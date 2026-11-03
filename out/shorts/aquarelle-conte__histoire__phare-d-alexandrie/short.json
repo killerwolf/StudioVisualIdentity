@@ -1,0 +1,69 @@
+{
+ "identity": "aquarelle-conte",
+ "family": "histoire",
+ "title": "Il était une fois le Phare d'Alexandrie",
+ "hook": "Dès la frame 0, des pierres tombent du ciel de crépuscule et s'empilent sur l'île de Pharos pendant que « Il était une fois… le Phare d'Alexandrie » s'imbibe dans le papier.",
+ "duration": 16.0,
+ "libraries": [
+  "p5.js",
+  "Paper.js"
+ ],
+ "seed": 11,
+ "renderTimeSec": 524.2,
+ "structure": [
+  {
+   "t": 0,
+   "beat": "hook : construction de l'étage carré pierre par pierre, titre"
+  },
+  {
+   "t": 3.5,
+   "beat": "vers 280 av. J.-C., île de Pharos, rois Ptolémée : étages octogonal et cylindrique, lanterne"
+  },
+  {
+   "t": 5.9,
+   "beat": "le feu s'allume"
+  },
+  {
+   "t": 6.3,
+   "beat": "lavis qui s'ouvre vers la nuit depuis le feu ; faisceau tournant, felouque"
+  },
+  {
+   "t": 7.0,
+   "beat": "toise 100–130 m, l'une des 7 Merveilles du monde antique"
+  },
+  {
+   "t": 9.7,
+   "beat": "séisme : secousse puis chute des pierres dans la mer (disparu au XIVe s.)"
+  },
+  {
+   "t": 12.3,
+   "beat": "lavis qui s'ouvre vers le matin ; les mêmes pierres bâtissent le fort de Qaitbay (XVe s.)"
+  },
+  {
+   "t": 14.3,
+   "beat": "« Fin. »"
+  },
+  {
+   "t": 15.2,
+   "beat": "fondu papier"
+  }
+ ],
+ "engagement": {
+  "mechanic": "suspense « il était une fois » + transformation (les pierres du phare deviennent un fort)",
+  "cta": "Quelle autre Merveille du monde veux-tu dans la prochaine histoire ?"
+ },
+ "loopable": false,
+ "sound": {
+  "type": "generated",
+  "voice": false,
+  "preset": "pad",
+  "spec": "src/sound.json"
+ },
+ "qualityChecks": {
+  "stillsReviewed": true,
+  "textMinPx": 54,
+  "safeAreaOk": true
+ },
+ "notes": "Faits formulés avec prudence : construit vers 280 av. J.-C. (commencé sous Ptolémée Ier, achevé sous Ptolémée II), île de Pharos, environ 100–130 m, une des Sept Merveilles, endommagé par des séismes (notamment 1303 et 1323) et disparu au XIVe siècle ; ses pierres ont été réutilisées pour le fort de Qaitbay (vers 1477–1480) à son emplacement. Des pierres restent dans la mer (blocs retrouvés sous l'eau), d'où les blocs translucides restants. Pierres, chute et réassemblage = fonctions pures de t (Paper.js, matrices absolues). Rendu mesuré 524,2 s pour 480 frames (109,2 s/100 frames) avec 4 rendus concurrents.",
+ "reproduce": "node out/tools/render.mjs out/shorts/aquarelle-conte__histoire__phare-d-alexandrie/src/index.html --out /tmp/svi/aquarelle-conte__histoire__phare-d-alexandrie/video.mp4 --duration 16 && .venv/bin/python out/tools/sound.py out/shorts/aquarelle-conte__histoire__phare-d-alexandrie/src/sound.json /tmp/svi/aquarelle-conte__histoire__phare-d-alexandrie/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/aquarelle-conte__histoire__phare-d-alexandrie/video.mp4 --music /tmp/svi/aquarelle-conte__histoire__phare-d-alexandrie/music.wav --out out/shorts/aquarelle-conte__histoire__phare-d-alexandrie/short.mp4"
+}

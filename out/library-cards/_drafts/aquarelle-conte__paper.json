@@ -11,7 +11,7 @@
   "milliers d'objets par frame",
   "texte principal (DOM plus net et polices plus simples)"
  ],
- "renderCostPer100Frames": "__HIST__",
+ "renderCostPer100Frames": "109,2 s (mesuré, short aquarelle-conte histoire « Phare d’Alexandrie », 480 frames en 524,2 s : ~95 groupes Paper.js à matrices absolues + 6 calques p5 + grain CSS, 4 rendus concurrents sur 4 cœurs) ; la part Paper.js est faible devant la capture Chromium",
  "gotchas": [
   "setup sur un canvas dédié avec hidpi='off' (attribut) et width/height 1080×1920, sinon le canvas est mis à l'échelle devicePixelRatio",
   "paper.view.autoUpdate = false puis paper.view.update() à la fin de chaque renderAt (rendu synchrone avant la capture)",
