@@ -19,7 +19,7 @@ dépasse maxDuration, il est accéléré (atempo ≤ 1.35) ; au-delà, il débor
 La musique est duckée sous la voix par assemble.py mux (sidechaincompress).
 Les fichiers sources (music.wav / video_silent.mp4) doivent exister dans le dossier du short (src/ ou racine).
 """
-import argparse, base64, io, json, os, subprocess, sys, time, wave
+import argparse, re, base64, io, json, os, subprocess, sys, time, wave
 from pathlib import Path
 
 import numpy as np
@@ -28,7 +28,8 @@ from scipy import signal
 
 ROOT = Path(__file__).resolve().parents[2]
 SR = 48000
-MODELS = ['gemini-3.8-flash-tts', 'gemini-3.8-flash-lite-tts']
+MODELS = ['gemini-3.8-flash-lite-tts', 'gemini-3.1-flash-tts-preview', 'gemini-3.8-flash-tts']
+MIN_GAP = 21  # s entre deux requêtes (limite mesurée : ~3 requêtes/min en plan gratuit)
 # voix préconstruites Gemini TTS (mapping indicatif par style)
 VOICE_BY_STYLE = [('enfant', 'Leda'), ('conte', 'Aoede'), ('calme', 'Achernar'), ('doux', 'Sulafat'),
                   ('énergique', 'Puck'), ('enjoué', 'Puck'), ('dramatique', 'Charon'), ('grave', 'Charon'),
@@ -79,16 +80,22 @@ def synth(client, text, style, voice, lang, model):
             voice_config=types.VoiceConfig(prebuilt_voice_config=types.PrebuiltVoiceConfig(voice_name=voice))))
     last = None
     for m in [model] + [x for x in MODELS if x != model]:
-        for attempt in range(3):
+        for attempt in range(12):
             try:
                 r = client.models.generate_content(model=m, contents=prompt, config=cfg)
                 part = r.candidates[0].content.parts[0].inline_data
+                time.sleep(MIN_GAP)  # une génération après l'autre, jamais en parallèle
                 return pcm_from_part(part.data, part.mime_type), m
-            except Exception as e:  # quota / modèle indisponible -> retry puis modèle suivant
+            except Exception as e:
                 last = e
-                if 'RESOURCE_EXHAUSTED' in str(e) and 'PerDay' in str(e):
-                    break  # quota journalier épuisé pour ce modèle : inutile de réessayer
-                time.sleep(2 ** attempt)
+                msg = str(e)
+                if 'RESOURCE_EXHAUSTED' in msg:
+                    if 'PerDay' in msg:
+                        break  # quota journalier épuisé : modèle suivant
+                    mm = re.search(r"retryDelay': '([\d.]+)s", msg)
+                    time.sleep(float(mm.group(1)) + 1 if mm else 20)  # limite par minute : on attend
+                else:
+                    time.sleep(2 ** min(attempt, 4))
     raise RuntimeError(f'TTS failed: {last}')
 
 
