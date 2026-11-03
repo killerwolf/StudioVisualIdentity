@@ -1,0 +1,1 @@
+- 2026-11-03T21:07:22Z start studio bauhaus-kinetic; read brief/facts/fiche/poster. Plan: 2 shorts HTML (Paper.js canvas + anime.js paused timeline seek + flubber morph), poster code reused.
