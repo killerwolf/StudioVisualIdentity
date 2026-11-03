@@ -1,0 +1,11 @@
+node_modules/
+.venv/
+__pycache__/
+*.part.mp4
+*.pyc
+media/
+.cache/
+out/**/tmp/
+out/**/_frames/
+__pycache__/
+out/tools/tests/*.wav

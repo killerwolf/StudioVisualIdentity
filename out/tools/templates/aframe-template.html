@@ -1,0 +1,37 @@
+<!doctype html><html><head><meta charset="utf-8">
+<!-- Template A-Frame déterministe : boucle d'animation coupée, caméra scriptée par Matrix4.lookAt, rendu manuel dans renderAt(t). -->
+<script src="/node_modules/aframe/dist/aframe-v1.8.0.js"></script>
+<style>html,body{margin:0;background:#ffe9f0;overflow:hidden}.a-enter-vr,.a-enter-ar,.a-orientation-modal{display:none!important}</style>
+</head><body>
+<a-scene embedded vr-mode-ui="enabled:false" xr-mode-ui="enabled:false" renderer="antialias:true; colorManagement:true; preserveDrawingBuffer:true" style="width:1080px;height:1920px" background="color:#ffd6e6" loading-screen="enabled:false" device-orientation-permission-ui="enabled:false">
+  <a-entity light="type:ambient; intensity:0.7"></a-entity>
+  <a-entity light="type:directional; intensity:0.9" position="2 4 3"></a-entity>
+  <a-entity id="cam" camera="fov:40; active:true" position="0 1.6 6"></a-entity>
+</a-scene>
+<script type="module">
+import * as S from '/out/tools/lib/svi.js';
+const sceneEl = document.querySelector('a-scene');
+const loaded = new Promise(r => sceneEl.hasLoaded ? r() : sceneEl.addEventListener('loaded', r));
+const ents = [];
+const ready = loaded.then(() => {
+  const rnd = S.rng(3);
+  for (let i = 0; i < 12; i++) {
+    const e = document.createElement('a-entity');
+    e.setAttribute('geometry', 'primitive: sphere; radius: 0.35');              // CHAÎNES, pas d'objets
+    e.setAttribute('material', `color: ${['#ff8fab','#9bf6ff','#caffbf','#fdffb6'][i%4]}; roughness: 0.6`);
+    e.setAttribute('position', `${(rnd()*4-2).toFixed(2)} ${(rnd()*2).toFixed(2)} ${(-rnd()*3).toFixed(2)}`);
+    sceneEl.appendChild(e); ents.push(e);
+  }
+  return new Promise(r => setTimeout(r, 300));
+}).then(() => { sceneEl.renderer.setAnimationLoop(null); sceneEl.pause(); });
+const THREE = window.AFRAME.THREE;
+const m4 = new THREE.Matrix4(), up = new THREE.Vector3(0,1,0);
+S.installContract({ duration: 3, ready, renderAt: t => {
+  const cam = document.getElementById('cam').object3D;
+  const a = t * 0.4;
+  cam.position.set(Math.sin(a)*6, 1.6, Math.cos(a)*6);
+  m4.lookAt(cam.position, new THREE.Vector3(0,0.6,-1), up); cam.quaternion.setFromRotationMatrix(m4);
+  ents.forEach((e,i) => { e.object3D.position.y = 0.6 + Math.sin(t*2+i)*0.4; });
+  sceneEl.renderer.render(sceneEl.object3D, sceneEl.camera);
+}});
+</script></body></html>

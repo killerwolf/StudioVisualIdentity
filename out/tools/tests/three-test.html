@@ -1,0 +1,23 @@
+<!doctype html><html><head><meta charset="utf-8">
+<style>html,body{margin:0;background:#05060a;overflow:hidden}canvas{display:block}
+#t{position:fixed;left:0;right:120px;top:760px;text-align:center;color:#fff;font:700 110px 'Space Grotesk';letter-spacing:-3px}</style>
+<script type="importmap">{"imports":{"three":"/node_modules/three/build/three.module.js","three/addons/":"/node_modules/three/examples/jsm/"}}</script>
+</head><body><div id="t">TEST 3D</div>
+<script type="module">
+import * as THREE from 'three';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+import * as S from '/out/tools/lib/svi.js';
+const r = new THREE.WebGLRenderer({antialias:true, preserveDrawingBuffer:true});
+r.setSize(S.W,S.H); r.setPixelRatio(1); document.body.prepend(r.domElement);
+const sc = new THREE.Scene(); const cam = new THREE.PerspectiveCamera(40, S.W/S.H, .1, 100); cam.position.set(0,0,9);
+const g = new THREE.InstancedMesh(new THREE.IcosahedronGeometry(.18,1), new THREE.MeshStandardMaterial({color:0x66ccff, emissive:0x113355, roughness:.3, metalness:.6}), 800);
+const rnd = S.rng(4), m = new THREE.Matrix4(); const P=[];
+for(let i=0;i<800;i++){P.push([rnd()*2-1,rnd()*2-1,rnd()*2-1].map(v=>v*3));}
+sc.add(g); sc.add(new THREE.AmbientLight(0xffffff,.4)); const L=new THREE.PointLight(0xff66aa,60); L.position.set(2,3,4); sc.add(L);
+const comp = new EffectComposer(r); comp.addPass(new RenderPass(sc,cam)); comp.addPass(new UnrealBloomPass(new THREE.Vector2(S.W,S.H),.9,.4,.2));
+S.installContract({ duration:3, ready: S.loadFonts([{family:'Space Grotesk',pkg:'space-grotesk',weight:700}]), renderAt: t => {
+  for(let i=0;i<800;i++){const [x,y,z]=P[i]; const a=t*.8+i*.01; m.makeTranslation(x*Math.cos(a)-z*Math.sin(a), y, x*Math.sin(a)+z*Math.cos(a)); g.setMatrixAt(i,m);} g.instanceMatrix.needsUpdate=true;
+  cam.position.z = 9 - t; comp.render(); }});
+</script></body></html>
