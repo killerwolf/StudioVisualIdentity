@@ -1,0 +1,50 @@
+{
+ "identity": "liquid-chrome",
+ "family": "abstrait",
+ "title": "Le pendule de Newton chromé qui ne s'arrête jamais",
+ "hook": "Choc dès la frame 0 (éclat blanc GlowLayer entre les billes 1 et 2) en macro 3/4, titre « Le pendule qui ne s'arrête jamais. » lisible à la frame 0",
+ "duration": 12.0,
+ "libraries": [
+  "Babylon.js"
+ ],
+ "seed": 3,
+ "renderTimeSec": 443.5,
+ "structure": [
+  {
+   "t": 0,
+   "beat": "hook : choc + éclat, carton 1"
+  },
+  {
+   "t": 1.2,
+   "beat": "chocs réguliers toutes les 1,2 s (clic + note de verre)"
+  },
+  {
+   "t": 4.6,
+   "beat": "carton « L'élan traverse. »"
+  },
+  {
+   "t": 8.8,
+   "beat": "carton « Ici, jamais. » (en vrai, il freine)"
+  },
+  {
+   "t": 12.0,
+   "beat": "boucle parfaite : état identique à t=0 (billes, caméra)"
+  }
+ ],
+ "engagement": {
+  "mechanic": "boucle parfaite (revisionnage hypnotique)",
+  "cta": "aucun CTA explicite : « Ici, jamais. » renvoie au début"
+ },
+ "loopable": true,
+ "sound": {
+  "type": "generated",
+  "voice": false
+ },
+ "qualityChecks": {
+  "stillsReviewed": true,
+  "textMinPx": 54,
+  "safeAreaOk": true
+ },
+ "notes": "Mouvement analytique θ = A·sin(2πt/T) (A = 0,45 rad, T = 2,4 s) appliqué à la bille de droite pour sin>0 et à celle de gauche pour sin<0 ; micro-vibration amortie des billes centrales après chaque choc ; caméra périodique 12 s (azimut −0,88±0,07 rad, rayon 13,6±0,5, fov 0,62). Environnement : sphère dégradé graphite/perle + 6 panneaux émissifs (lilas, rose, menthe, or, blanc, clé chaude #FFE9C8) capturés une fois par ReflectionProbe (RENDER_ONCE) puis désactivés. PBR métal irisé (iridescence 0,55, clearcoat 0,6), GlowLayer (éclats de choc avancés vers la caméra, liseré du socle), DefaultRenderingPipeline (ACES, DOF Low, FXAA, vignette). Palette plus chaude (graphite #121016–#1A161E, halos perle/or/rose) pour se distinguer de neon-lab. Mesure : 443,5 s pour 360 frames (123,2 s/100 frames), CPU peu chargé (3 studios).",
+ "reproduce": "node out/tools/render.mjs out/shorts/liquid-chrome__abstrait__pendule-de-newton-chrome/src/index.html --out /tmp/svi/liquid-c/video.mp4 --duration 12 && .venv/bin/python out/tools/sound.py out/shorts/liquid-chrome__abstrait__pendule-de-newton-chrome/src/sound.json /tmp/svi/liquid-c/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/liquid-c/video.mp4 --music /tmp/svi/liquid-c/music.wav --out out/shorts/liquid-chrome__abstrait__pendule-de-newton-chrome/short.mp4"
+}

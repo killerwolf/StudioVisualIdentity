@@ -1,0 +1,32 @@
+{
+ "language": "fr",
+ "style": "calme, sensoriel, voix basse et posée façon publicité de parfum ; chaque phrase entre deux clics",
+ "voice": "Achernar",
+ "lines": [
+  {
+   "t": 0.3,
+   "maxDuration": 1.6,
+   "text": "Cinq billes de chrome."
+  },
+  {
+   "t": 2.2,
+   "maxDuration": 2.0,
+   "text": "Une frappe, une seule repart."
+  },
+  {
+   "t": 4.7,
+   "maxDuration": 2.4,
+   "text": "L'élan traverse les billes du milieu."
+  },
+  {
+   "t": 8.6,
+   "maxDuration": 2.4,
+   "text": "En vrai, il finit par s'arrêter…"
+  },
+  {
+   "t": 11.05,
+   "maxDuration": 0.9,
+   "text": "Ici, jamais."
+  }
+ ]
+}

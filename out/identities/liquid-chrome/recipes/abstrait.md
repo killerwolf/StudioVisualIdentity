@@ -13,3 +13,10 @@ Pour un short **abstrait** dans cette identité :
 - **Tokens** : fond `#0B0B10` + halos, table `#1A1A24`, verre liseré chrome `#DBE3FF`, shading OpenCV (spéculaire n=90 ×1,25 + lustre n=14 ×0,22, env néon, Fresnel (1−n_z)²), caption y = 232, titre y = 306, x = 72.
 - **Paramètres MPM** : grille 90×196 (dx = 1/160 = 12 px), dt = 1e-4, 80 sous-pas/frame, E = 600, μ = 0,05, gravité 20, 4 × 6 000 particules ; splat bilinéaire en 540×960, flou σ = 2, seuil densité 0,12–0,32.
 - **Coût mesuré** : 443,7 s pour 420 frames (105,6 s/100 frames : simulation 332,7 s + ombrage 106,1 s), 1 thread, lancé via `out/tools/slot.sh`.
+
+## Variante « boucle parfaite » (Babylon.js)
+Référence : `out/shorts/liquid-chrome__abstrait__pendule-de-newton-chrome/` (12 s, 360 frames, 443,5 s mesurés).
+- **Ouvrir par** un événement matière à la frame 0 (choc + éclat GlowLayer) et le titre déjà affiché (pas de fondu d'entrée sur le 1er carton).
+- **Structurer en** une période verrouillée : T = 2,4 s, 5 cycles = 12 s ; chocs à t = k·1,2 s ponctués d'un `click` + `glass` (notes lydiennes de ré) ; trois cartons (0–4,15 / 4,6–8,2 / 8,8–11,9 s, fondu-chrome 0,45 s) ; caméra macro 3/4 périodique (dérive ±0,07 rad, respiration ±0,5 u).
+- **Fermer par** un carton qui se vide avant 11,9 s pour que la boucle t = 12 -> t = 0 soit invisible (billes et caméra identiques).
+- **Tokens** : variante graphite chaud (#121016–#1A161E, halos perle/or/rose), billes PBR métal irisé (roughness 0,045, iridescence 0,55, clearCoat 0,6), environnement ReflectionProbe RENDER_ONCE, ACES exposure 1,15, DOF Low.

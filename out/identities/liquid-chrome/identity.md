@@ -19,6 +19,7 @@ Vidéo « satisfying », publicité de parfum ou de cosmétique de luxe, macro d
 | Accent 3 | `#7CF7E4` menthe | matière n° 3, couleur de **succès** (vainqueur, pilule CTA) |
 | Accent 4 | `#FFE29A` or | matière n° 4, panneau bas |
 | Texte | `#FFFFFF` | titres, chiffres ; ombre portée `#0B0B10` 55 % floutée 10 px dans les overlays Python |
+| Graphite chaud / perle | `#121016` → `#1A161E`, socle `#4A4250`, clé `#FFE9C8`, perle `#F4EEF8` | variante chaude (short Babylon) : fonds graphite et reflets perle/or plutôt que noir bleuté + néon froid, pour ne pas se confondre avec neon-lab |
 | Danger | `#FF9AE8` | réutilise le rose (alerte/erreur) ; non utilisé dans les shorts de preuve |
 | Dégradé chrome | `#C8D3FF → #FF9AE8 45 % → #7CF7E4 80 % → #FFE29A` | **un seul mot-clé** par titre |
 
@@ -67,7 +68,8 @@ Haut 220 px, bas 320 px, droite 120 px. Légende à y = 232, titre à y = 306, x
 ## Librairies recommandées et pourquoi
 - **Taichi** (MLS-MPM, ti.cpu) : vrais fluides visqueux, chutes et mélanges crédibles ; seule librairie qui donne la « matière » de l'identité en 2D. Coût mesuré dans `out/library-cards/_drafts/liquid-chrome__taichi.json`.
 - **OpenCV** : transforme les points Taichi en surface liquide brillante (flou gaussien, Sobel → normales, spéculaire, reflets néon, composition) et dessine le verre antialiasé.
-- **three.js** : chrome et verre physiquement plausibles (PMREM procédural, MeshPhysicalMaterial irisé, transmission, BokehPass) ; scènes sans état faciles à rendre en stills.
+- **three.js** : chrome et verre physiquement plausibles (PMREM procédural, MeshPhysicalMaterial irisé, verre additif, BokehPass) ; scènes sans état faciles à rendre en stills.
+- **Babylon.js** : objets PBR chrome irisés en macro avec post-traitement intégré (DefaultRenderingPipeline ACES + DOF, GlowLayer pour les éclats) et environnement procédural capturé une fois par ReflectionProbe ; idéal pour les **boucles parfaites** analytiques (123 s/100 frames mesuré).
 
 ## Familles de contenus adaptées / inadaptées
 - **Adaptées** : abstrait (satisfying, boucles de matière), engagement (courses, « quelle couleur… », votes par couleur), explicatif court sur la matière (mercure, tension superficielle, viscosité), teasers produit/beauté.
@@ -76,12 +78,14 @@ Haut 220 px, bas 320 px, droite 120 px. Légende à y = 232, titre à y = 306, x
 ## Shorts de preuve (chemins)
 - `out/shorts/liquid-chrome__abstrait__quatre-peintures-mpm/` — Taichi MPM + OpenCV, 14 s.
 - `out/shorts/liquid-chrome__engagement__quelle-couleur-remplit-le-verre/` — three.js, 15 s.
+- `out/shorts/liquid-chrome__abstrait__pendule-de-newton-chrome/` — Babylon.js, 12 s, boucle parfaite (pendule de Newton, T = 2,4 s × 5).
 
 ## Place de la voix off (où elle parlera, débit conseillé, ce que le visuel laisse libre)
 Voix Gemini **Achernar** (calme), débit 2,3–2,6 mots/s, phrases de 2 à 6 mots posées **entre** les impacts sonores (les chutes et la victoire restent « à nu »). Le visuel ne porte que 1 titre + 1 légende à la fois et laisse la moitié basse de l'écran à la matière : la voix raconte ce qu'on ressent (« Chacune tombe de tout son poids »), l'écran ne la double pas mot à mot. La musique (pad / pulse) est duckée sous la voix par `assemble.py --voice`.
 
 ## Risques et limites
 - **Coût mesuré** : Taichi MPM + ombrage OpenCV = 443,7 s pour 14 s (105,6 s/100 frames, 24 k particules, 1 thread) ; three.js = 800,9 s pour 15 s (178 s/100 frames, CPU saturé). Ne pas dépasser ~25 k particules ni 15 s sans budget.
+- **Proximité avec neon-lab** : un test d'histogramme de couleurs a confondu les deux identités (quasi-noir + accents néon). Ce qui distingue Chrome Liquide : la matière chrome/perle (reflets larges, pas de traits lumineux), les pastels irisés, Syne 800, et les fonds graphite chauds (#121016–#1A161E, halos perle/or) à privilégier.
 - **Fond très sombre** : `#0B0B10` seul est détecté noir par `blackdetect` ; toujours garder des halos et une matière visible ≥ 2 % de l'image.
 - **Syne 800 très large** : 11 caractères/ligne à 92 px, les titres doivent être courts (sinon légende + titre).
 - **Mélange MPM** : les couleurs ne se mélangent pas seules (particules) — on diffuse la couleur via la grille, à doser (trop fort = gris lavande terne).
