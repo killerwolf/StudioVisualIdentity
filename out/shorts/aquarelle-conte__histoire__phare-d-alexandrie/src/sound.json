@@ -1,0 +1,15 @@
+{"duration": 16.0, "seed": 11, "bpm": 66, "key": "D", "scale": "dorian",
+ "music": {"preset": "pad", "gain": 0.5, "octave": 4, "density": 0.5, "loop": false},
+ "events": [
+  {"t": 0.2, "type": "chime", "note": "E6", "gain": 0.45, "dur": 1.6},
+  {"t": 0.5, "type": "tick", "gain": 0.25}, {"t": 0.85, "type": "tick", "gain": 0.25}, {"t": 1.2, "type": "tick", "gain": 0.25},
+  {"t": 1.55, "type": "tick", "gain": 0.25}, {"t": 3.9, "type": "tick", "gain": 0.25}, {"t": 4.3, "type": "tick", "gain": 0.25},
+  {"t": 4.9, "type": "tick", "gain": 0.25}, {"t": 5.4, "type": "pop", "note": "D5", "gain": 0.25},
+  {"t": 5.95, "type": "chime", "note": "A5", "gain": 0.4, "dur": 1.4},
+  {"t": 6.2, "type": "swell", "note": "D4", "gain": 0.5, "dur": 2.4},
+  {"t": 9.7, "type": "impact", "gain": 0.6},
+  {"t": 10.3, "type": "thud", "gain": 0.45}, {"t": 10.75, "type": "thud", "gain": 0.4}, {"t": 11.2, "type": "thud", "gain": 0.35},
+  {"t": 12.2, "type": "swell", "note": "F4", "gain": 0.5, "dur": 2.4},
+  {"t": 12.7, "type": "click", "gain": 0.2}, {"t": 13.0, "type": "click", "gain": 0.2}, {"t": 13.3, "type": "click", "gain": 0.2}, {"t": 13.6, "type": "click", "gain": 0.2},
+  {"t": 14.3, "type": "chime", "note": "D5", "gain": 0.4, "dur": 1.6}
+ ]}
