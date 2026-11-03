@@ -1,0 +1,30 @@
+{
+ "name": "Paper.js 0.17",
+ "role": "2D vectoriel (illustration)",
+ "bestFor": [
+  "personnages et bâtiments vectoriels (chouette, phare en blocs, felouque)",
+  "pointillés animés (dashArray/dashOffset), toises, faisceaux en dégradé",
+  "animations « fonction pure de t » de dizaines d'objets (pierres qui tombent puis se réassemblent) via matrices absolues"
+ ],
+ "avoidFor": [
+  "textures/remplissages peints (préférer p5)",
+  "milliers d'objets par frame",
+  "texte principal (DOM plus net et polices plus simples)"
+ ],
+ "renderCostPer100Frames": "__HIST__",
+ "gotchas": [
+  "setup sur un canvas dédié avec hidpi='off' (attribut) et width/height 1080×1920, sinon le canvas est mis à l'échelle devicePixelRatio",
+  "paper.view.autoUpdate = false puis paper.view.update() à la fin de chaque renderAt (rendu synchrone avant la capture)",
+  "pour une animation sans état : item.applyMatrix = false et item.matrix = new paper.Matrix().translate().rotate().scale() à chaque frame (les setters position/scaling sont cumulatifs)",
+  "chaîner Matrix.translate() mute la matrice (pas de copie)",
+  "paper-core.min.js suffit (pas de PaperScript) ; global `paper`",
+  "effet aquarelle vectoriel : 2–3 clones translucides jitterés de 1–3 px + contour à 62 % de la teinte",
+  "paupière/masque : Group([clip, forme]) avec group.clipped = true, puis item.bounds = Rectangle pour la hauteur"
+ ],
+ "snippetPath": "shorts/aquarelle-conte__histoire__phare-d-alexandrie/src",
+ "pairsWellWith": [
+  "p5.js",
+  "DOM + @fontsource",
+  "flubber (morphing de tracés)"
+ ]
+}

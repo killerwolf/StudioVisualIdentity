@@ -67,7 +67,9 @@ cam.setViewOffset(W, H, 30, 0, W, H);      // décale l'image de 30 px vers la g
 // ---- matières ----
 const chrome = new THREE.MeshPhysicalMaterial({ color: '#ffffff', metalness: 1, roughness: 0.06, iridescence: 0.35, iridescenceIOR: 1.6, envMapIntensity: 1.25, clearcoat: 1, clearcoatRoughness: 0.05 });
 const liquidMat = PAL.map(c => new THREE.MeshPhysicalMaterial({ color: c, metalness: 0.85, roughness: 0.14, iridescence: 0.45, iridescenceIOR: 1.5, envMapIntensity: 1.35, clearcoat: 1, clearcoatRoughness: 0.08, emissive: new THREE.Color(c), emissiveIntensity: 0.06 }));
-const glass = new THREE.MeshPhysicalMaterial({ color: '#ffffff', metalness: 0, roughness: 0.04, transmission: 1, thickness: 0.12, ior: 1.45, envMapIntensity: 1.4, clearcoat: 1, clearcoatRoughness: 0.03, transparent: true, side: THREE.DoubleSide });
+// verre « additif » : seuls les reflets de l'environnement s'ajoutent (pas de passe de transmission : ×5 plus rapide sous SwiftShader)
+const glass = new THREE.MeshPhysicalMaterial({ color: '#000000', metalness: 0, roughness: 0.05, envMapIntensity: 1.8, clearcoat: 1, clearcoatRoughness: 0.03,
+  transparent: true, blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide });
 
 // ---- éprouvettes ----
 const XS = [-1.38, -0.46, 0.46, 1.38], R_IN = 0.30, R_GL = 0.345, Y0 = -1.66, HT = 2.16;   // fond du verre, hauteur utile

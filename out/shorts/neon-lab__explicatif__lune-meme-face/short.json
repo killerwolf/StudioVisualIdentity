@@ -1,0 +1,51 @@
+{
+ "identity": "neon-lab",
+ "family": "explicatif",
+ "title": "Pourquoi la Lune nous montre toujours la même face ?",
+ "hook": "Dès 0,05 s : la question en titre (« Lune » en cyan) glisse sur une Terre néon en impulsion de bloom, Lune déjà en orbite, dolly-in outExpo",
+ "duration": 16.0,
+ "libraries": [
+  "three.js",
+  "OpenCV"
+ ],
+ "seed": 7,
+ "renderTimeSec": 877.7,
+ "structure": [
+  {
+   "t": 0,
+   "beat": "hook : question + Terre/Lune néon, dolly-in, légende FACE VISIBLE reliée à la Lune (1 s)"
+  },
+  {
+   "t": 4.5,
+   "beat": "hypothèse écartée : Lune fantôme magenta SANS rotation -> sa face marquée se détourne, légende FACE CACHÉE"
+  },
+  {
+   "t": 8.25,
+   "beat": "preuve : 1 rotation = 1 orbite ; arcs de progression cyan (révolution) et lime (rotation) synchrones, compteur JOUR 00,0 -> 27,3"
+  },
+  {
+   "t": 12.75,
+   "beat": "chute : ROTATION 27,3 j = RÉVOLUTION 27,3 j ; cause : verrouillage par effet de marée (renflement exagéré)"
+  },
+  {
+   "t": 16,
+   "beat": "fin propre : tenue sur la donnée-clé, poussée de caméra"
+  }
+ ],
+ "engagement": {
+  "mechanic": "question",
+  "cta": "Et la Terre, finira-t-elle verrouillée elle aussi ? Réponds en commentaire."
+ },
+ "loopable": false,
+ "sound": {
+  "type": "generated",
+  "voice": false
+ },
+ "qualityChecks": {
+  "stillsReviewed": true,
+  "textMinPx": 54,
+  "safeAreaOk": true
+ },
+ "notes": "Exactitude : la période de rotation sidérale de la Lune (27,3 j) est égale à sa période de révolution sidérale (27,3 j) -> rotation synchrone ; cause : couple de marée exercé par la Terre sur le renflement de marée lunaire, qui a freiné sa rotation (verrouillage gravitationnel). Simplifications assumées : échelles et distances non réalistes, orbite circulaire, libration (≈ 59 % de surface visible au total) non montrée ; le renflement est exagéré et étiqueté. La Lune fantôme garde l'orientation inertielle qu'elle avait à t=4,5 s. Rendu three.js 877,7 s pour 480 frames (182,8 s/100 frames) sous forte contention (4 slots pleins par d'autres studios, ≈ 3× le coût mesuré seul) ; post OpenCV neon_grade.py 176,0 s (36,7 s/100 frames). Champ de fond = même GLSL que le short abstrait (converti sRGB->linéaire car OutputPass).",
+ "reproduce": "node out/tools/render.mjs out/shorts/neon-lab__explicatif__lune-meme-face/src/index.html --out /tmp/svi/neon-lab-exp/raw.mp4 --duration 16 && .venv/bin/python out/shorts/neon-lab__explicatif__lune-meme-face/src/neon_grade.py /tmp/svi/neon-lab-exp/raw.mp4 /tmp/svi/neon-lab-exp/video.mp4 && .venv/bin/python out/tools/sound.py out/shorts/neon-lab__explicatif__lune-meme-face/src/sound.json /tmp/svi/neon-lab-exp/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/neon-lab-exp/video.mp4 --music /tmp/svi/neon-lab-exp/music.wav --out out/shorts/neon-lab__explicatif__lune-meme-face/short.mp4"
+}

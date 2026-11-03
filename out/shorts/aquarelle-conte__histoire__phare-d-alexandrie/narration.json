@@ -1,0 +1,32 @@
+{
+ "language": "fr",
+ "style": "conteuse d'album, chaleureuse et posée, ton « il était une fois » documentaire, débit lent",
+ "voice": "Aoede",
+ "lines": [
+  {
+   "t": 0.3,
+   "maxDuration": 2.8,
+   "text": "Il était une fois… le Phare d'Alexandrie."
+  },
+  {
+   "t": 3.4,
+   "maxDuration": 3.1,
+   "text": "Vers 280 avant J.-C., sur l'île de Pharos,"
+  },
+  {
+   "t": 6.6,
+   "maxDuration": 3.1,
+   "text": "il devient l'une des Sept Merveilles du monde."
+  },
+  {
+   "t": 9.8,
+   "maxDuration": 2.7,
+   "text": "Mais les séismes l'abattent, pierre à pierre."
+  },
+  {
+   "t": 12.6,
+   "maxDuration": 3.1,
+   "text": "Ses pierres bâtissent alors le fort de Qaitbay."
+  }
+ ]
+}

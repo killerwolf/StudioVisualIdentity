@@ -1,0 +1,465 @@
+{
+ "duration": 15.0,
+ "seed": 1989,
+ "bpm": 128,
+ "key": "A",
+ "scale": "minor",
+ "music": {
+  "preset": "pulse",
+  "gain": 0.45,
+  "octave": 3,
+  "density": 0.6
+ },
+ "reverb": 0.14,
+ "events": [
+  {
+   "t": 0,
+   "type": "whoosh",
+   "gain": 0.55,
+   "dur": 0.55
+  },
+  {
+   "t": 0.5,
+   "type": "thud",
+   "gain": 0.7
+  },
+  {
+   "t": 0.77,
+   "type": "impact",
+   "gain": 0.55,
+   "dur": 0.5
+  },
+  {
+   "t": 0.929,
+   "type": "tick",
+   "gain": 0.35
+  },
+  {
+   "t": 1.047,
+   "type": "tick",
+   "gain": 0.35
+  },
+  {
+   "t": 1.135,
+   "type": "tick",
+   "gain": 0.35
+  },
+  {
+   "t": 1.224,
+   "type": "tick",
+   "gain": 0.35
+  },
+  {
+   "t": 1.341,
+   "type": "tick",
+   "gain": 0.35
+  },
+  {
+   "t": 1.459,
+   "type": "tick",
+   "gain": 0.35
+  },
+  {
+   "t": 1.547,
+   "type": "tick",
+   "gain": 0.35
+  },
+  {
+   "t": 1.665,
+   "type": "tick",
+   "gain": 0.35
+  },
+  {
+   "t": 2.344,
+   "type": "click",
+   "gain": 0.7
+  },
+  {
+   "t": 3.7,
+   "type": "whoosh",
+   "gain": 0.55,
+   "dur": 0.55
+  },
+  {
+   "t": 4.3,
+   "type": "thud",
+   "gain": 0.7
+  },
+  {
+   "t": 4.6,
+   "type": "impact",
+   "gain": 0.5,
+   "dur": 0.45
+  },
+  {
+   "t": 4.675,
+   "type": "tick",
+   "gain": 0.35
+  },
+  {
+   "t": 4.775,
+   "type": "tick",
+   "gain": 0.35
+  },
+  {
+   "t": 4.875,
+   "type": "tick",
+   "gain": 0.35
+  },
+  {
+   "t": 4.975,
+   "type": "tick",
+   "gain": 0.35
+  },
+  {
+   "t": 5.05,
+   "type": "tick",
+   "gain": 0.35
+  },
+  {
+   "t": 5.125,
+   "type": "tick",
+   "gain": 0.35
+  },
+  {
+   "t": 6.006,
+   "type": "impact",
+   "gain": 0.5,
+   "dur": 0.45
+  },
+  {
+   "t": 6.081,
+   "type": "tick",
+   "gain": 0.35
+  },
+  {
+   "t": 6.156,
+   "type": "tick",
+   "gain": 0.35
+  },
+  {
+   "t": 6.256,
+   "type": "tick",
+   "gain": 0.35
+  },
+  {
+   "t": 6.356,
+   "type": "tick",
+   "gain": 0.35
+  },
+  {
+   "t": 6.431,
+   "type": "tick",
+   "gain": 0.35
+  },
+  {
+   "t": 6.506,
+   "type": "tick",
+   "gain": 0.35
+  },
+  {
+   "t": 6.581,
+   "type": "tick",
+   "gain": 0.35
+  },
+  {
+   "t": 7.413,
+   "type": "impact",
+   "gain": 0.5,
+   "dur": 0.45
+  },
+  {
+   "t": 7.488,
+   "type": "tick",
+   "gain": 0.35
+  },
+  {
+   "t": 7.588,
+   "type": "tick",
+   "gain": 0.35
+  },
+  {
+   "t": 7.663,
+   "type": "tick",
+   "gain": 0.35
+  },
+  {
+   "t": 7.763,
+   "type": "tick",
+   "gain": 0.35
+  },
+  {
+   "t": 7.838,
+   "type": "tick",
+   "gain": 0.35
+  },
+  {
+   "t": 7.938,
+   "type": "tick",
+   "gain": 0.35
+  },
+  {
+   "t": 8.037,
+   "type": "tick",
+   "gain": 0.35
+  },
+  {
+   "t": 8.2,
+   "type": "click",
+   "gain": 0.7
+  },
+  {
+   "t": 8.387,
+   "type": "whoosh",
+   "gain": 0.55,
+   "dur": 0.55
+  },
+  {
+   "t": 8.988,
+   "type": "thud",
+   "gain": 0.7
+  },
+  {
+   "t": 9.057,
+   "type": "glass",
+   "note": "A4",
+   "gain": 0.35
+  },
+  {
+   "t": 9.057,
+   "type": "thud",
+   "gain": 0.6
+  },
+  {
+   "t": 9.087,
+   "type": "tick",
+   "gain": 0.35
+  },
+  {
+   "t": 9.175,
+   "type": "tick",
+   "gain": 0.35
+  },
+  {
+   "t": 9.293,
+   "type": "tick",
+   "gain": 0.35
+  },
+  {
+   "t": 9.381,
+   "type": "tick",
+   "gain": 0.35
+  },
+  {
+   "t": 9.528,
+   "type": "tick",
+   "gain": 0.35
+  },
+  {
+   "t": 9.616,
+   "type": "tick",
+   "gain": 0.35
+  },
+  {
+   "t": 9.995,
+   "type": "whoosh",
+   "gain": 0.5,
+   "dur": 0.6
+  },
+  {
+   "t": 10.495,
+   "type": "impact",
+   "gain": 0.9,
+   "dur": 0.9
+  },
+  {
+   "t": 10.765,
+   "type": "impact",
+   "gain": 0.5,
+   "dur": 0.45
+  },
+  {
+   "t": 11.2,
+   "type": "whoosh",
+   "gain": 0.55,
+   "dur": 0.55
+  },
+  {
+   "t": 11.776,
+   "type": "blip",
+   "note": "E6",
+   "gain": 0.18
+  },
+  {
+   "t": 11.8,
+   "type": "thud",
+   "gain": 0.7
+  },
+  {
+   "t": 11.828,
+   "type": "blip",
+   "note": "E6",
+   "gain": 0.18
+  },
+  {
+   "t": 11.881,
+   "type": "blip",
+   "note": "E6",
+   "gain": 0.18
+  },
+  {
+   "t": 11.937,
+   "type": "blip",
+   "note": "E6",
+   "gain": 0.18
+  },
+  {
+   "t": 11.994,
+   "type": "blip",
+   "note": "E6",
+   "gain": 0.18
+  },
+  {
+   "t": 12.053,
+   "type": "blip",
+   "note": "E6",
+   "gain": 0.18
+  },
+  {
+   "t": 12.115,
+   "type": "blip",
+   "note": "E6",
+   "gain": 0.18
+  },
+  {
+   "t": 12.179,
+   "type": "blip",
+   "note": "E6",
+   "gain": 0.18
+  },
+  {
+   "t": 12.246,
+   "type": "blip",
+   "note": "E6",
+   "gain": 0.18
+  },
+  {
+   "t": 12.317,
+   "type": "blip",
+   "note": "E6",
+   "gain": 0.18
+  },
+  {
+   "t": 12.392,
+   "type": "blip",
+   "note": "E6",
+   "gain": 0.18
+  },
+  {
+   "t": 12.472,
+   "type": "blip",
+   "note": "E6",
+   "gain": 0.18
+  },
+  {
+   "t": 12.557,
+   "type": "blip",
+   "note": "E6",
+   "gain": 0.18
+  },
+  {
+   "t": 12.65,
+   "type": "blip",
+   "note": "E6",
+   "gain": 0.18
+  },
+  {
+   "t": 12.753,
+   "type": "blip",
+   "note": "E6",
+   "gain": 0.18
+  },
+  {
+   "t": 12.87,
+   "type": "blip",
+   "note": "E6",
+   "gain": 0.18
+  },
+  {
+   "t": 13.009,
+   "type": "blip",
+   "note": "E6",
+   "gain": 0.18
+  },
+  {
+   "t": 13.189,
+   "type": "blip",
+   "note": "E6",
+   "gain": 0.18
+  },
+  {
+   "t": 13.454,
+   "type": "tick",
+   "gain": 0.35
+  },
+  {
+   "t": 13.543,
+   "type": "tick",
+   "gain": 0.35
+  },
+  {
+   "t": 13.625,
+   "type": "blip",
+   "note": "E6",
+   "gain": 0.18
+  },
+  {
+   "t": 13.625,
+   "type": "chime",
+   "note": "E5",
+   "gain": 0.35
+  },
+  {
+   "t": 13.631,
+   "type": "tick",
+   "gain": 0.35
+  },
+  {
+   "t": 13.749,
+   "type": "tick",
+   "gain": 0.35
+  },
+  {
+   "t": 13.866,
+   "type": "tick",
+   "gain": 0.35
+  },
+  {
+   "t": 13.954,
+   "type": "tick",
+   "gain": 0.35
+  },
+  {
+   "t": 14.043,
+   "type": "tick",
+   "gain": 0.35
+  },
+  {
+   "t": 14.131,
+   "type": "tick",
+   "gain": 0.35
+  },
+  {
+   "t": 14.213,
+   "type": "impact",
+   "gain": 0.7,
+   "dur": 0.7
+  },
+  {
+   "t": 14.262,
+   "type": "chime",
+   "note": "A5",
+   "gain": 0.3
+  }
+ ]
+}

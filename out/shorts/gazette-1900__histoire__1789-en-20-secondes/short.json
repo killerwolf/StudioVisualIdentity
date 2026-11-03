@@ -1,0 +1,59 @@
+{
+ "identity": "gazette-1900",
+ "family": "histoire",
+ "title": "1789 en 20 secondes",
+ "hook": "Dès la 1re frame une une de journal « LE PETIT CRIEUR — 1789 EN 20 SECONDES » tourbillonne et se pose à 0,5 s, tampon rouge « Édition spéciale » à 0,62 s.",
+ "duration": 18.75,
+ "libraries": [
+  "GSAP",
+  "OpenCV"
+ ],
+ "seed": 1789,
+ "renderTimeSec": 367.2,
+ "structure": [
+  {
+   "t": 0,
+   "beat": "hook : une « 1789 EN 20 SECONDES » tourne et se pose, tampon ÉDITION SPÉCIALE"
+  },
+  {
+   "t": 1.875,
+   "beat": "5 mai — ouverture des États généraux"
+  },
+  {
+   "t": 4.688,
+   "beat": "20 juin — serment du Jeu de paume"
+  },
+  {
+   "t": 7.5,
+   "beat": "14 juillet — prise de la Bastille"
+  },
+  {
+   "t": 10.312,
+   "beat": "4 août — abolition des privilèges"
+  },
+  {
+   "t": 13.125,
+   "beat": "26 août — Déclaration des droits de l'homme et du citoyen"
+  },
+  {
+   "t": 15.938,
+   "beat": "récapitulatif tapé + tampon AU PROCHAIN NUMÉRO + vote"
+  }
+ ],
+ "engagement": {
+  "mechanic": "vote / récapitulatif",
+  "cta": "VOTEZ — quelle date ? (laquelle des 5 dates retenez-vous, en commentaire)"
+ },
+ "loopable": false,
+ "sound": {
+  "type": "generated",
+  "voice": false
+ },
+ "qualityChecks": {
+  "stillsReviewed": true,
+  "textMinPx": 54,
+  "safeAreaOk": true
+ },
+ "notes": "Grille 128 bpm : une = 6 temps (2,8125 s). Chaque une : tourniquet 0,55 s power3.out (-540°), tampon 0,16 s power4.in à +1,5 temps, dépêche typewriter 34 car/s, zoom brusque ×1,1 (0,14 s expo.out) à +4 temps, Ken Burns ×1,07 sur la gravure. Gravures procédurales en hachures (canvas 2D) ; silhouettes inventées et stylisées (aucun portrait réel). Post OpenCV par frame (pipes ffmpeg, slot.sh) : gate weave, bavure d'encre, sépia/taches/fibres/vignette, flicker, grain, rayures, poussières, flash sur coupes — 155,2 s pour 563 frames (27,6 s/100 f). renderTimeSec = render.mjs seul (65,2 s/100 f, CPU partagé). Total pipeline mesuré ≈ 530 s. Poids 19,8 Mo (le grain sature le plafond 8 Mb/s).",
+ "reproduce": "bash out/shorts/gazette-1900__histoire__1789-en-20-secondes/src/build.sh   # = node out/tools/render.mjs out/shorts/gazette-1900__histoire__1789-en-20-secondes/src/index.html --out /tmp/svi/gazette-1900__histoire__1789-en-20-secondes/raw.mp4 --duration 18.75 && out/tools/slot.sh .venv/bin/python out/shorts/gazette-1900__histoire__1789-en-20-secondes/src/post.py video /tmp/svi/gazette-1900__histoire__1789-en-20-secondes/raw.mp4 /tmp/svi/gazette-1900__histoire__1789-en-20-secondes/video.mp4 --seed 1900 --flash 1.875,4.6875,7.5,10.3125,13.125,15.9375 && .venv/bin/python out/tools/sound.py out/shorts/gazette-1900__histoire__1789-en-20-secondes/src/sound.json /tmp/svi/gazette-1900__histoire__1789-en-20-secondes/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/gazette-1900__histoire__1789-en-20-secondes/video.mp4 --music /tmp/svi/gazette-1900__histoire__1789-en-20-secondes/music.wav --out out/shorts/gazette-1900__histoire__1789-en-20-secondes/short.mp4"
+}

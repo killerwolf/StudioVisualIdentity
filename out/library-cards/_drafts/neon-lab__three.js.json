@@ -1,0 +1,27 @@
+{
+ "name": "three.js",
+ "role": "3D",
+ "bestFor": [
+  "schémas astronomiques/scientifiques 3D (sphères à grille, orbites, fresnel)",
+  "bloom natif (UnrealBloomPass) pour une identité néon",
+  "réutiliser un shader GLSL maison en ShaderMaterial plein écran"
+ ],
+ "avoidFor": [
+  "> quelques milliers de particules animées sans InstancedMesh (préférer twgl/points)",
+  "texte : le garder en DOM/SVG par-dessus le canvas"
+ ],
+ "renderCostPer100Frames": "182,8 s (mesuré, neon-lab explicatif : Terre + Lune ShaderMaterial + UnrealBloom + champ GLSL plein écran + DOM/SVG, 480 frames en 877,7 s avec 4 slots CPU occupés par d'autres studios) ; ≈ 60 s/100 frames hors contention (facts.md)",
+ "gotchas": [
+  "OutputPass convertit linéaire->sRGB : un ShaderMaterial qui écrit des couleurs sRGB doit faire pow(c, 2.2) sinon le fond sort gris",
+  "setViewOffset(W,H,0,-70,W,H) pour descendre le sujet sous le titre sans changer la perspective",
+  "project() d'un Vector3 utilise la viewOffset : parfait pour accrocher des légendes DOM/SVG",
+  "quad plein écran : gl_Position=vec4(position.xy,0.9999,1.), frustumCulled=false, renderOrder négatif, depthTest false",
+  "importmap 'three' + 'three/addons/' vers /node_modules/three/..."
+ ],
+ "snippetPath": "shorts/neon-lab__explicatif__lune-meme-face/src",
+ "pairsWellWith": [
+  "OpenCV (grade commun)",
+  "twgl.js (même GLSL)",
+  "GSAP/DOM pour la typo"
+ ]
+}

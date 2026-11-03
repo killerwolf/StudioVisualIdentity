@@ -1,0 +1,42 @@
+{
+ "language": "fr",
+ "style": "speaker d'actualités filmées / crieur de journaux 1900 : rythmé, solennel, légère emphase sur les dates, pauses nettes entre les unes",
+ "voice": "Orus",
+ "lines": [
+  {
+   "t": 0.15,
+   "maxDuration": 1.8,
+   "text": "1789, en vingt secondes !"
+  },
+  {
+   "t": 2.05,
+   "maxDuration": 2.55,
+   "text": "5 mai : les États généraux s'ouvrent."
+  },
+  {
+   "t": 4.85,
+   "maxDuration": 2.7,
+   "text": "20 juin : serment du Jeu de paume."
+  },
+  {
+   "t": 7.6,
+   "maxDuration": 2.65,
+   "text": "14 juillet : Paris prend la Bastille !"
+  },
+  {
+   "t": 10.4,
+   "maxDuration": 2.7,
+   "text": "Nuit du 4 août : fin des privilèges."
+  },
+  {
+   "t": 13.2,
+   "maxDuration": 2.7,
+   "text": "26 août : les droits de l'homme proclamés."
+  },
+  {
+   "t": 16.0,
+   "maxDuration": 2.6,
+   "text": "Cinq dates. Laquelle retenez-vous ?"
+  }
+ ]
+}

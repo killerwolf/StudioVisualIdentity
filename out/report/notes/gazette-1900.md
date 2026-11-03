@@ -1,2 +1,4 @@
 - 21:10 start studio gazette-1900; plan: GSAP pages (shared gazette.js) -> render.mjs -> OpenCV post.py (ffmpeg pipes, slot.sh) -> sound.py -> mux. bpm 128 grid (beat 0.46875 s), page = 6 beats.
 - 21:17 1789: stills reviewed x3 (fixes: meta date nowrap/no weekday, explicit <br> in subs, stamp opaque cream since multiply vanished on black crowd, stamp moved inside plate). Full render launched (18.75 s).
+- 21:45 1789 full render done: GSAP render.mjs 563 frames 367.2 s (65.2 s/100f, CPU partagé 10 studios) + OpenCV post 155.2 s (27.6 s/100f). Mux crf 20 -> 20 Mo (grain de film = débit plafonné 8 Mb/s ; crf 25 ne change rien car le plafond maxrate domine). Accepté.
+- 21:45 1989: stills x3 passes (fixes: fitWidth sur toutes les manchettes — 'LA BRÈCHE' débordait ; frise remontée pour libérer le tampon ; foule derrière la brèche allégée, 2 rangs au lieu de 3 qui faisaient un aplat noir). Full render lancé (15.0 s).
