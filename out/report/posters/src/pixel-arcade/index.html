@@ -1,0 +1,95 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8">
+<!-- Poster "Arcade Pixel" — Matter.js (course de billes déterministe, re-simulée jusqu'à t) + p5.js v2 (rendu 270×480 upscalé ×4 nearest). Rendu : render.mjs --stills 2.0 -->
+<script src="/node_modules/matter-js/build/matter.min.js"></script>
+<script src="/node_modules/p5/lib/p5.min.js"></script>
+<style>
+  html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:#0E0B1F}
+  #wrap canvas{position:absolute;left:0;top:0;width:1080px!important;height:1920px!important;image-rendering:pixelated}
+  .scan{position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(0,0,0,.22) 0 2px,transparent 2px 4px);pointer-events:none}
+  .ov{position:absolute;color:#fff;font-family:'Press Start 2P'}
+  .hud{top:236px;left:72px;width:888px;display:flex;justify-content:space-between;font-size:32px;line-height:32px}
+  .hud .a{color:#FF4F79}.hud .b{color:#FFD23F}
+  h1{position:absolute;left:68px;top:292px;margin:0;font:400 112px/1.04 'Rubik Mono One';color:#fff;letter-spacing:-0.02em;
+     text-shadow:8px 8px 0 #FF4F79, 16px 16px 0 #1D1740}
+  h1 span{color:#3CF2A0}
+  .body{top:1448px;left:72px;width:888px;font-size:56px;line-height:76px;color:#fff}
+  .body b{font-weight:400;color:#FFD23F}
+  .blink{color:#3CF2A0}
+</style></head><body>
+<div id="wrap"></div>
+<div class="ov hud"><span class="a">1UP 004200</span><span class="b">HI 099990</span></div>
+<h1>QUELLE<br>BILLE<br><span>GAGNE</span>&nbsp;?</h1>
+<div class="ov body">PARIE SUR TA<br><b>COULEUR</b> <span class="blink">&#9654;GO!</span></div>
+<div class="scan"></div>
+<script type="module">
+import * as S from '/out/tools/lib/svi.js';
+const { Engine, Bodies, Composite, Body } = Matter;
+const LW = 270, LH = 480;
+const COLS = ['#FF4F79', '#3CF2A0', '#FFD23F', '#4FB3FF'];
+const FX0 = 18, FX1 = 240, FY0 = 176, FY1 = 336;   // terrain (pixels logiques ; ×4 = écran)
+let engine, marbles, pegs, simT, trails;
+function build() {
+  engine = Engine.create(); engine.gravity.y = 1; engine.gravity.scale = 0.0006;
+  const st = { isStatic: true, restitution: 0.6, friction: 0 };
+  pegs = [];
+  for (let r = 0; r < 7; r++) for (let c = 0; c < 11; c++) {
+    const x = FX0 + 14 + c * 20 + (r % 2 ? 10 : 0), y = FY0 + 36 + r * 18;
+    if (x > FX1 - 8) continue; pegs.push(Bodies.circle(x, y, 3, st));
+  }
+  const walls = [Bodies.rectangle(FX0 - 5, (FY0 + FY1) / 2, 10, FY1 - FY0 + 40, st), Bodies.rectangle(FX1 + 5, (FY0 + FY1) / 2, 10, FY1 - FY0 + 40, st),
+    Bodies.rectangle((FX0 + FX1) / 2, FY1 + 5, FX1 - FX0 + 20, 10, st)];
+  marbles = COLS.map((c, i) => { const b = Bodies.circle(FX0 + 70 + i * 26, FY0 + 10 - i * 4, 6, { restitution: 0.5, friction: 0.002, frictionAir: 0.004, density: 0.002 }); b.col = c; return b; });
+  Composite.add(engine.world, [...pegs, ...walls, ...marbles]);
+  simT = 0; trails = marbles.map(() => []);
+}
+function simTo(t) {
+  if (!engine || t < simT) build();
+  const dt = 1000 / 120;
+  while (simT < t) {
+    Engine.update(engine, dt); simT += dt / 1000;
+    marbles.forEach((m, i) => { trails[i].push([m.position.x, m.position.y]); if (trails[i].length > 30) trails[i].shift(); });
+  }
+}
+let P;
+const sketchReady = new Promise(res => {
+  new p5(p => {
+    p.setup = () => { p.createCanvas(LW, LH); p.pixelDensity(1); p.noSmooth(); p.noLoop(); P = p; res(); };
+  }, document.getElementById('wrap'));
+});
+const q = v => Math.round(v);  // quantification au pixel logique (= pas de 4 px écran)
+function draw(t) {
+  const p = P; p.background('#0E0B1F');
+  p.noStroke();
+  // étoiles / ciel
+  const r = S.rng(3); for (let i = 0; i < 60; i++) { p.fill(i % 7 ? '#2a2358' : '#4FB3FF'); p.rect(q(r() * LW), q(r() * LH), 1, 1); }
+  // cadre du terrain (bordure pixel double)
+  p.fill('#1D1740'); p.rect(FX0 - 6, FY0 - 6, FX1 - FX0 + 12, FY1 - FY0 + 26);
+  p.fill('#4FB3FF'); p.rect(FX0 - 6, FY0 - 6, FX1 - FX0 + 12, 2); p.rect(FX0 - 6, FY0 - 6, 2, FY1 - FY0 + 26); p.rect(FX1 + 4, FY0 - 6, 2, FY1 - FY0 + 26);
+  p.fill('#0E0B1F'); p.rect(FX0, FY0, FX1 - FX0, FY1 - FY0);
+  // grille de fond
+  p.fill('#16123a'); for (let x = FX0; x < FX1; x += 10) p.rect(x, FY0, 1, FY1 - FY0); for (let y = FY0; y < FY1; y += 10) p.rect(FX0, y, FX1 - FX0, 1);
+  // ligne d'arrivée en damier
+  for (let x = FX0; x < FX1; x += 4) for (let k = 0; k < 2; k++) { p.fill(((x - FX0) / 4 + k) % 2 ? '#FFFFFF' : '#0E0B1F'); p.rect(x, FY1 - 10 + k * 4, 4, 4); }
+  // couloirs d'arrivée colorés
+  COLS.forEach((c, i) => { const w = (FX1 - FX0) / 4; p.fill(c); p.rect(q(FX0 + i * w + 4), FY1 + 6, q(w - 8), 6); });
+  // picots
+  pegs.forEach((b, i) => { const lit = ((i * 7 + Math.floor(t * 8)) % 13) === 0; p.fill(lit ? '#FFD23F' : '#8a7fd6'); p.rect(q(b.position.x) - 2, q(b.position.y) - 2, 4, 4); p.fill(lit ? '#fff3b0' : '#c9c1ff'); p.rect(q(b.position.x) - 2, q(b.position.y) - 2, 2, 2); });
+  // traînées
+  trails.forEach((tr, i) => tr.forEach(([x, y], k) => { if (k % 3) return; const c = p.color(COLS[i]); c.setAlpha(40 + k * 5); p.fill(c); p.rect(q(x) - 2, q(y) - 2, 4, 4); }));
+  // billes (disques pixel 12×12 + reflet)
+  marbles.forEach((m, i) => {
+    const x = q(m.position.x), y = q(m.position.y);
+    p.fill('#0E0B1F'); p.rect(x - 5, y - 7, 10, 14); p.rect(x - 7, y - 5, 14, 10);
+    p.fill(m.col); p.rect(x - 4, y - 6, 8, 12); p.rect(x - 6, y - 4, 12, 8); p.rect(x - 5, y - 5, 10, 10);
+    p.fill('#FFFFFF'); p.rect(x - 3, y - 4, 3, 2); p.rect(x - 4, y - 2, 2, 2);
+    // numéro de dossard au-dessus
+    p.fill(m.col); const n = i + 1; p.rect(x - 1, y - 12, 2, 3);
+  });
+  // leader : flèche clignotante
+  const lead = marbles.reduce((a, b) => (b.position.y > a.position.y ? b : a));
+  if (Math.floor(t * 4) % 2 === 0) { p.fill('#FFFFFF'); const x = q(lead.position.x), y = q(lead.position.y) + 10; p.rect(x - 1, y, 2, 2); p.rect(x - 2, y + 2, 4, 2); }
+}
+function renderAt(t) { simTo(t); draw(t); }
+const ready = Promise.all([sketchReady, S.loadFonts([{ family: 'Press Start 2P', pkg: 'press-start-2p', weight: 400 }, { family: 'Rubik Mono One', pkg: 'rubik-mono-one', weight: 400 }])]).then(() => build());
+S.installContract({ renderAt, ready, duration: 8 });
+</script></body></html>

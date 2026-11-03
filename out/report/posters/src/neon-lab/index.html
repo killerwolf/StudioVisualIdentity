@@ -1,0 +1,134 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8">
+<!-- Poster "Labo Néon" — three.js + UnrealBloom. Rendu : node out/tools/render.mjs <ce fichier> --stills 2.0 -->
+<script type="importmap">{"imports":{"three":"/node_modules/three/build/three.module.js","three/addons/":"/node_modules/three/examples/jsm/"}}</script>
+<style>
+  html,body{margin:0;width:1080px;height:1920px;background:#05060B;overflow:hidden}
+  canvas{position:absolute;inset:0}
+  .ov{position:absolute;left:72px;width:880px;color:#F2F6FF}
+  .tag{top:236px;font:500 34px 'JetBrains Mono';letter-spacing:.08em;color:#38F9FF;display:flex;gap:18px;align-items:center}
+  .tag i{display:inline-block;width:16px;height:16px;border-radius:50%;background:#FF3DCB;box-shadow:0 0 18px #FF3DCB}
+  h1{top:290px;margin:0;font:700 104px/0.98 'Space Grotesk';letter-spacing:-0.035em;text-shadow:0 0 40px rgba(56,249,255,.25)}
+  h1 em{font-style:normal;color:#38F9FF}
+  .data{top:1350px;font:500 30px 'JetBrains Mono';color:#B6FF3B;letter-spacing:.06em;display:flex;justify-content:space-between;width:820px;opacity:.95}
+  .body{top:1420px;font:500 56px/1.16 'Space Grotesk';letter-spacing:-0.01em;color:#F2F6FF}
+  .body b{color:#B6FF3B;font-weight:700}
+  .lab{position:absolute;font:500 30px 'JetBrains Mono';color:#FF3DCB;letter-spacing:.04em}
+</style></head><body>
+<div class="ov tag"><i></i>LABO/07 · MÉCANIQUE CÉLESTE</div>
+<h1 class="ov">Pourquoi la <em>Lune</em> nous montre toujours la même face&nbsp;?</h1>
+<div class="ov data"><span>ROTATION 27,3 j</span><span>=</span><span>RÉVOLUTION 27,3 j</span></div>
+<div class="ov body">Elle tourne sur elle-même <b>pile</b> au rythme de son tour de la Terre.</div>
+<div class="lab" id="lab" style="left:620px;top:1215px">FACE VISIBLE</div>
+<script type="module">
+import * as THREE from 'three';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+import * as S from '/out/tools/lib/svi.js';
+
+const W = 1080, H = 1920;
+const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+renderer.setSize(W, H); renderer.setPixelRatio(1);
+document.body.prepend(renderer.domElement);
+const scene = new THREE.Scene(); scene.background = new THREE.Color('#05060B');
+scene.fog = new THREE.FogExp2('#05060B', 0.028);
+const cam = new THREE.PerspectiveCamera(38, W / H, 0.1, 200);
+// décale le cadrage pour que la scène vive entre le titre et le texte
+cam.setViewOffset(W, H, 0, -70, W, H);
+
+const C = { cyan: new THREE.Color('#38F9FF'), mag: new THREE.Color('#FF3DCB'), lime: new THREE.Color('#B6FF3B'), surf: new THREE.Color('#11142A') };
+
+// --- Terre : sphère sombre, grille lat/long néon, rim fresnel
+const earthMat = new THREE.ShaderMaterial({
+  uniforms: { uCyan: { value: C.cyan }, uSurf: { value: C.surf }, uRot: { value: 0 } },
+  vertexShader: `varying vec3 vN; varying vec3 vV; varying vec2 vUv;
+    void main(){ vUv=uv; vec4 mv=modelViewMatrix*vec4(position,1.); vN=normalize(normalMatrix*normal); vV=normalize(-mv.xyz); gl_Position=projectionMatrix*mv; }`,
+  fragmentShader: `uniform vec3 uCyan; uniform vec3 uSurf; uniform float uRot; varying vec3 vN; varying vec3 vV; varying vec2 vUv;
+    void main(){ float f=pow(1.-max(dot(vN,vV),0.),2.6);
+      vec2 g=abs(fract(vec2((vUv.x+uRot)*24.,vUv.y*12.))-.5); float line=smoothstep(.47,.5,max(g.x,g.y));
+      float light=clamp(dot(vN,normalize(vec3(-.6,.4,.7))),0.,1.);
+      vec3 c=uSurf*(.35+.9*light)+uCyan*line*(.08+.32*light)+uCyan*f*1.1;
+      gl_FragColor=vec4(c,1.); }`
+});
+const earth = new THREE.Mesh(new THREE.SphereGeometry(0.95, 96, 64), earthMat);
+scene.add(earth);
+// halo
+const halo = new THREE.Mesh(new THREE.SphereGeometry(1.08, 64, 48), new THREE.ShaderMaterial({
+  transparent: true, depthWrite: false, side: THREE.BackSide, blending: THREE.AdditiveBlending,
+  uniforms: { c: { value: C.cyan } },
+  vertexShader: `varying vec3 vN; varying vec3 vV; void main(){ vec4 mv=modelViewMatrix*vec4(position,1.); vN=normalize(normalMatrix*normal); vV=normalize(-mv.xyz); gl_Position=projectionMatrix*mv; }`,
+  fragmentShader: `uniform vec3 c; varying vec3 vN; varying vec3 vV; void main(){ float f=pow(max(-dot(vN,vV),0.),3.); gl_FragColor=vec4(c*f*.5,f); }`
+}));
+scene.add(halo);
+
+// --- orbite
+const R = 2.05;
+const orbitPts = []; for (let i = 0; i <= 256; i++) { const a = i / 256 * Math.PI * 2; orbitPts.push(new THREE.Vector3(Math.cos(a) * R, 0, Math.sin(a) * R)); }
+const orbit = new THREE.Line(new THREE.BufferGeometry().setFromPoints(orbitPts), new THREE.LineDashedMaterial({ color: C.cyan, dashSize: 0.09, gapSize: 0.06, transparent: true, opacity: 0.85 }));
+orbit.computeLineDistances(); scene.add(orbit);
+const orbitGroup = new THREE.Group(); scene.add(orbitGroup); orbitGroup.add(orbit);
+orbitGroup.rotation.x = 0.0;
+
+// --- lunes : 1 principale + 3 fantômes, marqueur magenta toujours tourné vers la Terre
+function makeMoon(alpha) {
+  const g = new THREE.Group();
+  const mat = new THREE.ShaderMaterial({
+    transparent: alpha < 1, uniforms: { a: { value: alpha }, cy: { value: C.cyan } },
+    vertexShader: `varying vec3 vN; varying vec3 vV; varying vec3 vW; void main(){ vec4 mv=modelViewMatrix*vec4(position,1.); vN=normalize(normalMatrix*normal); vV=normalize(-mv.xyz); vW=normalize((modelMatrix*vec4(normal,0.)).xyz); gl_Position=projectionMatrix*mv; }`,
+    fragmentShader: `uniform float a; uniform vec3 cy; varying vec3 vN; varying vec3 vV; varying vec3 vW;
+      void main(){ float l=clamp(dot(vW,normalize(vec3(-.8,.3,.6))),0.,1.); float f=pow(1.-max(dot(vN,vV),0.),2.);
+      vec3 c=vec3(.55,.6,.75)*(.12+.8*l)+cy*f*.9; gl_FragColor=vec4(c,a); }`
+  });
+  const m = new THREE.Mesh(new THREE.SphereGeometry(0.26, 48, 32), mat); g.add(m);
+  const mk = new THREE.Mesh(new THREE.SphereGeometry(0.075, 24, 16), new THREE.MeshBasicMaterial({ color: C.mag, transparent: true, opacity: alpha }));
+  mk.position.set(-0.24, 0, 0); g.add(mk); // -x local = vers la Terre après lookAt-like orientation
+  // rayon de visée vers la Terre
+  const beam = new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-0.3, 0, 0), new THREE.Vector3(-R + 1.0, 0, 0)]),
+    new THREE.LineBasicMaterial({ color: C.mag, transparent: true, opacity: 0.55 * alpha }));
+  g.add(beam);
+  orbitGroup.add(g); return g;
+}
+const moons = [makeMoon(1), makeMoon(0.3), makeMoon(0.3), makeMoon(0.3)];
+function placeMoon(g, a) { g.position.set(Math.cos(a) * R, 0, Math.sin(a) * R); g.rotation.y = -a; } // -x local pointe vers l'origine
+
+// --- grille de sol + étoiles
+const grid = new THREE.GridHelper(40, 60, C.cyan, new THREE.Color('#1b3d66'));
+grid.position.y = -1.55; grid.material.transparent = true; grid.material.opacity = 0.3; scene.add(grid);
+const rnd = S.rng(7); const sp = [];
+for (let i = 0; i < 900; i++) { const th = rnd() * Math.PI * 2, ph = Math.acos(2 * rnd() - 1), r = 30 + rnd() * 40; sp.push(r * Math.sin(ph) * Math.cos(th), Math.abs(r * Math.cos(ph)) * 0.8 + 2, r * Math.sin(ph) * Math.sin(th)); }
+const sg = new THREE.BufferGeometry(); sg.setAttribute('position', new THREE.Float32BufferAttribute(sp, 3));
+scene.add(new THREE.Points(sg, new THREE.PointsMaterial({ color: '#9fb7ff', size: 0.12, sizeAttenuation: true, fog: false })));
+// anneau lime d'inclinaison (accent)
+const ring = new THREE.Mesh(new THREE.TorusGeometry(1.28, 0.008, 8, 160), new THREE.MeshBasicMaterial({ color: C.lime }));
+ring.rotation.x = Math.PI / 2 + 0.35; scene.add(ring);
+
+const composer = new EffectComposer(renderer);
+composer.addPass(new RenderPass(scene, cam));
+composer.addPass(new UnrealBloomPass(new THREE.Vector2(W / 2, H / 2), 0.62, 0.45, 0.32));
+composer.addPass(new OutputPass());
+
+const lab = document.getElementById('lab');
+function renderAt(t) {
+  const k = S.ease.outExpo(S.clamp(t / 2.2));
+  const az = 0.55 + 0.26 * k;                  // orbite 15°
+  const dist = 12.4 - 0.9 * k;                  // dolly-in lent
+  cam.position.set(Math.sin(az) * dist, 5.6, Math.cos(az) * dist);
+  cam.lookAt(0, -0.1, 0);
+  earthMat.uniforms.uRot.value = t * 0.03;
+  const a0 = 0.55 + t * 0.12;
+  placeMoon(moons[0], a0 + Math.PI * 0.5 + 0.35);
+  placeMoon(moons[1], a0 + Math.PI * 1.0 + 0.35);
+  placeMoon(moons[2], a0 + Math.PI * 1.5 + 0.35);
+  placeMoon(moons[3], a0 + 0.35);
+  composer.render();
+  // étiquette accrochée à la lune principale
+  const p = new THREE.Vector3(); moons[0].getWorldPosition(p); p.project(cam);
+  const sx = (p.x * 0.5 + 0.5) * W, sy = (-p.y * 0.5 + 0.5) * H;
+  lab.style.left = Math.min(960 - 260, Math.max(72, sx - 130)) + 'px'; lab.style.top = (sy + 44) + 'px';
+}
+const ready = S.loadFonts([
+  { family: 'Space Grotesk', pkg: 'space-grotesk', weight: 700 }, { family: 'Space Grotesk', pkg: 'space-grotesk', weight: 500 },
+  { family: 'JetBrains Mono', pkg: 'jetbrains-mono', weight: 500 }]);
+S.installContract({ renderAt, ready, duration: 6 });
+</script></body></html>

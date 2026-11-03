@@ -1,0 +1,121 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8">
+<!-- Poster "Tableau Craie" — Rough.js (tracés main levée) sur canvas + texture craie procédurale. Rendu : render.mjs --stills 2.0 -->
+<script src="/node_modules/roughjs/bundled/rough.js"></script>
+<style>html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:#1F3A30}canvas{position:absolute;inset:0}</style>
+</head><body>
+<canvas id="bg" width="1080" height="1920"></canvas>
+<canvas id="ch" width="1080" height="1920"></canvas>
+<script type="module">
+import * as S from '/out/tools/lib/svi.js';
+const W = 1080, H = 1920;
+const P = { bg: '#1F3A30', surf: '#264639', cream: '#FFF6D5', orange: '#FFB84C', blue: '#7FD1FF', red: '#FF7A7A', text: '#F7F3E3' };
+const bg = document.getElementById('bg').getContext('2d');
+const cv = document.getElementById('ch'), ctx = cv.getContext('2d');
+const rc = rough.canvas(cv);
+
+// --- fond : ardoise + traces de chiffon + cadre bois + rebord à craies
+function drawBoard() {
+  const r = S.rng(5);
+  bg.fillStyle = P.bg; bg.fillRect(0, 0, W, H);
+  const g = bg.createRadialGradient(540, 900, 100, 540, 900, 1300); g.addColorStop(0, '#24443A'); g.addColorStop(1, '#16291F');
+  bg.fillStyle = g; bg.fillRect(0, 0, W, H);
+  for (let i = 0; i < 26; i++) { // essuyages
+    const x = r() * W, y = r() * H, rx = 140 + r() * 320, ry = 30 + r() * 70;
+    const gg = bg.createRadialGradient(x, y, 0, x, y, rx); gg.addColorStop(0, 'rgba(240,240,220,0.05)'); gg.addColorStop(1, 'rgba(240,240,220,0)');
+    bg.save(); bg.translate(x, y); bg.rotate((r() - .5) * .6); bg.scale(1, ry / rx); bg.fillStyle = gg; bg.beginPath(); bg.arc(0, 0, rx, 0, 7); bg.fill(); bg.restore();
+  }
+  const id = bg.getImageData(0, 0, W, H), d = id.data;
+  for (let i = 0; i < d.length; i += 4) { const n = (r() - .5) * 14; d[i] += n; d[i + 1] += n; d[i + 2] += n; }
+  bg.putImageData(id, 0, 0);
+  // fantômes de vieilles équations effacées
+  bg.globalAlpha = 0.06; bg.fillStyle = P.cream; bg.font = "700 70px 'Caveat'";
+  [['E = hν', 760, 1180], ['λ = 450 nm', 640, 660], ['∝ 1/λ⁴', 90, 1590], ['n₂ + o₂', 700, 1520]].forEach(([s, x, y]) => bg.fillText(s, x, y));
+  bg.globalAlpha = 1;
+  // rebord bois en bas (zone décorative)
+  const wood = bg.createLinearGradient(0, 1760, 0, 1840); wood.addColorStop(0, '#9A6A3E'); wood.addColorStop(1, '#5E3D22');
+  bg.fillStyle = wood; bg.fillRect(0, 1770, W, 70);
+  bg.fillStyle = 'rgba(0,0,0,.35)'; bg.fillRect(0, 1765, W, 6);
+  [[160, P.cream, 120], [330, P.orange, 90], [470, P.blue, 70]].forEach(([x, c, l]) => { bg.fillStyle = c; bg.fillRect(x, 1752, l, 18); });
+}
+
+// --- éléments de craie (apparaissent dans l'ordre)
+const O = (o = {}) => Object.assign({ roughness: 1.6, bowing: 1.2, strokeWidth: 4, seed: 3 }, o);
+function wave(x0, y0, x1, y1, amp, per, color, seed) {
+  const dx = x1 - x0, dy = y1 - y0, L = Math.hypot(dx, dy), ux = dx / L, uy = dy / L, nx = -uy, ny = ux;
+  const pts = []; for (let s = 0; s <= L; s += 6) { const a = Math.sin(s / per * Math.PI * 2) * amp; pts.push([x0 + ux * s + nx * a, y0 + uy * s + ny * a]); }
+  rc.curve(pts, O({ stroke: color, strokeWidth: 5, roughness: 0.8, seed }));
+  const hx = x1, hy = y1; // tête de flèche
+  rc.linearPath([[hx - ux * 26 + nx * 16, hy - uy * 26 + ny * 16], [hx, hy], [hx - ux * 26 - nx * 16, hy - uy * 26 - ny * 16]], O({ stroke: color, strokeWidth: 5, seed: seed + 1 }));
+}
+function hand(text, x, y, size, color, rot = 0, weight = 700, family = 'Caveat') {
+  ctx.save(); ctx.translate(x, y); ctx.rotate(rot); ctx.fillStyle = color; ctx.font = `${weight} ${size}px '${family}'`; ctx.fillText(text, 0, 0); ctx.restore();
+}
+const steps = [
+  () => { // titre
+    ctx.font = "800 116px 'Nunito'"; ctx.fillStyle = P.text; ctx.fillText('Pourquoi le ciel', 72, 352);
+    ctx.fillText('est ', 72, 478); const w = ctx.measureText('est ').width;
+    ctx.fillStyle = P.blue; ctx.fillText('bleu', 72 + w, 478); const w2 = ctx.measureText('bleu').width;
+    ctx.fillStyle = P.text; ctx.fillText(' ?', 72 + w + w2, 478);
+    rc.curve([[72 + w, 506], [72 + w + w2 * .5, 518], [72 + w + w2, 502]], O({ stroke: P.blue, strokeWidth: 6, seed: 9 }));
+  },
+  () => { // soleil
+    rc.circle(210, 720, 170, O({ stroke: P.orange, fill: 'rgba(255,184,76,0.85)', fillStyle: 'hachure', hachureGap: 11, fillWeight: 3, strokeWidth: 5, seed: 4 }));
+    for (let i = 0; i < 10; i++) { const a = i / 10 * Math.PI * 2; rc.line(210 + Math.cos(a) * 112, 720 + Math.sin(a) * 112, 210 + Math.cos(a) * 150, 720 + Math.sin(a) * 150, O({ stroke: P.orange, seed: 20 + i })); }
+    hand('Soleil', 140, 912, 54, P.orange, -0.04);
+  },
+  () => { // lumière blanche
+    rc.line(312, 760, 548, 926, O({ stroke: P.cream, strokeWidth: 9, roughness: 1.2, seed: 30 }));
+    rc.line(316, 776, 540, 936, O({ stroke: P.cream, strokeWidth: 3, roughness: 1.6, seed: 31 }));
+    hand('lumière blanche', 336, 684, 52, P.cream, 0.6);
+  },
+  () => { // molécule d'air
+    rc.circle(582, 950, 58, O({ stroke: P.text, fill: 'rgba(247,243,227,.5)', fillStyle: 'cross-hatch', hachureGap: 9, seed: 40 }));
+    rc.circle(626, 962, 50, O({ stroke: P.text, fill: 'rgba(247,243,227,.5)', fillStyle: 'cross-hatch', hachureGap: 9, seed: 41 }));
+    hand("molécule d'air", 470, 1066, 50, P.text, -0.03);
+  },
+  () => { // bleu dispersé partout
+    wave(606, 896, 660, 656, 12, 28, P.blue, 50);
+    wave(640, 910, 860, 720, 12, 28, P.blue, 52);
+    wave(560, 960, 300, 1060, 12, 28, P.blue, 54);
+    wave(650, 920, 900, 880, 12, 28, P.blue, 56);
+    hand('le bleu rebondit partout !', 560, 620, 58, P.blue, -0.05);
+  },
+  () => { // rouge tout droit
+    wave(680, 978, 935, 1050, 16, 64, P.red, 60);
+    hand('le rouge', 720, 1128, 54, P.red, 0.0); hand('passe tout droit', 620, 1180, 54, P.red, 0.0);
+  },
+  () => { // sol + observateur
+    rc.arc(540, 3800, 5000, 5000, Math.PI * 1.36, Math.PI * 1.64, false, O({ stroke: P.cream, strokeWidth: 5, seed: 70 }));
+    const fx = 250, fy = 1270; // bonhomme bâton générique
+    rc.circle(fx, fy - 74, 44, O({ stroke: P.cream, seed: 72 }));
+    rc.linearPath([[fx, fy - 52], [fx, fy + 8]], O({ stroke: P.cream, seed: 73 }));
+    rc.linearPath([[fx - 26, fy - 30], [fx, fy - 40], [fx + 30, fy - 46]], O({ stroke: P.cream, seed: 74 }));
+    rc.linearPath([[fx - 22, fy + 46], [fx, fy + 8], [fx + 22, fy + 46]], O({ stroke: P.cream, seed: 75 }));
+    hand('toi', 160, 1250, 50, P.cream, -0.1);
+  },
+  () => { // corps de texte
+    hand("L'air disperse le bleu", 72, 1432, 70, P.text);
+    hand('bien plus que le rouge :', 72, 1502, 70, P.text);
+    hand('il nous arrive de partout !', 72, 1572, 70, P.orange);
+    rc.line(72, 1594, 640, 1590, O({ stroke: P.orange, strokeWidth: 3, seed: 90 }));
+  },
+];
+// texture craie : on retire des grains de la couche de craie
+let grain;
+function makeGrain() {
+  grain = document.createElement('canvas'); grain.width = W; grain.height = H;
+  const g = grain.getContext('2d'), id = g.createImageData(W, H), d = id.data, r = S.rng(77);
+  for (let i = 0; i < d.length; i += 4) { const v = r(); d[i + 3] = v < 0.28 ? 255 : (v < 0.4 ? 120 : 0); }
+  g.putImageData(id, 0, 0);
+}
+function renderAt(t) {
+  ctx.clearRect(0, 0, W, H);
+  const n = Math.min(steps.length, Math.floor(t / 0.2) + 1);
+  for (let i = 0; i < n; i++) steps[i]();
+  ctx.globalCompositeOperation = 'destination-out'; ctx.drawImage(grain, 0, 0); ctx.globalCompositeOperation = 'source-over';
+  // poussière de craie
+  ctx.globalAlpha = 0.9; ctx.filter = 'blur(0.6px)'; ctx.drawImage(cv, 0, 0); ctx.filter = 'none'; ctx.globalAlpha = 1;
+}
+const ready = S.loadFonts([{ family: 'Caveat', pkg: 'caveat', weight: 700 }, { family: 'Nunito', pkg: 'nunito', weight: 800 }]).then(() => { drawBoard(); makeGrain(); });
+S.installContract({ renderAt, ready, duration: 6 });
+</script></body></html>

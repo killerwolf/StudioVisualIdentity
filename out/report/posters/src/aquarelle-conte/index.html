@@ -1,0 +1,111 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8">
+<title>Affiche — Aquarelle Conte</title>
+<!-- Direction aquarelle-conte : lavis aquarelle simulés en p5.js v2 (polygones déformés récursivement,
+     ~40 couches à 3-5 % d'opacité par tache, bords plus foncés), 3 plans peints dans des p5.Graphics et
+     composés avec un léger travelling latéral (multiplane). Texture de papier à grain en post (post.py, OpenCV). -->
+<style>
+:root{--bg:#F7F1E6;--surface:#EFE4D0;--coral:#E88D72;--blue:#6C9BCF;--gold:#F2C14E;--green:#7FB685;--text:#3A3042}
+html,body{margin:0;background:var(--bg);width:1080px;height:1920px;overflow:hidden}
+#stage canvas{position:absolute;inset:0;display:block}
+.t{position:absolute;left:60px;width:900px;color:var(--text)}
+#kick{top:1150px;font:600 54px/1 'Nunito';color:#B2573E}
+#title{top:1226px;font:700 116px/1.0 'Fraunces';letter-spacing:-2px;font-variation-settings:'SOFT' 100}
+#title em{font-style:normal;color:#4E7FB8}
+#sub{top:1488px;font:600 54px/1.15 'Nunito';color:var(--text)}
+</style></head><body>
+<div id="stage"></div>
+<div class="t" id="kick">Histoire du soir · n°3</div>
+<div class="t" id="title">Où vont les<br><em>étoiles</em> le jour&nbsp;?</div>
+<div class="t" id="sub">Chut… elles font la sieste&nbsp;!</div>
+<script src="/node_modules/p5/lib/p5.min.js"></script>
+<script type="module">
+import * as S from '/out/tools/lib/svi.js';
+const R = S.rng(7);
+const gauss = () => { let u = 0, v = 0; while (!u) u = R(); while (!v) v = R(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); };
+const hex = h => [parseInt(h.slice(1, 3), 16), parseInt(h.slice(3, 5), 16), parseInt(h.slice(5, 7), 16)];
+
+// déformation récursive d'un polygone (méthode "watercolor" à la Tyler Hobbs)
+function deform(pts, depth, vari) {
+  if (depth === 0) return pts;
+  const out = [];
+  for (let i = 0; i < pts.length; i++) {
+    const a = pts[i], b = pts[(i + 1) % pts.length];
+    const len = Math.hypot(b[0] - a[0], b[1] - a[1]);
+    const m = [(a[0] + b[0]) / 2 + gauss() * len * vari * a[2], (a[1] + b[1]) / 2 + gauss() * len * vari * a[2], S.clamp(a[2] * (0.8 + R() * 0.4), .2, 2)];
+    out.push(a, m);
+  }
+  return deform(out, depth - 1, vari);
+}
+const poly = (pts, v = 1) => pts.map(p => [p[0], p[1], p[2] ?? v]);
+function wash(g, pts, color, { layers = 36, alpha = 9, vari = .22, base = 3, sub = 2, edge = true } = {}) {
+  const [r, gg, b] = hex(color);
+  const basePts = deform(poly(pts), base, vari);
+  g.noStroke();
+  for (let k = 0; k < layers; k++) {
+    const p = deform(basePts, sub, vari * .9);
+    g.fill(r, gg, b, alpha); g.beginShape(); for (const q of p) g.vertex(q[0], q[1]); g.endShape(g.CLOSE);
+    if (edge && k % 6 === 0) {        // bord plus foncé : contour très léger
+      g.noFill(); g.stroke(r * .8, gg * .8, b * .8, alpha * 1.6); g.strokeWeight(1.4);
+      g.beginShape(); for (const q of p) g.vertex(q[0], q[1]); g.endShape(g.CLOSE); g.noStroke();
+    }
+  }
+}
+const circlePts = (cx, cy, r, n = 14) => Array.from({ length: n }, (_, i) => [cx + Math.cos(i / n * 6.283) * r, cy + Math.sin(i / n * 6.283) * r]);
+const hill = (y0, amp, freq, phase, yb = 1920) => { const pts = []; for (let x = -80; x <= 1160; x += 80) pts.push([x, y0 + Math.sin(x * freq + phase) * amp]); pts.push([1160, yb], [-80, yb]); return pts; };
+const star = (cx, cy, r) => Array.from({ length: 10 }, (_, i) => { const a = -Math.PI / 2 + i * Math.PI / 5, rr = i % 2 ? r * .45 : r; return [cx + Math.cos(a) * rr, cy + Math.sin(a) * rr, .4]; });
+
+let P, L, ready = new Promise(res => {
+  new p5(p => {
+    p.setup = () => {
+      p.pixelDensity(1); p.createCanvas(1080, 1920).parent('stage'); p.noLoop();
+      L = { sky: p.createGraphics(1180, 1920), far: p.createGraphics(1180, 1920), near: p.createGraphics(1180, 1920) };
+      Object.values(L).forEach(g => { g.pixelDensity(1); g.clear(); });
+      P = p; res();
+    };
+  });
+});
+
+function paint() {
+  const { sky, far, near } = L;
+  // CIEL : lavis bleu en haut, halo doré autour de la lune
+  wash(sky, [[-60, -40], [1240, -40], [1240, 640], [900, 760], [500, 700], [100, 800], [-60, 720]], '#6C9BCF', { layers: 34, alpha: 8, vari: .28 });
+  wash(sky, [[-60, -40], [1240, -40], [1240, 380], [600, 470], [-60, 360]], '#4E7FB8', { layers: 26, alpha: 7, vari: .3 });
+  // halo : on "soulève" le pigment (lavis crème) puis on dépose l'or
+  for (const [r, a] of [[270, 4], [235, 5], [200, 6], [165, 7]]) wash(sky, circlePts(760, 520, r, 28), '#F7F1E6', { layers: 26, alpha: a * 2, vari: .1, edge: false });
+  // croissant de lune : disque doré moins un disque décalé (polygone en lunule)
+  { const pts = []; const cx = 760, cy = 520, r = 120, ox = 58, oy = -34, r2 = 104;
+    for (let i = 0; i <= 40; i++) { const a = -2.25 + i / 40 * 4.5 + Math.PI * .0; pts.push([cx + Math.cos(a + 2.6) * r, cy + Math.sin(a + 2.6) * r]); }
+    for (let i = 40; i >= 0; i--) { const a = -1.75 + i / 40 * 3.5; pts.push([cx + ox + Math.cos(a + 2.6) * r2, cy + oy + Math.sin(a + 2.6) * r2]); }
+    wash(sky, pts, '#F2C14E', { layers: 34, alpha: 18, vari: .03, base: 1, sub: 1 }); }
+  // étoiles (petites taches dorées)
+  for (const [x, y, r] of [[200, 300, 26], [380, 420, 18], [140, 560, 16], [560, 300, 20], [1000, 330, 16], [470, 610, 14], [1010, 690, 14], [300, 700, 12]])
+    wash(sky, star(x, y, r), '#F2C14E', { layers: 18, alpha: 22, vari: .08, base: 1, sub: 1 });
+  // LOIN : collines bleu-vert
+  wash(far, hill(830, 40, .006, 1.2), '#6C9BCF', { layers: 30, alpha: 8, vari: .16 });
+  wash(far, hill(900, 50, .005, 3.0), '#7FB685', { layers: 30, alpha: 8, vari: .16 });
+  // PRÈS : grande colline verte, maison, arbre, chemin
+  wash(near, hill(1000, 60, .004, 0.2), '#7FB685', { layers: 40, alpha: 10, vari: .14 });
+  wash(near, [[230, 1000], [380, 1000], [380, 880], [230, 880]], '#EFE4D0', { layers: 24, alpha: 22, vari: .05 });   // murs
+  wash(near, [[205, 892], [305, 790], [405, 892]], '#E88D72', { layers: 28, alpha: 20, vari: .06 });                  // toit
+  wash(near, [[270, 930], [318, 930], [318, 975], [270, 975]], '#F2C14E', { layers: 24, alpha: 34, vari: .04 });      // fenêtre allumée
+  wash(near, circlePts(294, 952, 70, 10), '#F2C14E', { layers: 14, alpha: 7, vari: .2 });                               // halo veilleuse
+  wash(near, [[340, 830], [362, 830], [362, 790], [340, 790]], '#B2573E', { layers: 16, alpha: 24, vari: .05 });      // cheminée
+  wash(near, [[880, 1060], [904, 1060], [900, 900], [884, 900]], '#8A6A55', { layers: 16, alpha: 24, vari: .05 });    // tronc
+  wash(near, circlePts(892, 860, 80, 12), '#7FB685', { layers: 30, alpha: 14, vari: .18 });
+  wash(near, circlePts(860, 800, 54, 10), '#5E9A6A', { layers: 24, alpha: 12, vari: .18 });
+  wash(near, [[300, 1000], [350, 1000], [520, 1180], [380, 1180]], '#F7E2B8', { layers: 20, alpha: 18, vari: .1 });   // chemin
+  // fond de bas de page : on laisse le papier, avec un lavis crème très léger
+  wash(near, [[-60, 1080], [1240, 1060], [1240, 2300], [-60, 2300]], '#F7F1E6', { layers: 20, alpha: 40, vari: .04 });
+}
+
+S.installContract({
+  duration: 12,
+  ready: Promise.all([ready, S.loadFonts([{ family: 'Fraunces', pkg: 'fraunces', weight: 700 }, { family: 'Nunito', pkg: 'nunito', weight: 600 }])]).then(paint),
+  renderAt: t => {
+    const p = P, k = S.ease.inOutSine(S.clamp(t / 12));
+    p.background(247, 241, 230);
+    p.image(L.sky, -20 - k * 10, 0); p.image(L.far, -40 - k * 30, 0); p.image(L.near, -60 - k * 60, 0);   // multiplane
+    const s = 1 + Math.sin(t * 0.9) * 0.004; document.getElementById('title').style.transform = `scale(${s})`;   // respiration
+  },
+});
+</script></body></html>

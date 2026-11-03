@@ -1,0 +1,104 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8">
+<title>Affiche — Brut Mème</title>
+<!-- Direction brut-meme : contraste maximal noir/jaune/rouge/blanc. Course de billes dessinée en PixiJS v8
+     (rampe en zigzag, billes à contour épais, traînées de vitesse, ombre tramée), typo Anton énorme,
+     punch-in / shake / slam du sticker pilotés par une timeline GSAP seekée à t. -->
+<style>
+:root{--bg:#111111;--yel:#FFE600;--red:#FF2D2D;--white:#FFFFFF}
+html,body{margin:0;background:var(--bg);width:1080px;height:1920px;overflow:hidden}
+#pix{position:absolute;inset:0}
+#pix canvas{display:block}
+#wrap{position:absolute;inset:0;transform-origin:500px 700px}
+#tag{position:absolute;left:60px;top:236px;padding:10px 18px 8px;background:var(--red);color:var(--white);font:900 54px/1 'Inter';letter-spacing:-1px}
+#title{position:absolute;left:52px;top:318px;width:900px;font:400 214px/0.86 'Anton';color:var(--white);text-transform:uppercase;letter-spacing:-2px}
+#title div{white-space:nowrap}
+#title .hl{display:inline-block;background:var(--yel);color:var(--bg);padding:22px 18px 4px;margin:14px 0 0 -10px;line-height:0.86}
+#sticker{position:absolute;left:676px;top:560px;width:270px;height:270px;border-radius:50%;background:var(--red);color:var(--white);
+  display:flex;align-items:center;justify-content:center;text-align:center;font:900 54px/0.95 'Inter';letter-spacing:-2px;border:8px solid var(--bg);box-shadow:0 0 0 6px var(--white)}
+#band{position:absolute;left:0;top:1420px;width:1080px;height:176px;background:var(--yel);}
+#band div{position:absolute;left:60px;top:28px;font:900 64px/1.0 'Inter';color:var(--bg);letter-spacing:-2px}
+#band div b{display:block;font-size:54px;font-weight:900;color:var(--bg);margin-top:8px}
+#band div b i{font-style:normal;background:var(--bg);color:var(--yel);padding:0 10px}
+#num{position:absolute;inset:0;pointer-events:none}
+.n{position:absolute;transform:translate(-50%,-50%);font:400 64px/1 'Anton';}
+</style></head><body>
+<div id="wrap">
+  <div id="pix"></div>
+  <div id="num"></div>
+  <div id="tag">TEST N°47</div>
+  <div id="title"><div>Quelle</div><div>bille</div><div class="hl">gagne&nbsp;?</div></div>
+  <div id="sticker">99&nbsp;%<br>se<br>trompent</div>
+</div>
+<div id="band"><div>COMMENTE TA BILLE<b>→ <i>1, 2, 3 ou 4&nbsp;?</i></b></div></div>
+<script src="/node_modules/pixi.js/dist/pixi.min.js"></script>
+<script src="/node_modules/gsap/dist/gsap.min.js"></script>
+<script type="module">
+import * as S from '/out/tools/lib/svi.js';
+const C = { bg: 0x111111, yel: 0xFFE600, red: 0xFF2D2D, white: 0xFFFFFF };
+const app = new PIXI.Application();
+const ready = app.init({ width: S.W, height: S.H, background: C.bg, antialias: true, autoStart: false, preserveDrawingBuffer: true, preference: 'webgl' })
+  .then(() => { document.getElementById('pix').appendChild(app.canvas); });
+
+// rampe en zigzag : segments [x0,y0,x1,y1]
+const RAMPS = [[90, 980, 840, 1080], [940, 1150, 180, 1250], [90, 1330, 940, 1360]];
+const balls = [
+  { c: C.yel, ink: '#111111', n: 1, seg: 0, u: .78 },
+  { c: C.red, ink: '#FFFFFF', n: 2, seg: 1, u: .22 },
+  { c: C.white, ink: '#111111', n: 3, seg: 1, u: .58 },
+  { c: 0x2D7BFF, ink: '#FFFFFF', n: 4, seg: 2, u: .30 },
+];
+const BR = 46;
+const nums = document.getElementById('num');
+balls.forEach(b => { b.el = document.createElement('div'); b.el.className = 'n'; b.el.textContent = b.n; b.el.style.color = b.ink; nums.appendChild(b.el); });
+
+function draw(t) {
+  app.stage.removeChildren();
+  const g = new PIXI.Graphics(); app.stage.addChild(g);
+  // trame de points (fond, coin bas) — texture "imprimé brut"
+  for (let y = 900; y < 1420; y += 22) for (let x = 0; x < 1080; x += 22) {
+    const k = S.clamp((y - 900) / 520) * .9; if (k < .05) continue;
+    g.circle(x + ((y / 22) % 2) * 11, y, 4.5 * k).fill({ color: 0x2a2a2a });
+  }
+  // rampes
+  RAMPS.forEach(([x0, y0, x1, y1]) => {
+    g.moveTo(x0, y0).lineTo(x1, y1).stroke({ width: 18, color: C.white, cap: 'round' });
+    g.moveTo(x0, y0 + 16).lineTo(x1, y1 + 16).stroke({ width: 6, color: C.yel, cap: 'round' });
+  });
+  // billes : position le long de leur rampe (avance un peu avec t), traînées de vitesse, ombre décalée
+  balls.forEach((b, i) => {
+    const [x0, y0, x1, y1] = RAMPS[b.seg]; const u = S.clamp(b.u + Math.sin(t * 3 + i) * .01);
+    const dirx = x1 - x0, diry = y1 - y0, L = Math.hypot(dirx, diry), ux = dirx / L, uy = diry / L;
+    const nx = uy, ny = -ux; const s = ny < 0 ? 1 : -1;  // normale vers le haut
+    const cx = x0 + dirx * u + nx * s * (BR + 9), cy = y0 + diry * u + ny * s * (BR + 9);
+    for (let k = 1; k <= 3; k++) g.moveTo(cx - ux * (BR + 20) + nx * s * (k - 2) * 26, cy - uy * (BR + 20) + ny * s * (k - 2) * 26)
+      .lineTo(cx - ux * (BR + 20 + 110 - k * 18) + nx * s * (k - 2) * 26, cy - uy * (BR + 20 + 110 - k * 18) + ny * s * (k - 2) * 26)
+      .stroke({ width: 8, color: C.white, cap: 'round', alpha: .9 });
+    g.circle(cx + 10, cy + 10, BR).fill({ color: 0x000000 });
+    g.circle(cx, cy, BR).fill({ color: b.c }).stroke({ width: 7, color: C.bg });
+    g.circle(cx - 15, cy - 16, 11).fill({ color: 0xffffff, alpha: b.c === C.white ? .0 : .55 });
+    b.el.style.left = cx + 'px'; b.el.style.top = (cy + 3) + 'px';
+  });
+  // ligne d'arrivée en damier en bas à droite
+  for (let k = 0; k < 6; k++) for (let m = 0; m < 2; m++) g.rect(950 + m * 16, 1284 + k * 16, 16, 16).fill({ color: (k + m) % 2 ? C.white : C.bg });
+  app.renderer.render(app.stage);
+}
+
+// timeline GSAP : punch-in du titre, slam du sticker, shake résiduel
+const tl = gsap.timeline({ paused: true });
+tl.fromTo('#title', { scale: 1.6, opacity: 0 }, { scale: 1, opacity: 1, duration: .1, ease: 'power4.out' }, .2)
+  .fromTo('#wrap', { scale: 1.15 }, { scale: 1, duration: .1, ease: 'none' }, .3)
+  .fromTo('#sticker', { scale: 3, rotation: 40, opacity: 0 }, { scale: 1, rotation: -12, opacity: 1, duration: .1, ease: 'power4.in' }, .9)
+  .fromTo('#wrap', { scale: 1.08 }, { scale: 1, duration: .1 }, 1.0)
+  .fromTo('#band', { yPercent: 100 }, { yPercent: 0, duration: .1, ease: 'power4.out' }, 1.2);
+
+S.installContract({
+  duration: 8,
+  ready: Promise.all([ready, S.loadFonts([{ family: 'Anton', pkg: 'anton', weight: 400 }, { family: 'Inter', pkg: 'inter', weight: 900 }])]),
+  renderAt: t => {
+    tl.seek(t, false);
+    const sh = S.rng(Math.floor(t * 30) + 1); const amp = 3;
+    gsap.set('#title', { x: (sh() - .5) * amp * 2, y: (sh() - .5) * amp * 2 });
+    draw(t);
+  },
+});
+</script></body></html>

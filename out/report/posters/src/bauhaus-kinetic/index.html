@@ -1,0 +1,94 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8">
+<title>Affiche — Bauhaus Cinétique</title>
+<!-- Direction bauhaus-kinetic : grille 6×10 stricte, formes primaires dessinées avec Paper.js, un carré qui se
+     morphe en hexagone (flubber), staggers/snaps pilotés par une timeline anime.js v4 seekée à t. -->
+<style>
+html,body{margin:0;background:#F2EDE3;width:1080px;height:1920px;overflow:hidden}
+canvas{position:absolute;inset:0;display:block}
+#card{position:absolute;left:60px;top:1072px;width:900px;box-sizing:border-box;padding:34px 32px;background:#FFFFFF}
+#title{font:800 90px/1.04 'Unbounded';color:#111;letter-spacing:-3px;white-space:nowrap}
+#title em{font-style:normal;color:#E63B2E}
+#body{margin-top:26px;font:500 54px/1.1 'Space Grotesk';color:#111;display:flex;align-items:center;gap:22px}
+#body i{display:inline-block;width:44px;height:44px;background:#1D4ED8;border-radius:50%}
+#num{position:absolute;left:60px;top:236px;font:800 54px/1 'Unbounded';color:#111}
+</style></head><body>
+<canvas id="cv" width="1080" height="1920"></canvas>
+<div id="num">N°06</div>
+<div id="card">
+  <div id="title">Pourquoi<br>les abeilles<br>construisent<br>en <em>hexagones&nbsp;?</em></div>
+  <div id="body"><i></i>Moins de cire, plus de miel.</div>
+</div>
+<script src="/node_modules/paper/dist/paper-full.min.js"></script>
+<script src="/node_modules/flubber/build/flubber.min.js"></script>
+<script type="module">
+import { createTimeline, stagger } from '/node_modules/animejs/dist/bundles/anime.esm.min.js';
+import * as S from '/out/tools/lib/svi.js';
+const C = { bg: '#F2EDE3', red: '#E63B2E', yel: '#F5B700', blue: '#1D4ED8', ink: '#111111', white: '#FFFFFF' };
+const CW = 180, CH = 192;                       // grille 6 × 10
+paper.setup(document.getElementById('cv'));
+const P = paper;
+
+// ---- géométrie ----
+const HR = 116;                                  // rayon de l'hexagone (pointe en haut)
+const hexPts = (cx, cy, r, rot = 0) => Array.from({ length: 6 }, (_, i) => { const a = Math.PI / 180 * (60 * i - 90) + rot; return [cx + r * Math.cos(a), cy + r * Math.sin(a)]; });
+const sqPts = (cx, cy, s) => [[cx - s, cy - s], [cx + s, cy - s], [cx + s, cy + s], [cx - s, cy + s]];
+const toD = pts => 'M' + pts.map(p => p.join(',')).join('L') + 'Z';
+const HC = { x: 500, y: 650 };
+const dx = Math.sqrt(3) * HR + 10;
+const cells = [[0, 0, C.red], [1, 0, C.yel], [-1, 0, C.yel], [.5, -1, C.yel], [-.5, -1, C.blue], [-.5, 1, C.yel], [.5, 1, C.ink]];
+// cellule manquante (en haut à droite) : elle arrive en carré et se morphe en hexagone
+const target = { x: HC.x + 1.5 * dx * 0.666 + dx / 3 * 0, y: HC.y };
+const slot = { x: HC.x + dx, y: HC.y - 1.5 * (HR + 6) - 0 };
+slot.x = HC.x + 1.5 * dx; slot.y = HC.y - (1.5 * HR + 8.66);
+
+// ---- état animé (anime.js timeline sur des objets JS) ----
+const st = { grid: 0, cells: cells.map(() => ({ k: 0 })), morph: { k: 0, x: 900, y: 300, rot: 0 }, deco: [0, 0, 0, 0, 0].map(() => ({ k: 0 })) };
+const tl = createTimeline({ autoplay: false, defaults: { ease: 'outBack(1.6)' } });
+tl.add(st, { grid: [0, 1], duration: 500, ease: 'outQuad' }, 0)
+  .add(st.deco, { k: [0, 1], duration: 450, delay: stagger(80) }, 100)
+  .add(st.cells, { k: [0, 1], duration: 420, delay: stagger(70, { from: 'first' }) }, 250)
+  .add(st.morph, { x: [960, slot.x], y: [250, slot.y], rot: [90, 0], duration: 900, ease: 'inOutQuart' }, 1200)
+  .add(st.morph, { k: [0, 1], duration: 900, ease: 'inOutCubic' }, 1580);
+
+// interpolateur flubber carré -> hexagone
+const morphFn = flubber.interpolate(toD(sqPts(0, 0, 96)), toD(hexPts(0, 0, HR)), { maxSegmentLength: 6 });
+
+function draw() {
+  P.project.activeLayer.removeChildren();
+  // grille 6×10
+  for (let i = 1; i < 6; i++) { const l = new P.Path.Line([i * CW, 0], [i * CW, 1920 * st.grid]); l.strokeColor = C.ink; l.opacity = .09; l.strokeWidth = 2; }
+  for (let j = 1; j < 10; j++) { const l = new P.Path.Line([0, j * CH], [1080 * st.grid, j * CH]); l.strokeColor = C.ink; l.opacity = .09; l.strokeWidth = 2; }
+  // décor en haut / bas (zones non-importantes) : quart de cercle, demi-cercle, barres
+  const d = st.deco.map(o => o.k);
+  { const q = new P.Path.Circle([1080, 0], 360 * d[0]); q.fillColor = C.blue; }
+  { const h = new P.Path.Circle([1 * CW, 2 * CH + 20], 96 * d[1]); h.fillColor = C.yel;
+    const m = new P.Path.Rectangle([1 * CW - 100, 2 * CH + 20, 200, 100]); const hh = h.subtract(m); h.remove(); m.remove(); }
+  { const r = new P.Path.Rectangle([0, 9 * CH, 2 * CW * d[2], CH]); r.fillColor = C.ink; }
+  { const c = new P.Path.Circle([3 * CW, 9.5 * CH + 10], 70 * d[3]); c.fillColor = C.red; }
+  { const tr = new P.Path.RegularPolygon([5 * CW - 40, 9.5 * CH], 3, 78 * d[4]); tr.fillColor = C.yel; tr.rotate(180 * (1 - d[4])); }
+  // ligne d'horizon noire épaisse sur la grille
+  { const b = new P.Path.Rectangle([60, 1030, 900 * st.grid, 14]); b.fillColor = C.ink; }
+  // rayon de miel
+  cells.forEach(([u, v, col], i) => {
+    const k = st.cells[i].k; if (k <= 0) return;
+    const cx = HC.x + u * dx, cy = HC.y + v * (1.5 * HR + 8.66);
+    const p = new P.Path(); hexPts(cx, cy, HR * k, (1 - k) * Math.PI / 3).forEach(pt => p.add(pt)); p.closed = true; p.fillColor = col;
+  });
+  // petit cercle "œil" au centre de l'hexagone rouge
+  { const k = st.cells[0].k; const c = new P.Path.Circle([HC.x, HC.y], 34 * k); c.fillColor = C.white; }
+  // demi-cercles bleus à l'intérieur de la cellule noire (motif)
+  { const k = st.cells[6].k, cx = HC.x + .5 * dx, cy = HC.y + (1.5 * HR + 8.66);
+    for (let i = -1; i <= 1; i++) { const r = new P.Path.Rectangle([cx - 54 * k, cy + i * 34 * k - 7 * k, 108 * k, 14 * k]); r.fillColor = C.yel; } }
+  // cellule qui se morphe : carré -> hexagone (flubber), contour noir épais pendant le morph
+  { const m = st.morph; const path = new P.CompoundPath(morphFn(m.k)); path.position = new P.Point(0, 0);
+    path.translate(new P.Point(m.x, m.y)); path.rotate(m.rot, new P.Point(m.x, m.y));
+    path.fillColor = C.blue; path.strokeColor = C.ink; path.strokeWidth = 10 * (1 - m.k); }
+  P.view.update();
+}
+
+S.installContract({
+  duration: 6,
+  ready: S.loadFonts([{ family: 'Unbounded', pkg: 'unbounded', weight: 800 }, { family: 'Space Grotesk', pkg: 'space-grotesk', weight: 500 }]),
+  renderAt: t => { tl.seek(t * 1000); draw(); },
+});
+</script></body></html>

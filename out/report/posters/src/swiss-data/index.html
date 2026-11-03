@@ -1,0 +1,56 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8">
+<!-- Poster "Grille Suisse" — D3.js (échelles + barres SVG) + GSAP (barres qui poussent, compteur). Rendu : render.mjs --stills 2.0 -->
+<!-- Données : ONU, World Population Prospects 2024 (estimations 2024, arrondies). -->
+<script src="/node_modules/d3/dist/d3.min.js"></script>
+<script src="/node_modules/gsap/dist/gsap.min.js"></script>
+<style>html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:#F4F1EA}svg{position:absolute;inset:0}</style>
+</head><body>
+<svg id="s" width="1080" height="1920"></svg>
+<script type="module">
+import * as S from '/out/tools/lib/svi.js';
+const RED = '#E3241B', INK = '#111111', BLUE = '#1B4DE3', BG = '#F4F1EA';
+const svg = d3.select('#s');
+// grille 12 colonnes (marges 72 / 120)
+const gx = d3.scaleLinear().domain([0, 12]).range([72, 960]);
+const grid = svg.append('g');
+d3.range(13).forEach(i => grid.append('line').attr('x1', gx(i)).attr('x2', gx(i)).attr('y1', 0).attr('y2', 1920).attr('stroke', '#E2DDD2').attr('stroke-width', 1.5));
+const txt = (x, y, s, font, fill = INK, anchor = 'start') => svg.append('text').attr('x', x).attr('y', y).attr('fill', fill).attr('text-anchor', anchor).style('font', font).text(s);
+
+// en-tête
+svg.append('rect').attr('x', 72).attr('y', 232).attr('width', 888).attr('height', 8).attr('fill', INK);
+txt(72, 290, 'DÉMOGRAPHIE', "800 34px Inter", RED);
+txt(960, 290, '2024 · ONU', "600 34px Inter", INK, 'end');
+['Où vivent', 'les 8 milliards', 'd’humains ?'].forEach((l, i) => txt(66, 408 + i * 100, l, "800 104px Inter", INK).style('letter-spacing', '-0.045em'));
+
+// chiffre géant
+const big = txt(58, 932, '59', "400 360px 'Archivo Black'", RED).style('letter-spacing', '-0.06em');
+txt(gx(6.2), 760, '%', "400 150px 'Archivo Black'", RED);
+txt(gx(6.2), 842, 'des humains', "800 56px Inter", INK).style('letter-spacing', '-0.02em');
+txt(gx(6.2), 908, 'vivent en Asie', "800 56px Inter", INK).style('letter-spacing', '-0.02em');
+svg.append('rect').attr('x', 72).attr('y', 980).attr('width', 888).attr('height', 4).attr('fill', INK);
+
+// barres
+const data = [
+  { n: 'Asie', v: 4.75 }, { n: 'Afrique', v: 1.49 }, { n: 'Europe', v: 0.74 },
+  { n: 'Amérique latine', v: 0.66 }, { n: 'Amérique du Nord', v: 0.38 }, { n: 'Océanie', v: 0.045 }];
+const x = d3.scaleLinear().domain([0, 4.75]).range([0, 888]);
+const fmt = v => (v < 0.1 ? '0,05' : d3.format('.2~f')(v).replace('.', ',')) + ' Md';
+const bars = [];
+data.forEach((d, i) => {
+  const y = 1050 + i * 94;
+  txt(72, y + 4, d.n, "600 54px Inter", INK).style('letter-spacing', '-0.02em');
+  const val = txt(960, y + 4, fmt(d.v), "800 54px Inter", i === 0 ? RED : INK, 'end');
+  svg.append('rect').attr('x', 72).attr('y', y + 20).attr('width', 888).attr('height', 22).attr('fill', '#E7E2D7');
+  const b = svg.append('rect').attr('x', 72).attr('y', y + 20).attr('height', 22).attr('width', 0).attr('fill', i === 0 ? RED : (i === 1 ? BLUE : INK));
+  bars.push({ b, w: Math.max(4, x(d.v)) });
+});
+// repère d'index suisse
+txt(72, 1630, '', "600 30px Inter");
+
+const st = { n: 0 };
+const tl = gsap.timeline({ paused: true });
+tl.to(st, { n: 59, duration: 1.2, ease: 'expo.out', onUpdate: () => big.text(Math.round(st.n)) }, 0);
+bars.forEach((o, i) => tl.fromTo(o.b.node(), { attr: { width: 0 } }, { attr: { width: o.w }, duration: 0.9, ease: 'expo.out', immediateRender: false }, 0.15 + i * 0.08));
+const ready = S.loadFonts([{ family: 'Inter', pkg: 'inter', weight: 600 }, { family: 'Inter', pkg: 'inter', weight: 800 }, { family: 'Archivo Black', pkg: 'archivo-black', weight: 400 }]);
+S.installContract({ renderAt: t => { tl.seek(t, false); }, ready, duration: 6 });
+</script></body></html>

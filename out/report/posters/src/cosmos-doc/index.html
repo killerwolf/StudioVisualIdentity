@@ -1,0 +1,140 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8">
+<title>Affiche — Cosmos Doc</title>
+<!-- Direction cosmos-doc : three.js (Lune procédurale texture+bump, Terre avec atmosphère fresnel, étoiles,
+     soleil + lens flare, UnrealBloom), titres Bebas Neue révélés par fondu + tracking (timeline GSAP seekée). -->
+<style>
+html,body{margin:0;background:#000004;width:1080px;height:1920px;overflow:hidden}
+canvas{display:block;position:absolute;inset:0}
+.txt{position:absolute;left:60px;width:900px;color:#EAF2FF}
+#ep{top:236px;text-align:right;font:400 46px/1 'Bebas Neue';letter-spacing:14px;color:#FFB347}
+#ep span{color:#6EC6FF}
+#title{top:1092px;font:400 114px/0.94 'Bebas Neue';letter-spacing:2px;text-shadow:0 0 40px rgba(0,0,10,.8)}
+#title em{font-style:normal;color:#FFB347}
+#sub{top:1452px;font:400 54px/1.2 'Inter';color:#C9D6EE}
+#sub b{font-weight:400;color:#6EC6FF}
+#rule{position:absolute;left:60px;top:1428px;width:140px;height:3px;background:#FFB347}
+</style>
+<script type="importmap">{"imports":{"three":"/node_modules/three/build/three.module.js","three/addons/":"/node_modules/three/examples/jsm/"}}</script>
+</head><body>
+<div class="txt" id="ep">Cosmos <span>·</span> épisode 03</div>
+<div class="txt" id="title">Pourquoi la Lune<br>nous montre toujours<br><em>la même face ?</em></div>
+<div id="rule"></div>
+<div class="txt" id="sub">Un tour sur elle-même = un tour de la Terre&nbsp;: <b>27,3&nbsp;jours</b>.</div>
+<script src="/node_modules/gsap/dist/gsap.min.js"></script>
+<script type="module">
+import * as THREE from 'three';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+import { Lensflare, LensflareElement } from 'three/addons/objects/Lensflare.js';
+import * as S from '/out/tools/lib/svi.js';
+
+const R = S.rng(273);
+const ren = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+ren.setSize(S.W, S.H); ren.setPixelRatio(1); document.body.prepend(ren.domElement);
+ren.toneMapping = THREE.ACESFilmicToneMapping; ren.toneMappingExposure = 1.05;
+const scene = new THREE.Scene(); scene.background = new THREE.Color('#000004');
+const cam = new THREE.PerspectiveCamera(36, S.W / S.H, 0.1, 500);   // ~50 mm en vertical
+
+// ---- texture lunaire procédurale (albedo + relief) ----
+function moonTextures() {
+  const w = 1024, h = 512, c = document.createElement('canvas'); c.width = w; c.height = h;
+  const g = c.getContext('2d'), img = g.createImageData(w, h);
+  const bump = document.createElement('canvas'); bump.width = w; bump.height = h;
+  const gb = bump.getContext('2d'), bimg = gb.createImageData(w, h);
+  const craters = []; for (let i = 0; i < 420; i++) craters.push([R() * w, R() * h, Math.pow(R(), 3.5) * 40 + 2.5]);
+  for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+    const u = x / w * 8, v = y / h * 4;
+    let n = 0, a = 1, f = 1; for (let o = 0; o < 5; o++) { n += a * S.noise2(u * f + 11, v * f + 7); a *= .5; f *= 2.1; }
+    n /= 1.94;
+    const maria = S.smoothstep(.52, .62, S.noise2(x / w * 3 + 4, y / h * 2 + 1) * .7 + S.noise2(x / w * 6, y / h * 3) * .3);
+    let hgt = n, alb = 0.62 + (n - .5) * .35 - maria * .28;
+    for (const [cx, cy, r] of craters) {
+      const dx = Math.min(Math.abs(x - cx), w - Math.abs(x - cx)), d = Math.hypot(dx, (y - cy) * 1.0) / r;
+      if (d < 1.35) { const bowl = d < 1 ? -(1 - d * d) * .6 : 0; const rim = Math.exp(-Math.pow((d - 1) / .2, 2)) * .14; hgt += (bowl * .5 + rim) * Math.min(1, r / 24); alb += rim * .25 - (d < 1 ? .015 : 0); }
+    }
+    const k = (y * w + x) * 4, A = S.clamp(alb) * 255, H = S.clamp(hgt * .6 + .3) * 255;
+    img.data[k] = A * 1.0; img.data[k + 1] = A * .985; img.data[k + 2] = A * .95; img.data[k + 3] = 255;
+    bimg.data[k] = bimg.data[k + 1] = bimg.data[k + 2] = H; bimg.data[k + 3] = 255;
+  }
+  g.putImageData(img, 0, 0); gb.putImageData(bimg, 0, 0);
+  const t1 = new THREE.CanvasTexture(c); t1.colorSpace = THREE.SRGBColorSpace;
+  return [t1, new THREE.CanvasTexture(bump)];
+}
+const [mapT, bumpT] = moonTextures();
+const moon = new THREE.Mesh(new THREE.SphereGeometry(2.0, 160, 120),
+  new THREE.MeshStandardMaterial({ map: mapT, bumpMap: bumpT, bumpScale: 1.4, roughness: 1, metalness: 0 }));
+moon.position.set(0.5, 2.25, 0); scene.add(moon);
+
+// ---- Terre lointaine + atmosphère fresnel ----
+function earthTex() {
+  const w = 1024, h = 512, c = document.createElement('canvas'); c.width = w; c.height = h; const g = c.getContext('2d');
+  const im = g.createImageData(w, h);
+  for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+    const land = S.noise2(x / 96, y / 80) * .7 + S.noise2(x / 28, y / 24) * .3;
+    const cloud = S.noise2(x / 44 + 40, y / 18 + 3) * .8 + S.noise2(x / 9, y / 6) * .2;
+    let c3 = land > .56 ? [70, 120, 70] : [18, 60, 140];
+    if (cloud > .62) c3 = [235, 240, 250];
+    const k = (y * w + x) * 4; im.data[k] = c3[0]; im.data[k + 1] = c3[1]; im.data[k + 2] = c3[2]; im.data[k + 3] = 255;
+  }
+  g.putImageData(im, 0, 0); const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t;
+}
+const earth = new THREE.Mesh(new THREE.SphereGeometry(0.42, 64, 48), new THREE.MeshStandardMaterial({ map: earthTex(), roughness: .7 }));
+earth.position.set(-2.05, 0.6, -6); scene.add(earth);
+const atm = new THREE.Mesh(new THREE.SphereGeometry(0.46, 64, 48), new THREE.ShaderMaterial({
+  transparent: true, blending: THREE.AdditiveBlending, depthWrite: false,
+  uniforms: { L: { value: new THREE.Vector3(-1, .35, .25).normalize() } },
+  vertexShader: `varying vec3 vN; varying vec3 vW; void main(){ vN=normalize(mat3(modelMatrix)*normal); vW=(modelMatrix*vec4(position,1.)).xyz; gl_Position=projectionMatrix*viewMatrix*vec4(vW,1.);} `,
+  fragmentShader: `uniform vec3 L; varying vec3 vN; varying vec3 vW; void main(){ vec3 V=normalize(cameraPosition-vW); float f=pow(1.-max(dot(vN,V),0.),3.); float lit=smoothstep(-.3,.6,dot(vN,L)); gl_FragColor=vec4(vec3(.43,.78,1.)*f*lit*1.8,f*lit);} `,
+}));
+atm.position.copy(earth.position); scene.add(atm);
+
+// ---- étoiles ----
+{
+  const n = 2600, pos = new Float32Array(n * 3), col = new Float32Array(n * 3);
+  for (let i = 0; i < n; i++) {
+    const th = R() * Math.PI * 2, ph = Math.acos(2 * R() - 1), r = 120;
+    pos.set([r * Math.sin(ph) * Math.cos(th), r * Math.sin(ph) * Math.sin(th), r * Math.cos(ph) - 40], i * 3);
+    const b = Math.pow(R(), 3) * 1.2 + .25, warm = R();
+    col.set(warm < .2 ? [b, b * .85, b * .6] : warm > .85 ? [b * .7, b * .85, b] : [b, b, b], i * 3);
+  }
+  const geo = new THREE.BufferGeometry(); geo.setAttribute('position', new THREE.BufferAttribute(pos, 3)); geo.setAttribute('color', new THREE.BufferAttribute(col, 3));
+  scene.add(new THREE.Points(geo, new THREE.PointsMaterial({ size: 2.2, sizeAttenuation: false, vertexColors: true })));
+}
+
+// ---- soleil (hors-champ haut gauche) + flare ----
+const sun = new THREE.DirectionalLight(0xfff1dd, 3.4); sun.position.set(-10, 3.5, 2.5); scene.add(sun);
+scene.add(new THREE.AmbientLight(0x6ec6ff, 0.035));
+function flareTex(stops) { const c = document.createElement('canvas'); c.width = c.height = 256; const g = c.getContext('2d'); const gr = g.createRadialGradient(128, 128, 0, 128, 128, 128); stops.forEach(([o, s]) => gr.addColorStop(o, s)); g.fillStyle = gr; g.fillRect(0, 0, 256, 256); return new THREE.CanvasTexture(c); }
+const sunLight = new THREE.PointLight(0xffffff, 0, 0); sunLight.position.set(-5.0, 10.4, -14); scene.add(sunLight);
+const lf = new Lensflare();
+lf.addElement(new LensflareElement(flareTex([[0, 'rgba(255,255,255,1)'], [.12, 'rgba(255,220,170,.9)'], [.4, 'rgba(255,179,71,.25)'], [1, 'rgba(255,140,40,0)']]), 420, 0, new THREE.Color(1, .93, .82)));
+const ring = flareTex([[0, 'rgba(110,198,255,0)'], [.7, 'rgba(110,198,255,0)'], [.82, 'rgba(110,198,255,.16)'], [1, 'rgba(110,198,255,0)']]);
+const dot = flareTex([[0, 'rgba(255,179,71,.45)'], [1, 'rgba(255,179,71,0)']]);
+
+sunLight.add(lf);
+
+const comp = new EffectComposer(ren);
+comp.addPass(new RenderPass(scene, cam));
+comp.addPass(new UnrealBloomPass(new THREE.Vector2(S.W / 2, S.H / 2), 0.55, 0.6, 0.82));
+comp.addPass(new OutputPass());
+
+// ---- texte : fondu + tracking (GSAP, seeké) ----
+const tl = gsap.timeline({ paused: true });
+tl.fromTo('#ep', { opacity: 0, letterSpacing: '40px' }, { opacity: 1, letterSpacing: '14px', duration: 1.6, ease: 'sine.inOut' }, 0)
+  .fromTo('#title', { opacity: 0, letterSpacing: '18px' }, { opacity: 1, letterSpacing: '2px', duration: 1.8, ease: 'sine.inOut' }, 0.1)
+  .fromTo('#rule', { scaleX: 0, transformOrigin: '0 50%' }, { scaleX: 1, duration: 1.2, ease: 'sine.inOut' }, 0.5)
+  .fromTo('#sub', { opacity: 0 }, { opacity: 1, duration: 1.2, ease: 'sine.inOut' }, 0.6);
+
+S.installContract({
+  duration: 12,
+  ready: S.loadFonts([{ family: 'Bebas Neue', pkg: 'bebas-neue', weight: 400 }, { family: 'Inter', pkg: 'inter', weight: 400 }]),
+  renderAt: t => {
+    const k = S.ease.inOutSine(S.clamp(t / 12));
+    cam.position.set(0.6 - k * .4, 0.2 + k * .2, 13.5 - k * 1.2); cam.lookAt(0, 0.9, 0);   // dolly très lent
+    moon.rotation.y = -0.6 + t * 0.02; earth.rotation.y = t * .05;
+    tl.seek(t, false); comp.render();
+  },
+});
+</script></body></html>

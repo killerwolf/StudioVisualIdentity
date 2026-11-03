@@ -1,0 +1,95 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8">
+<!-- Poster "Chrome Liquide" — three.js : blob chrome déformé au bruit (CPU), environnement PMREM procédural (panneaux néon), BokehPass (DOF macro). Rendu : render.mjs --stills 2.0 -->
+<script type="importmap">{"imports":{"three":"/node_modules/three/build/three.module.js","three/addons/":"/node_modules/three/examples/jsm/"}}</script>
+<style>
+  html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:#0B0B10}
+  canvas{position:absolute;inset:0}
+  .ov{position:absolute;left:72px;width:880px;color:#FFFFFF}
+  .cap{top:238px;font:500 34px Inter;letter-spacing:.28em;color:#C8D3FF;opacity:.9}
+  h1{top:290px;margin:0;font:800 94px/1.02 Syne;letter-spacing:-0.03em}
+  h1 span{background:linear-gradient(90deg,#C8D3FF,#FF9AE8 45%,#7CF7E4 80%,#FFE29A);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .body{top:1398px;font:500 56px/1.2 Inter;color:#FFFFFF;letter-spacing:-0.01em}
+  .body b{font-weight:500;color:#7CF7E4}
+  .el{position:absolute;left:782px;top:1196px;width:150px;height:150px;border:2px solid rgba(200,211,255,.7);border-radius:6px;color:#fff;font:500 30px Inter;box-sizing:border-box;padding:10px 14px;backdrop-filter:blur(6px);background:rgba(26,26,36,.35)}
+  .el b{display:block;font:800 64px/1 Syne;margin-top:6px}
+</style></head><body>
+<div class="ov cap">MATIÈRE · Hg · N° 80</div>
+<h1 class="ov">Pourquoi le <span>mercure</span> est liquide&nbsp;?</h1>
+<div class="ov body">Seul métal liquide à 20&nbsp;°C : ses atomes se tiennent <b>à peine</b>.</div>
+<script type="module">
+import * as THREE from 'three';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { BokehPass } from 'three/addons/postprocessing/BokehPass.js';
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+import * as S from '/out/tools/lib/svi.js';
+const W = 1080, H = 1920;
+const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+renderer.setSize(W, H); renderer.setPixelRatio(1); renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.1;
+document.body.prepend(renderer.domElement);
+
+// environnement procédural : pièce sombre + panneaux lumineux aux couleurs de la palette
+const env = new THREE.Scene();
+env.add(new THREE.Mesh(new THREE.SphereGeometry(20, 64, 32), new THREE.ShaderMaterial({ side: THREE.BackSide,
+  vertexShader: 'varying vec3 vP; void main(){ vP=position; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.); }',
+  fragmentShader: 'varying vec3 vP; void main(){ float y=normalize(vP).y; vec3 top=vec3(.95,.96,1.), mid=vec3(.005,.005,.01), bot=vec3(.05,.045,.07);'+
+    'vec3 c = y>0. ? mix(mid,top,smoothstep(.15,.75,y)) : mix(mid,bot,smoothstep(0.,-.9,y)); c += vec3(1.)*smoothstep(.035,0.,abs(y-.02))*1.6; gl_FragColor=vec4(c,1.); }' })));
+const panel = (c, w, h, pos, inten = 1) => { const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({ color: new THREE.Color(c).multiplyScalar(inten), side: THREE.DoubleSide })); m.position.set(...pos); m.lookAt(0, 0, 0); env.add(m); };
+panel('#C8D3FF', 16, 5, [0, 9, 3], 2.0);
+panel('#FF9AE8', 5, 14, [-9, 0, 3], 2.2);
+panel('#7CF7E4', 5, 14, [9, 1, 1], 2.0);
+panel('#FFE29A', 10, 2, [0, -8, 4], 1.4);
+panel('#FFFFFF', 4, 4, [3, 4, 9], 3.0);
+const pm = new THREE.PMREMGenerator(renderer);
+const envTex = pm.fromScene(env, 0.02).texture;
+
+const scene = new THREE.Scene();
+scene.environment = envTex;
+const bgTex = (() => { const c = document.createElement('canvas'); c.width = 540; c.height = 960; const g = c.getContext('2d');
+  g.fillStyle = '#0B0B10'; g.fillRect(0, 0, 540, 960);
+  const halo = (x, y, r, col) => { const gr = g.createRadialGradient(x, y, 0, x, y, r); gr.addColorStop(0, col); gr.addColorStop(1, 'rgba(11,11,16,0)'); g.fillStyle = gr; g.fillRect(0, 0, 540, 960); };
+  halo(170, 470, 300, 'rgba(255,154,232,0.20)'); halo(390, 540, 280, 'rgba(124,247,228,0.16)'); halo(270, 520, 200, 'rgba(200,211,255,0.10)');
+  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t; })();
+scene.background = bgTex;
+const cam = new THREE.PerspectiveCamera(30, W / H, 0.1, 100);
+cam.setViewOffset(W, H, 0, -30, W, H);
+
+const chrome = new THREE.MeshPhysicalMaterial({ color: '#ffffff', metalness: 1, roughness: 0.06, iridescence: 0.35, iridescenceIOR: 1.6, envMapIntensity: 1.25, clearcoat: 1, clearcoatRoughness: 0.05 });
+function blob(r, detail, seed) {
+  const g = new THREE.IcosahedronGeometry(r, detail);
+  const base = g.attributes.position.array.slice();
+  const m = new THREE.Mesh(g, chrome); m.userData = { base, r, seed }; return m;
+}
+function deform(m, t, amp, freq) {
+  const { base, seed } = m.userData; const pos = m.geometry.attributes.position.array;
+  for (let i = 0; i < pos.length; i += 3) {
+    const x = base[i], y = base[i + 1], z = base[i + 2]; const l = Math.hypot(x, y, z), nx = x / l, ny = y / l, nz = z / l;
+    const n = S.noise3(nx * freq + seed, ny * freq + t * 0.35, nz * freq - t * 0.2) * 0.7 + S.noise3(nx * freq * 2.3, ny * freq * 2.3 + seed, nz * freq * 2.3 + t * 0.5) * 0.3;
+    const d = 1 + amp * (n - 0.5) * 2 - 0.06 * ny; // légère goutte (plus lourde en bas)
+    pos[i] = nx * l * d; pos[i + 1] = ny * l * d * (ny < 0 ? 0.92 : 1.04); pos[i + 2] = nz * l * d;
+  }
+  m.geometry.attributes.position.needsUpdate = true; m.geometry.computeVertexNormals();
+}
+const main = blob(1.12, 72, 1.3); scene.add(main);
+const drops = [
+  { r: 0.2, p: [-1.45, 0.95, 0.5] }, { r: 0.14, p: [1.4, 0.85, 0.3] }, { r: 0.12, p: [1.25, -1.1, 0.8] },
+  { r: 0.35, p: [2.0, -0.3, -3] }, { r: 0.4, p: [-1.9, -1.0, -3] }, { r: 0.07, p: [-0.45, -1.12, 1.2] }, { r: 0.18, p: [0.3, 1.2, -2] }]
+  .map((d, i) => { const m = blob(d.r, 24, 5 + i); m.position.set(...d.p); m.userData.p0 = d.p; scene.add(m); return m; });
+
+const composer = new EffectComposer(renderer);
+composer.addPass(new RenderPass(scene, cam));
+const bokeh = new BokehPass(scene, cam, { focus: 13.0, aperture: 0.0025, maxblur: 0.008 });
+composer.addPass(bokeh);
+composer.addPass(new OutputPass());
+
+function renderAt(t) {
+  cam.position.set(Math.sin(t * 0.05) * 0.4, 0.25, 13.0); cam.lookAt(0, 0, 0);   // dérive lente
+  deform(main, t, 0.15, 1.6);
+  main.rotation.y = t * 0.12;
+  drops.forEach((m, i) => { deform(m, t + i, 0.1, 1.8); const p = m.userData.p0; m.position.set(p[0], p[1] + Math.sin(t * 0.6 + i) * 0.08, p[2]); });
+  bokeh.uniforms.focus.value = cam.position.distanceTo(main.position);
+  composer.render();
+}
+const ready = S.loadFonts([{ family: 'Syne', pkg: 'syne', weight: 800 }, { family: 'Inter', pkg: 'inter', weight: 500 }]);
+S.installContract({ renderAt, ready, duration: 8 });
+</script></body></html>

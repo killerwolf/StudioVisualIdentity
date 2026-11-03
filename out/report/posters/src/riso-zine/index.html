@@ -1,0 +1,118 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8">
+<title>Affiche — Zine Riso</title>
+<!-- Direction riso-zine : p5.js v2 (instance) dessine chaque encre (rose, bleu, jaune) dans une couche séparée,
+     puis la tramise (points de trame à angle propre) et l'imprime en MULTIPLY avec un défaut de repérage.
+     Le texte est imprimé aussi en deux passes décalées. Grain/speckles d'encre en post (post.py, OpenCV). -->
+<style>
+:root{--pink:#FF48B0;--blue:#0078BF;--yel:#FFE800;--ink:#1A1A1A;--paper:#F6F0E4}
+html,body{margin:0;background:var(--paper);width:1080px;height:1920px;overflow:hidden}
+#stage{position:absolute;inset:0}
+canvas{position:absolute;inset:0;display:block}
+.t{position:absolute;mix-blend-mode:multiply}
+.mono{font-family:'Space Mono';font-weight:700}
+#tag{left:60px;top:240px;font-size:44px;line-height:1;padding:10px 16px;background:var(--yel);color:var(--ink)}
+.title{left:60px;top:318px;width:900px;font-size:104px;line-height:1.0;letter-spacing:-3px;text-transform:uppercase}
+#tB{color:var(--blue)} #tP{color:var(--pink)}
+.lab{left:60px;font-size:54px;line-height:1;color:var(--ink);white-space:nowrap}
+.lab b{color:var(--blue);font-weight:700}
+.note{font-family:'Permanent Marker';font-size:62px;line-height:1;color:var(--blue);transform:rotate(-7deg);white-space:nowrap}
+#foot{left:60px;top:1500px;font-size:54px;line-height:1.1;color:var(--ink)}
+#foot span{background:var(--yel)}
+</style></head><body>
+<div id="stage"></div>
+<div class="t mono" id="tag">ZINE GÉO #12</div>
+<div class="t mono title" id="tP">Les 5 plus<br>longs fleuves<br>du monde</div>
+<div class="t mono title" id="tB">Les 5 plus<br>longs fleuves<br>du monde</div>
+<div id="labs"></div>
+<div class="t note" id="n1" style="left:672px;top:842px">ou 6&nbsp;992 ?</div>
+<div class="t mono" id="foot">Le Nil traverse <span>11&nbsp;pays</span>.</div>
+<script src="/node_modules/p5/lib/p5.min.js"></script>
+<script type="module">
+import * as S from '/out/tools/lib/svi.js';
+const INK = { pink: [255, 72, 176], blue: [0, 120, 191], yel: [255, 232, 0] };
+const RIVERS = [['Nil', 6650], ['Amazone', 6400], ['Yangtsé', 6300], ['Mississippi', 6275], ['Ienisseï', 5539]];
+const Y0 = 700, DY = 152, XL = 60, XMAX = 940;
+
+// labels HTML (texte noir net, au-dessus des rubans)
+const labs = document.getElementById('labs');
+RIVERS.forEach(([n, km], i) => {
+  const d = document.createElement('div'); d.className = 't mono lab'; d.style.top = (Y0 + i * DY) + 'px';
+  d.innerHTML = `${i + 1}·${n.toUpperCase()} <b>${km.toLocaleString('fr-FR').replace(/ /g, ' ')}&nbsp;km</b>`; labs.appendChild(d);
+});
+
+let P5, layers, ready;
+ready = new Promise(res => {
+  P5 = new p5(p => {
+    p.setup = () => {
+      p.pixelDensity(1); p.createCanvas(1080, 1920).parent('stage'); p.noLoop();
+      layers = { yel: p.createGraphics(1080, 1920), pink: p.createGraphics(1080, 1920), blue: p.createGraphics(1080, 1920) };
+      Object.values(layers).forEach(g => g.pixelDensity(1));
+      res();
+    };
+  });
+});
+
+// couverture d'encre de chaque couche (blanc = encre), dessinée avec les primitives p5
+function paintLayers(p, j) {
+  const L = layers;
+  for (const g of Object.values(L)) { g.background(0); g.noStroke(); g.fill(255); }
+  // JAUNE : grand soleil derrière le titre + bande de pied
+  L.yel.fill(255); L.yel.circle(800, 470, 520);
+  L.yel.fill(150); L.yel.rect(0, 1460, 1080, 150);
+  // ROSE : nappe en dégradé (trame qui grossit) + rubans pairs
+  for (let y = 0; y < 300; y += 4) { L.pink.fill(255 * (y / 300) * .55); L.pink.rect(0, 1610 + y, 1080, 4); }
+  // rubans : longueur ∝ km, méandres au bruit de p5
+  p.noiseSeed(12);
+  RIVERS.forEach(([n, km], i) => {
+    const g = i % 2 ? L.pink : L.blue, y = Y0 + i * DY + 98, len = (XMAX - XL) * km / 6650;
+    g.noFill(); g.stroke(255); g.strokeWeight(30 - i * 2); g.strokeCap(p.ROUND);
+    g.beginShape();
+    for (let x = 0; x <= len; x += 8) g.vertex(XL + 14 + x, y + (p.noise(x * .006, i * 3.1) - .5) * 46 + Math.sin(x * .03 + i) * 6);
+    g.endShape();
+    // delta / estuaire : 3 bras fins
+    for (let k = -1; k <= 1; k++) { g.strokeWeight(7); g.line(XL + 14 + len, y + (p.noise(len * .006, i * 3.1) - .5) * 46, XL + 40 + len, y + k * 22); }
+    g.noStroke();
+  });
+  // BLEU : vagues sous le titre
+  L.blue.noFill(); L.blue.stroke(255); L.blue.strokeWeight(6);
+  for (let k = 0; k < 3; k++) { L.blue.beginShape(); for (let x = 60; x <= 940; x += 10) L.blue.vertex(x, 650 + k * 16 + Math.sin(x * .04 + k) * 6); L.blue.endShape(); }
+  // flèche marqueur vers l'Amazone (rose)
+  // soulignement marqueur sous l'annotation
+  L.pink.noFill(); L.pink.stroke(255); L.pink.strokeWeight(9);
+  L.pink.bezier(676, 930, 740, 918, 840, 926, 930, 900);
+}
+
+// tramage : points sur une grille tournée, rayon ∝ sqrt(couverture), imprimés en multiply avec offset (repérage)
+function screen(p, g, rgb, angle, pitch, off) {
+  g.loadPixels(); const px = g.pixels, W = 1080, H = 1920;
+  p.push(); p.blendMode(p.MULTIPLY); p.noStroke(); p.fill(...rgb);
+  const ca = Math.cos(angle), sa = Math.sin(angle), R = Math.hypot(W, H);
+  for (let v = -R; v < R; v += pitch) for (let u = -R; u < R; u += pitch) {
+    const x = W / 2 + u * ca - v * sa, y = H / 2 + u * sa + v * ca;
+    if (x < -pitch || y < -pitch || x > W + pitch || y > H + pitch) continue;
+    const xi = Math.min(W - 1, Math.max(0, x | 0)), yi = Math.min(H - 1, Math.max(0, y | 0));
+    const c = px[(yi * W + xi) * 4] / 255; if (c < .02) continue;
+    const r = c > .97 ? pitch * .78 : pitch * .62 * Math.sqrt(c);
+    p.circle(x + off[0], y + off[1], r * 2);
+  }
+  p.pop();
+}
+
+S.installContract({
+  duration: 10,
+  ready: Promise.all([ready, S.loadFonts([
+    { family: 'Space Mono', pkg: 'space-mono', weight: 700 }, { family: 'Permanent Marker', pkg: 'permanent-marker', weight: 400 }])]),
+  renderAt: t => {
+    const tf = Math.floor(t * 12) / 12;                    // à-coups 12 fps (on twos)
+    const R = S.rng(1 + Math.round(tf * 12));
+    const p = P5; p.blendMode(p.BLEND); p.background(246, 240, 228);
+    paintLayers(p);
+    const mis = [(R() - .5) * 10, (R() - .5) * 10];
+    screen(p, layers.yel, INK.yel, 0.0, 9, [0, 0]);
+    screen(p, layers.pink, INK.pink, Math.PI / 4, 8, mis);
+    screen(p, layers.blue, INK.blue, Math.PI / 12, 7, [-mis[0] * .6, -mis[1] * .6]);
+    // texte : la passe rose décalée sous la bleue
+    document.getElementById('tP').style.transform = `translate(${7 + mis[0]}px,${5 + mis[1]}px)`;
+  },
+});
+</script></body></html>

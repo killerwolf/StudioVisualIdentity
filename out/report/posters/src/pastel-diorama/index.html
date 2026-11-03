@@ -1,0 +1,122 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8">
+<!-- Poster "Diorama Pastel" — Zdog (maquette pseudo-3D) + GSAP (rebonds outBack). Rendu : render.mjs --stills 2.0 -->
+<script src="/node_modules/zdog/dist/zdog.dist.min.js"></script>
+<script src="/node_modules/gsap/dist/gsap.min.js"></script>
+<style>
+  html,body{margin:0;width:1080px;height:1920px;overflow:hidden;
+    background: radial-gradient(900px 900px at 50% 58%, #FFF4F7 0%, #FFE8EF 60%, #FFDCE7 100%);}
+  .dots{position:absolute;inset:0;background-image:radial-gradient(#FFC9D8 3px, transparent 3.5px);background-size:46px 46px;opacity:.55}
+  canvas{position:absolute;left:0;top:560px}
+  .ov{position:absolute;color:#3B2E5A}
+  .kicker{left:72px;top:238px;font:800 40px 'Nunito';background:#FFD670;padding:8px 26px 10px;border-radius:40px;transform:rotate(-3deg);box-shadow:0 6px 0 #F0BC3F}
+  h1{left:72px;top:300px;margin:0;width:880px;font:800 132px/1.0 'Baloo 2';letter-spacing:-0.01em;
+     text-shadow:0 8px 0 #FFC2D3}
+  h1 span{color:#FF6F94}
+  .card{left:72px;top:1352px;width:820px;background:#FFFFFF;border-radius:48px;padding:34px 40px 38px;box-sizing:border-box;
+        font:700 56px/1.18 'Nunito';box-shadow:0 14px 0 #F9C6D5, 0 30px 60px rgba(59,46,90,.12)}
+  .card b{color:#3A8FC4}
+  .pill{position:absolute;font:800 40px 'Nunito';color:#3B2E5A;background:#fff;padding:6px 22px 9px;border-radius:30px;box-shadow:0 6px 0 rgba(59,46,90,.12)}
+</style></head><body>
+<div class="dots"></div>
+<canvas id="c" width="1080" height="900"></canvas>
+<div class="ov kicker">Petite question</div>
+<h1 class="ov">D'où vient<br>la <span>pluie</span>&nbsp;?</h1>
+<div class="pill" id="p1" style="left:640px;top:610px;background:#FFD670">nuage</div>
+<div class="pill" id="p2" style="left:72px;top:1240px;background:#8ED6FF">évaporation</div>
+<div class="ov card">L'eau du lac s'envole en vapeur, forme un nuage… puis retombe en <b>gouttes</b>&nbsp;!</div>
+<script type="module">
+import * as S from '/out/tools/lib/svi.js';
+const { TAU } = Zdog;
+const illo = new Zdog.Illustration({ element: '#c', zoom: 1.0, resize: false });
+const scene = new Zdog.Anchor({ addTo: illo, rotate: { x: -TAU / 13, y: TAU / 9 }, translate: { y: 40 } });
+
+// socle en feutrine (disque épais)
+const GY = 170;
+const groundG = new Zdog.Group({ addTo: scene });
+new Zdog.Cylinder({ addTo: groundG, diameter: 760, length: 70, translate: { y: GY + 35 }, rotate: { x: TAU / 4 },
+  color: '#9BE7B0', backface: '#7CCB95', stroke: 18 });
+new Zdog.Cylinder({ addTo: scene, diameter: 800, length: 26, translate: { y: GY + 92 }, rotate: { x: TAU / 4 },
+  color: '#FFFFFF', backface: '#F3D7E0', stroke: 12 });
+const top = { y: GY - 2 };
+// lac
+new Zdog.Ellipse({ addTo: groundG, width: 300, height: 220, translate: { x: -170, y: GY - 12, z: 120 }, rotate: { x: TAU / 4 },
+  fill: true, stroke: 14, color: '#8ED6FF' });
+new Zdog.Ellipse({ addTo: groundG, width: 120, height: 60, translate: { x: -200, y: GY - 16, z: 140 }, rotate: { x: TAU / 4 },
+  fill: true, stroke: 6, color: '#C8EEFF' });
+// maison en bois
+const house = new Zdog.Anchor({ addTo: scene, translate: { x: 150, y: GY - 70, z: -60 } });
+new Zdog.Box({ addTo: house, width: 150, height: 140, depth: 140, stroke: 10, color: '#FFFFFF',
+  leftFace: '#FFE1EA', rightFace: '#F6CBD8', topFace: '#FFFFFF', bottomFace: false, rearFace: '#F6CBD8' });
+new Zdog.Cone({ addTo: house, diameter: 210, length: 110, translate: { y: -70 }, rotate: { x: TAU / 4 }, stroke: 10,
+  color: '#FF8FAB', backface: '#E9718F' });
+new Zdog.Rect({ addTo: house, width: 46, height: 70, translate: { y: 35, z: 72 }, stroke: 8, fill: true, color: '#FFD670' });
+new Zdog.Shape({ addTo: house, translate: { x: -38, y: -12, z: 72 }, stroke: 32, color: '#8ED6FF' });
+new Zdog.Shape({ addTo: house, translate: { x: 38, y: -12, z: 72 }, stroke: 32, color: '#8ED6FF' });
+// arbres en boule
+function tree(x, z, s, c) {
+  const a = new Zdog.Anchor({ addTo: scene, translate: { x, y: GY, z } });
+  new Zdog.Cylinder({ addTo: a, diameter: 22 * s, length: 70 * s, translate: { y: -35 * s }, rotate: { x: TAU / 4 }, color: '#C99A6B', stroke: 4 });
+  new Zdog.Shape({ addTo: a, translate: { y: -95 * s }, stroke: 120 * s, color: c });
+  new Zdog.Shape({ addTo: a, translate: { x: -18 * s, y: -112 * s, z: 30 * s }, stroke: 34 * s, color: 'rgba(255,255,255,.35)' });
+}
+tree(-280, -150, 1.0, '#7ED19A'); tree(-60, -230, 1.25, '#9BE7B0'); tree(300, 150, 0.8, '#7ED19A'); tree(30, 230, 0.7, '#B5EFC3');
+// petites fleurs
+const r = S.rng(4);
+for (let i = 0; i < 16; i++) {
+  const a = r() * TAU, d = 220 + r() * 120;
+  new Zdog.Shape({ addTo: scene, translate: { x: Math.cos(a) * d, y: GY - 8, z: Math.sin(a) * d }, stroke: 16, color: ['#FF8FAB', '#FFD670', '#FFFFFF'][i % 3] });
+}
+// soleil
+const sun = new Zdog.Anchor({ addTo: illo, translate: { x: -300, y: -300, z: -200 } });
+new Zdog.Shape({ addTo: sun, stroke: 150, color: '#FFD670' });
+for (let i = 0; i < 10; i++) { const a = i / 10 * TAU; new Zdog.Shape({ addTo: sun, path: [{ x: Math.cos(a) * 105, y: Math.sin(a) * 105 }, { x: Math.cos(a) * 140, y: Math.sin(a) * 140 }], stroke: 16, color: '#FFC94A' }); }
+// nuage moelleux
+const cloud = new Zdog.Anchor({ addTo: illo, translate: { x: 90, y: -270, z: 60 } });
+[[0, 0, 170], [-110, 25, 120], [110, 20, 130], [-40, -55, 120], [60, -45, 110], [190, 40, 80], [-190, 45, 80]].forEach(([x, y, s]) =>
+  new Zdog.Shape({ addTo: cloud, translate: { x, y }, stroke: s, color: '#FFFFFF' }));
+[[-60, 70, 90], [40, 75, 100], [140, 65, 70]].forEach(([x, y, s]) => new Zdog.Shape({ addTo: cloud, translate: { x, y, z: -10 }, stroke: s, color: '#E6F4FF' }));
+// yeux endormis du nuage (simple, générique)
+new Zdog.Shape({ addTo: cloud, path: [{ x: -30, y: 10 }, { arc: [{ x: -20, y: 20 }, { x: -10, y: 10 }] }], closed: false, stroke: 7, color: '#3B2E5A', translate: { z: 90 } });
+new Zdog.Shape({ addTo: cloud, path: [{ x: 20, y: 10 }, { arc: [{ x: 30, y: 20 }, { x: 40, y: 10 }] }], closed: false, stroke: 7, color: '#3B2E5A', translate: { z: 90 } });
+new Zdog.Shape({ addTo: cloud, translate: { x: -45, y: 32, z: 88 }, stroke: 18, color: '#FFC2D3' });
+new Zdog.Shape({ addTo: cloud, translate: { x: 55, y: 32, z: 88 }, stroke: 18, color: '#FFC2D3' });
+// gouttes
+const drops = [];
+for (let i = 0; i < 9; i++) {
+  const d = new Zdog.Shape({ addTo: illo, path: [{ y: -14 }, { y: 14 }], stroke: 20, color: '#6EC3F5' });
+  drops.push({ d, x: 0 + (i % 5) * 55 - 60 + (i > 4 ? 28 : 0), ph: r(), z: 80 });
+}
+// pointillés d'évaporation (lac -> nuage)
+const dots = [];
+for (let i = 0; i < 9; i++) dots.push(new Zdog.Shape({ addTo: illo, stroke: 18, color: '#FF8FAB' }));
+
+const st = { pop: 0, cloudY: 0, sq: 1 };
+const tl = gsap.timeline({ paused: true });
+tl.fromTo(st, { pop: 0 }, { pop: 1, duration: 1.0, ease: 'back.out(1.8)', immediateRender: false }, 0)
+  .fromTo(st, { cloudY: -120 }, { cloudY: 0, duration: 1.2, ease: 'back.out(1.5)', immediateRender: false }, 0.2)
+  .fromTo(st, { sq: 0.8 }, { sq: 1, duration: 0.6, ease: 'elastic.out(1,0.4)', immediateRender: false }, 1.0);
+
+function renderAt(t) {
+  tl.seek(Math.min(t, tl.duration()), false);
+  scene.rotate.y = TAU / 9 + Math.sin(t * 0.5) * 0.12;          // travelling latéral de maquette
+  scene.scale = 0.6 + 0.4 * st.pop;
+  const bob = Math.sin(t * 1.6) * 10;
+  cloud.translate.y = -270 + st.cloudY + bob;
+  cloud.scale = { x: 1 / st.sq, y: st.sq, z: 1 };
+  sun.rotate.z = t * 0.2;
+  drops.forEach((o, i) => {
+    const k = ((t * 0.55 + o.ph) % 1);
+    o.d.translate = { x: cloud.translate.x + o.x, y: -165 + k * 190 + bob * 0.3, z: o.z };
+    o.d.visible = k < 0.95;
+  });
+  // arc d'évaporation : du lac (bas gauche) vers le nuage
+  dots.forEach((d, i) => {
+    const u = (i + (t * 0.8) % 1) / dots.length;
+    const x = -230 + u * 200 - Math.sin(u * Math.PI) * 120, y = 220 - u * 430;
+    d.translate = { x, y, z: 150 }; d.stroke = 10 + 14 * Math.sin(u * Math.PI);
+  });
+  illo.updateRenderGraph();
+}
+const ready = S.loadFonts([{ family: 'Baloo 2', pkg: 'baloo-2', weight: 800 }, { family: 'Nunito', pkg: 'nunito', weight: 700 }, { family: 'Nunito', pkg: 'nunito', weight: 800 }]);
+S.installContract({ renderAt, ready, duration: 6 });
+</script></body></html>

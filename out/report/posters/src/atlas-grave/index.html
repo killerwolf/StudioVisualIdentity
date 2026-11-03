@@ -1,0 +1,128 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8">
+<!-- Poster "Atlas Gravé" — D3.js (échelles, lignes, sélection SVG) + GSAP (tracé stroke-dashoffset). Rendu : render.mjs --stills 2.0 -->
+<script src="/node_modules/d3/dist/d3.min.js"></script>
+<script src="/node_modules/gsap/dist/gsap.min.js"></script>
+<style>
+  html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:#EFE3C8}
+  svg{position:absolute;inset:0}
+</style></head><body>
+<svg id="s" width="1080" height="1920" viewBox="0 0 1080 1920"></svg>
+<script type="module">
+import * as S from '/out/tools/lib/svi.js';
+const INK = '#2A1F14', RED = '#8C2F1B', BLUE = '#2D4A5A', GOLD = '#B8862B', SURF = '#E2D2AE';
+const svg = d3.select('#s');
+const defs = svg.append('defs');
+// papier vergé : grain fractal + vergeures + vignette
+const f = defs.append('filter').attr('id', 'paper').attr('x', 0).attr('y', 0).attr('width', '100%').attr('height', '100%');
+f.append('feTurbulence').attr('type', 'fractalNoise').attr('baseFrequency', '0.9 0.6').attr('numOctaves', 3).attr('seed', 7).attr('result', 'n');
+f.append('feColorMatrix').attr('in', 'n').attr('type', 'matrix').attr('values', '0 0 0 0 0.36  0 0 0 0 0.25  0 0 0 0 0.12  0 0 0 0.22 0');
+const f2 = defs.append('filter').attr('id', 'blot').attr('x', 0).attr('y', 0).attr('width', '100%').attr('height', '100%');
+f2.append('feTurbulence').attr('type', 'fractalNoise').attr('baseFrequency', '0.004').attr('numOctaves', 4).attr('seed', 3).attr('result', 'n');
+f2.append('feColorMatrix').attr('in', 'n').attr('type', 'matrix').attr('values', '0 0 0 0 0.55  0 0 0 0 0.4  0 0 0 0 0.2  0 0 0 0.35 -0.08');
+const rg = defs.append('radialGradient').attr('id', 'vig').attr('cx', '50%').attr('cy', '48%').attr('r', '75%');
+rg.append('stop').attr('offset', '55%').attr('stop-color', '#5a3a1a').attr('stop-opacity', 0);
+rg.append('stop').attr('offset', '100%').attr('stop-color', '#5a3a1a').attr('stop-opacity', 0.38);
+const ink = defs.append('filter').attr('id', 'ink');
+ink.append('feTurbulence').attr('type', 'fractalNoise').attr('baseFrequency', '0.06').attr('numOctaves', 2).attr('seed', 2).attr('result', 't');
+ink.append('feDisplacementMap').attr('in', 'SourceGraphic').attr('in2', 't').attr('scale', 2.2);
+// motif de hachures (gravure)
+const hp = defs.append('pattern').attr('id', 'hatch').attr('width', 7).attr('height', 7).attr('patternUnits', 'userSpaceOnUse').attr('patternTransform', 'rotate(35)');
+hp.append('line').attr('x1', 0).attr('y1', 0).attr('x2', 0).attr('y2', 7).attr('stroke', INK).attr('stroke-width', 1.3);
+
+svg.append('rect').attr('width', 1080).attr('height', 1920).attr('fill', '#EFE3C8');
+svg.append('rect').attr('width', 1080).attr('height', 1920).attr('filter', 'url(#blot)');
+const laid = svg.append('g').attr('opacity', 0.07);
+for (let y = 0; y < 1920; y += 9) laid.append('line').attr('x1', 0).attr('x2', 1080).attr('y1', y).attr('y2', y).attr('stroke', INK).attr('stroke-width', 0.8);
+for (let x = 40; x < 1080; x += 150) laid.append('line').attr('x1', x).attr('x2', x).attr('y1', 0).attr('y2', 1920).attr('stroke', INK).attr('stroke-width', 1.6);
+
+const art = svg.append('g').attr('filter', 'url(#ink)');
+// cadre gravé double filet
+art.append('rect').attr('x', 46).attr('y', 196).attr('width', 900).attr('height', 1440).attr('fill', 'none').attr('stroke', INK).attr('stroke-width', 3);
+art.append('rect').attr('x', 58).attr('y', 208).attr('width', 876).attr('height', 1416).attr('fill', 'none').attr('stroke', INK).attr('stroke-width', 1);
+// graduations de bord (méridiens)
+for (let i = 0; i <= 36; i++) { const x = 58 + i * 876 / 36; art.append('line').attr('x1', x).attr('x2', x).attr('y1', 208).attr('y2', i % 6 ? 216 : 224).attr('stroke', INK).attr('stroke-width', 1); }
+
+const T = (x, y, txt, font, size, fill = INK, anchor = 'start', extra = {}) => {
+  const e = svg.append('text').attr('x', x).attr('y', y).attr('fill', fill).attr('text-anchor', anchor)
+    .style('font-family', font).style('font-size', size + 'px').text(txt);
+  for (const k in extra) e.style(k, extra[k]); return e;
+};
+T(496, 278, 'PLANCHE V · HYDROGRAPHIE', 'Cinzel', 34, RED, 'middle', { 'font-weight': 600, 'letter-spacing': '0.14em' });
+T(496, 400, 'Les 5 plus longs', 'Cormorant Garamond', 112, INK, 'middle', { 'font-weight': 700 });
+T(496, 504, 'fleuves du monde', 'Cormorant Garamond', 112, INK, 'middle', { 'font-weight': 700, 'font-style': 'normal' });
+// filet ornemental
+const orn = art.append('g').attr('transform', 'translate(496,548)');
+orn.append('line').attr('x1', -300).attr('x2', -26).attr('stroke', GOLD).attr('stroke-width', 2.5);
+orn.append('line').attr('x1', 26).attr('x2', 300).attr('stroke', GOLD).attr('stroke-width', 2.5);
+orn.append('path').attr('d', 'M0,-14 L14,0 L0,14 L-14,0Z').attr('fill', RED);
+
+// --- données : longueurs (km), sources usuelles
+const rivers = [
+  { n: 'Nil', km: 6650, r: 'I' }, { n: 'Amazone', km: 6400, r: 'II' }, { n: 'Yangzi', km: 6300, r: 'III' },
+  { n: 'Mississippi', km: 6275, r: 'IV' }, { n: 'Ienisseï', km: 5539, r: 'V' }];
+const x = d3.scalePoint().domain(rivers.map(d => d.n)).range([150, 842]);
+const y0 = 680, len = d3.scaleLinear().domain([0, 6650]).range([0, 490]);
+const gR = art.append('g');
+const paths = [];
+rivers.forEach((d, i) => {
+  const rnd = S.rng(11 + i * 7), L = len(d.km), cx = x(d.n);
+  // montagnes gravées à la source
+  const m = gR.append('g').attr('transform', `translate(${cx},${y0 - 8})`);
+  [[-30, 0, 30], [0, -10, 40], [28, 2, 26]].forEach(([dx, dy, h]) => {
+    m.append('path').attr('d', `M${dx - h * .8},${dy} L${dx},${dy - h} L${dx + h * .8},${dy}Z`).attr('fill', 'url(#hatch)').attr('stroke', INK).attr('stroke-width', 1.6);
+    m.append('path').attr('d', `M${dx},${dy - h} L${dx + h * .8},${dy}`).attr('stroke', INK).attr('stroke-width', 2.4);
+  });
+  // tracé méandreux (noise + curveBasis)
+  const pts = d3.range(0, 41).map(k => { const u = k / 40; return [cx + (S.noise2(u * 5, i * 3.1) - .5) * 70 * Math.sin(Math.PI * Math.min(1, u * 1.3)) + Math.sin(u * 18 + i) * 9 * u, y0 + u * L]; });
+  const line = d3.line().curve(d3.curveBasis);
+  // fleuve qui s'élargit vers l'aval : 3 passes
+  [[7, BLUE, 0.25], [4.2, BLUE, 1], [1.4, '#EFE3C8', 0.9]].forEach(([w, c, o]) => {
+    const p = gR.append('path').attr('d', line(pts)).attr('fill', 'none').attr('stroke', c).attr('stroke-width', w).attr('stroke-opacity', o).attr('stroke-linecap', 'round');
+    paths.push(p.node());
+  });
+  // affluents
+  for (let a = 0; a < 4; a++) {
+    const k = 8 + Math.floor(rnd() * 26), p = pts[k], side = rnd() < .5 ? -1 : 1, l = 26 + rnd() * 30;
+    const tp = gR.append('path').attr('d', line([[p[0] + side * l, p[1] - l * .9], [p[0] + side * l * .4, p[1] - l * .2], p])).attr('fill', 'none')
+      .attr('stroke', BLUE).attr('stroke-width', 1.8); paths.push(tp.node());
+  }
+  // embouchure : estuaire + vaguelettes
+  const e = pts[40], mo = gR.append('g').attr('transform', `translate(${e[0]},${e[1] + 6})`);
+  mo.append('ellipse').attr('rx', 26).attr('ry', 9).attr('fill', 'url(#hatch)').attr('stroke', BLUE).attr('stroke-width', 1.4);
+  // chiffre romain
+  T(cx, y0 - 66, d.r, 'Cinzel', 44, RED, 'middle', { 'font-weight': 600 });
+  // repère de longueur (pointillé doré)
+  gR.append('line').attr('x1', cx - 46).attr('x2', cx + 46).attr('y1', y0 + L + 26).attr('y2', y0 + L + 26).attr('stroke', GOLD).attr('stroke-width', 2).attr('stroke-dasharray', '2 5');
+});
+// échelle graphique
+const sc = art.append('g').attr('transform', 'translate(110,1228)');
+for (let k = 0; k < 6; k++) sc.append('rect').attr('x', k * len(1000)).attr('y', 0).attr('width', len(1000)).attr('height', 10).attr('fill', k % 2 ? '#EFE3C8' : INK).attr('stroke', INK).attr('stroke-width', 1.2);
+sc.append('text').attr('x', 0).attr('y', 44).text('0').style('font', '500 30px "IBM Plex Mono"').attr('fill', INK);
+sc.append('text').attr('x', len(6000)).attr('y', 44).text('6 000 km').attr('text-anchor', 'middle').style('font', '500 30px "IBM Plex Mono"').attr('fill', INK);
+// rose des vents miniature
+const rose = art.append('g').attr('transform', 'translate(842,1222)');
+rose.append('circle').attr('r', 34).attr('fill', 'none').attr('stroke', INK).attr('stroke-width', 1.2);
+[0, 90, 180, 270].forEach(a => rose.append('path').attr('d', 'M0,-44 L8,0 L0,8 L-8,0Z').attr('transform', `rotate(${a})`).attr('fill', a ? INK : RED));
+T(842, 1168, 'N', 'Cinzel', 26, RED, 'middle', { 'font-weight': 700 });
+
+// légende (corps >= 54 px)
+const lg = svg.append('g').attr('transform', 'translate(96,1342)');
+rivers.forEach((d, i) => {
+  const yy = i * 62;
+  lg.append('text').attr('x', 0).attr('y', yy).text(d.r).attr('fill', RED).style('font', '600 40px Cinzel');
+  d.el = lg.append('text').attr('x', 92).attr('y', yy).text(d.n).attr('fill', INK).style('font', '700 58px "Cormorant Garamond"');
+  d.ld = lg.append('line').attr('x1', 92 + (d.n.length * 24) + 22).attr('x2', 560).attr('y1', yy - 12).attr('y2', yy - 12).attr('stroke', INK).attr('stroke-dasharray', '1.5 9').attr('stroke-width', 2.4).attr('stroke-linecap', 'round');
+  lg.append('text').attr('x', 820).attr('y', yy).text(d3.format(',')(d.km).replace(',', ' ') + ' km').attr('text-anchor', 'end').attr('fill', BLUE).style('font', '600 54px "IBM Plex Mono"');
+});
+svg.append('rect').attr('width', 1080).attr('height', 1920).attr('filter', 'url(#paper)').style('mix-blend-mode', 'multiply');
+svg.append('rect').attr('width', 1080).attr('height', 1920).attr('fill', 'url(#vig)');
+
+// tracé à l'encre animé (GSAP sur stroke-dashoffset)
+const tl = gsap.timeline({ paused: true });
+paths.forEach((p, i) => { const L = p.getTotalLength(); p.style.strokeDasharray = L; p.style.strokeDashoffset = L;
+  tl.fromTo(p, { strokeDashoffset: L }, { strokeDashoffset: 0, duration: 1.4, ease: 'sine.inOut', immediateRender: false }, (i % 99) * 0.012); });
+const ready = S.loadFonts([{ family: 'Cormorant Garamond', pkg: 'cormorant-garamond', weight: 700 }, { family: 'Cinzel', pkg: 'cinzel', weight: 600 }, { family: 'Cinzel', pkg: 'cinzel', weight: 700 },
+  { family: 'IBM Plex Mono', pkg: 'ibm-plex-mono', weight: 500 }, { family: 'IBM Plex Mono', pkg: 'ibm-plex-mono', weight: 600 }]);
+const ready2 = ready.then(() => rivers.forEach(d => d.ld.attr('x1', 92 + d.el.node().getComputedTextLength() + 18)));
+S.installContract({ renderAt: t => { tl.seek(t, false); }, ready: ready2, duration: 6 });
+</script></body></html>

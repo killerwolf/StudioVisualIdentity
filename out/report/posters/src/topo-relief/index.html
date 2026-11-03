@@ -1,0 +1,107 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8">
+<title>Affiche — Relief Topo</title>
+<!-- Direction topo-relief : heightmap procédurale (bruit ridged), courbes de niveau calculées par d3.contours et
+     peintes dans une texture, posée sur un relief three.js vu en plongée 45° (focale ~35 mm), brouillard,
+     balise d'altitude projetée 3D->2D en JetBrains Mono. -->
+<style>
+:root{--bg:#14221C;--surface:#1E3329;--gold:#E8C872;--clay:#D9734E;--mint:#9FD3C7;--text:#F1EEDC}
+html,body{margin:0;background:var(--bg);width:1080px;height:1920px;overflow:hidden}
+canvas{position:absolute;inset:0;display:block}
+#fade{position:absolute;left:0;right:0;top:1000px;height:920px;background:linear-gradient(to bottom,rgba(20,34,28,0),rgba(20,34,28,.92) 26%,#14221C 45%)}
+.t{position:absolute;left:60px;width:900px;color:var(--text)}
+#kick{top:236px;font:500 44px/1 'JetBrains Mono';color:var(--mint);letter-spacing:2px}
+#title{top:1150px;font:800 112px/0.98 'Inter';letter-spacing:-4px}
+#title em{font-style:normal;color:var(--gold)}
+#data{top:1490px;font:500 54px/1.1 'JetBrains Mono';color:var(--text);display:flex;gap:28px;align-items:baseline}
+#data b{color:var(--clay);font-weight:700}
+#pin{position:absolute;transform:translate(-50%,-100%);text-align:center;color:var(--gold);font:700 54px/1 'JetBrains Mono';white-space:nowrap}
+#pin:after{content:'';display:block;width:3px;height:120px;margin:12px auto 0;background:var(--gold)}
+#pin i{display:block;width:18px;height:18px;border-radius:50%;background:var(--gold);margin:-4px auto 0;box-shadow:0 0 0 8px rgba(232,200,114,.25)}
+#scale{position:absolute;left:60px;top:1040px;font:500 32px/1 'JetBrains Mono';color:var(--mint)}
+#scale div{width:240px;height:10px;margin-top:10px;background:repeating-linear-gradient(90deg,var(--mint) 0 60px,transparent 60px 120px);border:2px solid var(--mint)}
+</style>
+<script type="importmap">{"imports":{"three":"/node_modules/three/build/three.module.js","three/addons/":"/node_modules/three/examples/jsm/"}}</script>
+</head><body>
+<div id="fade"></div>
+<div class="t" id="kick">27°59′N · 86°55′E — HIMALAYA</div>
+<div id="pin">8 849 m<i></i></div>
+<div id="scale">0 — 2 km<div></div></div>
+<div class="t" id="title">Comment<br>mesure-t-on<br><em>l'Everest&nbsp;?</em></div>
+<div class="t" id="data"><span>GNSS + radar</span><b>±0,4&nbsp;m</b></div>
+<script src="/node_modules/d3/dist/d3.min.js"></script>
+<script type="module">
+import * as THREE from 'three';
+import * as S from '/out/tools/lib/svi.js';
+
+// ---- heightmap : massif principal + arêtes (ridged fBm) ----
+const N = 256, Hm = new Float64Array(N * N);
+for (let j = 0; j < N; j++) for (let i = 0; i < N; i++) {
+  const x = i / N, y = j / N;
+  let r = 0, a = .5, f = 3;
+  for (let o = 0; o < 6; o++) { const n = 1 - Math.abs(S.noise2(x * f + 3.1, y * f + 7.7) * 2 - 1); r += a * n * n; a *= .5; f *= 2.03; }
+  const dx = x - .52, dy = y - .42, peak = Math.exp(-Math.sqrt(dx * dx + dy * dy) / .11) * (.75 + .25 * r);
+  const ridge = Math.exp(-Math.pow((dy - dx * .55) / .05, 2)) * Math.exp(-(dx * dx) / .09) * .35;
+  Hm[j * N + i] = r * .7 + peak * .9 + ridge + Math.exp(-Math.pow((x - .2) / .1, 2) - Math.pow((y - .6) / .14, 2)) * .35;
+}
+let hmax = 0; for (const v of Hm) hmax = Math.max(hmax, v); for (let k = 0; k < Hm.length; k++) Hm[k] /= hmax;
+
+// ---- courbes de niveau D3 -> texture canvas ----
+function contourTexture() {
+  const T = 2048, c = document.createElement('canvas'); c.width = c.height = T; const g = c.getContext('2d');
+  const col = d3.scaleLinear().domain([0, .35, .7, 1]).range(['#152a20', '#1E3329', '#3a4a30', '#5a5236']);
+  // aplats hypsométriques
+  const bands = d3.range(0, 1.0001, 1 / 40);
+  const cs = d3.contours().size([N, N]).thresholds(bands)(Hm);
+  const path = d3.geoPath(d3.geoTransform({ point(x, y) { this.stream.point(x * T / N, y * T / N); } }), g);
+  for (const k of cs) { g.beginPath(); path(k); g.fillStyle = col(k.value); g.fill(); }
+  // lignes : maîtresses tous les 5, couleur or au-dessus de 0.6, menthe dessous
+  cs.forEach((k, idx) => {
+    g.beginPath(); path(k);
+    const master = idx % 5 === 0;
+    g.strokeStyle = k.value > .62 ? '#E8C872' : (master ? '#9FD3C7' : 'rgba(159,211,199,.55)');
+    g.lineWidth = master ? 5 : 2.2; g.stroke();
+  });
+  // sentier d'expédition (terre cuite, pointillé) vers le sommet
+  g.setLineDash([16, 14]); g.strokeStyle = '#D9734E'; g.lineWidth = 7; g.beginPath();
+  const pts = [[.18, .95], [.26, .82], [.33, .74], [.38, .62], [.45, .55], [.49, .47], [.52, .42]];
+  pts.forEach(([x, y], i) => i ? g.lineTo(x * T, y * T) : g.moveTo(x * T, y * T)); g.stroke();
+  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; return t;
+}
+
+const ren = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+ren.setSize(S.W, S.H); ren.setPixelRatio(1); document.body.prepend(ren.domElement);
+const scene = new THREE.Scene(); scene.background = new THREE.Color('#14221C'); scene.fog = new THREE.Fog('#14221C', 9, 22);
+const cam = new THREE.PerspectiveCamera(54, S.W / S.H, .1, 100);   // ~35 mm (vertical)
+
+const SZ = 12, AMP = 3.4;
+const geo = new THREE.PlaneGeometry(SZ, SZ, N - 1, N - 1); geo.rotateX(-Math.PI / 2);
+const pos = geo.attributes.position;
+for (let k = 0; k < pos.count; k++) {
+  const i = k % N, j = Math.floor(k / N);
+  pos.setY(k, Hm[j * N + i] * AMP);
+}
+geo.computeVertexNormals();
+const mat = new THREE.MeshStandardMaterial({ map: contourTexture(), roughness: .95, metalness: 0 });
+const terrain = new THREE.Mesh(geo, mat); scene.add(terrain);
+scene.add(new THREE.HemisphereLight(0xf1eedc, 0x14221c, .9));
+const sun = new THREE.DirectionalLight(0xffe2b0, 2.6); sun.position.set(-6, 5, -2); scene.add(sun);
+
+// sommet en coordonnées monde
+let best = 0; for (let k = 1; k < Hm.length; k++) if (Hm[k] > Hm[best]) best = k;
+const summit = new THREE.Vector3((best % N) / (N - 1) * SZ - SZ / 2, AMP, Math.floor(best / N) / (N - 1) * SZ - SZ / 2);
+const pin = document.getElementById('pin');
+
+S.installContract({
+  duration: 12,
+  ready: S.loadFonts([{ family: 'Inter', pkg: 'inter', weight: 800 }, { family: 'JetBrains Mono', pkg: 'jetbrains-mono', weight: 500 }, { family: 'JetBrains Mono', pkg: 'jetbrains-mono', weight: 700 }]),
+  renderAt: t => {
+    const a = -0.35 + t * 0.02;                      // survol lent autour du sommet
+    const R = 9.6, look = summit.clone();
+    cam.position.set(look.x + Math.sin(a) * R * .72, look.y + R * .62, look.z + Math.cos(a) * R * .72);  // plongée ~40-45°
+    cam.lookAt(look.x + Math.sin(a) * 1.6, look.y - 1.2, look.z + Math.cos(a) * 1.6);
+    ren.render(scene, cam);
+    const p = summit.clone().project(cam);
+    pin.style.left = ((p.x + 1) / 2 * S.W) + 'px'; pin.style.top = ((1 - p.y) / 2 * S.H - 4) + 'px';
+  },
+});
+</script></body></html>
