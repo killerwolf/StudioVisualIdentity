@@ -1,0 +1,66 @@
+{
+ "name": "OpenCV",
+ "role": "post-traitement",
+ "bestFor": [
+  "vieillissement pellicule/papier d'une vidéo déjà rendue : grain, flicker, gate weave, rayures, poussières, vignette, bavure d'encre",
+  "flash de coupe sur des instants donnés",
+  "identités rétro (actualités filmées, presse ancienne)",
+  "transformer des particules en surface liquide (flou gaussien + seuil)",
+  "ombrage 2D « chrome » : normales Sobel d'un champ de hauteur, spéculaire, reflets d'environnement, Fresnel",
+  "dessin antialiasé (verre, liserés) et composition numpy",
+  "analyse des vidéos rendues (détection des impacts par différence de frames pour caler le son)",
+  "grade signature appliqué à toute vidéo rendue (glow des hautes lumières, aberration chromatique radiale, vignette)",
+  "uniformiser des shorts rendus par des moteurs différents (twgl, three.js) sous une même identité"
+ ],
+ "avoidFor": [
+  "génération de l'image elle-même (texte, mise en page)",
+  "effets qui doivent suivre le contenu (pas de tracking ici)",
+  "livrables à faible plafond de débit : le grain par frame sature le bitrate",
+  "typographie (pas de polices @fontsource : passer par PIL/textpng)",
+  "opérations pleine résolution 1080×1920 float32 à chaque frame sans nécessité (≈ 1 s/frame mesuré)",
+  "effets dépendant de la profondeur ou de la géométrie 3D (à faire dans le moteur)",
+  "flous très larges à pleine résolution (travailler à 1/4 puis remonter)"
+ ],
+ "renderCostPer100Frames": [
+  "21,2 s (mesuré, short gazette-1900 evenements, 450 frames en 95,5 s) ; 27,6 s (short histoire 1789, 563 frames en 155,2 s) — 1080×1920, décodage + encodage ffmpeg par pipes rawvideo bgr24 inclus, via out/tools/slot.sh [gazette-1900]",
+  "25 s (mesuré, liquid-chrome__abstrait__quatre-peintures-mpm : ombrage demi-résolution 540×960 + agrandissement cubique + composition limitée à la bbox, 1 thread) ; 100 s/100 frames en pleine résolution au 1er essai [liquid-chrome]",
+  "31,9 s (mesuré, neon_grade.py sur 360 frames 1080×1920 : 114,7 s, lecture cv2.VideoCapture + pipe rawvideo ffmpeg crf 14, 4 slots CPU occupés) [neon-lab]"
+ ],
+ "gotchas": [
+  "lire/écrire via pipes ffmpeg (-f rawvideo -pix_fmt bgr24) : pas de cv2.VideoWriter (codec H.264 absent du build headless)",
+  "pré-tirer 12 champs de grain et les faire tourner : tirer un normal 1080×1920 par frame coûte cher",
+  "les rayures/poussières sont un état séquentiel : avancer l'état frame par frame depuis 0 (mode image compris) pour rester déterministe",
+  "le grain fait monter le poids : ~20 Mo pour 18,75 s au plafond 8 Mb/s du mux (crf plus haut ne change rien)",
+  "garder toutes les opérations en float32 et une seule conversion uint8 en fin de frame",
+  "warpAffine avec BORDER_REFLECT pour le gate weave, sinon bords noirs (frames 'noires' au check)",
+  "cv2.setNumThreads(1) pour rester dans son slot CPU",
+  "ombrer en demi-résolution puis INTER_CUBIC : ×4 moins cher, rendu identique sur un liquide flou",
+  "en incidence rasante le vecteur réfléchi tend vers (0,0,-1) -> liseré noir ; lire l'environnement dans la direction de la normale pour le Fresnel",
+  "le fond #0B0B10 est sous le seuil blackdetect : ajouter halos/table",
+  "OpenCV attend du BGR : inverser les canaux avant le pipe ffmpeg bgr24",
+  "opencv 5 headless : pas d'écriture H.264 fiable via VideoWriter -> pipe rawvideo bgr24 vers ffmpeg",
+  "travailler en float32 [0,1] et clipper avant conversion uint8",
+  "aberration radiale via warpAffine d'échelle par canal (≈2,4 px dans les coins pour 0,0022) : rester faible pour garder la typo nette",
+  "lancer via out/tools/slot.sh (rendu Python lourd)"
+ ],
+ "snippetPath": [
+  "shorts/gazette-1900__histoire__1789-en-20-secondes/src/post.py",
+  "shorts/liquid-chrome__abstrait__quatre-peintures-mpm/src",
+  "shorts/neon-lab__abstrait__champ-de-force-lucioles/src/neon_grade.py"
+ ],
+ "pairsWellWith": [
+  "GSAP / toute scène navigateur rendue par render.mjs",
+  "Manim, Taichi (même pipe ffmpeg)",
+  "textpng.py pour overlays",
+  "Taichi",
+  "numpy",
+  "PIL (textpng.py)",
+  "twgl.js",
+  "three.js"
+ ],
+ "usedBy": [
+  "gazette-1900",
+  "liquid-chrome",
+  "neon-lab"
+ ]
+}

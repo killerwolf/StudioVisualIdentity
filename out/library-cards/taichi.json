@@ -1,0 +1,39 @@
+{
+ "name": "Taichi",
+ "role": "fluides",
+ "bestFor": [
+  "fluides visqueux 2D (peinture, miel, slime) en MLS-MPM",
+  "chutes/éclaboussures/mélanges crédibles pour shorts satisfying",
+  "rendu points -> surface liquide avec OpenCV",
+  "boucles abstraites de matière"
+ ],
+ "avoidFor": [
+  "shorts > 15 s ou > 25 k particules sur CPU partagé",
+  "3D MPM sur CPU (coût ×20)",
+  "scènes demandant des stills à des temps arbitraires sans re-simuler (état séquentiel)",
+  "eau très fluide sans viscosité (éclabousse jusqu'au haut du cadre, formes en étoile)"
+ ],
+ "renderCostPer100Frames": [
+  "105,6 s (mesuré, liquid-chrome__abstrait__quatre-peintures-mpm : 24 000 particules, grille 90×196, 80 sous-pas dt=1e-4, 1 thread, ombrage OpenCV compris ; sim 79 s + ombrage 25 s) ; 1er essai 32 k particules / 100 sous-pas / ombrage pleine résolution : 206 s/100 frames [liquid-chrome]"
+ ],
+ "gotchas": [
+  "dt ≤ 1e-4 avec E=600 et dx=1/160 ; 80 sous-pas/frame -> 0,008 s de temps simulé par frame, régler la gravité (20) pour le rythme voulu",
+  "mpm88 (J seul) = eau : ajouter une viscosité mu(C+C^T) dans l'affine APIC (mu ≤ 0,05 stable à dt=1e-4) pour un comportement de peinture",
+  "grille rectangulaire possible (90×196) : prévoir des rangées au-dessus du cadre pour faire entrer les gouttes, sinon le clamp les écrase",
+  "activer les gouttes au fil du temps via un champ act[] (les particules inactives sautent P2G/G2P)",
+  "cpu_max_num_threads=1 pour respecter les slots CPU ; offline_cache=True",
+  "les couleurs ne se mélangent pas seules : P2G/G2P de la couleur + taux de mélange faible (0,0016/sous-pas)",
+  "splat bilinéaire (et non au plus proche) pour éviter le scintillement"
+ ],
+ "snippetPath": [
+  "shorts/liquid-chrome__abstrait__quatre-peintures-mpm/src"
+ ],
+ "pairsWellWith": [
+  "OpenCV",
+  "textpng.py (overlays)",
+  "ffmpeg rawvideo pipe"
+ ],
+ "usedBy": [
+  "liquid-chrome"
+ ]
+}

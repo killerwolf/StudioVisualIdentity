@@ -1,0 +1,79 @@
+{
+ "name": "GSAP",
+ "role": "animation (orchestration de timeline ; hors liste : aucune catégorie existante ne convient) | typo",
+ "bestFor": [
+  "timeline d'état unique (objet JS) seekée par renderAt : caméra, sceaux, légendes, compteurs pilotés par une seule source de vérité",
+  "easings nommés cohérents dans une identité (power2.out, sine.inOut, back.out(1.6))",
+  "tween de propriétés indexées de tableaux (gsap.to(st.hot, {[i]: 1}))",
+  "unes de journal / affiches animées en DOM (tourniquet, tampon, zoom brusque)",
+  "timelines calées sur une grille bpm, une seule timeline seekée",
+  "compteurs, frises qui se dessinent (scaleX), chutes de blocs avec stagger",
+  "timeline d'états déterministe pilotant Zdog, A-Frame ou du DOM",
+  "easings nommés expressifs (back.out, elastic.out, bounce.out) pour un langage de mouvement 'jouet'",
+  "rythmes de jeu (compte à rebours, révélations staggerées)",
+  "timeline unique seekée image par image (tl.seek(t,false)) pilotant des attributs SVG (attr: width, x, r, stroke-dashoffset, fill)",
+  "masques de révélation de texte (clipPath rect width 0 -> 1000, expo.out, stagger)",
+  "compteurs : tween d'un objet d'état lu et affiché dans renderAt",
+  "volets de transition plein cadre expo.inOut, push-in svgOrigin"
+ ],
+ "avoidFor": [
+  "simulation à état (physique) : préférer un pas fixe",
+  "animation pilotée par l'horloge réelle (le rendu est seeké)",
+  "simulations physiques (préférer Matter pré-simulé)",
+  "milliers d'éléments animés (DOM lent à 1080×1920)",
+  "effets de matière/grain (les faire en post OpenCV)",
+  "physique ou simulation",
+  "animer directement des propriétés DOM avec plusieurs tweens successifs sur la même propriété quand on seek dans le désordre (préférer un objet d'état)",
+  "simulation physique ou état cumulatif (préférer pré-calcul)",
+  "callbacks onUpdate/onComplete pour du rendu critique : lire l'état dans renderAt après le seek"
+ ],
+ "renderCostPer100Frames": [
+  "négligeable seul (< 1 ms par seek) ; dans la scène atlas-grave histoire le coût total est celui du SVG : voir renderTimeSec de shorts/atlas-grave__histoire__premier-tour-du-monde-1519-1522 [atlas-grave]",
+  "33,3 s (mesuré, short gazette-1900 evenements 9-novembre-1989, 450 frames en 149,8 s) ; 65,2 s sous forte contention (short histoire 1789, 563 frames en 367,2 s, 10 studios sur 4 cœurs) — le coût est la capture de la page DOM, pas GSAP [gazette-1900]",
+  "≈ 0 s propre (coût inclus dans les scènes : 66 s/100 frames avec Zdog, voir A-Frame pour la scène 3D ; seek d'une timeline de 30 tweens < 1 ms) [pastel-diorama]",
+  "13,7 s (mesuré avec D3, scène swiss-data__geographie__ou-vivent-8-milliards : ~90 tweens, 450 frames en 61,5 s ; le coût est dominé par la capture Chromium, pas par GSAP) ; 20,5 s (scène evenements, 92,3 s pour 450 frames) [swiss-data]"
+ ],
+ "gotchas": [
+  "renderAt = t => { tl.seek(t, false); } — ne jamais retourner la timeline (thenable)",
+  "immediateRender:false sur tous les to/fromTo d'une timeline seekée, sinon les fromTo écrasent l'état initial dès la construction",
+  "Les .set() dans une timeline seekée en arrière sont bien rejoués : OK pour un compteur entier",
+  "Lissage caméra : calculer la position suivie comme moyenne de positions à t±0,6 s via une fonction pure du temps (pas via des seeks multiples de la timeline)",
+  "renderAt = t => { tl.seek(t, false); } sans valeur de retour (timeline thenable)",
+  "immediateRender:false sur chaque fromTo, sinon l'état initial d'un tween tardif écrase les précédents",
+  "une page cachée doit être visibility:hidden + tl.set(visible) à son instant ; la 1re page visible en dur (un set à t=0 ne se rend pas toujours au seek(0))",
+  "un typewriter est plus simple et déterministe calculé dans renderAt (substring) qu'en onUpdate",
+  "mix-blend-mode:multiply sur un tampon rouge le rend invisible sur aplat noir : fond papier 90 %",
+  "fitWidth après loadFonts (mesurer scrollWidth) pour justifier les manchettes à la colonne",
+  "fromTo avec immediateRender:false ; un tween par propriété d'un objet d'état (st.s1 entrée, st.s1o sortie) puis appliquer l'état au DOM/3D dans renderAt -> stills et vidéo identiques quel que soit l'ordre des seek",
+  "tl.seek(Math.min(t, tl.duration())) pour tenir l'état final après la dernière animation",
+  "immediateRender:false sur les fromTo : l'état 'from' n'est PAS appliqué avant le début du tween -> poser l'état initial directement dans le DOM (opacity 0, width 0) sinon les éléments apparaissent trop tôt (vu sur nos stills)",
+  "ne jamais retourner la timeline depuis renderAt (thenable)",
+  "SVG : utiliser svgOrigin:'x y' (coordonnées globales) et non transformOrigin en px pour un push-in",
+  "tl.set({}, {}, DUR) pour allonger la timeline jusqu'à la durée du short",
+  "attr:{fill} se tweene entre deux hex (passage encre -> rouge)"
+ ],
+ "snippetPath": [
+  "shorts/atlas-grave__histoire__premier-tour-du-monde-1519-1522/src",
+  "shorts/gazette-1900__histoire__1789-en-20-secondes/src",
+  "shorts/pastel-diorama__enfants__d-ou-vient-la-pluie/src",
+  "shorts/swiss-data__evenements__j-272-eclipse-2-aout-2027/src"
+ ],
+ "pairsWellWith": [
+  "D3.js",
+  "pycairo",
+  "OpenCV (post grain/pellicule)",
+  "canvas 2D natif (gravures en hachures)",
+  "sound.py (SFX calés sur la même grille bpm)",
+  "Zdog",
+  "A-Frame",
+  "three.js",
+  "pixi.js",
+  "flubber"
+ ],
+ "usedBy": [
+  "atlas-grave",
+  "gazette-1900",
+  "pastel-diorama",
+  "swiss-data"
+ ]
+}

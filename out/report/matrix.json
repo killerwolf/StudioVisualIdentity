@@ -1,0 +1,97 @@
+{
+ "aquarelle-conte": {
+  "enfants": [
+   "Paper.js",
+   "p5.js"
+  ],
+  "histoire": [
+   "Paper.js",
+   "p5.js"
+  ]
+ },
+ "atlas-grave": {
+  "geographie": [
+   "D3.js",
+   "GSAP",
+   "pycairo"
+  ],
+  "histoire": [
+   "D3.js",
+   "GSAP",
+   "pycairo"
+  ]
+ },
+ "bauhaus-kinetic": {
+  "engagement": [
+   "Paper.js",
+   "anime.js",
+   "flubber"
+  ],
+  "explicatif": [
+   "Paper.js",
+   "anime.js",
+   "flubber"
+  ]
+ },
+ "gazette-1900": {
+  "evenements": [
+   "GSAP",
+   "OpenCV"
+  ],
+  "histoire": [
+   "GSAP",
+   "OpenCV"
+  ]
+ },
+ "liquid-chrome": {
+  "abstrait": [
+   "OpenCV",
+   "Taichi"
+  ]
+ },
+ "neon-lab": {
+  "abstrait": [
+   "OpenCV",
+   "twgl.js"
+  ],
+  "explicatif": [
+   "OpenCV",
+   "three.js"
+  ]
+ },
+ "pastel-diorama": {
+  "enfants": [
+   "GSAP",
+   "Zdog"
+  ],
+  "engagement": [
+   "A-Frame",
+   "GSAP"
+  ]
+ },
+ "pixel-arcade": {
+  "abstrait": [
+   "p5.js"
+  ],
+  "engagement": [
+   "Matter.js",
+   "p5.js"
+  ]
+ },
+ "swiss-data": {
+  "evenements": [
+   "D3.js",
+   "GSAP"
+  ],
+  "geographie": [
+   "D3.js",
+   "GSAP"
+  ]
+ },
+ "tableau-craie": {
+  "explicatif": [
+   "Manim",
+   "PIL/numpy (overlays texte et grain craie)"
+  ]
+ }
+}

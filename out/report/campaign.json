@@ -1,0 +1,295 @@
+{
+ "shorts": [
+  {
+   "dir": "shorts/aquarelle-conte__enfants__ou-vont-les-etoiles-le-jour",
+   "identity": "aquarelle-conte",
+   "family": "enfants",
+   "title": "Où vont les étoiles le jour ? (histoire du soir)",
+   "duration": 15.0,
+   "renderTimeSec": 529,
+   "libraries": [
+    "p5.js",
+    "Paper.js"
+   ],
+   "loopable": false,
+   "mechanic": "question d'enfant + révélation (loupe magique)",
+   "narrationLines": 6,
+   "video": "shorts/aquarelle-conte__enfants__ou-vont-les-etoiles-le-jour/short.mp4"
+  },
+  {
+   "dir": "shorts/aquarelle-conte__histoire__phare-d-alexandrie",
+   "identity": "aquarelle-conte",
+   "family": "histoire",
+   "title": "Il était une fois le Phare d'Alexandrie",
+   "duration": 16.0,
+   "renderTimeSec": 524.2,
+   "libraries": [
+    "p5.js",
+    "Paper.js"
+   ],
+   "loopable": false,
+   "mechanic": "suspense « il était une fois » + transformation (les pierres du phare deviennent un fort)",
+   "narrationLines": 5,
+   "video": "shorts/aquarelle-conte__histoire__phare-d-alexandrie/short.mp4"
+  },
+  {
+   "dir": "shorts/atlas-grave__geographie__plus-longs-fleuves-du-monde",
+   "identity": "atlas-grave",
+   "family": "geographie",
+   "title": "Les 5 plus longs fleuves du monde",
+   "duration": 15.0,
+   "renderTimeSec": 610.8,
+   "libraries": [
+    "D3.js",
+    "GSAP",
+    "pycairo"
+   ],
+   "loopable": false,
+   "mechanic": "compte à rebours (suspense V -> I) puis vote/duel",
+   "narrationLines": 8,
+   "video": "shorts/atlas-grave__geographie__plus-longs-fleuves-du-monde/short.mp4"
+  },
+  {
+   "dir": "shorts/atlas-grave__histoire__premier-tour-du-monde-1519-1522",
+   "identity": "atlas-grave",
+   "family": "histoire",
+   "title": "Le premier tour du monde : 1519–1522",
+   "duration": 16.0,
+   "renderTimeSec": 617.8,
+   "libraries": [
+    "D3.js",
+    "GSAP",
+    "pycairo"
+   ],
+   "loopable": false,
+   "mechanic": "compteur de pertes (suspense 5 -> 1) puis vote/duel",
+   "narrationLines": 8,
+   "video": "shorts/atlas-grave__histoire__premier-tour-du-monde-1519-1522/short.mp4"
+  },
+  {
+   "dir": "shorts/bauhaus-kinetic__engagement__trouve-l-intrus",
+   "identity": "bauhaus-kinetic",
+   "family": "engagement",
+   "title": "Trouve l'intrus en 5 secondes",
+   "duration": 14.0,
+   "renderTimeSec": 133.3,
+   "libraries": [
+    "Paper.js",
+    "flubber",
+    "anime.js"
+   ],
+   "loopable": false,
+   "mechanic": "défi chronométré + vote en commentaire",
+   "narrationLines": 8,
+   "video": "shorts/bauhaus-kinetic__engagement__trouve-l-intrus/short.mp4"
+  },
+  {
+   "dir": "shorts/bauhaus-kinetic__explicatif__abeilles-hexagones",
+   "identity": "bauhaus-kinetic",
+   "family": "explicatif",
+   "title": "Pourquoi les abeilles construisent en hexagones ?",
+   "duration": 16.0,
+   "renderTimeSec": 135.2,
+   "libraries": [
+    "Paper.js",
+    "flubber",
+    "anime.js"
+   ],
+   "loopable": false,
+   "mechanic": "question-titre + révélation en 4 temps",
+   "narrationLines": 5,
+   "video": "shorts/bauhaus-kinetic__explicatif__abeilles-hexagones/short.mp4"
+  },
+  {
+   "dir": "shorts/gazette-1900__evenements__9-novembre-1989-mur-de-berlin",
+   "identity": "gazette-1900",
+   "family": "evenements",
+   "title": "Ce jour-là : 9 novembre 1989, le Mur de Berlin tombe",
+   "duration": 15.0,
+   "renderTimeSec": 149.8,
+   "libraries": [
+    "GSAP",
+    "OpenCV"
+   ],
+   "loopable": false,
+   "mechanic": "question / souvenir (anniversaire dans 6 jours)",
+   "narrationLines": 8,
+   "video": "shorts/gazette-1900__evenements__9-novembre-1989-mur-de-berlin/short.mp4"
+  },
+  {
+   "dir": "shorts/gazette-1900__histoire__1789-en-20-secondes",
+   "identity": "gazette-1900",
+   "family": "histoire",
+   "title": "1789 en 20 secondes",
+   "duration": 18.75,
+   "renderTimeSec": 367.2,
+   "libraries": [
+    "GSAP",
+    "OpenCV"
+   ],
+   "loopable": false,
+   "mechanic": "vote / récapitulatif",
+   "narrationLines": 7,
+   "video": "shorts/gazette-1900__histoire__1789-en-20-secondes/short.mp4"
+  },
+  {
+   "dir": "shorts/liquid-chrome__abstrait__quatre-peintures-mpm",
+   "identity": "liquid-chrome",
+   "family": "abstrait",
+   "title": "Quatre peintures tombent et se mélangent",
+   "duration": 14.0,
+   "renderTimeSec": 443.7,
+   "libraries": [
+    "Taichi",
+    "OpenCV"
+   ],
+   "loopable": false,
+   "mechanic": "boucle / satisfaction (regarder jusqu'au mélange)",
+   "narrationLines": 6,
+   "video": "shorts/liquid-chrome__abstrait__quatre-peintures-mpm/short.mp4"
+  },
+  {
+   "dir": "shorts/neon-lab__abstrait__champ-de-force-lucioles",
+   "identity": "neon-lab",
+   "family": "abstrait",
+   "title": "Champ de force : 2 000 lucioles néon suivent un attracteur (boucle parfaite)",
+   "duration": 12.0,
+   "renderTimeSec": 199.7,
+   "libraries": [
+    "twgl.js",
+    "OpenCV"
+   ],
+   "loopable": true,
+   "mechanic": "boucle",
+   "narrationLines": 3,
+   "video": "shorts/neon-lab__abstrait__champ-de-force-lucioles/short.mp4"
+  },
+  {
+   "dir": "shorts/neon-lab__explicatif__lune-meme-face",
+   "identity": "neon-lab",
+   "family": "explicatif",
+   "title": "Pourquoi la Lune nous montre toujours la même face ?",
+   "duration": 16.0,
+   "renderTimeSec": 877.7,
+   "libraries": [
+    "three.js",
+    "OpenCV"
+   ],
+   "loopable": false,
+   "mechanic": "question",
+   "narrationLines": 4,
+   "video": "shorts/neon-lab__explicatif__lune-meme-face/short.mp4"
+  },
+  {
+   "dir": "shorts/pastel-diorama__enfants__d-ou-vient-la-pluie",
+   "identity": "pastel-diorama",
+   "family": "enfants",
+   "title": "D'où vient la pluie ? Le voyage de Plip la goutte",
+   "duration": 16.0,
+   "renderTimeSec": 316.8,
+   "libraries": [
+    "Zdog",
+    "GSAP"
+   ],
+   "loopable": false,
+   "mechanic": "question d'enfant + personnage récurrent",
+   "narrationLines": 5,
+   "video": "shorts/pastel-diorama__enfants__d-ou-vient-la-pluie/short.mp4"
+  },
+  {
+   "dir": "shorts/pastel-diorama__engagement__choisis-ta-boite-renard",
+   "identity": "pastel-diorama",
+   "family": "engagement",
+   "title": "Choisis ta boîte : laquelle cache le petit renard ?",
+   "duration": 15.0,
+   "renderTimeSec": 373.1,
+   "libraries": [
+    "A-Frame",
+    "GSAP"
+   ],
+   "loopable": false,
+   "mechanic": "jeu de suivi (bonneteau doux) + vote 1/2/3 + suspense compte à rebours",
+   "narrationLines": 5,
+   "video": "shorts/pastel-diorama__engagement__choisis-ta-boite-renard/short.mp4"
+  },
+  {
+   "dir": "shorts/pixel-arcade__abstrait__la-balle-peut-elle-s-echapper",
+   "identity": "pixel-arcade",
+   "family": "abstrait",
+   "title": "La balle peut-elle s'échapper du cercle ?",
+   "duration": 15.0,
+   "renderTimeSec": 184.3,
+   "libraries": [
+    "p5.js"
+   ],
+   "loopable": false,
+   "mechanic": "suspense (va-t-elle sortir avant d'être trop grosse ?) + compteur",
+   "narrationLines": 6,
+   "video": "shorts/pixel-arcade__abstrait__la-balle-peut-elle-s-echapper/short.mp4"
+  },
+  {
+   "dir": "shorts/pixel-arcade__engagement__quelle-bille-gagne-la-course",
+   "identity": "pixel-arcade",
+   "family": "engagement",
+   "title": "Quelle bille gagne la course ?",
+   "duration": 16.0,
+   "renderTimeSec": 208.5,
+   "libraries": [
+    "Matter.js",
+    "p5.js"
+   ],
+   "loopable": false,
+   "mechanic": "pari / vote en commentaire + suspense (photo finish à 0,10 s)",
+   "narrationLines": 6,
+   "video": "shorts/pixel-arcade__engagement__quelle-bille-gagne-la-course/short.mp4"
+  },
+  {
+   "dir": "shorts/swiss-data__evenements__j-272-eclipse-2-aout-2027",
+   "identity": "swiss-data",
+   "family": "evenements",
+   "title": "J-272 : l'éclipse totale du 2 août 2027",
+   "duration": 15.0,
+   "renderTimeSec": 92.3,
+   "libraries": [
+    "D3.js",
+    "GSAP"
+   ],
+   "loopable": false,
+   "mechanic": "suspense / compte à rebours",
+   "narrationLines": 4,
+   "video": "shorts/swiss-data__evenements__j-272-eclipse-2-aout-2027/short.mp4"
+  },
+  {
+   "dir": "shorts/swiss-data__geographie__ou-vivent-8-milliards",
+   "identity": "swiss-data",
+   "family": "geographie",
+   "title": "Où vivent les 8 milliards d'humains ?",
+   "duration": 15.0,
+   "renderTimeSec": 61.5,
+   "libraries": [
+    "D3.js",
+    "GSAP"
+   ],
+   "loopable": false,
+   "mechanic": "question",
+   "narrationLines": 6,
+   "video": "shorts/swiss-data__geographie__ou-vivent-8-milliards/short.mp4"
+  },
+  {
+   "dir": "shorts/tableau-craie__explicatif__pourquoi-le-ciel-est-bleu",
+   "identity": "tableau-craie",
+   "family": "explicatif",
+   "title": "Pourquoi le ciel est bleu ?",
+   "duration": 16.5,
+   "renderTimeSec": 94.4,
+   "libraries": [
+    "Manim",
+    "PIL/numpy (overlays texte et grain craie)"
+   ],
+   "loopable": false,
+   "mechanic": "question",
+   "narrationLines": 6,
+   "video": "shorts/tableau-craie__explicatif__pourquoi-le-ciel-est-bleu/short.mp4"
+  }
+ ]
+}

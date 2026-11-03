@@ -1,0 +1,34 @@
+{
+ "name": "anime.js",
+ "role": "typo",
+ "bestFor": [
+  "chorégraphies 2D : staggers en grille (stagger(ms,{grid:[c,r],from:'center'|index}))",
+  "piloter des objets JS simples (états {k,o,x,s}) lus ensuite par Paper.js/DOM",
+  "timelines lisibles en ms avec positions absolues"
+ ],
+ "avoidFor": [
+  "physique / simulations à état",
+  "animer directement du DOM puis capturer sans seek (autoplay = non déterministe)"
+ ],
+ "renderCostPer100Frames": [
+  "8,7 ms pour 100 seeks (0,087 ms/frame) d'une timeline de 192 tweens (mesuré, bench Chromium swiftshader sous charge) ; négligeable devant la capture (~30 s/100 frames pour le short complet, scène bauhaus-kinetic explicatif 28,2 s/100 f, engagement 31,7 s/100 f) [bauhaus-kinetic]"
+ ],
+ "gotchas": [
+  "v4 = imports nommés : import { createTimeline, stagger } from '/node_modules/animejs/dist/bundles/anime.esm.min.js' ; plus de anime({...}) global",
+  "déterminisme : createTimeline({autoplay:false}) puis tl.seek(t*1000) dans renderAt ; tout en millisecondes",
+  "ease en chaîne : 'outBack(1.6)', 'inOutQuart', 'outQuad' (pas d'objet)",
+  "plusieurs tweens successifs sur la même propriété d'un même objet (wipe aller puis retour) fonctionnent dans une timeline avec valeurs [from,to] explicites",
+  "tl.add(tableauObjets, {k:[0,1], delay: stagger(40,{grid:[5,6],from:23})}, position) : from accepte l'index de l'élément (révélation depuis l'intrus)"
+ ],
+ "snippetPath": [
+  "shorts/bauhaus-kinetic__explicatif__abeilles-hexagones/src"
+ ],
+ "pairsWellWith": [
+  "Paper.js",
+  "flubber",
+  "DOM/CSS pour le texte"
+ ],
+ "usedBy": [
+  "bauhaus-kinetic"
+ ]
+}

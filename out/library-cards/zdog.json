@@ -1,0 +1,36 @@
+{
+ "name": "Zdog",
+ "role": "3D",
+ "bestFor": [
+  "maquettes pseudo-3D plates à traits ronds (jouets, feutrine, pop-up)",
+  "personnages simples à visage minimal (chemins bezier remplis + stroke)",
+  "scènes enfants très lisibles et légères",
+  "positions écran d'ancres via renderOrigin pour caler des éléments 2D"
+ ],
+ "avoidFor": [
+  "éclairage/ombres réalistes",
+  "scènes > quelques centaines de formes",
+  "intersections de volumes (tri par z du centre seulement)"
+ ],
+ "renderCostPer100Frames": [
+  "66 s (mesuré, short pastel-diorama__enfants__d-ou-vient-la-pluie, canvas 1080×1920 + overlays DOM, 480 frames en 316,8 s, CPU 4 cœurs partagé par 10 studios ; l'essentiel = capture Playwright, le dessin Zdog est négligeable) [pastel-diorama]"
+ ],
+ "gotchas": [
+  "Illustration({resize:false, zoom:1}) sur un canvas 1080×1920 : origine au centre (540,960), y vers le bas",
+  "appeler illo.updateGraph() puis lire anchor.renderOrigin pour obtenir la position d'un point de la maquette tournée, puis repositionner les personnages et illo.updateRenderGraph()",
+  "le tri de profondeur se fait par centre de forme : mettre les personnages à z élevé (300) dans l'illustration non tournée",
+  "Cone pointe vers +z : rotate.x = TAU/4 pour un toit vers le haut",
+  "les couleurs acceptent rgba() -> fondus et 'vapeur' translucide sans canvas supplémentaire",
+  "un visage collé sur un groupe qui tourne tourne avec lui : séparer les rayons du soleil (Anchor dédié) du visage"
+ ],
+ "snippetPath": [
+  "shorts/pastel-diorama__enfants__d-ou-vient-la-pluie/src"
+ ],
+ "pairsWellWith": [
+  "GSAP",
+  "overlays DOM (Baloo 2 / Nunito)"
+ ],
+ "usedBy": [
+  "pastel-diorama"
+ ]
+}

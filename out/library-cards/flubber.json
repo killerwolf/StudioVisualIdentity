@@ -1,0 +1,32 @@
+{
+ "name": "flubber",
+ "role": "post-traitement",
+ "bestFor": [
+  "morphing de formes 2D (carré->hexagone, cercle->hexagone, badge de compte à rebours)",
+  "transitions « une forme devient une autre » dans une identité géométrique"
+ ],
+ "avoidFor": [
+  "contours très détaillés / texte (artefacts de correspondance des points)",
+  "formes à trous multiples (préférer interpolateAll / séparer)"
+ ],
+ "renderCostPer100Frames": [
+  "0,43 s pour 100 frames × 64 morphs cercle(48 pts)->hexagone en string:false (4,3 ms/frame) ; 1,5 s en sortie chaîne SVG ; construction d'un interpolateur 0,3 ms (mesuré, bench Chromium sous charge, scène explicatif) [bauhaus-kinetic]"
+ ],
+ "gotchas": [
+  "UMD seulement : <script src='/node_modules/flubber/build/flubber.min.js'> -> global flubber",
+  "{string:false} renvoie des tableaux de points : 3,5× plus rapide que de reparser une chaîne SVG à chaque frame",
+  "précalculer les interpolateurs une fois (forme unitaire centrée en 0,0) puis translater/échelonner les points par cellule",
+  "donner les cercles en polygones (48–72 points) plutôt qu'en arcs SVG ; maxSegmentLength 6–10 suffit",
+  "pour une chaîne de formes (cercle->carré->triangle->hexagone) : un interpolateur par paire, choisi selon l'étape"
+ ],
+ "snippetPath": [
+  "shorts/bauhaus-kinetic__engagement__trouve-l-intrus/src"
+ ],
+ "pairsWellWith": [
+  "Paper.js",
+  "anime.js"
+ ],
+ "usedBy": [
+  "bauhaus-kinetic"
+ ]
+}

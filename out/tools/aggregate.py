@@ -29,7 +29,9 @@ CANON.update({'three': 'three.js', 'matter': 'Matter.js', 'matterjs': 'Matter.js
 
 
 def canon(name):
-    k = re.sub(r'[^a-z0-9]', '', name.lower().split('(')[0])
+    base = name.lower().split('(')[0]
+    base = re.sub(r'\bv?\d+(\.\d+)*\b', ' ', base)          # retire les versions (« D3.js 7.9 », « anime.js 4.5 v4 »)
+    k = re.sub(r'[^a-z0-9]', '', base.replace('.js', 'js'))
     return CANON.get(k, name.strip())
 
 
@@ -55,7 +57,9 @@ def merge_cards():
         except Exception as e:
             print('carte invalide', p, e); continue
         ident = p.stem.split('__')[0]
-        by[canon(j.get('name', p.stem.split('__')[-1]))].append((ident, j))
+        by[canon(j.get('name') or p.stem.split('__')[-1])].append((ident, j))
+    for old in (OUT / 'library-cards').glob('*.json'):
+        old.unlink()  # régénéré à chaque exécution
     written = []
     for lib, items in sorted(by.items()):
         card = {'name': lib, 'role': items[0][1].get('role', ''), 'bestFor': [], 'avoidFor': [], 'renderCostPer100Frames': [],

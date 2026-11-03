@@ -1,0 +1,55 @@
+{
+ "name": "p5.js",
+ "role": "post-traitement | physique",
+ "bestFor": [
+  "textures peintes (lavis aquarelle par polygones déformés multicouches)",
+  "pré-rendu de décors dans des p5.Graphics au ready puis composition rapide par frame (multiplane, parallaxe)",
+  "transitions organiques par clip de tache déformée (« lavis qui s'ouvre »)",
+  "rendu pixel-art basse résolution (canvas 270×480, pixelDensity(1), noSmooth, upscale CSS ×4 image-rendering:pixelated)",
+  "mécaniques « satisfying » à physique maison (balle dans un anneau tournant, rebonds, croissance)",
+  "sprites dessinés en rect() : billes, tuiles d'anneau, étincelles, ondes",
+  "effets plein cadre via drawingContext (mosaïque pixel-mosaic par drawImage sans lissage)"
+ ],
+ "avoidFor": [
+  "génération de lavis à chaque frame (des milliers de polygones semi-transparents : trop lent)",
+  "3D",
+  "typographie fine (préférer le DOM + @fontsource)",
+  "texte net (faire le texte en DOM au-dessus du canvas)",
+  "3D / shaders lourds (préférer three.js ou twgl)",
+  "milliers de primitives par frame sans précalcul (rect() a un coût JS par appel)"
+ ],
+ "renderCostPer100Frames": [
+  "117,6 s (mesuré, short aquarelle-conte enfants « Où vont les étoiles le jour ? », 450 frames en 529 s, 9 calques p5 + Paper.js + grain CSS, 4 rendus concurrents sur 4 cœurs) ; pré-rendu des 9 calques de lavis au ready ≈ 1–2 s [aquarelle-conte]",
+  "41,0 s (mesuré, scène pixel-arcade abstrait : p5 seul 270×480 ×4 + texte DOM, rendu SEQUENTIAL 450 frames en 184,3 s avec 4 slots CPU partagés) ; la physique maison ring.js coûte 0,0002 s / 100 frames : le coût est celui de la capture Playwright, pas de p5 [pixel-arcade]"
+ ],
+ "gotchas": [
+  "p5 2.x : plus de preload(), setup peut être async ; utiliser new p5(p => …) en mode instance et p.noLoop()",
+  "composer avec p.drawingContext.drawImage(g.elt || g.canvas) + globalAlpha plutôt que tint() (tint est coûteux)",
+  "pixelDensity(1) sur le canvas ET sur chaque createGraphics, sinon taille x2 en headless",
+  "la déformation récursive est proportionnelle à la longueur du segment : un grand rectangle donne des « montagnes » -> subdiviser le bord (points tous les ~90 px)",
+  "clip d'une tache à très grand rayon : arêtes droites visibles -> blob 24 pts/4 niveaux et 5 paliers d'alpha",
+  "calques de parallaxe : largeur ≥ 1080 + décalage max + marge (bande de 15 px découverte sinon)",
+  "fond des calques de ciel : g.background(couleur) avant les lavis pour ne pas laisser de trous aux bords",
+  "p5 v2 : plus de preload() ; créer l'instance new p5(p => { p.setup = () => {...} }) et résoudre une Promise dans setup pour window.ready ; p.noLoop() puis dessiner dans renderAt(t).",
+  "Avec le contrat SEQUENTIAL, renderAt doit faire avancer la simulation de la frame courante à f = round(t·30) et reconstruire l'état si t recule (stills).",
+  "Précalculer les pixels de chaque tuile d'anneau (72 × ~50 pixels) une fois, puis p.fill + p.rect(…,1,1) : ~3 600 rect/frame restent fluides.",
+  "Mosaïque : copier le canvas vers un canvas temporaire réduit puis re-dessiner agrandi avec imageSmoothingEnabled=false (setTransform identité dans save/restore).",
+  "Physique maison déterministe Node/Chromium : seulement sqrt, + − × ÷ et cos/sin d'angles tabulés ; pas d'atan2/asin/hypot dans la boucle (vérifié : évasion 11.825 s / 45 rebonds identiques)."
+ ],
+ "snippetPath": [
+  "shorts/aquarelle-conte__enfants__ou-vont-les-etoiles-le-jour/src",
+  "shorts/pixel-arcade__abstrait__la-balle-peut-elle-s-echapper/src"
+ ],
+ "pairsWellWith": [
+  "Paper.js",
+  "DOM + @fontsource",
+  "GSAP (timeline de texte)",
+  "Matter.js (physique) — p5 ne fait alors que le rendu",
+  "out/tools/sound.py (blips ascendants par rebond)",
+  "DOM + @fontsource Press Start 2P / Rubik Mono One pour le texte"
+ ],
+ "usedBy": [
+  "aquarelle-conte",
+  "pixel-arcade"
+ ]
+}
