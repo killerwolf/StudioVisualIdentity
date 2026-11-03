@@ -1,0 +1,22 @@
+{"identity": "pixel-arcade", "family": "abstrait", "title": "La balle peut-elle s'échapper du cercle ?",
+ "hook": "Frame 0 : titre-question « LA BALLE PEUT-ELLE S'ÉCHAPPER ? » + HUD REBONDS 00 + anneau pixel à brèche qui tourne par paliers ; la balle tombe déjà, 1er rebond à 0,48 s (blip, onde, screenshake).",
+ "duration": 15.0,
+ "libraries": ["p5.js"],
+ "seed": 1007,
+ "renderTimeSec": 184.3,
+ "structure": [
+  {"t": 0, "beat": "hook : question + balle en mouvement dans l'anneau tournant"},
+  {"t": 0.48, "beat": "1er rebond : la tuile touchée s'allume, la balle grandit"},
+  {"t": 0.8, "beat": "règle en mots-clés : CHAQUE REBOND / ELLE GRANDIT (jusqu'à 5 s)"},
+  {"t": 5, "beat": "accélération du rythme : l'anneau se couvre des 4 couleurs, la balle passe de 5 à 20 px logiques"},
+  {"t": 10.3, "beat": "riser : la balle frôle la brèche"},
+  {"t": 11.83, "beat": "évasion au 45e rebond : screenshake 12 px, l'anneau éclate, ÉVADÉE ! (blink-in)"},
+  {"t": 13.25, "beat": "transition pixel-mosaic"},
+  {"t": 13.55, "beat": "carte de fin : BALLE ÉVADÉE ! + REBONDS 45 / TAILLE x4.6 / TEMPS 11.82 + ▶ RECORD !"}
+ ],
+ "engagement": {"mechanic": "suspense (va-t-elle sortir avant d'être trop grosse ?) + compteur", "cta": "▶ RECORD ! (fin de partie arcade, pas de CTA verbal)"},
+ "loopable": false,
+ "sound": {"type": "generated", "voice": false, "music": "chiptune 125 bpm, A pentatonique mineure", "sfx": "45 blips (1 par rebond enregistré par la simulation, hauteur qui monte dans la pentatonique de C sur 2 octaves), coin tous les 10 rebonds, riser 1,5 s avant l'évasion, glass + impact + coin à l'évasion, whoosh de transition"},
+ "qualityChecks": {"stillsReviewed": true, "textMinPx": 56, "safeAreaOk": true, "simVerified": "Chromium == Node (évasion 11.825 s, 45 rebonds ; ?verify=1 -> SIM OK)", "finalFramesReviewed": [0.3, 3, 8, 11.9, 12.4, 14.3]},
+ "notes": "Physique maison ring.js (p5 seul) : gravité 420 px/s² logiques, pas 1/240 s (8 sous-pas/frame), rebond élastique avec vitesse plancher 240 px/s, balle 5 px -> 23 px (+0,4 px par rebond), brèche de 9 tuiles (45°) sur 72, rotation d'une tuile (5°) toutes les 3 frames. Graine 1007 choisie parmi 1500 (scan < 2 s par réglage) : évasion entre 11,4 et 12,4 s avec le plus de rebonds. Pas de boucle parfaite (croissance) : fin propre sur carte de fin identique à l'engagement. Rendu 41,0 s / 100 frames avec 4 slots CPU partagés.",
+ "reproduce": "node out/shorts/pixel-arcade__abstrait__la-balle-peut-elle-s-echapper/src/simulate.cjs --seed 1007 && node out/shorts/pixel-arcade__abstrait__la-balle-peut-elle-s-echapper/src/make_sound.cjs && node out/tools/render.mjs out/shorts/pixel-arcade__abstrait__la-balle-peut-elle-s-echapper/src/index.html --out /tmp/svi/pixel-arcade__abstrait__la-balle-peut-elle-s-echapper/video.mp4 --duration 15 && .venv/bin/python out/tools/sound.py out/shorts/pixel-arcade__abstrait__la-balle-peut-elle-s-echapper/src/sound.json /tmp/svi/pixel-arcade__abstrait__la-balle-peut-elle-s-echapper/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/pixel-arcade__abstrait__la-balle-peut-elle-s-echapper/video.mp4 --music /tmp/svi/pixel-arcade__abstrait__la-balle-peut-elle-s-echapper/music.wav --out out/shorts/pixel-arcade__abstrait__la-balle-peut-elle-s-echapper/short.mp4"}

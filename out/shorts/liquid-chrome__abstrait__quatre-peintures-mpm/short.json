@@ -1,0 +1,67 @@
+{
+ "identity": "liquid-chrome",
+ "family": "abstrait",
+ "title": "Quatre peintures tombent et se mélangent",
+ "hook": "Une perle de peinture chrome lilas déjà en chute à la frame 0 + titre « Quatre peintures tombent… » lisible dès 0,3 s ; impact à 0,62 s",
+ "duration": 14.0,
+ "libraries": [
+  "Taichi",
+  "OpenCV"
+ ],
+ "seed": 11,
+ "renderTimeSec": 443.7,
+ "structure": [
+  {
+   "t": 0,
+   "beat": "hook : goutte lilas en chute, carton 1"
+  },
+  {
+   "t": 0.62,
+   "beat": "impact 1 (lilas)"
+  },
+  {
+   "t": 2.62,
+   "beat": "impact 2 (rose)"
+  },
+  {
+   "t": 4.14,
+   "beat": "impact 3 (menthe)"
+  },
+  {
+   "t": 5.68,
+   "beat": "impact 4 (or), vague"
+  },
+  {
+   "t": 6.6,
+   "beat": "carton « …et se mélangent. », diffusion de couleur"
+  },
+  {
+   "t": 7.2,
+   "beat": "tourbillon (vortex doux) -> marbrures"
+  },
+  {
+   "t": 11.3,
+   "beat": "carton final « Hypnotique. », la matière se pose"
+  },
+  {
+   "t": 14.0,
+   "beat": "fin propre : verre plein, matière encore vivante"
+  }
+ ],
+ "engagement": {
+  "mechanic": "boucle / satisfaction (regarder jusqu'au mélange)",
+  "cta": "Hypnotique. (invitation implicite à revoir)"
+ },
+ "loopable": false,
+ "sound": {
+  "type": "generated",
+  "voice": false
+ },
+ "qualityChecks": {
+  "stillsReviewed": true,
+  "textMinPx": 54,
+  "safeAreaOk": true
+ },
+ "notes": "MLS-MPM 2D fluide faiblement compressible (mpm88, J seul) + viscosité mu(C+C^T)=0.05, E=600, dt=1e-4, 80 sous-pas/frame, grille 90×196 (dx=12 px), 4×6000 particules, couleurs diffusées via la grille à partir de 6,8 s. Rendu : splat bilinéaire 540×960, flou gaussien cv2 σ=2, seuil densité, normales Sobel d'une hauteur multi-échelle, spéculaire Blinn + reflet d'environnement néon + liseré de Fresnel, composition pleine résolution limitée à la bbox. Mesure : 443,7 s pour 420 frames (105,6 s/100 frames ; sim 332,7 s, ombrage 106,1 s) en 1 thread, CPU partagé par 10 studios. Petites bulles d'air visibles dans la pâte (artefact de seuil, gardé : lu comme bulles).",
+ "reproduce": "out/tools/slot.sh .venv/bin/python out/shorts/liquid-chrome__abstrait__quatre-peintures-mpm/src/mpm_paint.py --out /tmp/svi/liquid-a/video.mp4 --duration 14 && .venv/bin/python out/shorts/liquid-chrome__abstrait__quatre-peintures-mpm/src/overlays.py /tmp/svi/liquid-a/ov && .venv/bin/python out/tools/sound.py out/shorts/liquid-chrome__abstrait__quatre-peintures-mpm/src/sound.json /tmp/svi/liquid-a/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/liquid-a/video.mp4 --music /tmp/svi/liquid-a/music.wav --overlay /tmp/svi/liquid-a/ov/o1.png:0:4.3:0.45 --overlay /tmp/svi/liquid-a/ov/o2.png:6.6:10.9:0.45 --overlay /tmp/svi/liquid-a/ov/o3.png:11.3:14:0.45 --out out/shorts/liquid-chrome__abstrait__quatre-peintures-mpm/short.mp4"
+}

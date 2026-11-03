@@ -2,7 +2,7 @@
  "role": "physique",
  "bestFor": ["rendu pixel-art basse résolution (canvas 270×480, pixelDensity(1), noSmooth, upscale CSS ×4 image-rendering:pixelated)", "mécaniques « satisfying » à physique maison (balle dans un anneau tournant, rebonds, croissance)", "sprites dessinés en rect() : billes, tuiles d'anneau, étincelles, ondes", "effets plein cadre via drawingContext (mosaïque pixel-mosaic par drawImage sans lissage)"],
  "avoidFor": ["texte net (faire le texte en DOM au-dessus du canvas)", "3D / shaders lourds (préférer three.js ou twgl)", "milliers de primitives par frame sans précalcul (rect() a un coût JS par appel)"],
- "renderCostPer100Frames": "__P5COST__",
+ "renderCostPer100Frames": "41,0 s (mesuré, scène pixel-arcade abstrait : p5 seul 270×480 ×4 + texte DOM, rendu SEQUENTIAL 450 frames en 184,3 s avec 4 slots CPU partagés) ; la physique maison ring.js coûte 0,0002 s / 100 frames : le coût est celui de la capture Playwright, pas de p5",
  "gotchas": [
    "p5 v2 : plus de preload() ; créer l'instance new p5(p => { p.setup = () => {...} }) et résoudre une Promise dans setup pour window.ready ; p.noLoop() puis dessiner dans renderAt(t).",
    "Avec le contrat SEQUENTIAL, renderAt doit faire avancer la simulation de la frame courante à f = round(t·30) et reconstruire l'état si t recule (stills).",

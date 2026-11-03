@@ -1,0 +1,29 @@
+{
+ "name": "GSAP",
+ "role": "typo",
+ "bestFor": [
+  "unes de journal / affiches animées en DOM (tourniquet, tampon, zoom brusque)",
+  "timelines calées sur une grille bpm, une seule timeline seekée",
+  "compteurs, frises qui se dessinent (scaleX), chutes de blocs avec stagger"
+ ],
+ "avoidFor": [
+  "simulations physiques (préférer Matter pré-simulé)",
+  "milliers d'éléments animés (DOM lent à 1080×1920)",
+  "effets de matière/grain (les faire en post OpenCV)"
+ ],
+ "renderCostPer100Frames": "33,3 s (mesuré, short gazette-1900 evenements 9-novembre-1989, 450 frames en 149,8 s) ; 65,2 s sous forte contention (short histoire 1789, 563 frames en 367,2 s, 10 studios sur 4 cœurs) — le coût est la capture de la page DOM, pas GSAP",
+ "gotchas": [
+  "renderAt = t => { tl.seek(t, false); } sans valeur de retour (timeline thenable)",
+  "immediateRender:false sur chaque fromTo, sinon l'état initial d'un tween tardif écrase les précédents",
+  "une page cachée doit être visibility:hidden + tl.set(visible) à son instant ; la 1re page visible en dur (un set à t=0 ne se rend pas toujours au seek(0))",
+  "un typewriter est plus simple et déterministe calculé dans renderAt (substring) qu'en onUpdate",
+  "mix-blend-mode:multiply sur un tampon rouge le rend invisible sur aplat noir : fond papier 90 %",
+  "fitWidth après loadFonts (mesurer scrollWidth) pour justifier les manchettes à la colonne"
+ ],
+ "snippetPath": "shorts/gazette-1900__histoire__1789-en-20-secondes/src",
+ "pairsWellWith": [
+  "OpenCV (post grain/pellicule)",
+  "canvas 2D natif (gravures en hachures)",
+  "sound.py (SFX calés sur la même grille bpm)"
+ ]
+}

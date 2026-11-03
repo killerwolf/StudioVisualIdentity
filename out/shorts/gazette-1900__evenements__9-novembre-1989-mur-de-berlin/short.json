@@ -1,0 +1,51 @@
+{
+ "identity": "gazette-1900",
+ "family": "evenements",
+ "title": "Ce jour-là : 9 novembre 1989, le Mur de Berlin tombe",
+ "hook": "Frame 0 : une « LE PETIT CRIEUR — Ce jour-là — 9 NOV. 1989 — LE MUR DE BERLIN TOMBE » en plein tourbillon, posée à 0,5 s, tampon rouge « Édition spéciale » à 0,62 s.",
+ "duration": 15.0,
+ "libraries": [
+  "GSAP",
+  "OpenCV"
+ ],
+ "seed": 1989,
+ "renderTimeSec": 149.8,
+ "structure": [
+  {
+   "t": 0,
+   "beat": "hook : une de l'époque, tampon Édition spéciale, dépêche « la frontière est ouverte ! », zoom brusque"
+  },
+  {
+   "t": 3.75,
+   "beat": "une « dépêches » : AOÛT 1961 / 155 KM / 28 ANS tamponnés tous les 3 temps"
+  },
+  {
+   "t": 8.4375,
+   "beat": "une « La brèche » : fissure puis chute des blocs du mur, foule en liesse, tampon Ouvert !"
+  },
+  {
+   "t": 11.25,
+   "beat": "une du 9 novembre 2026 : compteur il y a 00→37 ANS, frise 1961-1989-2026"
+  },
+  {
+   "t": 14.0625,
+   "beat": "tampon « Au prochain numéro » + question à l'audience, fin propre"
+  }
+ ],
+ "engagement": {
+  "mechanic": "question / souvenir (anniversaire dans 6 jours)",
+  "cta": "ET VOUS ? racontez en commentaire."
+ },
+ "loopable": false,
+ "sound": {
+  "type": "generated",
+  "voice": false
+ },
+ "qualityChecks": {
+  "stillsReviewed": true,
+  "textMinPx": 54,
+  "safeAreaOk": true
+ },
+ "notes": "Même système que le short 1789 (gazette.js identique, tokens communs) : tourniquet 0,55 s power3.out, tampon 0,16 s power4.in, typewriter, zoom brusque ×1,1. Faits : Mur construit à partir d'août 1961, ≈155 km autour de Berlin-Ouest, 28 ans ; frontière ouverte dans la nuit du 9 au 10 novembre 1989 (on ne dit pas qu'il est démoli cette nuit-là). 37 ans au 9 novembre 2026. Post OpenCV 95,5 s / 450 frames (21,2 s/100 f) ; renderTimeSec = render.mjs seul (33,3 s/100 f). Total pipeline ≈ 250 s. Poids 16,0 Mo.",
+ "reproduce": "bash out/shorts/gazette-1900__evenements__9-novembre-1989-mur-de-berlin/src/build.sh   # = node out/tools/render.mjs out/shorts/gazette-1900__evenements__9-novembre-1989-mur-de-berlin/src/index.html --out /tmp/svi/gazette-1900__evenements__9-novembre-1989-mur-de-berlin/raw.mp4 --duration 15.0 && out/tools/slot.sh .venv/bin/python out/shorts/gazette-1900__evenements__9-novembre-1989-mur-de-berlin/src/post.py video /tmp/svi/gazette-1900__evenements__9-novembre-1989-mur-de-berlin/raw.mp4 /tmp/svi/gazette-1900__evenements__9-novembre-1989-mur-de-berlin/video.mp4 --seed 1900 --flash 3.75,8.4375,11.25 && .venv/bin/python out/tools/sound.py out/shorts/gazette-1900__evenements__9-novembre-1989-mur-de-berlin/src/sound.json /tmp/svi/gazette-1900__evenements__9-novembre-1989-mur-de-berlin/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/gazette-1900__evenements__9-novembre-1989-mur-de-berlin/video.mp4 --music /tmp/svi/gazette-1900__evenements__9-novembre-1989-mur-de-berlin/music.wav --out out/shorts/gazette-1900__evenements__9-novembre-1989-mur-de-berlin/short.mp4"
+}
