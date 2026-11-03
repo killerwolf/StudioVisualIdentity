@@ -70,7 +70,9 @@ def pcm_from_part(data, mime):
 
 def synth(client, text, style, voice, lang, model):
     from google.genai import types
-    prompt = f"Lis ce texte en {'français' if lang == 'fr' else lang}, avec un ton {style}. Texte : {text}"
+    # IMPORTANT : tout préfixe de consigne ("Dis d'un ton…") est LU À VOIX HAUTE par le modèle (mesuré : 3,1 s -> 6,1 s).
+    # On envoie donc le texte seul ; le style passe par le choix de la voix. `style` et `lang` restent informatifs.
+    prompt = text
     cfg = types.GenerateContentConfig(
         response_modalities=['AUDIO'],
         speech_config=types.SpeechConfig(
@@ -84,6 +86,8 @@ def synth(client, text, style, voice, lang, model):
                 return pcm_from_part(part.data, part.mime_type), m
             except Exception as e:  # quota / modèle indisponible -> retry puis modèle suivant
                 last = e
+                if 'RESOURCE_EXHAUSTED' in str(e) and 'PerDay' in str(e):
+                    break  # quota journalier épuisé pour ce modèle : inutile de réessayer
                 time.sleep(2 ** attempt)
     raise RuntimeError(f'TTS failed: {last}')
 
