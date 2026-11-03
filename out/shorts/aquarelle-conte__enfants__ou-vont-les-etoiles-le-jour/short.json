@@ -1,0 +1,65 @@
+{
+ "identity": "aquarelle-conte",
+ "family": "enfants",
+ "title": "Où vont les étoiles le jour ? (histoire du soir)",
+ "hook": "Nuit aquarelle, une étoile filante traverse le ciel (0,25–1,25 s) pendant que le titre « Où vont les étoiles le jour ? » s'imbibe dans le papier ; Lulu la chouette cligne des yeux à 1,2 s.",
+ "duration": 15.0,
+ "libraries": [
+  "p5.js",
+  "Paper.js"
+ ],
+ "seed": 7,
+ "renderTimeSec": 529,
+ "structure": [
+  {
+   "t": 0,
+   "beat": "hook : nuit, étoile filante, titre"
+  },
+  {
+   "t": 3.5,
+   "beat": "transition lavis qui s'ouvre (aube) depuis le Soleil"
+  },
+  {
+   "t": 4.4,
+   "beat": "le Soleil se lève, les étoiles s'effacent"
+  },
+  {
+   "t": 7.6,
+   "beat": "révélation : cercles pointillés + loupe magique montrant le ciel étoilé derrière la lumière du jour"
+  },
+  {
+   "t": 8.6,
+   "beat": "explication : le Soleil brille si fort qu'il les cache"
+  },
+  {
+   "t": 11.0,
+   "beat": "crépuscule puis nuit (lavis qui s'ouvre), les étoiles reviennent"
+  },
+  {
+   "t": 12.0,
+   "beat": "Bonne nuit, Lulu : paupières qui se ferment"
+  },
+  {
+   "t": 14.2,
+   "beat": "fondu papier (fin)"
+  }
+ ],
+ "engagement": {
+  "mechanic": "question d'enfant + révélation (loupe magique)",
+  "cta": "Ce soir, cherche la première étoile avec tes parents !"
+ },
+ "loopable": false,
+ "sound": {
+  "type": "generated",
+  "voice": false,
+  "preset": "music-box",
+  "spec": "src/sound.json"
+ },
+ "qualityChecks": {
+  "stillsReviewed": true,
+  "textMinPx": 54,
+  "safeAreaOk": true
+ },
+ "notes": "Réponse correcte pour enfants : les étoiles sont toujours dans le ciel le jour, la lumière du Soleil (diffusée par l'atmosphère) est bien plus forte et les cache. Lavis p5 pré-rendus (9 calques) composés par frame ; Paper.js pour Lulu, étincelles, étoile filante, cercles pointillés, loupe. Rendu mesuré 529 s pour 450 frames (117,6 s/100 frames) avec 4 rendus concurrents sur 4 cœurs ; un 1er rendu (507 s) jeté pour une bande de 15 px non couverte à droite (calque trop étroit).",
+ "reproduce": "node out/tools/render.mjs out/shorts/aquarelle-conte__enfants__ou-vont-les-etoiles-le-jour/src/index.html --out /tmp/svi/aquarelle-conte__enfants__ou-vont-les-etoiles-le-jour/video.mp4 --duration 15 && .venv/bin/python out/tools/sound.py out/shorts/aquarelle-conte__enfants__ou-vont-les-etoiles-le-jour/src/sound.json /tmp/svi/aquarelle-conte__enfants__ou-vont-les-etoiles-le-jour/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/aquarelle-conte__enfants__ou-vont-les-etoiles-le-jour/video.mp4 --music /tmp/svi/aquarelle-conte__enfants__ou-vont-les-etoiles-le-jour/music.wav --out out/shorts/aquarelle-conte__enfants__ou-vont-les-etoiles-le-jour/short.mp4"
+}

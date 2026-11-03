@@ -1,0 +1,30 @@
+{
+ "name": "A-Frame",
+ "role": "3D",
+ "bestFor": [
+  "objets-jouets 3D manipulables (boîtes, couvercles, personnages en primitives arrondies)",
+  "éclairage doux hémisphérique type feutrine sans ombres",
+  "scènes de jeu/engagement avec caméra en plongée et push-in"
+ ],
+ "avoidFor": [
+  "ombres temps réel en rendu SwiftShader (5–10 min/100 frames)",
+  "centaines d'entités (préférer three.js InstancedMesh)",
+  "look 2D plat (Zdog est plus léger)"
+ ],
+ "renderCostPer100Frames": "82,9 s (mesuré, short pastel-diorama__engagement__choisis-ta-boite-renard : ~110 entités, antialias, sans ombres, 1080×1920, 450 frames en 373,1 s, CPU 4 cœurs partagé par 10 studios) ; still isolé ≈ 1,2 s",
+ "gotchas": [
+  "geometry/material en CHAÎNES ('primitive: sphere; radius: 0.1')",
+  "boucle coupée : sceneEl.renderer.setAnimationLoop(null) + sceneEl.pause() après 'loaded' + 300–400 ms, puis renderer.render(sceneEl.object3D, sceneEl.camera) dans renderAt",
+  "caméra : Matrix4.lookAt -> quaternion, puis updateMatrixWorld() avant render et avant Vector3.project pour caler des overlays DOM",
+  "renderer='alpha:true' sans composant background -> fond CSS (dégradé + trame) visible derrière la 3D",
+  "AFRAME.registerGeometry fonctionne pour une géométrie maison (roundbox) avec AFRAME.THREE ; ne pas importer three/examples (instance THREE différente)",
+  "masquer le bouton XR : xr-mode-ui='enabled:false' + CSS .a-enter-vr,.a-enter-ar{display:none}",
+  "polices DOM : attendre loadFonts dans la même promesse ready que 'loaded'"
+ ],
+ "snippetPath": "shorts/pastel-diorama__engagement__choisis-ta-boite-renard/src",
+ "pairsWellWith": [
+  "GSAP",
+  "overlays DOM",
+  "Zdog (même palette, même socle)"
+ ]
+}

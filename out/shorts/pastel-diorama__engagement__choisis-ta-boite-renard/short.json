@@ -1,0 +1,59 @@
+{
+ "identity": "pastel-diorama",
+ "family": "engagement",
+ "title": "Choisis ta boîte : laquelle cache le petit renard ?",
+ "hook": "Trois boîtes cadeau tombent en rebondissant sur la maquette, un petit renard pop dessus et salue sous « Où se cache le renard ? » (visible dès 0,1 s)",
+ "duration": 15.0,
+ "libraries": [
+  "A-Frame",
+  "GSAP"
+ ],
+ "seed": 7,
+ "renderTimeSec": 373.1,
+ "structure": [
+  {
+   "t": 0,
+   "beat": "hook : boîtes qui tombent (bounce), renard qui salue, question"
+  },
+  {
+   "t": 1.75,
+   "beat": "le renard saute dans la boîte du milieu, couvercle refermé"
+  },
+  {
+   "t": 3.25,
+   "beat": "Ça mélange… : 6 échanges de plus en plus rapides"
+  },
+  {
+   "t": 8.7,
+   "beat": "1, 2 ou 3 ? numéros + push-in + CTA commentaire + compte à rebours 3-2-1"
+  },
+  {
+   "t": 11.6,
+   "beat": "suspense : la n°2 (départ) est vide !"
+  },
+  {
+   "t": 12.35,
+   "beat": "révélation : le renard jaillit de la n°3, confettis"
+  },
+  {
+   "t": 13.25,
+   "beat": "CTA final : Tu l'avais trouvé ? Dis-le en commentaire !"
+  }
+ ],
+ "engagement": {
+  "mechanic": "jeu de suivi (bonneteau doux) + vote 1/2/3 + suspense compte à rebours",
+  "cta": "Écris ton choix en commentaire ! / Tu l'avais trouvé ? Dis-le en commentaire !"
+ },
+ "loopable": false,
+ "sound": {
+  "type": "generated",
+  "voice": false
+ },
+ "qualityChecks": {
+  "stillsReviewed": true,
+  "textMinPx": 56,
+  "safeAreaOk": true
+ },
+ "notes": "A-Frame 1.8 selon le template : geometry/material en chaînes, setAnimationLoop(null)+pause, caméra Matrix4.lookAt, rendu manuel ; géométrie 'roundbox' enregistrée (BoxGeometry segmentée, sommets projetés sur un rayon) pour des arêtes rondes cohérentes avec Zdog ; renderer alpha:true pour garder le fond rose à points en CSS. Pas d'ombres temps réel (disques transparents). Numéros/étiquettes DOM placés par projection Vector3.project. Boîtes identiques, échanges pré-calculés (renard : boîte du milieu -> emplacement 3). 82,9 s/100 frames mesuré avec CPU partagé.",
+ "reproduce": "node out/tools/render.mjs out/shorts/pastel-diorama__engagement__choisis-ta-boite-renard/src/index.html --out /tmp/svi/pastel-diorama__engagement__choisis-ta-boite-renard/video.mp4 --duration 15 && .venv/bin/python out/tools/sound.py out/shorts/pastel-diorama__engagement__choisis-ta-boite-renard/src/sound.json /tmp/svi/pastel-diorama__engagement__choisis-ta-boite-renard/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/pastel-diorama__engagement__choisis-ta-boite-renard/video.mp4 --music /tmp/svi/pastel-diorama__engagement__choisis-ta-boite-renard/music.wav --out out/shorts/pastel-diorama__engagement__choisis-ta-boite-renard/short.mp4"
+}

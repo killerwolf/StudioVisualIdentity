@@ -1,0 +1,12 @@
+{"identity": "tableau-craie", "family": "explicatif", "title": "Pourquoi le ciel est bleu ?",
+ "hook": "Dès t=0 la question « Pourquoi le ciel / est bleu ? » (bleu en craie bleue) et un soleil qui se dessine à la craie en 0,7 s, souligné à la craie.",
+ "duration": 16.5,
+ "libraries": ["Manim", "PIL/numpy (overlays texte et grain craie)"],
+ "seed": 5, "renderTimeSec": 94.4,
+ "structure": [{"t": 0, "beat": "hook : question + soleil dessiné"}, {"t": 0.9, "beat": "rayon de lumière blanche"}, {"t": 2.6, "beat": "la lumière blanche = 4 ondes de couleurs (longueurs d'onde décroissantes)"}, {"t": 4.9, "beat": "chiffon"}, {"t": 5.4, "beat": "molécule d'air : le rouge passe tout droit, zoom lent"}, {"t": 6.9, "beat": "le bleu est diffusé dans toutes les directions"}, {"t": 8.9, "beat": "chiffon + dézoom"}, {"t": 9.4, "beat": "barres de diffusion : rouge 700 nm ×1, bleu 450 nm ×5 (∝ 1/λ⁴)"}, {"t": 11.6, "beat": "chiffon"}, {"t": 12.0, "beat": "Et le soir ? Terre + atmosphère, midi : trajet court"}, {"t": 13.9, "beat": "soir : soleil à l'horizon, trajet long, le bleu se perd en route"}, {"t": 15.0, "beat": "chute : l'atmosphère rougit, « le bleu se perd, le ciel rougit ! », tenue finale"}],
+ "engagement": {"mechanic": "question", "cta": "Et toi, tu sais pourquoi les nuages sont blancs ? Réponds en commentaire !"},
+ "loopable": false,
+ "sound": {"type": "generated", "voice": false},
+ "qualityChecks": {"stillsReviewed": true, "textMinPx": 60, "safeAreaOk": true},
+ "notes": "Manim 0.22 (Cairo) dessine toutes les formes en 3 passes de craie tremblées ; Text()/MathTex indisponibles -> 17 overlays PNG Caveat/Nunito (textpng.text_layer + masque de grain) composités frame par frame en numpy (composite.py), plus un overlay de grain = pixels de l'ardoise qui troue les tracés. Rendu Manim 94,4 s pour 495 frames (19,1 s/100 frames) après obtention du slot ; compositing ≈ 40 s. Science : diffusion Rayleigh ∝ 1/λ⁴, (700/450)⁴ ≈ 5,9 → « ×5 » arrondi, coucher de soleil = trajet plus long. Défaut mineur connu : pendant le zoom et sous la Terre (aplat), le rebord bois de l'ardoise réapparaît en grain (overlay de grain en espace écran).",
+ "reproduce": "bash out/shorts/tableau-craie__explicatif__pourquoi-le-ciel-est-bleu/src/build.sh 30"}

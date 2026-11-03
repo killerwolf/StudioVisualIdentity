@@ -1,0 +1,37 @@
+{
+ "language": "fr",
+ "style": "conteuse douce et chuchotée, histoire du soir pour enfants de 3-7 ans, débit lent, sourire dans la voix",
+ "voice": "Aoede",
+ "lines": [
+  {
+   "t": 0.3,
+   "maxDuration": 2.4,
+   "text": "Lulu la petite chouette se demande :"
+  },
+  {
+   "t": 2.8,
+   "maxDuration": 2.4,
+   "text": "où vont les étoiles, le jour ?"
+  },
+  {
+   "t": 5.3,
+   "maxDuration": 2.35,
+   "text": "Le Soleil se lève… plus d'étoiles ?"
+  },
+  {
+   "t": 7.7,
+   "maxDuration": 2.0,
+   "text": "Si ! Elles sont toujours là."
+  },
+  {
+   "t": 9.75,
+   "maxDuration": 3.1,
+   "text": "Le Soleil brille si fort qu'il les cache."
+  },
+  {
+   "t": 12.9,
+   "maxDuration": 1.6,
+   "text": "Bonne nuit, Lulu."
+  }
+ ]
+}

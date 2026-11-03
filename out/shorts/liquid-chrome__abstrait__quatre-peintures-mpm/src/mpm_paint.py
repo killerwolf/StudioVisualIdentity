@@ -261,8 +261,9 @@ def shade(D, Cs):
     rx, ry = 2 * nz * nx, 2 * nz * ny                 # reflet de V=(0,0,1)
     fres = (1 - nz) ** 2
     e = env(rx, ry)
-    c = baseF * (0.26 + 0.55 * diff[..., None]) + e * baseF * (0.42 + 0.9 * fres[..., None]) \
-        + e * (0.6 * fres[..., None]) + spec[..., None]
+    er = env(nx * 1.3, ny * 1.3)                      # liseré : on lit l'environnement dans la direction de la normale
+    c = baseF * (0.26 + 0.55 * diff[..., None]) + e * baseF * (0.42 + 0.5 * fres[..., None]) \
+        + er * (0.25 + 0.75 * baseF) * fres[..., None] + spec[..., None]
     return np.clip(c, 0, 1), alpha
 
 

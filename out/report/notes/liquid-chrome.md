@@ -3,3 +3,4 @@
 - 21:35:17 test MPM #2 (24k, 80 sous-pas, viscosité) : 134 s/100 frames sous contention, formes de peinture correctes. Ombrage encore terne (argile) -> dôme multi-échelle plus fort, lustre large, reflets env ×1.7 ; seuil densité 0.18->0.12 (trous).
 - 21:35:17 engagement three.js : Syne 800 à 92 px ≈ 75 px/caractère -> « Quelle couleur » (1037 px) ne tient pas en 880 px. Décision : légende Inter 500 54 px « QUELLE COULEUR » + titre Syne « remplit le verre en premier ? » sur 3 lignes ; éprouvettes raccourcies (HT 2.16) sous le titre ; gouttes de fond déplacées sur les côtés (elles masquaient les numéros).
 - 21:35:17 file d'attente CPU : 4 slots occupés par d'autres studios, attente normale.
+- 21:42:35 test MPM #3 (2,5 s) : perles chrome convaincantes, 74,7 s/100 frames (1–2 gouttes actives), ombrage 0,27 s/frame après bbox. Liseré sombre au bord (reflet R≈(0,0,-1) en incidence rasante) -> liseré lu dans la direction de la normale. Lancement du rendu complet 14 s.
