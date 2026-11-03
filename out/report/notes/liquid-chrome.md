@@ -5,3 +5,7 @@
 - 21:35:17 file d'attente CPU : 4 slots occupés par d'autres studios, attente normale.
 - 21:42:35 test MPM #3 (2,5 s) : perles chrome convaincantes, 74,7 s/100 frames (1–2 gouttes actives), ombrage 0,27 s/frame après bbox. Liseré sombre au bord (reflet R≈(0,0,-1) en incidence rasante) -> liseré lu dans la direction de la normale. Lancement du rendu complet 14 s.
 - 21:52:03 engagement : 1er rendu complet avec verre en transmission = ~5 s/frame (60 frames en ~5 min, CPU saturé) -> estimé 37 min. Tué. Verre remplacé par un MeshPhysicalMaterial noir en blending additif (seuls les reflets d'environnement s'ajoutent, pas de passe de transmission). Rendu relancé.
+- 22:06:53 abstrait rendu complet : 443,7 s / 420 frames (105,6 s/100 ; sim 332,7 s, ombrage 106,1 s). Impacts mesurés par différence de frames (0,62 / 2,63 / 4,15 / 5,68 s) -> SFX recalés. check.py OK.
+- 22:06:53 engagement rendu complet (verre additif) : 800,9 s / 450 frames (178 s/100 frames) sous CPU saturé. check.py OK.
+- 22:06:53 Phase 3 : poster = frame 10,4 s de l'engagement (ralenti, égalité 90/90) ; planche-contact 9 frames ; tokens/identity/recettes mis à jour avec les coûts mesurés ; cartes Taichi, OpenCV, three.js.
+- note : la voix off n'est pas générée (GEMINI_API_KEY absente) ; narration.json prêts (voix Achernar).

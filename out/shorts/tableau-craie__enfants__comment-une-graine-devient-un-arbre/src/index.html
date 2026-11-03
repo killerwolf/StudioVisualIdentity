@@ -100,6 +100,9 @@ function chiffon(at, dur, els) {
     const b = el.getBBox(), cx = b.x + b.width / 2, k = S.clamp((cx + 300) / 1680);
     tl.to(el, { opacity: 0, duration: 0.24, ease: 'sine.inOut' }, at + Math.max(0, dur * (0.15 + 0.7 * k) - 0.12));
   });
+  // les tracés effacés sortent du rendu (display:none) : des éléments à opacité 0 sous le filtre de grain
+  // provoquaient un tracé fantôme intermittent (raster Chromium/SwiftShader)
+  tl.set(els, { display: 'none' }, at + dur + 0.05);
   const r = S.rng(SEED + Math.round(at * 10));
   for (let i = 0; i < 3; i++) { // traces de chiffon qui restent
     const re = document.createElementNS(NS, 'rect'); const w = 360 + r() * 360, h = 30 + r() * 40;
@@ -225,7 +228,7 @@ function build() {
   tl.set(seed2O, { opacity: 1 }, 13.7);
   tl.to(seed2O, { y: 1166, duration: 0.9, ease: 'bounce.out' }, 13.7);
   tl.to(seed2O, { x: 820, duration: 0.9, ease: 'power1.out' }, 13.7);
-  tl.to(seed2, { rotation: 200, transformOrigin: '50% 50%', duration: 0.9, ease: 'power1.out' }, 13.7);
+  // (pas de rotation sur seed2 : une rotation de 200° déclenchait un artefact de peinture Chromium/SwiftShader sous filtre)
   chalkOut(h5, 14.2);
   const k6 = txt('Et ça recommence !', 510, 330, 92, P.orange, { family: 'Nunito', weight: 800 }); chalkIn(k6, 14.4);
   tl.to(cam, { scale: 0.96, svgOrigin: '540 900', duration: 2.2, ease: 'sine.inOut' }, 13.0);

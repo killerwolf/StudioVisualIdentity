@@ -12,4 +12,4 @@ Pour un short **abstrait** dans cette identité :
 - **Fermer par** : la matière encore vivante (pas de fondu au noir — le fond sombre déclencherait `blackdetect`), dernier carton tenu 2,5 s ; la fin peut boucler visuellement sur un verre plein.
 - **Tokens** : fond `#0B0B10` + halos, table `#1A1A24`, verre liseré chrome `#DBE3FF`, shading OpenCV (spéculaire n=90 ×1,25 + lustre n=14 ×0,22, env néon, Fresnel (1−n_z)²), caption y = 232, titre y = 306, x = 72.
 - **Paramètres MPM** : grille 90×196 (dx = 1/160 = 12 px), dt = 1e-4, 80 sous-pas/frame, E = 600, μ = 0,05, gravité 20, 4 × 6 000 particules ; splat bilinéaire en 540×960, flou σ = 2, seuil densité 0,12–0,32.
-- **Coût** : voir `short.json` (renderTimeSec) — compter ≈ 1–1,5 s/frame en 1 thread sur CPU partagé ; lancer via `out/tools/slot.sh`.
+- **Coût mesuré** : 443,7 s pour 420 frames (105,6 s/100 frames : simulation 332,7 s + ombrage 106,1 s), 1 thread, lancé via `out/tools/slot.sh`.

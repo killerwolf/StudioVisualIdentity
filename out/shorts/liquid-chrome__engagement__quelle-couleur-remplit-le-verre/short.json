@@ -1,0 +1,70 @@
+{
+ "identity": "liquid-chrome",
+ "family": "engagement",
+ "title": "Quelle couleur remplit le verre en premier ?",
+ "hook": "Question lisible à la frame 0 (« QUELLE COULEUR / remplit le verre en premier ? ») sur 4 éprouvettes numérotées ; les 4 filets chrome démarrent à 0,45 s avec un arpège de pops",
+ "duration": 15.0,
+ "libraries": [
+  "three.js"
+ ],
+ "seed": 7,
+ "renderTimeSec": 800.9,
+ "structure": [
+  {
+   "t": 0,
+   "beat": "hook : question + 4 verres vides"
+  },
+  {
+   "t": 0.45,
+   "beat": "départ des 4 filets"
+  },
+  {
+   "t": 1.0,
+   "beat": "rose en tête"
+  },
+  {
+   "t": 4.5,
+   "beat": "l'or passe devant ; légende « FAIS TON PARI… »"
+  },
+  {
+   "t": 9.65,
+   "beat": "ralenti ×0,5, menthe remonte"
+  },
+  {
+   "t": 10.3,
+   "beat": "dépassement décisif de la menthe (dans le ralenti)"
+  },
+  {
+   "t": 11.65,
+   "beat": "menthe à 100 % : impact + chime, filets coupés, gagnant illuminé"
+  },
+  {
+   "t": 11.8,
+   "beat": "« Menthe gagne ! »"
+  },
+  {
+   "t": 12.6,
+   "beat": "CTA « Commente ta couleur ↓ »"
+  },
+  {
+   "t": 15.0,
+   "beat": "fin propre : clapot amorti, CTA tenu"
+  }
+ ],
+ "engagement": {
+  "mechanic": "suspense / pari (course à 4 couleurs, 2 changements de tête, ralenti), révélation à la fin",
+  "cta": "Commente ta couleur ↓"
+ },
+ "loopable": false,
+ "sound": {
+  "type": "generated",
+  "voice": false
+ },
+ "qualityChecks": {
+  "stillsReviewed": true,
+  "textMinPx": 54,
+  "safeAreaOk": true
+ },
+ "notes": "Scène sans état : niveaux = intégrale de débits tabulés par seconde de course (RATES), temps de course τ(t) avec ralenti ×0,5 sur τ 10→11. Matières : chrome du poster (gouttes sources et gouttes de fond floues), liquide métal irisé, verre MeshPhysicalMaterial noir en blending additif (reflets seuls). 1er rendu avec verre en transmission abandonné (~5 s/frame, estimé 37 min). Mesure finale : 800,9 s pour 450 frames (178 s/100 frames) sous SwiftShader avec CPU saturé par 10 studios.",
+ "reproduce": "node out/tools/render.mjs out/shorts/liquid-chrome__engagement__quelle-couleur-remplit-le-verre/src/index.html --out /tmp/svi/liquid-b/video.mp4 --duration 15 && .venv/bin/python out/tools/sound.py out/shorts/liquid-chrome__engagement__quelle-couleur-remplit-le-verre/src/sound.json /tmp/svi/liquid-b/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/liquid-b/video.mp4 --music /tmp/svi/liquid-b/music.wav --out out/shorts/liquid-chrome__engagement__quelle-couleur-remplit-le-verre/short.mp4"
+}

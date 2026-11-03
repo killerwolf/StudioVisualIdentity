@@ -1,0 +1,7 @@
+{"name": "GSAP 3.15", "role": "typo",
+ "bestFor": ["orchestrer un short entier sur UNE timeline en pause, rendue par tl.seek(t, false) (déterministe, non séquentiel)", "easings nommés expressifs (back.out, bounce.out, power3.out) pour pops et chutes", "animer stroke-dashoffset de tracés SVG (écriture à la craie) avec stagger", "zoom caméra 2D via scale + svgOrigin sur un groupe"],
+ "avoidFor": ["physique réelle (préférer Matter pré-simulé)", "scènes à état non réversible sans SEQUENTIAL"],
+ "renderCostPer100Frames": "≈ 0 s pour GSAP lui-même (seek instantané) ; coût total de la scène 309 s/100 frames dominé par le raster SVG filtré (voir carte Rough.js), mesuré sur « Comment une graine devient un arbre ? » (465 frames, 1437,7 s)",
+ "gotchas": ["renderAt = t => { tl.seek(t, false); } sans return (la timeline est thenable)", "fromTo(..., {immediateRender:false}) : poser l'état caché initial à la main (dashoffset = longueur, opacity 0) sinon l'objet est visible avant son tween", "svgOrigin sur un tween de rotation d'un <g> déjà translaté (x/y GSAP) a déplacé l'objet : imbriquer outer (x/y) / inner (rotation/scale avec transformOrigin '50% 50%')", "tl.set({}, {}, DUR) pour étendre la timeline jusqu'à la fin", "yoyo + repeat pour un « souffle » d'emphase (feuilles)"],
+ "snippetPath": "shorts/tableau-craie__enfants__comment-une-graine-devient-un-arbre/src",
+ "pairsWellWith": ["Rough.js", "SVG", "render.mjs (contrat renderAt)"]}

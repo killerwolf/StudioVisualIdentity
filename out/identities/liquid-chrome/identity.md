@@ -32,7 +32,7 @@ Vidéo « satisfying », publicité de parfum ou de cosmétique de luxe, macro d
 ## Formes & matières
 - Gouttes chrome déformées par bruit (icosaèdre subdivisé, bruit 3D lent, bas plus lourd) — la signature héritée du poster.
 - Liquides : métal coloré irisé (metalness 0.85, roughness 0.14, iridescence 0.45, clearcoat 1) ou, en 2D, peinture visqueuse ombrée par OpenCV (normales d'un champ de hauteur multi-échelle, spéculaire Blinn n=90 + lustre n=14, reflet d'environnement néon, liseré de Fresnel).
-- Verre : contenant fin, liseré chrome antialiasé + 2 reflets verticaux doux ; en 3D, MeshPhysicalMaterial transmission 1, ior 1.45, anneau chrome au col.
+- Verre : contenant fin, liseré chrome antialiasé + 2 reflets verticaux doux ; en 3D, MeshPhysicalMaterial noir en blending additif (seuls les reflets néon s'ajoutent), anneau chrome au col.
 - Les formes sont rondes, bombées, sans arêtes vives ; pas de contour noir.
 
 ## Langage de mouvement (easings nommés, durées, staggers, ce qu'on ne fait jamais)
@@ -81,8 +81,9 @@ Haut 220 px, bas 320 px, droite 120 px. Légende à y = 232, titre à y = 306, x
 Voix Gemini **Achernar** (calme), débit 2,3–2,6 mots/s, phrases de 2 à 6 mots posées **entre** les impacts sonores (les chutes et la victoire restent « à nu »). Le visuel ne porte que 1 titre + 1 légende à la fois et laisse la moitié basse de l'écran à la matière : la voix raconte ce qu'on ressent (« Chacune tombe de tout son poids »), l'écran ne la double pas mot à mot. La musique (pad / pulse) est duckée sous la voix par `assemble.py --voice`.
 
 ## Risques et limites
-- **Coût** : Taichi MPM en 1 thread ≈ 1–1,5 s/frame avec 24 k particules (CPU partagé) ; ne pas dépasser ~25 k particules ni 14 s sans budget.
+- **Coût mesuré** : Taichi MPM + ombrage OpenCV = 443,7 s pour 14 s (105,6 s/100 frames, 24 k particules, 1 thread) ; three.js = 800,9 s pour 15 s (178 s/100 frames, CPU saturé). Ne pas dépasser ~25 k particules ni 15 s sans budget.
 - **Fond très sombre** : `#0B0B10` seul est détecté noir par `blackdetect` ; toujours garder des halos et une matière visible ≥ 2 % de l'image.
 - **Syne 800 très large** : 11 caractères/ligne à 92 px, les titres doivent être courts (sinon légende + titre).
 - **Mélange MPM** : les couleurs ne se mélangent pas seules (particules) — on diffuse la couleur via la grille, à doser (trop fort = gris lavande terne).
-- **Transmission three.js** sous SwiftShader : correcte mais le haut vide des éprouvettes paraît fumé ; les gouttes de fond doivent rester sur les côtés pour ne pas masquer les chiffres.
+- **Transmission three.js** sous SwiftShader : ~5 s/frame mesuré, rendu abandonné -> verre additif (reflets seuls, pas de réfraction). Les gouttes de fond doivent rester sur les côtés pour ne pas masquer les chiffres.
+- **Artefacts MPM** : petites bulles d'air et bord supérieur légèrement granuleux (seuil de densité) ; lus comme des bulles de peinture, mais visibles en plein écran.
