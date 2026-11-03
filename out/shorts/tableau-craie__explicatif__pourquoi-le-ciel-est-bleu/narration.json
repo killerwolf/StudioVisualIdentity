@@ -1,0 +1,9 @@
+{"language": "fr", "style": "prof de sciences bienveillant et passionné, clair, posé, sourire dans la voix", "voice": "Kore",
+ "lines": [
+  {"t": 0.2, "maxDuration": 2.4, "text": "Pourquoi le ciel est-il bleu ?"},
+  {"t": 2.7, "maxDuration": 2.7, "text": "La lumière blanche contient toutes les couleurs."},
+  {"t": 5.5, "maxDuration": 3.15, "text": "Le rouge traverse l'air, le bleu rebondit partout."},
+  {"t": 8.9, "maxDuration": 2.7, "text": "Il est diffusé environ cinq fois plus !"},
+  {"t": 11.7, "maxDuration": 2.2, "text": "Le soir, le trajet s'allonge :"},
+  {"t": 14.1, "maxDuration": 2.35, "text": "le bleu s'efface, le ciel rougit."}
+ ]}

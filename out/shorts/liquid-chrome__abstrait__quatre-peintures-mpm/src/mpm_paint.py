@@ -59,7 +59,7 @@ COLS = [hx(c) for c in PAL]
 NPER = 6000
 N = NPER * 4
 # chutes : (instant d'apparition s, centre x px, centre y px (négatif = au-dessus du cadre), rayon px, vx, vy)
-DROPS = [(0.00, 360, 560, 168, 0.20, -0.3),
+DROPS = [(0.00, 380, 830, 168, 0.20, -0.5),
          (1.55, 700, -190, 160, -0.35, -0.6),
          (3.10, 420, -190, 160, 0.40, -0.6),
          (4.65, 610, -190, 168, -0.20, -0.6)]
@@ -234,6 +234,7 @@ def glass_layer():
     colr = np.ones((H, W, 3), np.float32) * np.array([0.86, 0.89, 1.0], np.float32)
     return colr, alpha
 GLASS, GA = glass_layer()
+BGG = (np.clip(BG * (1 - GA[..., None]) + GLASS * GA[..., None], 0, 1) * 255).astype(np.uint8)[..., ::-1].copy()  # fond + verre, BGR
 
 
 def shade(D, Cs):
@@ -246,36 +247,42 @@ def shade(D, Cs):
     # ombrage en demi-résolution (540×960), puis agrandissement cubique : ×4 moins cher qu'en pleine résolution
     dF = Db / DENS
     baseF = base
-    alpha = np.clip((dF - 0.18) / 0.22, 0, 1)
+    alpha = np.clip((dF - 0.12) / 0.20, 0, 1)
     alpha = alpha * alpha * (3 - 2 * alpha)
     # hauteur multi-échelle : biseau fin au bord + dôme large (reflets qui glissent sur toute la surface)
-    h = cv2.GaussianBlur(alpha, (0, 0), 4.5) + 0.55 * cv2.GaussianBlur(alpha, (0, 0), 22.0) \
-        + 0.025 * cv2.GaussianBlur(np.clip(dF, 0, 2), (0, 0), 3.0)
+    h = cv2.GaussianBlur(alpha, (0, 0), 4.5) + 0.9 * cv2.GaussianBlur(alpha, (0, 0), 24.0)
     gx = cv2.Sobel(h, cv2.CV_32F, 1, 0, ksize=3); gy = cv2.Sobel(h, cv2.CV_32F, 0, 1, ksize=3)
     k = 11.0
     nx, ny, nz = -gx * k, -gy * k, np.ones_like(h)
     inv = 1.0 / np.sqrt(nx * nx + ny * ny + nz * nz); nx *= inv; ny *= inv; nz *= inv
     diff = np.clip(nx * L[0] + ny * L[1] + nz * L[2], 0, 1)
-    spec = np.clip(nx * Hh[0] + ny * Hh[1] + nz * Hh[2], 0, 1) ** 90
+    nh = np.clip(nx * Hh[0] + ny * Hh[1] + nz * Hh[2], 0, 1)
+    spec = nh ** 90 * 1.25 + nh ** 14 * 0.22          # point brillant + lustre large
     rx, ry = 2 * nz * nx, 2 * nz * ny                 # reflet de V=(0,0,1)
     fres = (1 - nz) ** 2
     e = env(rx, ry)
-    c = baseF * (0.30 + 0.62 * diff[..., None]) + e * baseF * (0.25 + 0.9 * fres[..., None]) \
-        + e * (0.55 * fres[..., None]) + spec[..., None] * 1.25
-    c = np.clip(c, 0, 1)
-    c = cv2.resize(c, (W, H), interpolation=cv2.INTER_CUBIC)
-    alpha = np.clip(cv2.resize(alpha, (W, H), interpolation=cv2.INTER_CUBIC), 0, 1)
-    return c, alpha
+    c = baseF * (0.26 + 0.55 * diff[..., None]) + e * baseF * (0.42 + 0.9 * fres[..., None]) \
+        + e * (0.6 * fres[..., None]) + spec[..., None]
+    return np.clip(c, 0, 1), alpha
 
 
 def frame_image():
     splat()
     D = acc.to_numpy(); Cs = accc.to_numpy()
     c, al = shade(D, Cs)
-    out = BG * (1 - al[..., None]) + c * al[..., None]
-    # reflet du liquide sur la « table » (sous le verre)
-    out = out * (1 - GA[..., None]) + GLASS * GA[..., None]
-    return (np.clip(out, 0, 1) * 255).astype(np.uint8)[..., ::-1]   # BGR
+    out = BGG.copy()
+    ys, xs = np.nonzero(al > 0.002)
+    if len(ys):
+        # composition pleine résolution limitée à la boîte englobante du liquide (×3 plus rapide)
+        hy0, hy1 = max(0, ys.min() - 6), min(HH, ys.max() + 7); hx0, hx1 = max(0, xs.min() - 6), min(HW, xs.max() + 7)
+        y0, y1, x0, x1 = hy0 * 2, hy1 * 2, hx0 * 2, hx1 * 2
+        cc = cv2.resize(c[hy0:hy1, hx0:hx1], (x1 - x0, y1 - y0), interpolation=cv2.INTER_CUBIC)
+        aa = np.clip(cv2.resize(al[hy0:hy1, hx0:hx1], (x1 - x0, y1 - y0), interpolation=cv2.INTER_CUBIC), 0, 1)[..., None]
+        reg = BG[y0:y1, x0:x1] * (1 - aa) + np.clip(cc, 0, 1) * aa
+        ga = GA[y0:y1, x0:x1, None]
+        reg = reg * (1 - ga) + GLASS[y0:y1, x0:x1] * ga
+        out[y0:y1, x0:x1] = (np.clip(reg, 0, 1) * 255).astype(np.uint8)[..., ::-1]
+    return out
 
 
 dur = a.until if a.until else a.duration

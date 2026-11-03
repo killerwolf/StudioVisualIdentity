@@ -1,0 +1,20 @@
+{
+  "duration": 15.5, "seed": 8, "bpm": 92, "key": "F", "scale": "majpent",
+  "music": {"preset": "music-box", "gain": 0.42, "octave": 4, "density": 0.6, "loop": false},
+  "events": [
+    {"t": 0.02, "type": "tick", "gain": 0.7}, {"t": 0.15, "type": "tick", "gain": 0.5},
+    {"t": 0.48, "type": "pop", "note": "C5", "gain": 0.6}, {"t": 0.78, "type": "pop", "note": "F5", "gain": 0.35}, {"t": 0.96, "type": "pop", "note": "A5", "gain": 0.25},
+    {"t": 1.35, "type": "tick", "gain": 0.6}, {"t": 2.05, "type": "pop", "note": "C6", "gain": 0.45}, {"t": 2.35, "type": "pop", "note": "D6", "gain": 0.45}, {"t": 2.65, "type": "pop", "note": "F6", "gain": 0.45},
+    {"t": 2.7, "type": "swell", "note": "F4", "dur": 0.9, "gain": 0.3}, {"t": 3.1, "type": "click", "gain": 0.6},
+    {"t": 3.6, "type": "tick", "gain": 0.6}, {"t": 3.9, "type": "riser", "dur": 1.6, "gain": 0.22}, {"t": 4.6, "type": "pop", "note": "A5", "gain": 0.4},
+    {"t": 6.0, "type": "tick", "gain": 0.6}, {"t": 6.1, "type": "riser", "dur": 1.0, "gain": 0.22},
+    {"t": 7.2, "type": "pop", "note": "A5", "gain": 0.5}, {"t": 7.55, "type": "pop", "note": "C6", "gain": 0.5}, {"t": 7.9, "type": "pop", "note": "D6", "gain": 0.5},
+    {"t": 8.6, "type": "tick", "gain": 0.6}, {"t": 8.7, "type": "chime", "note": "F5", "gain": 0.5},
+    {"t": 9.3, "type": "blip", "note": "C6", "gain": 0.3}, {"t": 9.48, "type": "blip", "note": "D6", "gain": 0.3}, {"t": 9.66, "type": "blip", "note": "F6", "gain": 0.3},
+    {"t": 10.2, "type": "glass", "note": "C6", "gain": 0.4},
+    {"t": 11.2, "type": "whoosh", "dur": 0.6, "gain": 0.4},
+    {"t": 11.7, "type": "tick", "gain": 0.6}, {"t": 12.4, "type": "swell", "note": "F4", "dur": 1.4, "gain": 0.45}, {"t": 12.5, "type": "chime", "note": "A5", "gain": 0.45},
+    {"t": 13.0, "type": "pop", "note": "F5", "gain": 0.35}, {"t": 13.1, "type": "pop", "note": "A5", "gain": 0.35}, {"t": 13.2, "type": "pop", "note": "C6", "gain": 0.35}, {"t": 13.3, "type": "pop", "note": "D6", "gain": 0.35}, {"t": 13.4, "type": "pop", "note": "F6", "gain": 0.35},
+    {"t": 14.03, "type": "pop", "note": "C5", "gain": 0.6}, {"t": 14.4, "type": "chime", "note": "F5", "gain": 0.55}
+  ]
+}

@@ -1,0 +1,27 @@
+{
+ "name": "Paper.js 0.17",
+ "role": "typo",
+ "bestFor": [
+  "géométrie vectorielle 2D nette : pavages, rayons de miel, polygones réguliers, quarts de disque (arcTo)",
+  "booléens (subtract/unite) pour des formes Bauhaus composées",
+  "groupes avec masque (clipped) pour contenir un pavage dans un panneau"
+ ],
+ "avoidFor": [
+  "> quelques milliers d'objets par frame (reconstruction complète à chaque frame)",
+  "3D, effets de lumière, particules massives"
+ ],
+ "renderCostPer100Frames": "0,26 s pour 100 frames de 64 hexagones + 1 masque redessinés de zéro (2,6 ms/frame) ; booléen subtract 2,7 ms/opération ; short complet 28,2 s/100 frames (explicatif) dominé par la capture JPEG ~0,3 s/frame (mesuré, Chromium swiftshader, 10 studios sur 4 cœurs)",
+ "gotchas": [
+  "paper-full.min.js en <script> (global paper) puis paper.setup(canvas) ; canvas 1080×1920",
+  "déterministe : P.project.activeLayer.removeChildren() puis tout redessiner dans renderAt, finir par P.view.update()",
+  "h.subtract(m) crée un NOUVEL item déjà inséré : penser à remove() les opérandes",
+  "Group([clip]) + group.clipped = true : le 1er enfant sert de masque",
+  "rotate/scale prennent un point pivot explicite ; scale(0) casse la matrice -> Math.max(0.001,k)",
+  "le texte reste en DOM (polices @fontsource) au-dessus du canvas ; la transition grid-wipe est donc en DOM aussi pour couvrir le texte"
+ ],
+ "snippetPath": "shorts/bauhaus-kinetic__explicatif__abeilles-hexagones/src",
+ "pairsWellWith": [
+  "anime.js",
+  "flubber"
+ ]
+}

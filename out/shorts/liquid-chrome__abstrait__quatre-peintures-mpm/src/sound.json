@@ -1,0 +1,19 @@
+{"duration": 14.0, "seed": 11, "bpm": 72, "key": "D", "scale": "lydian",
+ "music": {"preset": "pad", "gain": 0.55, "octave": 3, "density": 0.4, "loop": false},
+ "events": [
+  {"t": 0.05, "type": "swell", "note": "D5", "gain": 0.35, "dur": 1.2},
+  {"t": 0.62, "type": "thud", "gain": 0.7},
+  {"t": 0.64, "type": "glass", "note": "D5", "gain": 0.35},
+  {"t": 1.70, "type": "whoosh", "gain": 0.35, "dur": 0.8},
+  {"t": 2.55, "type": "thud", "gain": 0.7},
+  {"t": 2.57, "type": "glass", "note": "F#5", "gain": 0.35},
+  {"t": 3.25, "type": "whoosh", "gain": 0.35, "dur": 0.8},
+  {"t": 4.10, "type": "thud", "gain": 0.7},
+  {"t": 4.12, "type": "glass", "note": "A5", "gain": 0.35},
+  {"t": 4.80, "type": "whoosh", "gain": 0.35, "dur": 0.8},
+  {"t": 5.65, "type": "impact", "gain": 0.6},
+  {"t": 5.67, "type": "glass", "note": "C#6", "gain": 0.4},
+  {"t": 6.70, "type": "chime", "note": "E5", "gain": 0.4},
+  {"t": 7.20, "type": "swell", "note": "A4", "gain": 0.5, "dur": 3.4},
+  {"t": 11.30, "type": "chime", "note": "D6", "gain": 0.5, "dur": 2.4}
+ ]}
