@@ -9,3 +9,4 @@
 - 22:06:53 engagement rendu complet (verre additif) : 800,9 s / 450 frames (178 s/100 frames) sous CPU saturé. check.py OK.
 - 22:06:53 Phase 3 : poster = frame 10,4 s de l'engagement (ralenti, égalité 90/90) ; planche-contact 9 frames ; tokens/identity/recettes mis à jour avec les coûts mesurés ; cartes Taichi, OpenCV, three.js.
 - note : la voix off n'est pas générée (GEMINI_API_KEY absente) ; narration.json prêts (voix Achernar).
+- 22:24:49 NOUVELLE TÂCHE : 3e short Babylon.js (pendule de Newton chromé, boucle parfaite T=2,4 s ×5 = 12 s). Env : ReflectionProbe RENDER_ONCE sur sphère dégradé graphite/perle + panneaux (dont une clé chaude #FFE9C8 pour s'éloigner de neon-lab), GlowLayer (éclats de choc, liseré du socle), DefaultRenderingPipeline ACES + DOF.

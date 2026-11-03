@@ -1,0 +1,27 @@
+{
+ "language": "fr",
+ "style": "documentaire posé, curieux ; une phrase par beat, attaque juste après chaque impulsion",
+ "voice": "Orus",
+ "lines": [
+  {
+   "t": 0.3,
+   "maxDuration": 4.0,
+   "text": "Deux pendules doubles, lâchés avec un millième de radian d'écart."
+  },
+  {
+   "t": 4.6,
+   "maxDuration": 3.4,
+   "text": "Au début, ils dansent exactement ensemble."
+  },
+  {
+   "t": 8.35,
+   "maxDuration": 3.4,
+   "text": "Puis l'écart explose : plus rien à voir."
+  },
+  {
+   "t": 12.1,
+   "maxDuration": 2.8,
+   "text": "C'est l'effet papillon : le chaos."
+  }
+ ]
+}

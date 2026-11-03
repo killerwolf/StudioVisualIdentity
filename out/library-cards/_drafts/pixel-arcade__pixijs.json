@@ -1,0 +1,16 @@
+{"name": "PixiJS 8.22",
+ "role": "post-traitement",
+ "bestFor": ["des milliers de sprites/cellules 2D colorées par frame (ParticleContainer : 17 094 particules, couleur dynamique)", "rendu pixel-perfect basse résolution : monde rendu dans une RenderTexture 270×480 scaleMode 'nearest' puis affiché ×4", "effets plein cadre par RenderTexture (pixel-mosaic : RT réduite 1/k ré-agrandie ×4k sans lissage)", "jeux de territoire, automates cellulaires, essaims, grilles de pixels animées"],
+ "avoidFor": ["texte net (faire le texte en DOM ou via textpng)", "3D (three.js)", "physique (coupler Matter.js ou un automate maison)", "ticker temps réel : inutilisable pour un rendu déterministe frame à frame"],
+ "renderCostPer100Frames": "32,6 s (mesuré, scène pixel-arcade engagement territoire : 17 094 particules + Graphics + 2 RenderTextures + texte DOM, rendu SEQUENTIAL 465 frames en 151,4 s, CPU moins chargé — 3 studios) ; automate conquest.js seul 0,11 s / 100 frames en Node : le coût est la capture Playwright, pas Pixi",
+ "gotchas": [
+   "Application v8 : `const app = new PIXI.Application(); await app.init({ width:1080, height:1920, preserveDrawingBuffer:true, autoStart:false, antialias:false, resolution:1, preference:'webgl' })` à attendre dans window.ready ; puis `app.ticker.stop()` et `document.body.prepend(app.canvas)` (v8 : app.canvas, plus app.view).",
+   "Dans renderAt : `app.renderer.render({ container: world, target: rt, clear: true })` puis `app.renderer.render(app.stage)` ; sans preserveDrawingBuffer la capture Playwright peut être noire.",
+   "ParticleContainer v8 : `new PIXI.ParticleContainer({ dynamicProperties: { position:false, rotation:false, vertex:false, uvs:false, color:true } })` + `addParticle(new PIXI.Particle({ texture: PIXI.Texture.WHITE, x, y, scaleX:2, scaleY:2, tint }))` ; les particules sont dans `container.particleChildren` (pas `children`) ; Texture.WHITE fait 1×1 px.",
+   "Ne changer `particle.tint` que si la valeur change (cache par particule) : le setter convertit la couleur à chaque appel.",
+   "Pixel net : `rt.source.scaleMode = 'nearest'` sur CHAQUE RenderTexture (y compris celles de la mosaïque) + CSS `image-rendering: pixelated` sur le canvas ; `roundPixels: true` sur le ParticleContainer.",
+   "Graphics v8 : API chaînée `g.rect(x,y,w,h).fill(color)` ; `g.clear()` à chaque frame pour le HUD dynamique.",
+   "Simulation : garder l'état hors de Pixi (automate en entiers + mulberry32) -> identique Node/Chromium, vérifiable (?verify=1 -> SIM OK)."
+ ],
+ "snippetPath": "shorts/pixel-arcade__engagement__quelle-couleur-conquiert-l-ecran/src",
+ "pairsWellWith": ["automate cellulaire maison pré-simulé en Node (choix de graine)", "Matter.js (physique) avec Pixi pour le rendu", "DOM + @fontsource pour le texte", "out/tools/sound.py (événements de la simulation -> SFX)"]}

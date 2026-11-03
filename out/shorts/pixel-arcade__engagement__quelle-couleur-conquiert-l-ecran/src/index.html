@@ -1,0 +1,169 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8">
+<!-- Arcade Pixel / engagement — « Quelle couleur conquiert l'écran ? »
+     PixiJS 8.22 : ParticleContainer de 17 094 cellules 2×2 px logiques, rendu dans une RenderTexture 270×480 (nearest)
+     affichée ×4 ; transition pixel-mosaic = RenderTexture réduite 1/k ré-agrandie ×4k. Automate conquest.js (SEQUENTIAL).
+     Application : preserveDrawingBuffer + autoStart:false, ticker arrêté, app.renderer.render(app.stage) dans renderAt.
+     ?verify=1 compare les compteurs du navigateur à trace.json (pré-simulation Node). -->
+<script src="/node_modules/pixi.js/dist/pixi.min.js"></script>
+<script src="./conquest.js"></script>
+<style>
+  :root{--bg:#0E0B1F;--surface:#1D1740;--pink:#FF4F79;--green:#3CF2A0;--yellow:#FFD23F;--blue:#4FB3FF;--text:#FFFFFF}
+  html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:var(--bg)}
+  canvas{position:absolute;left:0;top:0;width:1080px;height:1920px;image-rendering:pixelated}
+  .scan{position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(0,0,0,.20) 0 2px,transparent 2px 4px);pointer-events:none}
+  .ov{position:absolute;color:var(--text);font-family:'Press Start 2P';display:none;white-space:nowrap}
+  #hud{top:236px;left:72px;width:888px;font-size:56px;line-height:64px;display:none;justify-content:space-between}
+  #title{left:56px;top:430px;width:900px;padding:32px 32px;background:var(--surface);box-shadow:0 0 0 8px var(--blue),16px 16px 0 8px #000}
+  #title h1{margin:0;font:400 88px/1.08 'Rubik Mono One';letter-spacing:-0.02em;color:#fff;text-shadow:8px 8px 0 var(--pink)}
+  #title h1 span{color:var(--green)}
+  #bet{left:56px;top:960px;width:900px;padding:24px 32px;font-size:56px;line-height:80px;background:var(--surface);box-shadow:0 0 0 8px var(--pink),16px 16px 0 8px #000}
+  #bet b{font-weight:400;color:var(--yellow)}
+  #count{left:0;width:1080px;top:1210px;text-align:center;font:400 240px/1 'Rubik Mono One';color:var(--yellow);text-shadow:12px 12px 0 var(--pink)}
+  .banner{left:72px;width:888px;text-align:center;padding:28px 0;background:var(--surface);box-shadow:0 0 0 8px var(--yellow),16px 16px 0 8px #000}
+  .banner .big{font:400 92px/1.1 'Rubik Mono One';color:#fff;text-shadow:8px 8px 0 var(--pink)}
+  .banner .sm{font-size:56px;line-height:80px;margin-top:16px;color:var(--yellow)}
+  #end{left:72px;top:330px;width:888px}
+  #end .win{font:400 120px/1.05 'Rubik Mono One';letter-spacing:-0.02em;text-shadow:10px 10px 0 #000}
+  #end .row{font-size:56px;line-height:56px;height:104px;padding-left:112px;display:flex;align-items:center}
+  #end .cta{font-size:56px;line-height:84px;margin-top:40px}
+  #end .cta2{font-size:56px;line-height:84px;color:var(--green);margin-top:24px}
+  #verify{left:72px;top:1500px;font-size:40px;background:#000;padding:8px}
+</style></head><body>
+<div id="hud" class="ov"><span id="p1">00%</span><span id="p2">00%</span><span id="p3">00%</span><span id="p4">00%</span></div>
+<div id="title" class="ov"><h1>QUELLE<br>COULEUR<br>CONQUIERT<br><span>L'ÉCRAN&nbsp;?</span></h1></div>
+<div id="bet" class="ov">PARIE SUR TA<br><b>COULEUR</b> <span id="arrow" style="color:var(--green)">&#9654;</span></div>
+<div id="count" class="ov">3</div>
+<div id="battle" class="ov banner" style="top:760px"><div class="big">BATAILLE&nbsp;!</div><div class="sm">ÉCRAN PLEIN</div></div>
+<div id="photo" class="ov banner" style="top:760px"><div class="big">PHOTO<br>FINISH&nbsp;!</div><div class="sm" id="gap">+0.35 %</div></div>
+<div id="end" class="ov"><div class="win" id="winTxt">ROSE<br>GAGNE&nbsp;!</div><div id="rows" style="margin-top:56px"></div>
+  <div class="cta">TU AVAIS PARIÉ<br>SUR QUI&nbsp;?</div><div class="cta2" id="cta2">&#9660; COMMENTE &#9660;</div></div>
+<div id="verify" class="ov"></div>
+<div class="scan"></div>
+<script type="module">
+import * as S from '/out/tools/lib/svi.js';
+const Q = window.Conquest;
+const { GW, GH, CELL, OX, OY, N, FPS, START_F, END_F } = Q;
+const SEED = 175;
+const LW = 270, LH = 480, DUR = 15.5;
+const START_T = START_F / FPS, END_T = END_F / FPS;          // 2,4 s / 12,0 s
+const T_MOSAIC = [13.3, 13.9], T_END = 13.6;
+const COLS = [0x0E0B1F, 0xFF4F79, 0x3CF2A0, 0xFFD23F, 0x4FB3FF], CSS = ['#0E0B1F', '#FF4F79', '#3CF2A0', '#FFD23F', '#4FB3FF'];
+const LIGHT = [0x0E0B1F, 0xFFB3C6, 0xB8FFE0, 0xFFF0B0, 0xC4E6FF];   // cellule fraîchement conquise (2 frames)
+const NAMES = ['', 'ROSE', 'VERTE', 'JAUNE', 'BLEUE'];
+const $ = id => document.getElementById(id);
+const show = (id, on, disp = 'block') => { $(id).style.display = on ? disp : 'none'; };
+let s, TRACE;
+function build() { s = Q.create(SEED); }
+
+// ---------- PixiJS ----------
+const app = new PIXI.Application();
+let world, cells, fx, bg, endG, rt, display, downS, mrt = {};
+async function initPixi() {
+  await app.init({ width: 1080, height: 1920, preserveDrawingBuffer: true, autoStart: false, antialias: false, resolution: 1, background: '#0E0B1F', preference: 'webgl' });
+  app.ticker.stop();
+  document.body.prepend(app.canvas);
+  world = new PIXI.Container();
+  bg = new PIXI.Graphics(); world.addChild(bg);
+  // décor statique : étoiles, cadre, grille
+  const r = S.rng(3); for (let i = 0; i < 70; i++) bg.rect(Math.round(r() * LW), Math.round(r() * LH), 1, 1).fill(i % 7 ? 0x2A2358 : 0x4FB3FF);
+  bg.rect(OX - 6, OY - 4, GW * CELL + 12, GH * CELL + 8).fill(0x1D1740);
+  bg.rect(OX - 6, OY - 4, GW * CELL + 12, 2).fill(0x4FB3FF).rect(OX - 6, OY - 4, 2, GH * CELL + 8).fill(0x4FB3FF)
+    .rect(OX + GW * CELL + 4, OY - 4, 2, GH * CELL + 8).fill(0x4FB3FF).rect(OX - 6, OY + GH * CELL + 2, GW * CELL + 12, 2).fill(0x4FB3FF);
+  bg.rect(OX, OY, GW * CELL, GH * CELL).fill(0x0E0B1F);
+  for (let x = OX; x < OX + GW * CELL; x += 10) bg.rect(x, OY, 1, GH * CELL).fill(0x16123A);
+  for (let y = OY; y < OY + GH * CELL; y += 10) bg.rect(OX, y, GW * CELL, 1).fill(0x16123A);
+  // 17 094 cellules = particules 2×2 (texture blanche 1×1 teintée)
+  cells = new PIXI.ParticleContainer({ dynamicProperties: { position: false, rotation: false, vertex: false, uvs: false, color: true }, roundPixels: true });
+  cells.texture = PIXI.Texture.WHITE;
+  for (let i = 0; i < N; i++) {
+    const p = new PIXI.Particle({ texture: PIXI.Texture.WHITE, x: OX + (i % GW) * CELL, y: OY + Math.floor(i / GW) * CELL, scaleX: CELL, scaleY: CELL, tint: 0x0E0B1F, alpha: 1 });
+    p._last = -1; cells.addParticle(p);
+  }
+  world.addChild(cells);
+  fx = new PIXI.Graphics(); world.addChild(fx);
+  endG = new PIXI.Graphics(); endG.visible = false; world.addChild(endG);
+  rt = PIXI.RenderTexture.create({ width: LW, height: LH, resolution: 1, antialias: false });
+  rt.source.scaleMode = 'nearest';
+  [2, 4, 8, 16].forEach(k => { const m = PIXI.RenderTexture.create({ width: Math.ceil(LW / k), height: Math.ceil(LH / k), resolution: 1 }); m.source.scaleMode = 'nearest'; mrt[k] = m; });
+  downS = new PIXI.Sprite(rt);
+  display = new PIXI.Sprite(rt); display.scale.set(4); app.stage.addChild(display);
+}
+
+// ---------- dessin par frame ----------
+function paintCells(f) {
+  const col = s.col, born = s.born, ps = cells.particleChildren;
+  for (let i = 0; i < N; i++) {
+    const c = col[i], fresh = c && f - born[i] < 2;
+    const key = fresh ? c + 8 : c;
+    if (ps[i]._last !== key) { ps[i].tint = fresh ? LIGHT[c] : COLS[c]; ps[i]._last = key; }
+  }
+}
+const sh = (g, x, y, w, h, c) => g.rect(x, y, w, h).fill(c);
+function arrow(g, x, y, c, down) { if (down) { sh(g, x - 3, y, 6, 2, c); sh(g, x - 2, y + 2, 4, 2, c); sh(g, x - 1, y + 4, 2, 2, c); } else { sh(g, x - 1, y, 2, 2, c); sh(g, x - 2, y + 2, 4, 2, c); sh(g, x - 3, y + 4, 6, 2, c); } }
+function drawFx(t, f) {
+  fx.clear();
+  // barre empilée des parts (au-dessus du terrain)
+  const W = GW * CELL; let x = OX;
+  sh(fx, OX - 2, 77, W + 4, 6, 0x1D1740);
+  for (let c = 1; c <= 4; c++) { const w = Math.round(W * s.counts[c] / N); if (w > 0) sh(fx, x, 78, Math.min(w, OX + W - x), 4, COLS[c]); x += w; }
+  // leader : soulignement jaune sous son % (HUD DOM aux colonnes 72 + k·240 px écran)
+  if (s.frame > START_F) { let L = 1; for (let c = 2; c <= 4; c++) if (s.counts[c] > s.counts[L]) L = c; const k = [1, 2, 3, 4].indexOf(L); sh(fx, 18 + k * 60, 73, 42, 2, 0xFFD23F); }
+  // avant GO : flèches clignotantes au-dessus des coins
+  if (f < START_F && Math.floor(t * 4) % 2 === 0) s.corners.forEach(([cx, cy], k) => { const px = OX + (cx + 1) * CELL + 1, py = OY + cy * CELL; arrow(fx, px, cy < 10 ? py + 10 : py - 10, COLS[s.order[k]], cy > 10); });
+  // poussée (surge) : le cadre clignote dans la couleur qui attaque pendant 0,5 s
+  const sg = TRACE.events.filter(e => e.type === 'surge' && t >= e.t && t < e.t + 0.5).pop();
+  if (sg && Math.floor(t * 12) % 2 === 0) { const c = COLS[sg.c]; sh(fx, OX - 6, OY - 4, W + 12, 2, c); sh(fx, OX - 6, OY + GH * CELL + 2, W + 12, 2, c); sh(fx, OX - 6, OY - 4, 2, GH * CELL + 8, c); sh(fx, OX + W + 4, OY - 4, 2, GH * CELL + 8, c); }
+}
+function drawEnd(t) {
+  endG.clear();
+  sh(endG, 0, 0, LW, LH, 0x0E0B1F);
+  const r = S.rng(5); for (let i = 0; i < 90; i++) sh(endG, Math.round(r() * LW), Math.round((r() * LH + t * 20 * (1 + i % 3)) % LH), 1, 1, i % 5 ? 0x2A2358 : COLS[1 + i % 4]);
+  const age = t - T_END;
+  TRACE.rank.forEach((c, k) => { if (age < 0.3 + k * 0.12) return; const y = Math.round((638 + 52 + 104 * k) / 4); // drapeau-cellule 12×12
+    sh(endG, 24, y - 7, 14, 14, 0x000000); sh(endG, 25, y - 6, 12, 12, COLS[c]); sh(endG, 26, y - 5, 4, 2, 0xFFFFFF); });
+}
+let shakes = [];
+function renderAt(t) {
+  const f = Math.round(t * FPS);
+  if (!s || f < s.frame) { build(); shakes = []; }
+  while (s.frame < f) Q.stepFrame(s);
+  const inEnd = t >= T_END;
+  cells.visible = fx.visible = bg.visible = !inEnd; endG.visible = inEnd;
+  if (!inEnd) { paintCells(f); drawFx(t, f); } else drawEnd(t);
+  app.renderer.render({ container: world, target: rt, clear: true });
+  // pixel-mosaic : blocs 1,2,4,8,16 puis retour (10 paliers sur 0,6 s)
+  const k = t >= T_MOSAIC[0] && t < T_MOSAIC[1] ? [1, 2, 4, 8, 16, 16, 8, 4, 2, 1][Math.min(9, Math.floor(S.seg(t, T_MOSAIC[0], T_MOSAIC[1]) * 10))] : 1;
+  if (k > 1) { downS.scale.set(1 / k); app.renderer.render({ container: downS, target: mrt[k], clear: true }); display.texture = mrt[k]; display.scale.set(4 * k); }
+  else { display.texture = rt; display.scale.set(4); }
+  // secousse (pas de 4 px) : GO, écran plein, changements de leader
+  const hit = TRACE.events.some(e => (e.type === 'lead' || e.type === 'full') && f - Math.round(e.t * FPS) >= 0 && f - Math.round(e.t * FPS) < 4) || (f - START_F >= 0 && f - START_F < 4);
+  display.x = hit ? ((f % 2) ? 8 : -8) : 0; display.y = hit ? 4 : 0;
+  app.renderer.render(app.stage);
+  // ---------- DOM ----------
+  show('hud', !inEnd, 'flex');
+  for (let c = 1; c <= 4; c++) { const el = $('p' + c); el.textContent = String(Math.round(100 * s.counts[c] / N)).padStart(2, '0') + '%'; el.style.color = CSS[c];
+    const sg = TRACE.events.some(e => e.type === 'surge' && e.c === c && t >= e.t && t < e.t + 0.5); el.style.visibility = sg && Math.floor(t * 12) % 2 ? 'hidden' : 'visible'; }
+  const so = Math.floor(S.seg(t, START_T, START_T + 0.4) * 6) / 6;
+  show('title', t < START_T + 0.4); $('title').style.transform = `translateX(${-Math.round(so * 1150 / 8) * 8}px)`;
+  show('bet', t < START_T); $('arrow').style.visibility = Math.floor(t * 4) % 2 ? 'hidden' : 'visible';
+  const cd = [[0.96, '3'], [1.44, '2'], [1.92, '1'], [START_T, 'GO!']].filter(([a]) => t >= a).pop();
+  show('count', !!cd && t < START_T + 0.5);
+  if (cd) { $('count').textContent = cd[1]; const a = t - cd[0]; $('count').style.transform = `scale(${a < 0.07 ? 1.4 : a < 0.14 ? 1.2 : 1})`; $('count').style.color = cd[1] === 'GO!' ? 'var(--green)' : 'var(--yellow)'; }
+  const fullT = TRACE.fullT;
+  show('battle', t >= fullT && t < fullT + 1.2 && (t > fullT + 0.3 || Math.floor(t * 12) % 2 === 0));
+  show('photo', t >= END_T && t < T_MOSAIC[0] && (t > END_T + 0.3 || Math.floor(t * 12) % 2 === 0));
+  show('end', inEnd);
+  if (inEnd) { const age = t - T_END; [...$('rows').children].forEach((row, k) => { row.style.visibility = age > 0.3 + k * 0.12 ? 'visible' : 'hidden'; }); $('cta2').style.visibility = Math.floor(t * 4) % 2 ? 'hidden' : 'visible'; }
+  if (/verify=1/.test(location.search) && s.frame > END_F) { const ok = s.counts.every((v, i) => v === TRACE.counts[i]); $('verify').textContent = (ok ? 'SIM OK ' : 'SIM MISMATCH ') + s.counts.slice(1).join(','); show('verify', true); }
+}
+function fillEnd() {
+  const w = TRACE.rank[0];
+  $('winTxt').innerHTML = `${NAMES[w]}<br>GAGNE&nbsp;!`; $('winTxt').style.color = CSS[w];
+  $('rows').innerHTML = TRACE.rank.map((c, k) => `<div class="row"><span style="color:${k ? '#fff' : '#FFD23F'}">${k + 1}&nbsp;</span><span style="color:${CSS[c]}">${NAMES[c].padEnd(6, ' ')}</span><span>${TRACE.pct[c - 1].toFixed(2)}%</span></div>`).join('');
+  const p = [...TRACE.pct].sort((a, b) => b - a); $('gap').textContent = `+${(p[0] - p[1]).toFixed(2)} %`;
+}
+const ready = Promise.all([initPixi(),
+  S.loadFonts([{ family: 'Press Start 2P', pkg: 'press-start-2p', weight: 400 }, { family: 'Rubik Mono One', pkg: 'rubik-mono-one', weight: 400 }]),
+  fetch('./trace.json').then(r => r.json()).then(j => { TRACE = j; })]).then(() => { fillEnd(); build(); });
+S.installContract({ renderAt, ready, sequential: true, duration: DUR });
+</script></body></html>

@@ -54,7 +54,7 @@ Les shorts sont des plans-séquences (une seule scène simulée) ; les transitio
 2. **0,96–2,4 s** (engagement) : compte à rebours 3-2-1-GO sur les temps ; le titre sort en `step-slide-out`.
 3. **Développement** (2,4 → ~12 s) : la simulation joue seule ; HUD vivant (chrono ou compteur), feedback de chaque collision (picot allumé, étincelles, blip, onde).
 4. **Chute** (~11,8–12 s) : événement fort pré-calculé (arrivée serrée, évasion) + bannière `blink-in` + screenshake.
-5. **Fin** : `pixel-mosaic` (0,6 s) -> carte de fin « partie terminée » : résultat 120 px, 3–4 lignes de score en stagger 0,12 s, CTA clignotant 4 Hz. Durées : engagement 16,0 s, abstrait 15,0 s.
+5. **Fin** : `pixel-mosaic` (0,6 s) -> carte de fin « partie terminée » : résultat 120 px, 3–4 lignes de score en stagger 0,12 s, CTA clignotant 4 Hz. Durées : engagement 16,0 s (billes) et 15,5 s (territoire), abstrait 15,0 s.
 
 ## Zones sûres
 Haut 220 px, bas 320 px, droite 120 px (gauche 60 px). HUD posé à y = 236 px ; terrain de jeu entre 320 et 1600 px ; aucun texte au-delà de x = 960 px. En logique 270×480 : contenu utile dans x 15–240, y 55–400.
@@ -62,6 +62,8 @@ Haut 220 px, bas 320 px, droite 120 px (gauche 60 px). HUD posé à y = 236 px ;
 ## Librairies recommandées et pourquoi
 - **Matter.js 0.20** — courses/billes/pachinko : vraie physique 2D, rapide en Node pur (600 graines simulées en 35 s) pour **choisir** une course, puis rejouée à l'identique dans Chromium (SEQUENTIAL, 4 sous-pas de 8,33 ms par frame). Piège : construire le monde sans `Math.atan2`/`Math.hypot` (diffèrent au dernier bit entre Node et Chromium) ; billes `friction: 0` (sinon collées sur les pentes faibles).
 - **p5.js 2.3** — rendu pixel : canvas 270×480 `pixelDensity(1)` + `noSmooth()`, upscale CSS `pixelated`. Suffit seul pour les mécaniques « satisfying » à physique maison (anneau à brèche).
+- **PixiJS 8.22** — quand il faut **des milliers** de cellules/sprites par frame (guerre de territoire : 17 094 particules 2×2 dans un `ParticleContainer`, couleur dynamique). Le monde est rendu dans une `RenderTexture` 270×480 `nearest` affichée ×4 : même grille pixel que p5, et la transition `pixel-mosaic` devient une RenderTexture réduite 1/k. `Application.init({preserveDrawingBuffer:true, autoStart:false})` attendu dans `window.ready`, ticker arrêté, `app.renderer.render(app.stage)` dans `renderAt`.
+- Règle commune : la **simulation vit hors de la librairie de rendu** (Matter.js, ring.js, conquest.js), pré-simulée en Node pour choisir la graine puis rejouée à l'identique (vérification `?verify=1` -> SIM OK).
 
 ## Familles de contenus adaptées / inadaptées
 - **Adaptées** : engagement (paris, votes, « qui gagne ? »), abstrait (satisfying physics, boucles de jeu), enfants (couleurs franches, jeu), événements sportifs fictifs (tournois).
@@ -70,6 +72,7 @@ Haut 220 px, bas 320 px, droite 120 px (gauche 60 px). HUD posé à y = 236 px ;
 ## Shorts de preuve (chemins)
 - `out/shorts/pixel-arcade__engagement__quelle-bille-gagne-la-course/` — Matter.js + p5.js, 16,0 s.
 - `out/shorts/pixel-arcade__abstrait__la-balle-peut-elle-s-echapper/` — p5.js, 15,0 s.
+- `out/shorts/pixel-arcade__engagement__quelle-couleur-conquiert-l-ecran/` — PixiJS (+ automate maison), 15,5 s : guerre de territoire 4 couleurs, HUD % en direct, photo finish à 0,19 %.
 
 ## Place de la voix off (où elle parlera, débit conseillé, ce que le visuel laisse libre)
 La voix commente la partie comme un speaker d'arcade (engagement : Fenrir, énergique) ou murmure le suspense (abstrait : Achernar, calme). Débit ≤ 2,6 mots/s, phrases de 4 à 9 mots, posées dans les creux sonores : après le GO (2,5 s), au milieu du développement, sur la chute, sur la carte de fin. Le visuel ne porte que des **mots-clés** (titre-question, PARIE, PHOTO FINISH, ÉVADÉE, scores) : la voix ajoute le récit (qui mène, pourquoi c'est serré). La musique chiptune est à −18 dB et sera duckée sous la voix.
