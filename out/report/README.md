@@ -2,7 +2,7 @@
 
 **But** : 10 identités visuelles et cinématiques distinctes pour des chaînes de shorts verticaux (TikTok / Reels / Shorts), chacune **prouvée par 2 vidéos réelles** rendues par code avec des librairies open-source, puis documentée en design system exploitable par un agent de production.
 
-**Bilan** : 10 identités · 20 shorts (1080×1920, 30 fps, H.264, 12–18,75 s, son généré) · QA automatique **20/20 OK** · 7 familles couvertes ≥ 2 fois · 8/8 librairies niveau A + 8 niveau B utilisées · reconnaissance à l'aveugle **10/10 groupes purs** (juge visuel) et **18/20** (mesure couleur) · ~2 h de travail mural sur **4 cœurs** (20:27 -> ~22:30 UTC, 2026-11-03) · voix off **non générée** (clé Gemini absente, pipeline prêt).
+**Bilan** : 10 identités · 20 shorts (1080×1920, 30 fps, H.264, 12–18,75 s, son généré) · QA automatique **20/20 OK** · 7 familles couvertes ≥ 2 fois · 8/8 librairies niveau A + 8 niveau B utilisées · reconnaissance à l'aveugle **10/10 groupes purs** (juge visuel) et **18/20** (mesure couleur) · 1 h 46 de travail mural sur **4 cœurs** (20:27 -> 22:13 UTC, 2026-11-03) · voix off **non générée** (clé Gemini absente, pipeline prêt).
 
 Toutes les affirmations de ce dossier sont mesurées : temps (`facts.md`, `short.json.renderTimeSec`), QA (`qa.json`), reconnaissance (`recognition.json`).
 
