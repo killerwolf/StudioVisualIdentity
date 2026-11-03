@@ -1,0 +1,7 @@
+# Ce jour-là : 9 novembre 1989, le Mur de Berlin tombe — gazette-1900 / evenements
+
+Reproduire (depuis la racine du dépôt) :
+
+    bash out/shorts/gazette-1900__evenements__9-novembre-1989-mur-de-berlin/src/build.sh   # = node out/tools/render.mjs out/shorts/gazette-1900__evenements__9-novembre-1989-mur-de-berlin/src/index.html --out /tmp/svi/gazette-1900__evenements__9-novembre-1989-mur-de-berlin/raw.mp4 --duration 15.0 && out/tools/slot.sh .venv/bin/python out/shorts/gazette-1900__evenements__9-novembre-1989-mur-de-berlin/src/post.py video /tmp/svi/gazette-1900__evenements__9-novembre-1989-mur-de-berlin/raw.mp4 /tmp/svi/gazette-1900__evenements__9-novembre-1989-mur-de-berlin/video.mp4 --seed 1900 --flash 3.75,8.4375,11.25 && .venv/bin/python out/tools/sound.py out/shorts/gazette-1900__evenements__9-novembre-1989-mur-de-berlin/src/sound.json /tmp/svi/gazette-1900__evenements__9-novembre-1989-mur-de-berlin/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/gazette-1900__evenements__9-novembre-1989-mur-de-berlin/video.mp4 --music /tmp/svi/gazette-1900__evenements__9-novembre-1989-mur-de-berlin/music.wav --out out/shorts/gazette-1900__evenements__9-novembre-1989-mur-de-berlin/short.mp4
+
+Fichiers : `index.html` (scène GSAP, graine 1989), `gazette.js` (système partagé de l'identité, identique au short 1789), `post.py` (post-traitement OpenCV par frame), `gen_sound.py` -> `sound.json` (« pulse » 128 bpm la mineur + SFX calés), `build.sh`, `DURATION`, `FLASH`.
