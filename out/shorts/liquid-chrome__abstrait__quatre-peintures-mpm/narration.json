@@ -1,0 +1,9 @@
+{"language": "fr", "style": "calme, sensoriel, voix basse et posée façon publicité de parfum ; laisser respirer les impacts", "voice": "Achernar",
+ "lines": [
+  {"t": 0.2, "maxDuration": 1.4, "text": "Quatre peintures."},
+  {"t": 1.8, "maxDuration": 2.0, "text": "Lilas, rose, menthe, or."},
+  {"t": 4.3, "maxDuration": 2.4, "text": "Chacune tombe de tout son poids."},
+  {"t": 7.0, "maxDuration": 2.4, "text": "Puis un tourbillon les entraîne…"},
+  {"t": 9.6, "maxDuration": 2.0, "text": "et les couleurs se mélangent."},
+  {"t": 11.8, "maxDuration": 1.6, "text": "Hypnotique, non ?"}
+ ]}

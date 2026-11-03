@@ -1,0 +1,27 @@
+{
+  "identity": "atlas-grave",
+  "family": "histoire",
+  "title": "Le premier tour du monde : 1519–1522",
+  "hook": "Planche gravée « Le premier tour du monde · 1519 – 1522 » dès la frame 0, caravelle à quai à Sanlúcar sur la carte plate ; la route en pointillé sanguine part avant 1 s",
+  "duration": 16.0,
+  "libraries": ["D3.js", "GSAP", "pycairo"],
+  "seed": 19,
+  "renderTimeSec": 617.8,
+  "structure": [
+    {"t": 0, "beat": "hook : planche titrée + carte plate, « SEPT. 1519 / Départ de Sanlúcar », 5 navires"},
+    {"t": 0.5, "beat": "traversée de l'Atlantique vers le Brésil et la Patagonie (caméra qui suit)"},
+    {"t": 3.4, "beat": "zoom sur le détroit ; Santiago perdu (3,5 s)"},
+    {"t": 4.15, "beat": "« NOV. 1520 / Le détroit de Magellan » ; désertion du San Antonio (5,1 s)"},
+    {"t": 6.1, "beat": "« 1520 – 1521 / Plus de 3 mois de traversée » : panoramique sur le Pacifique"},
+    {"t": 8.95, "beat": "« AVRIL 1521 / Magellan meurt aux Philippines » : sceau-croix, impact ; Concepción perdue (9,9 s)"},
+    {"t": 10.6, "beat": "« 1521 – 1522 / Elcano ramène la Victoria » ; Trinidad restée aux Moluques (11,3 s) -> 1 navire"},
+    {"t": 13.4, "beat": "chute : « SEPT. 1522 / 18 survivants », recul sur la route complète autour du monde"},
+    {"t": 14.6, "beat": "fin : cartouche guilloché « Magellan ou Elcano ? qui mérite le nom du voyage ? », tenue 1,4 s"}
+  ],
+  "engagement": {"mechanic": "compteur de pertes (suspense 5 -> 1) puis vote/duel", "cta": "Magellan ou Elcano : qui mérite le nom du voyage ? Réponds en commentaire"},
+  "loopable": false,
+  "sound": {"type": "generated", "voice": false},
+  "qualityChecks": {"stillsReviewed": true, "textMinPx": 54, "safeAreaOk": true},
+  "notes": "Carte plate d3.geoEquirectangular (6 px/degré) répétée en 2 tuiles ; route en longitudes déroulées (-6 -> -383) tracée en d3.line curveCatmullRom, position du navire par getPointAtLength, temps interpolés entre ancres datées ; caméra = moyenne glissante ±0,6 s de la position du navire. Côtes dessinées à la main (même atlas.js que le short géographie). GSAP : timeline d'état seekée (légendes, zooms, pertes, sceau, cartouche). pycairo : papier, cadre, cartouche, rose, mer, caravelle (src/textures.py). Faits : départ Sanlúcar sept. 1519, détroit nov. 1520, mort de Magellan à Mactan (Philippines) le 27 avril 1521, retour de la Victoria sept. 1522 avec 18 survivants ; tracé de route simplifié. renderTimeSec = chronomètre render.mjs (hors attente de slot) sous forte charge (load ≈ 16–22 sur 4 cœurs, 128,7 s/100 frames).",
+  "reproduce": ".venv/bin/python out/shorts/atlas-grave__histoire__premier-tour-du-monde-1519-1522/src/textures.py out/shorts/atlas-grave__histoire__premier-tour-du-monde-1519-1522/src/assets && node out/tools/render.mjs out/shorts/atlas-grave__histoire__premier-tour-du-monde-1519-1522/src/index.html --out /tmp/svi/atlas-hist/video.mp4 --duration 16 && .venv/bin/python out/tools/sound.py out/shorts/atlas-grave__histoire__premier-tour-du-monde-1519-1522/src/sound.json /tmp/svi/atlas-hist/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/atlas-hist/video.mp4 --music /tmp/svi/atlas-hist/music.wav --out out/shorts/atlas-grave__histoire__premier-tour-du-monde-1519-1522/short.mp4"
+}

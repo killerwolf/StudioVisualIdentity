@@ -72,8 +72,8 @@ function paintAll() {
   // mer + côte lointaine (Alexandrie)
   const s = g.sea;
   wash(s, [[-60, 760], [420, 742], [420, 900], [-60, 900]], '#B9A27E', { layers: 18, alpha: 12, vari: .08 });
-  wash(s, [[-60, 880], [1240, 868], [1240, 1120], [-60, 1120]], '#6C9BCF', { layers: 30, alpha: 11, vari: .1 });
-  wash(s, [[-60, 960], [1240, 940], [1240, 1120], [-60, 1120]], '#4E7FB8', { layers: 26, alpha: 9, vari: .12 });
+  wash(s, band(880, 1120, -10), '#6C9BCF', { layers: 30, alpha: 12, vari: .06 });
+  wash(s, band(950, 1120, -16), '#4E7FB8', { layers: 26, alpha: 9, vari: .12 });
   // vagues (bandes claires)
   for (let r = 0; r < 6; r++) for (let i = 0; i < 9; i++) {
     const x = i * 170 + (r % 2) * 85, y = 70 + r * 50;

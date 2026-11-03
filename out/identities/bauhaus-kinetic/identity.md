@@ -18,10 +18,10 @@ Jeu de formes primaires, rythme, optimisme graphique, logique. Références de g
 | accent 2 | `#F5B700` jaune | miel, cellules, carré « 3 s » |
 | accent 3 | `#1D4ED8` bleu | quart de cercle d'angle, hexagones, triangle « 5 s » |
 | accent 4 / texte | `#111111` encre | texte, grille (opacité 0,09), barres d'horizon, pied de page, cadres 8–12 px |
-| muted | `#6B6458` | légende secondaire (contraste 5,3:1 sur le fond) |
+| muted | `#6B6458` | légende secondaire (contraste 5,0:1 sur le fond) |
 | succès | `#111111` (pastille ✓ encre) | validation |
 | danger | `#E63B2E` (pastille ✕ rouge) | erreur, trou |
-Texte blanc uniquement sur rouge, bleu ou encre ; texte encre sur jaune et blanc (AA respecté partout).
+Texte blanc uniquement sur rouge (4,2:1), bleu (6,7:1) ou encre ; texte encre sur jaune (10,5:1) et blanc. Le blanc sur rouge ne passe AA qu'en grand texte : n'y poser que du texte gras ≥ 54 px (c'est le cas dans les deux shorts).
 
 ## Typographie (familles @fontsource, tailles, graisses, interlettrage)
 - **Display** : Unbounded 800, 100 px, interlettrage −3 px, interligne 1,04 (titres de scène : « Seuls 3 », « Trouve l'intrus »).

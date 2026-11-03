@@ -1,0 +1,10 @@
+{"language": "fr", "style": "complice et posé, suspense qui monte vers la fin, sourire dans la voix à la victoire", "voice": "Achernar",
+ "lines": [
+  {"t": 0.1, "maxDuration": 3.1, "text": "Quelle couleur remplit le verre en premier ?"},
+  {"t": 3.3, "maxDuration": 2.0, "text": "Le rose part en tête…"},
+  {"t": 5.5, "maxDuration": 2.0, "text": "mais l'or le dépasse !"},
+  {"t": 7.7, "maxDuration": 1.7, "text": "Fais ton pari, vite."},
+  {"t": 9.7, "maxDuration": 1.9, "text": "Ralenti… la menthe remonte…"},
+  {"t": 11.7, "maxDuration": 1.2, "text": "Menthe gagne !"},
+  {"t": 12.9, "maxDuration": 1.6, "text": "Commente ta couleur !"}
+ ]}

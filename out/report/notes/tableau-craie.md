@@ -1,3 +1,4 @@
 - 21:08 Démarrage studio tableau-craie (Phase 2). Plan : explicatif = Manim (formes) + overlays textpng (Caveat/Nunito) + grain craie en overlay ; enfants = Rough.js (rough.svg) + GSAP (timeline seek) + filtre SVG grain.
 - 21:30 Contention CPU forte : 9 min d'attente de slot pour 8 stills (45,9 s de rendu effectif). Mux avec 18 overlays PNG plein cadre lent (>8 min sous contention). Décision : chrono Manim mesuré après obtention du slot.
 - 21:33 Explicatif : preview 6 fps vue (planche OK). Corrigé : hachures des barres (arange vide), horloge caméra (renderer.time au lieu de somme de dt), ×5 remonté. Overlays : compositing numpy maison (composite.py) au lieu de 18 entrées -loop ffmpeg (trop lent). Lancement du rendu complet 30 fps.
+- 21:36 Enfants : stills revus (titres > 840 px corrigés : 3 lignes + 'Des années après…', graine imbriquée outer/inner car svgOrigin cassait x/y). Lancement rendu complet.

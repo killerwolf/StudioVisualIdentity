@@ -2,3 +2,8 @@
 - 2026-11-03T21:11:55Z explicatif: stills OK after 2 passes (fixed panel overlap, morph start offscreen, badge pos); full render launched in bg.
 - 2026-11-03T21:24:35Z explicatif muxed (render 135.2 s, 28.2 s/100f). engagement: stills OK after 1 bug fix (badge state array had 4 entries for 5 morphs -> TypeError); full render launched.
 - 2026-11-03T21:32:02Z bench (scratch bench.mjs, Chromium swiftshader, under load): renderAt JS only 6.1 ms/frame (explicatif) / 7.8 ms (engagement); screenshot jpeg ~300-350 ms/frame = cost dominant. anime seek 192 tweens 0.087 ms/frame; flubber 64 morphs 0.43 ms/frame (string:false) vs 1.5 ms (string); Paper 64 hex+clip 2.6 ms/frame; Paper boolean subtract 2.7 ms/op.
+- 2026-11-03T21:30Z engagement rendered 133.3 s (31.7 s/100f under load), muxed, check.py OK. Explicatif check.py OK. Audio: -22.4 / -20.6 dB mean, peaks -1.1 / -1.4 dB.
+- 2026-11-03T21:33Z decision: transitions done in-scene (DOM grid-wipe above text) rather than ffmpeg xfade between clips -> one render per short; tokens list ffmpeg 'wipedown' as montage equivalent.
+- 2026-11-03T21:33Z decision: poster.jpg = frame 2.2 s of explicatif final (hook complete); contact sheet = 5 explicatif + 4 engagement frames.
+- 2026-11-03T21:35Z contrast check: white on red #E63B2E = 4.18:1 -> AA large text only; all red-backed text is bold >= 56 px, documented in identity.md. Muted #6B6458 on bg = 5.0:1.
+- 2026-11-03T21:36Z Phase 3 delivered (identity.md, tokens.json, poster, contact-sheet, recipes x2, 3 library-card drafts). No library replaced; no failure beyond 1 JS bug (badge state array length). Total ~30 min wall time.
