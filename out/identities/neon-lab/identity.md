@@ -71,6 +71,7 @@ Haut 220 px, bas 320 px, droite 120 px (et marge gauche 72 px). Tag à 232 px, t
 - **three.js** (+ UnrealBloom) : scènes 3D à objets (sphères, orbites), bloom natif, `ShaderMaterial` pour réutiliser le champ GLSL. ≈ 60 s / 100 frames.
 - **twgl.js** : GLSL brut et nuages de points massifs (20 000 sprites additifs) quand il n'y a pas de maillage ; boucles parfaites faciles (renderAt pur). ≈ 55 s / 100 frames.
 - **OpenCV** : grade signature commun à tous les moteurs (glow, aberration chromatique, vignette), ce qui rend l'identité reconnaissable même quand la scène change de moteur. ≈ 32 s / 100 frames.
+- **Matplotlib** (Agg) : explicatifs « simulation + mesure » 100 % Python — simulation numpy (RK4), schéma 2D à traînes néon (LineCollection à alpha dégressif) et vrai graphe en direct (axe log) ; la lueur vient du grade OpenCV. Polices @fontsource converties woff -> ttf (fontTools). ≈ 53 s / 100 frames.
 
 ## Familles de contenus adaptées / inadaptées
 - **Adaptées** : abstrait (systèmes dynamiques, champs, particules), explicatif scientifique (astronomie, physique, maths), engagement de type « devine le paramètre ».
@@ -79,6 +80,7 @@ Haut 220 px, bas 320 px, droite 120 px (et marge gauche 72 px). Tag à 232 px, t
 ## Shorts de preuve (chemins)
 - `out/shorts/neon-lab__abstrait__champ-de-force-lucioles/` — 12 s, boucle parfaite, twgl.js + OpenCV.
 - `out/shorts/neon-lab__explicatif__lune-meme-face/` — 16 s, three.js + OpenCV (+ champ GLSL partagé).
+- `out/shorts/neon-lab__explicatif__effet-papillon-double-pendule/` — 15 s, Matplotlib + OpenCV (champ de force porté en numpy, LABO/03).
 
 ## Place de la voix off (où elle parlera, débit conseillé, ce que le visuel laisse libre)
 - Voix documentaire posée (Gemini **Orus** pour l'explicatif, **Achernar** calme pour l'abstrait), débit ≤ 2,6 mots/s, une phrase par beat, démarrage 0,1–0,3 s après chaque impulsion.

@@ -1,0 +1,51 @@
+{
+ "identity": "neon-lab",
+ "family": "explicatif",
+ "title": "L'effet papillon : deux pendules presque identiques",
+ "hook": "Dès 0,05 s : titre « Effet papillon » + « Δθ = 0,001 rad » sur deux doubles pendules néon superposés (cœur cyan bordé de magenta) qui tombent ensemble, impulsion lumineuse",
+ "duration": 15.0,
+ "libraries": [
+  "Matplotlib",
+  "OpenCV"
+ ],
+ "seed": 3,
+ "renderTimeSec": 243.1,
+ "structure": [
+  {
+   "t": 0,
+   "beat": "hook : deux pendules lâchés à 0,001 rad d'écart, superposés ; tag LABO/03 · CHAOS"
+  },
+  {
+   "t": 4.5,
+   "beat": "« Presque jumeaux » : ils restent ensemble, le graphe log de l'écart monte en ligne droite (croissance exponentielle), 1,7 cm à 6 s"
+  },
+  {
+   "t": 8.25,
+   "beat": "« Puis… le chaos » : les traînes cyan et magenta se séparent, écart ≈ 0,5–0,9 m"
+  },
+  {
+   "t": 12.0,
+   "beat": "chute « Imprévisible » : ×1 000 en 10,0 s (1 mm -> 1 m), le graphe sature à l'échelle des pendules"
+  },
+  {
+   "t": 15,
+   "beat": "fin propre sur la donnée-clé"
+  }
+ ],
+ "engagement": {
+  "mechanic": "suspense",
+  "cta": "À quel moment as-tu vu les deux pendules se séparer ? Dis-le en commentaire."
+ },
+ "loopable": false,
+ "sound": {
+  "type": "generated",
+  "voice": false
+ },
+ "qualityChecks": {
+  "stillsReviewed": true,
+  "textMinPx": 54,
+  "safeAreaOk": true
+ },
+ "notes": "Physique : double pendule à masses ponctuelles et tiges rigides sans masse, sans frottement (équations de Lagrange standard), m1 = m2 = 1 kg, L1 = L2 = 1 m, g = 9,81 m/s², RK4 à pas fixe dt = 1/1800 s (60 sous-pas par frame), temps simulé = temps vidéo (temps réel). A : θ1 = θ2 = 1,8 rad, ω = 0 ; B : θ1 = 1,801 rad. Énergie conservée à 1,4e-9 J près sur 15 s (6,686558 J). Écart mesuré entre les masses inférieures : 1,0 mm à t=0, 1 cm à 5,1 s, 50 cm à 8,8 s, 1 m (×1 000) à 10,0 s ; maximum ≈ 2,9 m (borné par la taille du système, d'où la saturation du graphe). Conditions initiales choisies par pré-simulation pour que la divergence tombe sur le beat C. Rendu Matplotlib Agg (une figure réutilisée, artistes mis à jour) : 243,1 s au total dont 237,8 s de dessin (52,8 s/100 frames) ; post OpenCV neon_grade.py 69,6 s (15,5 s/100 frames, CPU peu chargé). Polices : woff @fontsource convertis en ttf via fontTools (Matplotlib ne lit pas le woff2).",
+ "reproduce": "out/tools/slot.sh .venv/bin/python out/shorts/neon-lab__explicatif__effet-papillon-double-pendule/src/render.py --out /tmp/svi/neon-lab-pend/raw.mp4 && out/tools/slot.sh .venv/bin/python out/shorts/neon-lab__explicatif__effet-papillon-double-pendule/src/neon_grade.py /tmp/svi/neon-lab-pend/raw.mp4 /tmp/svi/neon-lab-pend/video.mp4 && .venv/bin/python out/tools/sound.py out/shorts/neon-lab__explicatif__effet-papillon-double-pendule/src/sound.json /tmp/svi/neon-lab-pend/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/neon-lab-pend/video.mp4 --music /tmp/svi/neon-lab-pend/music.wav --out out/shorts/neon-lab__explicatif__effet-papillon-double-pendule/short.mp4"
+}

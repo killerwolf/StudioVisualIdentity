@@ -14,3 +14,12 @@ Référence : `out/shorts/neon-lab__explicatif__lune-meme-face/` (16 s, three.js
 - **Exactitude** : faits vérifiés (27,3 j = période sidérale, rotation = révolution) ; échelles et vitesses non réalistes indiquées dans `short.json`.
 - **Budget** : three.js + UnrealBloom ≈ 60 s / 100 frames, + OpenCV ≈ 32 s / 100 frames.
 - **Voix** : Orus (documentaire), une phrase par beat, ≤ 2,6 mots/s, les chiffres restent à l'écran.
+
+## Variante « simulation + mesure » (Matplotlib)
+
+Référence : `out/shorts/neon-lab__explicatif__effet-papillon-double-pendule/` (15 s, Matplotlib + OpenCV).
+
+- **Ouvrir par** : titre de beat 104 px (« Effet papillon »), donnée mono lime sous le titre (`Δθ = 0,001 rad`), le système simulé déjà en mouvement à 0,5 s.
+- **Structurer en** : même grille de beats (0 / 4,5 / 8,25 / 12,0 s) ; zone schéma 640–1250 px ; graphe de mesure 1410–1590 px avec deux repères physiques seulement (`1 mm`, `1 m`, mono 54 px) et la valeur live en lime à droite ; deux objets comparés = cyan (référence, fin, dessus) et magenta (variante, large, dessous) pour rester lisibles superposés.
+- **Fermer par** : titre lime (« Imprévisible ») + la donnée chiffrée tirée de la simulation (`×1 000 en 10,0 s`).
+- **Physique** : RK4 à pas fixe, paramètres et conditions initiales écrits dans `short.json` ; choisir les conditions initiales par pré-simulation pour caler l'événement sur un beat.
