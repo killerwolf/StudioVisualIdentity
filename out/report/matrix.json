@@ -47,6 +47,9 @@
   "abstrait": [
    "OpenCV",
    "Taichi"
+  ],
+  "engagement": [
+   "three.js"
   ]
  },
  "neon-lab": {
@@ -89,6 +92,10 @@
   ]
  },
  "tableau-craie": {
+  "enfants": [
+   "GSAP",
+   "Rough.js"
+  ],
   "explicatif": [
    "Manim",
    "PIL/numpy (overlays texte et grain craie)"

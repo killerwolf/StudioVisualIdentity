@@ -35,5 +35,8 @@
  ],
  "usedBy": [
   "liquid-chrome"
+ ],
+ "roleAsDeclaredByStudios": [
+  "fluides"
  ]
 }

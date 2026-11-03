@@ -1,27 +1,31 @@
 [
  {
   "short": "aquarelle-conte__enfants__ou-vont-les-etoiles-le-jour",
-  "ok": false,
-  "errors": [
-   "short.mp4 manquant",
-   "short.json manquant",
-   "narration.json manquant",
-   "stills: 0 (3–5 attendus)"
-  ],
+  "ok": true,
+  "errors": [],
   "warnings": [],
-  "info": {}
+  "info": {
+   "duration": 15.0,
+   "width": 1080,
+   "height": 1920,
+   "fps": "30/1",
+   "codec": "h264",
+   "pix": "yuv420p"
+  }
  },
  {
   "short": "aquarelle-conte__histoire__phare-d-alexandrie",
-  "ok": false,
-  "errors": [
-   "short.mp4 manquant",
-   "short.json manquant",
-   "narration.json manquant",
-   "stills: 0 (3–5 attendus)"
-  ],
+  "ok": true,
+  "errors": [],
   "warnings": [],
-  "info": {}
+  "info": {
+   "duration": 16.0,
+   "width": 1080,
+   "height": 1920,
+   "fps": "30/1",
+   "codec": "h264",
+   "pix": "yuv420p"
+  }
  },
  {
   "short": "atlas-grave__geographie__plus-longs-fleuves-du-monde",
@@ -39,22 +43,22 @@
  },
  {
   "short": "atlas-grave__histoire__premier-tour-du-monde-1519-1522",
-  "ok": false,
-  "errors": [
-   "short.mp4 manquant",
-   "short.json manquant",
-   "stills: 0 (3–5 attendus)"
-  ],
+  "ok": true,
+  "errors": [],
   "warnings": [],
-  "info": {}
+  "info": {
+   "duration": 16.0,
+   "width": 1080,
+   "height": 1920,
+   "fps": "30/1",
+   "codec": "h264",
+   "pix": "yuv420p"
+  }
  },
  {
   "short": "bauhaus-kinetic__engagement__trouve-l-intrus",
-  "ok": false,
-  "errors": [
-   "short.json manquant",
-   "stills: 0 (3–5 attendus)"
-  ],
+  "ok": true,
+  "errors": [],
   "warnings": [],
   "info": {
    "duration": 14.0,
@@ -81,51 +85,59 @@
  },
  {
   "short": "gazette-1900__evenements__9-novembre-1989-mur-de-berlin",
-  "ok": false,
-  "errors": [
-   "short.mp4 manquant",
-   "short.json manquant",
-   "narration.json manquant",
-   "stills: 0 (3–5 attendus)"
-  ],
+  "ok": true,
+  "errors": [],
   "warnings": [],
-  "info": {}
+  "info": {
+   "duration": 15.0,
+   "width": 1080,
+   "height": 1920,
+   "fps": "30/1",
+   "codec": "h264",
+   "pix": "yuv420p"
+  }
  },
  {
   "short": "gazette-1900__histoire__1789-en-20-secondes",
-  "ok": false,
-  "errors": [
-   "short.mp4 manquant",
-   "short.json manquant",
-   "narration.json manquant",
-   "stills: 0 (3–5 attendus)"
-  ],
+  "ok": true,
+  "errors": [],
   "warnings": [],
-  "info": {}
+  "info": {
+   "duration": 18.77,
+   "width": 1080,
+   "height": 1920,
+   "fps": "30/1",
+   "codec": "h264",
+   "pix": "yuv420p"
+  }
  },
  {
   "short": "liquid-chrome__abstrait__quatre-peintures-mpm",
-  "ok": false,
-  "errors": [
-   "short.mp4 manquant",
-   "short.json manquant",
-   "narration.json manquant",
-   "stills: 0 (3–5 attendus)"
-  ],
+  "ok": true,
+  "errors": [],
   "warnings": [],
-  "info": {}
+  "info": {
+   "duration": 14.0,
+   "width": 1080,
+   "height": 1920,
+   "fps": "30/1",
+   "codec": "h264",
+   "pix": "yuv420p"
+  }
  },
  {
   "short": "liquid-chrome__engagement__quelle-couleur-remplit-le-verre",
-  "ok": false,
-  "errors": [
-   "short.mp4 manquant",
-   "short.json manquant",
-   "narration.json manquant",
-   "stills: 0 (3–5 attendus)"
-  ],
+  "ok": true,
+  "errors": [],
   "warnings": [],
-  "info": {}
+  "info": {
+   "duration": 15.0,
+   "width": 1080,
+   "height": 1920,
+   "fps": "30/1",
+   "codec": "h264",
+   "pix": "yuv420p"
+  }
  },
  {
   "short": "neon-lab__abstrait__champ-de-force-lucioles",
@@ -143,14 +155,17 @@
  },
  {
   "short": "neon-lab__explicatif__lune-meme-face",
-  "ok": false,
-  "errors": [
-   "short.mp4 manquant",
-   "short.json manquant",
-   "stills: 0 (3–5 attendus)"
-  ],
+  "ok": true,
+  "errors": [],
   "warnings": [],
-  "info": {}
+  "info": {
+   "duration": 16.0,
+   "width": 1080,
+   "height": 1920,
+   "fps": "30/1",
+   "codec": "h264",
+   "pix": "yuv420p"
+  }
  },
  {
   "short": "pastel-diorama__enfants__d-ou-vient-la-pluie",
@@ -168,36 +183,45 @@
  },
  {
   "short": "pastel-diorama__engagement__choisis-ta-boite-renard",
-  "ok": false,
-  "errors": [
-   "short.mp4 manquant",
-   "short.json manquant",
-   "stills: 0 (3–5 attendus)"
-  ],
+  "ok": true,
+  "errors": [],
   "warnings": [],
-  "info": {}
+  "info": {
+   "duration": 15.0,
+   "width": 1080,
+   "height": 1920,
+   "fps": "30/1",
+   "codec": "h264",
+   "pix": "yuv420p"
+  }
  },
  {
   "short": "pixel-arcade__abstrait__la-balle-peut-elle-s-echapper",
-  "ok": false,
-  "errors": [
-   "short.mp4 manquant",
-   "short.json manquant",
-   "stills: 0 (3–5 attendus)"
-  ],
+  "ok": true,
+  "errors": [],
   "warnings": [],
-  "info": {}
+  "info": {
+   "duration": 15.0,
+   "width": 1080,
+   "height": 1920,
+   "fps": "30/1",
+   "codec": "h264",
+   "pix": "yuv420p"
+  }
  },
  {
   "short": "pixel-arcade__engagement__quelle-bille-gagne-la-course",
-  "ok": false,
-  "errors": [
-   "short.mp4 manquant",
-   "short.json manquant",
-   "stills: 0 (3–5 attendus)"
-  ],
+  "ok": true,
+  "errors": [],
   "warnings": [],
-  "info": {}
+  "info": {
+   "duration": 16.0,
+   "width": 1080,
+   "height": 1920,
+   "fps": "30/1",
+   "codec": "h264",
+   "pix": "yuv420p"
+  }
  },
  {
   "short": "swiss-data__evenements__j-272-eclipse-2-aout-2027",
@@ -229,26 +253,30 @@
  },
  {
   "short": "tableau-craie__enfants__comment-une-graine-devient-un-arbre",
-  "ok": false,
-  "errors": [
-   "short.mp4 manquant",
-   "short.json manquant",
-   "narration.json manquant",
-   "stills: 0 (3–5 attendus)"
-  ],
+  "ok": true,
+  "errors": [],
   "warnings": [],
-  "info": {}
+  "info": {
+   "duration": 15.5,
+   "width": 1080,
+   "height": 1920,
+   "fps": "30/1",
+   "codec": "h264",
+   "pix": "yuv420p"
+  }
  },
  {
   "short": "tableau-craie__explicatif__pourquoi-le-ciel-est-bleu",
-  "ok": false,
-  "errors": [
-   "short.mp4 manquant",
-   "short.json manquant",
-   "narration.json manquant",
-   "stills: 0 (3–5 attendus)"
-  ],
+  "ok": true,
+  "errors": [],
   "warnings": [],
-  "info": {}
+  "info": {
+   "duration": 16.5,
+   "width": 1080,
+   "height": 1920,
+   "fps": "30/1",
+   "codec": "h264",
+   "pix": "yuv420p"
+  }
  }
 ]

@@ -149,6 +149,21 @@
    "video": "shorts/liquid-chrome__abstrait__quatre-peintures-mpm/short.mp4"
   },
   {
+   "dir": "shorts/liquid-chrome__engagement__quelle-couleur-remplit-le-verre",
+   "identity": "liquid-chrome",
+   "family": "engagement",
+   "title": "Quelle couleur remplit le verre en premier ?",
+   "duration": 15.0,
+   "renderTimeSec": 800.9,
+   "libraries": [
+    "three.js"
+   ],
+   "loopable": false,
+   "mechanic": "suspense / pari (course à 4 couleurs, 2 changements de tête, ralenti), révélation à la fin",
+   "narrationLines": 7,
+   "video": "shorts/liquid-chrome__engagement__quelle-couleur-remplit-le-verre/short.mp4"
+  },
+  {
    "dir": "shorts/neon-lab__abstrait__champ-de-force-lucioles",
    "identity": "neon-lab",
    "family": "abstrait",
@@ -274,6 +289,22 @@
    "mechanic": "question",
    "narrationLines": 6,
    "video": "shorts/swiss-data__geographie__ou-vivent-8-milliards/short.mp4"
+  },
+  {
+   "dir": "shorts/tableau-craie__enfants__comment-une-graine-devient-un-arbre",
+   "identity": "tableau-craie",
+   "family": "enfants",
+   "title": "Comment une graine devient un arbre ?",
+   "duration": 15.5,
+   "renderTimeSec": 1437.7,
+   "libraries": [
+    "Rough.js",
+    "GSAP"
+   ],
+   "loopable": false,
+   "mechanic": "boucle / suspense",
+   "narrationLines": 7,
+   "video": "shorts/tableau-craie__enfants__comment-une-graine-devient-un-arbre/short.mp4"
   },
   {
    "dir": "shorts/tableau-craie__explicatif__pourquoi-le-ciel-est-bleu",

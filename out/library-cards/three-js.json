@@ -2,18 +2,32 @@
  "name": "three.js",
  "role": "3D",
  "bestFor": [
+  "chrome, verre et liquides métalliques irisés (MeshPhysicalMaterial : metalness, iridescence, clearcoat)",
+  "environnement PMREM procédural (panneaux néon) sans aucune texture téléchargée",
+  "scènes sans état (renderAt(t) pur) -> stills à n'importe quel instant",
+  "profondeur de champ macro (BokehPass)",
   "schémas astronomiques/scientifiques 3D (sphères à grille, orbites, fresnel)",
   "bloom natif (UnrealBloomPass) pour une identité néon",
   "réutiliser un shader GLSL maison en ShaderMaterial plein écran"
  ],
  "avoidFor": [
+  "transmission physique (verre réfractif) sous SwiftShader sur CPU partagé : ~5 s/frame mesuré",
+  "fluides réellement simulés (passer par Taichi)",
+  "milliers d'objets non instanciés",
   "> quelques milliers de particules animées sans InstancedMesh (préférer twgl/points)",
   "texte : le garder en DOM/SVG par-dessus le canvas"
  ],
  "renderCostPer100Frames": [
+  "178 s (mesuré, liquid-chrome__engagement__quelle-couleur-remplit-le-verre : 4 éprouvettes, 9 gouttes chrome déformées au bruit CPU, PMREM, BokehPass, 1080×1920, SwiftShader, CPU saturé par 10 studios) ; même scène avec verre en transmission ≈ 500 s/100 frames (60 frames en ~5 min, rendu abandonné) [liquid-chrome]",
   "182,8 s (mesuré, neon-lab explicatif : Terre + Lune ShaderMaterial + UnrealBloom + champ GLSL plein écran + DOM/SVG, 480 frames en 877,7 s avec 4 slots CPU occupés par d'autres studios) ; ≈ 60 s/100 frames hors contention (facts.md) [neon-lab]"
  ],
  "gotchas": [
+  "verre bon marché : MeshPhysicalMaterial color #000 + AdditiveBlending + depthWrite:false -> seuls les reflets s'ajoutent, pas de passe de transmission",
+  "IcosahedronGeometry est non indexée : detail 20 ≈ 26 k sommets, déformation CPU + computeVertexNormals à chaque frame — rester ≤ detail 20 pour les petites gouttes",
+  "setViewOffset(W,H,30,0,W,H) pour recentrer l'image sur la zone sûre (droite 120 px)",
+  "positionner les étiquettes HTML par Vector3.project(cam) après cam.updateMatrixWorld()",
+  "Syne 800 très large : prévoir le titre en HTML (background-clip:text pour le dégradé)",
+  "BokehPass : focus = distance caméra ; gouttes de fond sur les côtés seulement (elles masquent les chiffres sinon)",
   "OutputPass convertit linéaire->sRGB : un ShaderMaterial qui écrit des couleurs sRGB doit faire pow(c, 2.2) sinon le fond sort gris",
   "setViewOffset(W,H,0,-70,W,H) pour descendre le sujet sous le titre sans changer la perspective",
   "project() d'un Vector3 utilise la viewOffset : parfait pour accrocher des légendes DOM/SVG",
@@ -21,14 +35,22 @@
   "importmap 'three' + 'three/addons/' vers /node_modules/three/..."
  ],
  "snippetPath": [
+  "shorts/liquid-chrome__engagement__quelle-couleur-remplit-le-verre/src",
   "shorts/neon-lab__explicatif__lune-meme-face/src"
  ],
  "pairsWellWith": [
+  "svi.js (noise3, seg, ease)",
+  "Taichi (même palette en 2D)",
+  "sound.py",
   "OpenCV (grade commun)",
   "twgl.js (même GLSL)",
   "GSAP/DOM pour la typo"
  ],
  "usedBy": [
+  "liquid-chrome",
   "neon-lab"
+ ],
+ "roleAsDeclaredByStudios": [
+  "3D"
  ]
 }

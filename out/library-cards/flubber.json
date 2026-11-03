@@ -1,6 +1,6 @@
 {
  "name": "flubber",
- "role": "post-traitement",
+ "role": "morphing vectoriel",
  "bestFor": [
   "morphing de formes 2D (carré->hexagone, cercle->hexagone, badge de compte à rebours)",
   "transitions « une forme devient une autre » dans une identité géométrique"
@@ -28,5 +28,8 @@
  ],
  "usedBy": [
   "bauhaus-kinetic"
+ ],
+ "roleAsDeclaredByStudios": [
+  "post-traitement"
  ]
 }

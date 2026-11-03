@@ -1,6 +1,6 @@
 {
  "name": "twgl.js",
- "role": "3D",
+ "role": "shaders GLSL",
  "bestFor": [
   "shaders GLSL plein écran (champs, fonds procéduraux, lignes iso)",
   "nuages de points massifs en GL_POINTS additifs (20 000 sprites/frame mis à jour en JS)",
@@ -30,5 +30,8 @@
  ],
  "usedBy": [
   "neon-lab"
+ ],
+ "roleAsDeclaredByStudios": [
+  "3D"
  ]
 }

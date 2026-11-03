@@ -32,5 +32,8 @@
  ],
  "usedBy": [
   "pastel-diorama"
+ ],
+ "roleAsDeclaredByStudios": [
+  "3D"
  ]
 }

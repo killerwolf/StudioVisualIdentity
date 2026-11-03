@@ -1,6 +1,6 @@
 {
  "name": "p5.js",
- "role": "post-traitement | physique",
+ "role": "creative coding (raster 2D)",
  "bestFor": [
   "textures peintes (lavis aquarelle par polygones déformés multicouches)",
   "pré-rendu de décors dans des p5.Graphics au ready puis composition rapide par frame (multiplane, parallaxe)",
@@ -51,5 +51,9 @@
  "usedBy": [
   "aquarelle-conte",
   "pixel-arcade"
+ ],
+ "roleAsDeclaredByStudios": [
+  "post-traitement",
+  "physique"
  ]
 }

@@ -1,6 +1,6 @@
 {
  "name": "Paper.js",
- "role": "2D vectoriel (illustration) | typo",
+ "role": "vectoriel 2D",
  "bestFor": [
   "personnages et bâtiments vectoriels (chouette, phare en blocs, felouque)",
   "pointillés animés (dashArray/dashOffset), toises, faisceaux en dégradé",
@@ -49,5 +49,9 @@
  "usedBy": [
   "aquarelle-conte",
   "bauhaus-kinetic"
+ ],
+ "roleAsDeclaredByStudios": [
+  "2D vectoriel (illustration)",
+  "typo"
  ]
 }

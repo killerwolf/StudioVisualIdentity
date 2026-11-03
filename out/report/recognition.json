@@ -1,0 +1,249 @@
+{
+ "method": "Lab 8x8x8 Bhattacharyya + edge-histogram chi2, 8 frames/short, nearest neighbour",
+ "shorts": 20,
+ "top1Accuracy": 0.9,
+ "meanIntra": 0.2116,
+ "meanInter": 0.8308,
+ "ratioIntraOverInter": 0.255,
+ "rows": [
+  {
+   "short": "aquarelle-conte__enfants__ou-vont-les-etoiles-le-jour",
+   "nearest": "aquarelle-conte__histoire__phare-d-alexandrie",
+   "sameIdentity": true,
+   "distance": 0.2827
+  },
+  {
+   "short": "aquarelle-conte__histoire__phare-d-alexandrie",
+   "nearest": "aquarelle-conte__enfants__ou-vont-les-etoiles-le-jour",
+   "sameIdentity": true,
+   "distance": 0.2827
+  },
+  {
+   "short": "atlas-grave__geographie__plus-longs-fleuves-du-monde",
+   "nearest": "atlas-grave__histoire__premier-tour-du-monde-1519-1522",
+   "sameIdentity": true,
+   "distance": 0.0436
+  },
+  {
+   "short": "atlas-grave__histoire__premier-tour-du-monde-1519-1522",
+   "nearest": "atlas-grave__geographie__plus-longs-fleuves-du-monde",
+   "sameIdentity": true,
+   "distance": 0.0436
+  },
+  {
+   "short": "bauhaus-kinetic__engagement__trouve-l-intrus",
+   "nearest": "bauhaus-kinetic__explicatif__abeilles-hexagones",
+   "sameIdentity": true,
+   "distance": 0.1505
+  },
+  {
+   "short": "bauhaus-kinetic__explicatif__abeilles-hexagones",
+   "nearest": "bauhaus-kinetic__engagement__trouve-l-intrus",
+   "sameIdentity": true,
+   "distance": 0.1505
+  },
+  {
+   "short": "gazette-1900__evenements__9-novembre-1989-mur-de-berlin",
+   "nearest": "gazette-1900__histoire__1789-en-20-secondes",
+   "sameIdentity": true,
+   "distance": 0.0841
+  },
+  {
+   "short": "gazette-1900__histoire__1789-en-20-secondes",
+   "nearest": "gazette-1900__evenements__9-novembre-1989-mur-de-berlin",
+   "sameIdentity": true,
+   "distance": 0.0841
+  },
+  {
+   "short": "liquid-chrome__abstrait__quatre-peintures-mpm",
+   "nearest": "neon-lab__abstrait__champ-de-force-lucioles",
+   "sameIdentity": false,
+   "distance": 0.3674
+  },
+  {
+   "short": "liquid-chrome__engagement__quelle-couleur-remplit-le-verre",
+   "nearest": "neon-lab__explicatif__lune-meme-face",
+   "sameIdentity": false,
+   "distance": 0.5921
+  },
+  {
+   "short": "neon-lab__abstrait__champ-de-force-lucioles",
+   "nearest": "neon-lab__explicatif__lune-meme-face",
+   "sameIdentity": true,
+   "distance": 0.1873
+  },
+  {
+   "short": "neon-lab__explicatif__lune-meme-face",
+   "nearest": "neon-lab__abstrait__champ-de-force-lucioles",
+   "sameIdentity": true,
+   "distance": 0.1873
+  },
+  {
+   "short": "pastel-diorama__enfants__d-ou-vient-la-pluie",
+   "nearest": "pastel-diorama__engagement__choisis-ta-boite-renard",
+   "sameIdentity": true,
+   "distance": 0.3967
+  },
+  {
+   "short": "pastel-diorama__engagement__choisis-ta-boite-renard",
+   "nearest": "pastel-diorama__enfants__d-ou-vient-la-pluie",
+   "sameIdentity": true,
+   "distance": 0.3967
+  },
+  {
+   "short": "pixel-arcade__abstrait__la-balle-peut-elle-s-echapper",
+   "nearest": "pixel-arcade__engagement__quelle-bille-gagne-la-course",
+   "sameIdentity": true,
+   "distance": 0.1315
+  },
+  {
+   "short": "pixel-arcade__engagement__quelle-bille-gagne-la-course",
+   "nearest": "pixel-arcade__abstrait__la-balle-peut-elle-s-echapper",
+   "sameIdentity": true,
+   "distance": 0.1315
+  },
+  {
+   "short": "swiss-data__evenements__j-272-eclipse-2-aout-2027",
+   "nearest": "swiss-data__geographie__ou-vivent-8-milliards",
+   "sameIdentity": true,
+   "distance": 0.1251
+  },
+  {
+   "short": "swiss-data__geographie__ou-vivent-8-milliards",
+   "nearest": "swiss-data__evenements__j-272-eclipse-2-aout-2027",
+   "sameIdentity": true,
+   "distance": 0.1251
+  },
+  {
+   "short": "tableau-craie__enfants__comment-une-graine-devient-un-arbre",
+   "nearest": "tableau-craie__explicatif__pourquoi-le-ciel-est-bleu",
+   "sameIdentity": true,
+   "distance": 0.1122
+  },
+  {
+   "short": "tableau-craie__explicatif__pourquoi-le-ciel-est-bleu",
+   "nearest": "tableau-craie__enfants__comment-une-graine-devient-un-arbre",
+   "sameIdentity": true,
+   "distance": 0.1122
+  }
+ ],
+ "blindJudge": {
+  "method": "Juge agent indépendant, 40 frames anonymisées (2 par short, noms aléatoires, clé cachée), consigne : 10 groupes de 4 par style",
+  "pureGroups": 10,
+  "groups": 10,
+  "imagesCorrectlyGrouped": 40,
+  "images": 40,
+  "judgeGroups": [
+   {
+    "style": "Vintage newspaper front-page broadsheet",
+    "confidence": 0.98,
+    "identities": [
+     "gazette-1900",
+     "gazette-1900",
+     "gazette-1900",
+     "gazette-1900"
+    ],
+    "pure": true
+   },
+   {
+    "style": "Antique atlas plate, parchment serif",
+    "confidence": 0.97,
+    "identities": [
+     "atlas-grave",
+     "atlas-grave",
+     "atlas-grave",
+     "atlas-grave"
+    ],
+    "pure": true
+   },
+   {
+    "style": "Green chalkboard hand-drawn chalk",
+    "confidence": 0.97,
+    "identities": [
+     "tableau-craie",
+     "tableau-craie",
+     "tableau-craie",
+     "tableau-craie"
+    ],
+    "pure": true
+   },
+   {
+    "style": "Soft watercolor storybook illustration",
+    "confidence": 0.95,
+    "identities": [
+     "aquarelle-conte",
+     "aquarelle-conte",
+     "aquarelle-conte",
+     "aquarelle-conte"
+    ],
+    "pure": true
+   },
+   {
+    "style": "Pastel pink 3D clay diorama",
+    "confidence": 0.96,
+    "identities": [
+     "pastel-diorama",
+     "pastel-diorama",
+     "pastel-diorama",
+     "pastel-diorama"
+    ],
+    "pure": true
+   },
+   {
+    "style": "Dark navy neon lab monospace",
+    "confidence": 0.95,
+    "identities": [
+     "neon-lab",
+     "neon-lab",
+     "neon-lab",
+     "neon-lab"
+    ],
+    "pure": true
+   },
+   {
+    "style": "Retro pixel arcade game UI",
+    "confidence": 0.92,
+    "identities": [
+     "pixel-arcade",
+     "pixel-arcade",
+     "pixel-arcade",
+     "pixel-arcade"
+    ],
+    "pure": true
+   },
+   {
+    "style": "Glossy iridescent 3D glass simulation",
+    "confidence": 0.85,
+    "identities": [
+     "liquid-chrome",
+     "liquid-chrome",
+     "liquid-chrome",
+     "liquid-chrome"
+    ],
+    "pure": true
+   },
+   {
+    "style": "Editorial data, cream, red accents",
+    "confidence": 0.93,
+    "identities": [
+     "swiss-data",
+     "swiss-data",
+     "swiss-data",
+     "swiss-data"
+    ],
+    "pure": true
+   },
+   {
+    "style": "Bauhaus primary-color geometric puzzles",
+    "confidence": 0.9,
+    "identities": [
+     "bauhaus-kinetic",
+     "bauhaus-kinetic",
+     "bauhaus-kinetic",
+     "bauhaus-kinetic"
+    ],
+    "pure": true
+   }
+  ]
+ }
+}

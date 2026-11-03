@@ -1,6 +1,6 @@
 {
  "name": "anime.js",
- "role": "typo",
+ "role": "timeline / stagger",
  "bestFor": [
   "chorégraphies 2D : staggers en grille (stagger(ms,{grid:[c,r],from:'center'|index}))",
   "piloter des objets JS simples (états {k,o,x,s}) lus ensuite par Paper.js/DOM",
@@ -30,5 +30,8 @@
  ],
  "usedBy": [
   "bauhaus-kinetic"
+ ],
+ "roleAsDeclaredByStudios": [
+  "typo"
  ]
 }

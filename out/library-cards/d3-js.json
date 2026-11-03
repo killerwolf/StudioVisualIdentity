@@ -47,5 +47,8 @@
  "usedBy": [
   "atlas-grave",
   "swiss-data"
+ ],
+ "roleAsDeclaredByStudios": [
+  "data"
  ]
 }

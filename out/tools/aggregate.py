@@ -28,6 +28,13 @@ CANON.update({'three': 'three.js', 'matter': 'Matter.js', 'matterjs': 'Matter.js
               'zdog': 'Zdog', 'flubber': 'flubber', 'pycairo': 'pycairo', 'cairo': 'pycairo'})
 
 
+ROLES = {'three.js': '3D', 'A-Frame': '3D', 'Zdog': '3D', 'Babylon.js': '3D', 'Matter.js': 'physique', 'Taichi': 'fluides',
+         'p5.js': 'creative coding (raster 2D)', 'Paper.js': 'vectoriel 2D', 'Rough.js': 'vectoriel 2D (trait main levée)',
+         'flubber': 'morphing vectoriel', 'GSAP': 'typo / timeline', 'anime.js': 'timeline / stagger', 'D3.js': 'data',
+         'Manim': 'science', 'OpenCV': 'post-traitement', 'pycairo': 'textures procédurales (raster)', 'twgl.js': 'shaders GLSL',
+         'PixiJS': 'particules 2D', 'Matplotlib': 'data / science'}
+
+
 def canon(name):
     base = name.lower().split('(')[0]
     base = re.sub(r'\bv?\d+(\.\d+)*\b', ' ', base)          # retire les versions (« D3.js 7.9 », « anime.js 4.5 v4 »)
@@ -78,7 +85,8 @@ def merge_cards():
         for k in ('bestFor', 'avoidFor', 'gotchas', 'pairsWellWith', 'snippetPath', 'usedBy'):
             card[k] = dedup(card[k])
         roles = dedup([j.get('role', '') for _, j in items])
-        card['role'] = ' | '.join(roles)
+        card['role'] = ROLES.get(lib, ' | '.join(roles))
+        card['roleAsDeclaredByStudios'] = roles
         f = OUT / 'library-cards' / f'{slugify(lib)}.json'
         json.dump(card, open(f, 'w'), ensure_ascii=False, indent=1)
         written.append(f.name)

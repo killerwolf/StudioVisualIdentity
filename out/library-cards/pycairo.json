@@ -1,6 +1,6 @@
 {
  "name": "pycairo",
- "role": "post-traitement",
+ "role": "textures procédurales (raster)",
  "bestFor": [
   "matières gravées précalculées en PNG pour une scène navigateur : papier vergé (numpy + vergeures), cadre gradué, cartouche guilloché (trochoïdes sur superellipse), rose des vents hachurée, mer en taille-douce, vignettage",
   "pictogrammes vectoriels nets (caravelle gravée) réutilisés comme <image> SVG"
@@ -28,5 +28,8 @@
  ],
  "usedBy": [
   "atlas-grave"
+ ],
+ "roleAsDeclaredByStudios": [
+  "post-traitement"
  ]
 }

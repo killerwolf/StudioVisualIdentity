@@ -1,0 +1,38 @@
+{
+ "name": "Rough.js",
+ "role": "vectoriel 2D (trait main levée)",
+ "bestFor": [
+  "trait main levée et hachures « craie / crayon » sans dessin manuel",
+  "schémas pédagogiques enfants (graine, racines, soleil, arbre)",
+  "tracés qui s'écrivent : chemins SVG mesurables (getTotalLength) + stroke-dashoffset"
+ ],
+ "avoidFor": [
+  "régénérer les formes à chaque frame (le tracé « bout » et coûte cher) : générer une fois avec seed fixe",
+  "aplats propres / UI nette",
+  "milliers de formes (DOM SVG lourd)"
+ ],
+ "renderCostPer100Frames": [
+  "309 s (mesuré : 465 frames en 1437,7 s, scène « Comment une graine devient un arbre ? », ~45 groupes Rough.js en SVG sous un filtre plein cadre feImage+feComposite+flou 1,1 px, Chromium SwiftShader, charge machine 8–15 sur 4 cœurs) ; le filtre de grain plein cadre domine le coût — stills : 8 en 45,9 s [tableau-craie]"
+ ],
+ "gotchas": [
+  "toujours passer seed: dans les options sinon le tracé change à chaque génération",
+  "les remplissages 'solid' sont des <path> sans stroke : les animer en opacité, pas en dashoffset",
+  "getTotalLength() + 2 px de marge pour éviter un point résiduel en fin de dasharray",
+  "hachureGap 8–14 px pour rester lisible en 1080×1920",
+  "rotation GSAP de 200° sur un groupe sous filtre SVG -> artefact de peinture intermittent (tracé fantôme) : éviter les grandes rotations sous filtre"
+ ],
+ "snippetPath": [
+  "shorts/tableau-craie__enfants__comment-une-graine-devient-un-arbre/src"
+ ],
+ "pairsWellWith": [
+  "GSAP (timeline seek)",
+  "SVG feImage (grain)",
+  "Caveat/Nunito @fontsource"
+ ],
+ "usedBy": [
+  "tableau-craie"
+ ],
+ "roleAsDeclaredByStudios": [
+  "typo"
+ ]
+}

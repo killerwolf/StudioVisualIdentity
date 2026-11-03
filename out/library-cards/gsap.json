@@ -1,6 +1,6 @@
 {
  "name": "GSAP",
- "role": "animation (orchestration de timeline ; hors liste : aucune catégorie existante ne convient) | typo",
+ "role": "typo / timeline",
  "bestFor": [
   "timeline d'état unique (objet JS) seekée par renderAt : caméra, sceaux, légendes, compteurs pilotés par une seule source de vérité",
   "easings nommés cohérents dans une identité (power2.out, sine.inOut, back.out(1.6))",
@@ -14,7 +14,11 @@
   "timeline unique seekée image par image (tl.seek(t,false)) pilotant des attributs SVG (attr: width, x, r, stroke-dashoffset, fill)",
   "masques de révélation de texte (clipPath rect width 0 -> 1000, expo.out, stagger)",
   "compteurs : tween d'un objet d'état lu et affiché dans renderAt",
-  "volets de transition plein cadre expo.inOut, push-in svgOrigin"
+  "volets de transition plein cadre expo.inOut, push-in svgOrigin",
+  "orchestrer un short entier sur UNE timeline en pause, rendue par tl.seek(t, false) (déterministe, non séquentiel)",
+  "easings nommés expressifs (back.out, bounce.out, power3.out) pour pops et chutes",
+  "animer stroke-dashoffset de tracés SVG (écriture à la craie) avec stagger",
+  "zoom caméra 2D via scale + svgOrigin sur un groupe"
  ],
  "avoidFor": [
   "simulation à état (physique) : préférer un pas fixe",
@@ -25,13 +29,16 @@
   "physique ou simulation",
   "animer directement des propriétés DOM avec plusieurs tweens successifs sur la même propriété quand on seek dans le désordre (préférer un objet d'état)",
   "simulation physique ou état cumulatif (préférer pré-calcul)",
-  "callbacks onUpdate/onComplete pour du rendu critique : lire l'état dans renderAt après le seek"
+  "callbacks onUpdate/onComplete pour du rendu critique : lire l'état dans renderAt après le seek",
+  "physique réelle (préférer Matter pré-simulé)",
+  "scènes à état non réversible sans SEQUENTIAL"
  ],
  "renderCostPer100Frames": [
   "négligeable seul (< 1 ms par seek) ; dans la scène atlas-grave histoire le coût total est celui du SVG : voir renderTimeSec de shorts/atlas-grave__histoire__premier-tour-du-monde-1519-1522 [atlas-grave]",
   "33,3 s (mesuré, short gazette-1900 evenements 9-novembre-1989, 450 frames en 149,8 s) ; 65,2 s sous forte contention (short histoire 1789, 563 frames en 367,2 s, 10 studios sur 4 cœurs) — le coût est la capture de la page DOM, pas GSAP [gazette-1900]",
   "≈ 0 s propre (coût inclus dans les scènes : 66 s/100 frames avec Zdog, voir A-Frame pour la scène 3D ; seek d'une timeline de 30 tweens < 1 ms) [pastel-diorama]",
-  "13,7 s (mesuré avec D3, scène swiss-data__geographie__ou-vivent-8-milliards : ~90 tweens, 450 frames en 61,5 s ; le coût est dominé par la capture Chromium, pas par GSAP) ; 20,5 s (scène evenements, 92,3 s pour 450 frames) [swiss-data]"
+  "13,7 s (mesuré avec D3, scène swiss-data__geographie__ou-vivent-8-milliards : ~90 tweens, 450 frames en 61,5 s ; le coût est dominé par la capture Chromium, pas par GSAP) ; 20,5 s (scène evenements, 92,3 s pour 450 frames) [swiss-data]",
+  "≈ 0 s pour GSAP lui-même (seek instantané) ; coût total de la scène 309 s/100 frames dominé par le raster SVG filtré (voir carte Rough.js), mesuré sur « Comment une graine devient un arbre ? » (465 frames, 1437,7 s) [tableau-craie]"
  ],
  "gotchas": [
   "renderAt = t => { tl.seek(t, false); } — ne jamais retourner la timeline (thenable)",
@@ -50,13 +57,19 @@
   "ne jamais retourner la timeline depuis renderAt (thenable)",
   "SVG : utiliser svgOrigin:'x y' (coordonnées globales) et non transformOrigin en px pour un push-in",
   "tl.set({}, {}, DUR) pour allonger la timeline jusqu'à la durée du short",
-  "attr:{fill} se tweene entre deux hex (passage encre -> rouge)"
+  "attr:{fill} se tweene entre deux hex (passage encre -> rouge)",
+  "renderAt = t => { tl.seek(t, false); } sans return (la timeline est thenable)",
+  "fromTo(..., {immediateRender:false}) : poser l'état caché initial à la main (dashoffset = longueur, opacity 0) sinon l'objet est visible avant son tween",
+  "svgOrigin sur un tween de rotation d'un <g> déjà translaté (x/y GSAP) a déplacé l'objet : imbriquer outer (x/y) / inner (rotation/scale avec transformOrigin '50% 50%')",
+  "tl.set({}, {}, DUR) pour étendre la timeline jusqu'à la fin",
+  "yoyo + repeat pour un « souffle » d'emphase (feuilles)"
  ],
  "snippetPath": [
   "shorts/atlas-grave__histoire__premier-tour-du-monde-1519-1522/src",
   "shorts/gazette-1900__histoire__1789-en-20-secondes/src",
   "shorts/pastel-diorama__enfants__d-ou-vient-la-pluie/src",
-  "shorts/swiss-data__evenements__j-272-eclipse-2-aout-2027/src"
+  "shorts/swiss-data__evenements__j-272-eclipse-2-aout-2027/src",
+  "shorts/tableau-craie__enfants__comment-une-graine-devient-un-arbre/src"
  ],
  "pairsWellWith": [
   "D3.js",
@@ -68,12 +81,20 @@
   "A-Frame",
   "three.js",
   "pixi.js",
-  "flubber"
+  "flubber",
+  "Rough.js",
+  "SVG",
+  "render.mjs (contrat renderAt)"
  ],
  "usedBy": [
   "atlas-grave",
   "gazette-1900",
   "pastel-diorama",
-  "swiss-data"
+  "swiss-data",
+  "tableau-craie"
+ ],
+ "roleAsDeclaredByStudios": [
+  "animation (orchestration de timeline ; hors liste : aucune catégorie existante ne convient)",
+  "typo"
  ]
 }

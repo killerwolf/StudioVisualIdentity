@@ -62,5 +62,8 @@
   "gazette-1900",
   "liquid-chrome",
   "neon-lab"
+ ],
+ "roleAsDeclaredByStudios": [
+  "post-traitement"
  ]
 }

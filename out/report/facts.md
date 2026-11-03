@@ -47,4 +47,40 @@ Les faits hérités de la mission (§4) sont repris en fin de fichier ; les nôt
 
 ## Mesures ajoutées par les studios (Phase 2)
 
-<!-- Les mesures par short sont dans out/shorts/*/short.json (renderTimeSec) et agrégées ici en Phase 4. -->
+Conditions : 10 studios en parallèle sur 4 cœurs ; load average mesuré **16–22** (21:37 UTC) car seuls les rendus passent par les slots (ffmpeg, pré-simulations Node, compositions numpy n'y passent pas). Les coûts ci-dessous sont donc ×2–3 au-dessus d'une machine calme. Détail par short : `report/comparison.md` §2.
+
+### Coûts de rendu mesurés (s / 100 frames, 1080×1920, sous contention)
+| Technique | s/100 frames | Short source |
+|---|---|---|
+| D3 SVG + GSAP (aplats, peu de nœuds) | 13,7 – 20,5 | swiss-data ×2 |
+| Manim (formes, sans texte) | 19,1 | tableau-craie/explicatif |
+| Paper.js + flubber + anime.js (DOM/canvas 2D) | 28,2 – 31,7 | bauhaus-kinetic ×2 |
+| GSAP DOM + canvas 2D (gravures hachurées) | 33,3 – 65,3 (+ OpenCV 21–28) | gazette-1900 ×2 |
+| p5 v2 basse résolution ×4 (+ Matter) | 41,0 – 43,4 | pixel-arcade ×2 |
+| twgl.js (shader GLSL plein cadre + points additifs) | 55,5 (+ OpenCV 32) | neon-lab/abstrait |
+| Zdog (pseudo-3D plate) | 66,0 | pastel-diorama/enfants |
+| A-Frame sans ombres | 82,9 | pastel-diorama/engagement |
+| Taichi MPM 24 k particules 90×196, 80 substeps + shading cv2 | 105,6 (simulation 79 + shading 25) | liquid-chrome/abstrait |
+| p5 v2 lavis précalculés + Paper.js | 109,2 – 117,6 | aquarelle-conte ×2 |
+| D3 geo + GSAP + PNG pycairo | 128,7 – 135,7 | atlas-grave ×2 |
+| three.js MeshPhysical iridescent + DOF | 178,0 | liquid-chrome/engagement |
+| three.js + UnrealBloom | 182,9 (+ OpenCV 37) | neon-lab/explicatif |
+| Rough.js SVG sous filtre plein cadre (feImage + flou) | **309,2** | tableau-craie/enfants |
+
+- **La capture d'écran domine** : ~0,3 s par screenshot JPEG 1080×1920 alors que le JS de scène coûte 6–8 ms/frame (bauhaus-kinetic) ; Matter.js 0,024 s/100 frames de physique (pixel-arcade). Optimiser la scène n'a d'effet que sur les scènes WebGL lourdes ou les filtres SVG.
+- **Filtres SVG plein cadre** (feTurbulence/feImage) = poste de coût n°1 en 2D : les remplacer par des textures PNG précalculées (pycairo/PIL) — fait par atlas-grave.
+- **Verre en transmission three.js** (`MeshPhysicalMaterial.transmission`) ≈ 5 s/frame sous SwiftShader saturé : inutilisable ; simuler le verre par reflets d'environnement additifs.
+- **Taichi MPM** : sans viscosité la « peinture » se comporte comme de l'eau ; μ 0,05, E 600, dt 1e-4, 80 substeps, 24 k particules sur grille 90×196 donne une peinture épaisse stable (liquid-chrome).
+
+### Pièges nouveaux (vérifiés)
+- **`Math.atan2` diffère au dernier bit entre Node 22 et Chromium** (0.17467219900823971 vs 0.1746721990082397) : une course Matter pré-simulée en Node divergeait dans le navigateur à la frame 102. Ne jamais construire la géométrie d'un monde rejoué avec `atan2`/`hypot` calculés des deux côtés : précalculer en Node et coder en dur. Vérifier par un mode `?verify=1` qui compare les temps d'arrivée.
+- **Matter.js 0.20** colle les corps aux pentes < ~0,25 rad dès que `friction > 0` (même `frictionStatic: 0`) : friction 0 et `frictionAir` ≈ 0,014.
+- **Dépôt `"type": "module"`** : un script Node de pré-simulation en `require()` a besoin d'un `package.json` `{"type":"commonjs"}` local.
+- **GSAP `immediateRender:false`** sur `fromTo` : l'état de départ n'est pas posé avant le début du tween -> poser les états initiaux en CSS/attributs.
+- **three.js + shader custom** : le rendu final applique sa conversion sRGB -> un ShaderMaterial « délavé » ; linéariser les couleurs du shader (`pow(c, 2.2)`).
+- **Chromium/SwiftShader sous filtre SVG** : tracé fantôme intermittent avec des éléments à opacité 0 + rotation de 200° ; mettre `display:none` aux éléments effacés.
+- **Manim 0.22** : `play(..., run_time=)` écrase la durée de chaque animation ; les `.animate` doivent passer par `prepare_animation` ; `insert_n_curves` plante sur un groupe vide ; pas d'`add_to_back` (utiliser `bring_to_back`) ; piloter la caméra par `renderer.time`.
+- **Overlays ffmpeg** : 18 PNG plein cadre `-loop 1` + `fade` alpha > 8 min sous contention ; un compositeur numpy (lecture/écriture par pipes) prend ~40 s. Au-delà de ~5 overlays, composer en Python.
+- **Polices** : Syne 800 à 92 px ≈ 75 px par caractère -> 11 caractères max par ligne en zone sûre ; Playfair a des chiffres elzéviriens par défaut (`font-variant-numeric: lining-nums`) ; certains glyphes (↻ ✓) manquent dans Baloo/Nunito -> SVG inline.
+- **Débit de livrable** : le grain de film (OpenCV) sature le plafond 8 Mb/s (16–20 Mo / 15–19 s) ; les styles en aplats tombent sous 1 Mo pour 15 s.
+- **Workflow** : le moteur de workflow limite à 2 agents concurrents sur 4 CPU (min(16, CPU − 2)).

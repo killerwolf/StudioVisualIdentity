@@ -91,4 +91,5 @@ Haut 220 px, bas 320 px, droite 120 px (+ gauche 60 px). Les en-têtes commencen
 - Manim sans Text/MathTex : toute formule passe par overlays PNG (pas de λ dans le sous-ensemble latin des polices).
 - Rough.js régénère le tracé à chaque appel : toujours fixer `seed`, et ne pas re-générer par frame (pas de « boil »).
 - Le chiffon (bande claire) peut être lu comme un rayon de lumière s'il passe sur un schéma de soleil : le garder rapide (≤ 0,6 s).
-- Coût CPU modéré mais le compositing d'overlays par ffmpeg (`-loop` × 18) est très lent sous contention → compositing numpy.
+- Coût CPU : Manim ≈ 19 s/100 frames (léger) ; la version navigateur coûte ≈ 300 s/100 frames sous charge à cause du filtre SVG de grain plein cadre (feImage + flou) — prévoir 20–25 min de rendu par short ou appliquer le grain en post (numpy) comme pour Manim. Le compositing d'overlays par ffmpeg (`-loop` × 18) est très lent sous contention → compositing numpy.
+- Bug de raster Chromium/SwiftShader observé : des éléments laissés à opacité 0 sous le filtre de grain (et une rotation de 200°) ont produit un tracé fantôme intermittent → toujours `display:none` les tracés effacés par le chiffon, éviter les grandes rotations sous filtre, et scanner la vidéo (différences frame à frame) avant livraison.
