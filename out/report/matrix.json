@@ -45,6 +45,7 @@
  },
  "liquid-chrome": {
   "abstrait": [
+   "Babylon.js",
    "OpenCV",
    "Taichi"
   ],
@@ -58,6 +59,7 @@
    "twgl.js"
   ],
   "explicatif": [
+   "Matplotlib",
    "OpenCV",
    "three.js"
   ]
@@ -78,6 +80,7 @@
   ],
   "engagement": [
    "Matter.js",
+   "PixiJS",
    "p5.js"
   ]
  },

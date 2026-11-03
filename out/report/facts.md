@@ -66,6 +66,10 @@ Conditions : 10 studios en parallèle sur 4 cœurs ; load average mesuré **16�
 | three.js MeshPhysical iridescent + DOF | 178,0 | liquid-chrome/engagement |
 | three.js + UnrealBloom | 182,9 (+ OpenCV 37) | neon-lab/explicatif |
 | Rough.js SVG sous filtre plein cadre (feImage + flou) | **309,2** | tableau-craie/enfants |
+| *3ᵉ shorts, 3 studios actifs seulement :* | | |
+| PixiJS 8 ParticleContainer 17 094 cellules -> RenderTexture 270×480 ×4 | 32,6 (automate 0,11 en Node) | pixel-arcade/territoire |
+| Matplotlib Agg 1080×1920, figure réutilisée + 2 fonds plein cadre | 52,8 (+ OpenCV 15,5) | neon-lab/effet papillon |
+| Babylon.js 9 PBR + GlowLayer + DOF + reflet cube procédural | 123,2 | liquid-chrome/pendule |
 
 - **La capture d'écran domine** : ~0,3 s par screenshot JPEG 1080×1920 alors que le JS de scène coûte 6–8 ms/frame (bauhaus-kinetic) ; Matter.js 0,024 s/100 frames de physique (pixel-arcade). Optimiser la scène n'a d'effet que sur les scènes WebGL lourdes ou les filtres SVG.
 - **Filtres SVG plein cadre** (feTurbulence/feImage) = poste de coût n°1 en 2D : les remplacer par des textures PNG précalculées (pycairo/PIL) — fait par atlas-grave.
@@ -83,4 +87,7 @@ Conditions : 10 studios en parallèle sur 4 cœurs ; load average mesuré **16�
 - **Overlays ffmpeg** : 18 PNG plein cadre `-loop 1` + `fade` alpha > 8 min sous contention ; un compositeur numpy (lecture/écriture par pipes) prend ~40 s. Au-delà de ~5 overlays, composer en Python.
 - **Polices** : Syne 800 à 92 px ≈ 75 px par caractère -> 11 caractères max par ligne en zone sûre ; Playfair a des chiffres elzéviriens par défaut (`font-variant-numeric: lining-nums`) ; certains glyphes (↻ ✓) manquent dans Baloo/Nunito -> SVG inline.
 - **Débit de livrable** : le grain de film (OpenCV) sature le plafond 8 Mb/s (16–20 Mo / 15–19 s) ; les styles en aplats tombent sous 1 Mo pour 15 s.
+- **Matplotlib ne lit pas les `.woff2`** (FreeType sans brotli, `FT_Open_Face` 0x55) : convertir les `.woff` @fontsource en `.ttf` avec fontTools, puis `matplotlib.font_manager.fontManager.addfont`. Les sous-ensembles d'une même police (latin / grec) partagent le nom de famille : renommer pour les déclarer en repli.
+- **PixiJS 8 headless** : `await app.init({preserveDrawingBuffer:true, autoStart:false})` dans `window.ready`, ticker arrêté, `app.renderer.render(app.stage)` dans `renderAt` ; `ParticleContainer` + texture blanche 1×1 teintée pour > 10 k cellules ; RenderTexture basse résolution en `nearest` pour le pixel-art. Garder la simulation hors de Pixi (entiers + PRNG) pour la vérifier en Node.
+- **Babylon.js 9 headless** : `new BABYLON.Engine(canvas, true, {preserveDrawingBuffer:true, stencil:true})`, jamais `runRenderLoop`, `await scene.whenReadyAsync()` puis `scene.render()` dans `renderAt` ; reflets via un environnement procédural capturé une fois en cube ; le sélecteur de GlowLayer par préfixe de nom attrape d'autres meshes -> noms explicites.
 - **Workflow** : le moteur de workflow limite à 2 agents concurrents sur 4 CPU (min(16, CPU − 2)).

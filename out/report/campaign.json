@@ -133,6 +133,21 @@
    "video": "shorts/gazette-1900__histoire__1789-en-20-secondes/short.mp4"
   },
   {
+   "dir": "shorts/liquid-chrome__abstrait__pendule-de-newton-chrome",
+   "identity": "liquid-chrome",
+   "family": "abstrait",
+   "title": "Le pendule de Newton chromé qui ne s'arrête jamais",
+   "duration": 12.0,
+   "renderTimeSec": 443.5,
+   "libraries": [
+    "Babylon.js"
+   ],
+   "loopable": true,
+   "mechanic": "boucle parfaite (revisionnage hypnotique)",
+   "narrationLines": 5,
+   "video": "shorts/liquid-chrome__abstrait__pendule-de-newton-chrome/short.mp4"
+  },
+  {
    "dir": "shorts/liquid-chrome__abstrait__quatre-peintures-mpm",
    "identity": "liquid-chrome",
    "family": "abstrait",
@@ -178,6 +193,22 @@
    "mechanic": "boucle",
    "narrationLines": 3,
    "video": "shorts/neon-lab__abstrait__champ-de-force-lucioles/short.mp4"
+  },
+  {
+   "dir": "shorts/neon-lab__explicatif__effet-papillon-double-pendule",
+   "identity": "neon-lab",
+   "family": "explicatif",
+   "title": "L'effet papillon : deux pendules presque identiques",
+   "duration": 15.0,
+   "renderTimeSec": 243.1,
+   "libraries": [
+    "Matplotlib",
+    "OpenCV"
+   ],
+   "loopable": false,
+   "mechanic": "suspense",
+   "narrationLines": 4,
+   "video": "shorts/neon-lab__explicatif__effet-papillon-double-pendule/short.mp4"
   },
   {
    "dir": "shorts/neon-lab__explicatif__lune-meme-face",
@@ -257,6 +288,21 @@
    "mechanic": "pari / vote en commentaire + suspense (photo finish à 0,10 s)",
    "narrationLines": 6,
    "video": "shorts/pixel-arcade__engagement__quelle-bille-gagne-la-course/short.mp4"
+  },
+  {
+   "dir": "shorts/pixel-arcade__engagement__quelle-couleur-conquiert-l-ecran",
+   "identity": "pixel-arcade",
+   "family": "engagement",
+   "title": "Quelle couleur conquiert l'écran ?",
+   "duration": 15.5,
+   "renderTimeSec": 151.4,
+   "libraries": [
+    "PixiJS"
+   ],
+   "loopable": false,
+   "mechanic": "pari / vote en commentaire + suspense (photo finish à 0,19 %, leader changé à la dernière frame)",
+   "narrationLines": 6,
+   "video": "shorts/pixel-arcade__engagement__quelle-couleur-conquiert-l-ecran/short.mp4"
   },
   {
    "dir": "shorts/swiss-data__evenements__j-272-eclipse-2-aout-2027",

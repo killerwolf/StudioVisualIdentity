@@ -1,0 +1,42 @@
+{
+ "name": "Babylon.js",
+ "role": "3D",
+ "bestFor": [
+  "objets PBR chrome/irisés (PBRMaterial : metallic, iridescence, clearCoat) en plan macro",
+  "boucles parfaites calculées analytiquement (scène sans état, renderAt(t) pur)",
+  "post-traitement intégré sans addons : DefaultRenderingPipeline (ACES, DOF, FXAA, vignette) + GlowLayer pour les éclats",
+  "environnement de réflexion 100 % procédural via ReflectionProbe (aucun .env/.hdr téléchargé)"
+ ],
+ "avoidFor": [
+  "createDefaultEnvironment / environnements .env par défaut (téléchargés depuis le CDN Babylon : interdit)",
+  "réfraction/transmission sous SwiftShader (coût mesuré ~5 s/frame côté three.js)",
+  "sol infini brillant (bord dur visible au loin en incidence rasante) : préférer un Layer de fond 2D"
+ ],
+ "renderCostPer100Frames": [
+  "123,2 s (mesuré, liquid-chrome__abstrait__pendule-de-newton-chrome : 5 sphères PBR irisées segments 48, ReflectionProbe 256 rendue une fois, GlowLayer 512 + DOF Low + FXAA, 1080×1920 SwiftShader, CPU peu chargé) ; stills : ~3 s l'unité [liquid-chrome]"
+ ],
+ "gotchas": [
+  "new BABYLON.Engine(canvas, true, {preserveDrawingBuffer:true, stencil:true}) ; jamais engine.runRenderLoop : scene.render() dans renderAt(t) ; await scene.whenReadyAsync() dans window.ready",
+  "UMD : <script src=/node_modules/babylonjs/babylon.js> puis un <script type=module> qui lit window.BABYLON",
+  "ReflectionProbe refreshRate = REFRESHRATE_RENDER_ONCE : rendre 2 fois dans ready, puis setEnabled(false) sur les panneaux d'environnement pour qu'ils disparaissent de la vue ; scene.environmentTexture = probe.cubeTexture",
+  "GlowLayer.customEmissiveColorSelector reçoit TOUS les meshes : filtrer par nom exact (un startsWith('b') attrapait 'base'/'bar' -> crash Color3.FromHexString(undefined))",
+  "un éclat (sphère émissive) au point de contact de deux sphères est caché : l'avancer vers la caméra",
+  "Color3.FromHexString exige '#RRGGBB' ; Color4 '#RRGGBBAA'",
+  "orienter un cylindre entre 2 points : Quaternion.FromUnitVectorsToRef(up, dir, q) + scaling.y = longueur",
+  "depthOfField.focusDistance est en millimètres (distance × 1000)"
+ ],
+ "snippetPath": [
+  "shorts/liquid-chrome__abstrait__pendule-de-newton-chrome/src"
+ ],
+ "pairsWellWith": [
+  "svi.js (loadFonts, seg, ease, installContract)",
+  "texte HTML superposé",
+  "sound.py (SFX calés sur une période)"
+ ],
+ "usedBy": [
+  "liquid-chrome"
+ ],
+ "roleAsDeclaredByStudios": [
+  "3D"
+ ]
+}

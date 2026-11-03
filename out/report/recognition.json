@@ -1,10 +1,10 @@
 {
  "method": "Lab 8x8x8 Bhattacharyya + edge-histogram chi2, 8 frames/short, nearest neighbour",
- "shorts": 20,
- "top1Accuracy": 0.9,
- "meanIntra": 0.2116,
- "meanInter": 0.8308,
- "ratioIntraOverInter": 0.255,
+ "shorts": 23,
+ "top1Accuracy": 0.913,
+ "meanIntra": 0.2736,
+ "meanInter": 0.8366,
+ "ratioIntraOverInter": 0.327,
  "rows": [
   {
    "short": "aquarelle-conte__enfants__ou-vont-les-etoiles-le-jour",
@@ -55,6 +55,12 @@
    "distance": 0.0841
   },
   {
+   "short": "liquid-chrome__abstrait__pendule-de-newton-chrome",
+   "nearest": "liquid-chrome__abstrait__quatre-peintures-mpm",
+   "sameIdentity": true,
+   "distance": 0.5074
+  },
+  {
    "short": "liquid-chrome__abstrait__quatre-peintures-mpm",
    "nearest": "neon-lab__abstrait__champ-de-force-lucioles",
    "sameIdentity": false,
@@ -71,6 +77,12 @@
    "nearest": "neon-lab__explicatif__lune-meme-face",
    "sameIdentity": true,
    "distance": 0.1873
+  },
+  {
+   "short": "neon-lab__explicatif__effet-papillon-double-pendule",
+   "nearest": "neon-lab__abstrait__champ-de-force-lucioles",
+   "sameIdentity": true,
+   "distance": 0.197
   },
   {
    "short": "neon-lab__explicatif__lune-meme-face",
@@ -103,6 +115,12 @@
    "distance": 0.1315
   },
   {
+   "short": "pixel-arcade__engagement__quelle-couleur-conquiert-l-ecran",
+   "nearest": "pixel-arcade__engagement__quelle-bille-gagne-la-course",
+   "sameIdentity": true,
+   "distance": 0.3491
+  },
+  {
    "short": "swiss-data__evenements__j-272-eclipse-2-aout-2027",
    "nearest": "swiss-data__geographie__ou-vivent-8-milliards",
    "sameIdentity": true,
@@ -128,7 +146,7 @@
   }
  ],
  "blindJudge": {
-  "method": "Juge agent indépendant, 40 frames anonymisées (2 par short, noms aléatoires, clé cachée), consigne : 10 groupes de 4 par style",
+  "method": "Juge agent indépendant, 40 frames anonymisées (2 par short, noms aléatoires, clé cachée), consigne : 10 groupes de 4 par style ; porte sur les 20 shorts initiaux (avant les 3e shorts)",
   "pureGroups": 10,
   "groups": 10,
   "imagesCorrectlyGrouped": 40,

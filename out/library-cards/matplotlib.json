@@ -1,0 +1,38 @@
+{
+ "name": "Matplotlib",
+ "role": "data / science",
+ "bestFor": [
+  "explicatifs scientifiques avec un vrai graphe (axes log, courbes de mesure en direct) à côté d'une simulation numpy",
+  "schémas 2D à traits (pendules, trajectoires, traînes en LineCollection à alpha dégressif)",
+  "pipeline 100 % Python : simulation -> rendu -> OpenCV -> ffmpeg sans navigateur"
+ ],
+ "avoidFor": [
+  "effets additifs/bloom (Agg compose en alpha : faire la lueur en post OpenCV)",
+  "3D ou milliers de particules animées (préférer twgl/three.js)",
+  "animations typographiques riches"
+ ],
+ "renderCostPer100Frames": [
+  "52,8 s (mesuré, neon-lab explicatif double pendule : figure 1080×1920 à 100 dpi, 2 imshow plein cadre + 4 LineCollection + graphe log, 450 frames dessinées en 237,8 s, CPU peu chargé) ; stills ≈ 0,5 s/frame + 5–6 s de mise en place (simulation RK4 + champ numpy) [neon-lab]"
+ ],
+ "gotchas": [
+  "FreeType de Matplotlib ne lit pas le .woff2 (RuntimeError FT_Open_Face 0x55, brotli absent) : convertir le .woff @fontsource en .ttf avec fontTools (déjà installé comme dépendance de Matplotlib) puis fontManager.addfont(ttf)",
+  "les sous-ensembles @fontsource (latin, greek) ont le même nom de famille : renommer le grec (table name 1/4/16) et passer family=['JetBrains Mono','JetBrains Mono Greek'] pour le repli Δ θ",
+  "tailles : points = px × 72/100 à 100 dpi ; positionner le texte en fraction de figure 1 - y_px/1920",
+  "réutiliser UNE figure et mettre à jour set_data/set_segments/set_alpha ; buffer_rgba() -> numpy -> ffmpeg -pix_fmt rgba",
+  "l'essentiel du coût vient des imshow plein cadre redessinés à chaque frame : pour aller plus vite, blitting ou fond composé en numpy",
+  "lancer via out/tools/slot.sh"
+ ],
+ "snippetPath": [
+  "shorts/neon-lab__explicatif__effet-papillon-double-pendule/src"
+ ],
+ "pairsWellWith": [
+  "OpenCV (glow/aberration en post)",
+  "numpy/scipy (simulation)"
+ ],
+ "usedBy": [
+  "neon-lab"
+ ],
+ "roleAsDeclaredByStudios": [
+  "science"
+ ]
+}

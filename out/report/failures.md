@@ -1,6 +1,6 @@
 # Ce qui a échoué, et pourquoi
 
-Sources : journaux horodatés des studios (`out/report/notes/<slug>.md`), rapports de fin de studio, journal orchestrateur (`decisions.md`). Aucune librairie n'a dû être remplacée (aucun blocage > 20 min). Tous les temps sont mesurés.
+Sources : journaux horodatés des studios (`out/report/notes/<slug>.md`), rapports de fin de studio, journal orchestrateur (`decisions.md`). Aucune librairie n'a dû être remplacée (aucun blocage > 20 min). PixiJS, Babylon.js et Matplotlib n'étaient attribués à aucun studio au premier tour (choix d'orchestration : le minimum de 5 libs B était atteint) ; ajoutés ensuite par un 3ᵉ short chacune, sans blocage. Tous les temps sont mesurés.
 
 ## Échecs d'environnement (orchestrateur)
 
@@ -45,3 +45,14 @@ Sources : journaux horodatés des studios (`out/report/notes/<slug>.md`), rappor
 - **GSAP `immediateRender:false`** : l'état de départ n'est pas appliqué avant le début du tween -> poser les états initiaux en dur (swiss-data).
 - **anime.js v4 / p5 v2** : API différentes des versions documentées partout (pas de `anime()` global, pas de `preload()`).
 - **Dépôt `"type":"module"`** : les scripts Node `require()` (pré-simulation Matter) ont besoin d'un `package.json` `commonjs` local dans `src/`.
+
+## 3ᵉ shorts (PixiJS, Babylon.js, Matplotlib) — 22:22 → 22:37
+
+| Short | Problème | Cause | Résolution |
+|---|---|---|---|
+| neon-lab / effet papillon (Matplotlib) | les polices @fontsource `.woff2` ne se chargent pas (`FT_Open_Face` 0x55) | FreeType de Matplotlib sans brotli | `.woff` -> `.ttf` via fontTools (déjà installé) puis `fontManager.addfont` ; sous-ensemble grec de JetBrains Mono renommé pour servir de repli à Δ, θ |
+| liquid-chrome / pendule (Babylon.js) | plantage au 1er still | le sélecteur de couleur de GlowLayer matchait tous les meshes dont le nom commence par « b » (socle, barres) | billes renommées `ball<i>` |
+| liquid-chrome / pendule | bande grise dure à l'horizon | sol brillant infini | sol retiré, fond en calque 2D |
+| pixel-arcade / territoire (PixiJS) | écran rempli trop lentement (10 s), batailles plates à ~25 % chacune | réglages de l'automate | 2 sous-pas synchrones par frame et force d'attaque au carré, avant tout rendu |
+
+Un seul rendu complet par short, aucun rejeté. Les voix off de ces 3 shorts sont à générer comme les autres (`tts.py`).

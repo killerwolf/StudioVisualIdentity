@@ -91,6 +91,11 @@ def main():
            'shorts': n, 'top1Accuracy': round(hits / n, 3), 'meanIntra': round(float(np.mean(intra)), 4),
            'meanInter': round(float(np.mean(inter)), 4), 'ratioIntraOverInter': round(float(np.mean(intra) / np.mean(inter)), 3),
            'rows': rows}
+    old = ROOT / 'out/report/recognition.json'
+    if old.exists():  # conserve le résultat du juge aveugle (ajouté à part)
+        prev = json.loads(old.read_text())
+        if 'blindJudge' in prev:
+            res['blindJudge'] = prev['blindJudge']
     (ROOT / 'out/report/recognition.json').write_text(json.dumps(res, indent=1, ensure_ascii=False))
     print(f"top-1 = {hits}/{n} ({hits / n:.0%}) ; intra moyen {res['meanIntra']} vs inter {res['meanInter']} (ratio {res['ratioIntraOverInter']})")
     for r in rows:

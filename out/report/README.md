@@ -2,7 +2,7 @@
 
 **But** : 10 identités visuelles et cinématiques distinctes pour des chaînes de shorts verticaux (TikTok / Reels / Shorts), chacune **prouvée par 2 vidéos réelles** rendues par code avec des librairies open-source, puis documentée en design system exploitable par un agent de production.
 
-**Bilan** : 10 identités · 20 shorts (1080×1920, 30 fps, H.264, 12–18,75 s, son généré) · QA automatique **20/20 OK** · 7 familles couvertes ≥ 2 fois · 8/8 librairies niveau A + 8 niveau B utilisées · reconnaissance à l'aveugle **10/10 groupes purs** (juge visuel) et **18/20** (mesure couleur) · 1 h 46 de travail mural sur **4 cœurs** (20:27 -> 22:13 UTC, 2026-11-03) · voix off **non générée** (clé Gemini absente, pipeline prêt).
+**Bilan** : 10 identités · **23 shorts** (20 + 3ᵉ short pour pixel-arcade, neon-lab, liquid-chrome ; 1080×1920, 30 fps, H.264, 12–18,75 s, son généré) · QA automatique **23/23 OK** · 7 familles couvertes ≥ 2 fois · **8/8 librairies niveau A + 11/11 niveau B** utilisées · reconnaissance à l'aveugle **10/10 groupes purs** (juge visuel, 20 shorts initiaux) et **21/23** (mesure couleur) · 1 h 46 de travail mural sur **4 cœurs** (20:27 -> 22:13 UTC, 2026-11-03), puis 3ᵉ shorts en 15 min (22:22 -> 22:37) · voix off **non générée** (clé Gemini absente, pipeline prêt).
 
 Toutes les affirmations de ce dossier sont mesurées : temps (`facts.md`, `short.json.renderTimeSec`), QA (`qa.json`), reconnaissance (`recognition.json`).
 
@@ -12,16 +12,16 @@ Toutes les affirmations de ce dossier sont mesurées : temps (`facts.md`, `short
 |---|---|---|---|---|---|
 | `swiss-data` | Grille Suisse | geographie, evenements | D3.js, GSAP | `identities/swiss-data/` | `shorts/swiss-data__geographie__ou-vivent-8-milliards`, `shorts/swiss-data__evenements__j-272-eclipse-2-aout-2027` |
 | `gazette-1900` | Gazette 1900 | histoire, evenements | GSAP, OpenCV | `identities/gazette-1900/` | `shorts/gazette-1900__histoire__1789-en-20-secondes`, `shorts/gazette-1900__evenements__9-novembre-1989-mur-de-berlin` |
-| `pixel-arcade` | Arcade Pixel | engagement, abstrait | Matter.js, p5.js | `identities/pixel-arcade/` | `shorts/pixel-arcade__engagement__quelle-bille-gagne-la-course`, `shorts/pixel-arcade__abstrait__la-balle-peut-elle-s-echapper` |
+| `pixel-arcade` | Arcade Pixel | engagement ×2, abstrait | Matter.js, p5.js, PixiJS | `identities/pixel-arcade/` | `shorts/pixel-arcade__engagement__quelle-bille-gagne-la-course`, `shorts/pixel-arcade__abstrait__la-balle-peut-elle-s-echapper`, `shorts/pixel-arcade__engagement__quelle-couleur-conquiert-l-ecran` (PixiJS) |
 | `bauhaus-kinetic` | Bauhaus Cinétique | explicatif, engagement | anime.js, flubber, Paper.js | `identities/bauhaus-kinetic/` | `shorts/bauhaus-kinetic__explicatif__abeilles-hexagones`, `shorts/bauhaus-kinetic__engagement__trouve-l-intrus` |
 | `tableau-craie` | Tableau Craie | explicatif, enfants | Manim, Rough.js, GSAP | `identities/tableau-craie/` | `shorts/tableau-craie__explicatif__pourquoi-le-ciel-est-bleu`, `shorts/tableau-craie__enfants__comment-une-graine-devient-un-arbre` |
 | `pastel-diorama` | Diorama Pastel | enfants, engagement | Zdog, A-Frame, GSAP | `identities/pastel-diorama/` | `shorts/pastel-diorama__enfants__d-ou-vient-la-pluie`, `shorts/pastel-diorama__engagement__choisis-ta-boite-renard` |
 | `atlas-grave` | Atlas Gravé | geographie, histoire | D3.js, GSAP, pycairo | `identities/atlas-grave/` | `shorts/atlas-grave__geographie__plus-longs-fleuves-du-monde`, `shorts/atlas-grave__histoire__premier-tour-du-monde-1519-1522` |
 | `aquarelle-conte` | Aquarelle Conte | enfants, histoire | p5.js, Paper.js | `identities/aquarelle-conte/` | `shorts/aquarelle-conte__enfants__ou-vont-les-etoiles-le-jour`, `shorts/aquarelle-conte__histoire__phare-d-alexandrie` |
-| `neon-lab` | Labo Néon | abstrait, explicatif | three.js, twgl.js, OpenCV | `identities/neon-lab/` | `shorts/neon-lab__abstrait__champ-de-force-lucioles` (boucle parfaite), `shorts/neon-lab__explicatif__lune-meme-face` |
-| `liquid-chrome` | Chrome Liquide | abstrait, engagement | Taichi, three.js, OpenCV | `identities/liquid-chrome/` | `shorts/liquid-chrome__abstrait__quatre-peintures-mpm`, `shorts/liquid-chrome__engagement__quelle-couleur-remplit-le-verre` |
+| `neon-lab` | Labo Néon | abstrait, explicatif ×2 | three.js, twgl.js, OpenCV, Matplotlib | `identities/neon-lab/` | `shorts/neon-lab__abstrait__champ-de-force-lucioles` (boucle parfaite), `shorts/neon-lab__explicatif__lune-meme-face`, `shorts/neon-lab__explicatif__effet-papillon-double-pendule` (Matplotlib) |
+| `liquid-chrome` | Chrome Liquide | abstrait ×2, engagement | Taichi, three.js, OpenCV, Babylon.js | `identities/liquid-chrome/` | `shorts/liquid-chrome__abstrait__quatre-peintures-mpm`, `shorts/liquid-chrome__engagement__quelle-couleur-remplit-le-verre`, `shorts/liquid-chrome__abstrait__pendule-de-newton-chrome` (Babylon.js, boucle parfaite) |
 
-L'ordre du tableau est le classement de durabilité/industrialisation (argumenté dans `comparison.md` §5). Index machine complet : `report/campaign.json` (20 shorts avec durée, temps de rendu, libs, mécanique d'engagement) et `report/matrix.json` (identité × famille × libs).
+L'ordre du tableau est le classement de durabilité/industrialisation (argumenté dans `comparison.md` §5). Index machine complet : `report/campaign.json` (23 shorts avec durée, temps de rendu, libs, mécanique d'engagement) et `report/matrix.json` (identité × famille × libs).
 
 ## Recommandation
 
@@ -82,10 +82,11 @@ La clé `GEMINI_API_KEY` n'était pas disponible dans le conteneur pendant la ca
 
 ## Ce qui n'a pas marché (résumé — détail dans `failures.md`)
 
-- **Voix off absente** des 20 shorts : clé Gemini indisponible ; seul le script horodaté (`narration.json`) est livré.
+- **Voix off** : clé Gemini indisponible dans cette session ; une seconde session (prompt : `report/VOICEOVER_PROMPT.md`) génère la voix à partir des `narration.json`.
 - **CPU sur-souscrit** : 10 studios sur 4 cœurs (load 16–22) ; tous les temps de rendu sont ×2–3 au-dessus d'une machine calme.
 - **2 rendus complets jetés** (aquarelle-conte : bande non peinte ; liquid-chrome : verre réfractif à ~5 s/frame), 1 segment re-rendu (tableau-craie : bug de raster SwiftShader sous filtre SVG).
 - **Déterminisme Node ≠ navigateur** pour Matter.js (`Math.atan2` au dernier bit) : corrigé par géométrie précalculée.
 - **Manim sans texte** (pas de Pango ni LaTeX) : texte en overlays.
-- **Non explorés** : PixiJS, Babylon.js, Matplotlib (niveau B) et Blender/Remotion (niveau C) ; pas de 3ᵉ short par identité ; une seule boucle parfaite (neon-lab/abstrait).
+- **Niveau B complété après coup** : PixiJS, Babylon.js et Matplotlib n'avaient été attribués à aucun studio dans le premier tour (choix de l'orchestrateur, le minimum de 5 étant atteint) ; ils ont été ajoutés à la demande via un 3ᵉ short pour pixel-arcade, liquid-chrome et neon-lab.
+- **Non explorés** : Blender et Remotion (niveau C, optionnels ; Blender Cycles ≈ 25–30 s/frame était incompatible avec 4 cœurs saturés) ; 3ᵉ short seulement pour 3 identités ; deux boucles parfaites seulement (neon-lab/abstrait, liquid-chrome/pendule).
 - **Pas de PR** : le dépôt distant n'a pas de branche de base ; tout est poussé sur `claude/new-session-ae9hjs`.
