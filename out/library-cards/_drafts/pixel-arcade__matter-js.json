@@ -1,0 +1,15 @@
+{"name": "Matter.js 0.20",
+ "role": "physique",
+ "bestFor": ["courses de billes / pachinko / plinko 2D à parier (engagement)", "pré-simulation massive en Node pur pour choisir une graine (600 courses × 16 s en 35 s)", "journal d'événements de collision -> SFX synchronisés", "scènes à 4–50 corps rigides, plan 2D fixe"],
+ "avoidFor": ["fluides, tissus, foules > 500 corps", "3D", "billes qui doivent ROULER sur pentes faibles (< 0,25 rad) avec friction : elles collent", "rendu non séquentiel (seek arbitraire) : il faut re-simuler depuis t = 0"],
+ "renderCostPer100Frames": "43,4 s (mesuré, scène pixel-arcade engagement : Matter + p5 270×480 ×4, rendu SEQUENTIAL 480 frames en 208,5 s avec 4 slots CPU partagés) ; physique seule 0,024 s / 100 frames en Node (4 sous-pas de 8,33 ms, 4 billes, ~90 corps statiques)",
+ "gotchas": [
+   "Déterminisme Node -> Chromium : Math.atan2 (et potentiellement Math.hypot) diffèrent au dernier bit entre V8 Node 22 et Chromium 153 (0.17467219900823971 vs 0.1746721990082397) ; un angle de rampe calculé ainsi fait diverger la course dès ~3 s. Figer angles/longueurs en littéraux calculés en Node, puis vérifier (page ?verify=1 ou script Playwright) que les temps d'arrivée sont identiques.",
+   "friction > 0 sur une bille + pente faible = bille collée (même frictionStatic 0) ; utiliser friction 0 et régler la vitesse avec frictionAir (0.014 ≈ 90 px/s sur 0,11 rad avec gravity.scale 0.001).",
+   "Picots en quinconce : l'espacement DIAGONAL doit dépasser diamètre bille + 2 × rayon picot, sinon blocage systématique.",
+   "Nudge anti-blocage (pas de progrès vertical > 1,2 s) : pousser vers le bas de la rampe courante, pas vers le centre (sinon la bille remonte la rampe et re-déclenche le nudge en boucle) ; réinitialiser le chrono du nudge à l'ouverture de la grille.",
+   "Pas fixe Engine.update(engine, 1000/120) × 4 par frame 30 fps ; Body.setAngle(static, a, true) pour les hélices cinématiques.",
+   "Racine en \"type\": \"module\" : mettre un package.json {\"type\":\"commonjs\"} dans src/ pour require('matter-js') + module partagé UMD."
+ ],
+ "snippetPath": "shorts/pixel-arcade__engagement__quelle-bille-gagne-la-course/src",
+ "pairsWellWith": ["p5.js (rendu pixel basse résolution upscalé nearest)", "out/tools/sound.py (blips depuis le journal de collisions)"]}
