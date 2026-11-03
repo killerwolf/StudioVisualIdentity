@@ -1,0 +1,271 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8">
+<title>Bauhaus Cinétique — Pourquoi les abeilles construisent en hexagones ?</title>
+<!-- Short explicatif, identité bauhaus-kinetic. Paper.js dessine toute la géométrie (pavages, rayon de miel, contours),
+     flubber morphe carré->hexagone et cercle->hexagone, une timeline anime.js v4 en pause (seekée à t) pilote tout. -->
+<style>
+html,body{margin:0;background:#F2EDE3;width:1080px;height:1920px;overflow:hidden}
+canvas{position:absolute;inset:0;display:block}
+.t{position:absolute;left:60px;font:800 100px/1.04 'Unbounded';color:#111;letter-spacing:-3px;white-space:nowrap;transform-origin:0 50%}
+.t em{font-style:normal;color:#E63B2E}
+.s{position:absolute;left:62px;font:500 56px/1.12 'Space Grotesk';color:#111;white-space:nowrap}
+.card{position:absolute;left:60px;width:900px;box-sizing:border-box;padding:34px 32px;background:#FFFFFF}
+.card .h{font:800 90px/1.04 'Unbounded';color:#111;letter-spacing:-3px;white-space:nowrap}
+.card .h em{font-style:normal;color:#E63B2E}
+.card .b{margin-top:24px;font:500 56px/1.12 'Space Grotesk';color:#111;display:flex;align-items:center;gap:22px}
+.card .b i{flex:none;display:inline-block;width:44px;height:44px;background:#1D4ED8;border-radius:50%}
+.pill{position:absolute;font:500 56px/1 'Space Grotesk';color:#111;background:#FFFFFF;padding:12px 22px;white-space:nowrap}
+.val{position:absolute;font:800 58px/1 'Unbounded';letter-spacing:-2px;white-space:nowrap}
+.badge{position:absolute;font:800 56px/1 'Unbounded';color:#fff;background:#E63B2E;padding:16px 24px;letter-spacing:-2px;white-space:nowrap;transform-origin:0 50%}
+#num{position:absolute;left:60px;top:236px;font:800 54px/1 'Unbounded';color:#111}
+</style></head><body>
+<canvas id="cv" width="1080" height="1920"></canvas>
+<!-- scène 0 : hook -->
+<div id="num">N°06</div>
+<div class="card" id="card0" style="top:1060px"><div class="h">Pourquoi<br>les abeilles<br>construisent<br>en <em>hexagones&nbsp;?</em></div></div>
+<!-- scène 1 : pavages -->
+<div class="t" id="t1" style="top:236px">Seuls <em>3</em></div>
+<div class="s" id="s1" style="top:360px">polygones réguliers<br>pavent sans trou</div>
+<div class="pill" id="p1a" style="left:80px;top:826px">triangle</div>
+<div class="pill" id="p1b" style="left:550px;top:826px">carré</div>
+<div class="pill" id="p1c" style="left:80px;top:1296px">hexagone</div>
+<div class="pill" id="p1d" style="left:550px;top:1296px">pentagone</div>
+<!-- scène 2 : périmètres à surface égale -->
+<div class="t" id="t2" style="top:236px">Même aire</div>
+<div class="s" id="s2" style="top:360px">quel contour<br>est le plus court&nbsp;?</div>
+<div class="val" id="v2a" style="left:350px;top:640px;color:#fff">4,56</div>
+<div class="val" id="v2b" style="left:350px;top:930px;color:#111">4,00</div>
+<div class="val" id="v2c" style="left:350px;top:1220px;color:#fff">3,72</div>
+<div class="s" id="c2" style="top:1470px;color:#6B6458">aire = 1 · longueur du contour</div>
+<div class="badge" id="b2" style="left:330px;top:1340px">−7 % de cire</div>
+<!-- scène 3 : cercles -> hexagones -->
+<div class="t" id="t3a" style="top:236px">Des cercles</div>
+<div class="s" id="s3a" style="top:360px">laissent des trous</div>
+<div class="t" id="t3b" style="top:236px"><em>Hexagones</em></div>
+<div class="s" id="s3b" style="top:360px">zéro trou, cire minimale</div>
+<!-- scène 4 : fin -->
+<div class="card" id="card4" style="top:1060px"><div class="h">Prouvé<br>en <em>1999</em></div><div class="b"><i></i><span>Thomas Hales,<br>« nid d'abeille »</span></div></div>
+<script src="/node_modules/paper/dist/paper-full.min.js"></script>
+<script src="/node_modules/flubber/build/flubber.min.js"></script>
+<script type="module">
+import { createTimeline, stagger } from '/node_modules/animejs/dist/bundles/anime.esm.min.js';
+import * as S from '/out/tools/lib/svi.js';
+import { C, CW, CH, EASE, DUR, STAGGER, FONTS, hexPts, polyPts, circlePts, sqPts, toD, poly, drawGrid, makeWipe, WIPE_COVER, css } from './bk.js';
+
+const SEED = 6; // aucune part aléatoire ; graine notée pour la forme
+paper.setup(document.getElementById('cv'));
+const P = paper;
+const $ = id => document.getElementById(id);
+const wipe = makeWipe(document.body);
+
+// ---------- découpage (ms) ----------
+const W1 = 2400, W2 = 6000, W3 = 9600, W4 = 13000;                 // départs des grid-wipes
+const CUT = [0, W1 + WIPE_COVER, W2 + WIPE_COVER, W3 + WIPE_COVER, W4 + WIPE_COVER];
+const sceneAt = ms => CUT.filter(c => ms >= c).length - 1;
+
+// ---------- états animés ----------
+const o = () => ({ o: 0, x: 0, y: 0, s: 1, r: 0 });
+const st = {
+  grid: 0.35,
+  deco: [0, 0, 0, 0, 0].map(() => ({ k: 0 })),
+  cells: Array.from({ length: 7 }, () => ({ k: 0 })),
+  morph: { k: 0, x: 420, y: -380, rot: 90 },
+  card0: o(),
+  // scène 1
+  t1: o(), s1: o(), pan: [0, 0, 0, 0].map(() => ({ k: 0 })), mark: [0, 0, 0, 0].map(() => ({ k: 0 })), gap: { k: 0 }, pills: [0, 0, 0, 0].map(o),
+  // scène 2
+  t2: o(), s2: o(), rows: [0, 0, 0].map(() => ({ k: 0, dim: 1 })), c2: o(), b2: o(),
+  // scène 3
+  t3a: o(), s3a: o(), t3b: o(), s3b: o(), comb: Array.from({ length: 64 }, () => ({ k: 0 })), mf: Array.from({ length: 64 }, () => ({ k: 0 })),
+  // scène 4
+  cells4: Array.from({ length: 7 }, () => ({ k: 0 })), morph4: { k: 0, x: 420, y: -380, rot: 90 }, card4: o(),
+};
+st.deco[0].k = 1;   // quart de cercle bleu présent dès la frame 0 (hook)
+
+const tl = createTimeline({ autoplay: false, defaults: { ease: EASE.enter } });
+const IN = { o: [0, 1], y: [60, 0], duration: DUR.base };
+// scène 0 — hook
+tl.add(st, { grid: [0.35, 1], duration: 500, ease: 'outQuad' }, 0)
+  .add(st.deco.slice(1), { k: [0, 1], duration: DUR.base, delay: stagger(80) }, 150)
+  .add(st.cells, { k: [0, 1], duration: 420, delay: stagger(STAGGER) }, 0)
+  .add(st.card0, { o: [0, 1], y: [420, 0], duration: 600 }, 120)
+  .add(st.morph, { x: [420, 0], y: [-380, 0], rot: [90, 0], duration: DUR.slow, ease: EASE.emphasis }, 700)
+  .add(st.morph, { k: [0, 1], duration: DUR.slow, ease: 'inOutCubic' }, 1100);
+wipe.add(tl, W1);
+// scène 1 — pavages
+const c1 = CUT[1];
+tl.add(st.t1, { o: [0, 1], x: [-80, 0], duration: DUR.base }, c1 + 60)
+  .add(st.s1, IN, c1 + 200)
+  .add(st.pan, { k: [0, 1], duration: 1000, ease: 'outQuad', delay: stagger(380) }, c1 + 250)
+  .add(st.pills, { o: [0, 1], y: [40, 0], duration: DUR.fast, delay: stagger(380) }, c1 + 600)
+  .add(st.mark.slice(0, 3), { k: [0, 1], duration: DUR.base, delay: stagger(380) }, c1 + 1100)
+  .add(st.gap, { k: [0, 1], duration: 1200, ease: 'linear' }, c1 + 1900)
+  .add(st.mark[3], { k: [0, 1], duration: DUR.base }, c1 + 2300);
+wipe.add(tl, W2);
+// scène 2 — périmètres
+const c2 = CUT[2];
+tl.add(st.t2, { o: [0, 1], x: [-80, 0], duration: DUR.base }, c2 + 60)
+  .add(st.s2, IN, c2 + 200)
+  .add(st.rows, { k: [0, 1], duration: 1100, ease: 'inOutCubic', delay: stagger(300) }, c2 + 300)
+  .add(st.c2, IN, c2 + 900)
+  .add(st.rows.slice(0, 2), { dim: [1, 0.28], duration: DUR.base, ease: 'outQuad' }, c2 + 2100)
+  .add(st.b2, { o: [0, 1], s: [0.4, 1], r: [-90, 0], duration: DUR.base }, c2 + 2200);
+wipe.add(tl, W3);
+// scène 3 — cercles -> hexagones
+const c3 = CUT[3];
+tl.add(st.t3a, { o: [0, 1], x: [-80, 0], duration: DUR.base }, c3 + 60)
+  .add(st.s3a, IN, c3 + 200)
+  .add(st.comb, { k: [0, 1], duration: 380, delay: stagger(18, { grid: [8, 8], from: 'center' }) }, c3 + 100)
+  .add([st.t3a, st.s3a], { o: [1, 0], x: [0, -120], duration: DUR.fast, ease: EASE.exit }, c3 + 1450)
+  .add(st.mf, { k: [0, 1], duration: 700, ease: 'inOutCubic', delay: stagger(22, { grid: [8, 8], from: 'center' }) }, c3 + 1400)
+  .add(st.t3b, { o: [0, 1], x: [-80, 0], duration: DUR.base }, c3 + 1700)
+  .add(st.s3b, IN, c3 + 1850);
+wipe.add(tl, W4);
+// scène 4 — fin
+const c4 = CUT[4];
+tl.add(st.cells4, { k: [0, 1], duration: 420, delay: stagger(STAGGER) }, c4 + 50)
+  .add(st.card4, { o: [0, 1], y: [420, 0], duration: 600 }, c4 + 150)
+  .add(st.morph4, { x: [420, 0], y: [-380, 0], rot: [90, 0], duration: DUR.slow, ease: EASE.emphasis }, c4 + 500)
+  .add(st.morph4, { k: [0, 1], duration: DUR.slow, ease: 'inOutCubic' }, c4 + 800)
+  .add(st, { grid: [1, 1], duration: 10 }, 15990);
+
+// ---------- géométrie partagée ----------
+const HR = 116, HC = { x: 500, y: 650 }, DX = Math.sqrt(3) * HR + 10, DY = 1.5 * HR + 8.66;
+const CELLS = [[0, 0, C.red], [1, 0, C.yel], [-1, 0, C.yel], [.5, -1, C.yel], [-.5, -1, C.blue], [-.5, 1, C.yel], [.5, 1, C.ink]];
+const SLOT = { x: HC.x + 1.5 * DX, y: HC.y - DY };   // case vide en haut à droite du rayon
+const morphSq = flubber.interpolate(toD(sqPts(0, 0, 96)), toD(hexPts(0, 0, HR)), { maxSegmentLength: 6, string: false });
+const RC = 64, RH = 62 / Math.cos(Math.PI / 6);            // cercle r=64 -> hexagone d'apothème 62 (murs de cire 8 px)
+const morphCi = flubber.interpolate(circlePts(0, 0, RC, 48), hexPts(0, 0, RH), { maxSegmentLength: 10, string: false });
+const COMB = []; { const sx = 132, sy = 132 * Math.sqrt(3) / 2; for (let j = 0; j < 8; j++) for (let i = 0; i < 8; i++) COMB.push([60 + 20 + i * sx + (j % 2 ? sx / 2 : 0), 560 + 40 + j * sy]); }
+
+function drawCluster(cellsSt, morphSt) {
+  CELLS.forEach(([u, v, col], i) => {
+    const k = cellsSt[i].k; if (k <= 0) return;
+    poly(P, hexPts(HC.x + u * DX, HC.y + v * DY, HR * k, (1 - k) * Math.PI / 3), col);
+  });
+  { const k = cellsSt[0].k; if (k > 0) { const c = new P.Path.Circle([HC.x, HC.y], 34 * k); c.fillColor = C.white; } }
+  { const k = cellsSt[6].k, cx = HC.x + .5 * DX, cy = HC.y + DY;
+    if (k > 0) for (let i = -1; i <= 1; i++) { const r = new P.Path.Rectangle([cx - 54 * k, cy + i * 34 * k - 7 * k, 108 * k, 14 * k]); r.fillColor = C.yel; } }
+  const m = morphSt, pts = morphSq(m.k).map(([x, y]) => [x, y]);
+  const p = poly(P, pts, C.blue, C.ink, 10 * (1 - m.k));
+  p.rotate(m.rot, new P.Point(0, 0)); p.translate(new P.Point(SLOT.x + m.x, SLOT.y + m.y));
+}
+function drawDeco(d) {
+  { const q = new P.Path.Circle([1080, 0], 360 * d[0]); q.fillColor = C.blue; }
+  { const h = new P.Path.Circle([CW, 2 * CH + 20], 96 * d[1]); h.fillColor = C.yel; const m = new P.Path.Rectangle([CW - 100, 2 * CH + 20, 200, 100]); h.subtract(m); h.remove(); m.remove(); }
+  { const r = new P.Path.Rectangle([0, 9 * CH, 2 * CW * d[2], CH]); r.fillColor = C.ink; }
+  { const c = new P.Path.Circle([3 * CW, 9.5 * CH + 10], 70 * d[3]); c.fillColor = C.red; }
+  { const tr = new P.Path.RegularPolygon([5 * CW - 40, 9.5 * CH], 3, 78 * d[4]); tr.fillColor = C.yel; tr.rotate(180 * (1 - d[4])); }
+}
+// panneaux de pavage (scène 1) : x0,y0,430×430
+const PANELS = [[60, 540], [530, 540], [60, 1010], [530, 1010]];
+const PW = 430, PH = 380;
+function tilesFor(kind, x0, y0) {
+  const out = []; const cx = x0 + PW / 2, cy = y0 + PH / 2;
+  if (kind === 0) { const a = 120, h = a * Math.sqrt(3) / 2;
+    for (let j = -1; j < PH / h + 1; j++) for (let i = -2; i < PW / (a / 2) + 2; i++) {
+      const up = (i + j) % 2 === 0, X = x0 + i * a / 2, Y = y0 + j * h;
+      out.push(up ? [[X, Y + h], [X + a / 2, Y], [X + a, Y + h]] : [[X, Y], [X + a, Y], [X + a / 2, Y + h]]); } }
+  if (kind === 1) { const a = 108; for (let j = -1; j < PH / a + 1; j++) for (let i = -1; i < PW / a + 1; i++) { const X = x0 + 10 + i * a, Y = y0 + 10 + j * a; out.push([[X, Y], [X + a, Y], [X + a, Y + a], [X, Y + a]]); } }
+  if (kind === 2) { const R = 64, dx = Math.sqrt(3) * R, dy = 1.5 * R; for (let j = -1; j < PH / dy + 1; j++) for (let i = -1; i < PW / dx + 1; i++) out.push(hexPts(x0 + 30 + i * dx + (j % 2 ? dx / 2 : 0), y0 + 40 + j * dy, R)); }
+  return out.map(pts => { const m = pts.reduce((a, p) => [a[0] + p[0] / pts.length, a[1] + p[1] / pts.length], [0, 0]); return { pts, d: Math.hypot(m[0] - cx, m[1] - cy), m }; });
+}
+const TILES = [0, 1, 2].map(k => tilesFor(k, PANELS[k][0], PANELS[k][1]));
+const TCOL = [C.red, C.yel, C.blue];
+function shrink(pts, m, k) { return pts.map(([x, y]) => [m[0] + (x - m[0]) * k, m[1] + (y - m[1]) * k]); }
+function check(x, y, k, ok) {
+  if (k <= 0) return; const g = new P.Group();
+  const c = new P.Path.Circle([x, y], 44); c.fillColor = ok ? C.ink : C.red; g.addChild(c);
+  const l = ok ? new P.Path({ segments: [[x - 20, y + 2], [x - 5, y + 17], [x + 22, y - 15]] }) : new P.Path({ segments: [[x - 16, y - 16], [x + 16, y + 16]] });
+  l.strokeColor = C.white; l.strokeWidth = 11; l.strokeCap = 'square'; g.addChild(l);
+  if (!ok) { const l2 = new P.Path({ segments: [[x + 16, y - 16], [x - 16, y + 16]] }); l2.strokeColor = C.white; l2.strokeWidth = 11; l2.strokeCap = 'square'; g.addChild(l2); }
+  g.scale(k, new P.Point(x, y)); g.rotate(90 * (1 - k), new P.Point(x, y));
+}
+function drawScene1() {
+  PANELS.forEach(([x0, y0], k) => {
+    const pk = st.pan[k].k; if (pk <= 0) return;
+    const frame = new P.Path.Rectangle([x0, y0, PW, PH]); frame.fillColor = C.white;
+    const clip = new P.Path.Rectangle([x0, y0, PW, PH]);
+    const g = new P.Group([clip]); g.clipped = true;
+    if (k < 3) {
+      const maxd = Math.hypot(PW, PH) / 2;
+      TILES[k].forEach(t => { const kk = S.clamp(pk * 1.7 - t.d / maxd * 0.7); if (kk <= 0) return;
+        const e = S.ease.outBack(kk); const p = poly(P, shrink(t.pts, t.m, Math.min(e, 1.04)), TCOL[k], C.bg, 7); g.addChild(p); });
+    } else {
+      // 3 pentagones réguliers autour d'un sommet : 3 × 108° = 324°, il reste un trou de 36°
+      const V = [x0 + PW / 2 + 20, y0 + PH / 2 - 22], s = 118, R = s / (2 * Math.sin(Math.PI / 5)), th0 = -Math.PI / 2 - 0.3;
+      for (let n = 0; n < 3; n++) { const kk = S.clamp(pk * 3 - n * 0.9); if (kk <= 0) continue;
+        const th = th0 + n * 108 * Math.PI / 180, phi = th + 54 * Math.PI / 180;
+        const c = [V[0] + R * Math.cos(phi), V[1] + R * Math.sin(phi)];
+        const pts = Array.from({ length: 5 }, (_, i) => { const a = phi + Math.PI + i * 2 * Math.PI / 5; return [c[0] + R * Math.cos(a), c[1] + R * Math.sin(a)]; });
+        g.addChild(poly(P, shrink(pts, c, S.ease.outBack(kk)), C.ink, C.bg, 7)); }
+      const gk = st.gap.k; if (gk > 0) {
+        const a1 = th0 + 324 * Math.PI / 180, a2 = th0 + 2 * Math.PI, L = s;
+        const w = poly(P, [V, [V[0] + L * Math.cos(a1), V[1] + L * Math.sin(a1)], [V[0] + L * Math.cos(a2), V[1] + L * Math.sin(a2)]], C.red);
+        w.opacity = 0.35 + 0.65 * (0.5 + 0.5 * Math.cos(gk * Math.PI * 6)); g.addChild(w); }
+    }
+    const fr = new P.Path.Rectangle([x0, y0, PW, PH]); fr.strokeColor = C.ink; fr.strokeWidth = 8;
+    check(x0 + PW - 50, y0 + 50, st.mark[k].k, k < 3);
+  });
+}
+// scène 2 : formes de même aire (A = 22 500 px² = 150²) et barres de périmètre
+const A = 150 * 150;
+const SH = [
+  { n: 3, R: Math.sqrt(4 * A / Math.sqrt(3)) / Math.sqrt(3), per: 4.559, col: C.red, txt: '#fff' },
+  { n: 4, R: 150 / Math.SQRT2, per: 4.0, col: C.yel, txt: C.ink },
+  { n: 6, R: Math.sqrt(2 * A / (3 * Math.sqrt(3))), per: 3.722, col: C.blue, txt: '#fff' },
+];
+const ROWY = [690, 980, 1270];
+function partial(pts, k) { // contour partiel : k de 0..1 du périmètre
+  const p = new P.Path({ segments: pts, closed: true }); const L = p.length * k; if (k >= 1) return p;
+  const q = new P.Path(); let acc = 0; const n = pts.length;
+  q.add(pts[0]);
+  for (let i = 0; i < n; i++) { const a = pts[i], b = pts[(i + 1) % n], l = Math.hypot(b[0] - a[0], b[1] - a[1]);
+    if (acc + l >= L) { const f = (L - acc) / l; q.add([a[0] + (b[0] - a[0]) * f, a[1] + (b[1] - a[1]) * f]); break; } q.add(b); acc += l; }
+  p.remove(); return q;
+}
+function drawScene2() {
+  SH.forEach((sh, i) => {
+    const r = st.rows[i]; if (r.k <= 0) return; const y = ROWY[i], cx = 190;
+    const rot = sh.n === 4 ? Math.PI / 4 : sh.n === 6 ? Math.PI / 6 * 0 : 0;
+    const cy = y + (sh.n === 3 ? sh.R * 0.25 : 0);
+    const pts = polyPts(cx, cy, sh.R, sh.n, sh.n === 4 ? Math.PI / 4 : 0);
+    const f = poly(P, pts, sh.col); f.opacity = S.clamp(r.k * 3) * r.dim;
+    const ol = partial(pts, r.k); ol.strokeColor = C.ink; ol.strokeWidth = 10; ol.strokeJoin = 'miter'; ol.opacity = r.dim;
+    const w = 600 * sh.per / 4.559 * r.k;
+    const bar = new P.Path.Rectangle([330, y - 46, w, 92]); bar.fillColor = sh.col; bar.opacity = r.dim;
+    const el = $(['v2a', 'v2b', 'v2c'][i]); el.textContent = (sh.per * r.k).toFixed(2).replace('.', ',');
+    el.style.opacity = (S.clamp(r.k * 4) * r.dim).toFixed(3); el.style.top = (y - 29) + 'px';
+  });
+}
+function drawScene3() {
+  const pan = new P.Path.Rectangle([60, 520, 900, 960]); pan.fillColor = C.ink;
+  const clip = new P.Path.Rectangle([60, 520, 900, 960]); const g = new P.Group([clip]); g.clipped = true;
+  COMB.forEach(([x, y], i) => { const k = st.comb[i].k; if (k <= 0) return;
+    const pts = morphCi(st.mf[i].k).map(([px, py]) => [x + px * k, y + py * k]);
+    g.addChild(poly(P, pts, (i * 7) % 11 === 3 ? C.red : C.yel)); });
+}
+function drawText(ms) {
+  const sc = sceneAt(ms);
+  const show = (id, ob, scene) => { const el = $(id); if (sc !== scene) { el.style.opacity = 0; return; } css(el, ob); };
+  $('num').style.opacity = sc === 0 || sc === 4 ? 1 : 0;
+  show('card0', st.card0, 0);
+  show('t1', st.t1, 1); show('s1', st.s1, 1); ['p1a', 'p1b', 'p1c', 'p1d'].forEach((id, i) => show(id, st.pills[i], 1));
+  show('t2', st.t2, 2); show('s2', st.s2, 2); show('c2', st.c2, 2); show('b2', st.b2, 2);
+  ['v2a', 'v2b', 'v2c'].forEach(id => { if (sc !== 2) $(id).style.opacity = 0; });
+  show('t3a', st.t3a, 3); show('s3a', st.s3a, 3); show('t3b', st.t3b, 3); show('s3b', st.s3b, 3);
+  show('card4', st.card4, 4);
+}
+function draw(ms) {
+  P.project.activeLayer.removeChildren();
+  const sc = sceneAt(ms);
+  drawGrid(P, st.grid);
+  if (sc === 0) { drawDeco(st.deco.map(d => d.k)); drawCluster(st.cells, st.morph); const b = new P.Path.Rectangle([60, 1018, 900 * st.grid, 14]); b.fillColor = C.ink; }
+  if (sc === 1) drawScene1();
+  if (sc === 2) drawScene2();
+  if (sc === 3) drawScene3();
+  if (sc === 4) { drawDeco([1, 1, 1, 1, 1]); drawCluster(st.cells4, st.morph4); const b = new P.Path.Rectangle([60, 1018, 900, 14]); b.fillColor = C.ink; }
+  drawText(ms); wipe.apply();
+  P.view.update();
+}
+S.installContract({ duration: 16, ready: S.loadFonts(FONTS), renderAt: t => { const ms = t * 1000; tl.seek(ms); draw(ms); } });
+</script></body></html>

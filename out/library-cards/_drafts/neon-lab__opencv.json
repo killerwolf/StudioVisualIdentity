@@ -1,0 +1,25 @@
+{
+ "name": "OpenCV",
+ "role": "post-traitement",
+ "bestFor": [
+  "grade signature appliqué à toute vidéo rendue (glow des hautes lumières, aberration chromatique radiale, vignette)",
+  "uniformiser des shorts rendus par des moteurs différents (twgl, three.js) sous une même identité"
+ ],
+ "avoidFor": [
+  "effets dépendant de la profondeur ou de la géométrie 3D (à faire dans le moteur)",
+  "flous très larges à pleine résolution (travailler à 1/4 puis remonter)"
+ ],
+ "renderCostPer100Frames": "31,9 s (mesuré, neon_grade.py sur 360 frames 1080×1920 : 114,7 s, lecture cv2.VideoCapture + pipe rawvideo ffmpeg crf 14, 4 slots CPU occupés)",
+ "gotchas": [
+  "opencv 5 headless : pas d'écriture H.264 fiable via VideoWriter -> pipe rawvideo bgr24 vers ffmpeg",
+  "travailler en float32 [0,1] et clipper avant conversion uint8",
+  "aberration radiale via warpAffine d'échelle par canal (≈2,4 px dans les coins pour 0,0022) : rester faible pour garder la typo nette",
+  "lancer via out/tools/slot.sh (rendu Python lourd)"
+ ],
+ "snippetPath": "shorts/neon-lab__abstrait__champ-de-force-lucioles/src/neon_grade.py",
+ "pairsWellWith": [
+  "twgl.js",
+  "three.js",
+  "Taichi"
+ ]
+}

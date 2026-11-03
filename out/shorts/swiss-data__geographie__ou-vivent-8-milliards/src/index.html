@@ -1,0 +1,124 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8">
+<!-- swiss-data · geographie · « Où vivent les 8 milliards d'humains ? » — D3.js (échelles, grille, unit chart, barres SVG) + GSAP (timeline seekée).
+     Données : ONU, World Population Prospects 2024, estimations 2024 arrondies (continents en milliards ; pays : Inde 1,45 · Chine 1,41 · États-Unis 0,35 · Indonésie 0,28 · Pakistan 0,25).
+     Déterministe (aucun aléa, seed 0). Durée 15 s. -->
+<script src="/node_modules/d3/dist/d3.min.js"></script>
+<script src="/node_modules/gsap/dist/gsap.min.js"></script>
+<style>html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:#F4F1EA}svg{position:absolute;inset:0}</style>
+</head><body>
+<svg id="s" width="1080" height="1920"></svg>
+<script type="module">
+import { T, gx, txt, frame, wipeLine, makeWipe, addWipe, showScenes, fontsReady, fr, S } from './grille.js';
+const DUR = 15;
+const svg = d3.select('#s');
+const F = frame(svg, { kicker: '01 · MONDE', right: 'ONU · 2024' });
+const tl = gsap.timeline({ paused: true });
+const st = { n8: 0, pctA: 0, pctB: 0, third: 0 };
+const ex = (node, from, to, dur, at, ease = 'expo.out') => tl.fromTo(node, from, { ...to, duration: dur, ease, immediateRender: false }, at);
+
+const continents = [
+  { n: 'Asie', v: 4.75, c: T.red }, { n: 'Afrique', v: 1.49, c: T.blue }, { n: 'Europe', v: 0.74, c: T.ink },
+  { n: 'Amérique latine', v: 0.66, c: T.muted }, { n: 'Amérique du Nord', v: 0.38, c: T.ghost }, { n: 'Océanie', v: 0.045, c: T.ink }];
+const total = d3.sum(continents, d => d.v);
+const CUT1 = 3.475, CUT2 = 8.475;   // coupes sous le volet rouge (wipes lancés à 3.0 et 8.0)
+
+// ───────── Scène A : hook « 8 milliards » (0 → CUT1) ─────────
+const A = svg.append('g');
+['Où vivent', 'les 8 milliards', 'd’humains ?'].map((l, i) => wipeLine(A, 66, 448 + i * 128, l, 122))
+  .forEach((o, i) => ex(o.clip, { attr: { width: 0 } }, { attr: { width: 1000 } }, 0.7, 0.1 + i * 0.1));
+const eight = txt(A, 52, 1400, '8', 780, { family: T.display, fill: T.red, track: -0.06 });
+['milliards', 'd’humains', 'en 2024'].forEach((l, i) => {
+  const o = wipeLine(A, gx(8), 1150 + i * 80, l, 62, { fill: i === 2 ? T.red : T.ink });
+  ex(o.clip, { attr: { width: 0 } }, { attr: { width: 400 } }, 0.6, 0.9 + i * 0.08);
+});
+tl.to(st, { n8: 8, duration: 0.9, ease: 'power2.out' }, 0);
+// barre empilée (teaser) : continents en proportion
+const xs = d3.scaleLinear().domain([0, total]).range([0, T.W]);
+A.append('rect').attr('x', T.L).attr('y', 1460).attr('width', T.W).attr('height', 4).attr('fill', T.ink);
+let acc = 0;
+continents.forEach((d, i) => {
+  const r = A.append('rect').attr('x', T.L + xs(acc)).attr('y', 1484).attr('height', 48).attr('width', 0).attr('fill', d.c);
+  acc += d.v;
+  ex(r.node(), { attr: { width: 0 } }, { attr: { width: Math.max(3, xs(d.v) - 4) } }, 0.8, 1.6 + i * 0.1);
+});
+
+// ───────── Scène B : unit chart « 1 carré = 100 millions » (CUT1 → CUT2) ─────────
+const B = svg.append('g');
+['1 carré =', '100 millions'].map((l, i) => wipeLine(B, 66, 420 + i * 108, l, 104))
+  .forEach((o, i) => ex(o.clip, { attr: { width: 0 } }, { attr: { width: 1000 } }, 0.6, CUT1 + 0.1 + i * 0.08));
+const cells = [];
+continents.forEach((d, ci) => {
+  const n = d.v < 0.1 ? 1 : Math.round(d.v * 10);       // Océanie : moins d'un carré (0,45 -> carré d'aire 0,45)
+  for (let k = 0; k < n; k++) cells.push({ c: d.c, ci, frac: d.v < 0.1 ? d.v * 10 : 1 });
+});
+const COLS = 10, CELL = T.W / COLS, SQ = 76, Y0 = 590;
+const groups = continents.map(() => B.append('g'));
+cells.forEach((c, i) => {
+  const cx = T.L + (i % COLS) * CELL + SQ / 2, cy = Y0 + Math.floor(i / COLS) * CELL + SQ / 2;
+  const s = SQ * Math.sqrt(c.frac);
+  const r = groups[c.ci].append('rect').attr('fill', c.c).attr('x', cx).attr('y', cy).attr('width', 0).attr('height', 0);
+  ex(r.node(), { attr: { x: cx, y: cy, width: 0, height: 0 } }, { attr: { x: cx - s / 2, y: cy - s / 2, width: s, height: s } }, 0.4, CUT1 + 0.3 + i * 0.017);
+});
+// lecture : 59 % Asie, puis 18 % Afrique
+const RB = 1590;
+const roA = B.append('g').style('opacity', 0), roB = B.append('g').style('opacity', 0);
+const numA = txt(roA, 60, RB, '0', 200, { family: T.display, fill: T.red });
+txt(roA, 0, RB, '%', 110, { family: T.display, fill: T.red }).attr('class', 'pc');
+txt(roA, gx(6.2), RB - 70, 'vivent', 62); txt(roA, gx(6.2), RB, 'en Asie', 62);
+const numB = txt(roB, 60, RB, '0', 200, { family: T.display, fill: T.blue });
+txt(roB, 0, RB, '%', 110, { family: T.display, fill: T.blue }).attr('class', 'pc');
+txt(roB, gx(6.2), RB - 70, 'vivent', 62); txt(roB, gx(6.2), RB, 'en Afrique', 62);
+ex(roA.node(), { opacity: 0, y: 40 }, { opacity: 1, y: 0 }, 0.5, 5.5);
+tl.to(st, { pctA: 4.75 / total * 100, duration: 0.9, ease: 'expo.out' }, 5.5);
+ex(roA.node(), { opacity: 1, y: 0 }, { opacity: 0, y: -40 }, 0.3, 6.9, 'power2.in');
+ex(roB.node(), { opacity: 0, y: 40 }, { opacity: 1, y: 0 }, 0.5, 7.0);
+tl.to(st, { pctB: 1.49 / total * 100, duration: 0.8, ease: 'expo.out' }, 7.0);
+groups.forEach((g, i) => { if (i !== 1) ex(g.node(), { opacity: 1 }, { opacity: 0.18 }, 0.4, 7.0, 'power2.out'); });
+
+// ───────── Scène C : top 5 des pays (CUT2 → fin) ─────────
+const C = svg.append('g');
+['Top 5', 'des pays'].map((l, i) => wipeLine(C, 66, 420 + i * 112, l, 108))
+  .forEach((o, i) => ex(o.clip, { attr: { width: 0 } }, { attr: { width: 1000 } }, 0.6, CUT2 + 0.1 + i * 0.08));
+const pays = [{ n: 'Inde', v: 1.45 }, { n: 'Chine', v: 1.41 }, { n: 'États-Unis', v: 0.35 }, { n: 'Indonésie', v: 0.28 }, { n: 'Pakistan', v: 0.25 }];
+const xb = d3.scaleLinear().domain([0, 1.45]).range([0, T.W]);
+const barNodes = [];
+pays.forEach((d, i) => {
+  const y = 668 + i * 136;
+  const row = C.append('g').style('opacity', 0);
+  txt(row, T.L, y, `${i + 1}  ${d.n}`, 60, { weight: 600 });
+  const val = txt(row, T.R, y, `${fr(d.v)} Md`, 60, { anchor: 'end', fill: i === 0 ? T.red : T.ink });
+  row.append('rect').attr('x', T.L).attr('y', y + 22).attr('width', T.W).attr('height', 34).attr('fill', T.rail);
+  const b = row.append('rect').attr('x', T.L).attr('y', y + 22).attr('height', 34).attr('width', 0).attr('fill', i === 0 ? T.red : T.ink);
+  barNodes.push({ b, val });
+  ex(row.node(), { opacity: 0 }, { opacity: 1 }, 0.25, CUT2 + 0.35 + i * 0.12, 'power1.out');
+  ex(b.node(), { attr: { width: 0 } }, { attr: { width: xb(d.v) } }, 1.0, CUT2 + 0.45 + i * 0.12);
+});
+// Chine rejoint l'Inde en rouge : plus d'un humain sur trois
+ex(barNodes[1].b.node(), { attr: { fill: T.ink } }, { attr: { fill: T.red } }, 0.3, 10.6, 'power1.out');
+ex(barNodes[1].val.node(), { attr: { fill: T.ink } }, { attr: { fill: T.red } }, 0.3, 10.6, 'power1.out');
+C.append('rect').attr('x', T.L).attr('y', 1368).attr('width', T.W).attr('height', 4).attr('fill', T.ink);
+const ro = C.append('g').style('opacity', 0);
+const roIn = ro.append('g');
+txt(roIn, 60, RB, '1/3', 200, { family: T.display, fill: T.red });
+txt(roIn, gx(6.2), RB - 70, 'vit en Inde', 62); txt(roIn, gx(6.2), RB, 'ou en Chine', 62);
+ex(ro.node(), { opacity: 0, y: 40 }, { opacity: 1, y: 0 }, 0.5, 11.0);
+// push-in lent sur la valeur (caméra 2D)
+ex(roIn.node(), { scale: 1, svgOrigin: '72 1590' }, { scale: 1.08, svgOrigin: '72 1590' }, 3.0, 11.6, 'sine.inOut');
+
+// ───────── Volet rouge (au-dessus de tout) + kicker ─────────
+const wipe = makeWipe(svg);
+addWipe(tl, wipe, CUT1 - 0.475); addWipe(tl, wipe, CUT2 - 0.475);
+const scenes = [{ g: A, from: 0, to: CUT1 }, { g: B, from: CUT1, to: CUT2 }, { g: C, from: CUT2, to: 99 }];
+const kick = ['01 · MONDE', '02 · CONTINENTS', '03 · PAYS'];
+tl.set({}, {}, DUR);
+
+function renderAt(t) {
+  tl.seek(t, false);
+  showScenes(scenes, t);
+  F.kicker.text(kick[t < CUT1 ? 0 : t < CUT2 ? 1 : 2]);
+  eight.text(Math.max(1, Math.round(st.n8)));
+  numA.text(Math.round(st.pctA)); numB.text(Math.round(st.pctB));
+  [numA, numB].forEach(n => { const w = n.node().getComputedTextLength(); d3.select(n.node().parentNode).select('.pc').attr('x', 60 + w + 8); });
+}
+S.installContract({ renderAt, ready: fontsReady(), duration: DUR });
+</script></body></html>

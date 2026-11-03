@@ -1,0 +1,225 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8">
+<title>Aquarelle Conte — Il était une fois le Phare d'Alexandrie</title>
+<!-- Short histoire, identité aquarelle-conte. Graine 11. Durée 16 s.
+     p5.js v2 : ciels (crépuscule, nuit étoilée, matin), mer, vagues, côte lointaine, île de Pharos, papier bas de page
+     pré-rendus au ready, composés par frame (multiplane 3 plans + transitions « lavis qui s'ouvre »).
+     Paper.js : le phare bâti pierre par pierre (3 étages : carré, octogonal, cylindrique + lanterne), faisceau tournant,
+     felouque, toise de hauteur, séisme (chute des pierres, fonction pure de t), puis les mêmes pierres bâtissent le fort de Qaitbay. -->
+<style>
+:root{--bg:#F7F1E6;--text:#3A3042;--coralDeep:#B2573E;--blueDeep:#4E7FB8}
+html,body{margin:0;background:var(--bg);width:1080px;height:1920px;overflow:hidden}
+#stage{position:absolute;inset:0}
+#stage canvas{position:absolute;inset:0;display:block}
+#vec{z-index:10}
+.t{position:absolute;left:64px;width:880px;color:var(--text);z-index:20;opacity:0;will-change:opacity,transform}
+.kick{font:600 54px/1 'Nunito';color:var(--coralDeep)}
+.title{font:700 108px/1.0 'Fraunces';letter-spacing:-2px}
+.big{font:700 92px/1.02 'Fraunces';letter-spacing:-1.5px}
+.sub{font:600 58px/1.18 'Nunito'}
+em{font-style:normal;color:var(--blueDeep)}
+sup{font-size:.6em;line-height:0}
+#gaugeL{position:absolute;z-index:21;font:700 60px/1 'Fraunces';color:var(--text);background:rgba(247,241,230,.86);padding:10px 18px 14px;border-radius:26px 30px 24px 32px;opacity:0}
+#fade{position:absolute;inset:0;background:var(--bg);opacity:0;z-index:60}
+</style></head><body>
+<div id="stage">
+  <canvas id="vec"></canvas>
+  <div id="gaugeL">100–130 m</div>
+  <div class="t kick" id="k0" style="top:1150px">Il était une fois…</div>
+  <div class="t title" id="t0" style="top:1224px">le <em>Phare</em><br>d’Alexandrie</div>
+  <div class="t big" id="b1" style="top:1190px">Vers 280<br>av. J.-C.</div>
+  <div class="t sub" id="s1" style="top:1410px">Sur l’île de Pharos,<br>sous les rois Ptolémée.</div>
+  <div class="t big" id="b2" style="top:1190px">Une des <em>7&nbsp;Merveilles</em></div>
+  <div class="t sub" id="s2" style="top:1410px">du monde antique, haute<br>d’environ 100 à 130 m.</div>
+  <div class="t big" id="b3" style="top:1190px">Puis la terre<br>tremble…</div>
+  <div class="t sub" id="s3" style="top:1410px">Les séismes l’abattent :<br>au XIV<sup>e</sup> siècle, il a disparu.</div>
+  <div class="t big" id="b4" style="top:1190px">Au XV<sup>e</sup> siècle,</div>
+  <div class="t sub" id="s4" style="top:1300px">ses pierres bâtissent<br>le <b style="color:#B2573E">fort de Qaitbay</b>.</div>
+  <div class="t big" id="b5" style="top:1480px">Fin.</div>
+  <div id="fade"></div>
+</div>
+<script src="/node_modules/p5/lib/p5.min.js"></script>
+<script src="/node_modules/paper/dist/paper-core.min.js"></script>
+<script type="module">
+import * as S from '/out/tools/lib/svi.js';
+import { T, FONTS, washer, circle, ellipse, hill, star, rect, band, startP5, draw, bloom, bloomSoft, paperGrain, inkText, paperFade, paperSetup, wc, P } from './aq.js';
+
+const SEED = 11, DUR = 16;
+const W = washer(SEED), { wash } = W;
+const CX = 470, GROUND = 965;                 // pied du phare (coord. calque « près » avant parallaxe)
+let p, L, BLOB;
+
+function paintAll() {
+  const g = L;
+  // crépuscule (bandes subdivisées)
+  g.dusk.background(157, 179, 221);
+  wash(g.dusk, band(-40, 1060), '#9DB3DD', { layers: 20, alpha: 11, vari: .14 });
+  wash(g.dusk, band(470, 1060, -40), '#E88D72', { layers: 26, alpha: 8, vari: .2 });
+  wash(g.dusk, band(650, 1060, -30), '#F2C14E', { layers: 24, alpha: 9, vari: .2 });
+  for (const [r, a] of [[190, 5], [140, 7]]) wash(g.dusk, circle(820, 790, r, 22), '#F7D77E', { layers: 16, alpha: a, vari: .12, edge: false });
+  wash(g.dusk, circle(820, 800, 66, 20), '#F2C14E', { layers: 26, alpha: 24, vari: .05 });
+  // nuit étoilée
+  g.night.background(78, 127, 184);
+  wash(g.night, rect(-60, -40, 1300, 1060), '#6C9BCF', { layers: 24, alpha: 10, vari: .18 });
+  wash(g.night, [[-60, -40], [1240, -40], [1240, 720], [600, 780], [-60, 700]], '#4E7FB8', { layers: 28, alpha: 9, vari: .26 });
+  wash(g.night, [[-60, -40], [1240, -40], [1240, 400], [620, 480], [-60, 420]], '#33406E', { layers: 28, alpha: 9, vari: .3 });
+  for (const [x, y, r] of [[160, 300, 18], [300, 480, 13], [740, 290, 20], [930, 420, 15], [1060, 300, 14], [620, 560, 12], [860, 640, 12], [120, 640, 12], [560, 360, 14]])
+    wash(g.night, star(x, y, r), '#F2C14E', { layers: 16, alpha: 24, vari: .08, base: 1, sub: 1 });
+  // matin (fin)
+  g.morning.background(214, 228, 240);
+  wash(g.morning, rect(-60, -40, 1300, 1060), '#F7EBD2', { layers: 16, alpha: 14, vari: .12 });
+  wash(g.morning, [[-60, -40], [1240, -40], [1240, 760], [600, 840], [-60, 740]], '#A9CDEB', { layers: 28, alpha: 10, vari: .24 });
+  wash(g.morning, band(700, 1060, -20), '#F2C14E', { layers: 16, alpha: 7, vari: .2, edge: false });
+  // mer + côte lointaine (Alexandrie)
+  const s = g.sea;
+  wash(s, [[-60, 760], [420, 742], [420, 900], [-60, 900]], '#B9A27E', { layers: 18, alpha: 12, vari: .08 });
+  wash(s, [[-60, 880], [1240, 868], [1240, 1120], [-60, 1120]], '#6C9BCF', { layers: 30, alpha: 11, vari: .1 });
+  wash(s, [[-60, 960], [1240, 940], [1240, 1120], [-60, 1120]], '#4E7FB8', { layers: 26, alpha: 9, vari: .12 });
+  // vagues (bandes claires)
+  for (let r = 0; r < 6; r++) for (let i = 0; i < 9; i++) {
+    const x = i * 170 + (r % 2) * 85, y = 70 + r * 50;
+    wash(g.waves, [[x, y], [x + 60, y - 8], [x + 120, y], [x + 60, y + 6]], '#DDEBF7', { layers: 10, alpha: 26, vari: .1, base: 2, sub: 1, edge: false });
+  }
+  // près : île de Pharos (rocher sableux) + papier bas de page
+  const n = g.near;
+  wash(n, [[170, 1010], [230, 950], [320, 958], [CX, 948], [640, 956], [730, 962], [790, 1016], [480, 1040]], '#C9AE84', { layers: 30, alpha: 14, vari: .1 });
+  wash(n, [[200, 1010], [260, 972], [700, 972], [760, 1016], [480, 1032]], '#E9D3A8', { layers: 22, alpha: 14, vari: .08 });
+  wash(n, ellipse(240, 1010, 70, 26, 12), '#A88A5E', { layers: 14, alpha: 16, vari: .12 });
+  wash(n, ellipse(740, 1014, 60, 22, 12), '#A88A5E', { layers: 14, alpha: 16, vari: .12 });
+  wash(n, [[-60, 1096], [1240, 1080], [1240, 2300], [-60, 2300]], '#F7F1E6', { layers: 22, alpha: 40, vari: .04 });
+  BLOB = W.blob(24, 4);
+}
+
+/* ---------- Paper.js ---------- */
+const BL = [];          // pierres : {g, hx, hy, w, h, t0, fall:{t,sx,sy,rot}, fort:{x,y,t}|null}
+let lantern, fire, beamR, beamL, flash, boat, gauge;
+function buildVector() {
+  paperSetup(document.getElementById('vec'));
+  const R = S.rng(SEED), Path = paper.Path;
+  const stoneCols = ['#E9D3A8', '#E2C896', '#D9C29A', '#EBD9B4'];
+  const add = (x, y, w, h, t0) => {
+    const g = wc(new Path.Rectangle({ point: [-w / 2, -h / 2], size: [w - 2, h - 2], radius: 3 }), stoneCols[Math.floor(R() * 4)], { seed: BL.length + 50, copies: 2, jitter: 1.2, alpha: .72, edge: .7, edgeW: 1.6 });
+    BL.push({ g, hx: x, hy: y, w, h, t0, rot0: (R() - .5) * 2.5 });
+  };
+  // étage 1 : carré (base), 10 rangs ; étage 2 : octogonal, 6 rangs ; étage 3 : cylindrique, 4 rangs
+  const tiers = [{ w: 260, rows: 10, bw: 52, t: 0.0, dt: .15 }, { w: 180, rows: 6, bw: 45, t: 3.5, dt: .13 }, { w: 116, rows: 4, bw: 39, t: 4.6, dt: .14 }];
+  let y = GROUND;
+  tiers.forEach((tr, ti) => {
+    for (let r = 0; r < tr.rows; r++) {
+      const w = tr.w - r * (ti === 0 ? 3 : 2), cy = y - 14, x0 = CX - w / 2, off = r % 2 ? tr.bw / 2 : 0;
+      const xs = []; let x = x0 - off; while (x < x0 + w - 1) { const a = Math.max(x, x0), b = Math.min(x + tr.bw, x0 + w); if (b - a > 8) xs.push([a, b]); x += tr.bw; }
+      xs.forEach(([a, b], c) => add((a + b) / 2, cy, b - a, 28, tr.t + r * tr.dt + c * .03));
+      y -= 28;
+    }
+    // corniche
+    const cw = tr.w - (tr.rows - 1) * (ti === 0 ? 3 : 2) + 26;
+    add(CX, y - 6, cw, 12, tr.t + tr.rows * tr.dt + .05); y -= 12;
+  });
+  const TOP = y;   // haut du fût
+  // lanterne : colonnes + dôme + statue
+  lantern = new paper.Group(); lantern.applyMatrix = false;
+  for (const dx of [-40, -14, 14, 40]) lantern.addChild(wc(new Path.Rectangle({ point: [dx - 5, -54], size: [10, 54] }), '#D9C29A', { seed: 90 + dx, copies: 2 }));
+  lantern.addChild(wc(new Path({ segments: [[-54, -54], [54, -54], [0, -92]], closed: true }), '#E88D72', { seed: 95 }));
+  lantern.addChild(wc(new Path.Rectangle({ point: [-7, -128], size: [14, 38] }), '#C9AE84', { seed: 96, copies: 2 }));   // statue (silhouette)
+  lantern.addChild(wc(new Path.Circle({ center: [0, -134], radius: 9 }), '#C9AE84', { seed: 97, copies: 2 }));
+  lantern.data = { x: CX, y: TOP };
+  fire = new paper.Group([new Path.Circle({ center: [0, 0], radius: 70, fillColor: { gradient: { stops: [['rgba(255,226,140,0.85)', 0], ['rgba(242,193,78,0)', 1]], radial: true }, origin: [0, 0], destination: [70, 0] } }),
+    wc(new Path.Ellipse({ center: [0, 2], radius: [20, 24] }), '#E88D72', { seed: 98, copies: 2, edge: 0 }),
+    wc(new Path.Ellipse({ center: [0, 4], radius: [12, 15] }), '#F2C14E', { seed: 99, copies: 2, edge: 0 })]);
+  fire.applyMatrix = false;
+  const beam = () => { const b = new Path({ segments: [[0, -6], [1, -70], [1, 70], [0, 6]], closed: true, fillColor: { gradient: { stops: [['rgba(255,240,190,0.75)', 0], ['rgba(255,240,190,0)', 1]] }, origin: [0, 0], destination: [1, 0] } }); b.applyMatrix = false; return b; };
+  beamR = beam(); beamL = beam();
+  flash = new Path.Circle({ center: [0, 0], radius: 150, fillColor: { gradient: { stops: [['rgba(255,244,200,0.9)', 0], ['rgba(255,244,200,0)', 1]], radial: true }, origin: [0, 0], destination: [150, 0] } }); flash.applyMatrix = false;
+  // felouque
+  boat = new paper.Group([wc(new Path({ segments: [[-70, 0], [70, 0], [50, 22], [-52, 22]], closed: true }), '#8A6A55', { seed: 101 }),
+    new Path({ segments: [[0, 0], [0, -120]], strokeColor: '#5E4636', strokeWidth: 5 }),
+    wc(new Path({ segments: [[4, -116], [62, -10], [4, -10]], closed: true }), '#F7F1E6', { seed: 102, alpha: .7 }),
+    wc(new Path({ segments: [[-4, -96], [-46, -12], [-4, -12]], closed: true }), '#E88D72', { seed: 103, alpha: .6 })]);
+  boat.applyMatrix = false;
+  // toise
+  gauge = new paper.Group([new Path({ segments: [[0, GROUND], [0, TOP - 130]], strokeColor: T.ink, strokeWidth: 4, dashArray: [14, 10] }),
+    new Path({ segments: [[-18, GROUND], [18, GROUND]], strokeColor: T.ink, strokeWidth: 5, strokeCap: 'round' }),
+    new Path({ segments: [[-18, TOP - 130], [18, TOP - 130]], strokeColor: T.ink, strokeWidth: 5, strokeCap: 'round' })]);
+  gauge.applyMatrix = false; gauge.data = { top: TOP - 130 };
+  // séisme : chute (du haut vers le bas) ; fort de Qaitbay : cibles
+  const fall = b => { b.fall = { t: 10.15 + (GROUND - b.hy) / 690 * 1.1 + R() * .25, sx: 120 + R() * 760, sy: 1004 + R() * 70, rot: (R() - .5) * 300 }; };
+  BL.forEach(fall);
+  const fort = [];
+  for (let c = 0; c < 9; c++) for (let r = 0; r < 2; r++) fort.push([CX - 198 + 22 + c * 44, GROUND - 14 - r * 28, 44, 28]);   // muraille
+  for (let c = 0; c < 5; c++) for (let r = 0; r < 3; r++) fort.push([CX - 110 + 22 + c * 44, GROUND - 70 - r * 28, 44, 28]);   // donjon
+  for (const x of [CX - 176, CX + 176]) for (let r = 0; r < 2; r++) fort.push([x, GROUND - 70 - r * 28, 44, 28]);               // tours d'angle
+  for (const x of [CX - 88, CX - 44, CX, CX + 44, CX + 88]) fort.push([x, GROUND - 164, 24, 20]);                             // créneaux donjon
+  for (const x of [CX - 186, CX - 166, CX + 166, CX + 186]) fort.push([x, GROUND - 122, 14, 20]);                             // créneaux tours
+  const order = BL.map((b, i) => i).sort((a, b) => BL[a].fall.sx - BL[b].fall.sx);
+  fort.forEach((f, k) => { const b = BL[order[Math.floor(k * BL.length / fort.length)]]; b.fort = { x: f[0], y: f[1], sw: f[2] / b.w, sh: f[3] / b.h, t: 12.55 + k * .022 }; });
+}
+
+const M = (x, y, r = 0, sx = 1, sy = 1) => new paper.Matrix().translate(x, y).rotate(r).scale(sx, sy);
+
+function frame(t) {
+  const ctx = p.drawingContext;
+  const k = S.ease.inOutSine(S.clamp(t / DUR));
+  const quake = S.seg(t, 9.7, 10.0) * (1 - S.seg(t, 11.2, 11.8));
+  const shx = quake * (Math.sin(t * 47) * 7 + Math.sin(t * 31) * 4), shy = quake * Math.sin(t * 39) * 4;
+  const skyX = -10 - k * 10, seaX = -20 - k * 20, nearX = -30 - k * 30 + shx;
+  p.background(247, 241, 230);
+  const fireX = CX + nearX, fireY = lantern.data.y - 28 + shy;
+  const rNight = S.seg(t, 6.3, 7.5, S.ease.inOutSine) * 1500, rMorn = S.seg(t, 12.3, 13.2, S.ease.outCubic) * 1800;
+  if (rMorn < 1800) { if (rNight < 1500) draw(ctx, L.dusk, skyX, 0); bloomSoft(ctx, L.night, skyX, 0, BLOB, fireX, fireY, rNight); }
+  bloomSoft(ctx, L.morning, skyX, 0, BLOB, 640, 760, rMorn);
+  draw(ctx, L.sea, seaX, 0);
+  draw(ctx, L.waves, -200 + Math.sin(t * .6) * 30 + seaX, 880, .8);
+  draw(ctx, L.near, nearX, shy);
+
+  // --- pierres ---
+  const ox = nearX + 30, oy = shy;
+  for (const b of BL) {
+    const sb = S.seg(t, b.t0, b.t0 + .5, S.ease.outCubic);
+    let x = b.hx, y = b.hy - (1 - sb) * 160, r = b.rot0 * (1 - sb), a = sb, sx = 1, sy = 1;
+    const f = S.seg(t, b.fall.t, b.fall.t + .85);
+    if (f > 0) { x = S.lerp(b.hx, b.fall.sx, f); y = b.hy + (b.fall.sy - b.hy) * f * f; r = b.fall.rot * f; a = 1 - f * .5; }
+    if (b.fort) {
+      const q = S.seg(t, b.fort.t, b.fort.t + .7, S.ease.inOutCubic);
+      if (q > 0) { x = S.lerp(b.fall.sx, b.fort.x, q); y = S.lerp(b.fall.sy, b.fort.y, q) - Math.sin(q * Math.PI) * 170; r = b.fall.rot * (1 - q); a = .5 + q * .5; sx = S.lerp(1, b.fort.sw, q); sy = S.lerp(1, b.fort.sh, q); }
+    } else if (f > 0) a = (1 - f * .5) * (1 - S.seg(t, 14.6, 15.2) * .4);
+    b.g.matrix = M(x + ox, y + oy, r, sx, sy); b.g.opacity = a;
+  }
+  // lanterne + feu
+  const lb = S.seg(t, 5.3, 5.8, S.ease.outCubic), lf = S.seg(t, 10.05, 10.9);
+  lantern.matrix = M(CX + ox + lf * 140, lantern.data.y + oy - (1 - lb) * 120 + lf * lf * 1050, lf * 120); lantern.opacity = lb * (1 - lf);
+  const fireOn = S.seg(t, 5.9, 6.3) * (1 - S.seg(t, 10.0, 10.3));
+  const fl = 1 + Math.sin(t * 13) * .06 + Math.sin(t * 7.3) * .05;
+  fire.matrix = M(fireX, fireY, 0, fl, fl * 1.05); fire.opacity = fireOn;
+  // faisceau tournant (vu de profil : raccourci = cos φ, éclat quand il nous fait face)
+  const phi = (t - 6.2) * 1.9, cphi = Math.cos(phi), beamA = fireOn * S.seg(t, 6.2, 6.8);
+  beamR.matrix = M(fireX, fireY, 0, Math.max(1, cphi * 900), 1); beamR.opacity = beamA * Math.max(0, cphi);
+  beamL.matrix = M(fireX, fireY, 180, Math.max(1, -cphi * 900), 1); beamL.opacity = beamA * Math.max(0, -cphi);
+  const fs = Math.max(0, Math.sin(phi)) ** 6; flash.matrix = M(fireX, fireY, 0, .4 + fs, .4 + fs); flash.opacity = beamA * fs;
+  // felouque
+  const bk = S.seg(t, 6.6, 10.0);
+  boat.matrix = M(S.lerp(-120, 1220, bk), 1046 + Math.sin(t * 2.6) * 5, Math.sin(t * 2.1) * 3); boat.opacity = bk > 0 && bk < 1 ? 1 : 0;
+  // toise
+  const ga = S.seg(t, 7.0, 7.6, S.ease.outCubic) * (1 - S.seg(t, 9.3, 9.7));
+  gauge.matrix = M(CX + 190 + ox, GROUND + oy, 0, 1, Math.max(.01, ga)).translate(0, -GROUND); gauge.opacity = ga;
+  const gl = document.getElementById('gaugeL'); gl.style.opacity = ga.toFixed(3); gl.style.left = (CX + 214 + ox) + 'px'; gl.style.top = (gauge.data.top - 10) + 'px';
+  paper.view.update();
+
+  // --- texte ---
+  inkText(document.getElementById('k0'), t, 0.05, 3.4); inkText(document.getElementById('t0'), t, 0.15, 3.4);
+  inkText(document.getElementById('b1'), t, 3.5, 6.6); inkText(document.getElementById('s1'), t, 4.0, 6.6);
+  inkText(document.getElementById('b2'), t, 6.8, 9.6); inkText(document.getElementById('s2'), t, 7.3, 9.6);
+  inkText(document.getElementById('b3'), t, 9.8, 12.4); inkText(document.getElementById('s3'), t, 10.4, 12.4);
+  inkText(document.getElementById('b4'), t, 12.5, 16.2); inkText(document.getElementById('s4'), t, 13.0, 16.2);
+  inkText(document.getElementById('b5'), t, 14.3, 16.2);
+  paperFade(document.getElementById('fade'), t, DUR);
+}
+
+S.installContract({
+  duration: DUR,
+  ready: (async () => {
+    ({ p, L } = await startP5('stage', { dusk: [1180, 1060], night: [1180, 1060], morning: [1180, 1060], sea: [1180, 1200], waves: [1500, 360], near: [1180, 1920] }));
+    await S.loadFonts(FONTS);
+    paintAll(); buildVector(); paperGrain('stage', 37); frame(0);
+  })(),
+  renderAt: frame,
+});
+</script></body></html>

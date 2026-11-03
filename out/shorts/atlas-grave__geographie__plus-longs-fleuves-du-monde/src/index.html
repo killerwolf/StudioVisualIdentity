@@ -1,0 +1,171 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8">
+<!-- Atlas Gravé — géographie : « Les 5 plus longs fleuves du monde ».
+     D3.js (d3-geo NaturalEarth1 + côtes dessinées à la main, d3.line, sélections SVG) ; GSAP (timeline d'état seekée) ;
+     textures pycairo (assets/*.png générés par textures.py). Graine : 11. Durée : 15 s. -->
+<script src="/node_modules/d3/dist/d3.min.js"></script>
+<script src="/node_modules/gsap/dist/gsap.min.js"></script>
+<style>html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:#EFE3C8}svg{position:absolute;inset:0}</style>
+</head><body>
+<svg id="s" width="1080" height="1920" viewBox="0 0 1080 1920"></svg>
+<script type="module">
+import * as S from '/out/tools/lib/svi.js';
+import { C, FONTS, world, plate, overlays, T, ornament, fmtKm } from './atlas.js';
+const SEED = 11, DUR = 15;
+const svg = d3.select('#s');
+const defs = plate(d3, svg);
+const W0 = { x: 76, y: 590, w: 840, h: 470 };           // fenêtre de carte
+defs.append('clipPath').attr('id', 'win').append('rect').attr('x', W0.x).attr('y', W0.y).attr('width', W0.w).attr('height', W0.h);
+defs.append('pattern').attr('id', 'seaP').attr('patternUnits', 'userSpaceOnUse').attr('width', 1080).attr('height', 1920)
+  .append('image').attr('href', 'assets/sea.png').attr('width', 1080).attr('height', 1920);
+
+// ---- en-tête
+const head = svg.append('g');
+const hdr = T(head, 496, 286, 'PLANCHE V · FLEUVES', 'Cinzel', 54, C.red, 'middle', { 'font-weight': 600, 'letter-spacing': '0.06em' });
+const t1 = T(head, 496, 404, 'Les 5 plus longs', 'Cormorant Garamond', 108, C.ink, 'middle', { 'font-weight': 700 });
+const t2 = T(head, 496, 504, 'fleuves du monde', 'Cormorant Garamond', 108, C.ink, 'middle', { 'font-weight': 700 });
+const orn = ornament(head, 496, 548, 300);
+
+// ---- carte
+const { land, lakes } = world(d3);
+const proj = d3.geoNaturalEarth1().fitExtent([[W0.x + 6, W0.y + 10], [W0.x + W0.w - 6, W0.y + W0.h - 10]], { type: 'Sphere' });
+const gp = d3.geoPath(proj);
+const mapWrap = svg.append('g').attr('clip-path', 'url(#win)');
+mapWrap.append('rect').attr('x', W0.x).attr('y', W0.y).attr('width', W0.w).attr('height', W0.h).attr('fill', C.surface).attr('fill-opacity', 0.35);
+const cam = mapWrap.append('g');
+const inked = cam.append('g').attr('filter', 'url(#ink)');
+const sphere = inked.append('path').attr('d', gp({ type: 'Sphere' })).attr('fill', 'url(#seaP)').attr('stroke', C.ink);
+const grat = inked.append('path').attr('d', gp(d3.geoGraticule().step([30, 30])())).attr('fill', 'none').attr('stroke', C.blue).attr('stroke-opacity', 0.35);
+const landG = inked.append('g');
+const landFill = landG.selectAll('path.f').data(land).join('path').attr('d', gp).attr('fill', 'url(#hatchLand)').attr('fill-opacity', 0);
+const lakeFill = landG.selectAll('path.l').data(lakes).join('path').attr('d', gp).attr('fill', 'url(#seaP)').attr('stroke', C.ink).attr('fill-opacity', 0);
+const coast = landG.selectAll('path.c').data(land).join('path').attr('d', gp).attr('fill', 'none').attr('stroke', C.ink).attr('stroke-linejoin', 'round');
+const sphere2 = inked.append('path').attr('d', gp({ type: 'Sphere' })).attr('fill', 'none').attr('stroke', C.ink);
+
+// fleuves (source -> embouchure), tracés simplifiés à la main
+const rivers = [
+  { n: 'Nil', km: 6650, r: 'I', c: [31, 12], pts: [[29.6, -3.6], [30.6, -2], [32, -1.1], [33.2, 0.4], [32.3, 2.5], [31.6, 5], [31.5, 9.5], [32.5, 12], [32.5, 15.6], [33.8, 17.5], [32, 19.5], [31, 21.8], [32.9, 24.1], [32.7, 26], [31.2, 27.2], [31.2, 30], [31, 31.4]] },
+  { n: 'Amazone', km: 6400, r: 'II', c: [-62, -7], pts: [[-71.8, -15.5], [-73.5, -12], [-74, -8], [-73.5, -4.5], [-70, -4], [-66, -3.5], [-62, -3.3], [-60, -3.1], [-56.5, -2.4], [-54.7, -2.4], [-52, -1.6], [-50, -0.5]] },
+  { n: 'Yangzi', km: 6300, r: 'III', c: [106, 30], pts: [[91, 33.4], [94, 33], [97, 33], [99, 29], [100.2, 27], [101.7, 26.5], [103.6, 28.5], [104.6, 28.8], [106.5, 29.6], [108.5, 31], [111, 30.7], [112.5, 30], [114.3, 30.6], [116, 29.8], [117, 30.5], [118.8, 32], [120.5, 32], [121.8, 31.4]] },
+  { n: 'Mississippi', km: 6275, r: 'IV', c: [-97, 39], pts: [[-111.5, 44.6], [-111, 46.5], [-109, 47.8], [-104, 48], [-101, 47.4], [-100.4, 44.4], [-97.4, 42.8], [-96, 41.2], [-94.6, 39.1], [-92, 38.6], [-90.2, 38.7], [-89.2, 37], [-90, 35], [-91.1, 33], [-91.2, 31], [-90.1, 29.95], [-89.3, 29.1]] },
+  { n: 'Ienisseï', km: 5539, r: 'V', c: [92, 60], pts: [[98, 50.6], [96, 51.5], [94.5, 51.7], [92, 52.5], [91.5, 54], [92.9, 56], [93, 58.5], [92, 61.6], [88, 64], [87, 67.5], [86.5, 69.5], [84, 71], [82.5, 72]] }];
+const rline = d3.line().curve(d3.curveCatmullRom.alpha(0.5));
+const rivG = inked.append('g');
+rivers.forEach(d => {
+  d.xy = d.pts.map(p => proj(p));
+  d.base = rivG.append('path').attr('d', rline(d.xy)).attr('fill', 'none').attr('stroke', C.blue).attr('stroke-linecap', 'round');
+  d.hot = rivG.append('path').attr('d', rline(d.xy)).attr('fill', 'none').attr('stroke', C.red).attr('stroke-linecap', 'round');
+  d.L = d.base.node().getTotalLength();
+  d.base.attr('stroke-dasharray', d.L); d.hot.attr('stroke-dasharray', d.L);
+  d.cxy = proj(d.c);
+});
+// cadre de la fenêtre de carte + rose des vents
+const winFrame = svg.append('g');
+winFrame.append('rect').attr('x', W0.x).attr('y', W0.y).attr('width', W0.w).attr('height', W0.h).attr('fill', 'none').attr('stroke', C.ink).attr('stroke-width', 2.2);
+winFrame.append('rect').attr('x', W0.x - 7).attr('y', W0.y - 7).attr('width', W0.w + 14).attr('height', W0.h + 14).attr('fill', 'none').attr('stroke', C.ink).attr('stroke-width', 0.9);
+const rose = svg.append('image').attr('href', 'assets/compass.png').attr('width', 150).attr('height', 150).attr('x', W0.x + W0.w - 160).attr('y', W0.y + W0.h - 160);
+// sceau du fleuve actif (espace écran)
+const seal = svg.append('g').attr('opacity', 0);
+seal.append('circle').attr('r', 46).attr('fill', C.bg).attr('stroke', C.red).attr('stroke-width', 3);
+seal.append('circle').attr('r', 39).attr('fill', 'none').attr('stroke', C.red).attr('stroke-width', 1.2);
+const sealTxt = T(seal, 0, 19, 'V', 'Cinzel', 54, C.red, 'middle', { 'font-weight': 700 });
+
+// ---- tableau (fleuves « déroulés » : longueur du ruban ∝ km)
+const tab = svg.append('g');
+const R0 = 1146, RH = 92, X0 = 176, LMAX = 716;
+const len = d3.scaleLinear().domain([0, 6650]).range([0, LMAX]);
+rivers.forEach((d, i) => {
+  d.rowY = R0 + i * RH;
+  d.ph = tab.append('g').attr('opacity', 0).attr('transform', `translate(0,${d.rowY})`);   // rang vide (suspense)
+  T(d.ph, 96, 0, d.r, 'Cinzel', 54, C.red, 'start', { 'font-weight': 700 });
+  d.ph.append('line').attr('x1', X0).attr('x2', 904).attr('y1', -12).attr('y2', -12).attr('stroke', C.ink).attr('stroke-width', 2.4).attr('stroke-dasharray', '1.5 10').attr('stroke-linecap', 'round');
+  d.row = tab.append('g').attr('opacity', 0);
+  T(d.row, 96, 0, d.r, 'Cinzel', 54, C.red, 'start', { 'font-weight': 700 });
+  d.name = T(d.row, X0, 0, d.n, 'Cormorant Garamond', 62, C.ink, 'start', { 'font-weight': 700 });
+  d.kmT = T(d.row, 904, 0, fmtKm(d.km), 'IBM Plex Mono', 54, C.blue, 'end', { 'font-weight': 600 });
+  const rnd = S.rng(SEED + i * 7), Lp = len(d.km), n = 60;
+  const pts = d3.range(n + 1).map(k => { const u = k / n; return [X0 + u * Lp, 26 + (S.noise2(u * 6, i * 3.1 + rnd()) - .5) * 14 * Math.min(1, u * 4)]; });
+  d.rib = [[6, C.blue, 0.22], [3.2, C.blue, 1], [1.0, C.bg, 0.9]].map(([w, c, o]) =>
+    d.row.append('path').attr('d', d3.line().curve(d3.curveBasis)(pts)).attr('fill', 'none').attr('stroke', c).attr('stroke-width', w).attr('stroke-opacity', o).attr('stroke-linecap', 'round'));
+  d.rib.forEach(p => { const L = p.node().getTotalLength(); p.attr('stroke-dasharray', L).attr('stroke-dashoffset', L); p.L = L; });
+  d.ribEnd = X0 + Lp;
+  d.mouth = d.row.append('circle').attr('cx', X0 + Lp).attr('cy', 26).attr('r', 7).attr('fill', C.red).attr('opacity', 0);
+});
+
+// ---- cartouche du débat (guilloché pycairo)
+const cart = svg.append('g').attr('opacity', 0).attr('transform', 'translate(496,962)');
+cart.append('image').attr('href', 'assets/cartouche.png').attr('width', 782).attr('height', 255).attr('x', -391).attr('y', -128);
+T(cart, 0, -4, 'Nil ou Amazone ?', 'Cormorant Garamond', 80, C.ink, 'middle', { 'font-weight': 700 });
+const c2a = T(cart, 0, 66, 'les mesures divergent', 'Cormorant Garamond', 58, C.red, 'middle', { 'font-weight': 700, 'font-style': 'italic' });
+const c2b = T(cart, 0, 66, 'ton pari en commentaire', 'Cormorant Garamond', 58, C.blue, 'middle', { 'font-weight': 700, 'font-style': 'italic' }).attr('opacity', 0);
+
+overlays(svg);
+
+// ================= timeline d'état (GSAP) =================
+const st = { head: 0.35, coast: 0, fill: 0, riv: 0, fx: proj([20, 8])[0], fy: proj([20, 8])[1], k: 1, seal: 0, sealS: 0.6, act: -1,
+  rows: rivers.map(() => ({ o: 0, y: 14, rib: 0, km: 0 })), hot: rivers.map(() => 0), swap: 0, cart: 0, cta: 0, cs: 0.72, dim: 0, ph: 0 };
+const tl = gsap.timeline({ paused: true, defaults: { ease: 'sine.inOut' } });
+const I = { immediateRender: false };
+tl.to(st, { head: 1, duration: 0.5, ease: 'power2.out', ...I }, 0)
+  .to(st, { coast: 1, duration: 1.1, ease: 'power1.out', ...I }, 0)
+  .to(st, { fill: 1, duration: 0.7, ...I }, 0.6)
+  .to(st, { ph: 0.4, duration: 0.6, ...I }, 1.2)
+  .to(st, { riv: 1, duration: 1.0, ...I }, 1.1);
+// compte à rebours V -> I : caméra (zoom cartographique lent), sceau, ligne du tableau
+const order = [4, 3, 2, 1, 0], beat0 = 2.2, BEAT = 1.5;
+order.forEach((ri, j) => {
+  const d = rivers[ri], t0 = beat0 + j * BEAT + (ri === 0 ? 0.1 : 0);
+  tl.to(st, { fx: d.cxy[0], fy: d.cxy[1], k: ri === 0 ? 2.4 : 2.1, duration: 0.7, ...I }, t0 - 0.2)
+    .set(st, { act: ri }, t0)
+    .fromTo(st, { seal: 0, sealS: 1.6 }, { seal: 1, sealS: 1, duration: 0.35, ease: 'back.out(1.6)', ...I }, t0)
+    .to(st.hot, { [ri]: 1, duration: 0.6, ...I }, t0)
+    .to(st.rows[ri], { o: 1, y: 0, duration: 0.45, ease: 'power2.out', ...I }, t0 + 0.05)
+    .to(st.rows[ri], { rib: 1, km: d.km, duration: 0.9, ease: 'power2.out', ...I }, t0 + 0.15)
+    .to(st, { seal: 0, duration: 0.25, ...I }, t0 + (ri === 0 ? 1.75 : 1.2))
+    .to(st.hot, { [ri]: 0.0, duration: 0.5, ...I }, t0 + (ri === 0 ? 2.2 : 1.15));
+});
+// débat Nil / Amazone
+tl.to(st, { fx: proj([-12, -22])[0], fy: proj([-12, -22])[1], k: 1.3, duration: 0.9, ...I }, 10.1)
+  .to(st, { cart: 1, cs: 0.82, duration: 0.5, ease: 'power2.out', ...I }, 10.4)
+  .to(st.hot, { 0: 1, 1: 1, duration: 0.4, ...I }, 10.5)
+  .to(st, { swap: 1, duration: 0.6, ...I }, 11.0)
+  .to(st, { swap: 0, duration: 0.6, ...I }, 12.0)
+  .to(st, { cta: 1, duration: 0.45, ...I }, 13.1)
+  .to(st, { fx: proj([0, -18])[0], fy: proj([0, -18])[1], k: 1.16, duration: 1.9, ...I }, 13.1);
+
+function render(t) {
+  tl.seek(t, false);
+  head.attr('opacity', st.head).attr('transform', `translate(0,${(1 - st.head) * 10})`);
+  const cx = W0.x + W0.w / 2, cy = W0.y + W0.h / 2;
+  cam.attr('transform', `translate(${cx},${cy}) scale(${st.k}) translate(${-st.fx},${-st.fy})`);
+  const sw = w => w / st.k;
+  coast.attr('stroke-width', sw(1.6)).attr('pathLength', 1).attr('stroke-dasharray', 1).attr('stroke-dashoffset', 1 - st.coast);
+  sphere.attr('stroke-width', sw(1.2)); sphere2.attr('stroke-width', sw(2.6)).attr('opacity', st.coast);
+  grat.attr('stroke-width', sw(0.8)).attr('opacity', st.coast);
+  landFill.attr('fill-opacity', st.fill); lakeFill.attr('fill-opacity', st.fill).attr('stroke-width', sw(1)).attr('stroke-opacity', st.fill);
+  rivers.forEach((d, i) => {
+    d.base.attr('stroke-width', sw(2.6)).attr('stroke-dashoffset', d.L * (1 - st.riv));
+    d.hot.attr('stroke-width', sw(5.5)).attr('stroke-dashoffset', d.L * (1 - st.hot[i])).attr('opacity', Math.min(1, st.hot[i] * 3));
+    const r = st.rows[i];
+    let y = d.rowY;
+    if (i === 0) y += st.swap * RH; if (i === 1) y -= st.swap * RH;
+    const dip = (i < 2) ? 1 - 0.85 * Math.sin(Math.PI * st.swap) : 1;
+    d.row.attr('opacity', r.o * dip).attr('transform', `translate(${(i === 0 ? 1 : i === 1 ? -1 : 0) * 0 * Math.sin(Math.PI * st.swap)},${y + r.y})`);
+    d.ph.attr('opacity', st.ph * (1 - r.o));
+    d.rib.forEach(p => p.attr('stroke-dashoffset', p.L * (1 - r.rib)));
+    d.mouth.attr('opacity', r.rib > 0.97 ? 1 : 0);
+    d.kmT.text(fmtKm(Math.round(r.km / 5) * 5 === d.km ? d.km : Math.round(r.km)));
+  });
+  if (st.act >= 0) {
+    const d = rivers[st.act];
+    const sx = cx + (d.cxy[0] - st.fx) * st.k, sy = cy + (d.cxy[1] - st.fy) * st.k;
+    const ox = d.cxy[0] > 500 ? -120 : 120;
+    seal.attr('opacity', st.seal).attr('transform', `translate(${Math.max(140, Math.min(850, sx + ox))},${Math.max(W0.y + 70, Math.min(W0.y + W0.h - 70, sy))}) scale(${st.sealS})`);
+    sealTxt.text(d.r);
+  }
+  cart.attr('opacity', st.cart).attr('transform', `translate(496,962) scale(${st.cs})`);
+  rose.attr('opacity', 1 - st.cart);
+  c2a.attr('opacity', 1 - st.cta); c2b.attr('opacity', st.cta);
+}
+const ready = S.loadFonts(FONTS);
+S.installContract({ renderAt: render, ready, duration: DUR });
+</script></body></html>

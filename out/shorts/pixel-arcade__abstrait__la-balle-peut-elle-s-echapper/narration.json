@@ -1,0 +1,9 @@
+{"language": "fr", "style": "calme, presque chuchoté, suspense ASMR qui monte vers la fin", "voice": "Achernar",
+ "lines": [
+  {"t": 0.2, "maxDuration": 2.8, "text": "Cette balle peut-elle s'échapper du cercle ?"},
+  {"t": 3.2, "maxDuration": 2.2, "text": "À chaque rebond, elle grossit."},
+  {"t": 6.0, "maxDuration": 2.8, "text": "Et la brèche, elle, ne grandit pas."},
+  {"t": 9.2, "maxDuration": 1.8, "text": "Plus que quelques chances…"},
+  {"t": 11.9, "maxDuration": 1.0, "text": "Évadée !"},
+  {"t": 13.6, "maxDuration": 1.3, "text": "Quarante-cinq rebonds."}
+ ]}

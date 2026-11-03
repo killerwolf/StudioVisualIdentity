@@ -1,0 +1,35 @@
+{
+  "duration": 16.5,
+  "seed": 5,
+  "sections": [
+    {"name": "lumiere-blanche", "t0": 0.0, "t1": 4.9},
+    {"name": "chiffon-1", "t0": 4.9, "t1": 5.4},
+    {"name": "molecule", "t0": 5.4, "t1": 8.9},
+    {"name": "chiffon-2", "t0": 8.9, "t1": 9.4},
+    {"name": "x5", "t0": 9.4, "t1": 11.6},
+    {"name": "chiffon-3", "t0": 11.6, "t1": 12.0},
+    {"name": "coucher", "t0": 12.0, "t1": 16.5}
+  ],
+  "texts": [
+    {"text": "Pourquoi le ciel", "role": "display", "y": 250, "t0": 0.0, "t1": 5.15, "fade": 0.15},
+    {"text": "est bleu ?", "role": "display", "y": 372, "color": "#7FD1FF", "t0": 0.0, "t1": 5.15, "fade": 0.15},
+    {"text": "lumière blanche", "role": "caption", "y": 742, "x": 560, "align": "left", "color": "#FFF6D5", "t0": 1.2, "t1": 5.1},
+    {"text": "= toutes les couleurs", "role": "body", "y": 1250, "color": "#FFB84C", "t0": 3.1, "t1": 5.1},
+
+    {"text": "le bleu rebondit partout !", "role": "body", "y": 520, "color": "#7FD1FF", "t0": 7.3, "t1": 9.15},
+    {"text": "molécule d'air", "role": "caption", "y": 1112, "color": "#F7F3E3", "t0": 5.7, "t1": 9.15},
+    {"text": "le rouge passe tout droit", "role": "caption", "y": 1250, "color": "#FF7A7A", "t0": 6.4, "t1": 9.15},
+
+    {"text": "Diffusion", "role": "title", "y": 262, "color": "#F7F3E3", "t0": 9.4, "t1": 11.8},
+    {"text": "×1", "role": "title", "y": 1196, "x": 340, "color": "#FF7A7A", "t0": 10.2, "t1": 11.8, "fade": 0.2},
+    {"text": "×5", "role": "display", "size": 160, "y": 560, "x": 700, "color": "#7FD1FF", "t0": 10.6, "t1": 11.8, "fade": 0.2},
+    {"text": "rouge · 700 nm", "role": "caption", "y": 1482, "x": 340, "color": "#FF7A7A", "t0": 9.9, "t1": 11.8},
+    {"text": "bleu · 450 nm", "role": "caption", "y": 1482, "x": 700, "color": "#7FD1FF", "t0": 9.9, "t1": 11.8},
+
+    {"text": "Et le soir ?", "role": "title", "y": 262, "color": "#FFB84C", "t0": 12.0, "t1": 17.0, "fade": 0.2},
+    {"text": "midi :\ntrajet court", "role": "caption", "y": 760, "x": 250, "color": "#FFF6D5", "t0": 12.9, "t1": 14.2},
+    {"text": "soir : trajet long", "role": "caption", "y": 1170, "x": 330, "color": "#FFB84C", "t0": 14.3, "t1": 17.0},
+    {"text": "le bleu se perd,", "role": "body", "y": 760, "color": "#7FD1FF", "t0": 15.0, "t1": 17.0},
+    {"text": "le ciel rougit !", "role": "body", "y": 850, "color": "#FF7A7A", "t0": 15.4, "t1": 17.0}
+  ]
+}

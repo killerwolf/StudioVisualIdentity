@@ -1,0 +1,206 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8">
+<!-- Arcade Pixel / engagement — « Quelle bille gagne la course ? »
+     Matter.js (physique, pas fixe 1000/120 ms × 4 par frame, SEQUENTIAL) + p5.js v2 (rendu 270×480 upscalé ×4 nearest).
+     Graine 17 choisie par la pré-simulation Node (simulate.js). ?verify=1 affiche la comparaison avec trace.json. -->
+<script src="/node_modules/matter-js/build/matter.min.js"></script>
+<script src="/node_modules/p5/lib/p5.min.js"></script>
+<script src="./course.js"></script>
+<style>
+  :root{--bg:#0E0B1F;--surface:#1D1740;--pink:#FF4F79;--green:#3CF2A0;--yellow:#FFD23F;--blue:#4FB3FF;--text:#FFFFFF}
+  html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:var(--bg)}
+  #wrap{position:absolute;inset:0}
+  #wrap canvas{position:absolute;left:0;top:0;width:1080px!important;height:1920px!important;image-rendering:pixelated}
+  .scan{position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(0,0,0,.20) 0 2px,transparent 2px 4px);pointer-events:none}
+  .ov{position:absolute;color:var(--text);font-family:'Press Start 2P';display:none;white-space:nowrap}
+  .disp{font-family:'Rubik Mono One';letter-spacing:-0.02em}
+  #hud{top:236px;left:72px;font-size:56px;line-height:64px}
+  #hud .lab{color:var(--yellow)}
+  #title{left:56px;top:470px;width:900px;padding:36px 32px;background:var(--surface);box-shadow:0 0 0 8px var(--blue),16px 16px 0 8px #000}
+  #title h1{margin:0;font:400 104px/1.08 'Rubik Mono One';letter-spacing:-0.02em;color:#fff;text-shadow:8px 8px 0 var(--pink)}
+  #title h1 span{color:var(--green)}
+  #bet{left:56px;top:960px;width:900px;padding:24px 32px;font-size:56px;line-height:80px;background:var(--surface);box-shadow:0 0 0 8px var(--pink),16px 16px 0 8px #000}
+  #bet b{font-weight:400;color:var(--yellow)}
+  #count{left:0;width:1080px;top:1210px;text-align:center;font:400 240px/1 'Rubik Mono One';color:var(--yellow);text-shadow:12px 12px 0 var(--pink)}
+  #photo{left:72px;top:700px;width:888px;text-align:center;padding:28px 0;background:var(--surface);box-shadow:0 0 0 8px var(--yellow),16px 16px 0 8px #000}
+  #photo .big{font:400 92px/1.1 'Rubik Mono One';color:#fff;text-shadow:8px 8px 0 var(--pink)}
+  #photo .sm{font-size:56px;line-height:80px;margin-top:16px;color:var(--yellow)}
+  #end{left:72px;top:330px;width:888px}
+  #end .win{font:400 120px/1.05 'Rubik Mono One';letter-spacing:-0.02em;text-shadow:10px 10px 0 #000}
+  #end .row{font-size:56px;line-height:56px;height:104px;padding-left:112px;display:flex;align-items:center}
+  #end .cta{font-size:56px;line-height:84px;margin-top:40px}
+  #end .cta2{font-size:56px;line-height:84px;color:var(--green);margin-top:24px}
+  #verify{left:72px;top:1500px;font-size:40px;background:#000;padding:8px}
+</style></head><body>
+<div id="wrap"></div>
+<div id="hud" class="ov"><span class="lab">TIME </span><span id="time">00.00</span></div>
+<div id="title" class="ov"><h1>QUELLE<br>BILLE<br><span>GAGNE&nbsp;?</span></h1></div>
+<div id="bet" class="ov">PARIE SUR TA<br><b>COULEUR</b> <span id="arrow" style="color:var(--green)">&#9654;</span></div>
+<div id="count" class="ov">3</div>
+<div id="photo" class="ov"><div class="big">PHOTO<br>FINISH&nbsp;!</div><div class="sm" id="gap">+0.10 S</div></div>
+<div id="end" class="ov"><div class="win" id="winTxt">BLEUE<br>GAGNE&nbsp;!</div><div id="rows" style="margin-top:56px"></div>
+  <div class="cta">TU AVAIS PARIÉ<br>SUR QUI&nbsp;?</div><div class="cta2" id="cta2">&#9660; COMMENTE &#9660;</div></div>
+<div id="verify" class="ov"></div>
+<div class="scan"></div>
+<script type="module">
+import * as S from '/out/tools/lib/svi.js';
+const C = window.Course;
+const SEED = 17;
+const { LW, LH, FX0, FX1, FINISH, FLOOR, COLS, NAMES, FPS, START_T, RAMPS } = C;
+const T_PHOTO = [12.0, 13.85], T_MOSAIC = [13.95, 14.55], T_END = 14.25, DUR = 16.0;
+const $ = id => document.getElementById(id);
+const show = (id, on) => { $(id).style.display = on ? 'block' : 'none'; };
+const q = Math.round;
+let s, lastEv = 0, pegLit = new Map(), sparks = [], shake = [];
+function build() { s = C.create(Matter, SEED); lastEv = 0; pegLit = new Map(); sparks = []; shake = []; }
+
+let P;
+const sketchReady = new Promise(res => {
+  new p5(p => { p.setup = () => { p.createCanvas(LW, LH); p.pixelDensity(1); p.noSmooth(); p.noLoop(); P = p; res(); }; }, $('wrap'));
+});
+
+// ---------- dessin pixel ----------
+function marbleSprite(p, x, y, col, scale = 1) {
+  const r = (a, b, w, h) => p.rect(x + a * scale, y + b * scale, w * scale, h * scale);
+  p.fill('#0E0B1F'); r(-5, -7, 10, 14); r(-7, -5, 14, 10);
+  p.fill(col); r(-4, -6, 8, 12); r(-6, -4, 12, 8); r(-5, -5, 10, 10);
+  p.fill('#FFFFFF'); r(-3, -4, 3, 2); r(-4, -2, 2, 2);
+}
+function pixLine(p, x0, y0, x1, y1, th) {
+  const n = Math.ceil(Math.max(Math.abs(x1 - x0), Math.abs(y1 - y0)));
+  for (let i = 0; i <= n; i++) { const k = i / n; p.rect(q(x0 + (x1 - x0) * k), q(y0 + (y1 - y0) * k - th / 2), 1, th); }
+}
+function drawField(p, t, f) {
+  p.background('#0E0B1F'); p.noStroke();
+  const r = S.rng(3); for (let i = 0; i < 70; i++) { p.fill(i % 7 ? '#2a2358' : '#4FB3FF'); p.rect(q(r() * LW), q(r() * LH), 1, 1); }
+  // cadre
+  p.fill('#1D1740'); p.rect(FX0 - 6, 80, FX1 - FX0 + 12, FLOOR - 74);
+  p.fill('#4FB3FF'); p.rect(FX0 - 6, 80, FX1 - FX0 + 12, 2); p.rect(FX0 - 6, 80, 2, FLOOR - 74); p.rect(FX1 + 4, 80, 2, FLOOR - 74); p.rect(FX0 - 6, FLOOR + 4, FX1 - FX0 + 12, 2);
+  p.fill('#0E0B1F'); p.rect(FX0, 84, FX1 - FX0, FLOOR - 84);
+  p.fill('#16123a'); for (let x = FX0; x < FX1; x += 10) p.rect(x, 84, 1, FLOOR - 84); for (let y = 84; y < FLOOR; y += 10) p.rect(FX0, y, FX1 - FX0, 1);
+  // grille de départ (clignote avant l'ouverture)
+  if (!s.gateOpen) { p.fill(Math.floor(t * 4) % 2 ? '#FF4F79' : '#FFD23F'); for (let x = FX0; x < FX1; x += 8) p.rect(x, 102, 5, 4); }
+  // ligne d'arrivée en damier
+  for (let x = FX0; x < FX1; x += 4) for (let k = 0; k < 2; k++) { p.fill(((x - FX0) / 4 + k) % 2 ? '#FFFFFF' : '#0E0B1F'); p.rect(x, FINISH + 1 + k * 4, 4, 4); }
+  // rampes (escalier de pixels) + reflet
+  RAMPS.forEach(([x0, y0, x1, y1]) => { p.fill('#4FB3FF'); pixLine(p, x0, y0, x1, y1, 4); p.fill('#bfe6ff'); pixLine(p, x0, y0 - 1.5, x1, y1 - 1.5, 1); });
+  // hélices
+  s.spinners.forEach(b => {
+    const a = b.angle, hx = Math.cos(a) * 18, hy = Math.sin(a) * 18;
+    p.fill('#FF4F79'); pixLine(p, b.position.x - hx, b.position.y - hy, b.position.x + hx, b.position.y + hy, 4);
+    p.fill('#FFD23F'); p.rect(q(b.position.x) - 2, q(b.position.y) - 2, 4, 4);
+  });
+  // picots (s'allument quand on les touche)
+  s.pegs.forEach(b => {
+    const lit = pegLit.has(b.id) && f - pegLit.get(b.id) < 9;
+    p.fill(lit ? '#FFD23F' : '#8a7fd6'); p.rect(q(b.position.x) - 2, q(b.position.y) - 2, 4, 4);
+    p.fill(lit ? '#fff3b0' : '#c9c1ff'); p.rect(q(b.position.x) - 2, q(b.position.y) - 2, 2, 2);
+  });
+}
+function drawHUDSlots(p, t) {
+  // 4 cases de classement (haut droite) : se remplissent dans l'ordre d'arrivée
+  for (let k = 0; k < 4; k++) {
+    const x = 168 + k * 18, y = 59;
+    p.fill(k === 0 ? '#FFD23F' : '#4FB3FF'); p.rect(x, y, 16, 16); p.fill('#1D1740'); p.rect(x + 2, y + 2, 12, 12);
+    const m = s.rank[k];
+    if (m !== undefined) { const age = s.frame / FPS - s.finishT[m]; if (age > 0.25 || Math.floor(age * 16) % 2) marbleSprite(p, x + 8, y + 8, COLS[m], 0.8); }
+  }
+}
+function frameEvents(f) {
+  // nouveaux événements de collision depuis la dernière frame -> picots allumés, étincelles, secousse
+  for (; lastEv < s.events.length; lastEv++) {
+    const e = s.events[lastEv];
+    if (e.with === 'peg') pegLit.set(e.id, f);
+    if (e.m >= 0 && (e.with === 'marble' || e.v > 1.2) && e.with !== 'finish') {
+      const m = s.marbles[e.m]; const rr = S.rng(lastEv * 7 + 1);
+      for (let k = 0; k < 6; k++) sparks.push({ x: m.position.x, y: m.position.y, vx: (rr() - 0.5) * 3, vy: -rr() * 2.5, f0: f, col: COLS[e.m] });
+      if (e.with === 'marble' && e.v > 0.9) shake.push(f);
+    }
+    if (e.with === 'finish') { shake.push(f); const [fx] = s.finishPos[e.m]; const rr = S.rng(99 + e.m);
+      for (let k = 0; k < 16; k++) sparks.push({ x: fx, y: FINISH, vx: (rr() - 0.5) * 5, vy: -rr() * 4, f0: f, col: k % 2 ? COLS[e.m] : '#FFFFFF' }); }
+    if (e.with === 'start') shake.push(f);
+  }
+  sparks = sparks.filter(sp => f - sp.f0 < 14);
+}
+function drawDynamic(p, t, f) {
+  // traînées
+  s.trails.forEach((tr, i) => tr.forEach(([x, y], k) => { if (k % 2) return; const c = p.color(COLS[i]); c.setAlpha(30 + k * 10); p.fill(c); p.rect(q(x) - 2, q(y) - 2, 4, 4); }));
+  // étincelles (balistiques, quantifiées)
+  sparks.forEach(sp => { const a = f - sp.f0; p.fill(sp.col); p.rect(q(sp.x + sp.vx * a), q(sp.y + sp.vy * a + 0.12 * a * a), 2, 2); });
+  // billes en course
+  s.marbles.forEach((m, i) => { if (s.finishT[i] === null) marbleSprite(p, q(m.position.x), q(m.position.y), COLS[i]); });
+  // flèche du leader (clignote)
+  if (s.gateOpen && s.rank.length === 0) {
+    let li = 0; s.marbles.forEach((m, i) => { if (m.position.y > s.marbles[li].position.y) li = i; });
+    if (Math.floor(t * 4) % 2 === 0) { const m = s.marbles[li]; const x = q(m.position.x), y = q(m.position.y) - 16; p.fill('#FFFFFF'); p.rect(x - 3, y, 6, 2); p.rect(x - 2, y + 2, 4, 2); p.rect(x - 1, y + 4, 2, 2); }
+  }
+  // flèches du hook vers les billes
+  if (!s.gateOpen && Math.floor(t * 4) % 2 === 0) s.marbles.forEach((m, i) => { const x = q(m.position.x), y = q(m.position.y) - 16; p.fill(COLS[i]); p.rect(x - 3, y, 6, 2); p.rect(x - 2, y + 2, 4, 2); p.rect(x - 1, y + 4, 2, 2); });
+}
+function drawEnd(p, t) {
+  p.background('#0E0B1F'); p.noStroke();
+  const r = S.rng(5); for (let i = 0; i < 90; i++) { p.fill(i % 5 ? '#2a2358' : COLS[i % 4]); p.rect(q(r() * LW), q((r() * LH + t * 20 * (1 + i % 3)) % LH), 1, 1); }
+  // médaillons des billes devant chaque ligne du classement (alignés sur .row DOM : 638 px + 52 + 104·k écran)
+  s0.rank.forEach((m, k) => { if (t - T_END > 0.3 + k * 0.12) marbleSprite(p, 30, q((638 + 52 + 104 * k) / 4), COLS[m], 1.6); });
+}
+function mosaic(p, k) {
+  if (k <= 1) return;
+  const c = p.drawingContext, cv = c.canvas;
+  const tmp = mosaic.tmp || (mosaic.tmp = document.createElement('canvas'));
+  tmp.width = Math.ceil(LW / k); tmp.height = Math.ceil(LH / k);
+  const tc = tmp.getContext('2d'); tc.imageSmoothingEnabled = false; tc.drawImage(cv, 0, 0, LW, LH, 0, 0, tmp.width, tmp.height);
+  c.save(); c.setTransform(1, 0, 0, 1, 0, 0); c.imageSmoothingEnabled = false; c.drawImage(tmp, 0, 0, tmp.width, tmp.height, 0, 0, tmp.width * k, tmp.height * k); c.restore();
+}
+
+function renderAt(t) {
+  const f = Math.round(t * FPS);
+  if (!s || f < s.frame) build();
+  while (s.frame < f) { C.stepFrame(Matter, s); frameEvents(s.frame); }
+  const p = P;
+  const inEnd = t >= T_END;
+  if (!inEnd) { drawField(p, t, f); drawHUDSlots(p, t); drawDynamic(p, t, f); } else drawEnd(p, t);
+  // transition « pixel-mosaic » : blocs 1→16 puis 16→1 (paliers)
+  const mk = t >= T_MOSAIC[0] && t < T_MOSAIC[1] ? [1, 2, 4, 8, 16, 16, 8, 4, 2, 1][Math.min(9, Math.floor(S.seg(t, T_MOSAIC[0], T_MOSAIC[1]) * 10))] : 1;
+  mosaic(p, mk);
+  // secousse écran (pas de 4 px)
+  const sh = shake.filter(g => f - g < 4).length ? ((f % 2) ? 1 : -1) * 8 : 0;
+  $('wrap').style.transform = `translate(${sh}px, ${sh ? 4 : 0}px)`;
+  // ---------- overlays DOM ----------
+  const raceT = Math.max(0, Math.min(t, s.finishT[s.rank[0]] ?? 99) - START_T);
+  $('time').textContent = raceT.toFixed(2).padStart(5, '0');
+  show('hud', !inEnd && t >= 0);
+  const titleOut = S.seg(t, START_T, START_T + 0.4); // sortie en 6 paliers (steps)
+  const stepOut = Math.floor(titleOut * 6) / 6;
+  show('title', t < START_T + 0.4); $('title').style.transform = `translateX(${-q(stepOut * 1150 / 8) * 8}px)`;
+  show('bet', t < START_T); $('arrow').style.visibility = Math.floor(t * 4) % 2 ? 'hidden' : 'visible';
+  const cd = [[0.96, '3'], [1.44, '2'], [1.92, '1'], [START_T, 'GO!']].filter(([a]) => t >= a).pop();
+  show('count', !!cd && t < START_T + 0.5);
+  if (cd) { $('count').textContent = cd[1]; const a = t - cd[0]; $('count').style.transform = `scale(${a < 0.07 ? 1.4 : a < 0.14 ? 1.2 : 1})`; $('count').style.color = cd[1] === 'GO!' ? 'var(--green)' : 'var(--yellow)'; }
+  show('photo', t >= T_PHOTO[0] && t < T_PHOTO[1] && (t > T_PHOTO[0] + 0.3 || Math.floor(t * 12) % 2 === 0));
+  show('end', inEnd);
+  if (inEnd) {
+    const age = t - T_END;
+    [...$('rows').children].forEach((row, k) => { row.style.visibility = age > 0.3 + k * 0.12 ? 'visible' : 'hidden'; });
+    $('cta2').style.visibility = Math.floor(t * 4) % 2 ? 'hidden' : 'visible';
+  }
+  if (/verify=1/.test(location.search) && s.rank.length === 4) {
+    const want = TRACE.finishT, ok = want.every((v, i) => Math.abs(v - s.finishT[i]) < 1e-6);
+    $('verify').textContent = (ok ? 'SIM OK ' : 'SIM MISMATCH ') + s.finishT.join(',');
+    show('verify', true);
+  }
+}
+let TRACE = null;
+function fillEnd() {
+  const w = s0.rank[0];
+  $('winTxt').innerHTML = `${NAMES[w]}<br>GAGNE&nbsp;!`; $('winTxt').style.color = COLS[w];
+  $('rows').innerHTML = s0.rank.map((m, k) => `<div class="row"><span style="color:${k ? '#fff' : '#FFD23F'}">${k + 1}&nbsp;</span><span style="color:${COLS[m]}">${NAMES[m].padEnd(6, ' ')}</span><span>${(s0.finishT[m] - START_T).toFixed(2)}</span></div>`).join('');
+  const sorted = [...s0.finishT].sort((a, b) => a - b); $('gap').textContent = `+${(sorted[1] - sorted[0]).toFixed(2)} S`;
+}
+let s0;
+const ready = Promise.all([sketchReady,
+  S.loadFonts([{ family: 'Press Start 2P', pkg: 'press-start-2p', weight: 400 }, { family: 'Rubik Mono One', pkg: 'rubik-mono-one', weight: 400 }]),
+  fetch('./trace.json').then(r => r.json()).then(j => { TRACE = j; })]).then(() => {
+  // résultats connus d'avance (trace Node) pour remplir la carte de fin ; la page re-simule quand même tout
+  s0 = { rank: TRACE.rank, finishT: TRACE.finishT }; fillEnd(); build();
+});
+S.installContract({ renderAt, ready, sequential: true, duration: DUR });
+</script></body></html>

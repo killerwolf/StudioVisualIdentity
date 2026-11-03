@@ -1,0 +1,179 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8">
+<!-- Atlas Gravé — histoire : « Le premier tour du monde : 1519–1522 » (Magellan puis Elcano).
+     D3.js (d3-geo Equirectangular, carte plate répétée en bande pour suivre le tour complet, côtes dessinées à la main) ;
+     GSAP (timeline d'état seekée : légendes, zooms, compteur de navires) ; textures pycairo (assets/). Graine : 19. Durée : 16 s. -->
+<script src="/node_modules/d3/dist/d3.min.js"></script>
+<script src="/node_modules/gsap/dist/gsap.min.js"></script>
+<style>html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:#EFE3C8}svg{position:absolute;inset:0}</style>
+</head><body>
+<svg id="s" width="1080" height="1920" viewBox="0 0 1080 1920"></svg>
+<script type="module">
+import * as S from '/out/tools/lib/svi.js';
+import { C, FONTS, world, plate, overlays, T, ornament } from './atlas.js';
+const SEED = 19, DUR = 16, PX = 6;                     // 6 px par degré à k = 1
+const svg = d3.select('#s');
+const defs = plate(d3, svg);
+const W0 = { x: 76, y: 640, w: 840, h: 660 };
+defs.append('clipPath').attr('id', 'win').append('rect').attr('x', W0.x).attr('y', W0.y).attr('width', W0.w).attr('height', W0.h);
+defs.append('pattern').attr('id', 'seaP').attr('patternUnits', 'userSpaceOnUse').attr('width', 1080).attr('height', 1920)
+  .append('image').attr('href', 'assets/sea.png').attr('width', 1080).attr('height', 1920);
+
+// ---- en-tête
+const head = svg.append('g');
+T(head, 496, 286, 'PLANCHE IX · VOYAGES', 'Cinzel', 54, C.red, 'middle', { 'font-weight': 600, 'letter-spacing': '0.06em' });
+T(head, 496, 400, 'Le premier tour', 'Cormorant Garamond', 108, C.ink, 'middle', { 'font-weight': 700 });
+T(head, 496, 500, 'du monde', 'Cormorant Garamond', 108, C.ink, 'middle', { 'font-weight': 700 });
+ornament(head, 496, 544, 300);
+T(head, 496, 614, '1519 – 1522', 'Cinzel', 56, C.red, 'middle', { 'font-weight': 700, 'letter-spacing': '0.08em' });
+
+// ---- carte plate (équirectangulaire), répétée : tuiles -360° et 0°
+const { land, lakes } = world(d3);
+const proj = d3.geoEquirectangular().scale(PX * 180 / Math.PI).translate([0, 0]);
+const gp = d3.geoPath(proj);
+const mapWrap = svg.append('g').attr('clip-path', 'url(#win)');
+mapWrap.append('rect').attr('x', W0.x).attr('y', W0.y).attr('width', W0.w).attr('height', W0.h).attr('fill', C.surface).attr('fill-opacity', 0.35);
+const cam = mapWrap.append('g');
+const inked = cam.append('g').attr('filter', 'url(#ink)');
+const strokes = [];
+const grat = d3.geoGraticule().step([30, 30]).extent([[-180, -90], [180.01, 90.01]])();
+[-360, 0].forEach(off => {
+  const g = inked.append('g').attr('transform', `translate(${off * PX},0)`);
+  g.append('rect').attr('x', -180 * PX).attr('y', -90 * PX).attr('width', 360 * PX).attr('height', 180 * PX).attr('fill', 'url(#seaP)');
+  strokes.push([g.append('path').attr('d', gp(grat)).attr('fill', 'none').attr('stroke', C.blue).attr('stroke-opacity', 0.35), 0.8]);
+  g.selectAll('path.f').data(land).join('path').attr('d', gp).attr('fill', 'url(#hatchLand)');
+  g.selectAll('path.l').data(lakes).join('path').attr('d', gp).attr('fill', 'url(#seaP)');
+  strokes.push([g.append('g').selectAll('path').data(land.concat(lakes)).join('path').attr('d', gp).attr('fill', 'none').attr('stroke', C.ink).attr('stroke-linejoin', 'round'), 1.6]);
+  strokes.push([g.append('path').attr('d', `M${-180 * PX},${-90 * PX}H${180 * PX}M${-180 * PX},${90 * PX}H${180 * PX}`).attr('fill', 'none').attr('stroke', C.ink), 2.2]);
+});
+
+// ---- route (longitudes « déroulées » vers l'ouest : -6 -> -366), ancres temporelles en secondes de scène
+const W = (lon, lat, t, tag) => ({ lon, lat, t, tag });
+const route = [
+  W(-6.4, 36.8, 0.5, 'sanlucar'), W(-15.5, 28), W(-19, 12), W(-30, -4), W(-43.2, -23, 2.4, 'rio'), W(-56, -35.6), W(-67.7, -49.3, 3.7, 'julian'),
+  W(-68.4, -52.4, 4.4, 'detroitE'), W(-71, -53.8), W(-74.6, -52.7, 5.7, 'detroitO'), W(-78, -45), W(-82, -33), W(-100, -20), W(-125, -9), W(-155, 3), W(-180, 11),
+  W(-215.3, 13.4, 8.5, 'guam'), W(-234.3, 10.7), W(-236.1, 10.3, 9.2, 'cebu'), W(-236.4, 10.0, 10.0, 'cebu2'), W(-240, 7), W(-245, 5), W(-238.5, 2.2), W(-232.6, 0.7),
+  W(-235.5, -9.5, 11.4, 'timor'), W(-262, -24), W(-295, -37), W(-325, -38), W(-341.5, -35.2, 12.6, 'cap'), W(-352, -22), W(-367, -2), W(-383.5, 14.5), W(-376, 28), W(-366.4, 36.8, 13.6, 'retour')];
+const rp = route.map(d => [d.lon * PX, -d.lat * PX]);
+const routeLine = d3.line().curve(d3.curveCatmullRom.alpha(0.5));
+const probe = svg.append('path').attr('d', routeLine(rp)).attr('fill', 'none').attr('stroke', 'none');
+const PN = probe.node(), LT = PN.getTotalLength();
+// longueur cumulée de chaque point (courbe partielle) -> temps interpolés entre ancres
+route.forEach((d, i) => { d.L = i === 0 ? 0 : (i === route.length - 1 ? LT : svg.append('path').attr('d', routeLine(rp.slice(0, i + 1))).remove().node().getTotalLength()); });
+for (let i = 0; i < route.length; i++) if (route[i].t === undefined) {
+  let a = i - 1; while (route[a].t === undefined) a--; let b = i + 1; while (route[b].t === undefined) b++;
+  route[i].t = route[a].t + (route[b].t - route[a].t) * (route[i].L - route[a].L) / (route[b].L - route[a].L);
+}
+const lenAt = t => { if (t <= route[0].t) return 0; for (let i = 1; i < route.length; i++) if (t <= route[i].t) { const a = route[i - 1], b = route[i]; return a.L + (b.L - a.L) * (t - a.t) / (b.t - a.t); } return LT; };
+const NS = 900, samples = d3.range(NS + 1).map(k => { const p = PN.getPointAtLength(LT * k / NS); return [p.x, p.y]; });
+const ptAt = L => { const p = PN.getPointAtLength(Math.max(0, Math.min(LT, L))); return [p.x, p.y]; };
+const routeG = inked.append('g');
+const trailCase = routeG.append('path').attr('fill', 'none').attr('stroke', C.bg).attr('stroke-linecap', 'round').attr('stroke-opacity', 0.85);
+const trail = routeG.append('path').attr('fill', 'none').attr('stroke', C.red).attr('stroke-linecap', 'round');
+// croix de Mactan (avril 1521)
+const mact = [-236.0 * PX, -10.3 * PX];
+const crossG = cam.append('g').attr('opacity', 0);
+// navire
+const shipImg = cam.append('image').attr('href', 'assets/ship.png');
+
+// cadre de fenêtre + rose des vents
+const winFrame = svg.append('g');
+winFrame.append('rect').attr('x', W0.x).attr('y', W0.y).attr('width', W0.w).attr('height', W0.h).attr('fill', 'none').attr('stroke', C.ink).attr('stroke-width', 2.2);
+winFrame.append('rect').attr('x', W0.x - 7).attr('y', W0.y - 7).attr('width', W0.w + 14).attr('height', W0.h + 14).attr('fill', 'none').attr('stroke', C.ink).attr('stroke-width', 0.9);
+const rose = svg.append('image').attr('href', 'assets/compass.png').attr('width', 150).attr('height', 150).attr('x', W0.x + W0.w - 160).attr('y', W0.y + W0.h - 160);
+// sceau (espace écran) pour la mort de Magellan
+const seal = svg.append('g').attr('opacity', 0);
+seal.append('circle').attr('r', 46).attr('fill', C.bg).attr('stroke', C.red).attr('stroke-width', 3);
+seal.append('circle').attr('r', 39).attr('fill', 'none').attr('stroke', C.red).attr('stroke-width', 1.2);
+seal.append('path').attr('d', 'M0,-26 L0,26 M-15,-10 L15,-10').attr('stroke', C.red).attr('stroke-width', 7).attr('stroke-linecap', 'square');
+
+// ---- légendes (date en Cinzel, événement en Cormorant), changées « à l'encre »
+const caps = [
+  { t: 0.0, d: 'SEPT. 1519', e: 'Départ de Sanlúcar' },
+  { t: 4.15, d: 'NOV. 1520', e: 'Le détroit de Magellan' },
+  { t: 6.1, d: '1520 – 1521', e: 'Plus de 3 mois de traversée' },
+  { t: 8.95, d: 'AVRIL 1521', e: 'Magellan meurt aux Philippines' },
+  { t: 10.6, d: '1521 – 1522', e: 'Elcano ramène la Victoria' },
+  { t: 13.4, d: 'SEPT. 1522', e: '18 survivants' }];
+const capG = svg.append('g');
+caps.forEach(c => {
+  c.g = capG.append('g').attr('opacity', 0);
+  T(c.g, 496, 1392, c.d, 'Cinzel', 56, C.red, 'middle', { 'font-weight': 700, 'letter-spacing': '0.06em' });
+  T(c.g, 496, 1470, c.e, 'Cormorant Garamond', c.e.length > 26 ? 62 : c.e.length < 15 ? 84 : 68, C.ink, 'middle', { 'font-weight': 700 });
+});
+// ---- compteur de navires (5 -> 1)
+const fleet = svg.append('g').attr('transform', 'translate(96,1506)');
+const shipsN = d3.range(5).map(i => {
+  const g = fleet.append('g').attr('transform', `translate(${i * 78},0)`);
+  g.append('image').attr('href', 'assets/ship.png').attr('width', 72).attr('height', 72);
+  const x = g.append('path').attr('d', 'M8,10 L64,64 M64,10 L8,64').attr('stroke', C.red).attr('stroke-width', 5).attr('stroke-linecap', 'round');
+  return { g, x };
+});
+const countT = T(svg, 904, 1562, '5 NAVIRES', 'Cinzel', 54, C.blue, 'end', { 'font-weight': 700 });
+
+// ---- cartouche final (guilloché pycairo)
+const cart = svg.append('g').attr('opacity', 0);
+cart.append('image').attr('href', 'assets/cartouche.png').attr('width', 782).attr('height', 255).attr('x', -391).attr('y', -128);
+T(cart, 0, -4, 'Magellan ou Elcano ?', 'Cormorant Garamond', 76, C.ink, 'middle', { 'font-weight': 700 });
+T(cart, 0, 66, 'qui mérite le nom du voyage ?', 'Cormorant Garamond', 56, C.red, 'middle', { 'font-weight': 700, 'font-style': 'italic' });
+
+overlays(svg);
+
+// ================= timeline d'état (GSAP) =================
+const st = { head: 0.35, k: 1.0, lat: -8, fix: 0, flon: -192, flat: 67, cap: caps.map(() => 0), lost: [0, 0, 0, 0, 0], ships: 5,
+  seal: 0, sealS: 1.6, cross: 0, cart: 0, cs: 0.72, shipO: 1, trailW: 3.4 };
+const tl = gsap.timeline({ paused: true, defaults: { ease: 'sine.inOut' } });
+const I = { immediateRender: false };
+tl.to(st, { head: 1, duration: 0.5, ease: 'power2.out', ...I }, 0);
+caps.forEach((c, i) => {
+  tl.to(st.cap, { [i]: 1, duration: 0.4, ease: 'power2.out', ...I }, c.t);
+  if (i < caps.length - 1) tl.to(st.cap, { [i]: 0, duration: 0.3, ...I }, caps[i + 1].t - 0.3);
+});
+// zoom cartographique sur le détroit, puis recul pour le Pacifique
+tl.to(st, { k: 1.75, lat: -44, duration: 1.0, ...I }, 3.4)
+  .to(st, { k: 1.0, lat: -8, duration: 1.2, ...I }, 5.6)
+  .to(st, { k: 1.45, lat: 2, duration: 0.8, ...I }, 8.6)
+  .to(st, { k: 1.0, lat: -10, duration: 1.0, ...I }, 10.2)
+  .to(st, { lat: 4, duration: 1.0, ...I }, 12.5)
+  .to(st, { fix: 1, k: 840 / (386 * PX), duration: 1.3, ...I }, 13.6)
+  .to(st, { shipO: 0, trailW: 5.2, duration: 0.6, ...I }, 13.8)
+  .fromTo(st, { cross: 0 }, { cross: 1, duration: 0.4, ease: 'back.out(1.6)', ...I }, 9.2)
+  .fromTo(st, { seal: 0, sealS: 1.6 }, { seal: 1, sealS: 1, duration: 0.35, ease: 'back.out(1.6)', ...I }, 9.2)
+  .to(st, { seal: 0, duration: 0.3, ...I }, 10.3)
+  .to(st, { cart: 1, cs: 0.82, duration: 0.5, ease: 'power2.out', ...I }, 14.6);
+// pertes : Santiago (naufrage 1520), San Antonio (désertion, détroit), Concepción (brûlée 1521), Trinidad (restée aux Moluques)
+[[3.5, 4, 4], [5.1, 3, 3], [9.9, 2, 2], [11.3, 1, 1]].forEach(([t, idx, n]) => {
+  tl.to(st.lost, { [idx]: 1, duration: 0.4, ease: 'power2.out', ...I }, t).set(st, { ships: n }, t + 0.2);
+});
+
+const ease = S.ease.inOutSine;
+function render(t) {
+  tl.seek(t, false);
+  head.attr('opacity', st.head).attr('transform', `translate(0,${(1 - st.head) * 10})`);
+  const L = lenAt(t), sp = ptAt(L);
+  // caméra : suit le navire (moyenne glissante ±0,6 s), puis vue d'ensemble
+  let ax = 0; for (let j = -4; j <= 4; j++) ax += ptAt(lenAt(t + j * 0.15))[0]; ax /= 9;
+  const followX = ax - 12 * PX, followY = -st.lat * PX;
+  const fx = followX * (1 - st.fix) + st.flon * PX * st.fix, fy = followY * (1 - st.fix) + st.flat * PX * st.fix;
+  const cx = W0.x + W0.w / 2, cy = W0.y + W0.h / 2;
+  cam.attr('transform', `translate(${cx},${cy}) scale(${st.k}) translate(${-fx},${-fy})`);
+  strokes.forEach(([sel, w]) => sel.attr('stroke-width', w / st.k));
+  // tracé partiel (échantillons) — pointillés de route maritime
+  const n = Math.max(1, Math.floor(NS * L / LT));
+  const part = samples.slice(0, n + 1); part.push(sp);
+  const dpath = d3.line()(part);
+  trail.attr('d', dpath).attr('stroke-width', st.trailW / st.k).attr('stroke-dasharray', `${10 / st.k} ${6 / st.k}`);
+  trailCase.attr('d', dpath).attr('stroke-width', (st.trailW + 4) / st.k);
+  const sz = 92 / st.k, bob = Math.sin(t * 5) * 2 / st.k;
+  shipImg.attr('width', sz).attr('height', sz).attr('x', sp[0] - sz / 2).attr('y', sp[1] - sz * 0.78 + bob).attr('opacity', st.shipO);
+  crossG.attr('opacity', 0);
+  const sx = cx + (mact[0] - fx) * st.k, sy = cy + (mact[1] - fy) * st.k;
+  seal.attr('opacity', st.seal).attr('transform', `translate(${Math.min(830, sx + 110)},${Math.max(W0.y + 70, sy - 90)}) scale(${st.sealS})`);
+  caps.forEach((c, i) => c.g.attr('opacity', st.cap[i]).attr('transform', `translate(0,${(1 - st.cap[i]) * 12})`));
+  shipsN.forEach((s, i) => { s.g.attr('opacity', 1 - 0.7 * st.lost[i]); s.x.attr('opacity', st.lost[i]); });
+  countT.text(st.ships > 1 ? `${st.ships} NAVIRES` : '1 NAVIRE');
+  rose.attr('opacity', 1 - st.cart);
+  cart.attr('opacity', st.cart).attr('transform', `translate(496,1182) scale(${st.cs})`);
+}
+const ready = S.loadFonts(FONTS);
+S.installContract({ renderAt: render, ready, duration: DUR });
+</script></body></html>

@@ -1,0 +1,32 @@
+{
+ "language": "fr",
+ "style": "enjoué, joueur, complice, pour enfants et familles ; petite pause de suspense avant la révélation",
+ "voice": "Puck",
+ "lines": [
+  {
+   "t": 0.2,
+   "maxDuration": 2.75,
+   "text": "Le petit renard se cache… regarde bien !"
+  },
+  {
+   "t": 3.3,
+   "maxDuration": 5.2,
+   "text": "Ça mélange ! Suis la bonne boîte des yeux… sans tricher !"
+  },
+  {
+   "t": 8.75,
+   "maxDuration": 2.7,
+   "text": "1, 2 ou 3 ? Dis-le en commentaire !"
+  },
+  {
+   "t": 11.6,
+   "maxDuration": 0.7,
+   "text": "Vide !"
+  },
+  {
+   "t": 12.4,
+   "maxDuration": 2.5,
+   "text": "C'était la 3 ! Tu l'avais trouvé ?"
+  }
+ ]
+}

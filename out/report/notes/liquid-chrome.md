@@ -1,0 +1,1 @@
+- 21:09:04 start studio liquid-chrome; plan: abstrait=Taichi MLS-MPM (fluide J-only mpm88) + rendu OpenCV (accumulation, flou, normales, specular/rim chrome), engagement=three.js (4 tubes verre + liquide chrome irisé, course analytique, stateless)

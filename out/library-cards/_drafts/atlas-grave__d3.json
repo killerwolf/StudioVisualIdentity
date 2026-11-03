@@ -1,0 +1,27 @@
+{
+  "name": "D3.js",
+  "role": "data",
+  "bestFor": [
+    "cartes vectorielles sans fichier téléchargé : côtes dessinées à la main projetées par d3-geo (geoNaturalEarth1, geoEquirectangular, geoGraticule)",
+    "classements et échelles (scaleLinear/scalePoint) rendus en SVG gravé",
+    "tracés de fleuves/routes avec d3.line + curveCatmullRom/curveBasis, animés par stroke-dashoffset ou par échantillonnage getPointAtLength"
+  ],
+  "avoidFor": [
+    "scènes à milliers d'éléments animés (SVG + filtres en SwiftShader deviennent lents)",
+    "3D, particules, physique"
+  ],
+  "renderCostPer100Frames": "135,7 s (mesuré, shorts/atlas-grave__geographie__plus-longs-fleuves-du-monde, 450 frames en 610,8 s, sous charge ≈ 16 sur 4 cœurs avec 4 rendus simultanés ; scène SVG + 1 feDisplacementMap sur la carte + 4 PNG plein cadre)",
+  "gotchas": [
+    "Anneaux dessinés à la main : d3-geo exige l'orientation sphérique ; si d3.geoArea(feature) > 2π, inverser l'anneau, sinon la « terre » remplit tout le globe",
+    "Pour un tour du monde complet, déplier les longitudes (-6 -> -383) et répéter la carte équirectangulaire en tuiles (-360°, 0°) : pas de saut de caméra à l'antiméridien ; supprimer les bords verticaux des tuiles (couture visible)",
+    "Caméra par transform scale(k) sur un groupe de chemins statiques : diviser les stroke-width par k à chaque frame plutôt que vector-effect:non-scaling-stroke (qui casse la cohérence des stroke-dasharray)",
+    "pathLength=1 sur les côtes permet de tracer tous les contours avec un seul dashoffset",
+    "Filtres SVG feTurbulence plein cadre = coût par frame élevé ; précalculer le papier en PNG (pycairo)",
+    "Polices @fontsource : mesurer les textes (getComputedTextLength) seulement après window.ready"
+  ],
+  "snippetPath": "shorts/atlas-grave__geographie__plus-longs-fleuves-du-monde/src",
+  "pairsWellWith": [
+    "GSAP",
+    "pycairo"
+  ]
+}

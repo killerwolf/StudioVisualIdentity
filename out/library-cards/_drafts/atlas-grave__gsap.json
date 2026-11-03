@@ -1,0 +1,25 @@
+{
+  "name": "GSAP",
+  "role": "animation (orchestration de timeline ; hors liste : aucune catégorie existante ne convient)",
+  "bestFor": [
+    "timeline d'état unique (objet JS) seekée par renderAt : caméra, sceaux, légendes, compteurs pilotés par une seule source de vérité",
+    "easings nommés cohérents dans une identité (power2.out, sine.inOut, back.out(1.6))",
+    "tween de propriétés indexées de tableaux (gsap.to(st.hot, {[i]: 1}))"
+  ],
+  "avoidFor": [
+    "simulation à état (physique) : préférer un pas fixe",
+    "animation pilotée par l'horloge réelle (le rendu est seeké)"
+  ],
+  "renderCostPer100Frames": "négligeable seul (< 1 ms par seek) ; dans la scène atlas-grave histoire le coût total est celui du SVG : voir renderTimeSec de shorts/atlas-grave__histoire__premier-tour-du-monde-1519-1522",
+  "gotchas": [
+    "renderAt = t => { tl.seek(t, false); } — ne jamais retourner la timeline (thenable)",
+    "immediateRender:false sur tous les to/fromTo d'une timeline seekée, sinon les fromTo écrasent l'état initial dès la construction",
+    "Les .set() dans une timeline seekée en arrière sont bien rejoués : OK pour un compteur entier",
+    "Lissage caméra : calculer la position suivie comme moyenne de positions à t±0,6 s via une fonction pure du temps (pas via des seeks multiples de la timeline)"
+  ],
+  "snippetPath": "shorts/atlas-grave__histoire__premier-tour-du-monde-1519-1522/src",
+  "pairsWellWith": [
+    "D3.js",
+    "pycairo"
+  ]
+}

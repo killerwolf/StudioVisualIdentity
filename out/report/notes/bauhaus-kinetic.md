@@ -1,1 +1,4 @@
 - 2026-11-03T21:07:22Z start studio bauhaus-kinetic; read brief/facts/fiche/poster. Plan: 2 shorts HTML (Paper.js canvas + anime.js paused timeline seek + flubber morph), poster code reused.
+- 2026-11-03T21:11:55Z explicatif: stills OK after 2 passes (fixed panel overlap, morph start offscreen, badge pos); full render launched in bg.
+- 2026-11-03T21:24:35Z explicatif muxed (render 135.2 s, 28.2 s/100f). engagement: stills OK after 1 bug fix (badge state array had 4 entries for 5 morphs -> TypeError); full render launched.
+- 2026-11-03T21:32:02Z bench (scratch bench.mjs, Chromium swiftshader, under load): renderAt JS only 6.1 ms/frame (explicatif) / 7.8 ms (engagement); screenshot jpeg ~300-350 ms/frame = cost dominant. anime seek 192 tweens 0.087 ms/frame; flubber 64 morphs 0.43 ms/frame (string:false) vs 1.5 ms (string); Paper 64 hex+clip 2.6 ms/frame; Paper boolean subtract 2.7 ms/op.

@@ -1,0 +1,223 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8">
+<title>1789 en 20 secondes — Gazette 1900</title>
+<!-- Short histoire « 1789 en 20 secondes » (identité gazette-1900).
+     GSAP : timeline seekée (tourniquet des unes, tampons, zoom brusque, Ken Burns sur les gravures).
+     Gravures procédurales en hachures (canvas 2D, graine 1789). Post-traitement film/papier : post.py (OpenCV).
+     Grille rythmique : 128 bpm, 1 une = 6 temps = 2,8125 s. Durée 18,75 s. -->
+<script src="/node_modules/gsap/dist/gsap.min.js"></script>
+</head><body><div id="stage"></div>
+<script type="module">
+import * as G from './gazette.js';
+const { S, T } = G;
+const R = S.rng(1789);
+const B = T.beat, PAGE = 6 * B, P0 = 4 * B;          // 0,46875 s ; 2,8125 s ; 1,875 s
+const DUR = P0 + 5 * PAGE + 6 * B;                   // 18,75 s
+
+const pages = [
+  { id: 'p0', date: 'ANNÉE 1789', kicker: 'Cinq dates, une révolution', big: '1789', sub: 'EN 20 SECONDES',
+    cap: 'Paris, Versailles : la France bascule.', depLabel: 'DÉPÊCHE — ', dep: 'tournez la page !', stamp: { text: 'Édition<br>spéciale' } },
+  { id: 'p1', date: '5 MAI 1789', kicker: 'Versailles', big: '5 MAI', sub: 'OUVERTURE DES<br>ÉTATS GÉNÉRAUX',
+    cap: 'Clergé, noblesse, tiers état.', depLabel: 'DÉPÊCHE — ', dep: 'le tiers état veut le vote par tête.', stamp: { text: 'Ouverte' } },
+  { id: 'p2', date: '20 JUIN 1789', kicker: 'Versailles', big: '20 JUIN', sub: 'LE SERMENT DU<br>JEU DE PAUME',
+    cap: 'Mains levées, les députés jurent.', depLabel: 'DÉPÊCHE — ', dep: 'pas de séparation sans Constitution.', stamp: { text: 'Serment' } },
+  { id: 'p3', date: '14 JUILLET 1789', kicker: "Paris s'est soulevé !", big: '14 JUILLET', sub: 'LA BASTILLE<br>EST PRISE',
+    cap: "La forteresse cède sous l'assaut.", depLabel: 'DÉPÊCHE — ', dep: 'les Parisiens prennent la forteresse.', stamp: { text: 'Prise !' } },
+  { id: 'p4', date: '4 AOÛT 1789', kicker: 'Dans la nuit', big: '4 AOÛT', sub: 'LES PRIVILÈGES<br>ABOLIS',
+    cap: 'Le vieux blason se fend en deux.', depLabel: 'DÉPÊCHE — ', dep: "l'Assemblée vote la fin des privilèges.", stamp: { text: 'Abolis' } },
+  { id: 'p5', date: '26 AOÛT 1789', kicker: 'Assemblée nationale', big: '26 AOÛT', sub: "DROITS DE L'HOMME<br>ET DU CITOYEN",
+    cap: 'La Déclaration est adoptée.', depLabel: 'ARTICLE 1 — ', dep: 'libres et égaux en droits.', stamp: { text: 'Adoptée' } },
+  { id: 'p6', date: 'FIN DE L\'ÉTÉ 1789', kicker: 'Récapitulatif', big: '1789', sub: null, cap: null, depLabel: 'VOTEZ — ', dep: 'quelle date ?',
+    stamp: { text: 'Au prochain<br>numéro' },
+    inner: `<div class="recap" id="recap"></div>` },
+];
+G.injectCSS();
+const extra = document.createElement('style');
+extra.textContent = `.recap{margin-top:22px;width:900px;border-top:5px solid ${T.ink};border-bottom:1.5px solid ${T.ink};padding:22px 0 18px;
+  font:600 56px/1.28 'IBM Plex Mono';min-height:374px;white-space:pre}
+  .recap b{color:${T.red};font-weight:700}
+  #p6 .big{font-size:300px} #p6 .stamp{right:100px;bottom:340px}`;
+document.head.appendChild(extra);
+const stage = document.getElementById('stage');
+stage.innerHTML = pages.map(G.pageHTML).join('');
+document.getElementById('p0').style.visibility = 'visible';
+
+// ---------------- gravures ----------------
+const W = 894, H = 430;
+function cvx(id) { const g = document.getElementById(id + '-cv').getContext('2d'); G.paper(g, W, H); return g; }
+
+function e0() { // cocarde + rayons + foule aux piques
+  const g = cvx('p0');
+  g.strokeStyle = T.ink; G.rays(g, 447, 250, 64, 140, 700, 3.2);
+  g.fillStyle = T.plate; g.beginPath(); g.arc(447, 250, 136, 0, 7); g.fill();
+  g.fillStyle = T.red; g.beginPath(); g.arc(447, 250, 126, 0, 7); g.fill();
+  g.fillStyle = T.plate; g.beginPath(); g.arc(447, 250, 86, 0, 7); g.fill();
+  g.save(); g.beginPath(); g.arc(447, 250, 86, 0, 7); g.clip();
+  for (let x = 340; x < 560; x += 5) { g.lineWidth = .8; g.beginPath(); g.moveTo(x, 150); g.lineTo(x, 350); g.stroke(); }
+  g.restore();
+  g.fillStyle = T.ink; g.beginPath(); g.arc(447, 250, 46, 0, 7); g.fill();
+  // plis de la cocarde
+  g.strokeStyle = T.plate; g.lineWidth = 2;
+  for (let i = 0; i < 24; i++) { const a = i / 24 * Math.PI * 2; g.beginPath(); g.moveTo(447 + Math.cos(a) * 92, 250 + Math.sin(a) * 92); g.lineTo(447 + Math.cos(a) * 124, 250 + Math.sin(a) * 124); g.stroke(); }
+  g.strokeStyle = T.ink;
+  G.crowd(g, W, H - 60, 40, 11, 16, R, { hats: ['none', 'bonnet', 'none', 'tricorn'], pikes: .3, jitter: 14 });
+  G.crowd(g, W, H - 22, 34, 14, 19, R, { hats: ['none', 'bonnet'], pikes: .15 });
+  G.frame(g, W, H);
+}
+function e1() { // États généraux : salle à colonnes, dais vide, trois ordres en rangées
+  const g = cvx('p1');
+  G.hHatch(g, 0, W, 4, 130, 6, (x, y) => S.lerp(3.2, .6, Math.max(0, 1 - Math.abs(x - 447) / 420)) * (1 - y / 260));
+  // dais / baldaquin (trône vide)
+  g.fillStyle = T.plate; g.beginPath(); g.moveTo(352, 40); g.lineTo(542, 40); g.lineTo(580, 220); g.lineTo(314, 220); g.closePath(); g.fill();
+  for (let x = 318; x < 578; x += 5) { const u = Math.abs(x - 447) / 130; g.lineWidth = S.lerp(.5, 2.8, u); g.beginPath(); g.moveTo(S.lerp(447, x, .73), 44); g.quadraticCurveTo(x + Math.sin(x / 9) * 3, 140, x, 218); g.stroke(); }
+  g.lineWidth = 3; g.beginPath(); g.moveTo(340, 40); g.lineTo(554, 40); g.stroke();
+  for (let i = 0; i < 9; i++) { g.beginPath(); g.arc(352 + i * 24, 46, 10, 0, Math.PI); g.stroke(); }
+  g.fillStyle = T.ink; g.fillRect(420, 150, 54, 62); g.fillRect(412, 140, 70, 10);   // fauteuil vide
+  g.fillStyle = T.plate; g.fillRect(430, 160, 34, 30);
+  g.fillStyle = T.ink; g.fillRect(296, 220, 302, 14);
+  for (let y = 236; y < 254; y += 4) { g.lineWidth = 1.4; g.beginPath(); g.moveTo(290, y); g.lineTo(604, y); g.stroke(); }
+  // colonnes
+  for (const [x, w] of [[14, 64], [104, 52], [738, 52], [816, 64]]) { G.cylinder(g, x, 20, w, 330, 0); g.fillRect(x - 8, 12, w + 16, 12); }
+  // trois rangées (chapeaux différents = trois ordres, silhouettes inventées)
+  G.crowd(g, W, 272, 46, 6, 7.5, R, { hats: ['cap'], jitter: 4 });
+  G.crowd(g, W, 318, 40, 8, 10, R, { hats: ['tricorn'], jitter: 5 });
+  g.lineWidth = 2; for (let y = 350; y < H; y += 5) { g.beginPath(); g.moveTo(0, y); g.lineTo(W, y); g.stroke(); }
+  G.crowd(g, W, 372, 34, 11, 13, R, { hats: ['tall', 'none'], jitter: 6 });
+  G.crowd(g, W, 412, 28, 14, 17, R, { hats: ['tall', 'none', 'none'], jitter: 6 });
+  G.frame(g, W, H);
+}
+function e2() { // Jeu de paume : haut mur, fenêtres hautes, bras levés
+  const g = cvx('p2');
+  G.hHatch(g, 0, W, 4, 300, 5, (x, y) => 1.4 + 1.6 * S.noise2(x / 120, y / 90));
+  for (let i = 0; i < 6; i++) {
+    const x = 40 + i * 140; g.fillStyle = T.plate; g.fillRect(x, 26, 88, 104);
+    g.lineWidth = 3; g.strokeRect(x, 26, 88, 104); g.beginPath(); g.moveTo(x + 44, 26); g.lineTo(x + 44, 130); g.moveTo(x, 78); g.lineTo(x + 88, 78); g.stroke();
+    // rais de lumière
+    g.lineWidth = .7; for (let k = 0; k < 14; k++) { g.beginPath(); g.moveTo(x + k * 6, 132); g.lineTo(x + k * 6 + 60, 290); g.stroke(); }
+  }
+  g.lineWidth = 4; g.beginPath(); g.moveTo(0, 160); g.lineTo(W, 160); g.stroke();
+  // table + orateur inventé
+  g.fillStyle = T.ink; g.fillRect(392, 244, 110, 12); g.fillRect(398, 256, 8, 40); g.fillRect(488, 256, 8, 40);
+  G.figure(g, 447, 214, 12, 'none', 0, R);
+  g.lineWidth = 10; g.beginPath(); g.moveTo(466, 218); g.lineTo(486, 150); g.stroke();
+  g.fillStyle = T.plate; g.fillRect(476, 122, 30, 36); g.lineWidth = 2; g.strokeRect(476, 122, 30, 36); g.fillStyle = T.ink;
+  G.crowd(g, W, 300, 44, 8, 10, R, { hats: ['none', 'tricorn'], arms: .85, jitter: 6 });
+  G.crowd(g, W, 352, 36, 10.5, 13, R, { hats: ['none', 'tricorn', 'tall'], arms: .9, jitter: 6 });
+  G.crowd(g, W, 404, 28, 14, 17, R, { hats: ['none', 'tricorn'], arms: .75, jitter: 6 });
+  G.frame(g, W, H);
+}
+function e3() { // la Bastille (gravure de l'affiche Phase 1, reprise)
+  const g = cvx('p3'); g.save(); g.scale(1, H / 424);
+  const smoke = (x, y) => { let s = 0; for (const [cx, cy, r] of [[250, 120, 95], [400, 60, 70], [690, 110, 105], [560, 40, 55]]) s += Math.max(0, 1 - Math.hypot((x - cx) / 1.6, y - cy) / r) * 1.6; return S.clamp(s + (S.noise2(x / 60, y / 40) - .5) * .5); };
+  G.hHatch(g, 0, W, 4, 300, 6, (x, y) => S.lerp(3.4, 0, smoke(x, y)) * (0.7 + y / 500));
+  const base = 330;
+  g.fillStyle = T.plate; g.fillRect(70, base - 170, 760, 170);
+  for (let x = 70; x < 830; x += 5) { g.lineWidth = 1.1 + (S.noise2(x / 30, 3) - .5); g.beginPath(); g.moveTo(x, base - 165); g.lineTo(x, base); g.stroke(); }
+  g.lineWidth = 3; g.strokeRect(70, base - 170, 760, 170);
+  for (const [cx, w, h] of [[70, 92, 230], [230, 100, 250], [430, 112, 270], [620, 100, 245], [780, 92, 225]]) {
+    const x0 = cx - w / 2, top = base - h; G.cylinder(g, x0, top, w, h - 1, 22);
+    for (let i = 0; i < 5; i++) { const cw = w / 9; g.fillRect(x0 + i * 2 * cw, top - 14, cw, 16); }
+    g.fillRect(cx - 4, top + 60, 8, 26); g.fillRect(cx - 4, top + 130, 8, 26);
+  }
+  g.lineWidth = 3; g.beginPath(); g.moveTo(430, base - 284); g.lineTo(430, base - 360); g.stroke();
+  g.fillStyle = T.red; g.beginPath(); g.moveTo(432, base - 360); g.quadraticCurveTo(470, base - 368, 500, base - 350); g.quadraticCurveTo(470, base - 338, 432, base - 332); g.fill();
+  g.lineWidth = 2.2; for (let y = base + 2; y < 424; y += 5) { g.beginPath(); g.moveTo(0, y); g.lineTo(W, y); g.stroke(); }
+  G.crowd(g, W, 424 - 70, 46, 11, 16, R, { hats: ['none', 'bonnet', 'none'], pikes: .22, jitter: 10 });
+  G.crowd(g, W, 424 - 30, 40, 13, 18, R, { hats: ['none', 'bonnet'], pikes: .15, jitter: 10 });
+  g.restore(); G.frame(g, W, H);
+}
+function e4() { // nuit du 4 août : ciel étoilé, blason fendu, chaîne brisée
+  const g = cvx('p4');
+  G.hHatch(g, 0, W, 3, 380, 4, (x, y) => 2.6 - 1.8 * Math.max(0, 1 - Math.hypot(x - 760, y - 92) / 160));
+  g.fillStyle = T.plate; g.beginPath(); g.arc(760, 92, 44, 0, 7); g.fill();
+  g.fillStyle = T.ink; g.beginPath(); g.arc(778, 80, 40, 0, 7); g.fill();
+  g.fillStyle = T.plate;
+  for (let i = 0; i < 40; i++) { const x = R() * W, y = R() * 300, s = 1.5 + R() * 3; if (Math.hypot(x - 447, y - 220) < 170) continue; g.fillRect(x - s, y - .8, s * 2, 1.6); g.fillRect(x - .8, y - s, 1.6, s * 2); }
+  const shield = (dx, rot, side) => {
+    g.save(); g.translate(447 + dx, 230); g.rotate(rot);
+    g.beginPath(); // contour de l'écu
+    g.moveTo(-110, -130); g.lineTo(110, -130); g.lineTo(110, 10); g.quadraticCurveTo(110, 100, 0, 140); g.quadraticCurveTo(-110, 100, -110, 10); g.closePath();
+    g.save(); g.clip();
+    g.beginPath(); // moitié gauche / droite par une fente en zigzag
+    const zz = [[-6, -140], [10, -90], [-12, -40], [8, 10], [-10, 60], [6, 100], [-4, 150]];
+    if (side < 0) { g.moveTo(-130, -140); zz.forEach(([x, y]) => g.lineTo(x, y)); g.lineTo(-130, 150); }
+    else { g.moveTo(130, -140); zz.forEach(([x, y]) => g.lineTo(x, y)); g.lineTo(130, 150); }
+    g.closePath(); g.clip();
+    g.fillStyle = T.plate; g.fillRect(-130, -140, 260, 300);
+    g.lineWidth = 1.2; for (let k = -300; k < 300; k += 7) { g.beginPath(); g.moveTo(k, -140); g.lineTo(k + 260, 160); g.stroke(); }
+    g.fillStyle = T.ink; g.fillRect(-110, -60, 220, 30);             // fasce
+    for (const [x, y] of [[-55, -95], [55, -95], [0, 40]]) { g.beginPath(); g.arc(x, y, 18, 0, 7); g.fill(); }
+    g.restore();
+    g.lineWidth = 5; g.beginPath(); g.moveTo(-110, -130); g.lineTo(110, -130); g.lineTo(110, 10); g.quadraticCurveTo(110, 100, 0, 140); g.quadraticCurveTo(-110, 100, -110, 10); g.closePath(); g.stroke();
+    g.restore();
+  };
+  shield(-16, -0.06, -1); shield(16, 0.06, 1);
+  // couronne tombée (forme générique)
+  g.save(); g.translate(600, 350); g.rotate(0.5); g.fillStyle = T.ink;
+  g.beginPath(); g.moveTo(-40, 20); g.lineTo(-44, -18); g.lineTo(-22, 0); g.lineTo(0, -26); g.lineTo(22, 0); g.lineTo(44, -18); g.lineTo(40, 20); g.closePath(); g.fill(); g.restore();
+  // sol + chaîne brisée
+  g.lineWidth = 2; for (let y = 382; y < H; y += 5) { g.beginPath(); g.moveTo(0, y); g.lineTo(W, y); g.stroke(); }
+  g.fillStyle = T.plate; g.fillRect(0, 392, W, 26);
+  g.strokeStyle = T.ink; g.lineWidth = 6;
+  for (let i = 0; i < 16; i++) { const x = 30 + i * 54 + (i > 7 ? 40 : 0); if (i === 7 || i === 8) continue; g.beginPath(); g.ellipse(x, 405, 24, 10, 0, 0, 7); g.stroke(); }
+  g.beginPath(); g.arc(424, 405, 22, -2.4, 1.6); g.stroke(); g.beginPath(); g.arc(510, 405, 22, 1.0, 5.2); g.stroke();
+  G.frame(g, W, H);
+}
+function e5() { // 26 août : deux tables de la loi inventées devant un soleil levant
+  const g = cvx('p5');
+  G.rays(g, 447, 430, 72, 60, 900, 2.6);
+  const tablet = (x0) => {
+    const w = 196, top = 50, bot = 400;
+    g.fillStyle = T.plate; g.beginPath(); g.moveTo(x0, bot); g.lineTo(x0, top + 70); g.quadraticCurveTo(x0, top, x0 + w / 2, top); g.quadraticCurveTo(x0 + w, top, x0 + w, top + 70); g.lineTo(x0 + w, bot); g.closePath(); g.fill();
+    g.lineWidth = 5; g.stroke(); g.lineWidth = 1.5; g.save(); g.clip();
+    g.beginPath(); g.moveTo(x0 + 12, bot); g.lineTo(x0 + 12, top + 74); g.quadraticCurveTo(x0 + 12, top + 12, x0 + w / 2, top + 12); g.quadraticCurveTo(x0 + w - 12, top + 12, x0 + w - 12, top + 74); g.lineTo(x0 + w - 12, bot); g.stroke(); g.restore();
+    g.fillStyle = T.ink; g.fillRect(x0 + 40, top + 50, w - 80, 9);
+    for (let y = top + 82; y < bot - 14; y += 15) {           // lignes d'écriture abstraites (pas de vrai texte)
+      let x = x0 + 26; const end = x0 + w - 26 - (R() < .2 ? R() * 60 : 0);
+      while (x < end) { const l = Math.min(end - x, 10 + R() * 26); g.fillRect(x, y, l, 3.2); x += l + 5; }
+    }
+  };
+  tablet(238); tablet(460);
+  // ruban rouge
+  g.fillStyle = T.red; g.beginPath(); g.moveTo(190, 330); g.lineTo(704, 330); g.lineTo(680, 352); g.lineTo(704, 374); g.lineTo(190, 374); g.lineTo(214, 352); g.closePath(); g.fill();
+  G.frame(g, W, H);
+}
+
+// ---------------- timeline ----------------
+const tl = gsap.timeline({ paused: true });
+const starts = [0]; for (let k = 1; k <= 6; k++) starts.push(P0 + (k - 1) * PAGE);
+const lands = [-1.2, 1.4, -1.6, 1.1, -1.3, 1.5, -0.8];
+const ticks = [], beats = [];
+pages.forEach((p, k) => {
+  const s = starts[k];
+  if (k === 0) G.spinIn(tl, '#p0', 0, lands[0], { fromRot: -300, fromScale: 0.28, dur: 0.5 });
+  else { G.spinIn(tl, '#' + p.id, s, lands[k]); G.dimOut(tl, `#${pages[k - 1].id} .dim`, s); }
+  if (p.id !== 'p6') G.kenBurns(tl, `#${p.id}-cv`, s, PAGE + 0.6);
+  const stT = s + (k === 0 ? 0.62 : 1.5 * B);
+  if (k < 6) G.stampIn(tl, `#${p.id}-stamp`, stT, k % 2 ? 7 : -8);
+  const depT = s + (k === 0 ? 0.75 : k === 6 ? 1.95 : 0.62);
+  const depEnd = G.typewriter(document.getElementById(p.id + '-dep'), p.depLabel, p.dep, depT);
+  if (k >= 1 && k <= 5) G.zoomKick(tl, `#${p.id} .zoom`, s + 4 * B);
+  beats.push({ page: p.id, spin: +s.toFixed(4), land: +(s + (k ? T.spin.dur : 0.5)).toFixed(4), stamp: k < 6 ? +stT.toFixed(4) : null, zoom: (k >= 1 && k <= 5) ? +(s + 4 * B).toFixed(4) : null, typeFrom: +depT.toFixed(3), typeEnd: +depEnd.toFixed(3) });
+  ticks.push(...G.typeTicks(p.dep, depT));
+});
+// récapitulatif (p6) : 5 lignes tapées vite, puis tampon « au prochain numéro »
+const s6 = starts[6];
+const recapLines = [['05 MAI', 'ÉTATS GÉNÉRAUX'], ['20 JUIN', 'JEU DE PAUME'], ['14 JUIL.', 'BASTILLE'], ['04 AOÛT', 'PRIVILÈGES'], ['26 AOÛT', "DROITS DE L'HOMME"]];
+const recap = document.getElementById('recap');
+recap.innerHTML = recapLines.map((_, i) => `<div id="rl${i}"></div>`).join('');
+recapLines.forEach(([d, l], i) => { const t0 = s6 + 0.5 + i * 0.26; G.typewriter(document.getElementById('rl' + i), d.padEnd(9, ' '), l, t0, 70); ticks.push(+(t0 + 0.05).toFixed(3)); });
+G.stampIn(tl, '#p6-stamp', s6 + 4 * B, -7);
+beats[6].stamp = +(s6 + 4 * B).toFixed(4);
+// la dépêche « votez » du p6 arrive après la liste
+window.__beats = { beats, ticks, duration: DUR };
+
+S.installContract({
+  duration: DUR,
+  ready: S.loadFonts(G.FONTS).then(() => {
+    document.querySelectorAll('.big').forEach(el => G.fitWidth(el, 900, el.closest('#p6') || el.closest('#p0') ? 300 : 230, 120));
+    document.querySelectorAll('.sub').forEach(el => G.fitLines(el, 2, 84, 62));
+    e0(); e1(); e2(); e3(); e4(); e5();
+  }),
+  renderAt: t => { tl.seek(t, false); G.renderTypers(t); },
+});
+</script></body></html>

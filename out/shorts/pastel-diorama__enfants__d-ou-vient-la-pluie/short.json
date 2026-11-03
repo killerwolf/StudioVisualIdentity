@@ -1,0 +1,51 @@
+{
+ "identity": "pastel-diorama",
+ "family": "enfants",
+ "title": "D'où vient la pluie ? Le voyage de Plip la goutte",
+ "hook": "Plip, une goutte d'eau souriante, rebondit au-dessus d'une maquette en feutrine sous le titre « D'où vient la pluie ? » (visible dès 0,1 s)",
+ "duration": 16.0,
+ "libraries": [
+  "Zdog",
+  "GSAP"
+ ],
+ "seed": 4,
+ "renderTimeSec": 316.8,
+ "structure": [
+  {
+   "t": 0,
+   "beat": "hook : Plip saute au-dessus du lac, titre pop"
+  },
+  {
+   "t": 3.25,
+   "beat": "1 · Évaporation : le soleil chauffe, Plip devient vapeur et monte"
+  },
+  {
+   "t": 7.05,
+   "beat": "2 · Condensation : en altitude il fait froid, la vapeur forme des gouttelettes qui font un nuage"
+  },
+  {
+   "t": 10.45,
+   "beat": "3 · Précipitation : le nuage s'alourdit, il pleut, Plip retombe dans le lac (splash)"
+  },
+  {
+   "t": 13.7,
+   "beat": "chute : le cycle de l'eau en flèches + 3 mots-clés, clin d'œil de Plip"
+  }
+ ],
+ "engagement": {
+  "mechanic": "question d'enfant + personnage récurrent",
+  "cta": "Et le voyage recommence ! (fin en boucle narrative)"
+ },
+ "loopable": false,
+ "sound": {
+  "type": "generated",
+  "voice": false
+ },
+ "qualityChecks": {
+  "stillsReviewed": true,
+  "textMinPx": 56,
+  "safeAreaOk": true
+ },
+ "notes": "Zdog : maquette pseudo-3D du poster Phase 1 réutilisée (socle feutrine, lac, maison, arbres-boules) ; Plip = chemin bezier rempli + trait rond. GSAP : 1 tween par propriété d'un objet d'état, seek(t,false) -> stills et vidéo identiques. Vapeur représentée par des volutes blanches translucides (la vraie vapeur est invisible : la voix off le dit). Rendu 66 s/100 frames mesuré avec CPU partagé par 10 studios (attente de slot exclue).",
+ "reproduce": "node out/tools/render.mjs out/shorts/pastel-diorama__enfants__d-ou-vient-la-pluie/src/index.html --out /tmp/svi/pastel-diorama__enfants__d-ou-vient-la-pluie/video.mp4 --duration 16 && .venv/bin/python out/tools/sound.py out/shorts/pastel-diorama__enfants__d-ou-vient-la-pluie/src/sound.json /tmp/svi/pastel-diorama__enfants__d-ou-vient-la-pluie/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/pastel-diorama__enfants__d-ou-vient-la-pluie/video.mp4 --music /tmp/svi/pastel-diorama__enfants__d-ou-vient-la-pluie/music.wav --out out/shorts/pastel-diorama__enfants__d-ou-vient-la-pluie/short.mp4"
+}

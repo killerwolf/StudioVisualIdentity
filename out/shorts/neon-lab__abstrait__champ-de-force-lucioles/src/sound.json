@@ -1,0 +1,245 @@
+{
+ "_comment": "Boucle 12 s : 3 cycles identiques rendus sur 36 s, loopslice.py garde [12,24). Impulsions visuelles toutes les 1,5 s (2 noires \u00e0 80 bpm) = blips.",
+ "duration": 36.0,
+ "seed": 11,
+ "bpm": 80,
+ "key": "A",
+ "scale": "minpent",
+ "music": {
+  "preset": "pulse",
+  "gain": 0.42,
+  "octave": 3,
+  "density": 0.6,
+  "loop": true
+ },
+ "events": [
+  {
+   "t": 0.0,
+   "type": "swell",
+   "note": "A4",
+   "dur": 3.0,
+   "gain": 0.45
+  },
+  {
+   "t": 6.0,
+   "type": "swell",
+   "note": "E4",
+   "dur": 3.0,
+   "gain": 0.4
+  },
+  {
+   "t": 0.0,
+   "type": "blip",
+   "note": "A4",
+   "gain": 0.35
+  },
+  {
+   "t": 1.5,
+   "type": "blip",
+   "note": "C5",
+   "gain": 0.35
+  },
+  {
+   "t": 3.0,
+   "type": "blip",
+   "note": "E5",
+   "gain": 0.35
+  },
+  {
+   "t": 4.5,
+   "type": "blip",
+   "note": "G5",
+   "gain": 0.35
+  },
+  {
+   "t": 6.0,
+   "type": "blip",
+   "note": "A5",
+   "gain": 0.35
+  },
+  {
+   "t": 7.5,
+   "type": "blip",
+   "note": "G5",
+   "gain": 0.35
+  },
+  {
+   "t": 9.0,
+   "type": "blip",
+   "note": "E5",
+   "gain": 0.35
+  },
+  {
+   "t": 10.5,
+   "type": "blip",
+   "note": "C5",
+   "gain": 0.35
+  },
+  {
+   "t": 0.0,
+   "type": "chime",
+   "note": "A5",
+   "dur": 1.6,
+   "gain": 0.3
+  },
+  {
+   "t": 6.0,
+   "type": "chime",
+   "note": "E6",
+   "dur": 1.6,
+   "gain": 0.22
+  },
+  {
+   "t": 12.0,
+   "type": "swell",
+   "note": "A4",
+   "dur": 3.0,
+   "gain": 0.45
+  },
+  {
+   "t": 18.0,
+   "type": "swell",
+   "note": "E4",
+   "dur": 3.0,
+   "gain": 0.4
+  },
+  {
+   "t": 12.0,
+   "type": "blip",
+   "note": "A4",
+   "gain": 0.35
+  },
+  {
+   "t": 13.5,
+   "type": "blip",
+   "note": "C5",
+   "gain": 0.35
+  },
+  {
+   "t": 15.0,
+   "type": "blip",
+   "note": "E5",
+   "gain": 0.35
+  },
+  {
+   "t": 16.5,
+   "type": "blip",
+   "note": "G5",
+   "gain": 0.35
+  },
+  {
+   "t": 18.0,
+   "type": "blip",
+   "note": "A5",
+   "gain": 0.35
+  },
+  {
+   "t": 19.5,
+   "type": "blip",
+   "note": "G5",
+   "gain": 0.35
+  },
+  {
+   "t": 21.0,
+   "type": "blip",
+   "note": "E5",
+   "gain": 0.35
+  },
+  {
+   "t": 22.5,
+   "type": "blip",
+   "note": "C5",
+   "gain": 0.35
+  },
+  {
+   "t": 12.0,
+   "type": "chime",
+   "note": "A5",
+   "dur": 1.6,
+   "gain": 0.3
+  },
+  {
+   "t": 18.0,
+   "type": "chime",
+   "note": "E6",
+   "dur": 1.6,
+   "gain": 0.22
+  },
+  {
+   "t": 24.0,
+   "type": "swell",
+   "note": "A4",
+   "dur": 3.0,
+   "gain": 0.45
+  },
+  {
+   "t": 30.0,
+   "type": "swell",
+   "note": "E4",
+   "dur": 3.0,
+   "gain": 0.4
+  },
+  {
+   "t": 24.0,
+   "type": "blip",
+   "note": "A4",
+   "gain": 0.35
+  },
+  {
+   "t": 25.5,
+   "type": "blip",
+   "note": "C5",
+   "gain": 0.35
+  },
+  {
+   "t": 27.0,
+   "type": "blip",
+   "note": "E5",
+   "gain": 0.35
+  },
+  {
+   "t": 28.5,
+   "type": "blip",
+   "note": "G5",
+   "gain": 0.35
+  },
+  {
+   "t": 30.0,
+   "type": "blip",
+   "note": "A5",
+   "gain": 0.35
+  },
+  {
+   "t": 31.5,
+   "type": "blip",
+   "note": "G5",
+   "gain": 0.35
+  },
+  {
+   "t": 33.0,
+   "type": "blip",
+   "note": "E5",
+   "gain": 0.35
+  },
+  {
+   "t": 34.5,
+   "type": "blip",
+   "note": "C5",
+   "gain": 0.35
+  },
+  {
+   "t": 24.0,
+   "type": "chime",
+   "note": "A5",
+   "dur": 1.6,
+   "gain": 0.3
+  },
+  {
+   "t": 30.0,
+   "type": "chime",
+   "note": "E6",
+   "dur": 1.6,
+   "gain": 0.22
+  }
+ ]
+}

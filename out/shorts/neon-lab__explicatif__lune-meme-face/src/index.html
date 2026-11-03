@@ -1,0 +1,233 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8">
+<!-- Labo Néon — explicatif : « Pourquoi la Lune nous montre toujours la même face ? » (rotation synchrone, 27,3 j).
+     three.js + UnrealBloom ; fond = même champ GLSL que le short abstrait (field.glsl.js, ShaderMaterial plein écran).
+     Rendu sans état (renderAt(t) pur). Échelles et vitesses non réalistes (pédagogie), seule la synchronisation compte.
+     Beats (80 bpm, noire 0,75 s) : A 0–4,5 hook · B 4,5–8,25 sans rotation · C 8,25–12,75 une orbite = une rotation · D 12,75–16 marée. -->
+<script type="importmap">{"imports":{"three":"/node_modules/three/build/three.module.js","three/addons/":"/node_modules/three/examples/jsm/"}}</script>
+<style>
+  html,body{margin:0;width:1080px;height:1920px;background:#05060B;overflow:hidden}
+  canvas{position:absolute;inset:0}
+  svg{position:absolute;inset:0}
+  .ov{position:absolute;left:72px;color:#F2F6FF;will-change:transform,opacity}
+  .tag{top:232px;font:500 54px 'JetBrains Mono';letter-spacing:.02em;color:#38F9FF;display:flex;gap:22px;align-items:center}
+  .tag i{display:inline-block;width:22px;height:22px;border-radius:50%;background:#FF3DCB;box-shadow:0 0 22px #FF3DCB}
+  .h{top:316px;margin:0;font:700 100px/0.98 'Space Grotesk';letter-spacing:-0.035em;width:900px;text-shadow:0 0 36px rgba(56,249,255,.22)}
+  .h em{font-style:normal;color:#38F9FF} .h .m{color:#FF3DCB} .h .l{color:#B6FF3B}
+  .h.big{font-size:112px}
+  .body{top:1400px;font:500 56px/1.16 'Space Grotesk';letter-spacing:-0.01em;width:880px}
+  .body b{color:#B6FF3B;font-weight:700}
+  .data{top:1380px;width:880px;display:flex;justify-content:space-between;align-items:flex-end;font:500 54px/1.1 'JetBrains Mono'}
+  .data .c{display:flex;flex-direction:column;gap:6px} .data small{font-size:54px;opacity:.75;color:#F2F6FF}
+  .data .r{text-align:right}
+  .lab{position:absolute;font:500 54px 'JetBrains Mono';letter-spacing:.01em;white-space:nowrap}
+  .day{top:1260px;font:500 54px 'JetBrains Mono';color:#F2F6FF;opacity:.9}
+</style></head><body>
+<svg width="1080" height="1920" viewBox="0 0 1080 1920" style="z-index:1">
+  <defs><filter id="gl" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+  <path id="orbArc" fill="none" stroke="#38F9FF" stroke-width="9" stroke-linecap="round" filter="url(#gl)"/>
+  <line id="lead" stroke-width="3" stroke-linecap="round"/>
+  <path id="rotArc" fill="none" stroke="#B6FF3B" stroke-width="9" stroke-linecap="round" filter="url(#gl)"/>
+</svg>
+<div style="position:absolute;inset:0;z-index:2">
+  <div class="ov tag" id="tag"><i></i>LABO/02 · LUNE</div>
+  <h1 class="ov h" id="hA">Pourquoi la <em>Lune</em><br>montre toujours<br>la même face&nbsp;?</h1>
+  <h1 class="ov h big" id="hB"><span class="m">Sans</span> rotation&nbsp;?</h1>
+  <h1 class="ov h big" id="hC">1 rotation<br><span class="l">=</span> 1 orbite</h1>
+  <h1 class="ov h big" id="hD">Verrouillée par <span class="l">marée</span></h1>
+  <div class="ov body" id="bB">On finirait par voir sa <b style="color:#FF3DCB">face cachée</b>.</div>
+  <div class="ov data" id="dC"><div class="c"><small>ROTATION</small><span style="color:#B6FF3B" id="v1">27,3 j</span></div>
+    <span style="color:#F2F6FF">=</span><div class="c r"><small>RÉVOLUTION</small><span style="color:#38F9FF" id="v2">27,3 j</span></div></div>
+  <div class="ov body" id="bD" style="top:1490px">La Terre a <b>freiné</b> sa rotation.</div>
+  <div class="ov day" id="day">JOUR 00,0</div>
+  <div class="lab" id="lab">FACE VISIBLE</div>
+</div>
+<script type="module">
+import * as THREE from 'three';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+import * as S from '/out/tools/lib/svi.js';
+import { FIELD_GLSL } from './field.glsl.js';
+
+const W = 1080, H = 1920, DUR = 16, SEED = 7;
+const BEAT = 0.75, TA = 0, TB = 4.5, TC = 8.25, TD = 12.75;
+const OMEGA = Math.PI * 2 / (TD - TC);      // une orbite pendant le beat C
+const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+renderer.setSize(W, H); renderer.setPixelRatio(1);
+document.body.prepend(renderer.domElement);
+const scene = new THREE.Scene();
+scene.fog = new THREE.FogExp2('#05060B', 0.022);
+const cam = new THREE.PerspectiveCamera(38, W / H, 0.1, 200);
+cam.setViewOffset(W, H, 0, -70, W, H);
+const C = { cyan: new THREE.Color('#38F9FF'), mag: new THREE.Color('#FF3DCB'), lime: new THREE.Color('#B6FF3B'), surf: new THREE.Color('#11142A') };
+
+// --- fond : champ de force GLSL partagé (plein écran, derrière tout)
+const fieldMat = new THREE.ShaderMaterial({
+  depthTest: false, depthWrite: false, fog: false,
+  uniforms: { uRes: { value: new THREE.Vector2(W, H) }, uCenter: { value: new THREE.Vector2(W * 0.5, H * 0.46) }, uLoop: { value: new THREE.Vector2(1, 0) }, uPulse: { value: 0 } },
+  vertexShader: `void main(){ gl_Position=vec4(position.xy,0.9999,1.); }`,
+  fragmentShader: `uniform vec2 uRes; uniform vec2 uCenter; uniform vec2 uLoop; uniform float uPulse; ${FIELD_GLSL}
+    void main(){ gl_FragColor=vec4(pow(neonField(gl_FragCoord.xy,uRes,uCenter,uLoop,uPulse,0.9),vec3(2.2)),1.); /* sRGB -> linéaire (OutputPass reconvertit) */ }`
+});
+const bgQuad = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), fieldMat); bgQuad.frustumCulled = false; bgQuad.renderOrder = -10;
+scene.add(bgQuad);
+
+// --- Terre : sphère sombre, grille néon, rim fresnel (repris du poster Phase 1)
+const earthMat = new THREE.ShaderMaterial({
+  uniforms: { uCyan: { value: C.cyan }, uSurf: { value: C.surf }, uRot: { value: 0 } },
+  vertexShader: `varying vec3 vN; varying vec3 vV; varying vec2 vUv;
+    void main(){ vUv=uv; vec4 mv=modelViewMatrix*vec4(position,1.); vN=normalize(normalMatrix*normal); vV=normalize(-mv.xyz); gl_Position=projectionMatrix*mv; }`,
+  fragmentShader: `uniform vec3 uCyan; uniform vec3 uSurf; uniform float uRot; varying vec3 vN; varying vec3 vV; varying vec2 vUv;
+    void main(){ float f=pow(1.-max(dot(vN,vV),0.),2.6);
+      vec2 g=abs(fract(vec2((vUv.x+uRot)*24.,vUv.y*12.))-.5); float line=smoothstep(.47,.5,max(g.x,g.y));
+      float light=clamp(dot(vN,normalize(vec3(-.6,.4,.7))),0.,1.);
+      vec3 c=uSurf*(.35+.9*light)+uCyan*line*(.08+.32*light)+uCyan*f*1.1;
+      gl_FragColor=vec4(c,1.); }`
+});
+const earth = new THREE.Mesh(new THREE.SphereGeometry(0.85, 96, 64), earthMat); scene.add(earth);
+scene.add(new THREE.Mesh(new THREE.SphereGeometry(0.97, 64, 48), new THREE.ShaderMaterial({
+  transparent: true, depthWrite: false, side: THREE.BackSide, blending: THREE.AdditiveBlending, uniforms: { c: { value: C.cyan } },
+  vertexShader: `varying vec3 vN; varying vec3 vV; void main(){ vec4 mv=modelViewMatrix*vec4(position,1.); vN=normalize(normalMatrix*normal); vV=normalize(-mv.xyz); gl_Position=projectionMatrix*mv; }`,
+  fragmentShader: `uniform vec3 c; varying vec3 vN; varying vec3 vV; void main(){ float f=pow(max(-dot(vN,vV),0.),3.); gl_FragColor=vec4(c*f*.5,f); }` })));
+
+// --- orbite pointillée
+const R = 2.35;
+const orbitPts = []; for (let i = 0; i <= 256; i++) { const a = i / 256 * Math.PI * 2; orbitPts.push(new THREE.Vector3(Math.cos(a) * R, 0, Math.sin(a) * R)); }
+const orbit = new THREE.Line(new THREE.BufferGeometry().setFromPoints(orbitPts), new THREE.LineDashedMaterial({ color: C.cyan, dashSize: 0.09, gapSize: 0.06, transparent: true, opacity: 0.7 }));
+orbit.computeLineDistances(); scene.add(orbit);
+
+// --- Lune : grille locale (rend la rotation visible) + hémisphère-face teinté + repère central
+function makeMoon(mark) {
+  const g = new THREE.Group();
+  const mat = new THREE.ShaderMaterial({
+    transparent: true, uniforms: { a: { value: 1 }, mk: { value: mark }, cy: { value: C.cyan } },
+    vertexShader: `varying vec3 vN; varying vec3 vV; varying vec3 vW; varying vec3 vO; varying vec2 vUv;
+      void main(){ vUv=uv; vO=normalize(position); vec4 mv=modelViewMatrix*vec4(position,1.); vN=normalize(normalMatrix*normal); vV=normalize(-mv.xyz); vW=normalize((modelMatrix*vec4(normal,0.)).xyz); gl_Position=projectionMatrix*mv; }`,
+    fragmentShader: `uniform float a; uniform vec3 mk; uniform vec3 cy; varying vec3 vN; varying vec3 vV; varying vec3 vW; varying vec3 vO; varying vec2 vUv;
+      void main(){ float l=clamp(dot(vW,normalize(vec3(-.8,.3,.6))),0.,1.); float f=pow(1.-max(dot(vN,vV),0.),2.);
+        vec2 g=abs(fract(vec2(vUv.x*16.,vUv.y*8.))-.5); float line=smoothstep(.45,.5,max(g.x,g.y));
+        float face=dot(vO,vec3(-1.,0.,0.));
+        float hemi=smoothstep(0.0,0.08,face); float spot=smoothstep(0.90,0.94,face);
+        vec3 c=vec3(.55,.6,.75)*(.14+.75*l)+vec3(.6,.7,.9)*line*.35+cy*f*.8;
+        c=mix(c,c*.6+mk*.55,hemi*.45); c=mix(c,mk*1.6,spot);
+        gl_FragColor=vec4(c,a); }`
+  });
+  const m = new THREE.Mesh(new THREE.SphereGeometry(0.34, 64, 40), mat); g.add(m);
+  const beam = new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-0.36, 0, 0), new THREE.Vector3(-1.62, 0, 0)]),
+    new THREE.LineBasicMaterial({ color: mark, transparent: true, opacity: 0.8 }));
+  g.add(beam); scene.add(g);
+  return { g, m, mat, beam };
+}
+const moon = makeMoon(C.lime), ghost = makeMoon(C.mag);
+
+// --- étoiles
+const rnd = S.rng(SEED); const sp = [];
+for (let i = 0; i < 700; i++) { const th = rnd() * Math.PI * 2, ph = Math.acos(2 * rnd() - 1), r = 30 + rnd() * 40; sp.push(r * Math.sin(ph) * Math.cos(th), Math.abs(r * Math.cos(ph)) * 0.8 + 2, r * Math.sin(ph) * Math.sin(th)); }
+const sg = new THREE.BufferGeometry(); sg.setAttribute('position', new THREE.Float32BufferAttribute(sp, 3));
+scene.add(new THREE.Points(sg, new THREE.PointsMaterial({ color: '#9fb7ff', size: 0.12, sizeAttenuation: true, fog: false })));
+
+const composer = new EffectComposer(renderer);
+composer.addPass(new RenderPass(scene, cam));
+const bloom = new UnrealBloomPass(new THREE.Vector2(W / 2, H / 2), 0.62, 0.45, 0.32);
+composer.addPass(bloom); composer.addPass(new OutputPass());
+
+// ---------- helpers de mouvement (tokens : glide outExpo 0,6 s, sortie inExpo 0,3 s, pulse 0,35 s) ----------
+const E = S.ease;
+function glide(el, t, t0, t1, dy = 46) {         // entrée outExpo, sortie inExpo
+  const a = S.seg(t, t0, t0 + 0.6, E.outExpo), b = t1 == null ? 0 : S.seg(t, t1 - 0.3, t1, E.inExpo);
+  el.style.opacity = (a * (1 - b)).toFixed(3);
+  el.style.transform = `translateY(${((1 - a) * dy - b * dy * 0.6).toFixed(1)}px)`;
+}
+const pulseAt = t => { let p = 0; for (const tb of [TA, TB, TC, TD]) { if (t >= tb) p = Math.max(p, Math.exp(-(t - tb) / 0.35)); } return p; };
+const $ = id => document.getElementById(id);
+const orbArc = $('orbArc'), rotArc = $('rotArc'), lab = $('lab');
+const v = new THREE.Vector3();
+function proj(x, y, z) { v.set(x, y, z).project(cam); return [(v.x * 0.5 + 0.5) * W, (-v.y * 0.5 + 0.5) * H]; }
+const placeMoon = (o, a, rotY) => { o.g.position.set(Math.cos(a) * R, 0, Math.sin(a) * R); o.g.rotation.y = rotY; };
+const A0 = -1.3 - OMEGA * TC;                    // à t=TC (et TD) la Lune est à -1,3 rad (arrière droit) ; finit vers -0,6 rad en D
+const fmt = x => x.toFixed(1).replace('.', ',').padStart(4, '0');
+
+function renderAt(t) {
+  // caméra : dolly-in outExpo (hook) puis orbite lente de 15°, poussée finale
+  const k = E.outExpo(S.clamp(t / 2.4));
+  const az = 0.40 + (15 * Math.PI / 180) * S.seg(t, 0, DUR, E.inOutSine);
+  const dist = 20.6 - 2.0 * k - 0.9 * S.seg(t, TD, DUR, E.inOutSine), el = (38 - 2 * k) * Math.PI / 180;
+  cam.position.set(Math.sin(az) * dist * Math.cos(el), dist * Math.sin(el), Math.cos(az) * dist * Math.cos(el));
+  cam.lookAt(0, -0.15, 0);
+  cam.updateMatrixWorld();
+  const pulse = pulseAt(t);
+  bloom.strength = 0.62 + 0.9 * pulse;
+  fieldMat.uniforms.uPulse.value = pulse;
+  const fp = t / DUR * Math.PI * 0.5; fieldMat.uniforms.uLoop.value.set(Math.cos(fp), Math.sin(fp));
+  earthMat.uniforms.uRot.value = t * 0.02;
+
+  // Lune réelle : rotation synchrone (le repère -x local pointe toujours vers la Terre)
+  const TAU_D = 0.25;  // D : la Lune ralentit (focus sur le renflement)
+  const a = t < TD ? A0 + OMEGA * t : A0 + OMEGA * TD + OMEGA * TAU_D * (1 - Math.exp(-(t - TD) / TAU_D));
+  placeMoon(moon, a, -a);
+  // fantôme « sans rotation » pendant B : orientation figée à celle de t=TB
+  const inB = S.seg(t, TB, TB + 0.5, E.outExpo) * (1 - S.seg(t, TC - 0.4, TC, E.inExpo));
+  placeMoon(ghost, a, -(A0 + OMEGA * TB));
+  ghost.g.visible = inB > 0.001;
+  ghost.mat.uniforms.a.value = inB; ghost.beam.material.opacity = 0.8 * inB;
+  moon.mat.uniforms.a.value = 1 - 0.85 * inB; moon.beam.material.opacity = 0.8 * (1 - inB);
+  // D : renflement de marée (exagéré) orienté vers la Terre
+  const bulge = S.seg(t, TD + 0.3, TD + 1.5, E.outExpo);
+  moon.m.scale.set(1 + 0.22 * bulge, 1 - 0.06 * bulge, 1 - 0.06 * bulge);
+  composer.render();
+
+  // ---- texte (glides calés sur les beats)
+  glide($('tag'), t, 0.0, null, 20);
+  glide($('hA'), t, 0.05, TB);
+  glide($('hB'), t, TB + 0.1, TC); glide($('bB'), t, TB + 0.9, TC);
+  glide($('hC'), t, TC + 0.1, TD); glide($('day'), t, TC + 0.3, TD);
+  glide($('dC'), t, TD - 0.05, null);
+  glide($('hD'), t, TD + 0.1, null);
+  const dC = $('dC'); const showD = S.seg(t, TD + 0.9, TD + 1.5, E.outExpo);
+  dC.style.top = (1380 - 40 * showD) + 'px';
+  glide($('bD'), t, TD + 1.0, null);
+  // compteur de jours + arcs pendant C
+  const pc = S.clamp((t - TC) / (TD - TC));
+  $('day').textContent = 'JOUR ' + fmt(27.3 * pc);
+  const arcOn = S.seg(t, TC, TC + 0.2) * (1 - S.seg(t, TD + 0.6, TD + 1.2));
+  if (pc > 0 && arcOn > 0) {
+    const a1 = A0 + OMEGA * TC, n = Math.max(2, Math.ceil(pc * 96));
+    let d = ''; for (let i = 0; i <= n; i++) { const aa = a1 + OMEGA * (TD - TC) * pc * i / n; const [x, y] = proj(Math.cos(aa) * R * 1.0, 0, Math.sin(aa) * R * 1.0); d += (i ? 'L' : 'M') + x.toFixed(1) + ' ' + y.toFixed(1); }
+    orbArc.setAttribute('d', d); orbArc.style.opacity = arcOn;
+    // arc de rotation propre autour de la Lune (2D, rayon = rayon projeté + marge)
+    const [mx, my] = proj(moon.g.position.x, 0, moon.g.position.z);
+    const [ex] = proj(moon.g.position.x + 0.34, 0, moon.g.position.z); const rr = Math.abs(ex - mx) + 34;
+    const ang = pc * Math.PI * 2 * 0.999;
+    const x0 = mx, y0 = my - rr, x1 = mx + rr * Math.sin(ang), y1 = my - rr * Math.cos(ang);
+    rotArc.setAttribute('d', `M${x0.toFixed(1)} ${y0.toFixed(1)} A${rr.toFixed(1)} ${rr.toFixed(1)} 0 ${ang > Math.PI ? 1 : 0} 1 ${x1.toFixed(1)} ${y1.toFixed(1)}`);
+    rotArc.style.opacity = arcOn;
+  } else { orbArc.style.opacity = 0; rotArc.style.opacity = 0; }
+  // étiquette accrochée à la Lune (ou au fantôme pendant B)
+  const tgt = inB > 0.5 ? ghost : moon;
+  const [lx, ly] = proj(tgt.g.position.x, 0, tgt.g.position.z);
+  let txt = 'FACE VISIBLE', colr = '#B6FF3B';
+  if (inB > 0.5) {
+    const dirFace = new THREE.Vector3(-1, 0, 0).applyQuaternion(ghost.g.quaternion); const toE = ghost.g.position.clone().negate().normalize();
+    const facing = dirFace.dot(toE); txt = facing > 0.2 ? 'FACE VISIBLE' : 'FACE CACHÉE'; colr = facing > 0.2 ? '#F2F6FF' : '#FF3DCB';
+  }
+  if (t >= TD) txt = 'RENFLEMENT';
+  lab.textContent = txt; lab.style.color = colr;
+  const labOn = S.seg(t, 1.0, 1.6, E.outExpo) * (1 - S.seg(t, TC - 0.2, TC, E.inExpo)) + S.seg(t, TD + 0.6, TD + 1.2, E.outExpo);
+  lab.style.opacity = S.clamp(labOn).toFixed(3);
+  const lw = txt.length * 32.5;
+  // légende fixe « musée » + filet de rappel vers la Lune
+  const LY = t >= TD ? 1190 : 1250, LX = 72;
+  lab.style.left = LX + 'px'; lab.style.top = LY + 'px';
+  const [ex1] = proj(tgt.g.position.x + 0.34, 0, tgt.g.position.z); const mr = Math.abs(ex1 - lx);
+  const lead = $('lead'); const sx0 = LX + lw + 16, sy0 = LY + 34;
+  const ddx = lx - sx0, ddy = ly - sy0, dd = Math.hypot(ddx, ddy) || 1;
+  lead.setAttribute('x1', sx0); lead.setAttribute('y1', sy0);
+  lead.setAttribute('x2', (lx - ddx / dd * (mr + 14)).toFixed(1)); lead.setAttribute('y2', (ly - ddy / dd * (mr + 14)).toFixed(1));
+  lead.setAttribute('stroke', colr); lead.style.opacity = (S.clamp(labOn) * (dd > mr + 40 ? 0.85 : 0)).toFixed(3);
+}
+const ready = S.loadFonts([
+  { family: 'Space Grotesk', pkg: 'space-grotesk', weight: 700 }, { family: 'Space Grotesk', pkg: 'space-grotesk', weight: 500 },
+  { family: 'JetBrains Mono', pkg: 'jetbrains-mono', weight: 500 }]);
+S.installContract({ renderAt, ready, duration: DUR });
+</script></body></html>

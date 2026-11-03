@@ -1,0 +1,150 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8">
+<title>Bauhaus Cinétique — Trouve l'intrus en 5 secondes</title>
+<!-- Short engagement, identité bauhaus-kinetic. Grille 5×6 de tuiles Bauhaus (carré + quart de disque) dessinées
+     avec Paper.js ; une tuile est tournée de 90°. anime.js v4 (timeline en pause seekée) gère les staggers en grille,
+     flubber morphe le badge du compte à rebours (cercle -> carré -> triangle -> hexagone) et les choix du CTA. -->
+<style>
+html,body{margin:0;background:#F2EDE3;width:1080px;height:1920px;overflow:hidden}
+canvas{position:absolute;inset:0;display:block}
+.t{position:absolute;left:60px;font:800 100px/1.04 'Unbounded';color:#111;letter-spacing:-3px;white-space:nowrap;transform-origin:0 50%}
+.t em{font-style:normal;color:#E63B2E}
+.s{position:absolute;left:62px;font:500 56px/1.12 'Space Grotesk';color:#111;white-space:nowrap}
+.pill{position:absolute;font:500 56px/1 'Space Grotesk';color:#fff;background:#111;padding:14px 24px;white-space:nowrap;transform-origin:50% 50%}
+.num{position:absolute;width:220px;text-align:center;font:800 120px/1 'Unbounded';letter-spacing:-4px}
+.opt{position:absolute;width:300px;text-align:center;font:800 76px/1 'Unbounded';letter-spacing:-3px}
+</style></head><body>
+<canvas id="cv" width="1080" height="1920"></canvas>
+<div class="t" id="t0" style="top:236px">Trouve</div>
+<div class="t" id="t1" style="top:344px">l'<em>intrus</em></div>
+<div class="num" id="cd" style="left:730px;top:280px;color:#fff">5</div>
+<div class="pill" id="hint" style="left:0;top:0">tourné de 90°</div>
+<div class="t" id="c0" style="top:236px;font-size:92px">T'as trouvé</div>
+<div class="t" id="c1" style="top:340px;font-size:92px">en <em>combien&nbsp;?</em></div>
+<div class="opt" id="o0" style="color:#fff">1 s</div>
+<div class="opt" id="o1" style="color:#111">3 s</div>
+<div class="opt" id="o2" style="color:#fff">5 s</div>
+<div class="opt" id="o3" style="color:#fff">raté</div>
+<div class="s" id="cs" style="top:1470px">Réponds en commentaire</div>
+<script src="/node_modules/paper/dist/paper-full.min.js"></script>
+<script src="/node_modules/flubber/build/flubber.min.js"></script>
+<script type="module">
+import { createTimeline, stagger } from '/node_modules/animejs/dist/bundles/anime.esm.min.js';
+import * as S from '/out/tools/lib/svi.js';
+import { C, ACC, EASE, DUR, STAGGER, FONTS, hexPts, polyPts, circlePts, sqPts, toD, poly, drawGrid, makeWipe, WIPE_COVER, css } from './bk.js';
+
+const SEED = 23;               // index de l'intrus (colonne 3, rangée 4) — pas d'aléatoire
+paper.setup(document.getElementById('cv'));
+const P = paper;
+const $ = id => document.getElementById(id);
+const wipe = makeWipe(document.body);
+
+// ---------- grille de tuiles ----------
+const COLS = 5, ROWS = 6, T = 150, G = 16;
+const X0 = 510 - (COLS * T + (COLS - 1) * G) / 2, Y0 = 494;
+const ODD = SEED;
+const tiles = Array.from({ length: COLS * ROWS }, (_, n) => { const i = n % COLS, j = Math.floor(n / COLS);
+  return { i, j, x: X0 + i * (T + G) + T / 2, y: Y0 + j * (T + G) + T / 2, col: ACC[(i + 2 * j) % 4], dot: ACC[(i + 2 * j + 1) % 4], rot: n === ODD ? 90 : 0 }; });
+
+// ---------- timeline ----------
+const CD0 = 1500;                                  // début du compte à rebours (5 s pile)
+const WP = 9000, CUT = WP + WIPE_COVER;
+const st = {
+  grid: 0.35, t0: { o: 0, x: 0 }, t1: { o: 0, x: 0 }, badge: { k: 0 }, bm: [0, 0, 0, 0, 0].map(() => ({ k: 0 })),
+  tiles: tiles.map(() => ({ k: 0, dim: 1 })), odd: { s: 1, ring: 0, fix: 0 }, hint: { o: 0, s: 0.6, r: -90 }, prog: [0, 0, 0, 0, 0].map(() => ({ k: 0 })),
+  c0: { o: 0, x: 0 }, c1: { o: 0, x: 0 }, opts: [0, 0, 0, 0].map(() => ({ k: 0, m: 0 })), cs: { o: 0, y: 0 }, foot: [0, 0, 0].map(() => ({ k: 0 })),
+};
+const tl = createTimeline({ autoplay: false, defaults: { ease: EASE.enter } });
+tl.add(st, { grid: [0.35, 1], duration: 500, ease: 'outQuad' }, 0)
+  .add([st.t0, st.t1], { o: [0, 1], x: [-80, 0], duration: DUR.base, delay: stagger(90) }, 0)
+  .add(st.tiles, { k: [0, 1], duration: 420, delay: stagger(40, { grid: [COLS, ROWS], from: 'center' }) }, 80)
+  .add(st.badge, { k: [0, 1], duration: DUR.base }, 300)
+  .add(st.foot, { k: [0, 1], duration: DUR.base, delay: stagger(80) }, 200);
+// compte à rebours : à chaque seconde le badge se morphe (flubber) vers la forme suivante et une case se remplit
+st.bm.forEach((b, n) => tl.add(b, { k: [0, 1], duration: DUR.fast, ease: EASE.enter }, CD0 + (n + 1) * 1000 - 140));
+st.prog.forEach((p, n) => tl.add(p, { k: [0, 1], duration: DUR.fast }, CD0 + (n + 1) * 1000 - 140));
+// révélation
+const RV = CD0 + 5000;                              // 6,5 s
+tl.add(st.tiles, { dim: [1, 0.22], duration: DUR.base, ease: 'outQuad', delay: stagger(35, { grid: [COLS, ROWS], from: ODD }) }, RV + 100)
+  .add(st.odd, { s: [1, 1.3], ring: [0, 1], duration: DUR.base }, RV + 150)
+  .add(st.hint, { o: [0, 1], s: [0.6, 1], r: [-90, 0], duration: DUR.base }, RV + 700)
+  .add(st.odd, { fix: [0, 1], duration: 500, ease: 'outBack(2)' }, RV + 1500);
+wipe.add(tl, WP);
+// CTA
+tl.add([st.c0, st.c1], { o: [0, 1], x: [-80, 0], duration: DUR.base, delay: stagger(90) }, CUT + 60)
+  .add(st.opts, { k: [0, 1], duration: DUR.base, delay: stagger(120) }, CUT + 250)
+  .add(st.opts, { m: [0, 1], duration: 600, ease: 'inOutCubic', delay: stagger(120) }, CUT + 800)
+  .add(st.cs, { o: [0, 1], y: [60, 0], duration: DUR.base }, CUT + 1500)
+  .add(st, { grid: [1, 1], duration: 10 }, 13990);
+
+// ---------- formes / morphs ----------
+const BC = { x: 840, y: 340 }, BR = 100;
+const SHAPES = [circlePts(0, 0, BR * 0.95, 60), sqPts(0, 0, BR * 0.82), polyPts(0, 14, BR * 1.12, 3), hexPts(0, 0, BR), circlePts(0, 0, BR * 0.95, 60), circlePts(0, 0, BR * 0.95, 60)];
+const BCOL = [C.red, C.yel, C.blue, C.ink, C.red, C.red];
+const BTXT = ['#fff', C.ink, '#fff', '#fff', '#fff', '#fff'];
+const bInterp = SHAPES.slice(0, 5).map((a, n) => flubber.interpolate(toD(a), toD(SHAPES[n + 1]), { maxSegmentLength: 8, string: false }));
+// options du CTA : chaque carré se morphe vers sa forme finale
+const OR = 140, OPOS = [[300, 760], [720, 760], [300, 1190], [720, 1190]];
+const OFIN = [circlePts(0, 0, OR, 60), sqPts(0, 0, OR * 0.86), polyPts(0, 22, OR * 1.22, 3), hexPts(0, 0, OR)];
+const OCOL = [C.red, C.yel, C.blue, C.ink];
+const oInterp = OFIN.map(f => flubber.interpolate(toD(sqPts(0, 0, OR * 0.86)), toD(f), { maxSegmentLength: 8, string: false }));
+
+function tile(t, k, dim, rot, scale = 1) {
+  const g = new P.Group(); const h = T / 2;
+  const sq = new P.Path.Rectangle([t.x - h, t.y - h, T, T]); sq.fillColor = t.col; g.addChild(sq);
+  // quart de disque crème ancré au coin haut-gauche (rayon 0,86 T), point de couleur dans le coin opposé
+  const q = new P.Path(); q.add([t.x - h, t.y - h]); q.add([t.x - h + T * 0.86, t.y - h]);
+  q.arcTo([t.x - h + T * 0.86 * Math.SQRT1_2, t.y - h + T * 0.86 * Math.SQRT1_2], [t.x - h, t.y - h + T * 0.86]); q.closePath(); q.fillColor = C.bg; g.addChild(q);
+  const d = new P.Path.Circle([t.x + h - T * 0.2, t.y + h - T * 0.2], T * 0.11); d.fillColor = t.col === t.dot ? C.bg : t.dot; g.addChild(d);
+  g.rotate(rot, new P.Point(t.x, t.y)); g.scale(Math.max(0.001, k * scale), new P.Point(t.x, t.y)); g.opacity = dim;
+  return g;
+}
+function footer(f) {
+  { const r = new P.Path.Rectangle([0, 1728, 360 * f[0].k, 192]); r.fillColor = C.ink; }
+  { const c = new P.Path.Circle([540, 1834], 70 * f[1].k); c.fillColor = C.red; }
+  { const tr = new P.Path.RegularPolygon([860, 1824], 3, 78 * f[2].k); tr.fillColor = C.yel; tr.rotate(180 * (1 - f[2].k)); }
+}
+function draw(ms) {
+  P.project.activeLayer.removeChildren();
+  const cta = ms >= CUT;
+  drawGrid(P, st.grid);
+  footer(st.foot);
+  if (!cta) {
+    // respiration : vague d'échelle qui parcourt la grille à chaque seconde du compte à rebours (garde l'image vivante)
+    tiles.forEach((t, n) => { const s = st.tiles[n]; if (s.k <= 0) return;
+      let sc = 1; if (ms > CD0 && ms < RV) { const ph = ((ms - CD0) / 1000 - (t.i + t.j) * 0.06) % 1; sc = 1 - 0.06 * Math.max(0, Math.sin(ph * Math.PI * 2)) * (ph < 0.5 ? 1 : 0); }
+      if (n === ODD) { sc *= st.odd.s; }
+      const g = tile(t, S.ease.outBack(Math.min(1, s.k)) > 0 ? s.k : 0, n === ODD ? 1 : s.dim, n === ODD ? 90 * (1 - st.odd.fix) : 0, sc);
+      if (n === ODD && st.odd.ring > 0) { const h = T / 2 * st.odd.s + 14; const r = new P.Path.Rectangle([t.x - h, t.y - h, 2 * h, 2 * h]); r.strokeColor = C.ink; r.strokeWidth = 12 * st.odd.ring; r.opacity = st.odd.ring; r.rotate(90 * (1 - st.odd.ring), new P.Point(t.x, t.y)); }
+    });
+    // badge du compte à rebours
+    const step = st.bm.reduce((a, b) => a + (b.k >= 1 ? 1 : 0), 0), cur = st.bm[Math.min(step, 4)];
+    const f = step < 5 ? cur.k : 1;
+    const pts = step < 5 ? bInterp[step](f) : SHAPES[5];
+    const bk = st.badge.k;
+    const b = poly(P, pts.map(([x, y]) => [BC.x + x * bk, BC.y + y * bk]), f > 0.5 && step < 5 ? BCOL[step + 1] : BCOL[step]);
+    // cases de progression (5 secondes)
+    st.prog.forEach((p, n) => { const x = 510 - 5 * 60 / 2 + n * 60 + 6; const y = Y0 + ROWS * (T + G) + 14;
+      const o = new P.Path.Rectangle([x, y, 48, 48]); o.strokeColor = C.ink; o.strokeWidth = 6; o.opacity = st.badge.k;
+      if (p.k > 0) { const fi = new P.Path.Rectangle([x + 24 - 24 * p.k, y + 24 - 24 * p.k, 48 * p.k, 48 * p.k]); fi.fillColor = ms >= RV - 200 ? C.red : C.ink; } });
+    const el = $('cd'); const shown = Math.max(0, 5 - (f > 0.5 ? step + 1 : step));
+    el.textContent = String(shown); el.style.color = (f > 0.5 && step < 5) ? BTXT[step + 1] : BTXT[step];
+    el.style.top = (BC.y - 60 + (step === 1 && f > 0.5 ? 14 : 0) + (step === 2 && f <= 0.5 ? 14 : 0)) + 'px';
+    el.style.opacity = bk; el.style.transform = `scale(${(0.6 + 0.4 * bk).toFixed(3)})`;
+    css($('t0'), st.t0); css($('t1'), st.t1);
+    const ot = tiles[ODD]; const hp = $('hint'); hp.style.left = (ot.x - 210) + 'px'; hp.style.top = (ot.y + T / 2 + 30) + 'px'; css(hp, st.hint);
+    ['c0', 'c1', 'cs', 'o0', 'o1', 'o2', 'o3'].forEach(id => $(id).style.opacity = 0);
+  } else {
+    ['t0', 't1', 'cd', 'hint'].forEach(id => $(id).style.opacity = 0);
+    css($('c0'), st.c0); css($('c1'), st.c1); css($('cs'), st.cs);
+    st.opts.forEach((o, n) => { if (o.k <= 0) { $('o' + n).style.opacity = 0; return; }
+      const [x, y] = OPOS[n]; const idle = Math.sin((ms - CUT) / 1000 * Math.PI + n) * 3;
+      const p = poly(P, oInterp[n](o.m).map(([px, py]) => [x + px * o.k, y + py * o.k]), OCOL[n]);
+      p.rotate(90 * (1 - Math.min(o.k, 1)) + idle * o.m, new P.Point(x, y));
+      const el = $('o' + n); el.style.left = (x - 150) + 'px'; el.style.top = (y - 38 + (n === 2 ? 30 : 0)) + 'px';
+      el.style.opacity = S.clamp(o.k); el.style.transform = `scale(${o.k.toFixed(3)})`; });
+  }
+  wipe.apply();
+  P.view.update();
+}
+S.installContract({ duration: 14, ready: S.loadFonts(FONTS), renderAt: t => { const ms = t * 1000; tl.seek(ms); draw(ms); } });
+</script></body></html>

@@ -1,0 +1,175 @@
+{
+ "_comment": "Beats 80 bpm : A 0 / B 4,5 / C 8,25 (clics = compteur de jours, riser vers 12,75) / D 12,75 (impact + carillon 27,3 = 27,3).",
+ "duration": 16.0,
+ "seed": 7,
+ "bpm": 80,
+ "key": "A",
+ "scale": "minpent",
+ "music": {
+  "preset": "pad",
+  "gain": 0.5,
+  "octave": 4,
+  "density": 0.5,
+  "loop": false
+ },
+ "events": [
+  {
+   "t": 0.0,
+   "type": "whoosh",
+   "dur": 0.6,
+   "gain": 0.5
+  },
+  {
+   "t": 0.05,
+   "type": "chime",
+   "note": "A5",
+   "dur": 1.6,
+   "gain": 0.35
+  },
+  {
+   "t": 0.0,
+   "type": "swell",
+   "note": "A4",
+   "dur": 2.5,
+   "gain": 0.4
+  },
+  {
+   "t": 1.05,
+   "type": "blip",
+   "note": "E6",
+   "gain": 0.3
+  },
+  {
+   "t": 4.5,
+   "type": "thud",
+   "gain": 0.6
+  },
+  {
+   "t": 4.45,
+   "type": "whoosh",
+   "dur": 0.5,
+   "gain": 0.4
+  },
+  {
+   "t": 5.9,
+   "type": "blip",
+   "note": "C6",
+   "gain": 0.3
+  },
+  {
+   "t": 6.1,
+   "type": "blip",
+   "note": "A5",
+   "gain": 0.3
+  },
+  {
+   "t": 8.25,
+   "type": "thud",
+   "gain": 0.6
+  },
+  {
+   "t": 8.2,
+   "type": "whoosh",
+   "dur": 0.5,
+   "gain": 0.4
+  },
+  {
+   "t": 8.25,
+   "type": "riser",
+   "dur": 4.5,
+   "gain": 0.22
+  },
+  {
+   "t": 8.25,
+   "type": "click",
+   "gain": 0.22
+  },
+  {
+   "t": 8.625,
+   "type": "click",
+   "gain": 0.22
+  },
+  {
+   "t": 9.0,
+   "type": "click",
+   "gain": 0.22
+  },
+  {
+   "t": 9.375,
+   "type": "click",
+   "gain": 0.22
+  },
+  {
+   "t": 9.75,
+   "type": "click",
+   "gain": 0.22
+  },
+  {
+   "t": 10.125,
+   "type": "click",
+   "gain": 0.22
+  },
+  {
+   "t": 10.5,
+   "type": "click",
+   "gain": 0.22
+  },
+  {
+   "t": 10.875,
+   "type": "click",
+   "gain": 0.22
+  },
+  {
+   "t": 11.25,
+   "type": "click",
+   "gain": 0.22
+  },
+  {
+   "t": 11.625,
+   "type": "click",
+   "gain": 0.22
+  },
+  {
+   "t": 12.0,
+   "type": "click",
+   "gain": 0.22
+  },
+  {
+   "t": 12.375,
+   "type": "click",
+   "gain": 0.22
+  },
+  {
+   "t": 12.75,
+   "type": "impact",
+   "gain": 0.7
+  },
+  {
+   "t": 12.75,
+   "type": "chime",
+   "note": "E6",
+   "dur": 2.0,
+   "gain": 0.4
+  },
+  {
+   "t": 12.75,
+   "type": "swell",
+   "note": "A4",
+   "dur": 3.2,
+   "gain": 0.45
+  },
+  {
+   "t": 13.75,
+   "type": "blip",
+   "note": "A5",
+   "gain": 0.3
+  },
+  {
+   "t": 14.25,
+   "type": "chime",
+   "note": "A5",
+   "dur": 1.6,
+   "gain": 0.25
+  }
+ ]
+}

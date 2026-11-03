@@ -1,0 +1,7 @@
+{"language": "fr", "style": "grave, froid, compte à rebours de journal télévisé, phrases courtes", "voice": "Charon",
+ "lines": [
+  {"t": 0.3, "maxDuration": 3.1, "text": "Dans 272 jours, le Soleil va s'éteindre."},
+  {"t": 3.7, "maxDuration": 3.6, "text": "Jusqu'à six minutes vingt-trois de nuit, près de Louxor."},
+  {"t": 8.6, "maxDuration": 3.6, "text": "De Cadix à la Somalie, en passant par l'Égypte."},
+  {"t": 12.55, "maxDuration": 2.4, "text": "Un record jusqu'en 2114."}
+ ]}

@@ -1,0 +1,25 @@
+{
+ "name": "GSAP",
+ "role": "typo",
+ "bestFor": [
+  "timeline d'états déterministe pilotant Zdog, A-Frame ou du DOM",
+  "easings nommés expressifs (back.out, elastic.out, bounce.out) pour un langage de mouvement 'jouet'",
+  "rythmes de jeu (compte à rebours, révélations staggerées)"
+ ],
+ "avoidFor": [
+  "physique ou simulation",
+  "animer directement des propriétés DOM avec plusieurs tweens successifs sur la même propriété quand on seek dans le désordre (préférer un objet d'état)"
+ ],
+ "renderCostPer100Frames": "≈ 0 s propre (coût inclus dans les scènes : 66 s/100 frames avec Zdog, voir A-Frame pour la scène 3D ; seek d'une timeline de 30 tweens < 1 ms)",
+ "gotchas": [
+  "renderAt = t => { tl.seek(t, false); } sans valeur de retour (timeline thenable)",
+  "fromTo avec immediateRender:false ; un tween par propriété d'un objet d'état (st.s1 entrée, st.s1o sortie) puis appliquer l'état au DOM/3D dans renderAt -> stills et vidéo identiques quel que soit l'ordre des seek",
+  "tl.seek(Math.min(t, tl.duration())) pour tenir l'état final après la dernière animation"
+ ],
+ "snippetPath": "shorts/pastel-diorama__enfants__d-ou-vient-la-pluie/src",
+ "pairsWellWith": [
+  "Zdog",
+  "A-Frame",
+  "three.js"
+ ]
+}

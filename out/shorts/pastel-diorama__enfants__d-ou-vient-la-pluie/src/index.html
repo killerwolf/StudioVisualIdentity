@@ -1,0 +1,308 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8">
+<!-- Short "D'où vient la pluie ? Le voyage de Plip la goutte" — identité Diorama Pastel.
+     Zdog (maquette pseudo-3D + personnage Plip) + GSAP (timeline d'états, seek déterministe).
+     Contrat svi : window.ready / window.renderAt(t). Graine 4. Durée 16 s. -->
+<script src="/node_modules/zdog/dist/zdog.dist.min.js"></script>
+<script src="/node_modules/gsap/dist/gsap.min.js"></script>
+<style>
+  :root{--bg:#FFE8EF;--ink:#3B2E5A;--pink:#FF8FAB;--pinkInk:#E23D72;--blue:#8ED6FF;--yellow:#FFD670;--mint:#9BE7B0}
+  html,body{margin:0;width:1080px;height:1920px;overflow:hidden;
+    background: radial-gradient(900px 1100px at 50% 55%, #FFF4F7 0%, #FFE8EF 60%, #FFDCE7 100%);}
+  .dots{position:absolute;inset:0;background-image:radial-gradient(#FFC9D8 3px, transparent 3.5px);background-size:46px 46px;opacity:.55}
+  #sky{position:absolute;inset:0;background:linear-gradient(#DDEBFF 0%, rgba(221,235,255,0) 55%);opacity:0}
+  canvas{position:absolute;left:0;top:0}
+  .ov{position:absolute;color:var(--ink);transform-origin:0% 50%;will-change:transform}
+  .kicker{left:72px;top:236px;font:800 56px 'Nunito';background:var(--yellow);padding:8px 28px 12px;border-radius:40px;box-shadow:0 6px 0 #F0BC3F}
+  h1{left:72px;top:322px;margin:0;width:900px;font:800 132px/1.0 'Baloo 2';letter-spacing:-0.01em;text-shadow:0 8px 0 #FFC2D3}
+  h1 span{color:var(--pinkInk)}
+  .step{left:72px;top:240px;display:flex;align-items:center;gap:26px;background:#FFFFFF;border-radius:70px;padding:14px 46px 18px 16px;
+        font:800 96px/1 'Baloo 2';box-shadow:0 12px 0 #F9C6D5, 0 26px 50px rgba(59,46,90,.10)}
+  .step i{font-style:normal;display:inline-flex;align-items:center;justify-content:center;width:112px;height:112px;border-radius:56px;font:800 76px/1 'Baloo 2';padding-top:6px;box-sizing:border-box}
+  .pill{position:absolute;font:800 56px/1 'Nunito';color:var(--ink);padding:14px 30px 18px;border-radius:40px;box-shadow:0 8px 0 rgba(59,46,90,.14);transform-origin:50% 50%}
+</style></head><body>
+<div class="dots"></div><div id="sky"></div>
+<canvas id="c" width="1080" height="1920"></canvas>
+<div class="ov kicker" id="kick">Le voyage de Plip</div>
+<h1 class="ov" id="title">D'où vient<br>la <span>pluie</span>&nbsp;?</h1>
+<div class="ov step" id="s1"><i style="background:#FFB3C6">1</i>Évaporation</div>
+<div class="ov step" id="s2"><i style="background:#8ED6FF">2</i>Condensation</div>
+<div class="ov step" id="s3"><i style="background:#FFD670">3</i>Précipitation</div>
+<div class="ov step" id="s4"><i style="background:#9BE7B0;padding-top:0"><svg width="70" height="70" viewBox="0 0 70 70"><path d="M57 35a22 22 0 1 1-8-17" fill="none" stroke="#3B2E5A" stroke-width="9" stroke-linecap="round"/><path d="M40 8l13 10-15 6z" fill="#3B2E5A" stroke="#3B2E5A" stroke-width="4" stroke-linejoin="round"/></svg></i>Le cycle de l'eau</div>
+<div class="pill" id="k1" style="left:66px;top:930px;background:#FFB3C6">évaporation</div>
+<div class="pill" id="k2" style="left:330px;top:500px;background:#8ED6FF">condensation</div>
+<div class="pill" id="k3" style="left:520px;top:1040px;background:#FFD670">précipitation</div>
+<div class="pill" id="cold" style="left:72px;top:560px;background:#DDEBFF;font-size:56px">brrr, froid !</div>
+<script type="module">
+import * as S from '/out/tools/lib/svi.js';
+const { TAU } = Zdog;
+const SEED = 4, DUR = 16;
+const R = S.rng(SEED);
+const illo = new Zdog.Illustration({ element: '#c', zoom: 1.0, resize: false });
+const scene = new Zdog.Anchor({ addTo: illo, rotate: { x: -TAU / 13, y: TAU / 9 }, translate: { y: 250 } });
+
+// ---------- diorama (repris du poster Phase 1) ----------
+const GY = 170;
+const groundG = new Zdog.Group({ addTo: scene });
+new Zdog.Cylinder({ addTo: groundG, diameter: 760, length: 70, translate: { y: GY + 35 }, rotate: { x: TAU / 4 }, color: '#9BE7B0', backface: '#7CCB95', stroke: 18 });
+new Zdog.Cylinder({ addTo: scene, diameter: 800, length: 26, translate: { y: GY + 92 }, rotate: { x: TAU / 4 }, color: '#FFFFFF', backface: '#F3D7E0', stroke: 12 });
+const LAKE = { x: -170, y: GY - 12, z: 120 };
+new Zdog.Ellipse({ addTo: groundG, width: 320, height: 230, translate: LAKE, rotate: { x: TAU / 4 }, fill: true, stroke: 14, color: '#8ED6FF' });
+new Zdog.Ellipse({ addTo: groundG, width: 120, height: 60, translate: { x: -205, y: GY - 16, z: 150 }, rotate: { x: TAU / 4 }, fill: true, stroke: 6, color: '#C8EEFF' });
+const lakeMark = new Zdog.Anchor({ addTo: scene, translate: { x: LAKE.x, y: LAKE.y - 30, z: LAKE.z } });
+// ondes d'éclaboussure sur le lac
+const rings = [0, 1].map(() => new Zdog.Ellipse({ addTo: scene, diameter: 100, translate: { x: LAKE.x, y: GY - 18, z: LAKE.z }, rotate: { x: TAU / 4 }, stroke: 8, color: '#FFFFFF', visible: false }));
+const house = new Zdog.Anchor({ addTo: scene, translate: { x: 150, y: GY - 70, z: -60 } });
+new Zdog.Box({ addTo: house, width: 150, height: 140, depth: 140, stroke: 10, color: '#FFFFFF', leftFace: '#FFE1EA', rightFace: '#F6CBD8', topFace: '#FFFFFF', bottomFace: false, rearFace: '#F6CBD8' });
+new Zdog.Cone({ addTo: house, diameter: 210, length: 110, translate: { y: -70 }, rotate: { x: TAU / 4 }, stroke: 10, color: '#FF8FAB', backface: '#E9718F' });
+new Zdog.Rect({ addTo: house, width: 46, height: 70, translate: { y: 35, z: 72 }, stroke: 8, fill: true, color: '#FFD670' });
+new Zdog.Shape({ addTo: house, translate: { x: -38, y: -12, z: 72 }, stroke: 32, color: '#8ED6FF' });
+new Zdog.Shape({ addTo: house, translate: { x: 38, y: -12, z: 72 }, stroke: 32, color: '#8ED6FF' });
+function tree(x, z, s, c) {
+  const a = new Zdog.Anchor({ addTo: scene, translate: { x, y: GY, z } });
+  new Zdog.Cylinder({ addTo: a, diameter: 22 * s, length: 70 * s, translate: { y: -35 * s }, rotate: { x: TAU / 4 }, color: '#C99A6B', stroke: 4 });
+  new Zdog.Shape({ addTo: a, translate: { y: -95 * s }, stroke: 120 * s, color: c });
+  new Zdog.Shape({ addTo: a, translate: { x: -18 * s, y: -112 * s, z: 30 * s }, stroke: 34 * s, color: 'rgba(255,255,255,.35)' });
+  return a;
+}
+const trees = [tree(-280, -150, 1.0, '#7ED19A'), tree(-60, -230, 1.25, '#9BE7B0'), tree(300, 150, 0.8, '#7ED19A'), tree(30, 230, 0.7, '#B5EFC3')];
+for (let i = 0; i < 16; i++) {
+  const a = R() * TAU, d = 230 + R() * 110;
+  new Zdog.Shape({ addTo: scene, translate: { x: Math.cos(a) * d, y: GY - 8, z: Math.sin(a) * d }, stroke: 16, color: ['#FF8FAB', '#FFD670', '#FFFFFF'][i % 3] });
+}
+// soleil
+const SUN = { x: 300, y: -310 };
+const sun = new Zdog.Anchor({ addTo: illo, translate: { x: SUN.x, y: SUN.y, z: -300 } });
+const sunBody = new Zdog.Shape({ addTo: sun, stroke: 150, color: '#FFD670' });
+const rays = []; const rayG = new Zdog.Anchor({ addTo: sun });
+for (let i = 0; i < 10; i++) { const a = i / 10 * TAU; rays.push(new Zdog.Shape({ addTo: rayG, path: [{ x: Math.cos(a) * 105, y: Math.sin(a) * 105 }, { x: Math.cos(a) * 140, y: Math.sin(a) * 140 }], stroke: 16, color: '#FFC94A' })); }
+new Zdog.Shape({ addTo: sun, path: [{ x: -30, y: 0 }, { arc: [{ x: -22, y: 10 }, { x: -14, y: 0 }] }], closed: false, stroke: 6, color: '#3B2E5A', translate: { z: 80 } });
+new Zdog.Shape({ addTo: sun, path: [{ x: 14, y: 0 }, { arc: [{ x: 22, y: 10 }, { x: 30, y: 0 }] }], closed: false, stroke: 6, color: '#3B2E5A', translate: { z: 80 } });
+new Zdog.Shape({ addTo: sun, path: [{ x: -14, y: 22 }, { arc: [{ x: 0, y: 32 }, { x: 14, y: 22 }] }], closed: false, stroke: 6, color: '#3B2E5A', translate: { z: 80 } });
+
+// nuage (se forme pendant la condensation)
+const CLOUD = { x: -40, y: -230 };
+const cloud = new Zdog.Anchor({ addTo: illo, translate: { x: CLOUD.x, y: CLOUD.y, z: 60 } });
+const puffDefs = [[0, 0, 170], [-110, 25, 120], [110, 20, 130], [-40, -55, 120], [60, -45, 110], [190, 40, 80], [-190, 45, 80]];
+const puffs = puffDefs.map(([x, y, s]) => new Zdog.Shape({ addTo: cloud, translate: { x, y }, stroke: s, color: '#FFFFFF' }));
+const under = [[-60, 70, 90], [40, 75, 100], [140, 65, 70]].map(([x, y, s]) => new Zdog.Shape({ addTo: cloud, translate: { x, y, z: -10 }, stroke: s, color: '#E6F4FF' }));
+const cloudFace = new Zdog.Group({ addTo: cloud, translate: { z: 90 } });
+new Zdog.Shape({ addTo: cloudFace, path: [{ x: -30, y: 10 }, { arc: [{ x: -20, y: 20 }, { x: -10, y: 10 }] }], closed: false, stroke: 7, color: '#3B2E5A' });
+new Zdog.Shape({ addTo: cloudFace, path: [{ x: 20, y: 10 }, { arc: [{ x: 30, y: 20 }, { x: 40, y: 10 }] }], closed: false, stroke: 7, color: '#3B2E5A' });
+new Zdog.Shape({ addTo: cloudFace, translate: { x: -45, y: 32 }, stroke: 18, color: '#FFC2D3' });
+new Zdog.Shape({ addTo: cloudFace, translate: { x: 55, y: 32 }, stroke: 18, color: '#FFC2D3' });
+
+// gouttelettes de condensation (convergent vers le nuage)
+const motes = [];
+for (let i = 0; i < 46; i++) {
+  const p = puffDefs[i % puffDefs.length];
+  const a = R() * TAU, rr = R() * p[2] * 0.42;
+  motes.push({ s: new Zdog.Shape({ addTo: illo, stroke: 12 + R() * 8, color: '#8ED6FF', visible: false }),
+    from: { x: CLOUD.x + (R() - 0.5) * 900, y: CLOUD.y + (R() - 0.3) * 520 }, to: { x: CLOUD.x + p[0] + Math.cos(a) * rr, y: CLOUD.y + p[1] + Math.sin(a) * rr }, d: R() * 0.35 });
+}
+// vapeur (volutes qui montent du lac)
+const wisps = [];
+for (let i = 0; i < 20; i++) wisps.push({ s: new Zdog.Shape({ addTo: illo, stroke: 34 + R() * 30, color: 'rgba(255,255,255,0.8)', visible: false }), ph: R(), dx: (R() - 0.5) * 220 });
+// pluie
+const drops = [];
+for (let i = 0; i < 18; i++) drops.push({ s: new Zdog.Shape({ addTo: illo, path: [{ y: -14 }, { y: 14 }], stroke: 18, color: '#6EC3F5', visible: false }), x: (R() - 0.5) * 440, ph: R(), sp: 0.9 + R() * 0.4 });
+// éclaboussures
+const spl = [];
+for (let i = 0; i < 6; i++) spl.push({ s: new Zdog.Shape({ addTo: illo, stroke: 16, color: '#8ED6FF', visible: false }), a: -Math.PI * (0.15 + 0.7 * i / 5) });
+// cycle : pointillés + flèches
+const cycL = [], cycR = [];
+for (let i = 0; i < 14; i++) cycL.push(new Zdog.Shape({ addTo: illo, stroke: 18, color: '#FF8FAB', visible: false }));
+for (let i = 0; i < 14; i++) cycR.push(new Zdog.Shape({ addTo: illo, stroke: 18, color: '#6EC3F5', visible: false }));
+const arrowL = new Zdog.Shape({ addTo: illo, path: [{ x: -26, y: 16 }, { x: 0, y: -22 }, { x: 26, y: 16 }], fill: true, stroke: 10, color: '#FF8FAB', visible: false });
+const arrowR = new Zdog.Shape({ addTo: illo, path: [{ x: -26, y: -16 }, { x: 0, y: 22 }, { x: 26, y: -16 }], fill: true, stroke: 10, color: '#6EC3F5', visible: false });
+
+// ---------- Plip la goutte (personnage inventé) ----------
+const plip = new Zdog.Anchor({ addTo: illo, translate: { z: 300 } });
+const plipBody = new Zdog.Shape({ addTo: plip, path: [{ x: 0, y: -92 },
+  { bezier: [{ x: 18, y: -58 }, { x: 62, y: -28 }, { x: 62, y: 14 }] },
+  { bezier: [{ x: 62, y: 50 }, { x: 34, y: 70 }, { x: 0, y: 70 }] },
+  { bezier: [{ x: -34, y: 70 }, { x: -62, y: 50 }, { x: -62, y: 14 }] },
+  { bezier: [{ x: -62, y: -28 }, { x: -18, y: -58 }, { x: 0, y: -92 }] }], closed: true, fill: true, stroke: 26, color: '#6EC3F5' });
+const plipShine = new Zdog.Shape({ addTo: plip, path: [{ x: -34, y: -10 }, { x: -24, y: -40 }], translate: { z: 5 }, stroke: 18, color: 'rgba(255,255,255,0.75)' });
+const face = new Zdog.Group({ addTo: plip, translate: { z: 10 } });
+const eyeL = new Zdog.Shape({ addTo: face, translate: { x: -22, y: 12 }, stroke: 20, color: '#3B2E5A' });
+const eyeR = new Zdog.Shape({ addTo: face, translate: { x: 22, y: 12 }, stroke: 20, color: '#3B2E5A' });
+const winkR = new Zdog.Shape({ addTo: face, path: [{ x: 12, y: 12 }, { arc: [{ x: 22, y: 2 }, { x: 32, y: 12 }] }], closed: false, stroke: 7, color: '#3B2E5A', visible: false });
+new Zdog.Shape({ addTo: face, translate: { x: -18, y: 8 }, stroke: 6, color: '#FFFFFF' });
+const glintR = new Zdog.Shape({ addTo: face, translate: { x: 26, y: 8 }, stroke: 6, color: '#FFFFFF' });
+new Zdog.Shape({ addTo: face, path: [{ x: -12, y: 32 }, { arc: [{ x: 0, y: 44 }, { x: 12, y: 32 }] }], closed: false, stroke: 7, color: '#3B2E5A' });
+const cheekL = new Zdog.Shape({ addTo: face, translate: { x: -42, y: 32 }, stroke: 18, color: '#FF8FAB' });
+const cheekR = new Zdog.Shape({ addTo: face, translate: { x: 42, y: 32 }, stroke: 18, color: '#FF8FAB' });
+
+// ---------- timeline GSAP (chaque propriété = un seul tween -> seek sûr) ----------
+const st = { pop: 0, title: 0, titleOut: 0, plipIn: 0, s1: 0, s2: 0, s3: 0, s4: 0, s1o: 0, s2o: 0, s3o: 0,
+  warm: 0, vapor: 0, rise: 0, cold: 0, coldO: 0, gather: 0, puff: 0, rewet: 0, grey: 0, rain: 0, fall: 0, land: 1, splash: 0, cyc: 0, kp: 0, wink: 0, sky: 0, skyO: 0, settle: 0, settleSq: 1 };
+const tl = gsap.timeline({ paused: true });
+const T = (p, a, b, d, ease) => tl.fromTo(st, { [p]: a }, { [p]: b, duration: d, ease, immediateRender: false }, undefined);
+const at = (p, a, b, d, ease, t) => tl.fromTo(st, { [p]: a }, { [p]: b, duration: d, ease, immediateRender: false }, t);
+at('pop', 0.62, 1, 0.9, 'back.out(1.8)', 0);
+at('title', 0.0, 1, 0.55, 'back.out(1.7)', 0);
+at('plipIn', 0, 1, 0.75, 'back.out(2.2)', 0.12);
+at('titleOut', 0, 1, 0.35, 'back.in(1.6)', 2.95);
+at('settle', 0, 1, 0.45, 'power2.in', 2.8);
+at('settleSq', 0.7, 1, 0.6, 'elastic.out(1,0.4)', 3.25);
+// 1 · évaporation
+at('s1', 0, 1, 0.5, 'back.out(1.8)', 3.25);
+at('warm', 0, 1, 0.9, 'sine.inOut', 3.35);
+at('vapor', 0, 1, 0.8, 'sine.inOut', 4.1);
+at('rise', 0, 1, 2.6, 'power1.inOut', 4.3);
+at('sky', 0, 1, 1.4, 'sine.inOut', 5.4);
+at('s1o', 0, 1, 0.3, 'back.in(1.6)', 6.75);
+// 2 · condensation
+at('s2', 0, 1, 0.5, 'back.out(1.8)', 7.05);
+at('cold', 0, 1, 0.45, 'back.out(2)', 7.15);
+at('gather', 0, 1, 1.4, 'power2.inOut', 7.1);
+at('puff', 0, 1, 1.3, 'none', 7.7);
+at('rewet', 0, 1, 0.7, 'back.out(1.6)', 8.2);
+at('coldO', 0, 1, 0.3, 'back.in(1.6)', 9.6);
+at('s2o', 0, 1, 0.3, 'back.in(1.6)', 10.15);
+// 3 · précipitation
+at('s3', 0, 1, 0.5, 'back.out(1.8)', 10.45);
+at('grey', 0, 1, 0.6, 'sine.inOut', 10.45);
+at('rain', 0, 1, 0.5, 'sine.out', 10.9);
+at('fall', 0, 1, 1.15, 'power2.in', 11.45);
+at('land', 0.62, 1, 0.9, 'elastic.out(1,0.35)', 12.6);
+at('splash', 0, 1, 0.8, 'power2.out', 12.6);
+at('skyO', 0, 1, 1.0, 'sine.inOut', 12.6);
+at('s3o', 0, 1, 0.3, 'back.in(1.6)', 13.4);
+// ↻ le cycle
+at('s4', 0, 1, 0.5, 'back.out(1.8)', 13.7);
+at('cyc', 0, 1, 1.3, 'power2.out', 13.75);
+at('kp', 0, 1, 1.2, 'none', 14.0);
+at('wink', 0, 1, 0.4, 'none', 15.1);
+
+const $ = id => document.getElementById(id);
+const els = { kick: $('kick'), title: $('title'), s1: $('s1'), s2: $('s2'), s3: $('s3'), s4: $('s4'), k1: $('k1'), k2: $('k2'), k3: $('k3'), cold: $('cold'), sky: $('sky') };
+function showEl(el, k, kout = 0, dy = 0) {           // pop outBack en entrée, back.in en sortie
+  const v = k * (1 - kout);
+  el.style.opacity = v <= 0.001 ? 0 : Math.min(1, v * 1.6);
+  el.style.transform = `translateY(${dy * (1 - k)}px) scale(${Math.max(0, v)})`;
+  el.style.visibility = v <= 0.001 ? 'hidden' : 'visible';
+}
+function rgba(hex, a) { const [r, g, b] = S.hexToRgb(hex); return `rgba(${r},${g},${b},${a})`; }
+function mixA(h1, h2, k, a = 1) { const A = S.hexToRgb(h1), B = S.hexToRgb(h2); return `rgba(${A.map((v, i) => Math.round(S.lerp(v, B[i], k))).join(',')},${a})`; }
+const qb = (p0, c, p1, u) => ({ x: (1 - u) * (1 - u) * p0.x + 2 * u * (1 - u) * c.x + u * u * p1.x, y: (1 - u) * (1 - u) * p0.y + 2 * u * (1 - u) * c.y + u * u * p1.y });
+
+function renderAt(t) {
+  tl.seek(Math.min(t, tl.duration()), false);
+  // maquette : travelling latéral doux + pop d'entrée
+  scene.rotate.y = TAU / 9 + Math.sin(t * 0.45) * 0.12;
+  scene.scale = st.pop * 1.16;
+  illo.updateGraph();
+  const lake = { x: lakeMark.renderOrigin.x, y: lakeMark.renderOrigin.y };
+
+  // soleil (pulse quand il chauffe)
+  const hot = st.warm * (1 - st.grey);
+  rayG.rotate.z = t * 0.2;
+  sun.scale = 1 + 0.12 * hot * (0.6 + 0.4 * Math.sin(t * 9));
+  sunBody.color = S.mix('#FFD670', '#FFC24A', hot);
+  sun.translate.x = SUN.x + 0 * t;
+
+  // ciel froid en altitude pendant condensation
+  els.sky.style.opacity = (st.sky * (1 - st.skyO)) * 0.9;
+
+  // nuage
+  const cloudK = st.puff;
+  const bob = Math.sin(t * 1.6) * 10;
+  cloud.translate.y = CLOUD.y + bob;
+  puffs.forEach((p, i) => { const k = S.clamp(cloudK * 1.6 - i * 0.09); p.visible = k > 0.01; p.scale = S.ease.outBack(k); p.color = S.mix('#FFFFFF', '#C9D3EE', st.grey); });
+  under.forEach((p, i) => { const k = S.clamp(cloudK * 1.6 - 0.5 - i * 0.07); p.visible = k > 0.01; p.scale = S.ease.outBack(k); p.color = S.mix('#E6F4FF', '#A9B9E3', st.grey); });
+  cloudFace.visible = cloudK > 0.75;
+  cloud.scale = { x: 1 + 0.05 * st.grey * Math.sin(t * 6), y: 1 - 0.05 * st.grey * Math.sin(t * 6), z: 1 };
+
+  // vapeur montante
+  const evapOn = S.clamp(st.vapor * 1.2) * (1 - st.gather);
+  wisps.forEach((w, i) => {
+    const k = (t * 0.42 + w.ph) % 1;
+    w.s.visible = evapOn > 0.02;
+    w.s.translate = { x: lake.x + w.dx + Math.sin(k * 6 + i) * 30, y: lake.y - 30 - k * 640, z: 200 };
+    w.s.color = `rgba(236,246,255,${(0.95 * Math.sin(k * Math.PI) * evapOn).toFixed(3)})`;
+  });
+  // condensation : gouttelettes qui se rassemblent
+  motes.forEach(m => {
+    const k = S.clamp((st.gather - m.d) / (1 - m.d));
+    m.s.visible = st.gather > 0.001 && st.puff < 0.95;
+    const p = { x: S.lerp(m.from.x, m.to.x, S.ease.inOutCubic(k)), y: S.lerp(m.from.y, m.to.y, S.ease.inOutCubic(k)) + bob * k };
+    m.s.translate = { x: p.x, y: p.y, z: 120 };
+    m.s.color = `rgba(110,195,245,${(Math.min(1, st.gather * 3) * (1 - st.puff)).toFixed(3)})`;
+  });
+  // pluie
+  drops.forEach(d => {
+    const k = (t * 0.8 * d.sp + d.ph) % 1;
+    const on = st.rain > 0.02 && st.cyc < 0.6;
+    d.s.visible = on && k < 0.93;
+    d.s.translate = { x: CLOUD.x + d.x, y: CLOUD.y + 70 + k * 560, z: 40 };
+    d.s.color = `rgba(110,195,245,${(st.rain * (1 - S.clamp(st.cyc * 1.7))).toFixed(3)})`;
+  });
+
+  // ---- Plip ----
+  let px, py, sc = 1, sx = 1, sy = 1;
+  const inK = st.plipIn;
+  const restY = lake.y - 20;
+  // position : lac -> (montée) -> nuage -> (chute) -> lac
+  const cloudSpot = { x: CLOUD.x + 10, y: CLOUD.y + 70 + bob };
+  if (st.rise < 1) {
+    const u = st.rise;
+    const p = qb({ x: lake.x, y: restY }, { x: lake.x - 160, y: (restY + cloudSpot.y) / 2 }, cloudSpot, u);
+    px = p.x + Math.sin(u * 14) * 18 * st.vapor; py = p.y;
+  } else if (st.fall <= 0) { px = cloudSpot.x; py = cloudSpot.y; }
+  else {
+    const u = st.fall;
+    px = S.lerp(cloudSpot.x, lake.x, S.ease.inOutSine(u)); py = S.lerp(cloudSpot.y, restY, u);
+    sx = 0.88; sy = 1.16;
+  }
+  if (st.fall >= 1) { px = lake.x; py = restY; sx = 1 / st.land; sy = st.land; py += (1 - st.land) * 40; }
+  // flottement permanent au repos
+  const idle = ((st.rise <= 0 && st.settle >= 1) || st.fall >= 1) ? Math.sin(t * 3.1) * 8 : 0;
+  // taille : grande au hook, normale, petite gouttelette dans le nuage
+  const hookBig = 1 + 0.5 * (1 - st.settle);
+  if (st.rise <= 0) { py -= (1 - st.settle) * (300 + Math.abs(Math.sin(t * 3.6)) * 40); sx = st.settle >= 1 ? 1 / st.settleSq : 1; sy = st.settle >= 1 ? st.settleSq : 1; }
+  sc = S.ease.outBack(Math.min(1, inK)) * hookBig * (1 - 0.45 * st.rewet * (1 - st.fall)) ;
+  sc *= 1 - 0.08 * st.vapor * (1 - st.rewet);
+  plip.translate = { x: px, y: py + idle, z: 300 };
+  plip.scale = { x: sc * sx * (1 + 0.04 * Math.sin(t * 7) * st.vapor * (1 - st.rewet)), y: sc * sy, z: 1 };
+  plip.rotate.z = st.fall > 0 && st.fall < 1 ? 0 : Math.sin(t * 2.2) * 0.06;
+  // couleur : goutte bleue -> vapeur blanche translucide -> gouttelette bleue
+  const vap = st.vapor * (1 - st.rewet);
+  plipBody.color = mixA('#6EC3F5', '#FFFFFF', vap, 1 - 0.3 * vap);
+  plipShine.visible = vap < 0.5;
+  const hotC = st.warm * (1 - st.vapor * 0.5);
+  cheekL.color = cheekR.color = S.mix('#FF8FAB', '#FF5C8A', hotC);
+  cheekL.stroke = cheekR.stroke = 18 + 6 * hotC;
+  const w = st.wink > 0.2 && st.wink < 0.9;
+  eyeR.visible = glintR.visible = !w; winkR.visible = w;
+
+  // éclaboussure
+  rings.forEach((r, i) => { const k = S.clamp(st.splash * 1.3 - i * 0.3); r.visible = k > 0 && k < 1; r.diameter = 90 + k * 230; r.color = `rgba(255,255,255,${(1 - k).toFixed(3)})`; });
+  spl.forEach(s => { const k = st.splash; s.s.visible = k > 0 && k < 0.95; s.s.translate = { x: lake.x + Math.cos(s.a) * 150 * k, y: restY + 40 + Math.sin(s.a) * 150 * k + 260 * k * k, z: 320 }; });
+
+  // cycle final : arcs en pointillés + flèches
+  const L0 = { x: lake.x - 120, y: lake.y - 40 }, L1 = { x: CLOUD.x - 250, y: CLOUD.y + 20 }, LC = { x: -500, y: 190 };
+  const R0 = { x: CLOUD.x + 250, y: CLOUD.y + 40 }, R1 = { x: 230, y: lake.y - 40 }, RC = { x: 450, y: -40 };
+  const drawArc = (arr, p0, c, p1, k, arrow, delay) => {
+    const kk = S.clamp((k - delay) / (1 - delay));
+    arr.forEach((d, i) => { const u = i / (arr.length - 1); d.visible = kk > 0 && u <= kk * 0.92; const p = qb(p0, c, p1, u); d.translate = { x: p.x, y: p.y, z: 250 }; d.stroke = 12 + 8 * Math.sin(u * Math.PI); });
+    const p = qb(p0, c, p1, Math.min(1, kk)), q = qb(p0, c, p1, Math.max(0, kk - 0.05));
+    arrow.visible = kk > 0.15; arrow.translate = { x: p.x, y: p.y, z: 260 };
+    arrow.rotate.z = Math.atan2(p.y - q.y, p.x - q.x) + (arrow === arrowL ? Math.PI / 2 : -Math.PI / 2);
+  };
+  drawArc(cycL, L0, LC, L1, st.cyc, arrowL, 0);
+  drawArc(cycR, R0, RC, R1, st.cyc, arrowR, 0.25);
+
+  // ---- overlays DOM ----
+  showEl(els.kick, S.clamp(st.title * 1.2), st.titleOut);
+  showEl(els.title, st.title, st.titleOut, 30);
+  showEl(els.s1, st.s1, st.s1o); showEl(els.s2, st.s2, st.s2o); showEl(els.s3, st.s3, st.s3o); showEl(els.s4, st.s4);
+  showEl(els.cold, st.cold, st.coldO);
+  showEl(els.k1, S.seg(st.kp, 0.0, 0.45, S.ease.outBack));
+  showEl(els.k2, S.seg(st.kp, 0.25, 0.7, S.ease.outBack));
+  showEl(els.k3, S.seg(st.kp, 0.5, 0.95, S.ease.outBack));
+  illo.updateRenderGraph();
+}
+const ready = S.loadFonts([{ family: 'Baloo 2', pkg: 'baloo-2', weight: 800 }, { family: 'Nunito', pkg: 'nunito', weight: 700 }, { family: 'Nunito', pkg: 'nunito', weight: 800 }]);
+S.installContract({ renderAt, ready, duration: DUR });
+</script></body></html>

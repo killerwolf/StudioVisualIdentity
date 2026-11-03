@@ -1,0 +1,25 @@
+{
+  "name": "pycairo",
+  "role": "post-traitement",
+  "bestFor": [
+    "matières gravées précalculées en PNG pour une scène navigateur : papier vergé (numpy + vergeures), cadre gradué, cartouche guilloché (trochoïdes sur superellipse), rose des vents hachurée, mer en taille-douce, vignettage",
+    "pictogrammes vectoriels nets (caravelle gravée) réutilisés comme <image> SVG"
+  ],
+  "avoidFor": [
+    "animation image par image (préférer le navigateur ou Manim)",
+    "texte : pas de mise en page avancée sans pango (pangocairo absent) — laisser le texte au navigateur"
+  ],
+  "renderCostPer100Frames": "0 s par frame (textures statiques) ; génération unique des 7 PNG 1080×1920 en 5,4 s mur / 2,7 s CPU (mesuré, shorts/atlas-grave__geographie__plus-longs-fleuves-du-monde/src/textures.py, sous charge ≈ 22)",
+  "gotchas": [
+    "Construire une ImageSurface depuis numpy : FORMAT_ARGB32 en BGRA, respecter get_stride(), puis mark_dirty() avant de dessiner",
+    "Remplacer les filtres SVG feTurbulence plein cadre par un PNG papier : gain de coût par frame dans Chromium/SwiftShader",
+    "Un PNG papier 1080×1920 avec grain pèse ~2,5 Mo : acceptable en local, ne pas le dupliquer en dizaines de calques",
+    "Hachures : clip() sur la forme puis lignes parallèles ; stroke du contour après restore()"
+  ],
+  "snippetPath": "shorts/atlas-grave__geographie__plus-longs-fleuves-du-monde/src/textures.py",
+  "pairsWellWith": [
+    "D3.js",
+    "GSAP",
+    "Pillow/numpy"
+  ]
+}

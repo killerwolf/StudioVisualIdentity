@@ -1,0 +1,244 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8">
+<!-- Tableau Craie — « Comment une graine devient un arbre ? » (enfants 6–10 ans).
+     Rough.js (rough.svg : tracés main levée + hachures) + GSAP 3 (timeline en pause, seek(t) par frame).
+     Chaque tracé Rough.js « s'écrit » (stroke-dashoffset), le grain de craie est un masque feImage déterministe.
+     Rendu : node out/tools/render.mjs <ce fichier> --out /tmp/v.mp4 --duration 15.5 -->
+<script src="/node_modules/roughjs/bundled/rough.js"></script>
+<script src="/node_modules/gsap/dist/gsap.min.js"></script>
+<style>html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:#1F3A30}canvas,svg{position:absolute;inset:0}
+text{font-family:'Caveat';font-weight:700}</style>
+</head><body>
+<canvas id="bg" width="1080" height="1920"></canvas>
+<svg id="sv" width="1080" height="1920" viewBox="0 0 1080 1920" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="chalk" filterUnits="userSpaceOnUse" x="0" y="0" width="1080" height="1920">
+      <feImage id="grainImg" x="0" y="0" width="1080" height="1920" preserveAspectRatio="none" result="g"/>
+      <feComposite in="SourceGraphic" in2="g" operator="in" result="c"/>
+      <feGaussianBlur in="c" stdDeviation="1.1" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="c"/></feMerge>
+    </filter>
+  </defs>
+  <g filter="url(#chalk)"><g id="cam"><g id="smears"></g><g id="world"></g></g><g id="hud"></g></g>
+</svg>
+<script type="module">
+import * as S from '/out/tools/lib/svi.js';
+const W = 1080, H = 1920, DUR = 15.5, SEED = 8;
+// tokens partagés avec le short explicatif (out/identities/tableau-craie/tokens.json)
+const P = { bg: '#1F3A30', surf: '#264639', cream: '#FFF6D5', orange: '#FFB84C', blue: '#7FD1FF', red: '#FF7A7A', text: '#F7F3E3', green: '#9BE58A', muted: '#A9BFAF' };
+const NS = 'http://www.w3.org/2000/svg';
+const sv = document.getElementById('sv'), world = document.getElementById('world'), hud = document.getElementById('hud');
+const cam = document.getElementById('cam'), smears = document.getElementById('smears');
+const rc = rough.svg(sv);
+const O = (o = {}) => Object.assign({ roughness: 1.5, bowing: 1.2, strokeWidth: 6, seed: 3, hachureGap: 12, fillWeight: 3 }, o);
+const tl = gsap.timeline({ paused: true });
+
+// ---------- ardoise (même recette que le poster et que board.png du short Manim)
+function drawBoard() {
+  const bg = document.getElementById('bg').getContext('2d'), r = S.rng(5);
+  const g = bg.createRadialGradient(540, 900, 100, 540, 900, 1300); g.addColorStop(0, '#24443A'); g.addColorStop(1, '#16291F');
+  bg.fillStyle = g; bg.fillRect(0, 0, W, H);
+  for (let i = 0; i < 26; i++) {
+    const x = r() * W, y = r() * H, rx = 140 + r() * 320, ry = 30 + r() * 70;
+    const gg = bg.createRadialGradient(x, y, 0, x, y, rx); gg.addColorStop(0, 'rgba(240,240,220,0.05)'); gg.addColorStop(1, 'rgba(240,240,220,0)');
+    bg.save(); bg.translate(x, y); bg.rotate((r() - .5) * .6); bg.scale(1, ry / rx); bg.fillStyle = gg; bg.beginPath(); bg.arc(0, 0, rx, 0, 7); bg.fill(); bg.restore();
+  }
+  const id = bg.getImageData(0, 0, W, H), d = id.data;
+  for (let i = 0; i < d.length; i += 4) { const n = (r() - .5) * 14; d[i] += n; d[i + 1] += n; d[i + 2] += n; }
+  bg.putImageData(id, 0, 0);
+  const wood = bg.createLinearGradient(0, 1770, 0, 1840); wood.addColorStop(0, '#9A6A3E'); wood.addColorStop(1, '#5E3D22');
+  bg.fillStyle = wood; bg.fillRect(0, 1770, W, 70); bg.fillStyle = 'rgba(0,0,0,.35)'; bg.fillRect(0, 1765, W, 6);
+  [[160, P.cream, 120], [330, P.orange, 90], [470, P.blue, 70]].forEach(([x, c, l]) => { bg.fillStyle = c; bg.fillRect(x, 1752, l, 18); });
+}
+// ---------- grain de craie : 26 % de trous, 12 % de demi-teinte (identique au masque Python)
+function grainURL() {
+  const c = document.createElement('canvas'); c.width = W; c.height = H;
+  const g = c.getContext('2d'), id = g.createImageData(W, H), d = id.data, r = S.rng(77);
+  for (let i = 0; i < d.length; i += 4) { const v = r(); d[i] = d[i + 1] = d[i + 2] = 255; d[i + 3] = v < 0.26 ? 0 : (v < 0.38 ? 128 : 255); }
+  g.putImageData(id, 0, 0); return c.toDataURL('image/png');
+}
+
+// ---------- helpers
+function add(node, parent = world) { parent.appendChild(node); return node; }
+function group(parent = world, ...kids) { const g = document.createElementNS(NS, 'g'); kids.forEach(k => g.appendChild(k)); parent.appendChild(g); return g; }
+function prepWrite(g) { // cache tous les tracés ; renvoie la liste à « écrire »
+  const strokes = [], fills = [];
+  g.querySelectorAll('path').forEach(p => {
+    const st = p.getAttribute('stroke');
+    if (st && st !== 'none') { const L = Math.ceil(p.getTotalLength()) + 2; p.style.strokeDasharray = `${L} ${L}`; p.style.strokeDashoffset = L; p.dataset.len = L; strokes.push(p); }
+    else { p.style.opacity = 0; fills.push(p); }
+  });
+  return { strokes, fills };
+}
+function write(g, at, dur, ease = 'power1.inOut', stagger = null) {
+  const { strokes, fills } = prepWrite(g);
+  const n = Math.max(1, strokes.length);
+  const st = stagger ?? Math.min(0.12, dur * 0.5 / n);
+  const each = Math.max(0.05, dur - st * (n - 1));
+  if (strokes.length) tl.fromTo(strokes, { strokeDashoffset: i => +strokes[i].dataset.len }, { strokeDashoffset: 0, duration: each, ease, stagger: st, immediateRender: false }, at);
+  if (fills.length) tl.fromTo(fills, { opacity: 0 }, { opacity: 1, duration: dur, immediateRender: false }, at);
+  return g;
+}
+function txt(s, x, y, size, color, { family = 'Caveat', weight = 700, anchor = 'middle', rot = 0, parent = hud } = {}) {
+  const t = document.createElementNS(NS, 'text'); t.textContent = s;
+  t.setAttribute('x', x); t.setAttribute('y', y); t.setAttribute('font-size', size); t.setAttribute('fill', color);
+  t.setAttribute('text-anchor', anchor); t.style.fontFamily = `'${family}'`; t.style.fontWeight = weight; t.style.opacity = 0;
+  if (rot) t.setAttribute('transform', `rotate(${rot} ${x} ${y})`);
+  parent.appendChild(t); return t;
+}
+// craie-qui-se-pose : fondu court + petit glissement (0.25 s, outCubic)
+function chalkIn(el, at, dur = 0.25) { tl.fromTo(el, { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: dur, ease: 'power3.out', immediateRender: false }, at); }
+function chalkOut(el, at, dur = 0.2) { tl.to(el, { opacity: 0, duration: dur, ease: 'sine.inOut' }, at); }
+// chiffon : balaie de gauche à droite, chaque élément s'efface quand le chiffon passe sur son centre
+function chiffon(at, dur, els) {
+  const cloth = group(hud);
+  [[160, 0.03], [100, 0.045], [50, 0.06]].forEach(([rx, op]) => { const e = document.createElementNS(NS, 'ellipse'); e.setAttribute('cx', 0); e.setAttribute('cy', 960); e.setAttribute('rx', rx); e.setAttribute('ry', 1080); e.setAttribute('fill', P.cream); e.setAttribute('fill-opacity', op); cloth.appendChild(e); });
+  cloth.style.opacity = 0;
+  tl.set(cloth, { opacity: 1 }, at);
+  tl.fromTo(cloth, { x: -300 }, { x: 1380, duration: dur, ease: 'sine.inOut', immediateRender: false }, at);
+  tl.set(cloth, { opacity: 0 }, at + dur);
+  els.forEach(el => {
+    const b = el.getBBox(), cx = b.x + b.width / 2, k = S.clamp((cx + 300) / 1680);
+    tl.to(el, { opacity: 0, duration: 0.24, ease: 'sine.inOut' }, at + Math.max(0, dur * (0.15 + 0.7 * k) - 0.12));
+  });
+  const r = S.rng(SEED + Math.round(at * 10));
+  for (let i = 0; i < 3; i++) { // traces de chiffon qui restent
+    const re = document.createElementNS(NS, 'rect'); const w = 360 + r() * 360, h = 30 + r() * 40;
+    re.setAttribute('x', 540 - w / 2 + (r() - .5) * 600); re.setAttribute('y', 300 + r() * 1200); re.setAttribute('width', w); re.setAttribute('height', h);
+    re.setAttribute('fill', P.cream); re.setAttribute('fill-opacity', 0.025); re.setAttribute('transform', `rotate(${(r() - .5) * 8} 540 960)`); re.style.opacity = 0; smears.appendChild(re);
+    tl.to(re, { opacity: 1, duration: 0.3 }, at + dur * 0.4);
+  }
+}
+
+function build() {
+  // ===== 0. HOOK (0–1.2 s) : titre + graine qui tombe dans la terre
+  const t1 = txt('Comment une', 510, 330, 100, P.text, { family: 'Nunito', weight: 800 });
+  const t1b = txt('graine devient', 510, 445, 100, P.text, { family: 'Nunito', weight: 800 });
+  const t2 = txt('un arbre ?', 510, 560, 100, P.green, { family: 'Nunito', weight: 800 });
+  tl.set([t1, t1b, t2], { opacity: 1 }, 0);
+  const ul = write(add(rc.curve([[300, 590], [470, 602], [640, 588]], O({ stroke: P.green, strokeWidth: 6, seed: 9 }))), 0.15, 0.4);
+  const ground = write(add(rc.linearPath([[40, 1186], [300, 1180], [540, 1190], [800, 1178], [1040, 1186]], O({ stroke: P.cream, strokeWidth: 7, seed: 11 }))), 0.0, 0.5, 'none');
+  const soil = write(add(rc.polygon([[60, 1196], [1020, 1196], [1020, 1600], [60, 1600]], O({ stroke: 'none', fill: 'rgba(255,184,76,0.28)', fillStyle: 'hachure', hachureAngle: -41, hachureGap: 26, fillWeight: 2.5, seed: 12 }))), 0.15, 0.7, 'none', 0.004);
+  const pebR = S.rng(13);
+  for (let i = 0; i < 9; i++) write(add(rc.ellipse(110 + pebR() * 860, 1290 + pebR() * 280, 26 + pebR() * 22, 16 + pebR() * 12, O({ stroke: P.muted, strokeWidth: 3, seed: 20 + i }))), 0.4 + i * 0.04, 0.3);
+  // la graine (personnage inventé : deux yeux, un sourire)
+  const seedO = group(world), seed = group(seedO);
+  seed.appendChild(rc.ellipse(0, 0, 118, 78, O({ stroke: P.orange, fill: 'rgba(255,184,76,0.9)', fillStyle: 'hachure', hachureGap: 8, strokeWidth: 6, seed: 30 })));
+  seed.appendChild(rc.circle(-20, -6, 10, O({ stroke: P.bg, fill: P.bg, fillStyle: 'solid', strokeWidth: 2, seed: 31 })));
+  seed.appendChild(rc.circle(20, -6, 10, O({ stroke: P.bg, fill: P.bg, fillStyle: 'solid', strokeWidth: 2, seed: 32 })));
+  seed.appendChild(rc.arc(0, 8, 34, 22, 0.2, Math.PI - 0.2, false, O({ stroke: P.bg, strokeWidth: 4, roughness: 0.6, seed: 33 })));
+  gsap.set(seedO, { x: 540, y: 700 });
+  tl.to(seedO, { y: 1222, duration: 0.9, ease: 'bounce.out' }, 0.15);
+  tl.to(seed, { rotation: 18, transformOrigin: '50% 50%', duration: 0.9, ease: 'power2.out' }, 0.15);
+  tl.to([t1, t1b, t2, ul], { opacity: 0, duration: 0.25 }, 1.25);
+
+  // ===== 1. ELLE BOIT (1.3–3.6)
+  const h1 = txt('1. Elle boit', 510, 330, 96, P.blue, { family: 'Nunito', weight: 800 }); chalkIn(h1, 1.35); chalkOut(h1, 3.5);
+  const k1 = txt("de l'eau", 540, 660, 76, P.blue); chalkIn(k1, 1.7); chalkOut(k1, 3.5);
+  const drops = [];
+  [[430, 1.5], [560, 1.8], [660, 2.1]].forEach(([x, at], i) => {
+    const d = group(world);
+    d.appendChild(rc.path(`M 0 -40 C 12 -14 24 0 24 14 C 24 30 12 38 0 38 C -12 38 -24 30 -24 14 C -24 0 -12 -14 0 -40 Z`, O({ stroke: P.blue, fill: 'rgba(127,209,255,0.85)', fillStyle: 'hachure', hachureGap: 7, strokeWidth: 5, seed: 40 + i })));
+    gsap.set(d, { x, y: 740, opacity: 0 });
+    tl.set(d, { opacity: 1 }, at);
+    tl.to(d, { y: 1170, duration: 0.55, ease: 'power2.in' }, at);
+    tl.to(d, { opacity: 0, scaleY: 0.3, duration: 0.12 }, at + 0.55);
+    const rip = write(add(rc.ellipse(x, 1196, 90, 20, O({ stroke: P.blue, strokeWidth: 4, seed: 50 + i }))), at + 0.55, 0.2);
+    tl.to(rip, { opacity: 0, duration: 0.4 }, at + 0.8);
+    drops.push(d);
+  });
+  tl.to(seed, { scale: 1.18, transformOrigin: '50% 50%', duration: 0.8, ease: 'back.out(2)' }, 2.6);
+  const crack = write(add(rc.linearPath([[506, 1200], [522, 1214], [512, 1226], [530, 1238]], O({ stroke: P.bg, strokeWidth: 5, roughness: 0.8, seed: 55 }))), 3.1, 0.3);
+
+  // ===== 2. LES RACINES (3.6–6.0) + zoom lent sur la terre
+  const h2 = txt('2. Les racines', 510, 330, 96, P.cream, { family: 'Nunito', weight: 800 }); chalkIn(h2, 3.6); chalkOut(h2, 5.9);
+  const roots = group(world);
+  roots.appendChild(rc.curve([[540, 1258], [548, 1340], [530, 1420], [546, 1500], [536, 1560]], O({ stroke: P.cream, strokeWidth: 7, seed: 60 })));
+  [[[544, 1320], [480, 1370], [430, 1440]], [[540, 1360], [610, 1400], [680, 1470]], [[534, 1430], [470, 1480], [410, 1500]], [[544, 1470], [600, 1520], [650, 1540]],
+   [[480, 1370], [440, 1372], [400, 1360]], [[610, 1400], [660, 1392], [700, 1404]]].forEach((pts, i) =>
+    roots.appendChild(rc.curve(pts, O({ stroke: P.cream, strokeWidth: 4.5, seed: 61 + i }))));
+  write(roots, 3.9, 1.8, 'power1.out', 0.22);
+  const k2 = txt('elles boivent l\'eau', 540, 860, 72, P.cream);
+  const k2b = txt('et tiennent la plante', 540, 945, 72, P.cream);
+  chalkIn(k2, 4.6); chalkIn(k2b, 4.9);
+  tl.to(cam, { scale: 1.1, svgOrigin: '540 1380', duration: 2.0, ease: 'sine.inOut' }, 3.8);
+  tl.to(cam, { scale: 1.0, svgOrigin: '540 1380', duration: 0.6, ease: 'sine.inOut' }, 5.8);
+  chalkOut([k2, k2b], 5.8);
+
+  // ===== 3. LA TIGE ET LES FEUILLES (6.0–8.6)
+  const h3 = txt('3. La tige pousse', 510, 330, 96, P.green, { family: 'Nunito', weight: 800 }); chalkIn(h3, 6.0); chalkOut(h3, 8.5);
+  const stem = write(add(rc.curve([[540, 1190], [548, 1080], [532, 960], [542, 860]], O({ stroke: P.green, strokeWidth: 9, seed: 70 }))), 6.1, 1.1, 'power1.out');
+  const leafPath = s => `M 0 0 C ${30 * s} -60 ${120 * s} -70 ${170 * s} -30 C ${120 * s} 10 ${50 * s} 20 0 0 Z`;
+  const leaves = [[537, 990, 1, 7.2], [544, 920, -1, 7.55], [541, 866, 0.6, 7.9]].map(([x, y, s, at], i) => {
+    const lf = group(world);
+    lf.appendChild(rc.path(leafPath(s), O({ stroke: P.green, fill: 'rgba(155,229,138,0.85)', fillStyle: 'hachure', hachureGap: 9, strokeWidth: 5, seed: 71 + i })));
+    lf.appendChild(rc.line(0, 0, 120 * s, -32, O({ stroke: P.green, strokeWidth: 3, seed: 75 + i })));
+    gsap.set(lf, { x, y, scale: 0, svgOrigin: '0 0' });
+    tl.to(lf, { scale: 1, duration: 0.45, ease: 'back.out(2.2)' }, at);
+    return lf;
+  });
+  const k3 = txt('des feuilles !', 300, 860, 72, P.green); chalkIn(k3, 7.4); chalkOut(k3, 8.5);
+
+  // ===== 4. LE SOLEIL LA NOURRIT (8.6–11.2) : photosynthèse
+  const h4 = txt('Photosynthèse', 510, 330, 96, P.orange, { family: 'Nunito', weight: 800 }); chalkIn(h4, 8.6);
+  const sun = group(world);
+  sun.appendChild(rc.circle(0, 0, 150, O({ stroke: P.orange, fill: 'rgba(255,184,76,0.9)', fillStyle: 'hachure', hachureGap: 10, strokeWidth: 6, seed: 80 })));
+  for (let i = 0; i < 10; i++) { const a = i / 10 * Math.PI * 2; sun.appendChild(rc.line(Math.cos(a) * 98, Math.sin(a) * 98, Math.cos(a) * 132, Math.sin(a) * 132, O({ stroke: P.orange, strokeWidth: 5, seed: 81 + i }))); }
+  gsap.set(sun, { x: 820, y: 560 });
+  write(sun, 8.7, 0.6);
+  const rays = [[[760, 640], [640, 860]], [[720, 610], [600, 930]], [[800, 660], [700, 990]]].map(([a, b], i) => {
+    const g = group(world);
+    g.appendChild(rc.line(a[0], a[1], b[0], b[1], O({ stroke: P.cream, strokeWidth: 5, seed: 92 + i })));
+    const ang = Math.atan2(b[1] - a[1], b[0] - a[0]);
+    g.appendChild(rc.linearPath([[b[0] - Math.cos(ang - 0.5) * 30, b[1] - Math.sin(ang - 0.5) * 30], b, [b[0] - Math.cos(ang + 0.5) * 30, b[1] - Math.sin(ang + 0.5) * 30]], O({ stroke: P.cream, strokeWidth: 5, seed: 95 + i })));
+    return write(g, 9.3 + i * 0.18, 0.45);
+  });
+  const k4 = txt('lumière + eau + air', 330, 600, 66, P.cream); chalkIn(k4, 9.6);
+  const k4b = txt('= de quoi grandir !', 330, 672, 66, P.orange); chalkIn(k4b, 10.1);
+  tl.to(leaves, { scale: 1.15, duration: 0.35, ease: 'sine.inOut', yoyo: true, repeat: 1 }, 10.2);
+
+  // ===== chiffon (11.2–11.8) : on efface l'étape, la plante devient arbre
+  chiffon(11.2, 0.6, [h4, k4, k4b, sun, ...rays, ...leaves, stem]);
+
+  // ===== 5. L'ARBRE (11.8–15.5)
+  const h5 = txt('Des années après…', 510, 330, 92, P.text, { family: 'Nunito', weight: 800 }); chalkIn(h5, 11.7);
+  const trunk = group(world);
+  trunk.appendChild(rc.polygon([[500, 1192], [520, 900], [512, 760], [568, 760], [560, 900], [584, 1192]], O({ stroke: P.orange, fill: 'rgba(154,106,62,0.9)', fillStyle: 'hachure', hachureAngle: 80, hachureGap: 10, strokeWidth: 6, seed: 100 })));
+  trunk.appendChild(rc.linearPath([[540, 900], [460, 820]], O({ stroke: P.orange, strokeWidth: 7, seed: 101 })));
+  trunk.appendChild(rc.linearPath([[548, 860], [640, 790]], O({ stroke: P.orange, strokeWidth: 7, seed: 102 })));
+  write(trunk, 11.8, 0.8, 'power1.out', 0.05);
+  const crown = group(world);
+  [[540, 640, 300], [400, 700, 210], [690, 700, 220], [470, 560, 200], [630, 560, 210]].forEach(([x, y, d], i) =>
+    crown.appendChild(rc.circle(x, y, d, O({ stroke: P.green, fill: 'rgba(155,229,138,0.55)', fillStyle: 'hachure', hachureGap: 14, strokeWidth: 6, seed: 110 + i }))));
+  gsap.set(crown, { scale: 0, svgOrigin: '540 760' });
+  tl.to(crown, { scale: 1, duration: 0.7, ease: 'back.out(1.6)' }, 12.4);
+  const fruits = [[430, 660], [600, 610], [700, 720], [500, 750], [380, 760]].map(([x, y], i) => {
+    const f = add(rc.circle(x, y, 34, O({ stroke: P.red, fill: P.red, fillStyle: 'solid', strokeWidth: 3, seed: 120 + i })));
+    gsap.set(f, { scale: 0, svgOrigin: `${x} ${y}` }); tl.to(f, { scale: 1, duration: 0.3, ease: 'back.out(3)' }, 13.0 + i * 0.1); return f;
+  });
+  const k5 = txt('un arbre !', 820, 1000, 80, P.green, { rot: -6 }); chalkIn(k5, 12.8);
+  // une nouvelle graine tombe : et tout recommence
+  const seed2O = group(world), seed2 = group(seed2O);
+  seed2.appendChild(rc.ellipse(0, 0, 80, 52, O({ stroke: P.orange, fill: 'rgba(255,184,76,0.9)', fillStyle: 'hachure', hachureGap: 7, strokeWidth: 5, seed: 130 })));
+  seed2.appendChild(rc.circle(-13, -4, 8, O({ stroke: P.bg, fill: P.bg, fillStyle: 'solid', strokeWidth: 2, seed: 131 })));
+  seed2.appendChild(rc.circle(13, -4, 8, O({ stroke: P.bg, fill: P.bg, fillStyle: 'solid', strokeWidth: 2, seed: 132 })));
+  gsap.set(seed2O, { x: 700, y: 760, opacity: 0 });
+  tl.set(seed2O, { opacity: 1 }, 13.7);
+  tl.to(seed2O, { y: 1166, duration: 0.9, ease: 'bounce.out' }, 13.7);
+  tl.to(seed2O, { x: 820, duration: 0.9, ease: 'power1.out' }, 13.7);
+  tl.to(seed2, { rotation: 200, transformOrigin: '50% 50%', duration: 0.9, ease: 'power1.out' }, 13.7);
+  chalkOut(h5, 14.2);
+  const k6 = txt('Et ça recommence !', 510, 330, 92, P.orange, { family: 'Nunito', weight: 800 }); chalkIn(k6, 14.4);
+  tl.to(cam, { scale: 0.96, svgOrigin: '540 900', duration: 2.2, ease: 'sine.inOut' }, 13.0);
+  tl.set({}, {}, DUR);
+}
+
+const ready = S.loadFonts([{ family: 'Caveat', pkg: 'caveat', weight: 700 }, { family: 'Nunito', pkg: 'nunito', weight: 800 }]).then(async () => {
+  drawBoard();
+  const img = document.getElementById('grainImg'); const url = grainURL();
+  img.setAttribute('href', url); img.setAttributeNS('http://www.w3.org/1999/xlink', 'href', url);
+  await new Promise(r => setTimeout(r, 200));
+  build();
+  tl.seek(0, false);
+});
+S.installContract({ renderAt: t => { tl.seek(t, false); }, ready, duration: DUR });
+</script></body></html>

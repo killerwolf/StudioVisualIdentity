@@ -1,0 +1,56 @@
+{
+ "identity": "bauhaus-kinetic",
+ "family": "engagement",
+ "title": "Trouve l'intrus en 5 secondes",
+ "hook": "« Trouve l'intrus » + badge 5 ; 30 tuiles Bauhaus (carré + quart de disque) pop en stagger depuis le centre en < 1 s",
+ "duration": 14.0,
+ "libraries": [
+  "Paper.js",
+  "flubber",
+  "anime.js"
+ ],
+ "seed": 23,
+ "renderTimeSec": 133.3,
+ "structure": [
+  {
+   "t": 0,
+   "beat": "hook : titre défi + grille 5×6 en stagger depuis le centre"
+  },
+  {
+   "t": 1.5,
+   "beat": "compte à rebours 5 s : badge morphé (cercle->carré->triangle->hexagone->cercle), 5 cases qui se remplissent, vague de respiration sur la grille"
+  },
+  {
+   "t": 6.5,
+   "beat": "révélation : stagger d'atténuation depuis l'intrus, cadre noir en snap 90°, « tourné de 90° »"
+  },
+  {
+   "t": 8.0,
+   "beat": "l'intrus se remet droit (rotation −90° outBack)"
+  },
+  {
+   "t": 9.0,
+   "beat": "grid-wipe"
+  },
+  {
+   "t": 9.53,
+   "beat": "CTA : « T'as trouvé en combien ? » ; 4 carrés se morphent en cercle 1 s / carré 3 s / triangle 5 s / hexagone raté ; « Réponds en commentaire » (tenue jusqu'à 14 s)"
+  }
+ ],
+ "engagement": {
+  "mechanic": "défi chronométré + vote en commentaire",
+  "cta": "T'as trouvé en combien ? Réponds en commentaire (1 s / 3 s / 5 s / raté)"
+ },
+ "loopable": false,
+ "sound": {
+  "type": "generated",
+  "voice": false
+ },
+ "qualityChecks": {
+  "stillsReviewed": true,
+  "textMinPx": 56,
+  "safeAreaOk": true
+ },
+ "notes": "Intrus = tuile index 23 (colonne 4, rangée 5 en comptant depuis 1), quart de disque ancré en haut à droite au lieu d'en haut à gauche. Couleurs des tuiles en motif diagonal (i + 2j) mod 4 pour brouiller la recherche sans aléatoire. Rendu sous charge (10 studios sur 4 cœurs) : 31,7 s/100 frames ; le coût est dominé par la capture JPEG (~0,3 s/frame), le JS ne pèse que ~8 ms/frame.",
+ "reproduce": "mkdir -p /tmp/svi/bauhaus-kinetic__engagement__trouve-l-intrus && node out/tools/render.mjs out/shorts/bauhaus-kinetic__engagement__trouve-l-intrus/src/index.html --out /tmp/svi/bauhaus-kinetic__engagement__trouve-l-intrus/video.mp4 --duration 14 && .venv/bin/python out/tools/sound.py out/shorts/bauhaus-kinetic__engagement__trouve-l-intrus/src/sound.json /tmp/svi/bauhaus-kinetic__engagement__trouve-l-intrus/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/bauhaus-kinetic__engagement__trouve-l-intrus/video.mp4 --music /tmp/svi/bauhaus-kinetic__engagement__trouve-l-intrus/music.wav --out out/shorts/bauhaus-kinetic__engagement__trouve-l-intrus/short.mp4"
+}

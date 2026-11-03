@@ -1,0 +1,225 @@
+{
+ "duration": 16.0,
+ "seed": 4,
+ "bpm": 96,
+ "key": "F",
+ "scale": "majpent",
+ "music": {
+  "preset": "music-box",
+  "gain": 0.5,
+  "octave": 5,
+  "density": 0.55
+ },
+ "reverb": 0.22,
+ "events": [
+  {
+   "t": 0.0,
+   "type": "pop",
+   "note": "C6",
+   "gain": 0.7
+  },
+  {
+   "t": 0.15,
+   "type": "pop",
+   "note": "F6",
+   "gain": 0.8
+  },
+  {
+   "t": 0.55,
+   "type": "glass",
+   "note": "A5",
+   "gain": 0.35
+  },
+  {
+   "t": 2.8,
+   "type": "whoosh",
+   "gain": 0.35,
+   "dur": 0.5
+  },
+  {
+   "t": 3.25,
+   "type": "thud",
+   "gain": 0.5
+  },
+  {
+   "t": 3.27,
+   "type": "pop",
+   "note": "C6",
+   "gain": 0.6
+  },
+  {
+   "t": 3.3,
+   "type": "chime",
+   "note": "F5",
+   "gain": 0.45
+  },
+  {
+   "t": 4.2,
+   "type": "swell",
+   "note": "F4",
+   "gain": 0.45,
+   "dur": 2.6
+  },
+  {
+   "t": 7.05,
+   "type": "chime",
+   "note": "A5",
+   "gain": 0.45
+  },
+  {
+   "t": 7.2,
+   "type": "blip",
+   "note": "E6",
+   "gain": 0.4
+  },
+  {
+   "t": 7.8,
+   "type": "glass",
+   "note": "C6",
+   "gain": 0.3
+  },
+  {
+   "t": 8.1,
+   "type": "glass",
+   "note": "D6",
+   "gain": 0.3
+  },
+  {
+   "t": 8.4,
+   "type": "glass",
+   "note": "F6",
+   "gain": 0.3
+  },
+  {
+   "t": 10.45,
+   "type": "chime",
+   "note": "C6",
+   "gain": 0.45
+  },
+  {
+   "t": 10.95,
+   "type": "tick",
+   "gain": 0.25
+  },
+  {
+   "t": 11.14,
+   "type": "tick",
+   "gain": 0.35
+  },
+  {
+   "t": 11.33,
+   "type": "tick",
+   "gain": 0.45
+  },
+  {
+   "t": 11.52,
+   "type": "tick",
+   "gain": 0.25
+  },
+  {
+   "t": 11.71,
+   "type": "tick",
+   "gain": 0.35
+  },
+  {
+   "t": 11.9,
+   "type": "tick",
+   "gain": 0.45
+  },
+  {
+   "t": 12.09,
+   "type": "tick",
+   "gain": 0.25
+  },
+  {
+   "t": 12.28,
+   "type": "tick",
+   "gain": 0.35
+  },
+  {
+   "t": 12.47,
+   "type": "tick",
+   "gain": 0.45
+  },
+  {
+   "t": 12.66,
+   "type": "tick",
+   "gain": 0.25
+  },
+  {
+   "t": 12.85,
+   "type": "tick",
+   "gain": 0.35
+  },
+  {
+   "t": 13.04,
+   "type": "tick",
+   "gain": 0.45
+  },
+  {
+   "t": 13.23,
+   "type": "tick",
+   "gain": 0.25
+  },
+  {
+   "t": 13.42,
+   "type": "tick",
+   "gain": 0.35
+  },
+  {
+   "t": 11.45,
+   "type": "whoosh",
+   "gain": 0.3,
+   "dur": 1.1
+  },
+  {
+   "t": 12.6,
+   "type": "impact",
+   "gain": 0.35,
+   "dur": 0.6
+  },
+  {
+   "t": 12.62,
+   "type": "pop",
+   "note": "A5",
+   "gain": 0.7
+  },
+  {
+   "t": 13.7,
+   "type": "chime",
+   "note": "F5",
+   "gain": 0.5
+  },
+  {
+   "t": 14.0,
+   "type": "pop",
+   "note": "C6",
+   "gain": 0.5
+  },
+  {
+   "t": 14.3,
+   "type": "pop",
+   "note": "D6",
+   "gain": 0.5
+  },
+  {
+   "t": 14.6,
+   "type": "pop",
+   "note": "F6",
+   "gain": 0.5
+  },
+  {
+   "t": 15.15,
+   "type": "blip",
+   "note": "A6",
+   "gain": 0.45
+  },
+  {
+   "t": 15.3,
+   "type": "chime",
+   "note": "F6",
+   "gain": 0.4,
+   "dur": 0.7
+  }
+ ]
+}

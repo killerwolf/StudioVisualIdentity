@@ -1,0 +1,22 @@
+{
+ "language": "fr",
+ "style": "calme, presque chuchoté, contemplatif ; laisser respirer entre les phrases",
+ "voice": "Achernar",
+ "lines": [
+  {
+   "t": 0.4,
+   "maxDuration": 3.0,
+   "text": "Deux mille lucioles. Une seule règle."
+  },
+  {
+   "t": 3.9,
+   "maxDuration": 3.7,
+   "text": "Elles suivent l'attracteur de Lorenz, sans jamais se répéter."
+  },
+  {
+   "t": 8.05,
+   "maxDuration": 3.9,
+   "text": "C'est le chaos… mais un chaos qui a une forme."
+  }
+ ]
+}

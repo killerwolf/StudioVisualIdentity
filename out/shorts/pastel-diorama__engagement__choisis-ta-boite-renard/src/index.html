@@ -1,0 +1,318 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8">
+<!-- Short "Choisis ta boîte : laquelle cache le petit renard ?" — identité Diorama Pastel.
+     A-Frame 1.8 (maquette 3D feutrine, boîtes arrondies, renard inventé) + GSAP (timeline seek) + overlays DOM.
+     Déterministe : boucle A-Frame coupée, caméra Matrix4.lookAt, rendu manuel. Graine 7. Durée 15 s. -->
+<script src="/node_modules/aframe/dist/aframe-v1.8.0.js"></script>
+<script src="/node_modules/gsap/dist/gsap.min.js"></script>
+<style>
+  :root{--ink:#3B2E5A;--pinkInk:#E23D72;--yellow:#FFD670;--blue:#8ED6FF;--mint:#9BE7B0}
+  html,body{margin:0;width:1080px;height:1920px;overflow:hidden;
+    background: radial-gradient(900px 1100px at 50% 55%, #FFF4F7 0%, #FFE8EF 60%, #FFDCE7 100%);}
+  .dots{position:absolute;inset:0;background-image:radial-gradient(#FFC9D8 3px, transparent 3.5px);background-size:46px 46px;opacity:.55}
+  a-scene{position:absolute!important;left:0;top:0}
+  .a-enter-vr,.a-enter-ar,.a-orientation-modal{display:none!important}
+  .ov{position:absolute;color:var(--ink);transform-origin:0% 50%;z-index:10}
+  .kicker{left:72px;top:236px;font:800 56px 'Nunito';background:var(--yellow);padding:8px 28px 12px;border-radius:40px;box-shadow:0 6px 0 #F0BC3F}
+  h1{left:72px;top:322px;margin:0;width:900px;font:800 132px/1.0 'Baloo 2';letter-spacing:-0.01em;text-shadow:0 8px 0 #FFC2D3}
+  h1 span{color:var(--pinkInk)}
+  .step{left:72px;top:240px;display:flex;align-items:center;gap:26px;background:#FFFFFF;border-radius:70px;padding:14px 46px 18px 16px;
+        font:800 96px/1 'Baloo 2';box-shadow:0 12px 0 #F9C6D5, 0 26px 50px rgba(59,46,90,.10)}
+  .step i{font-style:normal;display:inline-flex;align-items:center;justify-content:center;width:112px;height:112px;border-radius:56px;font:800 76px/1 'Baloo 2';padding-top:6px;box-sizing:border-box}
+  .num{position:absolute;z-index:10;width:118px;height:118px;margin:-59px 0 0 -59px;border-radius:60px;background:#FFFFFF;color:var(--ink);
+       display:flex;align-items:center;justify-content:center;font:800 84px/1 'Baloo 2';padding-top:8px;box-sizing:border-box;box-shadow:0 8px 0 rgba(59,46,90,.16)}
+  .count{position:absolute;z-index:10;left:540px;top:700px;width:250px;height:250px;margin:-125px 0 0 -125px;border-radius:125px;background:#FFD670;
+       display:flex;align-items:center;justify-content:center;font:800 190px/1 'Baloo 2';color:var(--ink);padding-top:16px;box-sizing:border-box;box-shadow:0 14px 0 #F0BC3F}
+  .card{left:72px;top:1400px;width:820px;background:#FFFFFF;border-radius:48px;padding:30px 40px 36px;box-sizing:border-box;
+        font:800 60px/1.15 'Nunito';box-shadow:0 14px 0 #F9C6D5, 0 30px 60px rgba(59,46,90,.12);transform-origin:50% 50%}
+  .card b{color:#2F7FB5}
+  .tag{position:absolute;z-index:10;font:800 56px/1 'Nunito';color:var(--ink);background:#FFFFFF;padding:12px 28px 16px;border-radius:40px;box-shadow:0 8px 0 rgba(59,46,90,.14);transform-origin:50% 100%}
+</style></head><body>
+<div class="dots"></div>
+<a-scene embedded vr-mode-ui="enabled:false" xr-mode-ui="enabled:false" renderer="antialias:true; colorManagement:true; preserveDrawingBuffer:true; alpha:true"
+  style="width:1080px;height:1920px" loading-screen="enabled:false" device-orientation-permission-ui="enabled:false">
+  <a-entity light="type:hemisphere; color:#FFFFFF; groundColor:#F2C9D8; intensity:1.25"></a-entity>
+  <a-entity light="type:directional; color:#FFF6EC; intensity:1.1" position="-3 6 5"></a-entity>
+  <a-entity light="type:directional; color:#DDEBFF; intensity:0.35" position="4 2 -3"></a-entity>
+  <a-entity id="cam" camera="fov:30; active:true; near:0.1; far:100" position="0 6.6 12"></a-entity>
+</a-scene>
+<div class="ov kicker" id="kick">Choisis ta boîte !</div>
+<h1 class="ov" id="title">Où se cache<br>le <span>renard</span>&nbsp;?</h1>
+<div class="ov step" id="s1"><i style="background:#8ED6FF">!</i>Ça mélange…</div>
+<div class="ov step" id="s2"><i style="background:#FFD670">?</i>1, 2 ou 3 ?</div>
+<div class="ov step" id="s3"><i style="background:#9BE7B0;padding-top:0"><svg width="64" height="64" viewBox="0 0 64 64"><path d="M12 34l13 13 27-29" fill="none" stroke="#3B2E5A" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/></svg></i>Boîte n°3 !</div>
+<div class="num" id="n0">1</div><div class="num" id="n1">2</div><div class="num" id="n2">3</div>
+<div class="count" id="count">3</div>
+<div class="tag" id="vide">vide !</div>
+<div class="ov card" id="cta1">Écris ton choix<br>en <b>commentaire</b> !</div>
+<div class="ov card" id="cta2">Tu l'avais trouvé ?<br>Dis-le en <b>commentaire</b> !</div>
+<script type="module">
+import * as S from '/out/tools/lib/svi.js';
+const SEED = 7, DUR = 15;
+const sceneEl = document.querySelector('a-scene');
+const THREE = window.AFRAME.THREE;
+
+// --- géométrie "roundbox" : boîte aux arêtes arrondies (look jouet/feutrine, cohérent avec les traits ronds de Zdog)
+AFRAME.registerGeometry('roundbox', {
+  schema: { width: { default: 1 }, height: { default: 1 }, depth: { default: 1 }, radius: { default: 0.1 }, seg: { default: 6 } },
+  init(d) {
+    const g = new THREE.BoxGeometry(d.width, d.height, d.depth, d.seg, d.seg, d.seg);
+    const p = g.attributes.position, n = g.attributes.normal, v = new THREE.Vector3(), c = new THREE.Vector3();
+    const ix = d.width / 2 - d.radius, iy = d.height / 2 - d.radius, iz = d.depth / 2 - d.radius;
+    for (let i = 0; i < p.count; i++) {
+      v.fromBufferAttribute(p, i);
+      c.set(S.clamp(v.x, -ix, ix), S.clamp(v.y, -iy, iy), S.clamp(v.z, -iz, iz));
+      v.sub(c).normalize(); n.setXYZ(i, v.x, v.y, v.z);
+      v.multiplyScalar(d.radius).add(c); p.setXYZ(i, v.x, v.y, v.z);
+    }
+    this.geometry = g;
+  }
+});
+
+const mk = (parent, geo, mat, pos = '0 0 0', extra = {}) => {
+  const e = document.createElement('a-entity');
+  e.setAttribute('geometry', geo);                                   // CHAÎNES (fait vérifié)
+  e.setAttribute('material', mat + '; roughness: 1; metalness: 0');
+  e.setAttribute('position', pos);
+  for (const k in extra) e.setAttribute(k, extra[k]);
+  parent.appendChild(e); return e;
+};
+const grp = (parent, pos = '0 0 0') => { const e = document.createElement('a-entity'); e.setAttribute('position', pos); parent.appendChild(e); return e; };
+
+const BOXW = 0.68, BOXH = 0.6, GAP = 0.94;
+const SLOTX = [-GAP, 0, GAP];
+const boxes = [], lids = [], shadows = [];
+let fox, foxParts = {}, confetti = [];
+const loaded = new Promise(r => sceneEl.hasLoaded ? r() : sceneEl.addEventListener('loaded', r));
+const ready = Promise.all([loaded, S.loadFonts([{ family: 'Baloo 2', pkg: 'baloo-2', weight: 800 }, { family: 'Nunito', pkg: 'nunito', weight: 800 }])]).then(() => {
+  const R = S.rng(SEED);
+  const root = grp(sceneEl);
+  // socle feutrine (même maquette que le monde Zdog : disque menthe + galette blanche)
+  mk(root, 'primitive: cylinder; radius: 1.75; height: 0.3; segmentsRadial: 64', 'color: #9BE7B0', '0 -0.15 0');
+  mk(root, 'primitive: cylinder; radius: 1.86; height: 0.12; segmentsRadial: 64', 'color: #FFFFFF', '0 -0.36 0');
+  for (let i = 0; i < 22; i++) {
+    const a = R() * Math.PI * 2, d = 1.25 + R() * 0.4;
+    if (Math.sin(a) > 0.3 && Math.abs(Math.cos(a)) < 0.6) continue;           // pas de fleurs devant les boîtes
+    mk(root, 'primitive: sphere; radius: 0.045; segmentsWidth: 10; segmentsHeight: 8', `color: ${['#FF8FAB', '#FFD670', '#FFFFFF'][i % 3]}`, `${(Math.cos(a) * d).toFixed(3)} 0.02 ${(Math.sin(a) * d).toFixed(3)}`);
+  }
+  // arbres-boules + maisonnette au fond
+  const tree = (x, z, s, c) => { mk(root, `primitive: cylinder; radius: ${0.05 * s}; height: ${0.35 * s}`, 'color: #C99A6B', `${x} ${0.17 * s} ${z}`);
+    mk(root, `primitive: sphere; radius: ${0.3 * s}; segmentsWidth: 24; segmentsHeight: 16`, `color: ${c}`, `${x} ${0.52 * s} ${z}`); };
+  tree(-1.15, -0.9, 1.0, '#7ED19A'); tree(-0.55, -1.35, 1.2, '#9BE7B0'); tree(1.3, -0.7, 0.8, '#B5EFC3');
+  const h = grp(root, '0.55 0 -1.25');
+  mk(h, 'primitive: roundbox; width: 0.5; height: 0.45; depth: 0.45; radius: 0.04', 'color: #FFFFFF', '0 0.225 0');
+  mk(h, 'primitive: cone; radiusBottom: 0.38; radiusTop: 0.0; height: 0.36; segmentsRadial: 24', 'color: #FF8FAB', '0 0.62 0');
+  mk(h, 'primitive: roundbox; width: 0.14; height: 0.22; depth: 0.02; radius: 0.01', 'color: #FFD670', '0 0.11 0.23');
+
+  // 3 boîtes cadeau identiques (vrai jeu de suivi)
+  for (let i = 0; i < 3; i++) {
+    const b = grp(root, `${SLOTX[i]} 0 0`);
+    shadows[i] = mk(b, 'primitive: circle; radius: 0.46; segments: 32', 'color: #6FB585; opacity: 0.45; transparent: true; shader: flat', '0 0.004 0', { rotation: '-90 0 0' });
+    mk(b, `primitive: roundbox; width: ${BOXW}; height: ${BOXH}; depth: ${BOXW}; radius: 0.07`, 'color: #8ED6FF', `0 ${BOXH / 2} 0`);
+    mk(b, `primitive: roundbox; width: 0.14; height: ${BOXH + 0.01}; depth: ${BOXW + 0.012}; radius: 0.02`, 'color: #FFD670', `0 ${BOXH / 2} 0`);
+    mk(b, `primitive: roundbox; width: ${BOXW + 0.012}; height: ${BOXH + 0.01}; depth: 0.14; radius: 0.02`, 'color: #FFD670', `0 ${BOXH / 2} 0`);
+    mk(b, `primitive: roundbox; width: ${BOXW - 0.1}; height: 0.02; depth: ${BOXW - 0.1}; radius: 0.009`, 'color: #3F78A8', `0 ${BOXH + 0.005} 0`);
+    const lid = grp(b, `0 ${BOXH} 0`);
+    mk(lid, `primitive: roundbox; width: ${BOXW + 0.08}; height: 0.15; depth: ${BOXW + 0.08}; radius: 0.05`, 'color: #B5E5FF', '0 0.06 0');
+    mk(lid, `primitive: roundbox; width: 0.15; height: 0.16; depth: ${BOXW + 0.092}; radius: 0.03`, 'color: #FFD670', '0 0.06 0');
+    mk(lid, `primitive: roundbox; width: ${BOXW + 0.092}; height: 0.16; depth: 0.15; radius: 0.03`, 'color: #FFD670', '0 0.06 0');
+    mk(lid, 'primitive: sphere; radius: 0.1; segmentsWidth: 16; segmentsHeight: 12', 'color: #FFD670', '-0.1 0.2 0', { scale: '1.3 0.8 0.7', rotation: '0 0 25' });
+    mk(lid, 'primitive: sphere; radius: 0.1; segmentsWidth: 16; segmentsHeight: 12', 'color: #FFD670', '0.1 0.2 0', { scale: '1.3 0.8 0.7', rotation: '0 0 -25' });
+    mk(lid, 'primitive: sphere; radius: 0.06; segmentsWidth: 12; segmentsHeight: 10', 'color: #FFC94A', '0 0.19 0.02');
+    boxes.push(b); lids.push(lid);
+  }
+  // le petit renard (personnage inventé, primitives arrondies)
+  fox = grp(root, '0 0 0');
+  const F = grp(fox, '0 0 0'); foxParts.F = F;
+  const OR = '#FF9E5E', WH = '#FFF7F0', INK = '#3B2E5A';
+  mk(F, 'primitive: sphere; radius: 0.22; segmentsWidth: 24; segmentsHeight: 16', `color: ${OR}`, '0 0.22 0', { scale: '1 1.1 0.9' });
+  mk(F, 'primitive: sphere; radius: 0.13; segmentsWidth: 18; segmentsHeight: 12', `color: ${WH}`, '0 0.2 0.12', { scale: '1 1.2 0.6' });
+  const head = grp(F, '0 0.58 0'); foxParts.head = head;
+  mk(head, 'primitive: sphere; radius: 0.24; segmentsWidth: 28; segmentsHeight: 18', `color: ${OR}`, '0 0 0', { scale: '1.12 0.95 1' });
+  mk(head, 'primitive: sphere; radius: 0.12; segmentsWidth: 18; segmentsHeight: 12', `color: ${WH}`, '-0.09 -0.07 0.15', { scale: '1 0.8 0.8' });
+  mk(head, 'primitive: sphere; radius: 0.12; segmentsWidth: 18; segmentsHeight: 12', `color: ${WH}`, '0.09 -0.07 0.15', { scale: '1 0.8 0.8' });
+  mk(head, 'primitive: sphere; radius: 0.045; segmentsWidth: 12; segmentsHeight: 10', `color: ${INK}`, '0 -0.02 0.25');
+  mk(head, 'primitive: sphere; radius: 0.035; segmentsWidth: 12; segmentsHeight: 10', `color: ${INK}`, '-0.09 0.06 0.21');
+  mk(head, 'primitive: sphere; radius: 0.035; segmentsWidth: 12; segmentsHeight: 10', `color: ${INK}`, '0.09 0.06 0.21');
+  mk(head, 'primitive: sphere; radius: 0.012; segmentsWidth: 8; segmentsHeight: 6', 'color: #FFFFFF; shader: flat', '-0.08 0.075 0.245');
+  mk(head, 'primitive: sphere; radius: 0.012; segmentsWidth: 8; segmentsHeight: 6', 'color: #FFFFFF; shader: flat', '0.1 0.075 0.245');
+  mk(head, 'primitive: sphere; radius: 0.04; segmentsWidth: 10; segmentsHeight: 8', 'color: #FF8FAB', '-0.17 -0.03 0.16', { scale: '1 0.7 0.5' });
+  mk(head, 'primitive: sphere; radius: 0.04; segmentsWidth: 10; segmentsHeight: 8', 'color: #FF8FAB', '0.17 -0.03 0.16', { scale: '1 0.7 0.5' });
+  for (const sx of [-1, 1]) {
+    const ear = grp(head, `${0.14 * sx} 0.2 0`); ear.setAttribute('rotation', `0 0 ${-18 * sx}`);
+    mk(ear, 'primitive: cone; radiusBottom: 0.1; radiusTop: 0.01; height: 0.22; segmentsRadial: 16', `color: ${OR}`, '0 0.08 0');
+    mk(ear, 'primitive: cone; radiusBottom: 0.055; radiusTop: 0.005; height: 0.14; segmentsRadial: 12', 'color: #FFC2D3', '0 0.06 0.05');
+  }
+  const tail = grp(F, '0.2 0.18 -0.12'); foxParts.tail = tail; tail.setAttribute('rotation', '0 0 -50');
+  mk(tail, 'primitive: sphere; radius: 0.12; segmentsWidth: 16; segmentsHeight: 12', `color: ${OR}`, '0 0.14 0', { scale: '0.85 1.6 0.85' });
+  mk(tail, 'primitive: sphere; radius: 0.08; segmentsWidth: 14; segmentsHeight: 10', `color: ${WH}`, '0 0.33 0', { scale: '1 1.1 1' });
+  const arm = grp(F, '-0.2 0.3 0.04'); foxParts.arm = arm;
+  mk(arm, 'primitive: sphere; radius: 0.06; segmentsWidth: 12; segmentsHeight: 10', `color: ${OR}`, '0 0.1 0', { scale: '0.8 1.6 0.8' });
+  // confettis
+  for (let i = 0; i < 34; i++) {
+    const e = mk(root, 'primitive: sphere; radius: 0.035; segmentsWidth: 8; segmentsHeight: 6', `color: ${['#FF8FAB', '#FFD670', '#8ED6FF', '#9BE7B0', '#FFFFFF'][i % 5]}`, '0 -5 0');
+    const a = R() * Math.PI * 2, sp = 1.4 + R() * 1.6;
+    confetti.push({ e, vx: Math.cos(a) * 0.9 * R(), vz: Math.sin(a) * 0.6 * R(), vy: 2.2 + sp, ph: R() });
+  }
+  return new Promise(r => setTimeout(r, 400));
+}).then(() => { sceneEl.renderer.setAnimationLoop(null); sceneEl.pause(); });
+
+// ---------- timeline GSAP (une propriété = un tween) ----------
+const st = { drop: 0, title: 0, titleOut: 0, foxIn: 0, wave: 0, lidA: 0, jump: 0, lidB: 0, s1: 0, s1o: 0, s2: 0, s2o: 0, s3: 0,
+  nums: 0, c3: 0, c2: 0, c1: 0, cOut: 0, cta1: 0, cta1o: 0, push: 0, openE: 0, vide: 0, videO: 0, openF: 0, foxUp: 0, conf: 0, win: 0, cta2: 0, wave2: 0 };
+const tl = gsap.timeline({ paused: true });
+const at = (p, a, b, d, ease, t) => tl.fromTo(st, { [p]: a }, { [p]: b, duration: d, ease, immediateRender: false }, t);
+at('drop', 0, 1, 0.6, 'bounce.out', 0);
+at('title', 0, 1, 0.55, 'back.out(1.7)', 0.0);
+at('foxIn', 0, 1, 0.6, 'back.out(2.2)', 0.2);
+at('wave', 0, 1, 1.4, 'none', 0.6);
+at('lidA', 0, 1, 0.35, 'back.out(2)', 1.75);
+at('jump', 0, 1, 0.7, 'none', 2.0);
+at('lidB', 0, 1, 0.3, 'bounce.out', 2.6);
+at('titleOut', 0, 1, 0.35, 'back.in(1.6)', 3.0);
+at('s1', 0, 1, 0.5, 'back.out(1.8)', 3.25);
+at('s1o', 0, 1, 0.3, 'back.in(1.6)', 8.45);
+at('s2', 0, 1, 0.5, 'back.out(1.8)', 8.7);
+at('nums', 0, 1, 0.8, 'none', 8.75);
+at('push', 0, 1, 2.6, 'sine.inOut', 8.7);
+at('cta1', 0, 1, 0.5, 'back.out(1.7)', 9.0);
+at('c3', 0, 1, 0.35, 'back.out(2)', 9.3);
+at('c2', 0, 1, 0.35, 'back.out(2)', 10.0);
+at('c1', 0, 1, 0.35, 'back.out(2)', 10.7);
+at('cOut', 0, 1, 0.25, 'back.in(1.6)', 11.35);
+at('cta1o', 0, 1, 0.3, 'back.in(1.6)', 11.4);
+at('openE', 0, 1, 0.5, 'back.out(1.6)', 11.6);
+at('vide', 0, 1, 0.4, 'back.out(2)', 11.75);
+at('s2o', 0, 1, 0.3, 'back.in(1.6)', 12.15);
+at('openF', 0, 1, 0.5, 'back.out(1.6)', 12.35);
+at('videO', 0, 1, 0.3, 'back.in(1.6)', 12.4);
+at('foxUp', 0, 1, 0.6, 'back.out(2.4)', 12.4);
+at('conf', 0, 1, 1.6, 'none', 12.45);
+at('s3', 0, 1, 0.5, 'back.out(1.8)', 12.45);
+at('win', 0, 1, 0.5, 'elastic.out(1,0.4)', 12.5);
+at('cta2', 0, 1, 0.5, 'back.out(1.7)', 13.25);
+at('wave2', 0, 1, 1.6, 'none', 13.3);
+
+// ---------- mélange : 6 échanges de places (le renard est dans la boîte 1 = "2") ----------
+const SWAPS = [[1, 2], [0, 1], [0, 2], [1, 2], [0, 1], [1, 2]];
+const SW_T = [3.45, 4.35, 5.15, 5.9, 6.6, 7.25], SW_D = [0.85, 0.75, 0.7, 0.65, 0.6, 0.65];
+const FOX_BOX = 1;
+// slots occupés au fil des échanges (pré-calculés)
+const slotAt = [[0, 1, 2]];                               // slotAt[k][boxIndex] = slot après k échanges
+SWAPS.forEach(([a, b]) => { const prev = slotAt[slotAt.length - 1].slice(); const ia = prev.indexOf(a), ib = prev.indexOf(b); prev[ia] = b; prev[ib] = a; slotAt.push(prev); });
+const FINAL = slotAt[slotAt.length - 1];
+const FOX_SLOT = FINAL[FOX_BOX];                          // = 2 -> "boîte n°3"
+const EMPTY_SLOT = 1;                                     // on ouvre d'abord la n°2 (celle du départ) : vide !
+const boxInSlot = s => FINAL.indexOf(s);
+function boxPos(i, t) {
+  let k = 0; while (k < SWAPS.length && t >= SW_T[k] + SW_D[k]) k++;
+  const from = slotAt[k][i];
+  if (k < SWAPS.length && t > SW_T[k]) {
+    const to = slotAt[k + 1][i];
+    if (to !== from) {
+      const u = S.ease.inOutCubic(S.clamp((t - SW_T[k]) / SW_D[k]));
+      const front = to > from ? 1 : -1;                  // une boîte passe devant, l'autre derrière
+      return { x: S.lerp(SLOTX[from], SLOTX[to], u), z: Math.sin(u * Math.PI) * 0.55 * front, y: Math.sin(u * Math.PI) * 0.12, tilt: Math.sin(u * Math.PI * 2) * 8 };
+    }
+  }
+  return { x: SLOTX[from], z: 0, y: 0, tilt: 0 };
+}
+
+const $ = id => document.getElementById(id);
+const els = {}; ['kick', 'title', 's1', 's2', 's3', 'n0', 'n1', 'n2', 'count', 'vide', 'cta1', 'cta2'].forEach(k => els[k] = $(k));
+function showEl(el, k, kout = 0, dy = 0, base = '') {
+  const v = k * (1 - kout);
+  el.style.opacity = v <= 0.001 ? 0 : Math.min(1, v * 1.6);
+  el.style.visibility = v <= 0.001 ? 'hidden' : 'visible';
+  el.style.transform = `${base} translateY(${dy * (1 - k)}px) scale(${Math.max(0, v)})`;
+}
+const m4 = new THREE.Matrix4(), up = new THREE.Vector3(0, 1, 0), tgt = new THREE.Vector3(), pv = new THREE.Vector3();
+function project(x, y, z, cam) { pv.set(x, y, z).project(cam); return { x: (pv.x + 1) / 2 * 1080, y: (1 - pv.y) / 2 * 1920 }; }
+
+function renderAt(t) {
+  tl.seek(Math.min(t, tl.duration()), false);
+  const camEl = document.getElementById('cam').object3D;
+  // caméra : travelling latéral doux de maquette + léger push-in pendant le choix
+  const dist = 1 - 0.13 * st.push;
+  camEl.position.set(Math.sin(t * 0.45) * 0.7, 0.9 + 5.7 * dist, 12 * dist);
+  tgt.set(0.12, 0.95 - 0.12 * st.push, 0);
+  m4.lookAt(camEl.position, tgt, up); camEl.quaternion.setFromRotationMatrix(m4);
+  camEl.updateMatrixWorld(); sceneEl.camera.updateMatrixWorld();
+
+  // boîtes : chute d'entrée (bounce) puis mélange
+  boxes.forEach((b, i) => {
+    const p = boxPos(i, t);
+    const d = S.clamp(st.drop * 1.15 - i * 0.07);
+    const lift = p.y + (1 - d) * 1.3;
+    b.object3D.position.set(p.x, lift, p.z);
+    shadows[i].object3D.position.y = 0.004 - lift; shadows[i].object3D.scale.setScalar(1 + lift * 0.5);
+    b.object3D.rotation.z = THREE.MathUtils.degToRad(p.tilt);
+    const sq = 1 + 0.05 * Math.sin(t * 3 + i);                       // respiration permanente
+    b.object3D.scale.set(1 / Math.sqrt(sq), sq, 1 / Math.sqrt(sq));
+    // couvercles
+    const lid = lids[i].object3D;
+    let ly = 0, lr = 0, lx = 0, lz = 0;
+    if (i === FOX_BOX) { const a = st.lidA * (1 - st.lidB); ly += a * 0.55; lr += a * 18; }
+    const slot = FINAL[i];
+    if (slot === EMPTY_SLOT) { ly += st.openE * 0.65; lr -= st.openE * 24; lx -= st.openE * 0.15; }
+    if (slot === FOX_SLOT && i === FOX_BOX) { ly += st.openF * 0.75; lr += st.openF * 22; lx += st.openF * 0.22; lz -= st.openF * 0.55; }
+    lid.position.set(lx, BOXH + ly, lz); lid.rotation.z = THREE.MathUtils.degToRad(lr);
+  });
+
+  // renard
+  const fb = boxes[FOX_BOX].object3D.position;
+  const topY = BOXH + 0.16;
+  let fy, fx = fb.x, fsx = 1, fsy = 1, vis = true;
+  if (st.jump <= 0) { fy = topY + fb.y; const k = Math.max(0, st.foxIn); fsy = k; fsx = k; vis = k > 0.01; }
+  else if (st.jump < 1) { const u = st.jump; fy = topY + 0.36 * Math.sin(u * Math.PI) - S.smoothstep(0.5, 1, u) * (topY + 0.3); fsy = u < 0.3 ? 0.8 : 1.12; fsx = u < 0.3 ? 1.15 : 0.92; }
+  else { fy = -0.4; vis = st.foxUp > 0; }
+  if (st.foxUp > 0) { vis = true; fy = S.lerp(0.0, topY - 0.02, st.foxUp); const sq = 1 + 0.15 * Math.sin(st.win * Math.PI * 3) * (1 - st.win); fsy = sq; fsx = 1 / sq; }
+  fox.object3D.visible = vis;
+  fox.object3D.position.set(fx, fy + (st.jump <= 0 || st.foxUp > 0 ? Math.abs(Math.sin(t * 3.2)) * 0.03 : 0), fb.z + 0.02);
+  fox.object3D.scale.set(1.25 * fsx, 1.25 * fsy, 1.25);
+  fox.object3D.rotation.y = Math.sin(t * 1.3) * 0.25;
+  const waving = st.wave > 0 && st.wave < 1 ? Math.sin(st.wave * Math.PI * 6) : (st.wave2 > 0 && st.wave2 < 1 ? Math.sin(st.wave2 * Math.PI * 7) : 0);
+  foxParts.arm.object3D.rotation.z = THREE.MathUtils.degToRad(40 + 110 * Math.abs(waving) * (st.wave < 1 || st.wave2 > 0 ? 1 : 0));
+  foxParts.tail.object3D.rotation.x = Math.sin(t * 5) * 0.25;
+  foxParts.head.object3D.rotation.z = Math.sin(t * 2.4) * 0.12;
+
+  // confettis
+  confetti.forEach(c => {
+    const k = st.conf; const tt = k * 1.6;
+    if (k <= 0 || k >= 1) { c.e.object3D.visible = false; return; }
+    c.e.object3D.visible = true;
+    c.e.object3D.position.set(fb.x + c.vx * tt, topY + 0.3 + c.vy * tt - 4.2 * tt * tt, fb.z + c.vz * tt + 0.2);
+  });
+  sceneEl.renderer.render(sceneEl.object3D, sceneEl.camera);
+
+  // ---- overlays DOM ----
+  showEl(els.kick, S.clamp(st.title * 1.2), st.titleOut);
+  showEl(els.title, st.title, st.titleOut, 30);
+  showEl(els.s1, st.s1, st.s1o); showEl(els.s2, st.s2, st.s2o); showEl(els.s3, st.s3);
+  // numéros sur la face avant de chaque emplacement
+  for (let s = 0; s < 3; s++) {
+    const el = els['n' + s];
+    const bi = boxInSlot(s); const bp = boxes[bi].object3D.position;
+    const p = project(bp.x, BOXH * 0.45, bp.z + BOXW / 2 + 0.02, sceneEl.camera);
+    el.style.left = p.x + 'px'; el.style.top = p.y + 'px';
+    const k = S.seg(st.nums, s * 0.2, s * 0.2 + 0.5, S.ease.outBack);
+    const win = s === FOX_SLOT ? st.win : 0, lose = s !== FOX_SLOT ? st.openF : 0;
+    el.style.background = win > 0 ? '#9BE7B0' : '#FFFFFF';
+    el.style.opacity = k <= 0.001 ? 0 : 1 - 0.55 * lose;
+    el.style.visibility = k <= 0.001 ? 'hidden' : 'visible';
+    el.style.transform = `scale(${Math.max(0, k) * (1 + 0.3 * win)})`;
+  }
+  // compte à rebours 3-2-1
+  const cv = st.c1 > 0 ? '1' : st.c2 > 0 ? '2' : '3';
+  els.count.textContent = cv;
+  const ck = cv === '1' ? st.c1 : cv === '2' ? st.c2 : st.c3;
+  showEl(els.count, ck, st.cOut);
+  // "vide !" au-dessus de la boîte ouverte la première
+  const eb = boxes[boxInSlot(EMPTY_SLOT)].object3D.position;
+  const pe = project(eb.x, BOXH + 0.75, eb.z, sceneEl.camera);
+  els.vide.style.left = (pe.x - 110) + 'px'; els.vide.style.top = (pe.y - 80) + 'px';
+  showEl(els.vide, st.vide, st.videO);
+  showEl(els.cta1, st.cta1, st.cta1o, 40);
+  showEl(els.cta2, st.cta2, 0, 40);
+}
+S.installContract({ renderAt, ready, duration: DUR });
+</script></body></html>

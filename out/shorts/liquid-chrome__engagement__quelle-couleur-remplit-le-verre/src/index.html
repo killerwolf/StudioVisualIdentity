@@ -1,0 +1,220 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8">
+<!--
+  Chrome Liquide — « Quelle couleur remplit le verre en premier ? » (famille engagement)
+  three.js 0.187 : 4 éprouvettes en verre (MeshPhysicalMaterial transmission) remplies de liquide chrome irisé,
+  sources = gouttes chrome du poster, environnement PMREM procédural (panneaux néon), BokehPass (DOF macro).
+  Course 100 % analytique (débits par seconde de course, intégrés), donc rendu sans état (renderAt(t) pur).
+  Ralenti : le temps de course τ ralentit ×0,5 sur la dernière ligne droite. Graine : SEED = 7 (gouttes de fond, éclaboussures).
+-->
+<script type="importmap">{"imports":{"three":"/node_modules/three/build/three.module.js","three/addons/":"/node_modules/three/examples/jsm/"}}</script>
+<style>
+  html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:#0B0B10}
+  canvas{position:absolute;inset:0}
+  .ov{position:absolute;left:72px;width:880px;color:#FFFFFF;will-change:opacity}
+  .cap{top:232px;font:500 54px Inter;letter-spacing:.2em;color:#C8D3FF;white-space:nowrap}
+  .st{top:612px;color:#FFFFFF;opacity:.92}
+  h1{top:306px;margin:0;font:800 92px/1.0 Syne;letter-spacing:-0.03em}
+  .g{background:linear-gradient(90deg,#C8D3FF,#FF9AE8 45%,#7CF7E4 80%,#FFE29A);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .cta{position:absolute;left:72px;top:520px;font:500 60px Inter;color:#0B0B10;background:#7CF7E4;border-radius:999px;padding:18px 40px 22px;letter-spacing:-0.01em;white-space:nowrap}
+  .num{position:absolute;top:1492px;width:180px;margin-left:-90px;text-align:center;font:800 76px/1 Syne}
+  .pct{position:absolute;width:200px;margin-left:-100px;text-align:center;font:600 54px/1 Inter;color:#FFFFFF;letter-spacing:-0.02em;text-shadow:0 2px 14px rgba(11,11,16,.9)}
+</style></head><body>
+<div class="ov cap" id="cap0">QUELLE COULEUR</div>
+<h1 class="ov" id="t1">remplit le verre <span class="g">en premier&nbsp;?</span></h1>
+<div class="ov cap st" id="cap">COURSE · 4 COULEURS</div>
+<h1 class="ov" id="t2" style="opacity:0"><span id="wname" style="color:#7CF7E4">Menthe</span> gagne&nbsp;!</h1>
+<div class="cta" id="cta" style="opacity:0">Commente ta couleur&nbsp;↓</div>
+<script type="module">
+import * as THREE from 'three';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { BokehPass } from 'three/addons/postprocessing/BokehPass.js';
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+import * as S from '/out/tools/lib/svi.js';
+const W = 1080, H = 1920, SEED = 7, DUR = 15;
+const PAL = ['#C8D3FF', '#FF9AE8', '#7CF7E4', '#FFE29A'];
+const NAMES = ['Lilas', 'Rose', 'Menthe', 'Or'];
+const WIN = 2;
+const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+renderer.setSize(W, H); renderer.setPixelRatio(1); renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.1;
+document.body.prepend(renderer.domElement);
+
+// ---- environnement procédural (identique au poster de l'identité) ----
+const env = new THREE.Scene();
+env.add(new THREE.Mesh(new THREE.SphereGeometry(20, 64, 32), new THREE.ShaderMaterial({ side: THREE.BackSide,
+  vertexShader: 'varying vec3 vP; void main(){ vP=position; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.); }',
+  fragmentShader: 'varying vec3 vP; void main(){ float y=normalize(vP).y; vec3 top=vec3(.95,.96,1.), mid=vec3(.005,.005,.01), bot=vec3(.05,.045,.07);' +
+    'vec3 c = y>0. ? mix(mid,top,smoothstep(.15,.75,y)) : mix(mid,bot,smoothstep(0.,-.9,y)); c += vec3(1.)*smoothstep(.035,0.,abs(y-.02))*1.6; gl_FragColor=vec4(c,1.); }' })));
+const panel = (c, w, h, pos, inten = 1) => { const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({ color: new THREE.Color(c).multiplyScalar(inten), side: THREE.DoubleSide })); m.position.set(...pos); m.lookAt(0, 0, 0); env.add(m); };
+panel('#C8D3FF', 16, 5, [0, 9, 3], 2.0);
+panel('#FF9AE8', 5, 14, [-9, 0, 3], 2.2);
+panel('#7CF7E4', 5, 14, [9, 1, 1], 2.0);
+panel('#FFE29A', 10, 2, [0, -8, 4], 1.4);
+panel('#FFFFFF', 4, 4, [3, 4, 9], 3.0);
+const pm = new THREE.PMREMGenerator(renderer);
+const envTex = pm.fromScene(env, 0.02).texture;
+
+const scene = new THREE.Scene();
+scene.environment = envTex;
+scene.background = (() => { const c = document.createElement('canvas'); c.width = 540; c.height = 960; const g = c.getContext('2d');
+  g.fillStyle = '#0B0B10'; g.fillRect(0, 0, 540, 960);
+  const halo = (x, y, r, col) => { const gr = g.createRadialGradient(x, y, 0, x, y, r); gr.addColorStop(0, col); gr.addColorStop(1, 'rgba(11,11,16,0)'); g.fillStyle = gr; g.fillRect(0, 0, 540, 960); };
+  halo(150, 560, 320, 'rgba(255,154,232,0.20)'); halo(400, 640, 300, 'rgba(124,247,228,0.16)'); halo(260, 820, 260, 'rgba(200,211,255,0.14)');
+  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t; })();
+const cam = new THREE.PerspectiveCamera(30, W / H, 0.1, 100);
+cam.setViewOffset(W, H, 30, 0, W, H);      // décale l'image de 30 px vers la gauche : centre de la zone sûre (510 px)
+
+// ---- matières ----
+const chrome = new THREE.MeshPhysicalMaterial({ color: '#ffffff', metalness: 1, roughness: 0.06, iridescence: 0.35, iridescenceIOR: 1.6, envMapIntensity: 1.25, clearcoat: 1, clearcoatRoughness: 0.05 });
+const liquidMat = PAL.map(c => new THREE.MeshPhysicalMaterial({ color: c, metalness: 0.85, roughness: 0.14, iridescence: 0.45, iridescenceIOR: 1.5, envMapIntensity: 1.35, clearcoat: 1, clearcoatRoughness: 0.08, emissive: new THREE.Color(c), emissiveIntensity: 0.06 }));
+const glass = new THREE.MeshPhysicalMaterial({ color: '#ffffff', metalness: 0, roughness: 0.04, transmission: 1, thickness: 0.12, ior: 1.45, envMapIntensity: 1.4, clearcoat: 1, clearcoatRoughness: 0.03, transparent: true, side: THREE.DoubleSide });
+
+// ---- éprouvettes ----
+const XS = [-1.38, -0.46, 0.46, 1.38], R_IN = 0.30, R_GL = 0.345, Y0 = -1.66, HT = 2.16;   // fond du verre, hauteur utile
+const tubes = XS.map((x, k) => {
+  const g = new THREE.Group(); g.position.x = x; scene.add(g);
+  const wall = new THREE.Mesh(new THREE.CylinderGeometry(R_GL, R_GL, HT + 0.12, 64, 1, true), glass); wall.position.y = Y0 + (HT + 0.12) / 2 - 0.06; g.add(wall);
+  const bottom = new THREE.Mesh(new THREE.SphereGeometry(R_GL, 64, 16, 0, Math.PI * 2, Math.PI / 2, Math.PI / 2), glass); bottom.position.y = Y0 - 0.06; g.add(bottom);
+  const rim = new THREE.Mesh(new THREE.TorusGeometry(R_GL, 0.022, 12, 64), chrome); rim.rotation.x = Math.PI / 2; rim.position.y = Y0 + HT + 0.06; g.add(rim);
+  // colonne de liquide : cylindre dont le sommet est déformé (clapot)
+  const lg = new THREE.CylinderGeometry(R_IN, R_IN, 1, 64, 6); lg.translate(0, 0.5, 0);
+  const base = lg.attributes.position.array.slice();
+  const liq = new THREE.Mesh(lg, liquidMat[k]); liq.position.y = Y0 - 0.02; g.add(liq);
+  const cup = new THREE.Mesh(new THREE.SphereGeometry(R_IN, 48, 12, 0, Math.PI * 2, Math.PI / 2, Math.PI / 2), liquidMat[k]); cup.position.y = Y0 - 0.02; g.add(cup);
+  // filet versé : cylindre fin déformé
+  const sg = new THREE.CylinderGeometry(1, 1, 1, 16, 24, true); sg.translate(0, -0.5, 0);
+  const sbase = sg.attributes.position.array.slice();
+  const stream = new THREE.Mesh(sg, liquidMat[k]); g.add(stream);
+  // source : goutte chrome (poster) au-dessus du verre
+  const src = blob(0.17, 20, 3 + k); src.position.set(0, Y0 + HT + 0.36, 0.0); g.add(src);
+  // éclaboussures (gouttelettes analytiques)
+  const drops = []; for (let i = 0; i < 6; i++) { const d = new THREE.Mesh(new THREE.SphereGeometry(1, 16, 10), liquidMat[k]); g.add(d); drops.push(d); }
+  return { g, liq, lg, base, cup, stream, sg, sbase, src, drops, k };
+});
+function blob(r, detail, seed) {
+  const g = new THREE.IcosahedronGeometry(r, detail);
+  const m = new THREE.Mesh(g, chrome); m.userData = { base: g.attributes.position.array.slice(), seed }; return m;
+}
+function deform(m, t, amp, freq) {
+  const { base, seed } = m.userData; const pos = m.geometry.attributes.position.array;
+  for (let i = 0; i < pos.length; i += 3) {
+    const x = base[i], y = base[i + 1], z = base[i + 2]; const l = Math.hypot(x, y, z), nx = x / l, ny = y / l, nz = z / l;
+    const n = S.noise3(nx * freq + seed, ny * freq + t * 0.35, nz * freq - t * 0.2) * 0.7 + S.noise3(nx * freq * 2.3, ny * freq * 2.3 + seed, nz * freq * 2.3 + t * 0.5) * 0.3;
+    const d = 1 + amp * (n - 0.5) * 2 - 0.06 * ny;
+    pos[i] = nx * l * d; pos[i + 1] = ny * l * d * (ny < 0 ? 1.1 : 1.0); pos[i + 2] = nz * l * d;
+  }
+  m.geometry.attributes.position.needsUpdate = true; m.geometry.computeVertexNormals();
+}
+// gouttes chrome floues en arrière-plan (profondeur de champ)
+const rnd = S.rng(SEED);
+const BGP = [[-2.7, 1.5, -6], [2.7, -0.7, -6], [-2.6, -1.9, -5], [2.5, 2.1, -7], [-2.9, -0.2, -8]];
+const bgDrops = BGP.map((p, i) => { const m = blob(0.14 + rnd() * 0.2, 16, 11 + i); m.position.set(...p); m.userData.p0 = m.position.toArray(); scene.add(m); return m; });
+
+// ---- course : débits par seconde de course τ (lus à la main, intégrés) ----
+const RATES = [[0.70, 0.80, 0.90, 1.00, 1.00, 1.05, 1.00, 0.95, 0.95, 0.90, 0.85, 0.85],
+  [1.55, 1.45, 1.25, 1.00, 0.85, 0.75, 0.70, 0.70, 0.75, 0.80, 0.80, 0.80],
+  [0.60, 0.70, 0.80, 0.90, 1.00, 1.05, 1.15, 1.28, 1.42, 1.62, 1.85, 1.95],
+  [0.95, 1.05, 1.20, 1.30, 1.30, 1.25, 1.15, 1.10, 1.05, 1.02, 1.00, 1.00]];
+const rate = (k, tau) => { tau = S.clamp(tau, 0, 11); const i = Math.min(10, Math.floor(tau)), f = tau - i; return RATES[k][i] * (1 - f) + RATES[k][i + 1] * f; };
+const NS = 1100, CUM = RATES.map((_, k) => { let s = 0; const a = [0]; for (let i = 1; i <= NS; i++) { s += rate(k, (i - 0.5) / 100) / 100; a.push(s); } return a; });
+const SCALE = CUM[WIN][NS];
+const level = (k, tau) => { const x = S.clamp(tau, 0, 11) * 100, i = Math.min(NS - 1, Math.floor(x)), f = x - i; return (CUM[k][i] * (1 - f) + CUM[k][i + 1] * f) / SCALE; };
+// temps réel t -> temps de course τ : départ 0,45 s ; τ 0→10 en 9,2 s ; ralenti ×0,5 sur τ 10→11 (t 9,65→11,65)
+const T0 = 0.45, TS = 9.65, TW = 11.65;
+const tauOf = t => t < T0 ? 0 : t < TS ? (t - T0) * 10 / (TS - T0) : t < TW ? 10 + (t - TS) * 0.5 : 11;
+const pours = t => t >= T0 && t < TW;
+
+const composer = new EffectComposer(renderer);
+composer.addPass(new RenderPass(scene, cam));
+const bokeh = new BokehPass(scene, cam, { focus: 13.0, aperture: 0.0022, maxblur: 0.008 });
+composer.addPass(bokeh);
+composer.addPass(new OutputPass());
+
+// ---- HTML ----
+const $ = id => document.getElementById(id);
+const nums = PAL.map((c, k) => { const d = document.createElement('div'); d.className = 'num'; d.style.color = c; d.textContent = k + 1; document.body.appendChild(d); return d; });
+const pcts = PAL.map(() => { const d = document.createElement('div'); d.className = 'pct'; document.body.appendChild(d); return d; });
+const v3 = new THREE.Vector3();
+const toPx = (x, y, z) => { v3.set(x, y, z).project(cam); return [(v3.x + 1) / 2 * W, (1 - v3.y) / 2 * H]; };
+const capAt = t => t < 4.6 ? 'COURSE · 4 COULEURS' : t < 9.65 ? 'FAIS TON PARI…' : t < TW ? 'RALENTI · ×0,5' : 'VAINQUEUR';
+const fadeIn = (t, a, d = 0.45) => S.seg(t, a, a + d, S.ease.outCubic);
+
+function renderAt(t) {
+  const tau = tauOf(t), won = S.seg(t, TW, TW + 0.6, S.ease.outCubic);
+  // caméra : dérive lente + léger travelling avant ; après la victoire, glisse vers le gagnant
+  const push = S.seg(t, 0, DUR, S.ease.inOutSine);
+  cam.position.set(Math.sin(t * 0.05) * 0.25 + XS[WIN] * 0.18 * won, 0.1 - 0.08 * push, 13.6 - 0.5 * push);
+  cam.lookAt(XS[WIN] * 0.12 * won, -0.05, 0); cam.updateMatrixWorld();
+  for (const tb of tubes) {
+    const { k, g } = tb;
+    const lv = level(k, tau);
+    const hLiq = Math.max(0.001, lv * (HT - 0.12));
+    const flow = pours(t) ? rate(k, tau) * (t < TS ? 1 : 0.5) : 0;
+    // filet : de la source au liquide, rayon ∝ √débit ; à la fin le filet tombe et disparaît
+    const srcY = Y0 + HT + 0.26, surf = Y0 - 0.02 + hLiq;
+    const tailCut = t >= TW ? S.clamp((t - TW) / 0.35) : 0;
+    const top = srcY - (srcY - surf) * tailCut;
+    const len = Math.max(0.001, top - surf);
+    const rad = flow > 0 || tailCut < 1 ? 0.035 + 0.03 * Math.sqrt(Math.max(flow, t >= TW ? 1 : 0)) : 0;
+    const sp = tb.sg.attributes.position.array, sb = tb.sbase;
+    for (let i = 0; i < sp.length; i += 3) {
+      const u = -sb[i + 1];                    // 0 en haut, 1 en bas
+      const yy = top - u * len;
+      const wob = 0.018 * Math.sin(yy * 9 + tau * 14 + k) * u;
+      const neck = 1 - 0.35 * Math.exp(-u * 6);
+      sp[i] = sb[i] * rad * neck + wob; sp[i + 1] = yy; sp[i + 2] = sb[i + 2] * rad * neck;
+    }
+    tb.sg.attributes.position.needsUpdate = true; tb.sg.computeVertexNormals();
+    tb.stream.visible = rad > 0 && tailCut < 1 && t >= T0 - 0.05;
+    // colonne : sommet en clapot (amplitude ∝ débit, s'amortit après la victoire)
+    const lp = tb.lg.attributes.position.array, lb = tb.base;
+    const slosh = (0.012 + 0.03 * Math.min(1.4, flow)) * (t >= TW ? Math.exp(-(t - TW) * 1.8) * 2.2 : 1);
+    for (let i = 0; i < lp.length; i += 3) {
+      const yb = lb[i + 1], x = lb[i], z = lb[i + 2];
+      let y = yb * hLiq;
+      if (yb > 0.999) { const a = Math.atan2(z, x), r = Math.hypot(x, z) / R_IN; y += slosh * r * (Math.sin(a * 2 + tau * 7 + k) * 0.6 + Math.sin(a * 3 - tau * 11) * 0.4) - 0.02 * (1 - r * r); }
+      lp[i] = x; lp[i + 1] = y; lp[i + 2] = z;
+    }
+    tb.lg.attributes.position.needsUpdate = true; tb.lg.computeVertexNormals();
+    tb.liq.visible = lv > 0.002;
+    // gouttelettes : petites paraboles au point d'impact
+    tb.drops.forEach((d, i) => {
+      const per = 0.55 + 0.1 * i, ph = ((tau * 1.3 + i * 0.37 + k * 0.21) % per) / per;
+      const ang = i * 2.1 + k, vr = 0.18 + 0.05 * (i % 3), vy = 0.55 + 0.1 * (i % 2);
+      const s = flow > 0 ? (0.016 + 0.01 * (i % 2)) * Math.min(1.2, flow) * (1 - ph) : 0;
+      d.visible = s > 0.002;
+      d.scale.setScalar(Math.max(s, 1e-4));
+      d.position.set(Math.cos(ang) * vr * ph * 0.6, surf + vy * ph - 1.6 * ph * ph, Math.sin(ang) * vr * ph * 0.4 + 0.05);
+    });
+    deform(tb.src, tau * 0.6 + k, 0.14 + 0.06 * Math.min(1.5, flow), 1.8);
+    tb.src.scale.setScalar(1 - 0.25 * (t >= TW ? S.seg(t, TW, TW + 0.8, S.ease.outCubic) : 0));
+    // gagnant mis en avant, perdants atténués
+    const isW = k === WIN;
+    liquidMat[k].emissiveIntensity = isW ? 0.06 + 0.5 * won * (0.75 + 0.25 * Math.sin((t - TW) * 5)) : 0.06;
+    liquidMat[k].envMapIntensity = isW ? 1.35 : 1.35 - 0.6 * won;
+    // étiquettes HTML
+    const [nx] = toPx(XS[k], Y0, 0), [px, py] = toPx(XS[k], surf + 0.16, 0);
+    nums[k].style.left = nx + 'px'; nums[k].style.opacity = isW ? 1 : 1 - 0.55 * won;
+    nums[k].style.transform = `scale(${isW ? 1 + 0.25 * won : 1})`;
+    pcts[k].style.left = px + 'px'; pcts[k].style.top = Math.max(py - 60, 800) + 'px';
+    pcts[k].textContent = Math.min(100, Math.floor(lv * 100 + 1e-6)) + ' %';
+    pcts[k].style.opacity = (t < T0 ? 0 : 1) * (isW ? 1 : 1 - 0.5 * won);
+  }
+  bgDrops.forEach((m, i) => { const p = m.userData.p0; deform(m, t + i, 0.1, 1.8); m.position.set(p[0], p[1] + Math.sin(t * 0.5 + i) * 0.12, p[2]); });
+  bokeh.uniforms.focus.value = cam.position.z;
+  // texte
+  $('cap').textContent = capAt(t);
+  $('cap').style.color = t >= TW ? PAL[WIN] : '#FFFFFF';
+  $('cap0').style.opacity = 1 - S.seg(t, TW, TW + 0.35);
+  $('cap').style.opacity = 0.92 * (1 - S.seg(t, TW, TW + 0.3));
+  $('t1').style.opacity = 1 - S.seg(t, TW, TW + 0.35);
+  $('t2').style.opacity = fadeIn(t, TW + 0.15);
+  $('t2').style.transform = `translateY(${(1 - fadeIn(t, TW + 0.15, 0.6)) * 30}px)`;
+  $('cta').style.opacity = fadeIn(t, 12.6);
+  $('cta').style.transform = `translateY(${(1 - S.seg(t, 12.6, 13.2, S.ease.outBack)) * 40}px)`;
+  composer.render();
+}
+const ready = S.loadFonts([{ family: 'Syne', pkg: 'syne', weight: 800 }, { family: 'Inter', pkg: 'inter', weight: 500 }, { family: 'Inter', pkg: 'inter', weight: 600 }]);
+S.installContract({ renderAt, ready, duration: DUR });
+window.RACE = { level, tauOf };
+</script></body></html>

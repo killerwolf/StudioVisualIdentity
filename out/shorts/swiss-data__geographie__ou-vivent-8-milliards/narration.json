@@ -1,0 +1,9 @@
+{"language": "fr", "style": "documentaire, posé et net, ton d'infographie de presse", "voice": "Orus",
+ "lines": [
+  {"t": 0.3, "maxDuration": 3.1, "text": "Huit milliards d'humains. Mais où vivent-ils ?"},
+  {"t": 3.5, "maxDuration": 2.0, "text": "Un carré, cent millions d'humains."},
+  {"t": 5.55, "maxDuration": 1.6, "text": "L'Asie, cinquante-neuf pour cent."},
+  {"t": 7.2, "maxDuration": 1.6, "text": "L'Afrique, dix-huit pour cent."},
+  {"t": 8.9, "maxDuration": 2.7, "text": "En tête, l'Inde, juste devant la Chine."},
+  {"t": 11.7, "maxDuration": 3.1, "text": "À elles deux, plus d'un humain sur trois."}
+ ]}

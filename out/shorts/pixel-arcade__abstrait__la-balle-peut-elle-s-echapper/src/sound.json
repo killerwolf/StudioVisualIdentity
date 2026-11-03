@@ -1,0 +1,403 @@
+{
+ "duration": 15,
+ "seed": 1007,
+ "bpm": 125,
+ "key": "A",
+ "scale": "minpent",
+ "reverb": 0.14,
+ "music": {
+  "preset": "chiptune",
+  "gain": 0.36,
+  "octave": 4,
+  "loop": false
+ },
+ "events": [
+  {
+   "t": 0.05,
+   "type": "coin",
+   "note": "E6",
+   "gain": 0.7
+  },
+  {
+   "t": 0.4833,
+   "type": "blip",
+   "note": "C5",
+   "gain": 0.46,
+   "dur": 0.12
+  },
+  {
+   "t": 0.7542,
+   "type": "blip",
+   "note": "D5",
+   "gain": 0.47,
+   "dur": 0.12
+  },
+  {
+   "t": 0.9375,
+   "type": "blip",
+   "note": "E5",
+   "gain": 0.47,
+   "dur": 0.12
+  },
+  {
+   "t": 1.1125,
+   "type": "blip",
+   "note": "G5",
+   "gain": 0.48,
+   "dur": 0.12
+  },
+  {
+   "t": 1.3375,
+   "type": "blip",
+   "note": "A5",
+   "gain": 0.49,
+   "dur": 0.12
+  },
+  {
+   "t": 1.9583,
+   "type": "blip",
+   "note": "C6",
+   "gain": 0.5,
+   "dur": 0.12
+  },
+  {
+   "t": 2.2,
+   "type": "blip",
+   "note": "D6",
+   "gain": 0.51,
+   "dur": 0.12
+  },
+  {
+   "t": 2.35,
+   "type": "blip",
+   "note": "E6",
+   "gain": 0.51,
+   "dur": 0.12
+  },
+  {
+   "t": 2.4708,
+   "type": "blip",
+   "note": "G6",
+   "gain": 0.52,
+   "dur": 0.12
+  },
+  {
+   "t": 2.5833,
+   "type": "blip",
+   "note": "A6",
+   "gain": 0.53,
+   "dur": 0.12
+  },
+  {
+   "t": 2.5833,
+   "type": "coin",
+   "note": "C7",
+   "gain": 0.5
+  },
+  {
+   "t": 2.7042,
+   "type": "blip",
+   "note": "C5",
+   "gain": 0.54,
+   "dur": 0.12
+  },
+  {
+   "t": 2.8542,
+   "type": "blip",
+   "note": "D5",
+   "gain": 0.55,
+   "dur": 0.12
+  },
+  {
+   "t": 3.0958,
+   "type": "blip",
+   "note": "E5",
+   "gain": 0.55,
+   "dur": 0.12
+  },
+  {
+   "t": 3.5,
+   "type": "blip",
+   "note": "G5",
+   "gain": 0.56,
+   "dur": 0.12
+  },
+  {
+   "t": 3.7083,
+   "type": "blip",
+   "note": "A5",
+   "gain": 0.57,
+   "dur": 0.12
+  },
+  {
+   "t": 3.8542,
+   "type": "blip",
+   "note": "C6",
+   "gain": 0.58,
+   "dur": 0.12
+  },
+  {
+   "t": 3.9833,
+   "type": "blip",
+   "note": "D6",
+   "gain": 0.59,
+   "dur": 0.12
+  },
+  {
+   "t": 4.1208,
+   "type": "blip",
+   "note": "E6",
+   "gain": 0.59,
+   "dur": 0.12
+  },
+  {
+   "t": 4.3,
+   "type": "blip",
+   "note": "G6",
+   "gain": 0.6,
+   "dur": 0.12
+  },
+  {
+   "t": 4.6292,
+   "type": "blip",
+   "note": "A6",
+   "gain": 0.61,
+   "dur": 0.12
+  },
+  {
+   "t": 4.6292,
+   "type": "coin",
+   "note": "C7",
+   "gain": 0.5
+  },
+  {
+   "t": 4.9417,
+   "type": "blip",
+   "note": "C5",
+   "gain": 0.62,
+   "dur": 0.12
+  },
+  {
+   "t": 5.1208,
+   "type": "blip",
+   "note": "D5",
+   "gain": 0.63,
+   "dur": 0.12
+  },
+  {
+   "t": 5.2667,
+   "type": "blip",
+   "note": "E5",
+   "gain": 0.63,
+   "dur": 0.12
+  },
+  {
+   "t": 5.4125,
+   "type": "blip",
+   "note": "G5",
+   "gain": 0.64,
+   "dur": 0.12
+  },
+  {
+   "t": 5.5917,
+   "type": "blip",
+   "note": "A5",
+   "gain": 0.65,
+   "dur": 0.12
+  },
+  {
+   "t": 5.9,
+   "type": "blip",
+   "note": "C6",
+   "gain": 0.66,
+   "dur": 0.12
+  },
+  {
+   "t": 6.225,
+   "type": "blip",
+   "note": "D6",
+   "gain": 0.67,
+   "dur": 0.12
+  },
+  {
+   "t": 6.4125,
+   "type": "blip",
+   "note": "E6",
+   "gain": 0.67,
+   "dur": 0.12
+  },
+  {
+   "t": 6.5667,
+   "type": "blip",
+   "note": "G6",
+   "gain": 0.68,
+   "dur": 0.12
+  },
+  {
+   "t": 6.7292,
+   "type": "blip",
+   "note": "A6",
+   "gain": 0.69,
+   "dur": 0.12
+  },
+  {
+   "t": 6.7292,
+   "type": "coin",
+   "note": "C7",
+   "gain": 0.5
+  },
+  {
+   "t": 6.9583,
+   "type": "blip",
+   "note": "C5",
+   "gain": 0.7,
+   "dur": 0.12
+  },
+  {
+   "t": 7.3292,
+   "type": "blip",
+   "note": "D5",
+   "gain": 0.71,
+   "dur": 0.12
+  },
+  {
+   "t": 7.5542,
+   "type": "blip",
+   "note": "E5",
+   "gain": 0.71,
+   "dur": 0.12
+  },
+  {
+   "t": 7.7167,
+   "type": "blip",
+   "note": "G5",
+   "gain": 0.72,
+   "dur": 0.12
+  },
+  {
+   "t": 7.875,
+   "type": "blip",
+   "note": "A5",
+   "gain": 0.73,
+   "dur": 0.12
+  },
+  {
+   "t": 8.1917,
+   "type": "blip",
+   "note": "C6",
+   "gain": 0.74,
+   "dur": 0.12
+  },
+  {
+   "t": 8.6292,
+   "type": "blip",
+   "note": "D6",
+   "gain": 0.75,
+   "dur": 0.12
+  },
+  {
+   "t": 8.9,
+   "type": "blip",
+   "note": "E6",
+   "gain": 0.75,
+   "dur": 0.12
+  },
+  {
+   "t": 9.2,
+   "type": "blip",
+   "note": "G6",
+   "gain": 0.76,
+   "dur": 0.12
+  },
+  {
+   "t": 9.6333,
+   "type": "blip",
+   "note": "A6",
+   "gain": 0.77,
+   "dur": 0.12
+  },
+  {
+   "t": 9.6333,
+   "type": "coin",
+   "note": "C7",
+   "gain": 0.5
+  },
+  {
+   "t": 9.9167,
+   "type": "blip",
+   "note": "C5",
+   "gain": 0.78,
+   "dur": 0.12
+  },
+  {
+   "t": 10.225,
+   "type": "blip",
+   "note": "D5",
+   "gain": 0.79,
+   "dur": 0.12
+  },
+  {
+   "t": 10.325,
+   "type": "riser",
+   "gain": 0.45,
+   "dur": 1.5
+  },
+  {
+   "t": 10.6458,
+   "type": "blip",
+   "note": "E5",
+   "gain": 0.79,
+   "dur": 0.12
+  },
+  {
+   "t": 10.9333,
+   "type": "blip",
+   "note": "G5",
+   "gain": 0.8,
+   "dur": 0.12
+  },
+  {
+   "t": 11.2792,
+   "type": "blip",
+   "note": "A5",
+   "gain": 0.81,
+   "dur": 0.12
+  },
+  {
+   "t": 11.825,
+   "type": "glass",
+   "note": "C6",
+   "gain": 0.8
+  },
+  {
+   "t": 11.825,
+   "type": "impact",
+   "gain": 0.7
+  },
+  {
+   "t": 11.924999999999999,
+   "type": "coin",
+   "note": "G6",
+   "gain": 0.9
+  },
+  {
+   "t": 13.25,
+   "type": "whoosh",
+   "gain": 0.6,
+   "dur": 0.6
+  },
+  {
+   "t": 13.55,
+   "type": "coin",
+   "note": "G6",
+   "gain": 0.8
+  },
+  {
+   "t": 13.85,
+   "type": "chime",
+   "note": "C6",
+   "gain": 0.5,
+   "dur": 1.2
+  }
+ ]
+}

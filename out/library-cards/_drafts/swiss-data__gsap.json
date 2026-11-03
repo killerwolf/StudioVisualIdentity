@@ -1,0 +1,7 @@
+{"name": "GSAP 3.15", "role": "typo",
+ "bestFor": ["timeline unique seekée image par image (tl.seek(t,false)) pilotant des attributs SVG (attr: width, x, r, stroke-dashoffset, fill)", "masques de révélation de texte (clipPath rect width 0 -> 1000, expo.out, stagger)", "compteurs : tween d'un objet d'état lu et affiché dans renderAt", "volets de transition plein cadre expo.inOut, push-in svgOrigin"],
+ "avoidFor": ["simulation physique ou état cumulatif (préférer pré-calcul)", "callbacks onUpdate/onComplete pour du rendu critique : lire l'état dans renderAt après le seek"],
+ "renderCostPer100Frames": "13,7 s (mesuré avec D3, scène swiss-data__geographie__ou-vivent-8-milliards : ~90 tweens, 450 frames en 61,5 s ; le coût est dominé par la capture Chromium, pas par GSAP) ; 20,5 s (scène evenements, 92,3 s pour 450 frames)",
+ "gotchas": ["immediateRender:false sur les fromTo : l'état 'from' n'est PAS appliqué avant le début du tween -> poser l'état initial directement dans le DOM (opacity 0, width 0) sinon les éléments apparaissent trop tôt (vu sur nos stills)", "ne jamais retourner la timeline depuis renderAt (thenable)", "SVG : utiliser svgOrigin:'x y' (coordonnées globales) et non transformOrigin en px pour un push-in", "tl.set({}, {}, DUR) pour allonger la timeline jusqu'à la durée du short", "attr:{fill} se tweene entre deux hex (passage encre -> rouge)"],
+ "snippetPath": "shorts/swiss-data__evenements__j-272-eclipse-2-aout-2027/src",
+ "pairsWellWith": ["D3.js", "three.js", "pixi.js", "flubber"]}

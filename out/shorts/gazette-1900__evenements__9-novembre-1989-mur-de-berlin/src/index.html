@@ -1,0 +1,174 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8">
+<title>Ce jour-là : 9 novembre 1989 — Gazette 1900</title>
+<!-- Short evenements « Ce jour-là : 9 novembre 1989, le Mur de Berlin tombe » (identité gazette-1900).
+     Même système que le short 1789 (gazette.js) : tourniquet des unes, tampons, dépêches typewriter, zoom brusque.
+     GSAP : timeline seekée (+ chute des blocs du Mur, compteur 0 -> 37, frise 1961-1989-2026).
+     Post-traitement film/papier : post.py (OpenCV). 128 bpm, durée 15,0 s, graine 1989. -->
+<script src="/node_modules/gsap/dist/gsap.min.js"></script>
+</head><body><div id="stage"></div>
+<script type="module">
+import * as G from './gazette.js';
+const { S, T } = G;
+const R = S.rng(1989);
+const B = T.beat;
+const st = [0, 8 * B, 18 * B, 24 * B];          // 0 ; 3,75 ; 8,4375 ; 11,25
+const DUR = 32 * B;                              // 15,0 s
+
+// ---- blocs dépêches (p1) ----
+const facts = [['AOÛT 1961', 'le Mur est construit.'], ['155 KM', 'autour de Berlin-Ouest.'], ['28 ANS', 'une ville coupée en deux.']];
+const p1inner = `<div class="facts">${facts.map((f, i) => `<div class="fact"><div class="num" id="fn${i}">${f[0]}</div><div class="fline" id="fl${i}"></div></div>`).join('')}</div>`;
+// ---- mur en blocs (p2) ----
+const COLS = 7, ROWS = 3, bw = 894 / COLS, bh = 430 / ROWS;
+let slabs = '';
+for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) slabs += `<div class="slab" id="sl${r}-${c}" style="left:${(c * bw).toFixed(1)}px;top:${(r * bh).toFixed(1)}px;width:${bw.toFixed(1)}px;height:${bh.toFixed(1)}px"></div>`;
+const p2inner = `<div class="plate"><div class="clip"><canvas id="p2-cv" width="894" height="430"></canvas>${slabs}
+  <svg class="crack" id="crack" width="894" height="430"><polyline points="447,0 430,60 462,120 425,190 470,250 432,320 455,430" /></svg></div>
+  <div class="stamp" id="p2-stamp">Ouvert !</div></div>`;
+// ---- frise (p3) ----
+const X0 = 70, X1 = 824, xy = y => X0 + (y - 1961) / (2026 - 1961) * (X1 - X0);
+const p3inner = `<div class="plate tlbox"><svg width="894" height="430" viewBox="0 0 894 430">
+  <defs><pattern id="hat" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="3" height="8" fill="${T.ink}"/></pattern></defs>
+  <g transform="translate(0,-38)"><line x1="${X0 - 30}" y1="164" x2="${X1 + 30}" y2="164" stroke="${T.ink}" stroke-width="4"/>
+  <rect id="seg1" x="${X0}" y="140" width="${xy(1989) - X0}" height="48" fill="${T.red}"/>
+  <rect id="seg2" x="${xy(1989)}" y="140" width="${X1 - xy(1989)}" height="48" fill="url(#hat)" stroke="${T.ink}" stroke-width="3"/>
+  ${[1961, 1989, 2026].map(y => `<line x1="${xy(y)}" y1="114" x2="${xy(y)}" y2="214" stroke="${T.ink}" stroke-width="5"/>`).join('')}
+  <text x="${X0 - 18}" y="276" font-family="IBM Plex Mono" font-weight="700" font-size="56" fill="${T.ink}">1961</text>
+  <text x="${xy(1989)}" y="276" text-anchor="middle" font-family="IBM Plex Mono" font-weight="700" font-size="56" fill="${T.red}">1989</text>
+  <text x="${X1 + 18}" y="276" text-anchor="end" font-family="IBM Plex Mono" font-weight="700" font-size="56" fill="${T.ink}">2026</text>
+  <text id="lab1" x="${(X0 + xy(1989)) / 2}" y="96" text-anchor="middle" font-family="Playfair Display" font-weight="900" font-size="64" fill="${T.red}">28 ANS</text>
+  <text id="lab2" x="${(xy(1989) + X1) / 2}" y="96" text-anchor="middle" font-family="Playfair Display" font-weight="900" font-size="64" fill="${T.ink}">37 ANS</text>
+</g></svg><div class="stamp" id="p3-stamp" style="bottom:10px">Au prochain<br>numéro</div></div>`;
+
+const pages = [
+  { id: 'p0', date: '9 NOVEMBRE 1989', price: '3 F', kicker: 'Ce jour-là', big: '9 NOV. 1989', sub: 'LE MUR DE BERLIN<br>TOMBE',
+    cap: 'Des milliers de Berlinois sur le Mur.', depLabel: 'DÉPÊCHE — ', dep: 'la frontière est ouverte !', stamp: { text: 'Édition<br>spéciale' } },
+  { id: 'p1', date: '9 NOVEMBRE 1989', price: '3 F', kicker: 'Les dépêches', big: 'LE MUR', sub: 'EN TROIS CHIFFRES', cap: null, dep: null, stamp: null, inner: p1inner },
+  { id: 'p2', date: '10 NOVEMBRE 1989', price: '3 F', kicker: 'Dans la nuit', big: 'LA BRÈCHE', sub: 'ON PASSE<br>À L\'OUEST',
+    cap: 'Des Berlinois attaquent le béton.', depLabel: 'DÉPÊCHE — ', dep: "Berlin fait la fête !", stamp: null, inner: p2inner },
+  { id: 'p3', date: '9 NOVEMBRE 2026', price: '3 F', kicker: 'Anniversaire : il y a', big: '<span id="cnt">37</span> ANS', sub: 'QUE LE MUR<br>EST TOMBÉ',
+    cap: 'Construit en 1961, tombé en 1989.', depLabel: 'ET VOUS ? ', dep: 'racontez en commentaire.', stamp: null, inner: p3inner },
+];
+G.injectCSS();
+const extra = document.createElement('style');
+extra.textContent = `
+  .facts{margin-top:26px;width:900px;border-top:5px solid ${T.ink}}
+  .fact{border-bottom:1.5px solid ${T.ink};padding:14px 0 16px;text-align:left}
+  .fact .num{font:900 128px/0.95 'Playfair Display';color:${T.red};letter-spacing:-2px;transform-origin:0% 60%;opacity:0}
+  .fact:nth-child(2) .num{color:${T.ink}}
+  .fline{font:500 54px/1.15 'IBM Plex Mono';min-height:62px;margin-top:6px}
+  .slab{position:absolute;box-sizing:border-box;border:2px solid ${T.ink};background:${T.surface};
+    background-image:repeating-linear-gradient(90deg, rgba(30,27,24,.55) 0 1.5px, transparent 1.5px 7px);transform-origin:50% 50%}
+  .slab::after{content:'';position:absolute;left:6px;right:6px;top:8px;height:10px;border-top:2px solid ${T.ink};border-bottom:1px solid ${T.ink}}
+  .crack{position:absolute;left:0;top:0;opacity:0}
+  .crack polyline{fill:none;stroke:${T.ink};stroke-width:7;stroke-linejoin:bevel}
+  .tlbox{background:${T.plate}}
+  #p3 .big{color:${T.ink}} #cnt{color:${T.red}}
+`;
+document.head.appendChild(extra);
+document.getElementById('stage').innerHTML = pages.map(G.pageHTML).join('');
+document.getElementById('p0').style.visibility = 'visible';
+
+// ---------------- gravures ----------------
+const W = 894, H = 430;
+function night(g, bursts) {
+  G.hHatch(g, 0, W, 3, 330, 4, (x, y) => { let k = 0; for (const [cx, cy, r] of bursts) k = Math.max(k, 1 - Math.hypot(x - cx, y - cy) / (r * 1.5)); return 2.7 - 2.2 * S.clamp(k); });
+  for (const [cx, cy, r] of bursts) {        // feux d'artifice : rayons clairs + points rouges
+    g.strokeStyle = T.plate;
+    for (let i = 0; i < 26; i++) { const a = i / 26 * Math.PI * 2 + R() * .1, r0 = r * .25, r1 = r * (.8 + R() * .35); g.lineWidth = 2.2; g.beginPath(); g.moveTo(cx + Math.cos(a) * r0, cy + Math.sin(a) * r0); g.lineTo(cx + Math.cos(a) * r1, cy + Math.sin(a) * r1); g.stroke(); }
+    g.fillStyle = T.red; for (let i = 0; i < 10; i++) { const a = R() * 6.28, rr = r * (.9 + R() * .3); g.beginPath(); g.arc(cx + Math.cos(a) * rr, cy + Math.sin(a) * rr, 3, 0, 7); g.fill(); }
+    g.strokeStyle = T.ink;
+  }
+}
+function e0() {
+  const g = document.getElementById('p0-cv').getContext('2d'); G.paper(g, W, H);
+  night(g, [[230, 80, 70], [640, 70, 85], [450, 150, 50]]);
+  // mirador (forme générique)
+  g.fillStyle = T.ink; g.fillRect(48, 110, 30, 230); g.fillRect(26, 70, 74, 50); g.fillRect(20, 62, 86, 10);
+  g.fillStyle = T.plate; g.fillRect(34, 82, 58, 20); g.fillStyle = T.ink;
+  // le mur : dalles de béton + tube arrondi au sommet
+  const top = 214, bot = 334;
+  g.fillStyle = T.plate; g.fillRect(0, top, W, bot - top);
+  for (let x = 0; x < W; x += 5) { const sh = .5 + 1.4 * S.noise2(x / 40, 1); g.lineWidth = sh; g.beginPath(); g.moveTo(x, top + 14); g.lineTo(x, bot); g.stroke(); }
+  g.lineWidth = 3; for (let x = 0; x < W; x += 64) { g.beginPath(); g.moveTo(x, top + 12); g.lineTo(x, bot); g.stroke(); }
+  g.fillStyle = T.ink; g.fillRect(0, top - 4, W, 18); g.fillStyle = T.plate; g.fillRect(0, top + 1, W, 4);
+  // foule sur le mur (bras levés) et devant
+  G.crowd(g, W, top - 34, 40, 7, 9, R, { arms: .75, jitter: 3 });
+  g.fillStyle = T.ink; g.lineWidth = 2.2; for (let y = bot; y < H; y += 5) { g.beginPath(); g.moveTo(0, y); g.lineTo(W, y); g.stroke(); }
+  G.crowd(g, W, H - 66, 36, 11, 14, R, { arms: .55, jitter: 10 });
+  G.crowd(g, W, H - 26, 30, 14, 18, R, { arms: .4, jitter: 8 });
+  G.frame(g, W, H);
+}
+function e2() { // derrière le mur : la foule en liesse, éclairée
+  const g = document.getElementById('p2-cv').getContext('2d'); G.paper(g, W, H);
+  night(g, [[447, 90, 90], [150, 60, 50], [760, 80, 55]]);
+    g.fillStyle = T.plate; g.fillRect(0, 300, W, H - 300);
+  g.lineWidth = 1; for (let y = 304; y < H; y += 7) { g.beginPath(); g.moveTo(0, y); g.lineTo(W, y); g.stroke(); }
+  G.crowd(g, W, 318, 30, 8, 10, R, { arms: .85, jitter: 4 });
+  G.crowd(g, W, 392, 22, 13, 16, R, { arms: .8, jitter: 6 });
+  G.frame(g, W, H);
+}
+
+// ---------------- timeline ----------------
+const tl = gsap.timeline({ paused: true });
+const lands = [-1.2, 1.4, -1.6, 1.1];
+const ticks = [], beats = [];
+// p0 — la une
+G.spinIn(tl, '#p0', 0, lands[0], { fromRot: -300, fromScale: 0.28, dur: 0.5 });
+G.kenBurns(tl, '#p0-cv', 0, st[1] + 0.6);
+G.stampIn(tl, '#p0-stamp', 0.62, -8);
+let e = G.typewriter(document.getElementById('p0-dep'), pages[0].depLabel, pages[0].dep, 0.9); ticks.push(...G.typeTicks(pages[0].dep, 0.9));
+G.zoomKick(tl, '#p0 .zoom', 5 * B);
+beats.push({ page: 'p0', spin: 0, land: 0.5, stamp: 0.62, typeFrom: 0.9, typeEnd: +e.toFixed(3), zoom: 5 * B });
+// p1 — trois chiffres
+G.spinIn(tl, '#p1', st[1], lands[1]); G.dimOut(tl, '#p0 .dim', st[1]);
+const factT = [st[1] + 0.7, st[1] + 0.7 + 3 * B, st[1] + 0.7 + 6 * B];
+facts.forEach((f, i) => {
+  tl.fromTo('#fn' + i, { scale: 1.8, opacity: 0, rotation: -4 }, { scale: 1, opacity: 1, rotation: 0, duration: T.stamp.dur, ease: T.stamp.ease, immediateRender: false }, factT[i]);
+  const t0 = factT[i] + 0.2; G.typewriter(document.getElementById('fl' + i), '', f[1], t0, 40); ticks.push(...G.typeTicks(f[1], t0, 40));
+});
+G.zoomKick(tl, '#p1 .zoom', factT[2] + 2 * B, 1.06);
+beats.push({ page: 'p1', spin: st[1], land: st[1] + T.spin.dur, facts: factT.map(v => +v.toFixed(4)), zoom: +(factT[2] + 2 * B).toFixed(4) });
+// p2 — la brèche
+G.spinIn(tl, '#p2', st[2], lands[2]); G.dimOut(tl, '#p1 .dim', st[2]);
+G.kenBurns(tl, '#p2-cv', st[2], 3.4, 1.05);
+const crackT = st[2] + 0.62, fallT = st[2] + 0.62 + 2 * B;
+tl.fromTo('#crack', { opacity: 0 }, { opacity: 1, duration: 0.05, immediateRender: false }, crackT);
+const falling = [];
+for (let r = 0; r < ROWS; r++) for (let c = 2; c <= 4; c++) falling.push([r, c]);
+falling.push([0, 1], [0, 5]);
+falling.sort((a, b) => a[0] - b[0] || Math.abs(a[1] - 3) - Math.abs(b[1] - 3));
+falling.forEach(([r, c], i) => {
+  tl.to(`#sl${r}-${c}`, { y: 520 - r * 60, x: (c - 3) * 40 + (R() - .5) * 30, rotation: (R() < .5 ? -1 : 1) * (25 + R() * 45), duration: 0.62, ease: 'power2.in', immediateRender: false }, fallT + i * 0.045);
+});
+tl.to('#crack', { opacity: 0, duration: 0.05 }, fallT + 0.05);
+G.stampIn(tl, '#p2-stamp', fallT + 0.62, 7);
+e = G.typewriter(document.getElementById('p2-dep'), pages[2].depLabel, pages[2].dep, st[2] + 0.62); ticks.push(...G.typeTicks(pages[2].dep, st[2] + 0.62));
+beats.push({ page: 'p2', spin: st[2], land: st[2] + T.spin.dur, crack: +crackT.toFixed(4), fall: +fallT.toFixed(4), stamp: +(fallT + 0.62).toFixed(4) });
+// p3 — anniversaire : compteur 0 -> 37, frise
+G.spinIn(tl, '#p3', st[3], lands[3]); G.dimOut(tl, '#p2 .dim', st[3]);
+const counter = { v: 0 }; const cntT = st[3] + 0.5;
+tl.fromTo(counter, { v: 0 }, { v: 37, duration: 4 * B, ease: 'power2.out', immediateRender: false }, cntT);
+tl.fromTo('#seg1', { scaleX: 0 }, { scaleX: 1, duration: 2 * B, ease: 'power2.inOut', transformOrigin: '0% 50%', immediateRender: false }, cntT);
+tl.fromTo('#seg2', { scaleX: 0 }, { scaleX: 1, duration: 2 * B, ease: 'power2.inOut', transformOrigin: '0% 50%', immediateRender: false }, cntT + 2 * B);
+tl.fromTo('#lab1', { opacity: 0 }, { opacity: 1, duration: 0.1, immediateRender: false }, cntT + 2 * B);
+tl.fromTo('#lab2', { opacity: 0 }, { opacity: 1, duration: 0.1, immediateRender: false }, cntT + 4 * B);
+G.stampIn(tl, '#p3-stamp', st[3] + 6 * B, -7);
+e = G.typewriter(document.getElementById('p3-dep'), pages[3].depLabel, pages[3].dep, st[3] + 4 * B + 0.3); ticks.push(...G.typeTicks(pages[3].dep, st[3] + 4 * B + 0.3));
+beats.push({ page: 'p3', spin: st[3], land: st[3] + T.spin.dur, counter: [+cntT.toFixed(4), +(cntT + 4 * B).toFixed(4)], stamp: +(st[3] + 6 * B).toFixed(4), typeEnd: +e.toFixed(3) });
+window.__beats = { beats, ticks, duration: DUR };
+const cnt = () => document.getElementById('cnt');
+
+S.installContract({
+  duration: DUR,
+  ready: S.loadFonts(G.FONTS).then(() => {
+    document.querySelectorAll('#p0 .big, #p1 .big, #p2 .big').forEach(el => G.fitWidth(el, 900, 230, 120));
+    document.querySelectorAll('#p3 .big').forEach(el => G.fitWidth(el, 900, 260, 120));
+    document.querySelectorAll('.sub').forEach(el => G.fitLines(el, 2, 84, 62));
+    e0(); e2();
+  }),
+  renderAt: t => {
+    tl.seek(t, false); G.renderTypers(t);
+    cnt().textContent = String(Math.round(t < st[3] ? 0 : counter.v)).padStart(2, '0');
+  },
+});
+</script></body></html>

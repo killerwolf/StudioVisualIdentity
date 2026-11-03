@@ -1,0 +1,226 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8">
+<title>Aquarelle Conte — Où vont les étoiles le jour ?</title>
+<!-- Short enfants, identité aquarelle-conte. Graine 7. Durée 15 s.
+     p5.js v2 : tous les lavis (ciels nuit/aube/jour, lune, soleil, nuages, collines, arbre, maison) pré-rendus au ready,
+     composés par frame (multiplane 3 plans + transitions « lavis qui s'ouvre »), loupe magique = ciel de nuit clippé.
+     Paper.js : Lulu la petite chouette (vecteur aquarelle, clignements, regard), étincelles, étoile filante,
+     cercles pointillés « elles sont toujours là ». -->
+<style>
+:root{--bg:#F7F1E6;--text:#3A3042;--coralDeep:#B2573E;--blueDeep:#4E7FB8}
+html,body{margin:0;background:var(--bg);width:1080px;height:1920px;overflow:hidden}
+#stage{position:absolute;inset:0}
+#stage canvas{position:absolute;inset:0;display:block}
+#vec{z-index:10}
+.t{position:absolute;left:64px;width:880px;color:var(--text);z-index:20;opacity:0;will-change:opacity,transform}
+.kick{font:600 54px/1 'Nunito';color:var(--coralDeep)}
+.title{font:700 108px/1.0 'Fraunces';letter-spacing:-2px}
+.big{font:700 92px/1.02 'Fraunces';letter-spacing:-1.5px}
+.sub{font:600 58px/1.18 'Nunito'}
+em{font-style:normal;color:var(--blueDeep)}
+#fade{position:absolute;inset:0;background:var(--bg);opacity:0;z-index:60}
+</style></head><body>
+<div id="stage">
+  <canvas id="vec"></canvas>
+  <div class="t kick" id="k0" style="top:1150px">Histoire du soir</div>
+  <div class="t title" id="t0" style="top:1224px">Où vont les<br><em>étoiles</em> le jour&nbsp;?</div>
+  <div class="t big" id="b1" style="top:1190px">Le Soleil se lève…</div>
+  <div class="t sub" id="s1" style="top:1316px">et les étoiles<br>disparaissent&nbsp;?</div>
+  <div class="t big" id="b2" style="top:1190px">Elles sont<br><em>toujours là</em>&nbsp;!</div>
+  <div class="t sub" id="s2" style="top:1410px">Le Soleil brille si fort<br>qu’il les cache.</div>
+  <div class="t big" id="b3" style="top:1190px">Bonne nuit,<br><em>Lulu</em>…</div>
+  <div class="t sub" id="s3" style="top:1410px">Les étoiles sont revenues.</div>
+  <div id="fade"></div>
+</div>
+<script src="/node_modules/p5/lib/p5.min.js"></script>
+<script src="/node_modules/paper/dist/paper-core.min.js"></script>
+<script type="module">
+import * as S from '/out/tools/lib/svi.js';
+import { T, FONTS, washer, circle, ellipse, hill, star, rect, startP5, draw, bloom, paperGrain, inkText, paperFade, paperSetup, wc, P } from './aq.js';
+
+const SEED = 7, DUR = 15;
+const W = washer(SEED);
+const { wash } = W;
+const STARS = [[420, 300, 24], [560, 410, 17], [700, 270, 20], [980, 300, 16], [1060, 560, 15], [610, 620, 14], [900, 650, 13], [470, 520, 13], [330, 260, 15], [1110, 420, 18], [780, 560, 12], [520, 340, 14], [650, 480, 16], [380, 420, 12]];
+const SUN = [860, 1000, 800, 430];      // lever : de (860,1000) à (800,430)
+let p, L, BLOB;
+
+function paintAll() {
+  const g = L;
+  // CIEL NUIT
+  wash(g.night, [[-60, -40], [1240, -40], [1240, 1100], [-60, 1100]], '#6C9BCF', { layers: 26, alpha: 10, vari: .18 });
+  wash(g.night, [[-60, -40], [1240, -40], [1240, 760], [600, 820], [-60, 740]], '#4E7FB8', { layers: 30, alpha: 9, vari: .26 });
+  wash(g.night, [[-60, -40], [1240, -40], [1240, 420], [620, 520], [-60, 430]], '#33406E', { layers: 30, alpha: 9, vari: .3 });
+  // CIEL AUBE / CRÉPUSCULE
+  wash(g.dawn, [[-60, -40], [1240, -40], [1240, 1100], [-60, 1100]], '#9DB3DD', { layers: 24, alpha: 11, vari: .2 });
+  wash(g.dawn, [[-60, 560], [1240, 520], [1240, 1100], [-60, 1100]], '#E88D72', { layers: 28, alpha: 9, vari: .22 });
+  wash(g.dawn, [[-60, 760], [1240, 720], [1240, 1100], [-60, 1100]], '#F2C14E', { layers: 26, alpha: 10, vari: .2 });
+  // CIEL JOUR
+  wash(g.day, [[-60, -40], [1240, -40], [1240, 1100], [-60, 1100]], '#F7EBD2', { layers: 18, alpha: 14, vari: .12 });
+  wash(g.day, [[-60, -40], [1240, -40], [1240, 780], [600, 860], [-60, 760]], '#A9CDEB', { layers: 30, alpha: 10, vari: .24 });
+  wash(g.day, [[-60, -40], [1240, -40], [1240, 380], [600, 460], [-60, 360]], '#7FAEDC', { layers: 22, alpha: 8, vari: .3 });
+  // ÉTOILES
+  for (const [x, y, r] of STARS) wash(g.stars, star(x, y, r), '#F2C14E', { layers: 18, alpha: 24, vari: .08, base: 1, sub: 1 });
+  // LUNE (calque 400×400, centre 200,200)
+  for (const [r, a] of [[180, 4], [150, 5], [120, 6]]) wash(g.moon, circle(200, 200, r, 26), '#F7F1E6', { layers: 20, alpha: a * 2, vari: .1, edge: false });
+  { const pts = [], cx = 200, cy = 200, r = 92, ox = 44, oy = -26, r2 = 80;
+    for (let i = 0; i <= 40; i++) { const a = -2.25 + i / 40 * 4.5; pts.push([cx + Math.cos(a + 2.6) * r, cy + Math.sin(a + 2.6) * r]); }
+    for (let i = 40; i >= 0; i--) { const a = -1.75 + i / 40 * 3.5; pts.push([cx + ox + Math.cos(a + 2.6) * r2, cy + oy + Math.sin(a + 2.6) * r2]); }
+    wash(g.moon, pts, '#F2C14E', { layers: 30, alpha: 18, vari: .03, base: 1, sub: 1 }); }
+  // SOLEIL (calque 520×520, centre 260,260)
+  for (const [r, a] of [[250, 4], [200, 6], [160, 8]]) wash(g.sun, circle(260, 260, r, 26), '#F2C14E', { layers: 16, alpha: a, vari: .12, edge: false });
+  wash(g.sun, circle(260, 260, 92, 24), '#F2C14E', { layers: 30, alpha: 24, vari: .05 });
+  wash(g.sun, circle(250, 250, 60, 18), '#F7D77E', { layers: 16, alpha: 18, vari: .06, edge: false });
+  // NUAGES (1400×700)
+  for (const [cx, cy, s] of [[260, 260, 1], [980, 420, .8]]) for (const [dx, dy, r] of [[-90, 20, 70], [0, -10, 95], [100, 18, 72], [40, 40, 80], [-40, 44, 70]])
+    wash(g.clouds, circle(cx + dx * s * 1.3, cy + dy * s, r * s, 14), '#FFFFFF', { layers: 18, alpha: 14, vari: .18, edge: false });
+  // LOIN : collines
+  wash(g.far, hill(880, 40, .006, 1.2), '#6C9BCF', { layers: 28, alpha: 9, vari: .16 });
+  wash(g.far, hill(940, 46, .005, 3.0), '#7FB685', { layers: 28, alpha: 9, vari: .16 });
+  // PRÈS : colline, maison, arbre + branche, chemin, papier bas de page
+  const n = g.near;
+  wash(n, hill(1010, 50, .004, 0.2), '#7FB685', { layers: 36, alpha: 11, vari: .14 });
+  wash(n, rect(800, 890, 140, 110), '#EFE4D0', { layers: 22, alpha: 24, vari: .05 });
+  wash(n, [[778, 900], [870, 800], [962, 900]], '#E88D72', { layers: 26, alpha: 22, vari: .06 });
+  wash(n, rect(846, 928, 44, 42), '#F2C14E', { layers: 22, alpha: 34, vari: .04 });
+  wash(n, rect(908, 820, 20, 44), '#B2573E', { layers: 14, alpha: 24, vari: .05 });
+  wash(n, [[230, 1070], [276, 1070], [270, 640], [238, 640]], '#8A6A55', { layers: 22, alpha: 26, vari: .04 });                  // tronc
+  wash(n, [[262, 872], [560, 842], [566, 858], [262, 900]], '#8A6A55', { layers: 22, alpha: 28, vari: .03 });                      // branche
+  wash(n, circle(210, 560, 170, 16), '#7FB685', { layers: 32, alpha: 14, vari: .18 });
+  wash(n, circle(320, 640, 105, 12), '#5E9A6A', { layers: 26, alpha: 12, vari: .18 });
+  wash(n, circle(150, 470, 90, 12), '#5E9A6A', { layers: 20, alpha: 10, vari: .2 });
+  wash(n, [[600, 1030], [660, 1030], [780, 1180], [600, 1180]], '#F7E2B8', { layers: 18, alpha: 18, vari: .1 });
+  wash(n, [[-60, 1090], [1240, 1070], [1240, 2300], [-60, 2300]], '#F7F1E6', { layers: 22, alpha: 40, vari: .04 });
+  BLOB = W.blob(14);
+}
+
+/* ---------- Paper.js : Lulu + étincelles ---------- */
+let owl, lids = [], pupils = [], sparks = [], rings = [], shoot, lens;
+function buildVector() {
+  paperSetup(document.getElementById('vec'));
+  const Path = paper.Path;
+  // Lulu (coord. locales, origine au centre du corps)
+  owl = new paper.Group(); owl.applyMatrix = false;
+  owl.addChild(wc(new Path.Ellipse({ center: [-66, 20], radius: [30, 62] }), '#8C6A52', { seed: 3 }));    // ailes
+  owl.addChild(wc(new Path.Ellipse({ center: [66, 20], radius: [30, 62] }), '#8C6A52', { seed: 4 }));
+  owl.addChild(wc(new Path({ segments: [[-62, -60], [-48, -118], [-18, -80]], closed: true }), '#8C6A52', { seed: 5 }));   // aigrettes
+  owl.addChild(wc(new Path({ segments: [[62, -60], [48, -118], [18, -80]], closed: true }), '#8C6A52', { seed: 6 }));
+  owl.addChild(wc(new Path.Ellipse({ center: [0, 0], radius: [76, 96] }), '#A9846A', { seed: 7 }));       // corps
+  owl.addChild(wc(new Path.Ellipse({ center: [0, 34], radius: [48, 56] }), '#EFD9B8', { seed: 8, alpha: .6 }));  // ventre
+  for (const [x, y] of [[-18, 20], [14, 26], [-4, 48], [22, 54], [-24, 58]]) owl.addChild(new Path({ segments: [[x - 7, y], [x, y + 6], [x + 7, y]], strokeColor: new paper.Color(0.55, 0.42, 0.33, .7), strokeWidth: 3, strokeCap: 'round' }));
+  for (const sx of [-1, 1]) {
+    const cx = sx * 33, cy = -34;
+    owl.addChild(wc(new Path.Circle({ center: [cx, cy], radius: 37 }), '#F4E6CC', { seed: 10 + sx, alpha: .7 }));
+    owl.addChild(new Path.Circle({ center: [cx, cy], radius: 25, fillColor: T.gold }));
+    const pu = new paper.Group([new Path.Circle({ center: [0, 0], radius: 12, fillColor: T.ink }), new Path.Circle({ center: [4, -5], radius: 4, fillColor: '#FFFFFF' })]);
+    pu.applyMatrix = false; owl.addChild(pu); pupils.push({ g: pu, cx, cy });
+    const clip = new Path.Circle({ center: [cx, cy], radius: 28 });
+    const lid = new Path.Rectangle({ point: [cx - 30, cy - 30], size: [60, 1], fillColor: '#A9846A' });
+    const lline = new Path({ segments: [[cx - 26, cy], [cx + 26, cy]], strokeColor: '#5E4636', strokeWidth: 4, strokeCap: 'round' });
+    const lg = new paper.Group([clip, lid]); lg.clipped = true; owl.addChild(lg); owl.addChild(lline);
+    lids.push({ lid, lline, cx, cy });
+  }
+  owl.addChild(wc(new Path({ segments: [[-11, -14], [11, -14], [0, 6]], closed: true }), '#E88D72', { seed: 20, alpha: .75 }));   // bec
+  owl.addChild(wc(new Path.Ellipse({ center: [-22, 96], radius: [16, 8] }), '#F2C14E', { seed: 21 }));   // pattes
+  owl.addChild(wc(new Path.Ellipse({ center: [22, 96], radius: [16, 8] }), '#F2C14E', { seed: 22 }));
+  // étincelles (étoiles à 4 branches) sur certaines étoiles
+  for (const i of [0, 2, 3, 5, 8, 9]) {
+    const [x, y, r] = STARS[i];
+    const sp = new Path({ segments: [[0, -1], [.18, -.18], [1, 0], [.18, .18], [0, 1], [-.18, .18], [-1, 0], [-.18, -.18]], closed: true, fillColor: '#FFF6D8' });
+    sp.applyMatrix = false; sparks.push({ g: sp, x, y, r: r * 1.5, ph: i * 1.7 });
+  }
+  // cercles pointillés « toujours là »
+  for (const i of [0, 1, 2, 3, 7, 8, 11, 12]) {
+    const [x, y, r] = STARS[i];
+    const c = new Path.Circle({ center: [0, 0], radius: r + 22, strokeColor: T.blueDeep, strokeWidth: 5, dashArray: [12, 12], strokeCap: 'round' });
+    c.applyMatrix = false; rings.push({ g: c, x, y, i });
+  }
+  // étoile filante
+  shoot = new paper.Group([new Path({ segments: [[-260, -6], [0, -9], [0, 9], [-260, 6]], closed: true, fillColor: { gradient: { stops: [['rgba(255,246,216,0)', 0], ['rgba(255,246,216,0.9)', 1]] }, origin: [-260, 0], destination: [0, 0] } }),
+    new Path.Circle({ center: [0, 0], radius: 10, fillColor: '#FFF6D8' })]);
+  shoot.applyMatrix = false;
+  // loupe magique
+  lens = new paper.Group([new Path.Circle({ center: [0, 0], radius: 128, strokeColor: '#8A6A55', strokeWidth: 14 }),
+    new Path.Circle({ center: [0, 0], radius: 120, strokeColor: '#F2C14E', strokeWidth: 4 }),
+    new Path({ segments: [[86, 96], [170, 186]], strokeColor: '#8A6A55', strokeWidth: 26, strokeCap: 'round' })]);
+  lens.applyMatrix = false;
+}
+
+const M = (x, y, r = 0, sx = 1, sy = 1) => new paper.Matrix().translate(x, y).rotate(r).scale(sx, sy);
+const lensPos = t => { const k = S.seg(t, 8.2, 11.0, S.ease.inOutSine); return [S.lerp(430, 650, k) + Math.sin(k * 3.2) * 40, 470 - Math.sin(k * Math.PI) * 120]; };
+
+function frame(t) {
+  const ctx = p.drawingContext;
+  const k = S.ease.inOutSine(S.clamp(t / DUR));
+  const skyX = -20 - k * 10, farX = -40 - k * 30, nearX = -60 - k * 60;
+  p.background(247, 241, 230);
+  // --- ciels empilés ---
+  const rDawn = S.seg(t, 3.5, 4.7, S.ease.outCubic) * 1500, aDay = S.seg(t, 5.0, 7.0, S.ease.inOutSine);
+  const rDusk = S.seg(t, 11.0, 12.0, S.ease.outCubic) * 1500, rNight = S.seg(t, 11.8, 13.0, S.ease.inOutSine) * 1500;
+  const sunK = t < 9 ? S.seg(t, 3.7, 7.2, S.ease.outCubic) : 1 - S.seg(t, 10.8, 12.6, S.ease.inOutSine);
+  const sx = S.lerp(SUN[0], SUN[2], sunK), sy = S.lerp(SUN[1], SUN[3], sunK);
+  if (rNight < 1500) {
+    if (aDay < 1 || rDusk > 0) draw(ctx, L.night, skyX, 0);
+    if (aDay < 1) bloom(ctx, L.dawn, skyX, 0, BLOB, sx, sy, rDawn);
+    draw(ctx, L.day, skyX, 0, aDay * (1 - S.seg(t, 11.6, 12.2)));
+    bloom(ctx, L.dawn, skyX, 0, BLOB, sx, sy, rDusk);
+  }
+  bloom(ctx, L.night, skyX, 0, BLOB, 820, 380, rNight);
+  const aStars = (1 - S.seg(t, 3.8, 6.0)) + S.seg(t, 12.4, 13.6);
+  draw(ctx, L.stars, skyX, 0, Math.min(1, aStars));
+  draw(ctx, L.moon, 820 - 200 + skyX + 20, 380 - 200 + S.seg(t, 3.8, 5.6) * 60, (1 - S.seg(t, 3.8, 5.6)) + S.seg(t, 12.2, 13.2));
+  draw(ctx, L.clouds, -160 + t * 7, 40, .18 + aDay * (1 - S.seg(t, 11.4, 12.6)) * .65);
+  draw(ctx, L.sun, sx - 260, sy - 260, S.seg(t, 3.6, 4.4) * (1 - S.seg(t, 12.2, 12.8)));
+  // --- loupe : le ciel de nuit est toujours là ---
+  const aLens = S.seg(t, 7.9, 8.4) * (1 - S.seg(t, 10.9, 11.3));
+  const [lx, ly] = lensPos(t);
+  if (aLens > 0) {
+    ctx.save(); ctx.beginPath(); ctx.arc(lx, ly, 121 * S.ease.outBack(Math.min(1, aLens)), 0, 6.283); ctx.clip();
+    draw(ctx, L.night, skyX, 0); draw(ctx, L.stars, skyX, 0); ctx.restore();
+  }
+  draw(ctx, L.far, farX, 0);
+  draw(ctx, L.near, nearX, 0);
+
+  // --- Paper.js ---
+  const breathe = Math.sin(t * 2.1) * .012;
+  const tilt = t < 3.6 ? Math.sin(S.seg(t, 1.6, 3.2) * Math.PI) * -8 : (t > 7.6 && t < 8.6 ? Math.sin(S.seg(t, 7.6, 8.6) * Math.PI) * 7 : 0);
+  owl.matrix = M(476 + nearX + 60, 730 - breathe * 60, tilt, 1.15 * (1 - breathe * .4), 1.15 * (1 + breathe));
+  // paupières : clignements + endormissement final
+  const blink = [1.2, 5.3, 9.6].reduce((m, b) => Math.max(m, Math.max(0, 1 - Math.abs(t - b) / .12)), 0);
+  const sleep = S.seg(t, 12.8, 14.3, S.ease.inOutSine);
+  const lidF = Math.max(blink, sleep * .92);
+  for (const l of lids) { l.lid.bounds = new paper.Rectangle(l.cx - 30, l.cy - 30, 60, Math.max(.5, 58 * lidF)); l.lline.position = P(l.cx, l.cy - 28 + 56 * lidF); l.lline.opacity = lidF > .05 ? 1 : 0; }
+  // regard
+  let gx = 6, gy = -7;
+  if (t > 3.6 && t < 8) { gx = 9; gy = -2; }
+  if (t >= 8) { const o = 476 + nearX + 60; const dx = lx - o, dy = ly - 708, d = Math.hypot(dx, dy); gx = dx / d * 10; gy = dy / d * 10; }
+  if (t >= 11.2) { gx = 4; gy = -8; }
+  for (const u of pupils) u.g.matrix = M(u.cx + gx, u.cy + gy);
+  // étincelles
+  const night = Math.min(1, (1 - S.seg(t, 3.6, 5.0)) + S.seg(t, 12.6, 13.8));
+  for (const s of sparks) { const tw = .5 + .5 * Math.sin(t * 3.1 + s.ph); s.g.matrix = M(s.x + skyX, s.y, t * 20, s.r * (.4 + tw * .8), s.r * (.4 + tw * .8)); s.g.opacity = night * (.35 + tw * .65); }
+  // étoile filante (hook)
+  const sk = S.seg(t, 0.25, 1.25, S.ease.inOutSine);
+  shoot.matrix = M(S.lerp(380, 980, sk), S.lerp(250, 470, sk), 20); shoot.opacity = Math.sin(sk * Math.PI);
+  // pointillés
+  for (const r of rings) { const a = S.seg(t, 7.6 + r.i * .09, 8.2 + r.i * .09, S.ease.outBack) * (1 - S.seg(t, 10.8, 11.3)); r.g.matrix = M(r.x + skyX, r.y, t * 25, Math.max(.01, a), Math.max(.01, a)); r.g.opacity = Math.min(1, a); r.g.dashOffset = t * 30; }
+  lens.matrix = M(lx, ly, 0, Math.max(.01, S.ease.outBack(Math.min(1, aLens))), Math.max(.01, S.ease.outBack(Math.min(1, aLens)))); lens.opacity = aLens;
+  paper.view.update();
+
+  // --- texte ---
+  inkText(document.getElementById('k0'), t, 0.05, 3.5); inkText(document.getElementById('t0'), t, 0.15, 3.5);
+  inkText(document.getElementById('b1'), t, 4.4, 7.4); inkText(document.getElementById('s1'), t, 4.9, 7.4);
+  inkText(document.getElementById('b2'), t, 7.7, 11.0); inkText(document.getElementById('s2'), t, 8.6, 11.0);
+  inkText(document.getElementById('b3'), t, 12.0, 15.2); inkText(document.getElementById('s3'), t, 12.6, 15.2);
+  paperFade(document.getElementById('fade'), t, DUR);
+}
+
+S.installContract({
+  duration: DUR,
+  ready: (async () => {
+    ({ p, L } = await startP5('stage', { night: [1180, 1100], dawn: [1180, 1100], day: [1180, 1100], stars: [1180, 1100], moon: [400, 400], sun: [520, 520], clouds: [1400, 700], far: [1240, 1920], near: [1240, 1920] }));
+    await S.loadFonts(FONTS);
+    paintAll(); buildVector(); paperGrain('stage', 31); frame(0);
+  })(),
+  renderAt: frame,
+});
+</script></body></html>

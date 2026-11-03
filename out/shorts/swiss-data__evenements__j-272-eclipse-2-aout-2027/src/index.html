@@ -1,0 +1,135 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8">
+<!-- swiss-data · evenements · « J-272 : l'éclipse totale du 2 août 2027 » — D3.js (d3-geo : projection équirectangulaire + graticule,
+     tracé simplifié à la main de la ligne de centralité ; échelles ; SVG) + GSAP (timeline seekée, compteurs, volets).
+     Date de référence : 3 novembre 2026 -> 272 jours avant le 2 août 2027. Totalité max ≈ 6 min 23 s près de Louxor.
+     Aucune donnée géographique téléchargée : 10 points lon/lat approximatifs saisis à la main. Déterministe, seed 0. Durée 15 s. -->
+<script src="/node_modules/d3/dist/d3.min.js"></script>
+<script src="/node_modules/gsap/dist/gsap.min.js"></script>
+<style>html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:#F4F1EA}svg{position:absolute;inset:0}</style>
+</head><body>
+<svg id="s" width="1080" height="1920"></svg>
+<script type="module">
+import { T, gx, txt, frame, wipeLine, makeWipe, addWipe, showScenes, fontsReady, S } from './grille.js';
+const DUR = 15;
+const svg = d3.select('#s');
+const F = frame(svg, { kicker: '01 · DÉCOMPTE', right: '02.08.2027' });
+const tl = gsap.timeline({ paused: true });
+const st = { days: 365, sec: 0 };
+const ex = (node, from, to, dur, at, ease = 'expo.out') => tl.fromTo(node, from, { ...to, duration: dur, ease, immediateRender: false }, at);
+const CUT1 = 3.475, CUT2 = 8.475, CUT3 = 12.475;
+const title = (g, lines, y0, size, lh, at) => lines.map((l, i) => wipeLine(g, 66, y0 + i * lh, l, size))
+  .forEach((o, i) => ex(o.clip, { attr: { width: 0 } }, { attr: { width: 1000 } }, 0.6, at + i * 0.08));
+// disque rouge (Soleil) + disque noir (Lune) : motif de l'identité pour ce short
+function eclipse(g, cx, cy, r) {
+  const corona = g.append('circle').attr('cx', cx).attr('cy', cy).attr('r', r * 1.22).attr('fill', 'none').attr('stroke', T.red).attr('stroke-width', 6).style('opacity', 0);
+  const sun = g.append('circle').attr('cx', cx).attr('cy', cy).attr('r', r).attr('fill', T.red);
+  const moon = g.append('circle').attr('cx', cx - r * 2.6).attr('cy', cy).attr('r', r * 1.02).attr('fill', T.ink);
+  return { corona: corona.node(), sun: sun.node(), moon: moon.node(), cx, cy, r };
+}
+
+// ───────── Scène A : J-272 (0 → CUT1) ─────────
+const A = svg.append('g');
+title(A, ['L’éclipse totale', 'du 2 août 2027'], 448, 112, 122, 0.1);
+txt(A, 60, 860, 'J–', 240, { family: T.display, fill: T.red });
+const wl1 = wipeLine(A, gx(5), 790, 'jours', 62), wl2 = wipeLine(A, gx(5), 862, 'restants', 62);
+[wl1, wl2].forEach((o, i) => ex(o.clip, { attr: { width: 0 } }, { attr: { width: 500 } }, 0.6, 1.4 + i * 0.08));
+const days = txt(A, 48, 1232, '365', 460, { family: T.display });
+tl.to(st, { days: 272, duration: 1.4, ease: 'expo.out' }, 0);
+const eA = eclipse(A, gx(6), 1440, 130);
+ex(eA.sun, { attr: { r: 0 } }, { attr: { r: 130 } }, 0.6, 0.0);
+ex(eA.moon, { attr: { cx: gx(6) - 340 } }, { attr: { cx: gx(6) - 120 } }, 3.0, 0.4, 'power2.out');
+
+// ───────── Scène B : 6 min 23 s (CUT1 → CUT2) ─────────
+const B = svg.append('g');
+title(B, ['Durée maximale', 'de la totalité'], 420, 104, 108, CUT1 + 0.1);
+const minN = txt(B, 48, 1000, '0', 420, { family: T.display, fill: T.ink });
+txt(B, 340, 1000, 'min', 130);
+const secN = txt(B, 48, 1340, '00', 420, { family: T.display, fill: T.red });
+const sUnit = txt(B, 600, 1340, 's', 130, { fill: T.red });
+const eB = eclipse(B, gx(10), 850, 112);
+d3.select(eB.moon).attr('cx', gx(10));
+ex(eB.corona, { attr: { r: 112 * 1.05 }, opacity: 0 }, { attr: { r: 112 * 1.3 }, opacity: 1 }, 1.2, CUT1 + 0.3);
+const xs = d3.scaleLinear().domain([0, 420]).range([T.L, T.R]);   // 0 -> 7 min
+B.append('rect').attr('x', T.L).attr('y', 1400).attr('width', T.W).attr('height', 36).attr('fill', T.rail);
+const bar = B.append('rect').attr('x', T.L).attr('y', 1400).attr('width', 0).attr('height', 36).attr('fill', T.red);
+d3.range(0, 8).forEach(m => B.append('rect').attr('x', xs(m * 60) - (m === 7 ? 4 : 0)).attr('y', 1446).attr('width', 4).attr('height', m % 7 === 0 ? 34 : 20).attr('fill', T.ink));
+const loc = wipeLine(B, 66, 1556, 'près de Louxor (Égypte)', 62);
+ex(loc.clip, { attr: { width: 0 } }, { attr: { width: 1000 } }, 0.6, 6.2);
+tl.to(st, { sec: 383, duration: 2.3, ease: 'power3.out' }, CUT1 + 0.4);
+
+// ───────── Scène C : le tracé (CUT2 → CUT3) ─────────
+const C = svg.append('g');
+title(C, ['La bande', 'de totalité'], 420, 104, 108, CUT2 + 0.1);
+const proj = d3.geoEquirectangular().fitExtent([[T.L, 600], [T.R, 1060]],
+  { type: 'MultiPoint', coordinates: [[-12, 42], [54, 42], [-12, 4], [54, 4]] });
+const geo = d3.geoPath(proj);
+C.append('path').datum(d3.geoGraticule().extent([[-12, 4], [54.01, 42.01]]).step([6, 6])()).attr('d', geo)
+  .attr('fill', 'none').attr('stroke', '#D5CFC2').attr('stroke-width', 1.5);
+C.append('rect').attr('x', T.L).attr('y', 600).attr('width', T.W).attr('height', 460).attr('fill', 'none').attr('stroke', T.ink).attr('stroke-width', 4);
+// ligne de centralité, simplifiée à la main (approximative) — ouest -> est
+const pts = [
+  { n: 'Espagne', p: [-6.6, 36.6] }, { n: 'Gibraltar', p: [-5.4, 36.1] }, { n: 'Maroc', p: [-4.6, 35.3] },
+  { n: 'Algérie', p: [2.5, 34.6] }, { n: 'Tunisie', p: [9.4, 33.8] }, { n: 'Libye', p: [18.5, 30.8] },
+  { n: 'Égypte', p: [32.6, 25.7] }, { n: 'Arabie saoudite', p: [40.0, 21.3] }, { n: 'Yémen', p: [45.5, 15.2] }, { n: 'Somalie', p: [50.5, 10.8] }];
+const start = [-13, 37.2], end = [54, 7.6];
+const line = d3.line().curve(d3.curveCatmullRom.alpha(0.5));
+const P = [start, ...pts.map(d => d.p), end].map(c => proj(c));
+const band = C.append('path').attr('d', line(P)).attr('fill', 'none').attr('stroke', T.red).attr('stroke-width', 30)
+  .attr('stroke-linecap', 'butt').attr('stroke-opacity', 0.92);
+const len = band.node().getTotalLength();
+band.attr('stroke-dasharray', `${len} ${len}`).attr('stroke-dashoffset', len);
+const DRAW0 = CUT2 + 0.3, DRAW = 2.4;
+tl.fromTo(band.node(), { attr: { 'stroke-dashoffset': len } }, { attr: { 'stroke-dashoffset': 0 }, duration: DRAW, ease: 'none', immediateRender: false }, DRAW0);
+// abscisse curviligne approximative de chaque point (corde cumulée)
+const cum = [0]; for (let i = 1; i < P.length; i++) cum.push(cum[i - 1] + Math.hypot(P[i][0] - P[i - 1][0], P[i][1] - P[i - 1][1]));
+const items = pts.map((d, i) => {
+  const at = DRAW0 + DRAW * cum[i + 1] / cum[cum.length - 1];
+  const [x, y] = proj(d.p);
+  const dot = C.append('circle').attr('cx', x).attr('cy', y).attr('r', 0).attr('fill', T.ink);
+  ex(dot.node(), { attr: { r: 0 } }, { attr: { r: 9 } }, 0.3, at, 'back.out(3)');
+  const col = i < 5 ? 0 : 1, row = i % 5;
+  const t = txt(C, col ? gx(6.2) : T.L, 1150 + row * 84, d.n, 58, { weight: 600, fill: T.ghost });
+  ex(t.node(), { attr: { fill: T.ghost } }, { attr: { fill: T.ink } }, 0.2, at, 'power1.out');
+  return { at };
+});
+const [cx0, cy0] = proj([-6.6, 36.6]);
+const cad = C.append('g').style('opacity', 0);
+cad.append('rect').attr('x', cx0 - 2).attr('y', cy0 + 14).attr('width', 4).attr('height', 50).attr('fill', T.ink);
+txt(cad, cx0 - 14, cy0 + 114, 'Cadix', 58, { fill: T.ink });
+ex(cad.node(), { opacity: 0 }, { opacity: 1 }, 0.3, items[0].at + 0.1, 'power1.out');
+const [lx, ly] = proj([32.6, 25.7]);
+const lux = C.append('g').style('opacity', 0);
+lux.append('rect').attr('x', lx + 14).attr('y', ly - 92).attr('width', 4).attr('height', 82).attr('fill', T.ink);
+txt(lux, lx + 30, ly - 40, 'Louxor', 58, { fill: T.ink });
+ex(lux.node(), { opacity: 0 }, { opacity: 1 }, 0.3, items[6].at + 0.1, 'power1.out');
+
+// ───────── Scène D : 2114 (CUT3 → fin) ─────────
+const D = svg.append('g');
+title(D, ['La plus longue', 'sur la terre ferme', 'jusqu’en'], 420, 92, 100, CUT3 + 0.1);
+const y2114 = wipeLine(D, 50, 1010, '2114', 360, { family: T.display, fill: T.red });
+ex(y2114.clip, { attr: { width: 0 } }, { attr: { width: 1060 } }, 0.7, CUT3 + 0.4);
+const eD = eclipse(D, gx(6), 1300, 120);
+d3.select(eD.moon).attr('cx', gx(6) - 300);
+ex(eD.moon, { attr: { cx: gx(6) - 300 } }, { attr: { cx: gx(6) } }, 1.3, CUT3 + 0.5, 'expo.out');
+ex(eD.corona, { attr: { r: 120 * 1.05 }, opacity: 0 }, { attr: { r: 120 * 1.32 }, opacity: 1 }, 1.0, CUT3 + 1.6);
+const dt = wipeLine(D, 66, 1560, '2 août 2027 · J–272', 62);
+ex(dt.clip, { attr: { width: 0 } }, { attr: { width: 1000 } }, 0.6, CUT3 + 1.2);
+
+// ───────── volets + kicker ─────────
+const wipe = makeWipe(svg);
+[CUT1, CUT2, CUT3].forEach(c => addWipe(tl, wipe, c - 0.475));
+const scenes = [{ g: A, from: 0, to: CUT1 }, { g: B, from: CUT1, to: CUT2 }, { g: C, from: CUT2, to: CUT3 }, { g: D, from: CUT3, to: 99 }];
+const kick = ['01 · DÉCOMPTE', '02 · TOTALITÉ', '03 · LE TRACÉ', '04 · À NOTER'];
+tl.set({}, {}, DUR);
+
+function renderAt(t) {
+  tl.seek(t, false);
+  showScenes(scenes, t);
+  F.kicker.text(kick[t < CUT1 ? 0 : t < CUT2 ? 1 : t < CUT3 ? 2 : 3]);
+  days.text(Math.round(st.days));
+  const s = Math.round(st.sec);
+  minN.text(Math.floor(s / 60)); secN.text(String(s % 60).padStart(2, '0'));
+  bar.attr('width', xs(s) - T.L);
+}
+S.installContract({ renderAt, ready: fontsReady(), duration: DUR });
+</script></body></html>

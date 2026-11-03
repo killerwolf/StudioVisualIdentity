@@ -1,0 +1,165 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8">
+<!-- Arcade Pixel / abstrait — « La balle peut-elle s'échapper du cercle ? »
+     p5.js v2 (buffer 270×480 upscalé ×4 nearest) ; physique maison ring.js (pas fixe 1/240 s, SEQUENTIAL).
+     Graine 1007 choisie par simulate.cjs (évasion à 11,825 s après 45 rebonds). ?verify=1 compare à trace.json. -->
+<script src="/node_modules/p5/lib/p5.min.js"></script>
+<script src="./ring.js"></script>
+<style>
+  :root{--bg:#0E0B1F;--surface:#1D1740;--pink:#FF4F79;--green:#3CF2A0;--yellow:#FFD23F;--blue:#4FB3FF;--text:#FFFFFF}
+  html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:var(--bg)}
+  #wrap{position:absolute;inset:0}
+  #wrap canvas{position:absolute;left:0;top:0;width:1080px!important;height:1920px!important;image-rendering:pixelated}
+  .scan{position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(0,0,0,.20) 0 2px,transparent 2px 4px);pointer-events:none}
+  .ov{position:absolute;color:var(--text);font-family:'Press Start 2P';display:none;white-space:nowrap}
+  #hud{top:236px;left:72px;font-size:56px;line-height:64px}
+  #hud .lab{color:var(--yellow)}
+  #title{left:56px;top:330px;width:900px;padding:28px 32px;background:var(--surface);box-shadow:0 0 0 8px var(--blue),16px 16px 0 8px #000}
+  #title h1{margin:0;font:400 80px/1.1 'Rubik Mono One';letter-spacing:-0.02em;color:#fff;text-shadow:8px 8px 0 var(--pink)}
+  #title h1 span{color:var(--green)}
+  #rule{left:72px;top:1420px;font-size:56px;line-height:80px}
+  #rule b{font-weight:400;color:var(--yellow)}
+  #esc{left:0;width:1080px;top:880px;text-align:center;font:400 150px/1 'Rubik Mono One';color:var(--green);text-shadow:12px 12px 0 var(--pink)}
+  #end{left:72px;top:330px;width:888px}
+  #end .win{font:400 120px/1.05 'Rubik Mono One';letter-spacing:-0.02em;color:var(--green);text-shadow:10px 10px 0 #000}
+  #end .row{font-size:56px;line-height:56px;height:104px;padding-left:112px;display:flex;align-items:center}
+  #end .row .lab{color:var(--yellow)}
+  #end .cta2{font-size:56px;line-height:84px;color:var(--green);margin-top:40px}
+  #verify{left:72px;top:1500px;font-size:40px;background:#000;padding:8px}
+</style></head><body>
+<div id="wrap"></div>
+<div id="hud" class="ov"><span class="lab">REBONDS </span><span id="cnt">00</span></div>
+<div id="title" class="ov"><h1>LA BALLE<br>PEUT-ELLE<br><span>S'ÉCHAPPER&nbsp;?</span></h1></div>
+<div id="rule" class="ov">CHAQUE REBOND<br><b>ELLE GRANDIT</b></div>
+<div id="esc" class="ov">ÉVADÉE<br>&nbsp;!</div>
+<div id="end" class="ov"><div class="win">ÉVADÉE<br>&nbsp;!</div>
+  <div style="margin-top:56px">
+    <div class="row"><span class="lab">REBONDS&nbsp;</span><span id="eN">45</span></div>
+    <div class="row"><span class="lab">TAILLE&nbsp;&nbsp;</span><span id="eR">x4.6</span></div>
+    <div class="row"><span class="lab">TEMPS&nbsp;&nbsp;&nbsp;</span><span id="eT">11.82</span></div>
+  </div>
+  <div class="cta2" id="cta2">&#9654; RECORD&nbsp;!</div></div>
+<div id="verify" class="ov"></div>
+<div class="scan"></div>
+<script type="module">
+import * as S from '/out/tools/lib/svi.js';
+const Rg = window.Ring;
+const SEED = 1007, DUR = 15.0;
+const LW = 270, LH = 480;
+const { CX, CY, R, RIN, ROUT, TILES, TILE, FPS } = Rg;
+const COLS = ['#FF4F79', '#3CF2A0', '#FFD23F', '#4FB3FF'];
+const T_MOSAIC = [13.25, 13.85], T_END = 13.55;
+const $ = id => document.getElementById(id);
+const show = (id, on) => { $(id).style.display = on ? 'block' : 'none'; };
+const q = Math.round;
+let s, ghosts = [];
+function build() { s = Rg.create(SEED); ghosts = []; }
+const rot = f => s.o.dir * Math.floor(f / s.o.stepFrames);          // décalage de l'anneau (en tuiles)
+// pixels de chaque tuile (repère monde), précalculés
+const TILEPIX = Array.from({ length: TILES }, () => []);
+for (let y = Math.floor(CY - ROUT - 1); y <= CY + ROUT + 1; y++) for (let x = Math.floor(CX - ROUT - 1); x <= CX + ROUT + 1; x++) {
+  const dx = x + 0.5 - CX, dy = y + 0.5 - CY, d = Math.sqrt(dx * dx + dy * dy);
+  if (d < RIN - 0.3 || d > ROUT + 0.3) continue;
+  let a = Math.atan2(dy, dx); if (a < 0) a += Math.PI * 2;
+  const k = Math.floor(a / TILE + 0.5) % TILES;
+  TILEPIX[k].push([x, y, d > ROUT - 1.5 ? 2 : d < RIN + 1.5 ? 0 : 1]);
+}
+
+let P;
+const sketchReady = new Promise(res => {
+  new p5(p => { p.setup = () => { p.createCanvas(LW, LH); p.pixelDensity(1); p.noSmooth(); p.noLoop(); P = p; res(); }; }, $('wrap'));
+});
+function disk(p, x, y, r, col, hi) {
+  const rr = Math.max(2, q(r));
+  for (let j = -rr; j <= rr; j++) { const w = Math.floor(Math.sqrt(rr * rr - j * j + rr * 0.6)); p.fill('#0E0B1F'); p.rect(x - w - 1, y + j, 2 * w + 3, 1); }
+  for (let j = -rr + 1; j <= rr - 1; j++) { const w = Math.floor(Math.sqrt((rr - 1) * (rr - 1) - j * j + rr * 0.6)); p.fill(col); p.rect(x - w, y + j, 2 * w + 1, 1); }
+  if (hi) { const h = Math.max(1, q(rr * 0.3)); p.fill('#FFFFFF'); p.rect(x - q(rr * 0.5), y - q(rr * 0.55), h + 1, h); p.rect(x - q(rr * 0.65), y - q(rr * 0.2), h, h); }
+}
+function background(p, t) {
+  p.background('#0E0B1F'); p.noStroke();
+  const r = S.rng(3); for (let i = 0; i < 70; i++) { p.fill(i % 7 ? '#2a2358' : '#4FB3FF'); p.rect(q(r() * LW), q(r() * LH), 1, 1); }
+  p.fill('#16123a'); for (let x = 20; x < 250; x += 10) p.rect(x, CY - 110, 1, 220); for (let y = CY - 110; y <= CY + 110; y += 10) p.rect(20, y, 230, 1);
+}
+function drawRing(p, t, f) {
+  const off = rot(f), g0 = s.gap0, n = s.o.gapTiles;
+  // couleur de chaque tuile du repère anneau : dernière couleur de rebond reçue
+  const lit = new Map(); s.hits.forEach(h => { if (h.f <= f) lit.set(((h.tile - rot(h.f - 1)) % TILES + TILES) % TILES, h); });
+  const escF = s.escaped ? Math.round(s.escT * FPS) : Infinity, fa = Math.max(0, f - escF);
+  for (let rk = 0; rk < TILES; rk++) {
+    const inGap = ((rk - g0) % TILES + TILES) % TILES < n;
+    if (inGap) continue;
+    const wk = ((rk + off) % TILES + TILES) % TILES;       // tuile dans le repère monde
+    const h = lit.get(rk);
+    let base = '#2c3f8f', hi = '#4FB3FF', lo = '#1D1740';
+    if (h) { const c = COLS[(h.n - 1) % 4]; base = c; hi = '#FFFFFF'; lo = S.mix(c, '#0E0B1F', 0.45); if (f - h.f < 3) { base = '#FFFFFF'; } }
+    // éclatement à l'évasion : chaque tuile part en ligne droite + gravité
+    let dx = 0, dy = 0;
+    if (fa > 0) { const rr = S.rng(rk * 13 + 7); const sp = 1.2 + rr() * 2.2; dx = Math.cos(wk * TILE) * sp * fa; dy = Math.sin(wk * TILE) * sp * fa + 0.09 * fa * fa; }
+    TILEPIX[wk].forEach(([x, y, l]) => { p.fill(l === 2 ? hi : l === 0 ? lo : base); p.rect(x + q(dx), y + q(dy), 1, 1); });
+  }
+  // marqueurs de brèche (deux flèches clignotantes aux bords)
+  if (!s.escaped && Math.floor(t * 4) % 2 === 0) [g0 - 0.5, g0 + n - 0.5].forEach(e => {
+    const a = (e + off) * TILE, x = q(CX + Math.cos(a) * (ROUT + 5)), y = q(CY + Math.sin(a) * (ROUT + 5)); p.fill('#FFD23F'); p.rect(x - 2, y - 2, 4, 4);
+  });
+}
+function drawBallAndFx(p, t, f) {
+  const last = s.hits.filter(h => h.f <= f).pop();
+  const col = last ? COLS[(last.n - 1) % 4] : '#FFFFFF';
+  // ondes d'impact (anneaux pixel qui s'élargissent)
+  s.hits.forEach(h => { const a = f - h.f; if (a < 0 || a > 10) return; const wk = h.tile, x = CX + Rg.COS[wk] * RIN, y = CY + Rg.SIN[wk] * RIN; const rr = 3 + a * 2.2;
+    p.fill(COLS[(h.n - 1) % 4]); for (let k = 0; k < 16; k++) { const an = k / 16 * Math.PI * 2; p.rect(q(x + Math.cos(an) * rr), q(y + Math.sin(an) * rr), 2, 2); } });
+  // fantômes (positions passées)
+  ghosts.forEach((g, i) => { const c = p.color(g.c); c.setAlpha(25 + i * 18); p.fill(c); const rr = Math.max(1, q(g.r * 0.7)); p.rect(q(g.x) - rr, q(g.y) - rr, rr * 2, rr * 2); });
+  disk(p, q(s.x), q(s.y), s.r, col, true);
+}
+function drawEnd(p, t) {
+  p.background('#0E0B1F'); p.noStroke();
+  const r = S.rng(5); for (let i = 0; i < 90; i++) { p.fill(i % 5 ? '#2a2358' : COLS[i % 4]); p.rect(q(r() * LW), q((r() * LH + t * 20 * (1 + i % 3)) % LH), 1, 1); }
+  const age = t - T_END;
+  // icônes devant les lignes : balle (petite -> grande), rebond, chrono (alignées sur .row : 638 + 52 + 104·k écran)
+  [0, 1, 2].forEach(k => { if (age < 0.3 + k * 0.12) return; const y = q((638 + 52 + 104 * k) / 4);
+    if (k === 0) disk(p, 30, y, 7, '#FF4F79', true); if (k === 1) disk(p, 30, y, 9, '#3CF2A0', true); if (k === 2) { p.fill('#FFD23F'); p.rect(24, y - 6, 12, 12); p.fill('#0E0B1F'); p.rect(26, y - 4, 8, 8); p.fill('#FFD23F'); p.rect(29, y - 3, 2, 4); p.rect(29, y, 4, 2); } });
+}
+function mosaic(p, k) {
+  if (k <= 1) return;
+  const c = p.drawingContext, cv = c.canvas;
+  const tmp = mosaic.tmp || (mosaic.tmp = document.createElement('canvas'));
+  tmp.width = Math.ceil(LW / k); tmp.height = Math.ceil(LH / k);
+  const tc = tmp.getContext('2d'); tc.imageSmoothingEnabled = false; tc.drawImage(cv, 0, 0, LW, LH, 0, 0, tmp.width, tmp.height);
+  c.save(); c.setTransform(1, 0, 0, 1, 0, 0); c.imageSmoothingEnabled = false; c.drawImage(tmp, 0, 0, tmp.width, tmp.height, 0, 0, tmp.width * k, tmp.height * k); c.restore();
+}
+function renderAt(t) {
+  const f = Math.round(t * FPS);
+  if (!s || f < s.frame) build();
+  while (s.frame < f) {
+    Rg.stepFrame(s);
+    if (s.frame % 2 === 0) { const last = s.hits.filter(h => h.f <= s.frame).pop(); ghosts.push({ x: s.x, y: s.y, r: s.r, c: last ? COLS[(last.n - 1) % 4] : '#FFFFFF' }); if (ghosts.length > 6) ghosts.shift(); }
+  }
+  const p = P, inEnd = t >= T_END;
+  if (!inEnd) { background(p, t); drawRing(p, t, f); drawBallAndFx(p, t, f); } else drawEnd(p, t);
+  const mk = t >= T_MOSAIC[0] && t < T_MOSAIC[1] ? [1, 2, 4, 8, 16, 16, 8, 4, 2, 1][Math.min(9, Math.floor(S.seg(t, T_MOSAIC[0], T_MOSAIC[1]) * 10))] : 1;
+  mosaic(p, mk);
+  // secousse (pas de 4 px) : 2 frames par rebond, 6 frames à l'évasion
+  const escF = s.escaped ? Math.round(s.escT * FPS) : Infinity;
+  const hitNow = s.hits.some(h => f - h.f >= 0 && f - h.f < 2), escNow = f - escF >= 0 && f - escF < 6;
+  const amp = escNow ? 12 : hitNow ? 4 : 0, sx = amp ? ((f % 2) ? 1 : -1) * amp : 0;
+  $('wrap').style.transform = `translate(${sx}px, ${amp ? 4 : 0}px)`;
+  // overlays
+  const nb = s.hits.filter(h => h.f <= f).length;
+  $('cnt').textContent = String(nb).padStart(2, '0');
+  show('hud', !inEnd);
+  show('title', !inEnd && !(f >= escF));
+  show('rule', t >= 0.8 && t < 5.0 && (t > 1.1 || Math.floor(t * 12) % 2 === 0));
+  show('esc', f >= escF && t < T_MOSAIC[0] + 0.3 && (f - escF > 9 || Math.floor((f - escF) / 2) % 2 === 0));
+  show('end', inEnd);
+  if (inEnd) { const age = t - T_END; [...document.querySelectorAll('#end .row')].forEach((row, k) => { row.style.visibility = age > 0.3 + k * 0.12 ? 'visible' : 'hidden'; }); $('cta2').style.visibility = Math.floor(t * 4) % 2 ? 'hidden' : 'visible'; }
+  if (/verify=1/.test(location.search) && s.escaped) { const ok = s.escT === TRACE.escT && s.bounces === TRACE.bounces; $('verify').textContent = (ok ? 'SIM OK ' : 'SIM MISMATCH ') + s.escT + ' / ' + s.bounces; show('verify', true); }
+}
+let TRACE = null;
+const ready = Promise.all([sketchReady,
+  S.loadFonts([{ family: 'Press Start 2P', pkg: 'press-start-2p', weight: 400 }, { family: 'Rubik Mono One', pkg: 'rubik-mono-one', weight: 400 }]),
+  fetch('./trace.json').then(r => r.json()).then(j => { TRACE = j; })]).then(() => {
+  $('eN').textContent = TRACE.bounces; $('eR').textContent = 'x' + (TRACE.rFinal / 5).toFixed(1); $('eT').textContent = TRACE.escT.toFixed(2);
+  build();
+});
+S.installContract({ renderAt, ready, sequential: true, duration: DUR });
+</script></body></html>

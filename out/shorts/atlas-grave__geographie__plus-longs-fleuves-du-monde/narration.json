@@ -1,0 +1,15 @@
+{
+  "language": "fr",
+  "style": "documentaire érudit, posé, légère solennité de cabinet de cartographe ; compte à rebours net, appuyé sur chaque rang",
+  "voice": "Orus",
+  "lines": [
+    {"t": 0.2, "maxDuration": 1.9, "text": "Les cinq plus longs fleuves."},
+    {"t": 2.2, "maxDuration": 1.4, "text": "Cinquième : l'Ienisseï."},
+    {"t": 3.7, "maxDuration": 1.4, "text": "Quatrième : le Mississippi."},
+    {"t": 5.2, "maxDuration": 1.4, "text": "Troisième : le Yangzi."},
+    {"t": 6.7, "maxDuration": 1.5, "text": "Deuxième : l'Amazone."},
+    {"t": 8.3, "maxDuration": 0.8, "text": "Premier : le Nil."},
+    {"t": 9.1, "maxDuration": 2.3, "text": "Six mille six cent cinquante kilomètres."},
+    {"t": 11.45, "maxDuration": 3.5, "text": "Mais selon la mesure, l'Amazone pourrait gagner. Ton pari ?"}
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "identity": "atlas-grave",
+  "family": "geographie",
+  "title": "Les 5 plus longs fleuves du monde",
+  "hook": "Planche gravée titrée « Les 5 plus longs fleuves du monde » visible dès la frame 0 ; la mappemonde s'encre et les 5 fleuves se tracent en bleu avant 2 s",
+  "duration": 15.0,
+  "libraries": [
+    "D3.js",
+    "GSAP",
+    "pycairo"
+  ],
+  "seed": 11,
+  "renderTimeSec": 610.8,
+  "structure": [
+    {
+      "t": 0,
+      "beat": "hook : planche titrée + mappemonde NaturalEarth1 qui s'encre"
+    },
+    {
+      "t": 1.1,
+      "beat": "5 fleuves tracés (stroke-dashoffset), rangs vides I–V en pointillés"
+    },
+    {
+      "t": 2.2,
+      "beat": "V Ienisseï 5 539 km : zoom, sceau, ruban déroulé"
+    },
+    {
+      "t": 3.7,
+      "beat": "IV Mississippi-Missouri 6 275 km"
+    },
+    {
+      "t": 5.2,
+      "beat": "III Yangzi 6 300 km"
+    },
+    {
+      "t": 6.7,
+      "beat": "II Amazone 6 400 km"
+    },
+    {
+      "t": 8.3,
+      "beat": "I Nil 6 650 km (zoom plus fort, riser + impact)"
+    },
+    {
+      "t": 10.4,
+      "beat": "chute : cartouche guilloché « Nil ou Amazone ? les mesures divergent », rangs I/II échangés puis rétablis"
+    },
+    {
+      "t": 13.1,
+      "beat": "fin : « ton pari en commentaire », recul lent, tenue 1,5 s"
+    }
+  ],
+  "engagement": {
+    "mechanic": "compte à rebours (suspense V -> I) puis vote/duel",
+    "cta": "Nil ou Amazone ? Ton pari en commentaire"
+  },
+  "loopable": false,
+  "sound": {
+    "type": "generated",
+    "voice": false
+  },
+  "qualityChecks": {
+    "stillsReviewed": true,
+    "textMinPx": 54,
+    "safeAreaOk": true
+  },
+  "notes": "Côtes dessinées à la main (~30 masses, quelques dizaines de points chacune) projetées par d3.geoNaturalEarth1 ; anneaux réorientés via d3.geoArea. Caméra = transform 2D sur chemins statiques, épaisseurs divisées par k. GSAP : une timeline d'état seekée (tl.seek(t,false)). Textures pycairo (papier vergé, cadre gradué, cartouche guilloché, rose, mer gravée, vignette) générées par src/textures.py dans src/assets. Longueurs : valeurs usuelles (Nil 6 650, Amazone 6 400, Yangzi 6 300, Mississippi-Missouri 6 275, Ienisseï 5 539 km) ; le classement Nil/Amazone est signalé comme débattu. renderTimeSec = chronomètre render.mjs (après obtention du slot CPU, hors attente) mesuré sous forte charge : 4 rendus simultanés de 10 studios, load average ≈ 16 sur 4 cœurs (135,7 s/100 frames) ; une scène D3/SVG de ce type coûte nettement moins sur machine libre.",
+  "reproduce": ".venv/bin/python out/shorts/atlas-grave__geographie__plus-longs-fleuves-du-monde/src/textures.py out/shorts/atlas-grave__geographie__plus-longs-fleuves-du-monde/src/assets && node out/tools/render.mjs out/shorts/atlas-grave__geographie__plus-longs-fleuves-du-monde/src/index.html --out /tmp/svi/atlas-geo/video.mp4 --duration 15 && .venv/bin/python out/tools/sound.py out/shorts/atlas-grave__geographie__plus-longs-fleuves-du-monde/src/sound.json /tmp/svi/atlas-geo/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/atlas-geo/video.mp4 --music /tmp/svi/atlas-geo/music.wav --out out/shorts/atlas-grave__geographie__plus-longs-fleuves-du-monde/short.mp4"
+}

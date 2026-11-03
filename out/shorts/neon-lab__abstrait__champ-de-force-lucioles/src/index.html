@@ -1,0 +1,142 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8">
+<!-- Labo Néon — abstrait : 2 000 lucioles sur l'attracteur de Lorenz, boucle parfaite T=12 s.
+     twgl.js (WebGL2) : champ de force GLSL plein écran + 2 000 lucioles × 10 points de traîne, mélange additif.
+     Boucle : la luciole i avance de k·Δ sur une trajectoire pré-intégrée ; à t=T elle occupe la place de i+k
+     (attributs périodiques de période gcd(k,N)=125) -> image(T) == image(0). Graine : 11. -->
+<style>
+  html,body{margin:0;width:1080px;height:1920px;background:#05060B;overflow:hidden}
+  canvas{position:absolute;inset:0;width:1080px;height:1920px}
+  .ov{position:absolute;left:72px;color:#F2F6FF}
+  .tag{top:232px;font:500 54px 'JetBrains Mono';letter-spacing:.02em;color:#38F9FF;display:flex;gap:22px;align-items:center}
+  .tag i{display:inline-block;width:22px;height:22px;border-radius:50%;background:#FF3DCB;box-shadow:0 0 22px #FF3DCB}
+  h1{top:316px;margin:0;font:700 118px/0.96 'Space Grotesk';letter-spacing:-0.035em;width:900px}
+  h1 em{font-style:normal;color:#38F9FF}
+  .data{top:1500px;font:500 54px 'JetBrains Mono';color:#B6FF3B;letter-spacing:.01em;width:880px;display:flex;justify-content:space-between}
+</style></head><body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<div class="ov tag"><i></i>LABO/01 · CHAMP</div>
+<h1 class="ov" id="h1"><em>2 000</em> lucioles,<br>un attracteur</h1>
+<div class="ov data" id="data"><span>σ 10</span><span>ρ 28</span><span>β 8/3</span></div>
+<script type="module">
+import * as twgl from '/node_modules/twgl.js/dist/7.x/twgl-full.module.js';
+import * as S from '/out/tools/lib/svi.js';
+import { FIELD_GLSL } from './field.glsl.js';
+
+const W = 1080, H = 1920, T = 12, SEED = 11;
+const N = 2000, K = 125, TRAIL = 10, TRAIL_STEP = 2.2;       // K : décalage d'identité sur une boucle
+const gl = document.getElementById('c').getContext('webgl2', { antialias: true, preserveDrawingBuffer: true, premultipliedAlpha: false });
+
+// ---------- 1. trajectoire de Lorenz pré-intégrée (RK4) ----------
+const SIG = 10, RHO = 28, BETA = 8 / 3, DT = 0.002;
+function lorenz(p) { return [SIG * (p[1] - p[0]), p[0] * (RHO - p[2]) - p[1], p[0] * p[1] - BETA * p[2]]; }
+function rk4(p) {
+  const a = lorenz(p), b = lorenz(p.map((v, i) => v + a[i] * DT / 2)), c = lorenz(p.map((v, i) => v + b[i] * DT / 2)),
+    d = lorenz(p.map((v, i) => v + c[i] * DT));
+  return p.map((v, i) => v + DT / 6 * (a[i] + 2 * b[i] + 2 * c[i] + d[i]));
+}
+let p = [0.1, 0, 0]; for (let i = 0; i < 2500; i++) p = rk4(p); // transitoire 5 u.t.
+const L = 20000;                                                  // 40 unités de temps
+const path = new Float32Array(L * 3);
+for (let i = 0; i < L; i++) { p = rk4(p); path[i * 3] = p[0]; path[i * 3 + 1] = p[2] - 25.5; path[i * 3 + 2] = p[1]; } // z vers le haut
+const DELTA = L / N;                                              // 10 échantillons entre lucioles
+
+// ---------- 2. attributs par classe (période gcd(K,N)=125 -> boucle parfaite) ----------
+const G = 125, rnd = S.rng(SEED);
+const cls = [];
+for (let c = 0; c < G; c++) {
+  const th = rnd() * Math.PI * 2, ph = Math.acos(2 * rnd() - 1), r = 0.12 + rnd() * 0.5;
+  cls.push({ j: [r * Math.sin(ph) * Math.cos(th), r * Math.cos(ph), r * Math.sin(ph) * Math.sin(th)],
+    tw: 1 + Math.floor(rnd() * 5), tph: rnd() * Math.PI * 2, wob: 1 + Math.floor(rnd() * 3), size: 0.75 + rnd() * 0.6,
+    lime: (c % 11) === 3 });
+}
+const CY = [0.2196, 0.9765, 1.0], MG = [1.0, 0.2392, 0.796], LI = [0.714, 1.0, 0.231];
+
+// ---------- 3. programmes twgl ----------
+const quadVS = `#version 300 es
+in vec2 position; void main(){ gl_Position=vec4(position,0.,1.); }`;
+const fieldFS = `#version 300 es
+precision highp float; uniform vec2 uRes; uniform vec2 uCenter; uniform vec2 uLoop; uniform float uPulse; out vec4 o;
+${FIELD_GLSL}
+void main(){ o=vec4(neonField(gl_FragCoord.xy,uRes,uCenter,uLoop,uPulse,1.0),1.); }`;
+const ptVS = `#version 300 es
+in vec3 position; in vec3 color; in vec2 sa; uniform mat4 uVP; uniform float uScale; out vec3 vC; out float vA;
+void main(){ vec4 c=uVP*vec4(position,1.); gl_Position=c; gl_PointSize=clamp(sa.x*uScale/c.w,1.5,64.); vC=color; vA=sa.y; }`;
+const ptFS = `#version 300 es
+precision highp float; in vec3 vC; in float vA; out vec4 o;
+void main(){ vec2 d=gl_PointCoord-.5; float r2=dot(d,d)*4.; if(r2>1.) discard;
+  float core=exp(-r2*14.), halo=exp(-r2*3.2)*.38; vec3 c=vC*(core*1.6+halo)+vec3(core*.55);
+  o=vec4(c*vA,1.); }`;
+const fieldPI = twgl.createProgramInfo(gl, [quadVS, fieldFS]);
+const ptPI = twgl.createProgramInfo(gl, [ptVS, ptFS]);
+const quad = twgl.createBufferInfoFromArrays(gl, { position: { numComponents: 2, data: [-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1] } });
+const NP = N * TRAIL;
+const pos = new Float32Array(NP * 3), col = new Float32Array(NP * 3), sa = new Float32Array(NP * 2);
+const pts = twgl.createBufferInfoFromArrays(gl, {
+  position: { numComponents: 3, data: pos, drawType: gl.DYNAMIC_DRAW },
+  color: { numComponents: 3, data: col, drawType: gl.DYNAMIC_DRAW },
+  sa: { numComponents: 2, data: sa, drawType: gl.DYNAMIC_DRAW } });
+
+function samplePath(s, out) {
+  s = ((s % L) + L) % L; const i0 = Math.floor(s), f = s - i0, i1 = (i0 + 1) % L;
+  for (let k = 0; k < 3; k++) out[k] = path[i0 * 3 + k] * (1 - f) + path[i1 * 3 + k] * f;
+  return s;
+}
+const TAU = Math.PI * 2, BEAT = 1.5;                                // impulsion toutes les 2 noires à 80 bpm
+const pulseAt = t => Math.exp(-(((t % BEAT) + BEAT) % BEAT) / 0.32);
+const tmp = [0, 0, 0];
+
+function renderAt(t) {
+  t = ((t % T) + T) % T;
+  const ph = TAU * t / T, loop = [Math.cos(ph), Math.sin(ph)];
+  const pulse = pulseAt(t);
+  // caméra : orbite ±15° + respiration de dolly, périodiques en T
+  const az = -0.06 + (15 * Math.PI / 180) * Math.sin(ph), dist = 146 - 7 * (0.5 - 0.5 * Math.cos(ph));
+  const eye = [Math.sin(az) * dist, 6 + 5 * Math.sin(ph * 2) * 0.4, Math.cos(az) * dist];
+  const proj = twgl.m4.perspective(38 * Math.PI / 180, W / H, 1, 400);
+  const camM = twgl.m4.lookAt(eye, [0, -1.0, 0], [0, 1, 0]);
+  // décale l'attracteur vers le bas du cadre (titre en haut)
+  const shift = twgl.m4.translation([-0.07, -0.06, 0]);
+  const vp = twgl.m4.multiply(shift, twgl.m4.multiply(proj, twgl.m4.inverse(camM)));
+  // ---- lucioles
+  const adv = t / T * K * DELTA;
+  let n = 0;
+  for (let i = 0; i < N; i++) {
+    const c = cls[i % G];
+    const s0 = i * DELTA + adv;
+    const wob = 1 + 0.35 * Math.sin(ph * c.wob + c.tph) + 0.18 * pulse;
+    const tw = 0.55 + 0.45 * (0.5 + 0.5 * Math.sin(ph * c.tw + c.tph));
+    for (let j = 0; j < TRAIL; j++) {
+      const s = samplePath(s0 - j * TRAIL_STEP, tmp);
+      const edge = S.smoothstep(0, 500, s) * S.smoothstep(L, L - 500, s);
+      const x = tmp[0] + c.j[0] * wob, y = tmp[1] + c.j[1] * wob, z = tmp[2] + c.j[2] * wob;
+      pos[n * 3] = x; pos[n * 3 + 1] = y; pos[n * 3 + 2] = z;
+      let rgb;
+      if (c.lime) rgb = LI; else { const k = S.smoothstep(-9, 9, tmp[0]); rgb = [CY[0] + (MG[0] - CY[0]) * k, CY[1] + (MG[1] - CY[1]) * k, CY[2] + (MG[2] - CY[2]) * k]; }
+      col[n * 3] = rgb[0]; col[n * 3 + 1] = rgb[1]; col[n * 3 + 2] = rgb[2];
+      const fall = 1 - j / TRAIL;
+      sa[n * 2] = (j === 0 ? 21 : 10 * fall + 3) * c.size * (1 + 0.35 * pulse);
+      sa[n * 2 + 1] = edge * tw * (j === 0 ? 0.62 : 0.26 * fall * fall) * (0.8 + 0.45 * pulse);
+      n++;
+    }
+  }
+  twgl.setAttribInfoBufferFromArray(gl, pts.attribs.position, pos);
+  twgl.setAttribInfoBufferFromArray(gl, pts.attribs.color, col);
+  twgl.setAttribInfoBufferFromArray(gl, pts.attribs.sa, sa);
+  // ---- passes
+  gl.viewport(0, 0, W, H);
+  gl.disable(gl.BLEND); gl.disable(gl.DEPTH_TEST);
+  gl.useProgram(fieldPI.program); twgl.setBuffersAndAttributes(gl, fieldPI, quad);
+  twgl.setUniforms(fieldPI, { uRes: [W, H], uCenter: [W * 0.48, H * 0.47], uLoop: loop, uPulse: pulse });
+  twgl.drawBufferInfo(gl, quad);
+  gl.enable(gl.BLEND); gl.blendFunc(gl.ONE, gl.ONE);
+  gl.useProgram(ptPI.program); twgl.setBuffersAndAttributes(gl, ptPI, pts);
+  twgl.setUniforms(ptPI, { uVP: vp, uScale: 95 });
+  twgl.drawBufferInfo(gl, pts, gl.POINTS);
+  // ---- typo : halo qui respire avec les impulsions (périodique)
+  document.getElementById('h1').style.textShadow = `0 0 ${24 + 30 * pulse}px rgba(56,249,255,${0.18 + 0.3 * pulse})`;
+}
+const ready = S.loadFonts([
+  { family: 'Space Grotesk', pkg: 'space-grotesk', weight: 700 },
+  { family: 'JetBrains Mono', pkg: 'jetbrains-mono', weight: 500 }]);
+S.installContract({ renderAt, ready, duration: T });
+</script></body></html>

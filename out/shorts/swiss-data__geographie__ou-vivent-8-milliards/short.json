@@ -1,0 +1,13 @@
+{"identity": "swiss-data", "family": "geographie", "title": "Où vivent les 8 milliards d'humains ?",
+ "hook": "Grand « 8 » rouge Archivo Black qui compte 1→8 dès la frame 0, titre-question révélé par wipe en 0,3 s",
+ "duration": 15.0, "libraries": ["D3.js", "GSAP"], "seed": 0, "renderTimeSec": 61.5,
+ "structure": [{"t": 0, "beat": "hook : compteur 8 + question en titre"}, {"t": 1.6, "beat": "barre empilée des continents (teaser)"},
+   {"t": 3.0, "beat": "volet rouge -> 02 · CONTINENTS"}, {"t": 3.8, "beat": "unit chart 1 carré = 100 millions (82 carrés)"},
+   {"t": 5.5, "beat": "lecture 59 % Asie"}, {"t": 7.0, "beat": "focus Afrique 18 % (le reste s'efface)"},
+   {"t": 8.0, "beat": "volet rouge -> 03 · PAYS"}, {"t": 8.9, "beat": "barres top 5 pays"},
+   {"t": 10.6, "beat": "Chine passe au rouge"}, {"t": 11.0, "beat": "chute : 1/3 vit en Inde ou en Chine + push-in lent"}, {"t": 15.0, "beat": "fin propre (tenue)"}],
+ "engagement": {"mechanic": "question", "cta": "Quel est le 6e pays le plus peuplé ? Réponse en commentaire."}, "loopable": false,
+ "sound": {"type": "generated", "voice": false},
+ "qualityChecks": {"stillsReviewed": true, "textMinPx": 54, "safeAreaOk": true},
+ "notes": "Données ONU WPP 2024 (estimations 2024 arrondies) : Asie 4,75 · Afrique 1,49 · Europe 0,74 · Am. latine 0,66 · Am. du Nord 0,38 · Océanie 0,045 Md ; % calculés sur la somme (8,07 Md). Océanie = carré d'aire 0,45. Aucun aléa (seed 0). Texte ≥ 54 px, titres 104–122 px ; tout le contenu entre y=232 et y=1600, x ≤ 960. Rendu 450 frames en 61,5 s (13,7 s/100 frames, slots CPU partagés).",
+ "reproduce": "node out/tools/render.mjs out/shorts/swiss-data__geographie__ou-vivent-8-milliards/src/index.html --out /tmp/svi/swiss-geo/video.mp4 --duration 15 && .venv/bin/python out/tools/sound.py out/shorts/swiss-data__geographie__ou-vivent-8-milliards/src/sound.json /tmp/svi/swiss-geo/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/swiss-geo/video.mp4 --music /tmp/svi/swiss-geo/music.wav --out out/shorts/swiss-data__geographie__ou-vivent-8-milliards/short.mp4"}

@@ -1,0 +1,32 @@
+{
+ "language": "fr",
+ "style": "enjoué et tendre, conteuse pour enfants de 6-10 ans, sourire dans la voix",
+ "voice": "Leda",
+ "lines": [
+  {
+   "t": 0.2,
+   "maxDuration": 3.0,
+   "text": "D'où vient la pluie ? Suis Plip !"
+  },
+  {
+   "t": 3.3,
+   "maxDuration": 3.7,
+   "text": "Le soleil chauffe : Plip devient vapeur invisible et monte !"
+  },
+  {
+   "t": 7.1,
+   "maxDuration": 3.3,
+   "text": "Là-haut, le froid forme des gouttelettes : un nuage !"
+  },
+  {
+   "t": 10.5,
+   "maxDuration": 3.15,
+   "text": "Les gouttes grossissent, deviennent lourdes… et il pleut !"
+  },
+  {
+   "t": 13.75,
+   "maxDuration": 2.2,
+   "text": "Et le voyage recommence !"
+  }
+ ]
+}

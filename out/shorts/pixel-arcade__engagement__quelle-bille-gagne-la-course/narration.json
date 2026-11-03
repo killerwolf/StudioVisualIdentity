@@ -1,0 +1,9 @@
+{"language": "fr", "style": "commentateur d'arcade enjoué, rythme rapide, sourire dans la voix", "voice": "Fenrir",
+ "lines": [
+  {"t": 0.15, "maxDuration": 2.0, "text": "Parie sur ta couleur !"},
+  {"t": 2.5, "maxDuration": 3.5, "text": "C'est parti ! Les picots dispersent tout le monde."},
+  {"t": 6.3, "maxDuration": 3.1, "text": "La verte passe devant sur les rampes !"},
+  {"t": 9.45, "maxDuration": 2.0, "text": "Attention, la bleue remonte !"},
+  {"t": 11.8, "maxDuration": 2.35, "text": "Photo finish ! Bleue gagne !"},
+  {"t": 14.2, "maxDuration": 1.6, "text": "Commente ta couleur !"}
+ ]}

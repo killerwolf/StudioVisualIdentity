@@ -1,0 +1,27 @@
+{
+ "name": "twgl.js",
+ "role": "3D",
+ "bestFor": [
+  "shaders GLSL plein écran (champs, fonds procéduraux, lignes iso)",
+  "nuages de points massifs en GL_POINTS additifs (20 000 sprites/frame mis à jour en JS)",
+  "boucles parfaites : renderAt(t) pur, aucun état GPU entre frames"
+ ],
+ "avoidFor": [
+  "scènes à maillages/éclairage (préférer three.js)",
+  "post-traitement multi-passes type bloom (à écrire soi-même ; ici remplacé par OpenCV)"
+ ],
+ "renderCostPer100Frames": "55,5 s (mesuré, scène neon-lab abstrait : champ fbm plein écran 1080×1920 + 20 000 points additifs, SwiftShader, 4 slots CPU occupés ; 360 frames en 199,7 s) ; stills ≈ 0,4 s/frame",
+ "gotchas": [
+  "Utiliser getContext('webgl2', {preserveDrawingBuffer:true}) sinon la capture Playwright peut être noire",
+  "fwidth() exige WebGL2 (#version 300 es) ou l'extension OES_standard_derivatives en WebGL1",
+  "twgl.m4.lookAt renvoie la matrice CAMÉRA : prendre m4.inverse() pour la vue",
+  "import ESM : /node_modules/twgl.js/dist/7.x/twgl-full.module.js (imports nommés via import * as twgl)",
+  "setAttribInfoBufferFromArray pour mettre à jour les buffers dynamiques (drawType DYNAMIC_DRAW)",
+  "regl ne rend que la 1re frame en headless : twgl fonctionne, c'est le remplaçant"
+ ],
+ "snippetPath": "shorts/neon-lab__abstrait__champ-de-force-lucioles/src",
+ "pairsWellWith": [
+  "OpenCV (glow/aberration en post)",
+  "three.js (même GLSL réutilisable en ShaderMaterial)"
+ ]
+}

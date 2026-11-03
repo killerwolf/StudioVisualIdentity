@@ -1,0 +1,2 @@
+- 21:10 start studio gazette-1900; plan: GSAP pages (shared gazette.js) -> render.mjs -> OpenCV post.py (ffmpeg pipes, slot.sh) -> sound.py -> mux. bpm 128 grid (beat 0.46875 s), page = 6 beats.
+- 21:17 1789: stills reviewed x3 (fixes: meta date nowrap/no weekday, explicit <br> in subs, stamp opaque cream since multiply vanished on black crowd, stamp moved inside plate). Full render launched (18.75 s).

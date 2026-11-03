@@ -1,0 +1,27 @@
+{
+ "language": "fr",
+ "style": "documentaire posé, curieux, clair ; une phrase par beat, attaque juste après chaque impulsion lumineuse",
+ "voice": "Orus",
+ "lines": [
+  {
+   "t": 0.3,
+   "maxDuration": 4.0,
+   "text": "Pourquoi la Lune nous montre-t-elle toujours la même face ?"
+  },
+  {
+   "t": 4.6,
+   "maxDuration": 3.55,
+   "text": "Sans rotation, on finirait par voir sa face cachée."
+  },
+  {
+   "t": 8.35,
+   "maxDuration": 4.3,
+   "text": "Or elle tourne sur elle-même au rythme exact de son orbite."
+  },
+  {
+   "t": 12.85,
+   "maxDuration": 3.1,
+   "text": "La gravité terrestre l'a freinée, puis verrouillée."
+  }
+ ]
+}

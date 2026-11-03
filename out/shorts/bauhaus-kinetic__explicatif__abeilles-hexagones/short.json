@@ -1,0 +1,68 @@
+{
+ "identity": "bauhaus-kinetic",
+ "family": "explicatif",
+ "title": "Pourquoi les abeilles construisent en hexagones ?",
+ "hook": "Rayon de miel Bauhaus qui pop en stagger dès 0,1 s + carte titre « Pourquoi les abeilles construisent en hexagones ? » ; un carré bleu tombe et se morphe en hexagone (flubber) pour compléter le rayon",
+ "duration": 16.0,
+ "libraries": [
+  "Paper.js",
+  "flubber",
+  "anime.js"
+ ],
+ "seed": 6,
+ "renderTimeSec": 135.2,
+ "structure": [
+  {
+   "t": 0,
+   "beat": "hook : rayon de miel + titre-question, carré -> hexagone"
+  },
+  {
+   "t": 2.4,
+   "beat": "grid-wipe"
+  },
+  {
+   "t": 2.93,
+   "beat": "seuls 3 polygones réguliers pavent le plan (triangle, carré, hexagone ✓) ; pentagone : trou de 36° ✕"
+  },
+  {
+   "t": 6.0,
+   "beat": "grid-wipe"
+  },
+  {
+   "t": 6.53,
+   "beat": "même aire : contours tracés + barres 4,56 / 4,00 / 3,72 ; badge −7 % de cire"
+  },
+  {
+   "t": 9.6,
+   "beat": "grid-wipe"
+  },
+  {
+   "t": 10.13,
+   "beat": "cercles empilés : trous noirs ; morph cercle -> hexagone en stagger depuis le centre : zéro trou"
+  },
+  {
+   "t": 13.0,
+   "beat": "grid-wipe"
+  },
+  {
+   "t": 13.53,
+   "beat": "chute : rayon de miel repris + « Prouvé en 1999 — Thomas Hales, nid d'abeille » (tenue 1,2 s)"
+  }
+ ],
+ "engagement": {
+  "mechanic": "question-titre + révélation en 4 temps",
+  "cta": "aucun CTA explicite : la question d'ouverture trouve sa réponse en fin (fin propre)"
+ },
+ "loopable": false,
+ "sound": {
+  "type": "generated",
+  "voice": false
+ },
+ "qualityChecks": {
+  "stillsReviewed": true,
+  "textMinPx": 54,
+  "safeAreaOk": true
+ },
+ "notes": "Faits : seuls 3 polygones réguliers pavent le plan (angles 60°, 90°, 120° divisent 360° ; le pentagone 108° laisse 36°). Périmètres à aire 1 : triangle 4,559 ; carré 4,000 ; hexagone 3,722 (−6,9 % vs carré, arrondi −7 %). Conjecture du nid d'abeille (pavage d'aire égale de périmètre minimal) prouvée par Thomas C. Hales en 1999. Le morph cercles -> hexagones est une illustration (pas une affirmation sur la mécanique de la cire). Rendu sous charge (10 studios sur 4 cœurs) : 28,2 s/100 frames. Décor uniquement dans les zones non sûres (pied de page, quart de cercle haut-droit).",
+ "reproduce": "mkdir -p /tmp/svi/bauhaus-kinetic__explicatif__abeilles-hexagones && node out/tools/render.mjs out/shorts/bauhaus-kinetic__explicatif__abeilles-hexagones/src/index.html --out /tmp/svi/bauhaus-kinetic__explicatif__abeilles-hexagones/video.mp4 --duration 16 && .venv/bin/python out/tools/sound.py out/shorts/bauhaus-kinetic__explicatif__abeilles-hexagones/src/sound.json /tmp/svi/bauhaus-kinetic__explicatif__abeilles-hexagones/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/bauhaus-kinetic__explicatif__abeilles-hexagones/video.mp4 --music /tmp/svi/bauhaus-kinetic__explicatif__abeilles-hexagones/music.wav --out out/shorts/bauhaus-kinetic__explicatif__abeilles-hexagones/short.mp4"
+}
