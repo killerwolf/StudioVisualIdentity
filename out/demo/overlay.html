@@ -106,22 +106,14 @@ function grid(t, phase) {
     }
   });
 }
-function counterCard(t) {
-  const n = T.COUNTS[Math.min(T.COUNTS.length - 1, Math.floor((t - T.C0) / T.CD))], c = Math.floor((t - T.C0) / T.CD);
-  const since = t - (T.C0 + c * T.CD), pop = 1 + 0.35 * (1 - seg(since, 0, 0.3, E.outExpo));
-  const last = c >= T.COUNTS.length - 1, shake = last ? seg(t, T.C0 + c * T.CD, T.CEND) : 0;
-  const r = S.rng(Math.floor(t * 30) + 11);
-  let [cx, cy] = center(); cx += (r() - 0.5) * 16 * shake; cy += (r() - 0.5) * 16 * shake;
-  const w = V ? 500 : 440, h = V ? 300 : 170;
-  ctx.fillStyle = 'rgba(12,11,26,0.92)'; rr(ctx, cx - w / 2, cy - h / 2, w, h, 26); ctx.fill();
-  ctx.strokeStyle = last ? HOT : 'rgba(255,255,255,0.25)'; ctx.lineWidth = 3; rr(ctx, cx - w / 2, cy - h / 2, w, h, 26); ctx.stroke();
-  ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-  ctx.save(); ctx.translate(cx, cy - (V ? 30 : 12)); ctx.scale(pop, pop);
-  ctx.fillStyle = last ? HOT : YEL; font(ctx, 400, V ? 150 : 104, 'Archivo Black'); ctx.fillText(`${n}`, 0, 0); ctx.restore();
-  ctx.fillStyle = '#ffffff'; font(ctx, 700, V ? 34 : 26, 'Inter');
-  ctx.fillText(n === 1 ? 'VOICE AT ONCE' : 'VOICES AT ONCE', cx, cy + (V ? 95 : 60));
-  if (last) { ctx.globalAlpha = seg(t, T.CEND - 3, T.CEND - 2.6); ctx.fillStyle = HOT; font(ctx, 800, V ? 30 : 22, 'Inter');
-    ctx.fillText('THIS IS WHAT CHOOSING SOUNDS LIKE', cx, cy - h / 2 - (V ? 40 : 26)); ctx.globalAlpha = 1; }
+function choirBars(t) { // 9:16 seulement : sous la carte, une barre par voix audible, qui monte avec le brouhaha
+  const [cx, cy] = center(), on = TL.filter(x => x.audibleFrom !== null && t >= x.audibleFrom);
+  const bw = 26, gap = 10, x0 = cx - (12 * (bw + gap) - gap) / 2, base = cy + 190;
+  const grow = 0.5 + 0.5 * seg(t, T.CEND - 4, T.CEND);
+  on.forEach((tile, k) => {
+    const h = (18 + 46 * Math.abs(Math.sin(t * (5.3 + k * 1.7) + k * 2.1))) * grow * seg(t, tile.audibleFrom, tile.audibleFrom + 0.3, E.outBack);
+    ctx.fillStyle = tile.accent; rr(ctx, x0 + k * (bw + gap), base - h, bw, h, 6); ctx.fill();
+  });
 }
 function introCard(t) {
   const [cx, cy] = center(), a = seg(t, T.CUT + 0.25, T.CUT + 0.55, E.outExpo), b = seg(t, T.CUES.noneAlike, T.CUES.noneAlike + 0.25, E.outExpo);
@@ -255,7 +247,7 @@ function renderAt(t) {
   if (t < T.CUT) { hook(t); return; }
   if (t < T.CEND) {
     if (t < T.C0) { grid(t, 'intro'); introCard(t); }
-    else { grid(t, 'cycles'); counterCard(t); }
+    else { grid(t, 'cycles'); if (V) { introCard(t); choirBars(t); } }
     shutter(t); return;
   }
   if (t < T.TERM) { tooMany(t); return; }

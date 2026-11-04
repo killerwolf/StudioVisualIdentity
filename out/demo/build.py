@@ -171,21 +171,54 @@ def sound_specs():
     json.dump(specs, open(HERE / 'sound.json', 'w'), indent=1)
 
 
+# Brouhaha : chaque tuile audible = musique de son short (short_novo.mp4, sans Arnold) + SA voix (brouhaha/NN.mp3),
+# une voix différente par tuile (fr, ja, es, de, en ; hommes et femmes). Index = position dans AUDIBLE.
+BROUHAHA_GAP = [0.5, 0.9, 0.6, 0.8, 0.4, 0.7, 1.0, 0.5, 0.9, 0.6, 0.8, 0.7]   # silence entre deux répétitions
+BROUHAHA_LAG = [0.15, 0.2, 0.15, 0.15, 0.55, 0.15, 0.95, 0.35, 1.4, 0.6, 1.8, 1.1]  # entrée après l'allumage de la tuile
+
+
+def brouhaha_clips():
+    """Normalise (loudnorm) chaque voix et ajoute le silence de fin -> TMP/bh_NN.wav, lu en boucle."""
+    TMP.mkdir(parents=True, exist_ok=True)
+    for k in range(len(AUDIBLE)):
+        src, dst = HERE / 'brouhaha' / f'{k:02d}.mp3', TMP / f'bh_{k:02d}.wav'
+        run(['ffmpeg', '-y', '-loglevel', 'error', '-i', src, '-af',
+             f'loudnorm=I=-19:TP=-2:LRA=9,aformat=sample_rates=48000:channel_layouts=stereo,apad=pad_dur={BROUHAHA_GAP[k]}', dst])
+
+
 def audio():
     lay = write_layout()
     sound_specs()
-    inputs, fc, labels = [], [], []
+    brouhaha_clips()
+    inputs, fc, labels, bus = [], [], [], []
     i = 0
+    ms = int(CUT * 1000)
     for t in lay['tiles']:
         T = t['audibleFrom']
         if T is None:
             continue
-        inputs += ['-stream_loop', '-1', '-i', SHORTS / t['dir'] / 'short.mp4']
-        ms = int(CUT * 1000)
-        vol = f"0.5*clip((t-{T})/0.25,0,1)*clip(({CEND}-t)/0.04,0,1)"
+        k = AUDIBLE.index(t['id'])
+        gate = f"clip((t-{T})/0.25,0,1)*clip(({CEND}-t)/0.04,0,1)"
+        # musique du short (sans voix), en fond
+        inputs += ['-stream_loop', '-1', '-i', SHORTS / t['dir'] / 'short_novo.mp4']
         fc.append(f"[{i}:a]atrim=0:{DUR - CUT:.2f},asetpts=PTS-STARTPTS,aformat=sample_rates=48000:channel_layouts=stereo,"
-                  f"adelay={ms}|{ms},volume='{vol}':eval=frame,apad,atrim=0:{DUR}[a{i}]")
-        labels.append(f'[a{i}]'); i += 1
+                  f"adelay={ms}|{ms},volume='0.28*{gate}':eval=frame,apad,atrim=0:{DUR}[m{i}]")
+        bus.append(f'[m{i}]'); i += 1
+        # sa voix, en boucle, légèrement panoramiquée
+        T0 = T + BROUHAHA_LAG[k]
+        vms = int(T0 * 1000)
+        pan = ((k * 5) % 11 - 5) / 9           # -0.55 .. +0.55
+        lg, rg = min(1, 1 - pan), min(1, 1 + pan)
+        inputs += ['-stream_loop', '-1', '-i', TMP / f'bh_{k:02d}.wav']
+        fc.append(f"[{i}:a]atrim=0:{CEND - T0 + 0.1:.2f},asetpts=PTS-STARTPTS,pan=stereo|c0={lg:.2f}*c0|c1={rg:.2f}*c1,"
+                  f"adelay={vms}|{vms},volume='0.62*clip((t-{T0})/0.05,0,1)*clip(({CEND}-t)/0.04,0,1)':eval=frame,apad,atrim=0:{DUR}[v{i}]")
+        bus.append(f'[v{i}]'); i += 1
+    # crescendo du bus : 0.8 au 1er cycle -> 1.0 au dernier, puis +60 % sur les 4 dernières secondes ; limiteur propre au bus
+    last = C0 + CD * (len(COUNTS) - 1)
+    cres = f"(0.8+0.2*clip((t-{C0})/{last - C0},0,1))*(1+0.6*clip((t-({CEND}-4))/4,0,1))"
+    fc.append(f"{''.join(bus)}amix=inputs={len(bus)}:duration=longest:normalize=0,volume='{cres}':eval=frame,"
+              f"alimiter=limit=0.8:attack=4:release=60[bh]")
+    labels.append('[bh]')
     inputs += ['-i', SHORTS / RESULT / 'short.mp4']
     ms = int((RES0 + 0.3) * 1000)   # après la fin de la voix off du prompt
     fc.append(f"[{i}:a]atrim=0:{RES1 - RES0 - 0.3:.2f},asetpts=PTS-STARTPTS,aformat=sample_rates=48000:channel_layouts=stereo,"
