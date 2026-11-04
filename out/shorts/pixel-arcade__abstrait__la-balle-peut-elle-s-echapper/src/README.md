@@ -11,3 +11,13 @@ Fichiers :
 - `simulate.cjs` — `--scan 1 1500` cherche une évasion entre 11,4 et 12,4 s avec ≥ 24 rebonds ; `--seed 1007` écrit `trace.json`.
 - `index.html` — rendu p5.js v2 (270×480 ×4 nearest), SEQUENTIAL ; `?verify=1` affiche SIM OK.
 - `make_sound.cjs` — `sound.json` (chiptune 125 bpm, blip ascendant par rebond, riser + glass + coin à l'évasion).
+
+## Dernière étape : voix off (Fish Audio « Arnold »)
+
+La commande ci-dessus produit la version **sans voix**. Pour obtenir le `short.mp4` livré (avec voix), lancer ensuite :
+
+```bash
+.venv/bin/python out/tools/tts.py out/shorts/pixel-arcade__abstrait__la-balle-peut-elle-s-echapper --engine files --voice "Fish Audio – Arnold (d704cf8f…)" --replace
+```
+
+Les fichiers `voice_lines/NN.mp3` (une ligne de `narration.json` chacun) sont déjà dans le dossier ; pour une nouvelle narration, les générer d'abord (voir `out/report/README.md`, section « Voix off Fish Audio »).

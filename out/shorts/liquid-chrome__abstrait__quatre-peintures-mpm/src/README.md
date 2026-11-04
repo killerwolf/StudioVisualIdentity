@@ -7,3 +7,13 @@ out/tools/slot.sh .venv/bin/python out/shorts/liquid-chrome__abstrait__quatre-pe
 ```
 
 Fichiers : `mpm_paint.py` (simulation + rendu, `--until/--stills` pour les aperçus), `overlays.py` (cartons texte), `sound.json` (musique pad + SFX calés sur les impacts).
+
+## Dernière étape : voix off (Fish Audio « Arnold »)
+
+La commande ci-dessus produit la version **sans voix**. Pour obtenir le `short.mp4` livré (avec voix), lancer ensuite :
+
+```bash
+.venv/bin/python out/tools/tts.py out/shorts/liquid-chrome__abstrait__quatre-peintures-mpm --engine files --voice "Fish Audio – Arnold (d704cf8f…)" --replace
+```
+
+Les fichiers `voice_lines/NN.mp3` (une ligne de `narration.json` chacun) sont déjà dans le dossier ; pour une nouvelle narration, les générer d'abord (voir `out/report/README.md`, section « Voix off Fish Audio »).

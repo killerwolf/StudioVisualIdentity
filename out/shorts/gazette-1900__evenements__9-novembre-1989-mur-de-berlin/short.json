@@ -42,7 +42,8 @@
   "voice": true,
   "voiceEngine": "fish-connector",
   "voiceName": "Fish Audio – Arnold (d704cf8f…)",
-  "voiceProvider": "files"
+  "voiceProvider": "files",
+  "voiceUsed": "Fish Audio – Arnold (d704cf8f1216490cbfbed89955f0e938, s2.1-pro)"
  },
  "qualityChecks": {
   "stillsReviewed": true,
@@ -50,5 +51,5 @@
   "safeAreaOk": true
  },
  "notes": "Même système que le short 1789 (gazette.js identique, tokens communs) : tourniquet 0,55 s power3.out, tampon 0,16 s power4.in, typewriter, zoom brusque ×1,1. Faits : Mur construit à partir d'août 1961, ≈155 km autour de Berlin-Ouest, 28 ans ; frontière ouverte dans la nuit du 9 au 10 novembre 1989 (on ne dit pas qu'il est démoli cette nuit-là). 37 ans au 9 novembre 2026. Post OpenCV 95,5 s / 450 frames (21,2 s/100 f) ; renderTimeSec = render.mjs seul (33,3 s/100 f). Total pipeline ≈ 250 s. Poids 16,0 Mo.",
- "reproduce": "bash out/shorts/gazette-1900__evenements__9-novembre-1989-mur-de-berlin/src/build.sh   # = node out/tools/render.mjs out/shorts/gazette-1900__evenements__9-novembre-1989-mur-de-berlin/src/index.html --out /tmp/svi/gazette-1900__evenements__9-novembre-1989-mur-de-berlin/raw.mp4 --duration 15.0 && out/tools/slot.sh .venv/bin/python out/shorts/gazette-1900__evenements__9-novembre-1989-mur-de-berlin/src/post.py video /tmp/svi/gazette-1900__evenements__9-novembre-1989-mur-de-berlin/raw.mp4 /tmp/svi/gazette-1900__evenements__9-novembre-1989-mur-de-berlin/video.mp4 --seed 1900 --flash 3.75,8.4375,11.25 && .venv/bin/python out/tools/sound.py out/shorts/gazette-1900__evenements__9-novembre-1989-mur-de-berlin/src/sound.json /tmp/svi/gazette-1900__evenements__9-novembre-1989-mur-de-berlin/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/gazette-1900__evenements__9-novembre-1989-mur-de-berlin/video.mp4 --music /tmp/svi/gazette-1900__evenements__9-novembre-1989-mur-de-berlin/music.wav --out out/shorts/gazette-1900__evenements__9-novembre-1989-mur-de-berlin/short.mp4"
+ "reproduce": "bash out/shorts/gazette-1900__evenements__9-novembre-1989-mur-de-berlin/src/build.sh   # = node out/tools/render.mjs out/shorts/gazette-1900__evenements__9-novembre-1989-mur-de-berlin/src/index.html --out /tmp/svi/gazette-1900__evenements__9-novembre-1989-mur-de-berlin/raw.mp4 --duration 15.0 && out/tools/slot.sh .venv/bin/python out/shorts/gazette-1900__evenements__9-novembre-1989-mur-de-berlin/src/post.py video /tmp/svi/gazette-1900__evenements__9-novembre-1989-mur-de-berlin/raw.mp4 /tmp/svi/gazette-1900__evenements__9-novembre-1989-mur-de-berlin/video.mp4 --seed 1900 --flash 3.75,8.4375,11.25 && .venv/bin/python out/tools/sound.py out/shorts/gazette-1900__evenements__9-novembre-1989-mur-de-berlin/src/sound.json /tmp/svi/gazette-1900__evenements__9-novembre-1989-mur-de-berlin/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/gazette-1900__evenements__9-novembre-1989-mur-de-berlin/video.mp4 --music /tmp/svi/gazette-1900__evenements__9-novembre-1989-mur-de-berlin/music.wav --out out/shorts/gazette-1900__evenements__9-novembre-1989-mur-de-berlin/short.mp4 && .venv/bin/python out/tools/tts.py out/shorts/gazette-1900__evenements__9-novembre-1989-mur-de-berlin --engine files --voice \"Fish Audio – Arnold (d704cf8f…)\" --replace"
 }

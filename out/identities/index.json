@@ -1,0 +1,2635 @@
+{
+ "schemaVersion": "1.0",
+ "description": "Machine index of the 14 visual identities for 9:16 shorts. Use it to shortlist identities, then read each identity's identity.md (16 sections, French) and tokens.json. coreTokens is a normalised subset (seconds, pixels on a 1080x1920 canvas, @fontsource slugs); the original tokens.json is authoritative for everything else. curation.* is orchestrator judgment. See AGENTS.md.",
+ "generatedBy": "out/tools/build_index.py",
+ "rankingCriteria": "durability/industrialisability: measured render cost 25%, templatability 25%, editorial breadth 20%, recognisability 15%, production risk 15% (out/report/comparison.md §5)",
+ "recognition": {
+  "blindJudge14": 14,
+  "blindJudgeGroups": 14,
+  "measuredTop1": "29/31"
+ },
+ "identities": [
+  {
+   "id": "swiss-data",
+   "name": "Grille Suisse",
+   "rank": 1,
+   "status": "selected",
+   "promiseFr": "Un chiffre qui claque par écran, posé sur une grille 12 colonnes visible, révélé par des volets rouges nets : on comprend une donnée en 4 secondes.",
+   "promiseEn": "One number per screen that lands hard, on a visible 12-column grid, revealed by clean red wipes: a fact understood in 4 seconds.",
+   "familiesProven": [
+    "evenements",
+    "geographie"
+   ],
+   "libraries": [
+    "D3.js",
+    "GSAP"
+   ],
+   "renderCostSecPer100Frames": {
+    "min": 13.7,
+    "max": 20.5,
+    "measuredUnderLoad": true
+   },
+   "sharedModule": [
+    "out/shorts/swiss-data__evenements__j-272-eclipse-2-aout-2027/src/grille.js"
+   ],
+   "voiceUsed": {
+    "provider": "Fish Audio",
+    "name": "Arnold",
+    "reference_id": "d704cf8f1216490cbfbed89955f0e938",
+    "model": "s2.1-pro",
+    "language": "fr"
+   },
+   "paths": {
+    "identityMd": "out/identities/swiss-data/identity.md",
+    "tokens": "out/identities/swiss-data/tokens.json",
+    "recipes": [
+     "out/identities/swiss-data/recipes/evenements.md",
+     "out/identities/swiss-data/recipes/geographie.md"
+    ],
+    "poster": "out/identities/swiss-data/poster.jpg",
+    "contactSheet": "out/identities/swiss-data/contact-sheet.jpg",
+    "phase1Poster": "out/report/posters/swiss-data.jpg"
+   },
+   "shorts": [
+    {
+     "dir": "out/shorts/swiss-data__evenements__j-272-eclipse-2-aout-2027",
+     "family": "evenements",
+     "title": "J-272 : l'éclipse totale du 2 août 2027",
+     "durationSec": 15.0,
+     "libraries": [
+      "D3.js",
+      "GSAP"
+     ],
+     "renderCostSecPer100Frames": 20.5,
+     "loopable": false,
+     "voiced": true,
+     "recognitionNearestShort": "swiss-data__geographie__ou-vivent-8-milliards",
+     "recognitionSameIdentity": true
+    },
+    {
+     "dir": "out/shorts/swiss-data__geographie__ou-vivent-8-milliards",
+     "family": "geographie",
+     "title": "Où vivent les 8 milliards d'humains ?",
+     "durationSec": 15.0,
+     "libraries": [
+      "D3.js",
+      "GSAP"
+     ],
+     "renderCostSecPer100Frames": 13.7,
+     "loopable": false,
+     "voiced": true,
+     "recognitionNearestShort": "swiss-data__evenements__j-272-eclipse-2-aout-2027",
+     "recognitionSameIdentity": true
+    }
+   ],
+   "coreTokens": {
+    "color": {
+     "bg": "#F4F1EA",
+     "surface": "#FFFFFF",
+     "text": "#111111",
+     "muted": "#6B665C",
+     "accent": [
+      "#E3241B",
+      "#111111",
+      "#1B4DE3"
+     ],
+     "success": "#1B4DE3",
+     "danger": "#E3241B"
+    },
+    "typography": {
+     "display": {
+      "family": "Archivo Black",
+      "fontsourceSlug": "archivo-black",
+      "weight": 400,
+      "sizePx": 200.0,
+      "sizeNote": "200–780px (chiffres géants : 360–460 px typique)"
+     },
+     "title": {
+      "family": "Inter",
+      "fontsourceSlug": "inter",
+      "weight": 800,
+      "sizePx": 92.0,
+      "sizeNote": "92–122px"
+     },
+     "body": {
+      "family": "Inter",
+      "fontsourceSlug": "inter",
+      "weight": 600,
+      "sizePx": 58.0,
+      "sizeNote": "58–62px"
+     },
+     "caption": {
+      "family": "Inter",
+      "fontsourceSlug": "inter",
+      "weight": 800,
+      "sizePx": 54.0,
+      "sizeNote": "54px"
+     }
+    },
+    "motion": {
+     "durationSec": {
+      "fast": 0.3,
+      "base": 0.6,
+      "slow": 1.0
+     },
+     "staggerSec": 0.08,
+     "easingRaw": {
+      "enter": "expo.out",
+      "exit": "power2.in",
+      "emphasis": "expo.inOut (volet)"
+     },
+     "hookDeadlineSec": 0.3,
+     "sourceUnits": "s"
+    },
+    "transitions": [
+     {
+      "name": "volet-rouge",
+      "ffmpegXfade": "wipeleft",
+      "durationSec": 0.95,
+      "use": "changement de rubrique (01→02→03) : panneau rouge plein cadre + filet noir 24 px, couvre en 0,45 s expo.inOut, coupe nette dessous, découvre en 0,45 s"
+     },
+     {
+      "name": "coupe-nette",
+      "ffmpegXfade": "none (cut)",
+      "durationSec": 0.0,
+      "use": "sous le volet ; jamais de fondu enchaîné"
+     },
+     {
+      "name": "wipe-ligne",
+      "ffmpegXfade": "wiperight",
+      "durationSec": 0.6,
+      "use": "révélation de chaque ligne de titre / label par masque horizontal expo.out, stagger 0,08 s"
+     },
+     {
+      "name": "swap-lecture",
+      "ffmpegXfade": "slideup",
+      "durationSec": 0.5,
+      "use": "remplacement d'un chiffre-lecture (sortie 0,3 s power2.in y −40, entrée 0,5 s expo.out y +40)"
+     }
+    ],
+    "safeAreaPx": {
+     "top": 220.0,
+     "bottom": 320.0,
+     "right": 120.0,
+     "left": 60.0
+    },
+    "canvas": {
+     "width": 1080,
+     "height": 1920,
+     "fps": 30
+    }
+   },
+   "curation": {
+    "by": "orchestrator judgment, not measured",
+    "audience": [
+     "teens",
+     "adults"
+    ],
+    "signatureToPreserve": [
+     "visible 12-column grid on warm off-white",
+     "one giant Archivo Black number per screen",
+     "red wipe transitions",
+     "palette limited to red / black / blue"
+    ],
+    "confusableWith": [
+     "bauhaus-kinetic"
+    ]
+   }
+  },
+  {
+   "id": "gazette-1900",
+   "name": "Gazette 1900",
+   "rank": 2,
+   "status": "selected",
+   "promiseFr": "Chaque grand moment arrive comme une une de journal qui tourbillonne, se pose sur la pile et se fait tamponner : l'histoire racontée à la vitesse d'un crieur de rue, avec le grain d'une actualité filmée.",
+   "promiseEn": "Every big moment arrives as an invented newspaper front page that spins in, lands and gets stamped, with newsreel grain.",
+   "familiesProven": [
+    "evenements",
+    "histoire"
+   ],
+   "libraries": [
+    "GSAP",
+    "OpenCV"
+   ],
+   "renderCostSecPer100Frames": {
+    "min": 33.3,
+    "max": 65.3,
+    "measuredUnderLoad": true
+   },
+   "sharedModule": [
+    "out/shorts/gazette-1900__evenements__9-novembre-1989-mur-de-berlin/src/gazette.js",
+    "out/shorts/gazette-1900__evenements__9-novembre-1989-mur-de-berlin/src/post.py"
+   ],
+   "voiceUsed": {
+    "provider": "Fish Audio",
+    "name": "Arnold",
+    "reference_id": "d704cf8f1216490cbfbed89955f0e938",
+    "model": "s2.1-pro",
+    "language": "fr"
+   },
+   "paths": {
+    "identityMd": "out/identities/gazette-1900/identity.md",
+    "tokens": "out/identities/gazette-1900/tokens.json",
+    "recipes": [
+     "out/identities/gazette-1900/recipes/evenements.md",
+     "out/identities/gazette-1900/recipes/histoire.md"
+    ],
+    "poster": "out/identities/gazette-1900/poster.jpg",
+    "contactSheet": "out/identities/gazette-1900/contact-sheet.jpg",
+    "phase1Poster": "out/report/posters/gazette-1900.jpg"
+   },
+   "shorts": [
+    {
+     "dir": "out/shorts/gazette-1900__evenements__9-novembre-1989-mur-de-berlin",
+     "family": "evenements",
+     "title": "Ce jour-là : 9 novembre 1989, le Mur de Berlin tombe",
+     "durationSec": 15.0,
+     "libraries": [
+      "GSAP",
+      "OpenCV"
+     ],
+     "renderCostSecPer100Frames": 33.3,
+     "loopable": false,
+     "voiced": true,
+     "recognitionNearestShort": "gazette-1900__histoire__1789-en-20-secondes",
+     "recognitionSameIdentity": true
+    },
+    {
+     "dir": "out/shorts/gazette-1900__histoire__1789-en-20-secondes",
+     "family": "histoire",
+     "title": "1789 en 20 secondes",
+     "durationSec": 18.75,
+     "libraries": [
+      "GSAP",
+      "OpenCV"
+     ],
+     "renderCostSecPer100Frames": 65.3,
+     "loopable": false,
+     "voiced": true,
+     "recognitionNearestShort": "gazette-1900__evenements__9-novembre-1989-mur-de-berlin",
+     "recognitionSameIdentity": true
+    }
+   ],
+   "coreTokens": {
+    "color": {
+     "bg": "#E9E1CF",
+     "surface": "#D8CDB4",
+     "text": "#1E1B18",
+     "muted": "#E4DAC4",
+     "accent": [
+      "#B3261E",
+      "#1E1B18",
+      "#E4DAC4"
+     ],
+     "success": "#1E1B18",
+     "danger": "#B3261E"
+    },
+    "typography": {
+     "display": {
+      "family": "Playfair Display",
+      "fontsourceSlug": "playfair-display",
+      "weight": 900,
+      "sizePx": 230.0,
+      "sizeNote": "230px (ajusté à 900 px de colonne, min 120, 300 pour les unes-titres)"
+     },
+     "title": {
+      "family": "Playfair Display",
+      "fontsourceSlug": "playfair-display",
+      "weight": 900,
+      "sizePx": 84.0,
+      "sizeNote": "84px (≤ 2 lignes, réduit jusqu'à 62) ; manchette du journal 92px"
+     },
+     "body": {
+      "family": "IBM Plex Mono",
+      "fontsourceSlug": "ibm-plex-mono",
+      "weight": 500,
+      "sizePx": 54.0,
+      "sizeNote": "54px (dépêches typewriter, label 700 rouge)"
+     },
+     "caption": {
+      "family": "DM Serif Display",
+      "fontsourceSlug": "dm-serif-display",
+      "weight": 400,
+      "sizePx": 54.0,
+      "sizeNote": "54px"
+     }
+    },
+    "motion": {
+     "durationSec": {
+      "fast": 0.14,
+      "base": 0.55,
+      "slow": 2.8125
+     },
+     "staggerSec": 0.26,
+     "easingRaw": {
+      "enter": "power3.out (tourniquet, -540° -> ±1,5°, échelle 0,06 -> 1)",
+      "exit": "power1.in (assombrissement de l'une précédente à 45 %)",
+      "emphasis": "power4.in (coup de tampon, échelle 2,6 -> 1) ; expo.out (zoom brusque)"
+     },
+     "hookDeadlineSec": 0.62,
+     "sourceUnits": "s"
+    },
+    "transitions": [
+     {
+      "name": "tourniquet",
+      "ffmpegXfade": "none (dans la scène GSAP : rotation -540° + échelle 0,06 -> 1)",
+      "durationSec": 0.55,
+      "use": "à chaque nouvelle une / nouveau beat narratif, sur le temps fort"
+     },
+     {
+      "name": "flash de coupe",
+      "ffmpegXfade": "fadewhite",
+      "durationSec": 0.067,
+      "use": "2 frames surexposées (OpenCV --flash) au départ de chaque tourniquet"
+     },
+     {
+      "name": "coup de tampon",
+      "ffmpegXfade": "none",
+      "durationSec": 0.16,
+      "use": "révéler un mot-clé (ÉDITION SPÉCIALE, PRISE !, OUVERT !) à +1,5 temps"
+     },
+     {
+      "name": "coupe sèche",
+      "ffmpegXfade": "none",
+      "durationSec": 0.0,
+      "use": "si l'on assemble des plans séparés : jamais de fondu lent"
+     }
+    ],
+    "safeAreaPx": {
+     "top": 220.0,
+     "bottom": 320.0,
+     "right": 120.0,
+     "left": 60.0
+    },
+    "canvas": {
+     "width": 1080,
+     "height": 1920,
+     "fps": 30
+    }
+   },
+   "curation": {
+    "by": "orchestrator judgment, not measured",
+    "audience": [
+     "teens",
+     "adults"
+    ],
+    "signatureToPreserve": [
+     "broadsheet front page that spins in and lands",
+     "Playfair Display 900 headline + typewriter dispatch in IBM Plex Mono",
+     "red rubber stamp",
+     "sepia + film-grain OpenCV pass"
+    ],
+    "confusableWith": []
+   }
+  },
+  {
+   "id": "pixel-arcade",
+   "name": "Arcade Pixel",
+   "rank": 3,
+   "status": "selected",
+   "promiseFr": "Une vraie simulation physique, déterministe, filmée comme une partie d'arcade : on parie, on suit, on voit le score tomber.",
+   "promiseEn": "A real deterministic physics simulation filmed like an arcade game: you bet, you follow, you see the score drop.",
+   "familiesProven": [
+    "abstrait",
+    "engagement"
+   ],
+   "libraries": [
+    "Matter.js",
+    "p5.js",
+    "PixiJS"
+   ],
+   "renderCostSecPer100Frames": {
+    "min": 32.6,
+    "max": 43.4,
+    "measuredUnderLoad": true
+   },
+   "sharedModule": null,
+   "voiceUsed": {
+    "provider": "Fish Audio",
+    "name": "Arnold",
+    "reference_id": "d704cf8f1216490cbfbed89955f0e938",
+    "model": "s2.1-pro",
+    "language": "fr"
+   },
+   "paths": {
+    "identityMd": "out/identities/pixel-arcade/identity.md",
+    "tokens": "out/identities/pixel-arcade/tokens.json",
+    "recipes": [
+     "out/identities/pixel-arcade/recipes/abstrait.md",
+     "out/identities/pixel-arcade/recipes/engagement.md"
+    ],
+    "poster": "out/identities/pixel-arcade/poster.jpg",
+    "contactSheet": "out/identities/pixel-arcade/contact-sheet.jpg",
+    "phase1Poster": "out/report/posters/pixel-arcade.jpg"
+   },
+   "shorts": [
+    {
+     "dir": "out/shorts/pixel-arcade__abstrait__la-balle-peut-elle-s-echapper",
+     "family": "abstrait",
+     "title": "La balle peut-elle s'échapper du cercle ?",
+     "durationSec": 15.0,
+     "libraries": [
+      "p5.js"
+     ],
+     "renderCostSecPer100Frames": 41.0,
+     "loopable": false,
+     "voiced": true,
+     "recognitionNearestShort": "pixel-arcade__engagement__quelle-bille-gagne-la-course",
+     "recognitionSameIdentity": true
+    },
+    {
+     "dir": "out/shorts/pixel-arcade__engagement__quelle-bille-gagne-la-course",
+     "family": "engagement",
+     "title": "Quelle bille gagne la course ?",
+     "durationSec": 16.0,
+     "libraries": [
+      "Matter.js",
+      "p5.js"
+     ],
+     "renderCostSecPer100Frames": 43.4,
+     "loopable": false,
+     "voiced": true,
+     "recognitionNearestShort": "pixel-arcade__abstrait__la-balle-peut-elle-s-echapper",
+     "recognitionSameIdentity": true
+    },
+    {
+     "dir": "out/shorts/pixel-arcade__engagement__quelle-couleur-conquiert-l-ecran",
+     "family": "engagement",
+     "title": "Quelle couleur conquiert l'écran ?",
+     "durationSec": 15.5,
+     "libraries": [
+      "PixiJS"
+     ],
+     "renderCostSecPer100Frames": 32.6,
+     "loopable": false,
+     "voiced": true,
+     "recognitionNearestShort": "pixel-arcade__engagement__quelle-bille-gagne-la-course",
+     "recognitionSameIdentity": true
+    }
+   ],
+   "coreTokens": {
+    "color": {
+     "bg": "#0E0B1F",
+     "surface": "#1D1740",
+     "text": "#FFFFFF",
+     "muted": "#8A7FD6",
+     "accent": [
+      "#FF4F79",
+      "#3CF2A0",
+      "#FFD23F",
+      "#4FB3FF"
+     ],
+     "success": "#3CF2A0",
+     "danger": "#FF4F79"
+    },
+    "typography": {
+     "display": {
+      "family": "Rubik Mono One",
+      "fontsourceSlug": "rubik-mono-one",
+      "weight": 400,
+      "sizePx": 120.0,
+      "sizeNote": null
+     },
+     "title": {
+      "family": "Rubik Mono One",
+      "fontsourceSlug": "rubik-mono-one",
+      "weight": 400,
+      "sizePx": 104.0,
+      "sizeNote": null
+     },
+     "body": {
+      "family": "Press Start 2P",
+      "fontsourceSlug": "press-start-2p",
+      "weight": 400,
+      "sizePx": 56.0,
+      "sizeNote": null
+     },
+     "caption": {
+      "family": "Press Start 2P",
+      "fontsourceSlug": "press-start-2p",
+      "weight": 400,
+      "sizePx": 56.0,
+      "sizeNote": null
+     }
+    },
+    "motion": {
+     "durationSec": {
+      "fast": 0.07,
+      "base": 0.4,
+      "slow": 0.6
+     },
+     "staggerSec": 0.12,
+     "easingRaw": {
+      "enter": "steps(6) — paliers discrets, jamais d'interpolation douce",
+      "exit": "steps(6) — sortie du titre : translateX en 6 paliers de 8 px quantifiés sur 0,4 s",
+      "emphasis": "pop-scale 1.4 -> 1.2 -> 1.0 en 3 paliers de 2 frames (compte à rebours) + clignotement 4 Hz"
+     },
+     "hookDeadlineSec": 1.0,
+     "sourceUnits": "s"
+    },
+    "transitions": [
+     {
+      "name": "pixel-mosaic",
+      "ffmpegXfade": "pixelize",
+      "durationSec": 0.6,
+      "use": "jeu -> carte de fin : blocs 1,2,4,8,16 px logiques puis retour (10 paliers), coupe au milieu"
+     },
+     {
+      "name": "step-slide-out",
+      "ffmpegXfade": "slideleft",
+      "durationSec": 0.4,
+      "use": "sortie du panneau-titre au top départ (6 paliers)"
+     },
+     {
+      "name": "blink-in",
+      "ffmpegXfade": "fadefast",
+      "durationSec": 0.3,
+      "use": "entrée des bannières (PHOTO FINISH, ÉVADÉE) : clignotement 12 Hz puis fixe"
+     }
+    ],
+    "safeAreaPx": {
+     "top": 220.0,
+     "bottom": 320.0,
+     "right": 120.0,
+     "left": 60.0
+    },
+    "canvas": {
+     "width": 1080,
+     "height": 1920,
+     "fps": 30
+    }
+   },
+   "curation": {
+    "by": "orchestrator judgment, not measured",
+    "audience": [
+     "kids",
+     "teens",
+     "adults"
+    ],
+    "signatureToPreserve": [
+     "dark navy pixel playfield, motion quantised to 4 px",
+     "Press Start 2P HUD (score, time)",
+     "real pre-simulated physics with photo finish",
+     "pixel-mosaic transition + chiptune blips on collisions"
+    ],
+    "confusableWith": []
+   }
+  },
+  {
+   "id": "brut-meme",
+   "name": "Brut Mème",
+   "rank": 4,
+   "status": "rehabilitated",
+   "promiseFr": "Un fait ou un défi par coupe, en lettres géantes qui claquent sur le beat : impossible de scroller sans lire.",
+   "promiseEn": "Brutalist meme energy: one word or number slams on the beat, black and hazard yellow, giant condensed type.",
+   "familiesProven": [
+    "engagement",
+    "evenements"
+   ],
+   "libraries": [
+    "PixiJS 8.22",
+    "GSAP 3.15"
+   ],
+   "renderCostSecPer100Frames": {
+    "min": 49.8,
+    "max": 58.5,
+    "measuredUnderLoad": true
+   },
+   "sharedModule": [
+    "out/shorts/brut-meme__engagement__test-des-3-secondes-stroop/src/brut.js"
+   ],
+   "voiceUsed": {
+    "provider": "Fish Audio",
+    "name": "Arnold",
+    "reference_id": "d704cf8f1216490cbfbed89955f0e938",
+    "model": "s2.1-pro",
+    "language": "fr"
+   },
+   "paths": {
+    "identityMd": "out/identities/brut-meme/identity.md",
+    "tokens": "out/identities/brut-meme/tokens.json",
+    "recipes": [
+     "out/identities/brut-meme/recipes/engagement.md",
+     "out/identities/brut-meme/recipes/evenements.md"
+    ],
+    "poster": "out/identities/brut-meme/poster.jpg",
+    "contactSheet": "out/identities/brut-meme/contact-sheet.jpg",
+    "phase1Poster": "out/report/posters/brut-meme.jpg"
+   },
+   "shorts": [
+    {
+     "dir": "out/shorts/brut-meme__engagement__test-des-3-secondes-stroop",
+     "family": "engagement",
+     "title": "Le test des 3 secondes : dis la COULEUR, pas le mot",
+     "durationSec": 15.5,
+     "libraries": [
+      "PixiJS",
+      "GSAP"
+     ],
+     "renderCostSecPer100Frames": 49.8,
+     "loopable": false,
+     "voiced": true,
+     "recognitionNearestShort": "brut-meme__evenements__pendant-ces-15-secondes-dans-le-monde",
+     "recognitionSameIdentity": true
+    },
+    {
+     "dir": "out/shorts/brut-meme__evenements__pendant-ces-15-secondes-dans-le-monde",
+     "family": "evenements",
+     "title": "Pendant ces 15 secondes, dans le monde…",
+     "durationSec": 16.0,
+     "libraries": [
+      "PixiJS",
+      "GSAP"
+     ],
+     "renderCostSecPer100Frames": 58.5,
+     "loopable": false,
+     "voiced": true,
+     "recognitionNearestShort": "brut-meme__engagement__test-des-3-secondes-stroop",
+     "recognitionSameIdentity": true
+    }
+   ],
+   "coreTokens": {
+    "color": {
+     "bg": "#111111",
+     "surface": "#FFE600",
+     "text": "#FFFFFF",
+     "muted": "#262626",
+     "accent": [
+      "#FFE600",
+      "#FF2D2D",
+      "#FFFFFF"
+     ],
+     "success": "#FFE600",
+     "danger": "#FF2D2D"
+    },
+    "typography": {
+     "display": {
+      "family": "Anton",
+      "fontsourceSlug": "anton",
+      "weight": 400,
+      "sizePx": null,
+      "sizeNote": "auto-fit 900 px de large (max 330–600 px)"
+     },
+     "title": {
+      "family": "Anton",
+      "fontsourceSlug": "anton",
+      "weight": 400,
+      "sizePx": 132.0,
+      "sizeNote": null
+     },
+     "body": {
+      "family": "Inter",
+      "fontsourceSlug": "inter",
+      "weight": 900,
+      "sizePx": 60.0,
+      "sizeNote": null
+     },
+     "caption": {
+      "family": "Inter",
+      "fontsourceSlug": "inter",
+      "weight": 900,
+      "sizePx": 56.0,
+      "sizeNote": null
+     }
+    },
+    "motion": {
+     "durationSec": {
+      "fast": 0.1,
+      "base": 0.5,
+      "slow": 1.7
+     },
+     "staggerSec": 0.2,
+     "easingRaw": {
+      "enter": "power4.out (slide / rescale 1,6 -> 1)",
+      "exit": "none (coupe franche)",
+      "emphasis": "power4.in (slam : scale 2,4 -> 1, rotation +18° -> -10°)"
+     },
+     "hookDeadlineSec": 0.4,
+     "sourceUnits": "s"
+    },
+    "transitions": [
+     {
+      "name": "hard-cut",
+      "ffmpegXfade": null,
+      "durationSec": 0.0,
+      "use": "tous les changements de scène, calés sur le temps (120 bpm)"
+     },
+     {
+      "name": "punch-cut",
+      "ffmpegXfade": null,
+      "durationSec": 0.1,
+      "use": "cut + punch-in 1,15 -> 1 en 3 frames + impact sonore (scènes, STOP, stickers)"
+     },
+     {
+      "name": "slam",
+      "ffmpegXfade": null,
+      "durationSec": 0.1,
+      "use": "sticker / mot-clé qui arrive de très près (scale 2,4 -> 1) + shake"
+     },
+     {
+      "name": "slide-snap",
+      "ffmpegXfade": "slideleft",
+      "durationSec": 0.1,
+      "use": "label ou ligne qui entre latéralement (récap, deuxième ligne de titre)"
+     },
+     {
+      "name": "bg-invert",
+      "ffmpegXfade": null,
+      "durationSec": 0.0,
+      "use": "fond noir <-> jaune pour marquer un changement d'acte (max 1 / 1,6 s)"
+     }
+    ],
+    "safeAreaPx": {
+     "top": 220.0,
+     "bottom": 320.0,
+     "right": 120.0,
+     "left": 60.0
+    },
+    "canvas": {
+     "width": 1080,
+     "height": 1920,
+     "fps": 30
+    }
+   },
+   "curation": {
+    "by": "orchestrator judgment, not measured",
+    "audience": [
+     "teens",
+     "adults"
+    ],
+    "signatureToPreserve": [
+     "black / #FFE600 yellow / red only",
+     "Anton auto-fitted to fill the frame",
+     "hard cuts on the beat with 3-frame punch-in",
+     "round stickers and hazard-stripe progress bar",
+     "photosensitivity rule: <= 3 flashes/s, no full-frame flash"
+    ],
+    "confusableWith": []
+   }
+  },
+  {
+   "id": "bauhaus-kinetic",
+   "name": "Bauhaus Cinétique",
+   "rank": 5,
+   "status": "selected",
+   "promiseFr": "Des formes primaires qui s'emboîtent sur une grille stricte pour expliquer ou défier en 15 secondes : chaque idée devient un puzzle géométrique qui se résout sous nos yeux.",
+   "promiseEn": "Primary shapes snapping together on a strict grid: every idea becomes a geometric puzzle solved in 15 seconds.",
+   "familiesProven": [
+    "engagement",
+    "explicatif"
+   ],
+   "libraries": [
+    "Paper.js",
+    "flubber",
+    "anime.js"
+   ],
+   "renderCostSecPer100Frames": {
+    "min": 28.2,
+    "max": 31.7,
+    "measuredUnderLoad": true
+   },
+   "sharedModule": [
+    "out/shorts/bauhaus-kinetic__engagement__trouve-l-intrus/src/bk.js"
+   ],
+   "voiceUsed": {
+    "provider": "Fish Audio",
+    "name": "Arnold",
+    "reference_id": "d704cf8f1216490cbfbed89955f0e938",
+    "model": "s2.1-pro",
+    "language": "fr"
+   },
+   "paths": {
+    "identityMd": "out/identities/bauhaus-kinetic/identity.md",
+    "tokens": "out/identities/bauhaus-kinetic/tokens.json",
+    "recipes": [
+     "out/identities/bauhaus-kinetic/recipes/engagement.md",
+     "out/identities/bauhaus-kinetic/recipes/explicatif.md"
+    ],
+    "poster": "out/identities/bauhaus-kinetic/poster.jpg",
+    "contactSheet": "out/identities/bauhaus-kinetic/contact-sheet.jpg",
+    "phase1Poster": "out/report/posters/bauhaus-kinetic.jpg"
+   },
+   "shorts": [
+    {
+     "dir": "out/shorts/bauhaus-kinetic__engagement__trouve-l-intrus",
+     "family": "engagement",
+     "title": "Trouve l'intrus en 5 secondes",
+     "durationSec": 14.0,
+     "libraries": [
+      "Paper.js",
+      "flubber",
+      "anime.js"
+     ],
+     "renderCostSecPer100Frames": 31.7,
+     "loopable": false,
+     "voiced": true,
+     "recognitionNearestShort": "bauhaus-kinetic__explicatif__abeilles-hexagones",
+     "recognitionSameIdentity": true
+    },
+    {
+     "dir": "out/shorts/bauhaus-kinetic__explicatif__abeilles-hexagones",
+     "family": "explicatif",
+     "title": "Pourquoi les abeilles construisent en hexagones ?",
+     "durationSec": 16.0,
+     "libraries": [
+      "Paper.js",
+      "flubber",
+      "anime.js"
+     ],
+     "renderCostSecPer100Frames": 28.2,
+     "loopable": false,
+     "voiced": true,
+     "recognitionNearestShort": "bauhaus-kinetic__engagement__trouve-l-intrus",
+     "recognitionSameIdentity": true
+    }
+   ],
+   "coreTokens": {
+    "color": {
+     "bg": "#F2EDE3",
+     "surface": "#FFFFFF",
+     "text": "#111111",
+     "muted": "#6B6458",
+     "accent": [
+      "#E63B2E",
+      "#F5B700",
+      "#1D4ED8",
+      "#111111"
+     ],
+     "success": "#111111",
+     "danger": "#E63B2E"
+    },
+    "typography": {
+     "display": {
+      "family": "Unbounded",
+      "fontsourceSlug": "unbounded",
+      "weight": 800,
+      "sizePx": 100.0,
+      "sizeNote": null
+     },
+     "title": {
+      "family": "Unbounded",
+      "fontsourceSlug": "unbounded",
+      "weight": 800,
+      "sizePx": 90.0,
+      "sizeNote": null
+     },
+     "body": {
+      "family": "Space Grotesk",
+      "fontsourceSlug": "space-grotesk",
+      "weight": 500,
+      "sizePx": 56.0,
+      "sizeNote": null
+     },
+     "caption": {
+      "family": "Unbounded",
+      "fontsourceSlug": "unbounded",
+      "weight": 800,
+      "sizePx": 54.0,
+      "sizeNote": null
+     }
+    },
+    "motion": {
+     "durationSec": {
+      "fast": 0.28,
+      "base": 0.45,
+      "slow": 0.9
+     },
+     "staggerSec": 0.06,
+     "easingRaw": {
+      "enter": "outBack(1.6)",
+      "exit": "inQuart",
+      "emphasis": "inOutQuart"
+     },
+     "hookDeadlineSec": 0.6,
+     "sourceUnits": "ms"
+    },
+    "transitions": [
+     {
+      "name": "grid-wipe",
+      "ffmpegXfade": "wipedown",
+      "durationSec": 1.05,
+      "use": "changement de scène : 6 colonnes rouge/jaune/bleu/noir/rouge/jaune tombent en stagger 45 ms (300 ms inOutQuart), couvrent à 0,525 s (coupe), repartent vers le bas ; réalisé dans la scène (DOM) ; wipedown = équivalent si l'on monte des clips séparés"
+     },
+     {
+      "name": "snap-90",
+      "ffmpegXfade": "none",
+      "durationSec": 0.45,
+      "use": "entrée/sortie d'un élément (badge, cadre, tuile) : rotation 90° -> 0° + échelle 0,4 -> 1 en outBack(1.6)"
+     },
+     {
+      "name": "shape-morph",
+      "ffmpegXfade": "none",
+      "durationSec": 0.9,
+      "use": "une forme devient une autre (carré->hexagone, cercle->hexagone, badge du compte à rebours) via flubber, inOutCubic, 280–900 ms"
+     }
+    ],
+    "safeAreaPx": {
+     "top": 220.0,
+     "bottom": 320.0,
+     "right": 120.0,
+     "left": 60.0
+    },
+    "canvas": {
+     "width": 1080,
+     "height": 1920,
+     "fps": 30
+    }
+   },
+   "curation": {
+    "by": "orchestrator judgment, not measured",
+    "audience": [
+     "kids",
+     "teens",
+     "adults"
+    ],
+    "signatureToPreserve": [
+     "cream ground with red / yellow / blue / black primary shapes",
+     "Unbounded 800 headlines",
+     "grid staggers and shape morphs (flubber)",
+     "grid-wipe transition"
+    ],
+    "confusableWith": [
+     "swiss-data"
+    ]
+   }
+  },
+  {
+   "id": "tableau-craie",
+   "name": "Tableau Craie",
+   "rank": 6,
+   "status": "selected",
+   "promiseFr": "Un prof bienveillant t'explique le monde en le dessinant à la craie : une idée = un schéma qui s'écrit, puis un coup de chiffon.",
+   "promiseEn": "A kind teacher explains the world by drawing it in chalk: one idea = one diagram that draws itself, then a wipe of the cloth.",
+   "familiesProven": [
+    "enfants",
+    "explicatif"
+   ],
+   "libraries": [
+    "Manim",
+    "Rough.js",
+    "GSAP"
+   ],
+   "renderCostSecPer100Frames": {
+    "min": 19.1,
+    "max": 309.2,
+    "measuredUnderLoad": true
+   },
+   "sharedModule": null,
+   "voiceUsed": {
+    "provider": "Fish Audio",
+    "name": "Arnold",
+    "reference_id": "d704cf8f1216490cbfbed89955f0e938",
+    "model": "s2.1-pro",
+    "language": "fr"
+   },
+   "paths": {
+    "identityMd": "out/identities/tableau-craie/identity.md",
+    "tokens": "out/identities/tableau-craie/tokens.json",
+    "recipes": [
+     "out/identities/tableau-craie/recipes/enfants.md",
+     "out/identities/tableau-craie/recipes/explicatif.md"
+    ],
+    "poster": "out/identities/tableau-craie/poster.jpg",
+    "contactSheet": "out/identities/tableau-craie/contact-sheet.jpg",
+    "phase1Poster": "out/report/posters/tableau-craie.jpg"
+   },
+   "shorts": [
+    {
+     "dir": "out/shorts/tableau-craie__enfants__comment-une-graine-devient-un-arbre",
+     "family": "enfants",
+     "title": "Comment une graine devient un arbre ?",
+     "durationSec": 15.5,
+     "libraries": [
+      "Rough.js",
+      "GSAP"
+     ],
+     "renderCostSecPer100Frames": 309.2,
+     "loopable": false,
+     "voiced": true,
+     "recognitionNearestShort": "tableau-craie__explicatif__pourquoi-le-ciel-est-bleu",
+     "recognitionSameIdentity": true
+    },
+    {
+     "dir": "out/shorts/tableau-craie__explicatif__pourquoi-le-ciel-est-bleu",
+     "family": "explicatif",
+     "title": "Pourquoi le ciel est bleu ?",
+     "durationSec": 16.5,
+     "libraries": [
+      "Manim",
+      "PIL/numpy (overlays texte et grain craie)"
+     ],
+     "renderCostSecPer100Frames": 19.1,
+     "loopable": false,
+     "voiced": true,
+     "recognitionNearestShort": "tableau-craie__enfants__comment-une-graine-devient-un-arbre",
+     "recognitionSameIdentity": true
+    }
+   ],
+   "coreTokens": {
+    "color": {
+     "bg": "#1F3A30",
+     "surface": "#264639",
+     "text": "#F7F3E3",
+     "muted": "#A9BFAF",
+     "accent": [
+      "#FFF6D5",
+      "#FFB84C",
+      "#7FD1FF",
+      "#FF7A7A"
+     ],
+     "success": "#9BE58A",
+     "danger": "#FF7A7A"
+    },
+    "typography": {
+     "display": {
+      "family": "Nunito",
+      "fontsourceSlug": "nunito",
+      "weight": 800,
+      "sizePx": 108.0,
+      "sizeNote": null
+     },
+     "title": {
+      "family": "Nunito",
+      "fontsourceSlug": "nunito",
+      "weight": 800,
+      "sizePx": 92.0,
+      "sizeNote": null
+     },
+     "body": {
+      "family": "Caveat",
+      "fontsourceSlug": "caveat",
+      "weight": 700,
+      "sizePx": 72.0,
+      "sizeNote": null
+     },
+     "caption": {
+      "family": "Caveat",
+      "fontsourceSlug": "caveat",
+      "weight": 700,
+      "sizePx": 60.0,
+      "sizeNote": null
+     }
+    },
+    "motion": {
+     "durationSec": {
+      "fast": 0.35,
+      "base": 0.8,
+      "slow": 1.6
+     },
+     "staggerSec": 0.12,
+     "easingRaw": {
+      "enter": "outCubic (craie qui se pose) / Create linéaire-sinus pour les tracés",
+      "exit": "inOutSine (chiffon)",
+      "emphasis": "outBack (pop des chiffres et des feuilles)"
+     },
+     "hookDeadlineSec": 0.8,
+     "sourceUnits": "s"
+    },
+    "transitions": [
+     {
+      "name": "chiffon",
+      "ffmpegXfade": "smoothleft",
+      "durationSec": 0.6,
+      "use": "entre deux idées : un chiffon balaie de gauche à droite, les tracés s'effacent dans l'ordre du balayage, une trace de craie reste"
+     },
+     {
+      "name": "craie-qui-se-pose",
+      "ffmpegXfade": "fade",
+      "durationSec": 0.25,
+      "use": "apparition d'un mot-clé (fondu court + grain)"
+     }
+    ],
+    "safeAreaPx": {
+     "top": 220.0,
+     "bottom": 320.0,
+     "right": 120.0,
+     "left": 60
+    },
+    "canvas": {
+     "width": 1080,
+     "height": 1920,
+     "fps": 30
+    }
+   },
+   "curation": {
+    "by": "orchestrator judgment, not measured",
+    "audience": [
+     "kids",
+     "teens"
+    ],
+    "signatureToPreserve": [
+     "dark green chalkboard with chalk grain",
+     "everything draws itself (Manim Create / stroke-dashoffset)",
+     "Caveat handwriting + Nunito titles",
+     "eraser-cloth wipe between ideas"
+    ],
+    "confusableWith": []
+   }
+  },
+  {
+   "id": "riso-zine",
+   "name": "Zine Riso",
+   "rank": 7,
+   "status": "rehabilitated",
+   "promiseFr": "Un chiffre fort, une forme découpée, une annotation au marqueur : la géo et l'agenda racontés comme un fanzine imprimé à la main, en trois encres qui débordent.",
+   "promiseEn": "An indie risograph fanzine: overprinted spot inks, misregistration and marker notes, animated on twos.",
+   "familiesProven": [
+    "evenements",
+    "geographie"
+   ],
+   "libraries": [
+    "p5.js",
+    "GSAP",
+    "OpenCV"
+   ],
+   "renderCostSecPer100Frames": {
+    "min": 62.3,
+    "max": 70.9,
+    "measuredUnderLoad": true
+   },
+   "sharedModule": [
+    "out/shorts/riso-zine__evenements__geminides-j-39/src/riso.js"
+   ],
+   "voiceUsed": {
+    "provider": "Fish Audio",
+    "name": "Arnold",
+    "reference_id": "d704cf8f1216490cbfbed89955f0e938",
+    "model": "s2.1-pro",
+    "language": "fr"
+   },
+   "paths": {
+    "identityMd": "out/identities/riso-zine/identity.md",
+    "tokens": "out/identities/riso-zine/tokens.json",
+    "recipes": [
+     "out/identities/riso-zine/recipes/evenements.md",
+     "out/identities/riso-zine/recipes/geographie.md"
+    ],
+    "poster": "out/identities/riso-zine/poster.jpg",
+    "contactSheet": "out/identities/riso-zine/contact-sheet.jpg",
+    "phase1Poster": "out/report/posters/riso-zine.jpg"
+   },
+   "shorts": [
+    {
+     "dir": "out/shorts/riso-zine__evenements__geminides-j-39",
+     "family": "evenements",
+     "title": "J-39 : les Géminides, la pluie d'étoiles filantes du 13–14 décembre",
+     "durationSec": 16.0,
+     "libraries": [
+      "p5.js",
+      "GSAP",
+      "OpenCV"
+     ],
+     "renderCostSecPer100Frames": 70.9,
+     "loopable": false,
+     "voiced": true,
+     "recognitionNearestShort": "riso-zine__geographie__5-plus-grands-deserts",
+     "recognitionSameIdentity": true
+    },
+    {
+     "dir": "out/shorts/riso-zine__geographie__5-plus-grands-deserts",
+     "family": "geographie",
+     "title": "Les 5 plus grands déserts du monde (le n°1 est glacé !)",
+     "durationSec": 16.0,
+     "libraries": [
+      "p5.js",
+      "GSAP",
+      "OpenCV"
+     ],
+     "renderCostSecPer100Frames": 62.3,
+     "loopable": false,
+     "voiced": true,
+     "recognitionNearestShort": "riso-zine__evenements__geminides-j-39",
+     "recognitionSameIdentity": true
+    }
+   ],
+   "coreTokens": {
+    "color": {
+     "bg": "#F6F0E4",
+     "surface": "#F6F0E4",
+     "text": "#1A1A1A",
+     "muted": "#0078BF",
+     "accent": [
+      "#FF48B0",
+      "#0078BF",
+      "#FFE800"
+     ],
+     "success": "#FF48B0",
+     "danger": "#FF48B0"
+    },
+    "typography": {
+     "display": {
+      "family": "Space Mono",
+      "fontsourceSlug": "space-mono",
+      "weight": 700,
+      "sizePx": 340.0,
+      "sizeNote": null
+     },
+     "title": {
+      "family": "Space Mono",
+      "fontsourceSlug": "space-mono",
+      "weight": 700,
+      "sizePx": 104.0,
+      "sizeNote": null
+     },
+     "body": {
+      "family": "Space Mono",
+      "fontsourceSlug": "space-mono",
+      "weight": 700,
+      "sizePx": 60.0,
+      "sizeNote": null
+     },
+     "caption": {
+      "family": "Permanent Marker",
+      "fontsourceSlug": "permanent-marker",
+      "weight": 400,
+      "sizePx": 62.0,
+      "sizeNote": null
+     }
+    },
+    "motion": {
+     "durationSec": {
+      "fast": 0.25,
+      "base": 0.3,
+      "slow": 0.45
+     },
+     "staggerSec": 0.13,
+     "easingRaw": {
+      "enter": "power3.out",
+      "exit": "none (coupe sèche de page)",
+      "emphasis": "back.out(1.7-2.2)"
+     },
+     "hookDeadlineSec": 0.0,
+     "sourceUnits": "s"
+    },
+    "transitions": [
+     {
+      "name": "coupe-de-page",
+      "ffmpegXfade": "none",
+      "durationSec": 0.0,
+      "use": "entre chaque page/beat ; compensée par un kick de repérage de 0,34 s et un slam du titre (x -150 px, rotation -8° -> 0)"
+     },
+     {
+      "name": "slam-decoupe",
+      "ffmpegXfade": "none",
+      "durationSec": 0.42,
+      "use": "entrée d'une forme découpée (back.out(1.7))"
+     },
+     {
+      "name": "trait-marqueur",
+      "ffmpegXfade": "wiperight",
+      "durationSec": 0.45,
+      "use": "annotation qui s'écrit (clip-path par pas) ; équivalent ffmpeg si assemblage de clips"
+     }
+    ],
+    "safeAreaPx": {
+     "top": 220.0,
+     "bottom": 320.0,
+     "right": 120.0,
+     "left": 60
+    },
+    "canvas": {
+     "width": 1080,
+     "height": 1920,
+     "fps": 30
+    }
+   },
+   "curation": {
+    "by": "orchestrator judgment, not measured",
+    "audience": [
+     "teens",
+     "adults"
+    ],
+    "signatureToPreserve": [
+     "cream paper with 2–3 overprinted spot inks (fluo pink, blue, yellow)",
+     "misregistration + halftone dots",
+     "Space Mono + Permanent Marker annotations",
+     "stepped 12 fps motion, collage cut-outs"
+    ],
+    "confusableWith": []
+   }
+  },
+  {
+   "id": "pastel-diorama",
+   "name": "Diorama Pastel",
+   "rank": 8,
+   "status": "selected",
+   "promiseFr": "Expliquer ou faire jouer les 6–10 ans dans un monde de jouets doux et rassurants où chaque idée « saute » en place avec un rebond, sans jamais faire peur ni brusquer.",
+   "promiseEn": "Explain or play with 6–10 year-olds in a soft toy world where every idea bounces into place, never scary or abrupt.",
+   "familiesProven": [
+    "enfants",
+    "engagement"
+   ],
+   "libraries": [
+    "Zdog",
+    "GSAP",
+    "A-Frame"
+   ],
+   "renderCostSecPer100Frames": {
+    "min": 66.0,
+    "max": 82.9,
+    "measuredUnderLoad": true
+   },
+   "sharedModule": null,
+   "voiceUsed": {
+    "provider": "Fish Audio",
+    "name": "Arnold",
+    "reference_id": "d704cf8f1216490cbfbed89955f0e938",
+    "model": "s2.1-pro",
+    "language": "fr"
+   },
+   "paths": {
+    "identityMd": "out/identities/pastel-diorama/identity.md",
+    "tokens": "out/identities/pastel-diorama/tokens.json",
+    "recipes": [
+     "out/identities/pastel-diorama/recipes/enfants.md",
+     "out/identities/pastel-diorama/recipes/engagement.md"
+    ],
+    "poster": "out/identities/pastel-diorama/poster.jpg",
+    "contactSheet": "out/identities/pastel-diorama/contact-sheet.jpg",
+    "phase1Poster": "out/report/posters/pastel-diorama.jpg"
+   },
+   "shorts": [
+    {
+     "dir": "out/shorts/pastel-diorama__enfants__d-ou-vient-la-pluie",
+     "family": "enfants",
+     "title": "D'où vient la pluie ? Le voyage de Plip la goutte",
+     "durationSec": 16.0,
+     "libraries": [
+      "Zdog",
+      "GSAP"
+     ],
+     "renderCostSecPer100Frames": 66.0,
+     "loopable": false,
+     "voiced": true,
+     "recognitionNearestShort": "pastel-diorama__engagement__choisis-ta-boite-renard",
+     "recognitionSameIdentity": true
+    },
+    {
+     "dir": "out/shorts/pastel-diorama__engagement__choisis-ta-boite-renard",
+     "family": "engagement",
+     "title": "Choisis ta boîte : laquelle cache le petit renard ?",
+     "durationSec": 15.0,
+     "libraries": [
+      "A-Frame",
+      "GSAP"
+     ],
+     "renderCostSecPer100Frames": 82.9,
+     "loopable": false,
+     "voiced": true,
+     "recognitionNearestShort": "pastel-diorama__enfants__d-ou-vient-la-pluie",
+     "recognitionSameIdentity": true
+    }
+   ],
+   "coreTokens": {
+    "color": {
+     "bg": "#FFE8EF",
+     "surface": "#FFFFFF",
+     "text": "#3B2E5A",
+     "muted": "#F9C6D5",
+     "accent": [
+      "#FF8FAB",
+      "#8ED6FF",
+      "#FFD670",
+      "#9BE7B0"
+     ],
+     "success": "#9BE7B0",
+     "danger": "#E23D72"
+    },
+    "typography": {
+     "display": {
+      "family": "Baloo 2",
+      "fontsourceSlug": "baloo-2",
+      "weight": 800,
+      "sizePx": 132.0,
+      "sizeNote": null
+     },
+     "title": {
+      "family": "Baloo 2",
+      "fontsourceSlug": "baloo-2",
+      "weight": 800,
+      "sizePx": 96.0,
+      "sizeNote": null
+     },
+     "body": {
+      "family": "Nunito",
+      "fontsourceSlug": "nunito",
+      "weight": 800,
+      "sizePx": 60.0,
+      "sizeNote": null
+     },
+     "caption": {
+      "family": "Nunito",
+      "fontsourceSlug": "nunito",
+      "weight": 800,
+      "sizePx": 56.0,
+      "sizeNote": null
+     }
+    },
+    "motion": {
+     "durationSec": {
+      "fast": 0.3,
+      "base": 0.5,
+      "slow": 1.3
+     },
+     "staggerSec": 0.16,
+     "easingRaw": {
+      "enter": "back.out(1.8)",
+      "exit": "back.in(1.6)",
+      "emphasis": "elastic.out(1,0.35)"
+     },
+     "hookDeadlineSec": 0.3,
+     "sourceUnits": "s"
+    },
+    "transitions": [
+     {
+      "name": "pastille-pop",
+      "ffmpegXfade": "fade",
+      "durationSec": 0.3,
+      "use": "changement d'étape : la pastille sort en back.in 0.3 s, la suivante entre en back.out 0.5 s (in-scene ; fade 0.3 s si clips séparés)"
+     },
+     {
+      "name": "teinte-ciel",
+      "ffmpegXfade": "fadewhite",
+      "durationSec": 1.4,
+      "use": "changement d'ambiance (froid, altitude) : dégradé bleu #DDEBFF en fondu sur le fond rose"
+     },
+     {
+      "name": "couvercle-pop",
+      "ffmpegXfade": "circleopen",
+      "durationSec": 0.5,
+      "use": "révélation : couvercle/rideau qui saute en back.out + confettis ; circleopen si la révélation est un clip séparé"
+     }
+    ],
+    "safeAreaPx": {
+     "top": 220.0,
+     "bottom": 320.0,
+     "right": 120.0,
+     "left": 60.0
+    },
+    "canvas": {
+     "width": 1080,
+     "height": 1920,
+     "fps": 30
+    }
+   },
+   "curation": {
+    "by": "orchestrator judgment, not measured",
+    "audience": [
+     "kids"
+    ],
+    "signatureToPreserve": [
+     "pink pastel toy diorama on a felt base",
+     "soft rounded toys and invented recurring characters",
+     "Baloo 2 titles and pill labels",
+     "bouncy back.out motion"
+    ],
+    "confusableWith": []
+   }
+  },
+  {
+   "id": "topo-relief",
+   "name": "Relief Topo",
+   "rank": 9,
+   "status": "rehabilitated",
+   "promiseFr": "Chaque sujet devient un **terrain qu'on survole** : le relief s'extrude sous nos yeux, les courbes de niveau s'allument en montant et un altimètre en chiffres mono dit exactement où l'on est.",
+   "promiseEn": "A 3D topographic expedition: terrain extrudes, contour lines light up, drone fly-overs and an altitude readout.",
+   "familiesProven": [
+    "geographie",
+    "histoire"
+   ],
+   "libraries": [
+    "three.js",
+    "D3.js"
+   ],
+   "renderCostSecPer100Frames": {
+    "min": 108.2,
+    "max": 169.0,
+    "measuredUnderLoad": true
+   },
+   "sharedModule": [
+    "out/shorts/topo-relief__geographie__comment-mesure-t-on-l-everest/src/topo.js"
+   ],
+   "voiceUsed": {
+    "provider": "Fish Audio",
+    "name": "Arnold",
+    "reference_id": "d704cf8f1216490cbfbed89955f0e938",
+    "model": "s2.1-pro",
+    "language": "fr"
+   },
+   "paths": {
+    "identityMd": "out/identities/topo-relief/identity.md",
+    "tokens": "out/identities/topo-relief/tokens.json",
+    "recipes": [
+     "out/identities/topo-relief/recipes/geographie.md",
+     "out/identities/topo-relief/recipes/histoire.md"
+    ],
+    "poster": "out/identities/topo-relief/poster.jpg",
+    "contactSheet": "out/identities/topo-relief/contact-sheet.jpg",
+    "phase1Poster": "out/report/posters/topo-relief.jpg"
+   },
+   "shorts": [
+    {
+     "dir": "out/shorts/topo-relief__geographie__comment-mesure-t-on-l-everest",
+     "family": "geographie",
+     "title": "Comment mesure-t-on l'Everest ?",
+     "durationSec": 15.0,
+     "libraries": [
+      "three.js",
+      "D3.js"
+     ],
+     "renderCostSecPer100Frames": 169.0,
+     "loopable": false,
+     "voiced": true,
+     "recognitionNearestShort": "topo-relief__histoire__hannibal-traverse-les-alpes",
+     "recognitionSameIdentity": true
+    },
+    {
+     "dir": "out/shorts/topo-relief__histoire__hannibal-traverse-les-alpes",
+     "family": "histoire",
+     "title": "Hannibal traverse les Alpes (218 av. J.-C.)",
+     "durationSec": 15.0,
+     "libraries": [
+      "three.js",
+      "D3.js"
+     ],
+     "renderCostSecPer100Frames": 108.2,
+     "loopable": false,
+     "voiced": true,
+     "recognitionNearestShort": "topo-relief__geographie__comment-mesure-t-on-l-everest",
+     "recognitionSameIdentity": true
+    }
+   ],
+   "coreTokens": {
+    "color": {
+     "bg": "#14221C",
+     "surface": "#1E3329",
+     "text": "#F1EEDC",
+     "muted": "#9AA898",
+     "accent": [
+      "#E8C872",
+      "#D9734E",
+      "#9FD3C7"
+     ],
+     "success": "#9FD3C7",
+     "danger": "#D9734E"
+    },
+    "typography": {
+     "display": {
+      "family": "Inter",
+      "fontsourceSlug": "inter",
+      "weight": 800,
+      "sizePx": 100.0,
+      "sizeNote": null
+     },
+     "title": {
+      "family": "JetBrains Mono",
+      "fontsourceSlug": "jetbrains-mono",
+      "weight": 700,
+      "sizePx": 104.0,
+      "sizeNote": null
+     },
+     "body": {
+      "family": "JetBrains Mono",
+      "fontsourceSlug": "jetbrains-mono",
+      "weight": 500,
+      "sizePx": 54.0,
+      "sizeNote": null
+     },
+     "caption": {
+      "family": "JetBrains Mono",
+      "fontsourceSlug": "jetbrains-mono",
+      "weight": 700,
+      "sizePx": 54.0,
+      "sizeNote": null
+     }
+    },
+    "motion": {
+     "durationSec": {
+      "fast": 0.3,
+      "base": 0.6,
+      "slow": 2.6
+     },
+     "staggerSec": 0.25,
+     "easingRaw": {
+      "enter": "outCubic (fondu + 26 px de montée, 0.3 s)",
+      "exit": "inCubic (0.3 s)",
+      "emphasis": "rise = cubic-bezier(0.16, 0.84, 0.30, 1) (extrusion du relief) ; balayage des courbes inOutSine"
+     },
+     "hookDeadlineSec": 0.15,
+     "sourceUnits": "s"
+    },
+    "transitions": [
+     {
+      "name": "courbes-qui-montent",
+      "ffmpegXfade": "fade",
+      "durationSec": 3.0,
+      "use": "ouverture : le relief s'extrude et les courbes s'allument (in-scene, pas de coupe)"
+     },
+     {
+      "name": "survol",
+      "ffmpegXfade": "smoothup",
+      "durationSec": 2.4,
+      "use": "changement de beat : la caméra glisse vers l'image clé suivante pendant que le bloc texte fait fondu 0.3 s / montée"
+     },
+     {
+      "name": "fondu-carte",
+      "ffmpegXfade": "fade",
+      "durationSec": 0.6,
+      "use": "si deux plans sont concaténés (assemble.py concat) : fondu au vert forêt #14221C"
+     },
+     {
+      "name": "recul-maquette",
+      "ffmpegXfade": "zoomin",
+      "durationSec": 2.4,
+      "use": "fin : recul + plongée vers la vue d'ensemble de la maquette"
+     }
+    ],
+    "safeAreaPx": {
+     "top": 220.0,
+     "bottom": 320.0,
+     "right": 120.0,
+     "left": 60
+    },
+    "canvas": {
+     "width": 1080,
+     "height": 1920,
+     "fps": 30
+    }
+   },
+   "curation": {
+    "by": "orchestrator judgment, not measured",
+    "audience": [
+     "teens",
+     "adults"
+    ],
+    "signatureToPreserve": [
+     "dark forest-green 3D terrain block with glowing contour lines",
+     "drone fly-over camera",
+     "altitude readout in JetBrains Mono",
+     "ochre / terracotta / teal accents"
+    ],
+    "confusableWith": [
+     "atlas-grave"
+    ]
+   }
+  },
+  {
+   "id": "atlas-grave",
+   "name": "Atlas Gravé",
+   "rank": 10,
+   "status": "selected",
+   "promiseFr": "Un savoir géographique ou historique s'imprime sous vos yeux, à l'encre, sur une carte gravée qui bouge à peine, et finit sur une question ouverte.",
+   "promiseEn": "Geographic or historical knowledge printed in ink before your eyes on an engraved map that barely moves, ending on an open question.",
+   "familiesProven": [
+    "geographie",
+    "histoire"
+   ],
+   "libraries": [
+    "D3.js",
+    "GSAP",
+    "pycairo"
+   ],
+   "renderCostSecPer100Frames": {
+    "min": 128.7,
+    "max": 135.7,
+    "measuredUnderLoad": true
+   },
+   "sharedModule": [
+    "out/shorts/atlas-grave__geographie__plus-longs-fleuves-du-monde/src/atlas.js",
+    "out/shorts/atlas-grave__geographie__plus-longs-fleuves-du-monde/src/textures.py"
+   ],
+   "voiceUsed": {
+    "provider": "Fish Audio",
+    "name": "Arnold",
+    "reference_id": "d704cf8f1216490cbfbed89955f0e938",
+    "model": "s2.1-pro",
+    "language": "fr"
+   },
+   "paths": {
+    "identityMd": "out/identities/atlas-grave/identity.md",
+    "tokens": "out/identities/atlas-grave/tokens.json",
+    "recipes": [
+     "out/identities/atlas-grave/recipes/geographie.md",
+     "out/identities/atlas-grave/recipes/histoire.md"
+    ],
+    "poster": "out/identities/atlas-grave/poster.jpg",
+    "contactSheet": "out/identities/atlas-grave/contact-sheet.jpg",
+    "phase1Poster": "out/report/posters/atlas-grave.jpg"
+   },
+   "shorts": [
+    {
+     "dir": "out/shorts/atlas-grave__geographie__plus-longs-fleuves-du-monde",
+     "family": "geographie",
+     "title": "Les 5 plus longs fleuves du monde",
+     "durationSec": 15.0,
+     "libraries": [
+      "D3.js",
+      "GSAP",
+      "pycairo"
+     ],
+     "renderCostSecPer100Frames": 135.7,
+     "loopable": false,
+     "voiced": true,
+     "recognitionNearestShort": "atlas-grave__histoire__premier-tour-du-monde-1519-1522",
+     "recognitionSameIdentity": true
+    },
+    {
+     "dir": "out/shorts/atlas-grave__histoire__premier-tour-du-monde-1519-1522",
+     "family": "histoire",
+     "title": "Le premier tour du monde : 1519–1522",
+     "durationSec": 16.0,
+     "libraries": [
+      "D3.js",
+      "GSAP",
+      "pycairo"
+     ],
+     "renderCostSecPer100Frames": 128.7,
+     "loopable": false,
+     "voiced": true,
+     "recognitionNearestShort": "atlas-grave__geographie__plus-longs-fleuves-du-monde",
+     "recognitionSameIdentity": true
+    }
+   ],
+   "coreTokens": {
+    "color": {
+     "bg": "#EFE3C8",
+     "surface": "#E2D2AE",
+     "text": "#2A1F14",
+     "muted": "#6B5A43",
+     "accent": [
+      "#8C2F1B",
+      "#2D4A5A",
+      "#B8862B"
+     ],
+     "success": "#2D4A5A",
+     "danger": "#8C2F1B"
+    },
+    "typography": {
+     "display": {
+      "family": "Cormorant Garamond",
+      "fontsourceSlug": "cormorant-garamond",
+      "weight": 700,
+      "sizePx": 108.0,
+      "sizeNote": null
+     },
+     "title": {
+      "family": "Cinzel",
+      "fontsourceSlug": "cinzel",
+      "weight": 600,
+      "sizePx": 54.0,
+      "sizeNote": null
+     },
+     "body": {
+      "family": "Cormorant Garamond",
+      "fontsourceSlug": "cormorant-garamond",
+      "weight": 700,
+      "sizePx": 62.0,
+      "sizeNote": null
+     },
+     "caption": {
+      "family": "IBM Plex Mono",
+      "fontsourceSlug": "ibm-plex-mono",
+      "weight": 600,
+      "sizePx": 54.0,
+      "sizeNote": null
+     }
+    },
+    "motion": {
+     "durationSec": {
+      "fast": 0.35,
+      "base": 0.6,
+      "slow": 1.2
+     },
+     "staggerSec": 1.5,
+     "easingRaw": {
+      "enter": "power2.out (encre qui apparaît : opacité + 10–14 px vers le haut)",
+      "exit": "sine.inOut (0.25–0.3 s)",
+      "emphasis": "back.out(1.6) (sceau tamponné, échelle 1.6 -> 1)"
+     },
+     "hookDeadlineSec": 0.5,
+     "sourceUnits": "s"
+    },
+    "transitions": [
+     {
+      "name": "encre-qui-seche",
+      "ffmpegXfade": "fade",
+      "durationSec": 0.4,
+      "use": "changement de légende/date : sortie 0.3 s, entrée 0.4 s power2.out avec 12 px de montée"
+     },
+     {
+      "name": "sceau",
+      "ffmpegXfade": "circleopen",
+      "durationSec": 0.35,
+      "use": "révélation d'un rang ou d'un événement-clé (back.out 1.6)"
+     },
+     {
+      "name": "panoramique-parchemin",
+      "ffmpegXfade": "slideleft",
+      "durationSec": 0.7,
+      "use": "passage d'un lieu à l'autre sur la carte (caméra, pas de coupe)"
+     },
+     {
+      "name": "cartouche-final",
+      "ffmpegXfade": "fade",
+      "durationSec": 0.5,
+      "use": "ouverture du cartouche guilloché de la question finale (échelle 0.72 -> 0.82)"
+     }
+    ],
+    "safeAreaPx": {
+     "top": 220.0,
+     "bottom": 320.0,
+     "right": 120.0,
+     "left": 60
+    },
+    "canvas": {
+     "width": 1080,
+     "height": 1920,
+     "fps": 30
+    }
+   },
+   "curation": {
+    "by": "orchestrator judgment, not measured",
+    "audience": [
+     "teens",
+     "adults"
+    ],
+    "signatureToPreserve": [
+     "laid-paper parchment and engraved hand-drawn maps",
+     "ink that draws itself",
+     "Cormorant Garamond / Cinzel serif",
+     "wax seals, compass rose, slow pans"
+    ],
+    "confusableWith": [
+     "topo-relief"
+    ]
+   }
+  },
+  {
+   "id": "aquarelle-conte",
+   "name": "Aquarelle Conte",
+   "rank": 11,
+   "status": "selected",
+   "promiseFr": "Chaque short est une page d'album : un paysage peint à l'eau qui respire, un petit personnage ou un monument en vecteur aquarellé, et une phrase courte posée sur du papier crème, racontée par une conteuse.",
+   "promiseEn": "Each short is a picture-book page: a breathing watercolour landscape, a small vector character or monument, one short sentence, told by a storyteller.",
+   "familiesProven": [
+    "enfants",
+    "histoire"
+   ],
+   "libraries": [
+    "p5.js",
+    "Paper.js"
+   ],
+   "renderCostSecPer100Frames": {
+    "min": 109.2,
+    "max": 117.6,
+    "measuredUnderLoad": true
+   },
+   "sharedModule": [
+    "out/shorts/aquarelle-conte__enfants__ou-vont-les-etoiles-le-jour/src/aq.js"
+   ],
+   "voiceUsed": {
+    "provider": "Fish Audio",
+    "name": "Arnold",
+    "reference_id": "d704cf8f1216490cbfbed89955f0e938",
+    "model": "s2.1-pro",
+    "language": "fr"
+   },
+   "paths": {
+    "identityMd": "out/identities/aquarelle-conte/identity.md",
+    "tokens": "out/identities/aquarelle-conte/tokens.json",
+    "recipes": [
+     "out/identities/aquarelle-conte/recipes/enfants.md",
+     "out/identities/aquarelle-conte/recipes/histoire.md"
+    ],
+    "poster": "out/identities/aquarelle-conte/poster.jpg",
+    "contactSheet": "out/identities/aquarelle-conte/contact-sheet.jpg",
+    "phase1Poster": "out/report/posters/aquarelle-conte.jpg"
+   },
+   "shorts": [
+    {
+     "dir": "out/shorts/aquarelle-conte__enfants__ou-vont-les-etoiles-le-jour",
+     "family": "enfants",
+     "title": "Où vont les étoiles le jour ? (histoire du soir)",
+     "durationSec": 15.0,
+     "libraries": [
+      "p5.js",
+      "Paper.js"
+     ],
+     "renderCostSecPer100Frames": 117.6,
+     "loopable": false,
+     "voiced": true,
+     "recognitionNearestShort": "aquarelle-conte__histoire__phare-d-alexandrie",
+     "recognitionSameIdentity": true
+    },
+    {
+     "dir": "out/shorts/aquarelle-conte__histoire__phare-d-alexandrie",
+     "family": "histoire",
+     "title": "Il était une fois le Phare d'Alexandrie",
+     "durationSec": 16.0,
+     "libraries": [
+      "p5.js",
+      "Paper.js"
+     ],
+     "renderCostSecPer100Frames": 109.2,
+     "loopable": false,
+     "voiced": true,
+     "recognitionNearestShort": "aquarelle-conte__enfants__ou-vont-les-etoiles-le-jour",
+     "recognitionSameIdentity": true
+    }
+   ],
+   "coreTokens": {
+    "color": {
+     "bg": "#F7F1E6",
+     "surface": "#EFE4D0",
+     "text": "#3A3042",
+     "muted": "#8A6A55",
+     "accent": [
+      "#E88D72",
+      "#6C9BCF",
+      "#F2C14E",
+      "#7FB685"
+     ],
+     "success": "#7FB685",
+     "danger": "#B2573E"
+    },
+    "typography": {
+     "display": {
+      "family": "Fraunces",
+      "fontsourceSlug": "fraunces",
+      "weight": 700,
+      "sizePx": 108.0,
+      "sizeNote": null
+     },
+     "title": {
+      "family": "Fraunces",
+      "fontsourceSlug": "fraunces",
+      "weight": 700,
+      "sizePx": 92.0,
+      "sizeNote": null
+     },
+     "body": {
+      "family": "Nunito",
+      "fontsourceSlug": "nunito",
+      "weight": 600,
+      "sizePx": 58.0,
+      "sizeNote": null
+     },
+     "caption": {
+      "family": "Nunito",
+      "fontsourceSlug": "nunito",
+      "weight": 600,
+      "sizePx": 54.0,
+      "sizeNote": null
+     }
+    },
+    "motion": {
+     "durationSec": {
+      "fast": 0.4,
+      "base": 0.6,
+      "slow": 2.0
+     },
+     "staggerSec": 0.09,
+     "easingRaw": {
+      "enter": "outCubic",
+      "exit": "inOutSine",
+      "emphasis": "outBack"
+     },
+     "hookDeadlineSec": 0.25,
+     "sourceUnits": "s"
+    },
+    "transitions": [
+     {
+      "name": "lavis-qui-s-ouvre",
+      "ffmpegXfade": "circleopen",
+      "durationSec": 1.0,
+      "use": "changement d'heure/de lieu : le nouveau ciel se révèle dans une tache d'eau déformée qui grandit depuis la source de lumière (Soleil, feu, Lune) ; 3 paliers d'opacité (5 paliers « bloomSoft » si fort écart de valeur)"
+     },
+     {
+      "name": "fondu-de-ciel",
+      "ffmpegXfade": "dissolve",
+      "durationSec": 2.0,
+      "use": "évolution lente dans la même scène (aube -> jour)"
+     },
+     {
+      "name": "encre-qui-s-imbibe",
+      "ffmpegXfade": "fade",
+      "durationSec": 0.6,
+      "use": "entrée de chaque bloc de texte (sortie 0.4 s)"
+     },
+     {
+      "name": "fondu-papier",
+      "ffmpegXfade": "fadewhite",
+      "durationSec": 0.8,
+      "use": "fin de chaque short : tout se dissout dans le papier #F7F1E6"
+     }
+    ],
+    "safeAreaPx": {
+     "top": 220.0,
+     "bottom": 320.0,
+     "right": 120.0,
+     "left": 60
+    },
+    "canvas": {
+     "width": 1080,
+     "height": 1920,
+     "fps": 30
+    }
+   },
+   "curation": {
+    "by": "orchestrator judgment, not measured",
+    "audience": [
+     "kids",
+     "adults"
+    ],
+    "signatureToPreserve": [
+     "watercolour washes on cream paper",
+     "multiplane parallax",
+     "Fraunces storybook titles on a bottom album page",
+     "gentle storyteller pacing and fades"
+    ],
+    "confusableWith": [
+     "pastel-diorama"
+    ]
+   }
+  },
+  {
+   "id": "neon-lab",
+   "name": "Labo Néon",
+   "rank": 12,
+   "status": "selected",
+   "promiseFr": "Une nuit de laboratoire où la science se voit en lumière : un phénomène réel (attracteur, orbite, rotation) mis en scène comme une visualisation de musée, précise et émerveillée.",
+   "promiseEn": "A night in the lab where science is seen as light: a real phenomenon staged like a museum visualisation, precise and full of wonder.",
+   "familiesProven": [
+    "abstrait",
+    "explicatif"
+   ],
+   "libraries": [
+    "three.js",
+    "twgl.js",
+    "OpenCV",
+    "Matplotlib"
+   ],
+   "renderCostSecPer100Frames": {
+    "min": 54.0,
+    "max": 182.9,
+    "measuredUnderLoad": true
+   },
+   "sharedModule": [
+    "out/shorts/neon-lab__abstrait__champ-de-force-lucioles/src/field.glsl.js",
+    "out/shorts/neon-lab__abstrait__champ-de-force-lucioles/src/neon_grade.py"
+   ],
+   "voiceUsed": {
+    "provider": "Fish Audio",
+    "name": "Arnold",
+    "reference_id": "d704cf8f1216490cbfbed89955f0e938",
+    "model": "s2.1-pro",
+    "language": "fr"
+   },
+   "paths": {
+    "identityMd": "out/identities/neon-lab/identity.md",
+    "tokens": "out/identities/neon-lab/tokens.json",
+    "recipes": [
+     "out/identities/neon-lab/recipes/abstrait.md",
+     "out/identities/neon-lab/recipes/explicatif.md"
+    ],
+    "poster": "out/identities/neon-lab/poster.jpg",
+    "contactSheet": "out/identities/neon-lab/contact-sheet.jpg",
+    "phase1Poster": "out/report/posters/neon-lab.jpg"
+   },
+   "shorts": [
+    {
+     "dir": "out/shorts/neon-lab__abstrait__champ-de-force-lucioles",
+     "family": "abstrait",
+     "title": "Champ de force : 2 000 lucioles néon suivent un attracteur (boucle parfaite)",
+     "durationSec": 12.0,
+     "libraries": [
+      "twgl.js",
+      "OpenCV"
+     ],
+     "renderCostSecPer100Frames": 55.5,
+     "loopable": true,
+     "voiced": true,
+     "recognitionNearestShort": "neon-lab__explicatif__lune-meme-face",
+     "recognitionSameIdentity": true
+    },
+    {
+     "dir": "out/shorts/neon-lab__explicatif__effet-papillon-double-pendule",
+     "family": "explicatif",
+     "title": "L'effet papillon : deux pendules presque identiques",
+     "durationSec": 15.0,
+     "libraries": [
+      "Matplotlib",
+      "OpenCV"
+     ],
+     "renderCostSecPer100Frames": 54.0,
+     "loopable": false,
+     "voiced": true,
+     "recognitionNearestShort": "neon-lab__abstrait__champ-de-force-lucioles",
+     "recognitionSameIdentity": true
+    },
+    {
+     "dir": "out/shorts/neon-lab__explicatif__lune-meme-face",
+     "family": "explicatif",
+     "title": "Pourquoi la Lune nous montre toujours la même face ?",
+     "durationSec": 16.0,
+     "libraries": [
+      "three.js",
+      "OpenCV"
+     ],
+     "renderCostSecPer100Frames": 182.9,
+     "loopable": false,
+     "voiced": true,
+     "recognitionNearestShort": "neon-lab__abstrait__champ-de-force-lucioles",
+     "recognitionSameIdentity": true
+    }
+   ],
+   "coreTokens": {
+    "color": {
+     "bg": "#05060B",
+     "surface": "#11142A",
+     "text": "#F2F6FF",
+     "muted": "#9FB7FF",
+     "accent": [
+      "#38F9FF",
+      "#FF3DCB",
+      "#B6FF3B"
+     ],
+     "success": "#B6FF3B",
+     "danger": "#FF3DCB"
+    },
+    "typography": {
+     "display": {
+      "family": "Space Grotesk",
+      "fontsourceSlug": "space-grotesk",
+      "weight": 700,
+      "sizePx": 118.0,
+      "sizeNote": null
+     },
+     "title": {
+      "family": "Space Grotesk",
+      "fontsourceSlug": "space-grotesk",
+      "weight": 700,
+      "sizePx": 100.0,
+      "sizeNote": null
+     },
+     "body": {
+      "family": "Space Grotesk",
+      "fontsourceSlug": "space-grotesk",
+      "weight": 500,
+      "sizePx": 56.0,
+      "sizeNote": null
+     },
+     "caption": {
+      "family": "JetBrains Mono",
+      "fontsourceSlug": "jetbrains-mono",
+      "weight": 500,
+      "sizePx": 54.0,
+      "sizeNote": null
+     }
+    },
+    "motion": {
+     "durationSec": {
+      "fast": 0.3,
+      "base": 0.6,
+      "slow": 2.4
+     },
+     "staggerSec": 0.8,
+     "easingRaw": {
+      "enter": "outExpo",
+      "exit": "inExpo",
+      "emphasis": "pulse exp(-Δt/0.35) sur bloom/halo"
+     },
+     "hookDeadlineSec": 0.1,
+     "sourceUnits": "s"
+    },
+    "transitions": [
+     {
+      "name": "pulse-flash",
+      "ffmpegXfade": "fadewhite",
+      "durationSec": 0.35,
+      "use": "in-scene à chaque changement de beat : bloom 0,62→1,52 décroissant exp(0,35 s) + lignes de champ +14 % ; équivalent ffmpeg fadewhite si assemblage de clips"
+     },
+     {
+      "name": "glide",
+      "ffmpegXfade": "slideup",
+      "durationSec": 0.6,
+      "use": "entrée des titres/données : translateY 46 px + opacité, outExpo ; sortie inExpo 0,3 s"
+     },
+     {
+      "name": "loop-seam",
+      "ffmpegXfade": "none",
+      "durationSec": 0.0,
+      "use": "abstrait : pas de transition, la couture tombe sur une impulsion (frame T = frame 0)"
+     }
+    ],
+    "safeAreaPx": {
+     "top": 220.0,
+     "bottom": 320.0,
+     "right": 120.0,
+     "left": 72.0
+    },
+    "canvas": {
+     "width": 1080,
+     "height": 1920,
+     "fps": 30
+    }
+   },
+   "curation": {
+    "by": "orchestrator judgment, not measured",
+    "audience": [
+     "teens",
+     "adults"
+    ],
+    "signatureToPreserve": [
+     "near-black lab with cyan / magenta / lime neon",
+     "bloom pulses on beat changes",
+     "GLSL force-field background",
+     "LABO/0X tag + JetBrains Mono data captions"
+    ],
+    "confusableWith": [
+     "liquid-chrome",
+     "cosmos-doc"
+    ]
+   }
+  },
+  {
+   "id": "cosmos-doc",
+   "name": "Cosmos Doc",
+   "rank": 13,
+   "status": "rehabilitated",
+   "promiseFr": "Chaque short est un plan de cinéma sur un vrai objet du ciel — lumière d'étoile chaude, noir absolu, travelling lent — où un seul chiffre en capitales Bebas Neue suffit à donner le vertige.",
+   "promiseEn": "Cinematic space documentary: warm starlight, vertiginous scale, silence and gravity.",
+   "familiesProven": [
+    "evenements",
+    "explicatif"
+   ],
+   "libraries": [
+    "three.js",
+    "GSAP"
+   ],
+   "renderCostSecPer100Frames": {
+    "min": 174.9,
+    "max": 186.4,
+    "measuredUnderLoad": true
+   },
+   "sharedModule": [
+    "out/shorts/cosmos-doc__evenements__voyager-1-a-un-jour-lumiere/src/cosmos.js"
+   ],
+   "voiceUsed": {
+    "provider": "Fish Audio",
+    "name": "Arnold",
+    "reference_id": "d704cf8f1216490cbfbed89955f0e938",
+    "model": "s2.1-pro",
+    "language": "fr"
+   },
+   "paths": {
+    "identityMd": "out/identities/cosmos-doc/identity.md",
+    "tokens": "out/identities/cosmos-doc/tokens.json",
+    "recipes": [
+     "out/identities/cosmos-doc/recipes/evenements.md",
+     "out/identities/cosmos-doc/recipes/explicatif.md"
+    ],
+    "poster": "out/identities/cosmos-doc/poster.jpg",
+    "contactSheet": "out/identities/cosmos-doc/contact-sheet.jpg",
+    "phase1Poster": "out/report/posters/cosmos-doc.jpg"
+   },
+   "shorts": [
+    {
+     "dir": "out/shorts/cosmos-doc__evenements__voyager-1-a-un-jour-lumiere",
+     "family": "evenements",
+     "title": "Voyager 1 à un jour-lumière de la Terre",
+     "durationSec": 15.0,
+     "libraries": [
+      "three.js",
+      "GSAP"
+     ],
+     "renderCostSecPer100Frames": 174.9,
+     "loopable": false,
+     "voiced": true,
+     "recognitionNearestShort": "cosmos-doc__explicatif__pourquoi-venus-plus-chaude-que-mercure",
+     "recognitionSameIdentity": true
+    },
+    {
+     "dir": "out/shorts/cosmos-doc__explicatif__pourquoi-venus-plus-chaude-que-mercure",
+     "family": "explicatif",
+     "title": "Pourquoi Vénus est plus chaude que Mercure ?",
+     "durationSec": 15.0,
+     "libraries": [
+      "three.js",
+      "GSAP"
+     ],
+     "renderCostSecPer100Frames": 186.4,
+     "loopable": false,
+     "voiced": true,
+     "recognitionNearestShort": "cosmos-doc__evenements__voyager-1-a-un-jour-lumiere",
+     "recognitionSameIdentity": true
+    }
+   ],
+   "coreTokens": {
+    "color": {
+     "bg": "#000004",
+     "surface": "#000006",
+     "text": "#EAF2FF",
+     "muted": "#AEBBD4",
+     "accent": [
+      "#FFB347",
+      "#6EC6FF",
+      "#FF6A2A"
+     ],
+     "success": "#6EC6FF",
+     "danger": "#FF6A2A"
+    },
+    "typography": {
+     "display": {
+      "family": "Bebas Neue",
+      "fontsourceSlug": "bebas-neue",
+      "weight": 400,
+      "sizePx": 250.0,
+      "sizeNote": null
+     },
+     "title": {
+      "family": "Bebas Neue",
+      "fontsourceSlug": "bebas-neue",
+      "weight": 400,
+      "sizePx": 118.0,
+      "sizeNote": null
+     },
+     "body": {
+      "family": "Inter",
+      "fontsourceSlug": "inter",
+      "weight": 400,
+      "sizePx": 56.0,
+      "sizeNote": null
+     },
+     "caption": {
+      "family": "Bebas Neue",
+      "fontsourceSlug": "bebas-neue",
+      "weight": 400,
+      "sizePx": 60.0,
+      "sizeNote": null
+     }
+    },
+    "motion": {
+     "durationSec": {
+      "fast": 0.5,
+      "base": 1.1,
+      "slow": 3.0
+     },
+     "staggerSec": 0.35,
+     "easingRaw": {
+      "enter": "sine.inOut (GSAP) = inOutSine : fondu + interlettrage qui se resserre",
+      "exit": "sine.inOut, fondu seul 0,5–0,7 s",
+      "emphasis": "rampe lente inOutSine 3 s (chaleur, émissif, bloom) ; jamais d'overshoot"
+     },
+     "hookDeadlineSec": 0.05,
+     "sourceUnits": "s"
+    },
+    "transitions": [
+     {
+      "name": "dip-to-black",
+      "ffmpegXfade": "fadeblack",
+      "durationSec": 0.6,
+      "use": "entre chaque plan (4,15→4,75 ; 8,0→8,6 ; 12,45→13,05) : descente 45 %, plancher 6 % ≈ 0,06 s, remontée 45 % (jamais 0,25 s de noir : blackdetect)"
+     },
+     {
+      "name": "fade-tracking",
+      "ffmpegXfade": "fade",
+      "durationSec": 1.1,
+      "use": "entrée de tout texte : opacité 0→1 + letter-spacing large→serré, sine.inOut (0,9 s titre du hook, 1,0–1,4 s ailleurs)"
+     },
+     {
+      "name": "fade-out",
+      "ffmpegXfade": "fade",
+      "durationSec": 0.6,
+      "use": "sortie des textes 0,4 s avant le dip"
+     }
+    ],
+    "safeAreaPx": {
+     "top": 220.0,
+     "bottom": 320.0,
+     "right": 120.0,
+     "left": 72.0
+    },
+    "canvas": {
+     "width": 1080,
+     "height": 1920,
+     "fps": 30
+    }
+   },
+   "curation": {
+    "by": "orchestrator judgment, not measured",
+    "audience": [
+     "teens",
+     "adults"
+    ],
+    "signatureToPreserve": [
+     "true black space with warm starlight and anamorphic lens flare",
+     "Bebas Neue capitals with tracking that tightens",
+     "single slow sine easing, slow dolly",
+     "film grain, no HUD or neon lines"
+    ],
+    "confusableWith": [
+     "neon-lab",
+     "liquid-chrome"
+    ]
+   }
+  },
+  {
+   "id": "liquid-chrome",
+   "name": "Chrome Liquide",
+   "rank": 14,
+   "status": "selected",
+   "promiseFr": "Une matière liquide, chromée et hypnotique qu'on regarde couler jusqu'au bout : chaque short est un plan-séquence de satisfaction où la physique fait le spectacle.",
+   "promiseEn": "Hypnotic liquid chrome matter watched until the end: each short is one continuous satisfying shot where physics is the show.",
+   "familiesProven": [
+    "abstrait",
+    "engagement"
+   ],
+   "libraries": [
+    "Taichi",
+    "OpenCV",
+    "three.js",
+    "Babylon.js"
+   ],
+   "renderCostSecPer100Frames": {
+    "min": 105.6,
+    "max": 178.0,
+    "measuredUnderLoad": true
+   },
+   "sharedModule": null,
+   "voiceUsed": {
+    "provider": "Fish Audio",
+    "name": "Arnold",
+    "reference_id": "d704cf8f1216490cbfbed89955f0e938",
+    "model": "s2.1-pro",
+    "language": "fr"
+   },
+   "paths": {
+    "identityMd": "out/identities/liquid-chrome/identity.md",
+    "tokens": "out/identities/liquid-chrome/tokens.json",
+    "recipes": [
+     "out/identities/liquid-chrome/recipes/abstrait.md",
+     "out/identities/liquid-chrome/recipes/engagement.md"
+    ],
+    "poster": "out/identities/liquid-chrome/poster.jpg",
+    "contactSheet": "out/identities/liquid-chrome/contact-sheet.jpg",
+    "phase1Poster": "out/report/posters/liquid-chrome.jpg"
+   },
+   "shorts": [
+    {
+     "dir": "out/shorts/liquid-chrome__abstrait__pendule-de-newton-chrome",
+     "family": "abstrait",
+     "title": "Le pendule de Newton chromé qui ne s'arrête jamais",
+     "durationSec": 12.0,
+     "libraries": [
+      "Babylon.js"
+     ],
+     "renderCostSecPer100Frames": 123.2,
+     "loopable": true,
+     "voiced": true,
+     "recognitionNearestShort": "liquid-chrome__abstrait__quatre-peintures-mpm",
+     "recognitionSameIdentity": true
+    },
+    {
+     "dir": "out/shorts/liquid-chrome__abstrait__quatre-peintures-mpm",
+     "family": "abstrait",
+     "title": "Quatre peintures tombent et se mélangent",
+     "durationSec": 14.0,
+     "libraries": [
+      "Taichi",
+      "OpenCV"
+     ],
+     "renderCostSecPer100Frames": 105.6,
+     "loopable": false,
+     "voiced": true,
+     "recognitionNearestShort": "neon-lab__abstrait__champ-de-force-lucioles",
+     "recognitionSameIdentity": false
+    },
+    {
+     "dir": "out/shorts/liquid-chrome__engagement__quelle-couleur-remplit-le-verre",
+     "family": "engagement",
+     "title": "Quelle couleur remplit le verre en premier ?",
+     "durationSec": 15.0,
+     "libraries": [
+      "three.js"
+     ],
+     "renderCostSecPer100Frames": 178.0,
+     "loopable": false,
+     "voiced": true,
+     "recognitionNearestShort": "cosmos-doc__evenements__voyager-1-a-un-jour-lumiere",
+     "recognitionSameIdentity": false
+    }
+   ],
+   "coreTokens": {
+    "color": {
+     "bg": "#0B0B10",
+     "surface": "#1A1A24",
+     "text": "#FFFFFF",
+     "muted": "#C8D3FF",
+     "accent": [
+      "#C8D3FF",
+      "#FF9AE8",
+      "#7CF7E4",
+      "#FFE29A"
+     ],
+     "success": "#7CF7E4",
+     "danger": "#FF9AE8"
+    },
+    "typography": {
+     "display": {
+      "family": "Syne",
+      "fontsourceSlug": "syne",
+      "weight": 800,
+      "sizePx": 92.0,
+      "sizeNote": null
+     },
+     "title": {
+      "family": "Syne",
+      "fontsourceSlug": "syne",
+      "weight": 800,
+      "sizePx": 76.0,
+      "sizeNote": null
+     },
+     "body": {
+      "family": "Inter",
+      "fontsourceSlug": "inter",
+      "weight": 500,
+      "sizePx": 60.0,
+      "sizeNote": null
+     },
+     "caption": {
+      "family": "Inter",
+      "fontsourceSlug": "inter",
+      "weight": 500,
+      "sizePx": 54.0,
+      "sizeNote": null
+     }
+    },
+    "motion": {
+     "durationSec": {
+      "fast": 0.35,
+      "base": 0.45,
+      "slow": 0.6
+     },
+     "staggerSec": 1.55,
+     "easingRaw": {
+      "enter": "outCubic",
+      "exit": "linear",
+      "emphasis": "outBack"
+     },
+     "hookDeadlineSec": 0.3,
+     "sourceUnits": "s"
+    },
+    "transitions": [
+     {
+      "name": "fondu-chrome",
+      "ffmpegXfade": "fade",
+      "durationSec": 0.45,
+      "use": "entrée/sortie des titres (overlays alpha, assemble.py --overlay …:0.45)"
+     },
+     {
+      "name": "glisse-haut",
+      "ffmpegXfade": "slideup",
+      "durationSec": 0.6,
+      "use": "titre de résultat et CTA qui montent de 30–40 px"
+     },
+     {
+      "name": "dissolution-lente",
+      "ffmpegXfade": "dissolve",
+      "durationSec": 0.8,
+      "use": "seulement si deux plans doivent s'enchaîner (les shorts de preuve sont des plans uniques)"
+     }
+    ],
+    "safeAreaPx": {
+     "top": 220.0,
+     "bottom": 320.0,
+     "right": 120.0,
+     "left": 60
+    },
+    "canvas": {
+     "width": 1080,
+     "height": 1920,
+     "fps": 30
+    }
+   },
+   "curation": {
+    "by": "orchestrator judgment, not measured",
+    "audience": [
+     "kids",
+     "teens",
+     "adults"
+    ],
+    "signatureToPreserve": [
+     "chrome / iridescent liquid matter in one continuous macro shot",
+     "Syne 800 titles with a pastel-gradient keyword",
+     "slow motion, no cuts",
+     "prefer the warm graphite/pearl background to stay distinct from neon-lab and cosmos-doc"
+    ],
+    "confusableWith": [
+     "neon-lab",
+     "cosmos-doc"
+    ]
+   }
+  }
+ ]
+}

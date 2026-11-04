@@ -46,7 +46,8 @@
   "voice": true,
   "voiceEngine": "fish-connector",
   "voiceName": "Fish Audio – Arnold (d704cf8f…)",
-  "voiceProvider": "files"
+  "voiceProvider": "files",
+  "voiceUsed": "Fish Audio – Arnold (d704cf8f1216490cbfbed89955f0e938, s2.1-pro)"
  },
  "qualityChecks": {
   "stillsReviewed": true,
@@ -54,5 +55,5 @@
   "safeAreaOk": true
  },
  "notes": "Faits : armée carthaginoise partie d'Espagne (218 av. J.-C.), environ 37 éléphants au départ, traversée en automne avec de la neige sur les hauteurs ; le col exact reste débattu (3 hypothèses parmi d'autres affichées : Petit-Saint-Bernard 2 188 m, Mont-Cenis 2 083 m, Traversette ≈ 2 950 m -> plage affichée 2 083–2 950 m). Relief 100 % procédural et stylisé (aucun MNT) ; l'altimètre pendant l'approche est une échelle stylisée (h normalisée × 3 600 m, maximum atteint). Silhouettes d'éléphants génériques inventées, aucun personnage. seed 11 (flocons, mulberry32) ; bruit du relief à offsets fixes 11.3/2.9. Texte ≥ 54 px, titres 100 px ; contenu entre y=236 et ≈1560, x ≤ 960. Rendu 450 frames en 486,7 s (108,2 s/100 frames) sous contention.",
- "reproduce": "mkdir -p /tmp/svi/topo-relief__histoire__hannibal-traverse-les-alpes && node out/tools/render.mjs out/shorts/topo-relief__histoire__hannibal-traverse-les-alpes/src/index.html --out /tmp/svi/topo-relief__histoire__hannibal-traverse-les-alpes/video.mp4 --duration 15 && .venv/bin/python out/tools/sound.py out/shorts/topo-relief__histoire__hannibal-traverse-les-alpes/src/sound.json /tmp/svi/topo-relief__histoire__hannibal-traverse-les-alpes/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/topo-relief__histoire__hannibal-traverse-les-alpes/video.mp4 --music /tmp/svi/topo-relief__histoire__hannibal-traverse-les-alpes/music.wav --out out/shorts/topo-relief__histoire__hannibal-traverse-les-alpes/short.mp4"
+ "reproduce": "mkdir -p /tmp/svi/topo-relief__histoire__hannibal-traverse-les-alpes && node out/tools/render.mjs out/shorts/topo-relief__histoire__hannibal-traverse-les-alpes/src/index.html --out /tmp/svi/topo-relief__histoire__hannibal-traverse-les-alpes/video.mp4 --duration 15 && .venv/bin/python out/tools/sound.py out/shorts/topo-relief__histoire__hannibal-traverse-les-alpes/src/sound.json /tmp/svi/topo-relief__histoire__hannibal-traverse-les-alpes/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/topo-relief__histoire__hannibal-traverse-les-alpes/video.mp4 --music /tmp/svi/topo-relief__histoire__hannibal-traverse-les-alpes/music.wav --out out/shorts/topo-relief__histoire__hannibal-traverse-les-alpes/short.mp4 && .venv/bin/python out/tools/tts.py out/shorts/topo-relief__histoire__hannibal-traverse-les-alpes --engine files --voice \"Fish Audio – Arnold (d704cf8f…)\" --replace"
 }

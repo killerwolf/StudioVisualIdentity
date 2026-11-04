@@ -1,5 +1,7 @@
 # Comparaison des 14 identités
 
+La voix off **réellement utilisée** pour les 31 shorts est Fish Audio « Arnold » ; les noms de voix Gemini de la table §2 sont les suggestions d'origine de `narration.json` (`voiceGeminiSuggestion`).
+
 Toutes les valeurs viennent des fichiers livrés (`identities/*/tokens.json`, `shorts/*/short.json`) ou de mesures faites pendant la campagne. Index machine : `report/campaign.json`, matrice : `report/matrix.json`, tests de reconnaissance : `report/recognition.json`.
 
 ## 1. Tableau comparatif
@@ -25,7 +27,7 @@ Toutes les valeurs viennent des fichiers livrés (`identities/*/tokens.json`, `s
 
 ## 2. Les 31 shorts
 
-| Short | Durée (s) | renderTimeSec | s/100 frames | Poids (Mo) | Voix off prévue (lignes / mots / voix) |
+| Short | Durée (s) | renderTimeSec | s/100 frames | Poids (Mo) | Narration (lignes / mots / voix Gemini suggérée à l'origine) |
 |---|---|---|---|---|---|
 | `aquarelle-conte__enfants__ou-vont-les-etoiles-le-jour` | 15.0 | 529 | 117.6 | 6.7 | 6 / 38 mots / Aoede |
 | `aquarelle-conte__histoire__phare-d-alexandrie` | 16.0 | 524.2 | 109.2 | 5.8 | 5 / 38 mots / Aoede |
@@ -50,7 +52,6 @@ Toutes les valeurs viennent des fichiers livrés (`identities/*/tokens.json`, `s
 | `pixel-arcade__engagement__quelle-couleur-conquiert-l-ecran` (3ᵉ, PixiJS) | 15.5 | 151.4 | 32.6 | 1.4 | 6 / 31 mots / Fenrir |
 | `liquid-chrome__abstrait__pendule-de-newton-chrome` (3ᵉ, Babylon.js, boucle parfaite) | 12.0 | 443.5 | 123.2 | 5.2 | 5 / 23 mots / Achernar |
 | `neon-lab__explicatif__effet-papillon-double-pendule` (3ᵉ, Matplotlib) | 15.0 | 243.1 | 54.0 | 2.8 | 4 / 30 mots / Orus |
-
 | `brut-meme__engagement__test-des-3-secondes-stroop` | 15.5 | 231.6 | 49.8 | 3.0 | 7 / 37 mots / Fenrir |
 | `brut-meme__evenements__pendant-ces-15-secondes-dans-le-monde` | 16.0 | 280.8 | 58.5 | 4.9 | 6 / 41 mots / Fenrir |
 | `cosmos-doc__evenements__voyager-1-a-un-jour-lumiere` | 15.0 | 787.1 | 174.9 | 6.1 | 4 / 30 mots / Charon |
@@ -62,7 +63,7 @@ Toutes les valeurs viennent des fichiers livrés (`identities/*/tokens.json`, `s
 
 Les trois 3ᵉ shorts ont été rendus à 22:22–22:37 avec seulement 3 studios actifs : leurs coûts sont proches d'une machine peu chargée et ne se comparent pas directement aux 20 premiers. Les 8 shorts des identités réhabilitées (cosmos-doc, brut-meme, riso-zine, topo-relief) ont été rendus le 2026-11-04 entre 00:24 et 00:57 UTC, 4 studios en parallèle (charge 15–23) : coûts sous contention, comme le premier tour. Pour riso-zine, `renderTimeSec` inclut la passe OpenCV (navigateur 124–206 s + OpenCV 134–175 s).
 
-QA automatique (`tools/check.py --all`, résultat dans `report/qa.json`) : **31/31 OK** — 1080×1920, 30 fps, H.264 yuv420p, 12–18,75 s, piste audio, aucune frame noire (blackdetect ≥ 0,25 s), aucun gel ≥ 3 s, fichiers requis présents. Les `renderTimeSec` excluent l'attente de slot et les passes OpenCV séparées (indiquées dans les notes de chaque `short.json`).
+QA automatique (`tools/check.py --all`, résultat dans `report/qa.json`) : **31/31 OK** — 1080×1920, 30 fps, H.264 yuv420p, 12–18,75 s, piste audio, aucune frame noire (blackdetect ≥ 0,25 s), aucun gel ≥ 3 s, fichiers requis présents. Les `renderTimeSec` excluent l'attente de slot. Ils excluent aussi les passes OpenCV séparées (indiquées dans les notes de chaque `short.json`), **sauf pour riso-zine**, dont le `renderTimeSec` inclut sa passe OpenCV.
 
 ## 3. Matrice identité × famille × librairie
 
@@ -96,9 +97,9 @@ Deux tests indépendants, tous deux reproductibles (`tools/recognition.py`).
 
 **a bis) 2ᵉ juge aveugle, 14 identités** — un nouvel agent sans contexte a reçu 56 frames anonymisées (2 shorts par identité × 2 frames, graine 1104, clé cachée) : **14 groupes purs sur 14, 56/56 images bien classées** (confiance 0,94–0,98). Les 4 identités réhabilitées ont toutes été isolées, y compris des voisines qu'on pouvait craindre (cosmos-doc vs neon-lab, brut-meme vs pixel-arcade, riso-zine vs swiss-data, topo-relief vs atlas-grave). Confusions jugées les plus difficiles : swiss-data vs bauhaus-kinetic (crème, grotesques grasses), et les 5 styles sur fond sombre, séparés par la technique de rendu (particules lumineuses, flares photoréalistes, 3D brillante, courbes de niveau, pixels).
 
-**b) Signature mesurée** — histogramme couleur Lab 8×8×8 (Bhattacharyya) + histogramme de gradients (χ²), 8 frames par short, plus proche voisin parmi tous les autres shorts. Sur les 20 shorts initiaux : **18/20 (90 %)**, intra 0,212 vs inter 0,831 (ratio 0,25). Sur les 23 shorts : **21/23 (91 %)**, intra 0,274 vs inter 0,837 (ratio 0,33) ; les 3 nouveaux shorts ont tous pour plus proche voisin un short de leur identité. Sur les **31 shorts (14 identités) : 29/31 (94 %)**, intra 0,250 vs inter 0,846 (ratio 0,30) ; les 8 shorts des identités réhabilitées ont tous pour plus proche voisin l'autre short de leur identité (distances 0,08–0,23). Les 2 échecs restent les deux premiers shorts liquid-chrome (le second a désormais pour voisin cosmos-doc/Voyager, autre fond noir). Les 2 échecs : les deux shorts **liquid-chrome** ont pour plus proche voisin un short neon-lab (fonds quasi noirs + accents pastel/néon) — la palette seule ne les sépare pas ; c'est la matière (chrome liquide vs points lumineux) et la typo (Syne vs Space Grotesk/Mono) qui les distinguent, comme l'a fait le juge.
+**b) Signature mesurée** — histogramme couleur Lab 8×8×8 (Bhattacharyya) + histogramme de gradients (χ²), 8 frames par short, plus proche voisin parmi tous les autres shorts. Sur les 20 shorts initiaux : **18/20 (90 %)**, intra 0,212 vs inter 0,831 (ratio 0,25). Sur les 23 shorts : **21/23 (91 %)**, intra 0,274 vs inter 0,837 (ratio 0,33) ; les 3 nouveaux shorts ont tous pour plus proche voisin un short de leur identité. Sur les **31 shorts (14 identités) : 29/31 (94 %)**, intra 0,250 vs inter 0,846 (ratio 0,30) ; les 8 shorts des identités réhabilitées ont tous pour plus proche voisin l'autre short de leur identité (distances 0,08–0,23). Les 2 échecs sont les deux premiers shorts **liquid-chrome** : sur 31 shorts, l'un a pour plus proche voisin un short neon-lab, l'autre cosmos-doc/Voyager (fonds quasi noirs + accents pastel/néon) — la palette seule ne les sépare pas ; c'est la matière (chrome liquide vs points lumineux) et la typo (Syne vs Space Grotesk/Mono) qui les distinguent, comme l'a fait le juge.
 
-**Verdict** : chaque identité est reconnaissable à l'aveugle ; deux shorts d'une même identité se ressemblent plus que deux shorts d'identités différentes (ratio 0,25). Point de vigilance : liquid-chrome et neon-lab partagent le fond noir ; pour une chaîne qui les ferait cohabiter, durcir la différence de palette. **Vérifié** : le 3ᵉ short liquid-chrome (Babylon.js) utilise la variante « graphite chaud / perle » (`#121016`–`#1A161E`) et la mesure le classe bien avec liquid-chrome (plus proche voisin : quatre-peintures, distance 0,51), pas avec neon-lab.
+**Verdict** : chaque identité est reconnaissable à l'aveugle ; deux shorts d'une même identité se ressemblent plus que deux shorts d'identités différentes (ratio intra/inter 0,30 sur 31 shorts). Point de vigilance : liquid-chrome et neon-lab partagent le fond noir ; pour une chaîne qui les ferait cohabiter, durcir la différence de palette. **Vérifié** : le 3ᵉ short liquid-chrome (Babylon.js) utilise la variante « graphite chaud / perle » (`#121016`–`#1A161E`) et la mesure le classe bien avec liquid-chrome (plus proche voisin : quatre-peintures, distance 0,51), pas avec neon-lab.
 
 ## 5. Classement pour une chaîne durable et industrialisable
 

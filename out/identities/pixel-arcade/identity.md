@@ -75,6 +75,9 @@ Haut 220 px, bas 320 px, droite 120 px (gauche 60 px). HUD posé à y = 236 px ;
 - `out/shorts/pixel-arcade__engagement__quelle-couleur-conquiert-l-ecran/` — PixiJS (+ automate maison), 15,5 s : guerre de territoire 4 couleurs, HUD % en direct, photo finish à 0,19 %.
 
 ## Place de la voix off (où elle parlera, débit conseillé, ce que le visuel laisse libre)
+
+> **Voix réellement utilisée pour tous les shorts : Fish Audio « Arnold »** (`d704cf8f1216490cbfbed89955f0e938`, modèle `s2.1-pro`, conteur masculin FR). Les noms de voix Gemini (Orus, Kore, Aoede…) qui suivent sont des suggestions historiques de casting par ton : Gemini a été abandonné (quota). Le placement, le débit et les silences décrits ici restent valables.
+
 La voix commente la partie comme un speaker d'arcade (engagement : Fenrir, énergique) ou murmure le suspense (abstrait : Achernar, calme). Débit ≤ 2,6 mots/s, phrases de 4 à 9 mots, posées dans les creux sonores : après le GO (2,5 s), au milieu du développement, sur la chute, sur la carte de fin. Le visuel ne porte que des **mots-clés** (titre-question, PARIE, PHOTO FINISH, ÉVADÉE, scores) : la voix ajoute le récit (qui mène, pourquoi c'est serré). La musique chiptune est à −18 dB et sera duckée sous la voix.
 
 ## Risques et limites

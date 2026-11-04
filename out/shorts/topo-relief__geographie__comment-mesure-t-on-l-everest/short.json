@@ -50,7 +50,8 @@
   "voice": true,
   "voiceEngine": "fish-connector",
   "voiceName": "Fish Audio – Arnold (d704cf8f…)",
-  "voiceProvider": "files"
+  "voiceProvider": "files",
+  "voiceUsed": "Fish Audio – Arnold (d704cf8f1216490cbfbed89955f0e938, s2.1-pro)"
  },
  "qualityChecks": {
   "stillsReviewed": true,
@@ -58,5 +59,5 @@
   "safeAreaOk": true
  },
  "notes": "Faits : 8 848,86 m annoncé conjointement par la Chine et le Népal le 8 décembre 2020 ; méthodes : GNSS au sommet, radar (épaisseur de neige), nivellement + gravimétrie pour le géoïde (niveau zéro) ; soulèvement tectonique de quelques mm/an (ordre de grandeur, effet exagéré à l'écran et signalé). Relief 100 % procédural (bruit ridged + gaussiennes), stylisé, aucun MNT. Pas d'aléa : bruit à valeur déterministe (offsets fixes 3.1/7.7) -> seed 0 ; son seed 7. Texte ≥ 54 px (titres 100 px Inter 800, HUD 104 px JetBrains Mono 700), contenu entre y=236 et y≈1560, x ≤ 960 (sauf satellites, décor). Rendu 450 frames en 760,5 s (169 s/100 frames) sous forte contention (4 studios).",
- "reproduce": "mkdir -p /tmp/svi/topo-relief__geographie__comment-mesure-t-on-l-everest && node out/tools/render.mjs out/shorts/topo-relief__geographie__comment-mesure-t-on-l-everest/src/index.html --out /tmp/svi/topo-relief__geographie__comment-mesure-t-on-l-everest/video.mp4 --duration 15 && .venv/bin/python out/tools/sound.py out/shorts/topo-relief__geographie__comment-mesure-t-on-l-everest/src/sound.json /tmp/svi/topo-relief__geographie__comment-mesure-t-on-l-everest/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/topo-relief__geographie__comment-mesure-t-on-l-everest/video.mp4 --music /tmp/svi/topo-relief__geographie__comment-mesure-t-on-l-everest/music.wav --out out/shorts/topo-relief__geographie__comment-mesure-t-on-l-everest/short.mp4"
+ "reproduce": "mkdir -p /tmp/svi/topo-relief__geographie__comment-mesure-t-on-l-everest && node out/tools/render.mjs out/shorts/topo-relief__geographie__comment-mesure-t-on-l-everest/src/index.html --out /tmp/svi/topo-relief__geographie__comment-mesure-t-on-l-everest/video.mp4 --duration 15 && .venv/bin/python out/tools/sound.py out/shorts/topo-relief__geographie__comment-mesure-t-on-l-everest/src/sound.json /tmp/svi/topo-relief__geographie__comment-mesure-t-on-l-everest/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/topo-relief__geographie__comment-mesure-t-on-l-everest/video.mp4 --music /tmp/svi/topo-relief__geographie__comment-mesure-t-on-l-everest/music.wav --out out/shorts/topo-relief__geographie__comment-mesure-t-on-l-everest/short.mp4 && .venv/bin/python out/tools/tts.py out/shorts/topo-relief__geographie__comment-mesure-t-on-l-everest --engine files --voice \"Fish Audio – Arnold (d704cf8f…)\" --replace"
 }

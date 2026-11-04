@@ -42,7 +42,8 @@
   "voice": true,
   "voiceEngine": "fish-connector",
   "voiceName": "Fish Audio – Arnold (d704cf8f…)",
-  "voiceProvider": "files"
+  "voiceProvider": "files",
+  "voiceUsed": "Fish Audio – Arnold (d704cf8f1216490cbfbed89955f0e938, s2.1-pro)"
  },
  "qualityChecks": {
   "stillsReviewed": true,
@@ -50,5 +51,5 @@
   "safeAreaOk": true
  },
  "notes": "Boucle parfaite par construction : trajectoire de Lorenz (σ10 ρ28 β8/3, RK4 dt 0,002, 20 000 échantillons) pré-intégrée ; la luciole i avance de K=125 espacements en 12 s, donc à t=T elle occupe la place de i+125 ; tous ses attributs (couleur, gigue, scintillement) sont périodiques de période gcd(125,2000)=125 ; caméra, impulsions et champ GLSL sont périodiques en T. Vérifié sur le fichier final : écart moyen frame 359->0 = 9,3, identique aux autres attaques d'impulsion (7,6–10,0). Son : 3 cycles identiques rendus sur 36 s puis tranche [12,24) (loopslice.py). Post OpenCV neon_grade.py : 114,7 s pour 360 frames (31,9 s/100 frames) en plus des 199,7 s du rendu twgl (55,5 s/100 frames, 4 slots occupés).",
- "reproduce": "node out/tools/render.mjs out/shorts/neon-lab__abstrait__champ-de-force-lucioles/src/index.html --out /tmp/svi/neon-lab-abs/raw.mp4 --duration 12 && .venv/bin/python out/shorts/neon-lab__abstrait__champ-de-force-lucioles/src/neon_grade.py /tmp/svi/neon-lab-abs/raw.mp4 /tmp/svi/neon-lab-abs/video.mp4 && .venv/bin/python out/tools/sound.py out/shorts/neon-lab__abstrait__champ-de-force-lucioles/src/sound.json /tmp/svi/neon-lab-abs/music36.wav && .venv/bin/python out/shorts/neon-lab__abstrait__champ-de-force-lucioles/src/loopslice.py /tmp/svi/neon-lab-abs/music36.wav /tmp/svi/neon-lab-abs/music.wav 12 24 && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/neon-lab-abs/video.mp4 --music /tmp/svi/neon-lab-abs/music.wav --out out/shorts/neon-lab__abstrait__champ-de-force-lucioles/short.mp4"
+ "reproduce": "node out/tools/render.mjs out/shorts/neon-lab__abstrait__champ-de-force-lucioles/src/index.html --out /tmp/svi/neon-lab-abs/raw.mp4 --duration 12 && .venv/bin/python out/shorts/neon-lab__abstrait__champ-de-force-lucioles/src/neon_grade.py /tmp/svi/neon-lab-abs/raw.mp4 /tmp/svi/neon-lab-abs/video.mp4 && .venv/bin/python out/tools/sound.py out/shorts/neon-lab__abstrait__champ-de-force-lucioles/src/sound.json /tmp/svi/neon-lab-abs/music36.wav && .venv/bin/python out/shorts/neon-lab__abstrait__champ-de-force-lucioles/src/loopslice.py /tmp/svi/neon-lab-abs/music36.wav /tmp/svi/neon-lab-abs/music.wav 12 24 && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/neon-lab-abs/video.mp4 --music /tmp/svi/neon-lab-abs/music.wav --out out/shorts/neon-lab__abstrait__champ-de-force-lucioles/short.mp4 && .venv/bin/python out/tools/tts.py out/shorts/neon-lab__abstrait__champ-de-force-lucioles --engine files --voice \"Fish Audio – Arnold (d704cf8f…)\" --replace"
 }

@@ -59,7 +59,8 @@
   "voice": true,
   "voiceEngine": "fish-connector",
   "voiceName": "Fish Audio – Arnold (d704cf8f…)",
-  "voiceProvider": "files"
+  "voiceProvider": "files",
+  "voiceUsed": "Fish Audio – Arnold (d704cf8f1216490cbfbed89955f0e938, s2.1-pro)"
  },
  "qualityChecks": {
   "stillsReviewed": true,
@@ -67,5 +68,5 @@
   "safeAreaOk": true
  },
  "notes": "Carte plate d3.geoEquirectangular (6 px/degré) répétée en 2 tuiles ; route en longitudes déroulées (-6 -> -383) tracée en d3.line curveCatmullRom, position du navire par getPointAtLength, temps interpolés entre ancres datées ; caméra = moyenne glissante ±0,6 s de la position du navire. Côtes dessinées à la main (même atlas.js que le short géographie). GSAP : timeline d'état seekée (légendes, zooms, pertes, sceau, cartouche). pycairo : papier, cadre, cartouche, rose, mer, caravelle (src/textures.py). Faits : départ Sanlúcar sept. 1519, détroit nov. 1520, mort de Magellan à Mactan (Philippines) le 27 avril 1521, retour de la Victoria sept. 1522 avec 18 survivants ; tracé de route simplifié. renderTimeSec = chronomètre render.mjs (hors attente de slot) sous forte charge (load ≈ 16–22 sur 4 cœurs, 128,7 s/100 frames).",
- "reproduce": ".venv/bin/python out/shorts/atlas-grave__histoire__premier-tour-du-monde-1519-1522/src/textures.py out/shorts/atlas-grave__histoire__premier-tour-du-monde-1519-1522/src/assets && node out/tools/render.mjs out/shorts/atlas-grave__histoire__premier-tour-du-monde-1519-1522/src/index.html --out /tmp/svi/atlas-hist/video.mp4 --duration 16 && .venv/bin/python out/tools/sound.py out/shorts/atlas-grave__histoire__premier-tour-du-monde-1519-1522/src/sound.json /tmp/svi/atlas-hist/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/atlas-hist/video.mp4 --music /tmp/svi/atlas-hist/music.wav --out out/shorts/atlas-grave__histoire__premier-tour-du-monde-1519-1522/short.mp4"
+ "reproduce": ".venv/bin/python out/shorts/atlas-grave__histoire__premier-tour-du-monde-1519-1522/src/textures.py out/shorts/atlas-grave__histoire__premier-tour-du-monde-1519-1522/src/assets && node out/tools/render.mjs out/shorts/atlas-grave__histoire__premier-tour-du-monde-1519-1522/src/index.html --out /tmp/svi/atlas-hist/video.mp4 --duration 16 && .venv/bin/python out/tools/sound.py out/shorts/atlas-grave__histoire__premier-tour-du-monde-1519-1522/src/sound.json /tmp/svi/atlas-hist/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/atlas-hist/video.mp4 --music /tmp/svi/atlas-hist/music.wav --out out/shorts/atlas-grave__histoire__premier-tour-du-monde-1519-1522/short.mp4 && .venv/bin/python out/tools/tts.py out/shorts/atlas-grave__histoire__premier-tour-du-monde-1519-1522 --engine files --voice \"Fish Audio – Arnold (d704cf8f…)\" --replace"
 }

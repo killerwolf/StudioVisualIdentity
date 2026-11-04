@@ -82,6 +82,9 @@ Haut 220 px (HUD à partir de y=236), bas 320 px (rien sous y≈1600), droite 12
 - `out/shorts/topo-relief__histoire__hannibal-traverse-les-alpes/` — 15 s, three.js + D3.js.
 
 ## Place de la voix off (où elle parlera, débit conseillé, ce que le visuel laisse libre)
+
+> **Voix réellement utilisée pour tous les shorts : Fish Audio « Arnold »** (`d704cf8f1216490cbfbed89955f0e938`, modèle `s2.1-pro`, conteur masculin FR). Les noms de voix Gemini (Orus, Kore, Aoede…) qui suivent sont des suggestions historiques de casting par ton : Gemini a été abandonné (quota). Le placement, le débit et les silences décrits ici restent valables.
+
 Voix documentaire grave (Gemini **Orus**), une phrase courte par beat, ≈ 2,3–2,5 mots/s, posée sur le début de chaque survol (0.1 s après le changement de kicker). L'écran ne porte que titres, chiffres et mots-clés : la voix raconte le « comment » (méthode, contexte), l'écran montre le « combien » (altitude, nombre). Les survols de 2–3 s laissent de l'air ; le drone sonore est à −18 dB et peut être duqué.
 
 ## Risques et limites

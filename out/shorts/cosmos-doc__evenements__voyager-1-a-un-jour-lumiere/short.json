@@ -58,7 +58,8 @@
   "voice": true,
   "voiceEngine": "fish-connector",
   "voiceName": "Fish Audio – Arnold (d704cf8f…)",
-  "voiceProvider": "files"
+  "voiceProvider": "files",
+  "voiceUsed": "Fish Audio – Arnold (d704cf8f1216490cbfbed89955f0e938, s2.1-pro)"
  },
  "qualityChecks": {
   "stillsReviewed": true,
@@ -66,5 +67,5 @@
   "safeAreaOk": true
  },
  "notes": "Faits : lancement le 5 septembre 1977 ; espace interstellaire depuis août 2012 ; vers novembre 2026 la sonde atteint ≈ 1 jour-lumière (≈ 25,9 milliards de km) de la Terre -> un signal radio met ≈ 24 h. Date affichée prudemment « VERS FIN 2026 ». Sonde = silhouette générique en primitives three.js (parabole LatheGeometry, bus décagonal, mâts, générateurs) — pas de modèle téléchargé. Licence artistique : la Terre est écartée du Soleil (vue de 170 UA, l'écart réel est d'environ 0,3°) et le bord de l'héliosphère est symbolique. Graine 1977. Rendu 450 frames en 787,1 s (174,9 s/100 frames) sous contention (load 20–23). Module commun src/cosmos.js identique au short explicatif.",
- "reproduce": "node out/tools/render.mjs out/shorts/cosmos-doc__evenements__voyager-1-a-un-jour-lumiere/src/index.html --out /tmp/svi/cosmos-doc__evenements__voyager-1-a-un-jour-lumiere/video.mp4 --duration 15 && .venv/bin/python out/tools/sound.py out/shorts/cosmos-doc__evenements__voyager-1-a-un-jour-lumiere/src/sound.json /tmp/svi/cosmos-doc__evenements__voyager-1-a-un-jour-lumiere/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/cosmos-doc__evenements__voyager-1-a-un-jour-lumiere/video.mp4 --music /tmp/svi/cosmos-doc__evenements__voyager-1-a-un-jour-lumiere/music.wav --out out/shorts/cosmos-doc__evenements__voyager-1-a-un-jour-lumiere/short.mp4"
+ "reproduce": "node out/tools/render.mjs out/shorts/cosmos-doc__evenements__voyager-1-a-un-jour-lumiere/src/index.html --out /tmp/svi/cosmos-doc__evenements__voyager-1-a-un-jour-lumiere/video.mp4 --duration 15 && .venv/bin/python out/tools/sound.py out/shorts/cosmos-doc__evenements__voyager-1-a-un-jour-lumiere/src/sound.json /tmp/svi/cosmos-doc__evenements__voyager-1-a-un-jour-lumiere/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/cosmos-doc__evenements__voyager-1-a-un-jour-lumiere/video.mp4 --music /tmp/svi/cosmos-doc__evenements__voyager-1-a-un-jour-lumiere/music.wav --out out/shorts/cosmos-doc__evenements__voyager-1-a-un-jour-lumiere/short.mp4 && .venv/bin/python out/tools/tts.py out/shorts/cosmos-doc__evenements__voyager-1-a-un-jour-lumiere --engine files --voice \"Fish Audio – Arnold (d704cf8f…)\" --replace"
 }

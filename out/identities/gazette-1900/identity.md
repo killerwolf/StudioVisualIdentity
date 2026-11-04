@@ -82,6 +82,9 @@ Haut 220 px (la manchette commence à y = 228), bas 320 px (la dépêche finit a
 - `out/shorts/gazette-1900__evenements__9-novembre-1989-mur-de-berlin/short.mp4` (15,0 s)
 
 ## Place de la voix off (où elle parlera, débit conseillé, ce que le visuel laisse libre)
+
+> **Voix réellement utilisée pour tous les shorts : Fish Audio « Arnold »** (`d704cf8f1216490cbfbed89955f0e938`, modèle `s2.1-pro`, conteur masculin FR). Les noms de voix Gemini (Orus, Kore, Aoede…) qui suivent sont des suggestions historiques de casting par ton : Gemini a été abandonné (quota). Le placement, le débit et les silences décrits ici restent valables.
+
 Voix **Orus** (documentaire), style speaker d'actualités filmées / crieur. Une phrase courte par une, posée juste après le tourniquet (≈ +0,1 s) et terminée avant le tourniquet suivant ; débit ≈ 2,6 mots/s, 5 à 7 mots par une. L'écran ne montre que dates, titres et mots-clés : la voix donne le liant (« les États généraux s'ouvrent », « Berlin fait la fête »). Les dépêches tapées doublent la voix en mots-clés, jamais en phrase complète à lire. Musique duckée sous la voix par `assemble.py mux --voice`.
 
 ## Risques et limites

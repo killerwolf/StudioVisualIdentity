@@ -1,5 +1,7 @@
 # Identités visuelles pour shorts 9:16 — rapport de campagne (lisible par agent)
 
+> Les chemins de ce document sont relatifs au dossier `out/` (ex. `identities/swiss-data/` = `out/identities/swiss-data/`). Pour un agent qui veut **définir sa propre identité** à partir de ce travail : lire d'abord `AGENTS.md` (racine) et charger `out/identities/index.json`.
+
 **But** : 14 identités visuelles (10 retenues en Phase 1, plus les 4 écartées puis réhabilitées à la demande) et cinématiques distinctes pour des chaînes de shorts verticaux (TikTok / Reels / Shorts), chacune **prouvée par 2 vidéos réelles** rendues par code avec des librairies open-source, puis documentée en design system exploitable par un agent de production.
 
 **Bilan** : **14 identités** · **31 shorts** (1080×1920, 30 fps, H.264, 12–18,75 s, son généré) · QA automatique **31/31 OK** · 7 familles couvertes ≥ 3 fois · **8/8 librairies niveau A + 11/11 niveau B** · reconnaissance à l'aveugle **14/14 groupes purs, 56/56 images** (juge visuel indépendant) et **29/31** (mesure couleur, plus proche voisin) · premier tour 1 h 46 (2026-11-03 20:27 -> 22:13 UTC), 3ᵉ shorts 22:22 -> 22:37, identités réhabilitées 2026-11-04 00:24 -> 00:57, sur **4 cœurs** · voix off Fish Audio « Arnold » **31/31** (Gemini abandonné, voir « Voix off Fish Audio »).
@@ -35,7 +37,7 @@ Pour une chaîne durable : **1. swiss-data** (data / actu : le moins cher, 13,7�
 
 1. **Choisir l'identité** dans le tableau, lire `identities/<id>/identity.md` (16 sections normalisées : palette, typo, mouvement, caméra, transitions, structure type, zones sûres, voix off, risques) et `identities/<id>/tokens.json` (valeurs exactes utilisées).
 2. **Choisir la recette** : `identities/<id>/recipes/<famille>.md` (« ouvrir par…, structurer en…, fermer par… », durées, chemin du short de référence).
-3. **Copier le short de référence** : `shorts/<id>__<famille>__<sujet>/src/` contient tout le code + un `README.md` avec la commande de reproduction exacte. 6 identités ont un module commun identique dans leurs deux shorts — swiss-data `grille.js`, gazette-1900 `gazette.js` + `post.py`, bauhaus-kinetic `bk.js`, aquarelle-conte `aq.js`, atlas-grave `atlas.js` + `textures.py`, neon-lab `field.glsl.js` + `neon_grade.py` : changer le contenu (données, textes, dates), pas le module. Les 4 autres changent de moteur d'un short à l'autre (pastel-diorama Zdog / A-Frame, liquid-chrome Taichi / three.js, tableau-craie Manim / Rough.js, pixel-arcade Matter / physique maison) et ne partagent que les tokens : partir du short de la même famille.
+3. **Copier le short de référence** : `shorts/<id>__<famille>__<sujet>/src/` contient tout le code + un `README.md` avec la commande de reproduction exacte. 10 identités ont un module commun identique dans leurs shorts — swiss-data `grille.js`, gazette-1900 `gazette.js` + `post.py`, bauhaus-kinetic `bk.js`, aquarelle-conte `aq.js`, atlas-grave `atlas.js` + `textures.py`, neon-lab `field.glsl.js` + `neon_grade.py`, brut-meme `brut.js`, cosmos-doc `cosmos.js`, riso-zine `riso.js` (ses deux `post.py` diffèrent légèrement), topo-relief `topo.js` : changer le contenu (données, textes, dates), pas le module. Les 4 autres changent de moteur d'un short à l'autre (pastel-diorama Zdog / A-Frame, liquid-chrome Taichi / three.js / Babylon.js, tableau-craie Manim / Rough.js, pixel-arcade Matter / physique maison / PixiJS) et ne partagent que les tokens : partir du short de la même famille.
 4. **Rendre** avec le harnais `tools/` (voir ci-dessous) : stills -> planche-contact -> rendu complet -> `sound.py` -> `assemble.py mux` -> `check.py`.
 5. **Voix off** : écrire `narration.json` (≈ 2,6 mots/s, lignes horodatées sans chevauchement, voix suggérée), puis `tts.py`.
 6. **Choisir les librairies** avec `library-cards/<lib>.json` (rôle, bestFor/avoidFor, coût mesuré, pièges, snippets, compatibilités).
@@ -76,7 +78,7 @@ Mise en place (une fois, depuis la racine du dépôt) : `npm i` (libs + polices 
 | Fichier | Contenu |
 |---|---|
 | `README.md` | ce document |
-| `comparison.md` | tableau comparatif, table des 20 shorts, matrice identité × famille × librairie, tests de reconnaissance, classement argumenté |
+| `comparison.md` | tableau comparatif, table des 31 shorts, matrice identité × famille × librairie, tests de reconnaissance, classement argumenté |
 | `directions-contact-sheet.jpg` | les 14 directions explorées (Phase 1) ; posters et sources dans `posters/` |
 | `directions.json` / `selection.json` | fiches des 14 directions ; sélection de 10, rejets justifiés, couverture |
 | `facts.md` | faits techniques vérifiés, versions, nproc, coûts de rendu mesurés, pièges nouveaux |
@@ -94,4 +96,4 @@ Mise en place (une fois, depuis la racine du dépôt) : `npm i` (libs + polices 
 - **Manim sans texte** (pas de Pango ni LaTeX) : texte en overlays.
 - **Niveau B complété après coup** : PixiJS, Babylon.js et Matplotlib n'avaient été attribués à aucun studio dans le premier tour (choix de l'orchestrateur, le minimum de 5 étant atteint) ; ils ont été ajoutés à la demande via un 3ᵉ short pour pixel-arcade, liquid-chrome et neon-lab.
 - **Non explorés** : Blender et Remotion (niveau C, optionnels ; Blender Cycles ≈ 25–30 s/frame était incompatible avec 4 cœurs saturés) ; 3ᵉ short seulement pour 3 identités ; deux boucles parfaites seulement (neon-lab/abstrait, liquid-chrome/pendule).
-- **Pas de PR** : le dépôt distant n'a pas de branche de base ; tout est poussé sur `claude/new-session-ae9hjs`.
+- **Branches** : tout le travail est sur `main` (les branches de travail des sessions ont été fusionnées puis supprimées).

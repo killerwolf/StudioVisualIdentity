@@ -76,6 +76,9 @@ Haut 220 px (filet d'en-tête à 232), bas 320 px (rien sous y = 1600 ; la lectu
 - `out/shorts/swiss-data__evenements__j-272-eclipse-2-aout-2027/short.mp4` — « J-272 : l'éclipse totale du 2 août 2027 »
 
 ## Place de la voix off (où elle parlera, débit conseillé, ce que le visuel laisse libre)
+
+> **Voix réellement utilisée pour tous les shorts : Fish Audio « Arnold »** (`d704cf8f1216490cbfbed89955f0e938`, modèle `s2.1-pro`, conteur masculin FR). Les noms de voix Gemini (Orus, Kore, Aoede…) qui suivent sont des suggestions historiques de casting par ton : Gemini a été abandonné (quota). Le placement, le débit et les silences décrits ici restent valables.
+
 Une phrase par rubrique (4–5 s), qui **lit** le chiffre affiché ou le contextualise ; débit 2,4–2,6 mots/s, voix documentaire (Orus) ou grave (Charon). La voix démarre à 0,3 s et après chaque volet (+0,1 s). Le visuel ne porte que titres, chiffres et mots-clés : la voix apporte les verbes et la source. Les 320 px du bas sont libres pour les sous-titres automatiques.
 
 ## Risques et limites

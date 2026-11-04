@@ -183,7 +183,7 @@ def process(d, a, client):
         if not voice:
             print('[tts] ATTENTION : aucune voix Fish (--voice / FISH_VOICE_ID / "fish_voice") -> voix par défaut instable.', file=sys.stderr)
     else:
-        voice = pick_voice(nar.get('style'), a.voice or nar.get('voice'))
+        voice = pick_voice(nar.get('style'), a.voice or nar.get('voice') or (nar.get('voiceUsed') or {}).get('name'))
     track = np.zeros(int((dur + 1) * SR), np.float32)
     report = []
     for i, ln in enumerate(nar['lines']):
@@ -249,7 +249,7 @@ def main():
     if a.dry_run:
         for d in dirs:
             n = json.load(open(d / 'narration.json'))
-            v = (a.voice or os.environ.get('FISH_VOICE_ID') or n.get('fish_voice') or '(aucune)') if a.engine == 'fish' else pick_voice(n.get('style'), a.voice or n.get('voice'))
+            v = (a.voice or os.environ.get('FISH_VOICE_ID') or n.get('fish_voice') or '(aucune)') if a.engine == 'fish' else (a.voice or (n.get('voiceUsed') or {}).get('name') or pick_voice(n.get('style'), n.get('voice')))
             print(d.name, a.engine, v, len(n['lines']), 'lignes')
         return
     if not key:

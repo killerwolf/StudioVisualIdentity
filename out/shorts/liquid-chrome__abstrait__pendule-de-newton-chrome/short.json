@@ -41,7 +41,8 @@
   "voice": true,
   "voiceEngine": "fish-connector",
   "voiceName": "Fish Audio – Arnold (d704cf8f…)",
-  "voiceProvider": "files"
+  "voiceProvider": "files",
+  "voiceUsed": "Fish Audio – Arnold (d704cf8f1216490cbfbed89955f0e938, s2.1-pro)"
  },
  "qualityChecks": {
   "stillsReviewed": true,
@@ -49,5 +50,5 @@
   "safeAreaOk": true
  },
  "notes": "Mouvement analytique θ = A·sin(2πt/T) (A = 0,45 rad, T = 2,4 s) appliqué à la bille de droite pour sin>0 et à celle de gauche pour sin<0 ; micro-vibration amortie des billes centrales après chaque choc ; caméra périodique 12 s (azimut −0,88±0,07 rad, rayon 13,6±0,5, fov 0,62). Environnement : sphère dégradé graphite/perle + 6 panneaux émissifs (lilas, rose, menthe, or, blanc, clé chaude #FFE9C8) capturés une fois par ReflectionProbe (RENDER_ONCE) puis désactivés. PBR métal irisé (iridescence 0,55, clearcoat 0,6), GlowLayer (éclats de choc avancés vers la caméra, liseré du socle), DefaultRenderingPipeline (ACES, DOF Low, FXAA, vignette). Palette plus chaude (graphite #121016–#1A161E, halos perle/or/rose) pour se distinguer de neon-lab. Mesure : 443,5 s pour 360 frames (123,2 s/100 frames), CPU peu chargé (3 studios).",
- "reproduce": "node out/tools/render.mjs out/shorts/liquid-chrome__abstrait__pendule-de-newton-chrome/src/index.html --out /tmp/svi/liquid-c/video.mp4 --duration 12 && .venv/bin/python out/tools/sound.py out/shorts/liquid-chrome__abstrait__pendule-de-newton-chrome/src/sound.json /tmp/svi/liquid-c/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/liquid-c/video.mp4 --music /tmp/svi/liquid-c/music.wav --out out/shorts/liquid-chrome__abstrait__pendule-de-newton-chrome/short.mp4"
+ "reproduce": "node out/tools/render.mjs out/shorts/liquid-chrome__abstrait__pendule-de-newton-chrome/src/index.html --out /tmp/svi/liquid-c/video.mp4 --duration 12 && .venv/bin/python out/tools/sound.py out/shorts/liquid-chrome__abstrait__pendule-de-newton-chrome/src/sound.json /tmp/svi/liquid-c/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/liquid-c/video.mp4 --music /tmp/svi/liquid-c/music.wav --out out/shorts/liquid-chrome__abstrait__pendule-de-newton-chrome/short.mp4 && .venv/bin/python out/tools/tts.py out/shorts/liquid-chrome__abstrait__pendule-de-newton-chrome --engine files --voice \"Fish Audio – Arnold (d704cf8f…)\" --replace"
 }

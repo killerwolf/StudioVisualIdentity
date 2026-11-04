@@ -1,0 +1,91 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "coreTokens (normalised subset of an identity tokens.json)",
+ "type": "object",
+ "required": [
+  "color",
+  "typography",
+  "motion",
+  "safeAreaPx",
+  "canvas"
+ ],
+ "properties": {
+  "color": {
+   "type": "object",
+   "required": [
+    "bg",
+    "accent"
+   ],
+   "properties": {
+    "bg": {
+     "type": "string"
+    },
+    "surface": {
+     "type": [
+      "string",
+      "null"
+     ]
+    },
+    "text": {
+     "type": [
+      "string",
+      "null"
+     ]
+    },
+    "accent": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  "typography": {
+   "type": "object",
+   "description": "each role: family, fontsourceSlug (npm @fontsource/<slug>), weight, sizePx (px on 1080x1920), sizeNote (original free text when not a plain number)"
+  },
+  "motion": {
+   "type": "object",
+   "properties": {
+    "durationSec": {
+     "type": "object"
+    },
+    "staggerSec": {
+     "type": [
+      "number",
+      "null"
+     ]
+    },
+    "easingRaw": {
+     "type": "object",
+     "description": "original easing strings (GSAP, svi.ease or prose)"
+    },
+    "hookDeadlineSec": {
+     "type": "number"
+    },
+    "sourceUnits": {
+     "enum": [
+      "s",
+      "ms"
+     ]
+    }
+   }
+  },
+  "transitions": {
+   "type": "array"
+  },
+  "safeAreaPx": {
+   "type": "object",
+   "description": "TikTok safe zones; left defaults to 60 when absent from tokens.json",
+   "required": [
+    "top",
+    "bottom",
+    "right",
+    "left"
+   ]
+  },
+  "canvas": {
+   "type": "object"
+  }
+ }
+}

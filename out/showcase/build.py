@@ -50,7 +50,7 @@ def build_data():
             shorts.append({'dir': n, 'title': j['title'], 'family': j['family'], 'duration': j['duration'],
                            'render': j.get('renderTimeSec'), 'cost': round(j['renderTimeSec'] / frames * 100, 1),
                            'libs': j['libraries'], 'loop': bool(j.get('loopable')),
-                           'voice': nr.get('voice'), 'voiced': bool((j.get('sound') or {}).get('voice')),
+                           'voice': (nr.get('voiceUsed') or {}).get('name') or nr.get('voice'), 'voiced': bool((j.get('sound') or {}).get('voice')),
                            'line': nr['lines'][0]['text'] if nr['lines'] else ''})
         c = t['color']
         libs = [l.split(' ')[0] if l.split(' ')[0] in ('PixiJS', 'GSAP') else l for l in (t.get('libraries') or [])]

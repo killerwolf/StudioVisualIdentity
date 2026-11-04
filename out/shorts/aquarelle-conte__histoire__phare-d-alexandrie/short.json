@@ -60,7 +60,8 @@
   "spec": "src/sound.json",
   "voiceEngine": "fish-connector",
   "voiceName": "Fish Audio – Arnold (d704cf8f…)",
-  "voiceProvider": "files"
+  "voiceProvider": "files",
+  "voiceUsed": "Fish Audio – Arnold (d704cf8f1216490cbfbed89955f0e938, s2.1-pro)"
  },
  "qualityChecks": {
   "stillsReviewed": true,
@@ -68,5 +69,5 @@
   "safeAreaOk": true
  },
  "notes": "Faits formulés avec prudence : construit vers 280 av. J.-C. (commencé sous Ptolémée Ier, achevé sous Ptolémée II), île de Pharos, environ 100–130 m, une des Sept Merveilles, endommagé par des séismes (notamment 1303 et 1323) et disparu au XIVe siècle ; ses pierres ont été réutilisées pour le fort de Qaitbay (vers 1477–1480) à son emplacement. Des pierres restent dans la mer (blocs retrouvés sous l'eau), d'où les blocs translucides restants. Pierres, chute et réassemblage = fonctions pures de t (Paper.js, matrices absolues). Rendu mesuré 524,2 s pour 480 frames (109,2 s/100 frames) avec 4 rendus concurrents.",
- "reproduce": "node out/tools/render.mjs out/shorts/aquarelle-conte__histoire__phare-d-alexandrie/src/index.html --out /tmp/svi/aquarelle-conte__histoire__phare-d-alexandrie/video.mp4 --duration 16 && .venv/bin/python out/tools/sound.py out/shorts/aquarelle-conte__histoire__phare-d-alexandrie/src/sound.json /tmp/svi/aquarelle-conte__histoire__phare-d-alexandrie/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/aquarelle-conte__histoire__phare-d-alexandrie/video.mp4 --music /tmp/svi/aquarelle-conte__histoire__phare-d-alexandrie/music.wav --out out/shorts/aquarelle-conte__histoire__phare-d-alexandrie/short.mp4"
+ "reproduce": "node out/tools/render.mjs out/shorts/aquarelle-conte__histoire__phare-d-alexandrie/src/index.html --out /tmp/svi/aquarelle-conte__histoire__phare-d-alexandrie/video.mp4 --duration 16 && .venv/bin/python out/tools/sound.py out/shorts/aquarelle-conte__histoire__phare-d-alexandrie/src/sound.json /tmp/svi/aquarelle-conte__histoire__phare-d-alexandrie/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/aquarelle-conte__histoire__phare-d-alexandrie/video.mp4 --music /tmp/svi/aquarelle-conte__histoire__phare-d-alexandrie/music.wav --out out/shorts/aquarelle-conte__histoire__phare-d-alexandrie/short.mp4 && .venv/bin/python out/tools/tts.py out/shorts/aquarelle-conte__histoire__phare-d-alexandrie --engine files --voice \"Fish Audio – Arnold (d704cf8f…)\" --replace"
 }

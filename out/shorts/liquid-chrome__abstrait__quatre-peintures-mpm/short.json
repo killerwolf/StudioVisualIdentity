@@ -58,7 +58,8 @@
   "voice": true,
   "voiceEngine": "fish-connector",
   "voiceName": "Fish Audio – Arnold (d704cf8f…)",
-  "voiceProvider": "files"
+  "voiceProvider": "files",
+  "voiceUsed": "Fish Audio – Arnold (d704cf8f1216490cbfbed89955f0e938, s2.1-pro)"
  },
  "qualityChecks": {
   "stillsReviewed": true,
@@ -66,5 +67,5 @@
   "safeAreaOk": true
  },
  "notes": "MLS-MPM 2D fluide faiblement compressible (mpm88, J seul) + viscosité mu(C+C^T)=0.05, E=600, dt=1e-4, 80 sous-pas/frame, grille 90×196 (dx=12 px), 4×6000 particules, couleurs diffusées via la grille à partir de 6,8 s. Rendu : splat bilinéaire 540×960, flou gaussien cv2 σ=2, seuil densité, normales Sobel d'une hauteur multi-échelle, spéculaire Blinn + reflet d'environnement néon + liseré de Fresnel, composition pleine résolution limitée à la bbox. Mesure : 443,7 s pour 420 frames (105,6 s/100 frames ; sim 332,7 s, ombrage 106,1 s) en 1 thread, CPU partagé par 10 studios. Petites bulles d'air visibles dans la pâte (artefact de seuil, gardé : lu comme bulles).",
- "reproduce": "out/tools/slot.sh .venv/bin/python out/shorts/liquid-chrome__abstrait__quatre-peintures-mpm/src/mpm_paint.py --out /tmp/svi/liquid-a/video.mp4 --duration 14 && .venv/bin/python out/shorts/liquid-chrome__abstrait__quatre-peintures-mpm/src/overlays.py /tmp/svi/liquid-a/ov && .venv/bin/python out/tools/sound.py out/shorts/liquid-chrome__abstrait__quatre-peintures-mpm/src/sound.json /tmp/svi/liquid-a/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/liquid-a/video.mp4 --music /tmp/svi/liquid-a/music.wav --overlay /tmp/svi/liquid-a/ov/o1.png:0:4.3:0.45 --overlay /tmp/svi/liquid-a/ov/o2.png:6.6:10.9:0.45 --overlay /tmp/svi/liquid-a/ov/o3.png:11.3:14:0.45 --out out/shorts/liquid-chrome__abstrait__quatre-peintures-mpm/short.mp4"
+ "reproduce": "out/tools/slot.sh .venv/bin/python out/shorts/liquid-chrome__abstrait__quatre-peintures-mpm/src/mpm_paint.py --out /tmp/svi/liquid-a/video.mp4 --duration 14 && .venv/bin/python out/shorts/liquid-chrome__abstrait__quatre-peintures-mpm/src/overlays.py /tmp/svi/liquid-a/ov && .venv/bin/python out/tools/sound.py out/shorts/liquid-chrome__abstrait__quatre-peintures-mpm/src/sound.json /tmp/svi/liquid-a/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/liquid-a/video.mp4 --music /tmp/svi/liquid-a/music.wav --overlay /tmp/svi/liquid-a/ov/o1.png:0:4.3:0.45 --overlay /tmp/svi/liquid-a/ov/o2.png:6.6:10.9:0.45 --overlay /tmp/svi/liquid-a/ov/o3.png:11.3:14:0.45 --out out/shorts/liquid-chrome__abstrait__quatre-peintures-mpm/short.mp4 && .venv/bin/python out/tools/tts.py out/shorts/liquid-chrome__abstrait__quatre-peintures-mpm --engine files --voice \"Fish Audio – Arnold (d704cf8f…)\" --replace"
 }

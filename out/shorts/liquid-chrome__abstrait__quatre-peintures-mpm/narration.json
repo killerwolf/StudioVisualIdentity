@@ -1,9 +1,44 @@
-{"language": "fr", "style": "calme, sensoriel, voix basse et posée façon publicité de parfum ; laisser respirer les impacts", "voice": "Achernar",
+{
+ "language": "fr",
+ "style": "calme, sensoriel, voix basse et posée façon publicité de parfum ; laisser respirer les impacts",
+ "voiceUsed": {
+  "provider": "Fish Audio",
+  "name": "Arnold",
+  "reference_id": "d704cf8f1216490cbfbed89955f0e938",
+  "model": "s2.1-pro",
+  "note": "voix réellement utilisée pour les 31 shorts ; audio par ligne dans voice_lines/NN.mp3"
+ },
+ "voiceGeminiSuggestion": "Achernar (historique : Gemini abandonné, voir out/report/failures.md)",
  "lines": [
-  {"t": 0.2, "maxDuration": 1.4, "text": "Quatre peintures."},
-  {"t": 1.8, "maxDuration": 2.0, "text": "Lilas, rose, menthe, or."},
-  {"t": 4.3, "maxDuration": 2.4, "text": "Chacune tombe de tout son poids."},
-  {"t": 7.0, "maxDuration": 2.4, "text": "Puis un tourbillon les entraîne…"},
-  {"t": 9.6, "maxDuration": 2.0, "text": "et les couleurs se mélangent."},
-  {"t": 11.8, "maxDuration": 1.6, "text": "Hypnotique, non ?"}
- ]}
+  {
+   "t": 0.2,
+   "maxDuration": 1.4,
+   "text": "Quatre peintures."
+  },
+  {
+   "t": 1.8,
+   "maxDuration": 2.0,
+   "text": "Lilas, rose, menthe, or."
+  },
+  {
+   "t": 4.3,
+   "maxDuration": 2.4,
+   "text": "Chacune tombe de tout son poids."
+  },
+  {
+   "t": 7.0,
+   "maxDuration": 2.4,
+   "text": "Puis un tourbillon les entraîne…"
+  },
+  {
+   "t": 9.6,
+   "maxDuration": 2.0,
+   "text": "et les couleurs se mélangent."
+  },
+  {
+   "t": 11.8,
+   "maxDuration": 1.6,
+   "text": "Hypnotique, non ?"
+  }
+ ]
+}

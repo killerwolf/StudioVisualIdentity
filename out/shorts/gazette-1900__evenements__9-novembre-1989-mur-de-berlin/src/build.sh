@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # build.sh — reproduit le short depuis la racine du dépôt : rendu GSAP -> post OpenCV -> son -> mux.
-# usage : bash out/shorts/<dossier>/src/build.sh   (depuis /home/user/StudioVisualIdentity)
+# usage : bash out/shorts/<dossier>/src/build.sh   (depuis la racine du dépôt)
 set -euo pipefail
 SRC="$(cd "$(dirname "$0")" && pwd)"; DIR="$(dirname "$SRC")"; NAME="$(basename "$DIR")"
 DUR=$(cat "$SRC/DURATION"); FLASH=$(cat "$SRC/FLASH" 2>/dev/null || echo "")

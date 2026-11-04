@@ -69,6 +69,9 @@ Adaptées : **geographie** (superficies, comparaisons « soit 25 × la France »
 - `out/shorts/riso-zine__evenements__geminides-j-39/` — J-39 : les Géminides, la pluie d'étoiles filantes du 13–14 décembre
 
 ## Place de la voix off (où elle parlera, débit conseillé, ce que le visuel laisse libre)
+
+> **Voix réellement utilisée pour tous les shorts : Fish Audio « Arnold »** (`d704cf8f1216490cbfbed89955f0e938`, modèle `s2.1-pro`, conteur masculin FR). Les noms de voix Gemini (Orus, Kore, Aoede…) qui suivent sont des suggestions historiques de casting par ton : Gemini a été abandonné (quota). Le placement, le débit et les silences décrits ici restent valables.
+
 Voix **Puck** (Gemini TTS), décontractée, complice ; ≈ 2,6 mots/s, une phrase courte par page, posée sur la coupe (0,1 s après). L'écran ne porte que chiffres, noms et mots-clés ; la voix dit le lien (« vingt-cinq fois la France », « ce sont les poussières de Phaéton »). Silence de la voix pendant les tampons (GLACÉ !) pour laisser le SFX verre/chime frapper.
 
 ## Risques et limites

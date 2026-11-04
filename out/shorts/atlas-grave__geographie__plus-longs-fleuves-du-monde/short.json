@@ -59,7 +59,8 @@
   "voice": true,
   "voiceEngine": "fish-connector",
   "voiceName": "Fish Audio – Arnold (d704cf8f…)",
-  "voiceProvider": "files"
+  "voiceProvider": "files",
+  "voiceUsed": "Fish Audio – Arnold (d704cf8f1216490cbfbed89955f0e938, s2.1-pro)"
  },
  "qualityChecks": {
   "stillsReviewed": true,
@@ -67,5 +68,5 @@
   "safeAreaOk": true
  },
  "notes": "Côtes dessinées à la main (~30 masses, quelques dizaines de points chacune) projetées par d3.geoNaturalEarth1 ; anneaux réorientés via d3.geoArea. Caméra = transform 2D sur chemins statiques, épaisseurs divisées par k. GSAP : une timeline d'état seekée (tl.seek(t,false)). Textures pycairo (papier vergé, cadre gradué, cartouche guilloché, rose, mer gravée, vignette) générées par src/textures.py dans src/assets. Longueurs : valeurs usuelles (Nil 6 650, Amazone 6 400, Yangzi 6 300, Mississippi-Missouri 6 275, Ienisseï 5 539 km) ; le classement Nil/Amazone est signalé comme débattu. renderTimeSec = chronomètre render.mjs (après obtention du slot CPU, hors attente) mesuré sous forte charge : 4 rendus simultanés de 10 studios, load average ≈ 16 sur 4 cœurs (135,7 s/100 frames) ; une scène D3/SVG de ce type coûte nettement moins sur machine libre.",
- "reproduce": ".venv/bin/python out/shorts/atlas-grave__geographie__plus-longs-fleuves-du-monde/src/textures.py out/shorts/atlas-grave__geographie__plus-longs-fleuves-du-monde/src/assets && node out/tools/render.mjs out/shorts/atlas-grave__geographie__plus-longs-fleuves-du-monde/src/index.html --out /tmp/svi/atlas-geo/video.mp4 --duration 15 && .venv/bin/python out/tools/sound.py out/shorts/atlas-grave__geographie__plus-longs-fleuves-du-monde/src/sound.json /tmp/svi/atlas-geo/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/atlas-geo/video.mp4 --music /tmp/svi/atlas-geo/music.wav --out out/shorts/atlas-grave__geographie__plus-longs-fleuves-du-monde/short.mp4"
+ "reproduce": ".venv/bin/python out/shorts/atlas-grave__geographie__plus-longs-fleuves-du-monde/src/textures.py out/shorts/atlas-grave__geographie__plus-longs-fleuves-du-monde/src/assets && node out/tools/render.mjs out/shorts/atlas-grave__geographie__plus-longs-fleuves-du-monde/src/index.html --out /tmp/svi/atlas-geo/video.mp4 --duration 15 && .venv/bin/python out/tools/sound.py out/shorts/atlas-grave__geographie__plus-longs-fleuves-du-monde/src/sound.json /tmp/svi/atlas-geo/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/atlas-geo/video.mp4 --music /tmp/svi/atlas-geo/music.wav --out out/shorts/atlas-grave__geographie__plus-longs-fleuves-du-monde/short.mp4 && .venv/bin/python out/tools/tts.py out/shorts/atlas-grave__geographie__plus-longs-fleuves-du-monde --engine files --voice \"Fish Audio – Arnold (d704cf8f…)\" --replace"
 }

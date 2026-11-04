@@ -88,6 +88,9 @@ Haut 220 px, bas 320 px, droite 120 px, gauche 72 px. Tag et en-têtes à 236–
 Module commun identique : `src/cosmos.js` dans les deux dossiers.
 
 ## Place de la voix off (où elle parlera, débit conseillé, ce que le visuel laisse libre)
+
+> **Voix réellement utilisée pour tous les shorts : Fish Audio « Arnold »** (`d704cf8f1216490cbfbed89955f0e938`, modèle `s2.1-pro`, conteur masculin FR). Les noms de voix Gemini (Orus, Kore, Aoede…) qui suivent sont des suggestions historiques de casting par ton : Gemini a été abandonné (quota). Le placement, le débit et les silences décrits ici restent valables.
+
 Voix grave documentaire (Gemini **Orus** pour l'explicatif, **Charon** pour l'événement), **une phrase par plan**, démarrant 0,1–0,3 s après la sortie du dip, débit ≈ 2,6 mots/s **au plus** (style « lente, silences entre les phrases »). Le visuel ne porte que des noms, dates et chiffres : la voix porte le **pourquoi** (« sans atmosphère, il brûle le jour et gèle la nuit »). La dernière seconde reste silencieuse sous la musique (drone). Musique : preset `drone` 64 bpm mineur, mixée à −18 dB, SFX graves (impact, thud, swell, riser) calés sur les plans.
 
 ## Risques et limites

@@ -1,15 +1,54 @@
 {
-  "language": "fr",
-  "style": "conteur documentaire, grave et posé, tension croissante jusqu'à la mort de Magellan puis retour apaisé",
-  "voice": "Charon",
-  "lines": [
-    {"t": 0.2, "maxDuration": 2.0, "text": "Cinq navires quittent l'Espagne."},
-    {"t": 2.3, "maxDuration": 1.9, "text": "Cap sur l'Amérique du Sud."},
-    {"t": 4.25, "maxDuration": 1.8, "text": "Puis le détroit, enfin franchi."},
-    {"t": 6.15, "maxDuration": 2.7, "text": "Trois mois pour traverser le Pacifique."},
-    {"t": 8.95, "maxDuration": 1.6, "text": "Magellan meurt aux Philippines."},
-    {"t": 10.6, "maxDuration": 2.75, "text": "Elcano ramène la dernière nef, la Victoria."},
-    {"t": 13.4, "maxDuration": 1.15, "text": "Dix-huit survivants."},
-    {"t": 14.65, "maxDuration": 1.3, "text": "Magellan, ou Elcano ?"}
-  ]
+ "language": "fr",
+ "style": "conteur documentaire, grave et posé, tension croissante jusqu'à la mort de Magellan puis retour apaisé",
+ "voiceUsed": {
+  "provider": "Fish Audio",
+  "name": "Arnold",
+  "reference_id": "d704cf8f1216490cbfbed89955f0e938",
+  "model": "s2.1-pro",
+  "note": "voix réellement utilisée pour les 31 shorts ; audio par ligne dans voice_lines/NN.mp3"
+ },
+ "voiceGeminiSuggestion": "Charon (historique : Gemini abandonné, voir out/report/failures.md)",
+ "lines": [
+  {
+   "t": 0.2,
+   "maxDuration": 2.0,
+   "text": "Cinq navires quittent l'Espagne."
+  },
+  {
+   "t": 2.3,
+   "maxDuration": 1.9,
+   "text": "Cap sur l'Amérique du Sud."
+  },
+  {
+   "t": 4.25,
+   "maxDuration": 1.8,
+   "text": "Puis le détroit, enfin franchi."
+  },
+  {
+   "t": 6.15,
+   "maxDuration": 2.7,
+   "text": "Trois mois pour traverser le Pacifique."
+  },
+  {
+   "t": 8.95,
+   "maxDuration": 1.6,
+   "text": "Magellan meurt aux Philippines."
+  },
+  {
+   "t": 10.6,
+   "maxDuration": 2.75,
+   "text": "Elcano ramène la dernière nef, la Victoria."
+  },
+  {
+   "t": 13.4,
+   "maxDuration": 1.15,
+   "text": "Dix-huit survivants."
+  },
+  {
+   "t": 14.65,
+   "maxDuration": 1.3,
+   "text": "Magellan, ou Elcano ?"
+  }
+ ]
 }

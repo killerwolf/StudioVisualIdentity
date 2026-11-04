@@ -75,6 +75,9 @@ Haut 220 px, bas 320 px, droite 120 px, gauche 60 px. Texte et figures entre x =
 - `out/shorts/bauhaus-kinetic__engagement__trouve-l-intrus/` — « Trouve l'intrus en 5 secondes », 14 s.
 
 ## Place de la voix off (où elle parlera, débit conseillé, ce que le visuel laisse libre)
+
+> **Voix réellement utilisée pour tous les shorts : Fish Audio « Arnold »** (`d704cf8f1216490cbfbed89955f0e938`, modèle `s2.1-pro`, conteur masculin FR). Les noms de voix Gemini (Orus, Kore, Aoede…) qui suivent sont des suggestions historiques de casting par ton : Gemini a été abandonné (quota). Le placement, le débit et les silences décrits ici restent valables.
+
 Une phrase par scène, posée 0,1–0,3 s après la coupe du grid-wipe et finie avant le wipe suivant (≈ 3–3,5 s, 7–9 mots). Débit ≈ 2,6 mots/s. L'écran ne porte que le titre (2–3 mots) et les chiffres ; la voix donne la phrase complète et le « pourquoi ». Voix : Orus (explicatif), Fenrir (engagement). Pendant un compte à rebours, la voix ne compte que les 3 dernières secondes et laisse les ticks respirer. Musique pluck-arp à −18 dB, à ducker sous la voix (assemble.py `--voice`).
 
 ## Risques et limites

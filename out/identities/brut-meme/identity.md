@@ -94,6 +94,9 @@ Haut 220 px, bas 320 px, droite 120 px, gauche 60 px. Contenu utile x 60–960, 
 - `out/shorts/brut-meme__evenements__pendant-ces-15-secondes-dans-le-monde/` — 16,0 s, PixiJS + GSAP, compteurs live calés sur l'horloge du short.
 
 ## Place de la voix off (où elle parlera, débit conseillé, ce que le visuel laisse libre)
+
+> **Voix réellement utilisée pour tous les shorts : Fish Audio « Arnold »** (`d704cf8f1216490cbfbed89955f0e938`, modèle `s2.1-pro`, conteur masculin FR). Les noms de voix Gemini (Orus, Kore, Aoede…) qui suivent sont des suggestions historiques de casting par ton : Gemini a été abandonné (quota). Le placement, le débit et les silences décrits ici restent valables.
+
 Voix **Fenrir** (énergique) ou **Puck** (enjouée), débit 2,6 mots/s, phrases de 1–7 mots qui doublent le mot-clé à l'écran (« Rouge ! », « Plus vite ! », « Et toi, t'as fait quoi ? »). Elle parle dans les 0,1–0,3 s après chaque cut et se tait pendant les tics de compte à rebours (le son porte le rythme). Une seule phrase longue autorisée (l'explication, ~4 s). Le visuel n'affiche que des mots-clés et des chiffres : la voix peut ajouter le « pourquoi » sans conflit. Musique `pulse` 120 bpm à −18 dB sous la voix ; impacts courts qui ne masquent pas la parole.
 
 ## Risques et limites

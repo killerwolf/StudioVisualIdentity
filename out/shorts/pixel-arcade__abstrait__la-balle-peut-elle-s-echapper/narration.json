@@ -1,9 +1,44 @@
-{"language": "fr", "style": "calme, presque chuchoté, suspense ASMR qui monte vers la fin", "voice": "Achernar",
+{
+ "language": "fr",
+ "style": "calme, presque chuchoté, suspense ASMR qui monte vers la fin",
+ "voiceUsed": {
+  "provider": "Fish Audio",
+  "name": "Arnold",
+  "reference_id": "d704cf8f1216490cbfbed89955f0e938",
+  "model": "s2.1-pro",
+  "note": "voix réellement utilisée pour les 31 shorts ; audio par ligne dans voice_lines/NN.mp3"
+ },
+ "voiceGeminiSuggestion": "Achernar (historique : Gemini abandonné, voir out/report/failures.md)",
  "lines": [
-  {"t": 0.2, "maxDuration": 2.8, "text": "Cette balle peut-elle s'échapper du cercle ?"},
-  {"t": 3.2, "maxDuration": 2.2, "text": "À chaque rebond, elle grossit."},
-  {"t": 6.0, "maxDuration": 2.8, "text": "Et la brèche, elle, ne grandit pas."},
-  {"t": 9.2, "maxDuration": 1.8, "text": "Plus que quelques chances…"},
-  {"t": 11.9, "maxDuration": 1.0, "text": "Évadée !"},
-  {"t": 13.6, "maxDuration": 1.3, "text": "Quarante-cinq rebonds."}
- ]}
+  {
+   "t": 0.2,
+   "maxDuration": 2.8,
+   "text": "Cette balle peut-elle s'échapper du cercle ?"
+  },
+  {
+   "t": 3.2,
+   "maxDuration": 2.2,
+   "text": "À chaque rebond, elle grossit."
+  },
+  {
+   "t": 6.0,
+   "maxDuration": 2.8,
+   "text": "Et la brèche, elle, ne grandit pas."
+  },
+  {
+   "t": 9.2,
+   "maxDuration": 1.8,
+   "text": "Plus que quelques chances…"
+  },
+  {
+   "t": 11.9,
+   "maxDuration": 1.0,
+   "text": "Évadée !"
+  },
+  {
+   "t": 13.6,
+   "maxDuration": 1.3,
+   "text": "Quarante-cinq rebonds."
+  }
+ ]
+}

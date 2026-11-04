@@ -1,6 +1,6 @@
 import json, math
-GEO = '/home/user/StudioVisualIdentity/out/shorts/swiss-data__geographie__ou-vivent-8-milliards/src/sound.json'
-ECL = '/home/user/StudioVisualIdentity/out/shorts/swiss-data__evenements__j-272-eclipse-2-aout-2027/src/sound.json'
+GEO = str(__import__('pathlib').Path(__file__).resolve().parents[4]) + '/out/shorts/swiss-data__geographie__ou-vivent-8-milliards/src/sound.json'
+ECL = str(__import__('pathlib').Path(__file__).resolve().parents[4]) + '/out/shorts/swiss-data__evenements__j-272-eclipse-2-aout-2027/src/sound.json'
 base = lambda: {"duration": 15.0, "seed": 7, "bpm": 120, "key": "D", "scale": "minor",
                 "music": {"preset": "pulse", "gain": 0.42, "octave": 3, "density": 0.5, "loop": False}}
 r = lambda x: round(x, 3)

@@ -1,10 +1,49 @@
-{"language": "fr", "style": "enjoué et tendre, pour enfants de 6-10 ans, comme une maîtresse qui dessine au tableau", "voice": "Kore",
+{
+ "language": "fr",
+ "style": "enjoué et tendre, pour enfants de 6-10 ans, comme une maîtresse qui dessine au tableau",
+ "voiceUsed": {
+  "provider": "Fish Audio",
+  "name": "Arnold",
+  "reference_id": "d704cf8f1216490cbfbed89955f0e938",
+  "model": "s2.1-pro",
+  "note": "voix réellement utilisée pour les 31 shorts ; audio par ligne dans voice_lines/NN.mp3"
+ },
+ "voiceGeminiSuggestion": "Kore (historique : Gemini abandonné, voir out/report/failures.md)",
  "lines": [
-  {"t": 0.1, "maxDuration": 2.3, "text": "Comment une graine devient un arbre ?"},
-  {"t": 2.45, "maxDuration": 1.95, "text": "Elle boit, puis elle craque !"},
-  {"t": 4.45, "maxDuration": 2.35, "text": "Les racines plongent dans la terre."},
-  {"t": 6.85, "maxDuration": 2.35, "text": "La tige pousse, les feuilles s'ouvrent !"},
-  {"t": 9.25, "maxDuration": 2.7, "text": "Le soleil la nourrit : c'est la photosynthèse !"},
-  {"t": 12.0, "maxDuration": 2.0, "text": "Des années après : un arbre !"},
-  {"t": 14.05, "maxDuration": 1.3, "text": "Et ça recommence !"}
- ]}
+  {
+   "t": 0.1,
+   "maxDuration": 2.3,
+   "text": "Comment une graine devient un arbre ?"
+  },
+  {
+   "t": 2.45,
+   "maxDuration": 1.95,
+   "text": "Elle boit, puis elle craque !"
+  },
+  {
+   "t": 4.45,
+   "maxDuration": 2.35,
+   "text": "Les racines plongent dans la terre."
+  },
+  {
+   "t": 6.85,
+   "maxDuration": 2.35,
+   "text": "La tige pousse, les feuilles s'ouvrent !"
+  },
+  {
+   "t": 9.25,
+   "maxDuration": 2.7,
+   "text": "Le soleil la nourrit : c'est la photosynthèse !"
+  },
+  {
+   "t": 12.0,
+   "maxDuration": 2.0,
+   "text": "Des années après : un arbre !"
+  },
+  {
+   "t": 14.05,
+   "maxDuration": 1.3,
+   "text": "Et ça recommence !"
+  }
+ ]
+}

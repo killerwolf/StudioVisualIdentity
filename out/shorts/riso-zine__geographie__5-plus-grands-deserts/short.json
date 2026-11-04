@@ -51,7 +51,8 @@
   "voice": true,
   "voiceEngine": "fish-connector",
   "voiceName": "Fish Audio – Arnold (d704cf8f…)",
-  "voiceProvider": "files"
+  "voiceProvider": "files",
+  "voiceUsed": "Fish Audio – Arnold (d704cf8f1216490cbfbed89955f0e938, s2.1-pro)"
  },
  "qualityChecks": {
   "stillsReviewed": true,
@@ -59,5 +60,5 @@
   "safeAreaOk": true
  },
  "notes": "Superficies (désert = très peu de précipitations, pas forcément chaud) : Antarctique ≈ 14 M km², Arctique ≈ 13,9, Sahara ≈ 9,2, Arabie ≈ 2,3, Gobi ≈ 1,3 ; France métropolitaine ≈ 0,55 M km² (rapports arrondis 2,4 / 4 / 17 / 25 / 25). Formes dessinées par code (blobs bruités), aire ∝ superficie, aucune donnée géo téléchargée. Rendu navigateur 124.4 s (480 frames) + passe OpenCV 174.7 s, sous contention (4 studios). Un 1er rendu complet a été jeté (bug de cache de style p5 v2 après ctx.restore : dunes du Sahara invisibles), voir notes/riso-zine.md. Voix off prévue : Puck.",
- "reproduce": "bash out/shorts/riso-zine__geographie__5-plus-grands-deserts/src/build.sh"
+ "reproduce": "bash out/shorts/riso-zine__geographie__5-plus-grands-deserts/src/build.sh && .venv/bin/python out/tools/tts.py out/shorts/riso-zine__geographie__5-plus-grands-deserts --engine files --voice \"Fish Audio – Arnold (d704cf8f…)\" --replace"
 }

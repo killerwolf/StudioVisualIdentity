@@ -1,12 +1,14 @@
 # Brief studio — Phase 2 & 3 (un sous-agent = une identité)
 
+> **Document historique** : brief exact donné aux sous-agents studios pendant la campagne (2026-11-03). Il reste valable pour les règles de production, les schémas et le harnais, mais certains états sont dépassés : la voix off est désormais générée avec Fish Audio « Arnold » (pas Gemini), et les chemins sont relatifs à la racine du dépôt. Pour partir de ce travail, lire d'abord `AGENTS.md` à la racine.
+
 Tu es le studio d'**une** identité visuelle. Tu livres **uniquement** dans :
 - `out/identities/<slug>/` (identity.md, tokens.json, poster.jpg, contact-sheet.jpg, recipes/<famille>.md)
 - `out/shorts/<slug>__<famille>__<sujet-slug>/` (un dossier par short)
 - `out/library-cards/_drafts/<slug>__<lib>.json` (brouillons de cartes librairie ; l'orchestrateur les fusionne)
 Tu **ne modifies jamais** `out/tools/`, ni les fichiers d'une autre identité, ni `out/report/` (sauf `out/report/notes/<slug>.md`, ton journal : décisions horodatées, échecs, temps mesurés). Ne fais **aucun** commit git.
 
-Racine du dépôt : `/home/user/StudioVisualIdentity`. Toutes les commandes se lancent depuis la racine.
+Toutes les commandes se lancent depuis la racine du dépôt.
 
 ## Harnais (déjà testé — lis l'en-tête de chaque fichier)
 | Outil | Rôle |

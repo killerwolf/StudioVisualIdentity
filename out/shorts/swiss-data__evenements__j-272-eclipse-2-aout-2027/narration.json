@@ -1,7 +1,34 @@
-{"language": "fr", "style": "grave, froid, compte à rebours de journal télévisé, phrases courtes", "voice": "Charon",
+{
+ "language": "fr",
+ "style": "grave, froid, compte à rebours de journal télévisé, phrases courtes",
+ "voiceUsed": {
+  "provider": "Fish Audio",
+  "name": "Arnold",
+  "reference_id": "d704cf8f1216490cbfbed89955f0e938",
+  "model": "s2.1-pro",
+  "note": "voix réellement utilisée pour les 31 shorts ; audio par ligne dans voice_lines/NN.mp3"
+ },
+ "voiceGeminiSuggestion": "Charon (historique : Gemini abandonné, voir out/report/failures.md)",
  "lines": [
-  {"t": 0.3, "maxDuration": 3.1, "text": "Dans 272 jours, le Soleil va s'éteindre."},
-  {"t": 3.7, "maxDuration": 3.6, "text": "Jusqu'à six minutes vingt-trois de nuit, près de Louxor."},
-  {"t": 8.6, "maxDuration": 3.6, "text": "De Cadix à la Somalie, en passant par l'Égypte."},
-  {"t": 12.55, "maxDuration": 2.4, "text": "Un record jusqu'en 2114."}
- ]}
+  {
+   "t": 0.3,
+   "maxDuration": 3.1,
+   "text": "Dans 272 jours, le Soleil va s'éteindre."
+  },
+  {
+   "t": 3.7,
+   "maxDuration": 3.6,
+   "text": "Jusqu'à six minutes vingt-trois de nuit, près de Louxor."
+  },
+  {
+   "t": 8.6,
+   "maxDuration": 3.6,
+   "text": "De Cadix à la Somalie, en passant par l'Égypte."
+  },
+  {
+   "t": 12.55,
+   "maxDuration": 2.4,
+   "text": "Un record jusqu'en 2114."
+  }
+ ]
+}

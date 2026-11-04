@@ -58,7 +58,8 @@
   "voice": true,
   "voiceEngine": "fish-connector",
   "voiceName": "Fish Audio – Arnold (d704cf8f…)",
-  "voiceProvider": "files"
+  "voiceProvider": "files",
+  "voiceUsed": "Fish Audio – Arnold (d704cf8f1216490cbfbed89955f0e938, s2.1-pro)"
  },
  "qualityChecks": {
   "stillsReviewed": true,
@@ -66,5 +67,5 @@
   "safeAreaOk": true
  },
  "notes": "Faits : Vénus ≈ 465 °C en surface jour et nuit ; distance moyenne au Soleil 108 M km contre 58 M km pour Mercure (≈ 1,9×) ; atmosphère de CO₂ à ~92 fois la pression terrestre -> effet de serre emballé ; Mercure sans atmosphère : ~430 °C le jour, ~–180 °C la nuit. Schéma volontairement exagéré : coquille d'atmosphère épaisse (1,24 R) et photons visibles (lumière entrante blanc chaud, infrarouge en braise #FF6A2A). Tout procédural (textures canvas déterministes, graine 404). Rendu three.js + GSAP 450 frames en 838,7 s (186,4 s/100 frames) sous contention forte (4 slots occupés, load ≈ 20–23). Module commun src/cosmos.js identique à celui du short evenements. Texte min 54 px (tag), contenu entre y=236 et y=1570, x ≤ 960.",
- "reproduce": "node out/tools/render.mjs out/shorts/cosmos-doc__explicatif__pourquoi-venus-plus-chaude-que-mercure/src/index.html --out /tmp/svi/cosmos-doc__explicatif__pourquoi-venus-plus-chaude-que-mercure/video.mp4 --duration 15 && .venv/bin/python out/tools/sound.py out/shorts/cosmos-doc__explicatif__pourquoi-venus-plus-chaude-que-mercure/src/sound.json /tmp/svi/cosmos-doc__explicatif__pourquoi-venus-plus-chaude-que-mercure/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/cosmos-doc__explicatif__pourquoi-venus-plus-chaude-que-mercure/video.mp4 --music /tmp/svi/cosmos-doc__explicatif__pourquoi-venus-plus-chaude-que-mercure/music.wav --out out/shorts/cosmos-doc__explicatif__pourquoi-venus-plus-chaude-que-mercure/short.mp4"
+ "reproduce": "node out/tools/render.mjs out/shorts/cosmos-doc__explicatif__pourquoi-venus-plus-chaude-que-mercure/src/index.html --out /tmp/svi/cosmos-doc__explicatif__pourquoi-venus-plus-chaude-que-mercure/video.mp4 --duration 15 && .venv/bin/python out/tools/sound.py out/shorts/cosmos-doc__explicatif__pourquoi-venus-plus-chaude-que-mercure/src/sound.json /tmp/svi/cosmos-doc__explicatif__pourquoi-venus-plus-chaude-que-mercure/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/cosmos-doc__explicatif__pourquoi-venus-plus-chaude-que-mercure/video.mp4 --music /tmp/svi/cosmos-doc__explicatif__pourquoi-venus-plus-chaude-que-mercure/music.wav --out out/shorts/cosmos-doc__explicatif__pourquoi-venus-plus-chaude-que-mercure/short.mp4 && .venv/bin/python out/tools/tts.py out/shorts/cosmos-doc__explicatif__pourquoi-venus-plus-chaude-que-mercure --engine files --voice \"Fish Audio – Arnold (d704cf8f…)\" --replace"
 }

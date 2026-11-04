@@ -42,7 +42,8 @@
   "voice": true,
   "voiceEngine": "fish-connector",
   "voiceName": "Fish Audio – Arnold (d704cf8f…)",
-  "voiceProvider": "files"
+  "voiceProvider": "files",
+  "voiceUsed": "Fish Audio – Arnold (d704cf8f1216490cbfbed89955f0e938, s2.1-pro)"
  },
  "qualityChecks": {
   "stillsReviewed": true,
@@ -50,5 +51,5 @@
   "safeAreaOk": true
  },
  "notes": "Physique : double pendule à masses ponctuelles et tiges rigides sans masse, sans frottement (équations de Lagrange standard), m1 = m2 = 1 kg, L1 = L2 = 1 m, g = 9,81 m/s², RK4 à pas fixe dt = 1/1800 s (60 sous-pas par frame), temps simulé = temps vidéo (temps réel). A : θ1 = θ2 = 1,8 rad, ω = 0 ; B : θ1 = 1,801 rad. Énergie conservée à 1,4e-9 J près sur 15 s (6,686558 J). Écart mesuré entre les masses inférieures : 1,0 mm à t=0, 1 cm à 5,1 s, 50 cm à 8,8 s, 1 m (×1 000) à 10,0 s ; maximum ≈ 2,9 m (borné par la taille du système, d'où la saturation du graphe). Conditions initiales choisies par pré-simulation pour que la divergence tombe sur le beat C. Rendu Matplotlib Agg (une figure réutilisée, artistes mis à jour) : 243,1 s au total dont 237,8 s de dessin (52,8 s/100 frames) ; post OpenCV neon_grade.py 69,6 s (15,5 s/100 frames, CPU peu chargé). Polices : woff @fontsource convertis en ttf via fontTools (Matplotlib ne lit pas le woff2).",
- "reproduce": "out/tools/slot.sh .venv/bin/python out/shorts/neon-lab__explicatif__effet-papillon-double-pendule/src/render.py --out /tmp/svi/neon-lab-pend/raw.mp4 && out/tools/slot.sh .venv/bin/python out/shorts/neon-lab__explicatif__effet-papillon-double-pendule/src/neon_grade.py /tmp/svi/neon-lab-pend/raw.mp4 /tmp/svi/neon-lab-pend/video.mp4 && .venv/bin/python out/tools/sound.py out/shorts/neon-lab__explicatif__effet-papillon-double-pendule/src/sound.json /tmp/svi/neon-lab-pend/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/neon-lab-pend/video.mp4 --music /tmp/svi/neon-lab-pend/music.wav --out out/shorts/neon-lab__explicatif__effet-papillon-double-pendule/short.mp4"
+ "reproduce": "out/tools/slot.sh .venv/bin/python out/shorts/neon-lab__explicatif__effet-papillon-double-pendule/src/render.py --out /tmp/svi/neon-lab-pend/raw.mp4 && out/tools/slot.sh .venv/bin/python out/shorts/neon-lab__explicatif__effet-papillon-double-pendule/src/neon_grade.py /tmp/svi/neon-lab-pend/raw.mp4 /tmp/svi/neon-lab-pend/video.mp4 && .venv/bin/python out/tools/sound.py out/shorts/neon-lab__explicatif__effet-papillon-double-pendule/src/sound.json /tmp/svi/neon-lab-pend/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/neon-lab-pend/video.mp4 --music /tmp/svi/neon-lab-pend/music.wav --out out/shorts/neon-lab__explicatif__effet-papillon-double-pendule/short.mp4 && .venv/bin/python out/tools/tts.py out/shorts/neon-lab__explicatif__effet-papillon-double-pendule --engine files --voice \"Fish Audio – Arnold (d704cf8f…)\" --replace"
 }

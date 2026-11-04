@@ -1,15 +1,54 @@
 {
-  "language": "fr",
-  "style": "énergique et joueur, défi lancé au spectateur, tutoiement",
-  "voice": "Fenrir",
-  "lines": [
-    {"t": 0.2, "maxDuration": 1.2, "text": "Trouve l'intrus !"},
-    {"t": 1.5, "maxDuration": 1.6, "text": "Tu as cinq secondes."},
-    {"t": 3.4, "maxDuration": 0.8, "text": "Trois…"},
-    {"t": 4.4, "maxDuration": 0.8, "text": "Deux…"},
-    {"t": 5.4, "maxDuration": 0.8, "text": "Un…"},
-    {"t": 6.6, "maxDuration": 2.8, "text": "Là ! Il est tourné de 90 degrés."},
-    {"t": 9.6, "maxDuration": 1.9, "text": "T'as trouvé en combien ?"},
-    {"t": 11.8, "maxDuration": 1.8, "text": "Dis-le en commentaire !"}
-  ]
+ "language": "fr",
+ "style": "énergique et joueur, défi lancé au spectateur, tutoiement",
+ "voiceUsed": {
+  "provider": "Fish Audio",
+  "name": "Arnold",
+  "reference_id": "d704cf8f1216490cbfbed89955f0e938",
+  "model": "s2.1-pro",
+  "note": "voix réellement utilisée pour les 31 shorts ; audio par ligne dans voice_lines/NN.mp3"
+ },
+ "voiceGeminiSuggestion": "Fenrir (historique : Gemini abandonné, voir out/report/failures.md)",
+ "lines": [
+  {
+   "t": 0.2,
+   "maxDuration": 1.2,
+   "text": "Trouve l'intrus !"
+  },
+  {
+   "t": 1.5,
+   "maxDuration": 1.6,
+   "text": "Tu as cinq secondes."
+  },
+  {
+   "t": 3.4,
+   "maxDuration": 0.8,
+   "text": "Trois…"
+  },
+  {
+   "t": 4.4,
+   "maxDuration": 0.8,
+   "text": "Deux…"
+  },
+  {
+   "t": 5.4,
+   "maxDuration": 0.8,
+   "text": "Un…"
+  },
+  {
+   "t": 6.6,
+   "maxDuration": 2.8,
+   "text": "Là ! Il est tourné de 90 degrés."
+  },
+  {
+   "t": 9.6,
+   "maxDuration": 1.9,
+   "text": "T'as trouvé en combien ?"
+  },
+  {
+   "t": 11.8,
+   "maxDuration": 1.8,
+   "text": "Dis-le en commentaire !"
+  }
+ ]
 }

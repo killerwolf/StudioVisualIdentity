@@ -50,7 +50,8 @@
   "voice": true,
   "voiceEngine": "fish-connector",
   "voiceName": "Fish Audio – Arnold (d704cf8f…)",
-  "voiceProvider": "files"
+  "voiceProvider": "files",
+  "voiceUsed": "Fish Audio – Arnold (d704cf8f1216490cbfbed89955f0e938, s2.1-pro)"
  },
  "qualityChecks": {
   "stillsReviewed": true,
@@ -58,5 +59,5 @@
   "safeAreaOk": true
  },
  "notes": "Grille 128 bpm : une = 6 temps (2,8125 s). Chaque une : tourniquet 0,55 s power3.out (-540°), tampon 0,16 s power4.in à +1,5 temps, dépêche typewriter 34 car/s, zoom brusque ×1,1 (0,14 s expo.out) à +4 temps, Ken Burns ×1,07 sur la gravure. Gravures procédurales en hachures (canvas 2D) ; silhouettes inventées et stylisées (aucun portrait réel). Post OpenCV par frame (pipes ffmpeg, slot.sh) : gate weave, bavure d'encre, sépia/taches/fibres/vignette, flicker, grain, rayures, poussières, flash sur coupes — 155,2 s pour 563 frames (27,6 s/100 f). renderTimeSec = render.mjs seul (65,2 s/100 f, CPU partagé). Total pipeline mesuré ≈ 530 s. Poids 19,8 Mo (le grain sature le plafond 8 Mb/s).",
- "reproduce": "bash out/shorts/gazette-1900__histoire__1789-en-20-secondes/src/build.sh   # = node out/tools/render.mjs out/shorts/gazette-1900__histoire__1789-en-20-secondes/src/index.html --out /tmp/svi/gazette-1900__histoire__1789-en-20-secondes/raw.mp4 --duration 18.75 && out/tools/slot.sh .venv/bin/python out/shorts/gazette-1900__histoire__1789-en-20-secondes/src/post.py video /tmp/svi/gazette-1900__histoire__1789-en-20-secondes/raw.mp4 /tmp/svi/gazette-1900__histoire__1789-en-20-secondes/video.mp4 --seed 1900 --flash 1.875,4.6875,7.5,10.3125,13.125,15.9375 && .venv/bin/python out/tools/sound.py out/shorts/gazette-1900__histoire__1789-en-20-secondes/src/sound.json /tmp/svi/gazette-1900__histoire__1789-en-20-secondes/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/gazette-1900__histoire__1789-en-20-secondes/video.mp4 --music /tmp/svi/gazette-1900__histoire__1789-en-20-secondes/music.wav --out out/shorts/gazette-1900__histoire__1789-en-20-secondes/short.mp4"
+ "reproduce": "bash out/shorts/gazette-1900__histoire__1789-en-20-secondes/src/build.sh   # = node out/tools/render.mjs out/shorts/gazette-1900__histoire__1789-en-20-secondes/src/index.html --out /tmp/svi/gazette-1900__histoire__1789-en-20-secondes/raw.mp4 --duration 18.75 && out/tools/slot.sh .venv/bin/python out/shorts/gazette-1900__histoire__1789-en-20-secondes/src/post.py video /tmp/svi/gazette-1900__histoire__1789-en-20-secondes/raw.mp4 /tmp/svi/gazette-1900__histoire__1789-en-20-secondes/video.mp4 --seed 1900 --flash 1.875,4.6875,7.5,10.3125,13.125,15.9375 && .venv/bin/python out/tools/sound.py out/shorts/gazette-1900__histoire__1789-en-20-secondes/src/sound.json /tmp/svi/gazette-1900__histoire__1789-en-20-secondes/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/gazette-1900__histoire__1789-en-20-secondes/video.mp4 --music /tmp/svi/gazette-1900__histoire__1789-en-20-secondes/music.wav --out out/shorts/gazette-1900__histoire__1789-en-20-secondes/short.mp4 && .venv/bin/python out/tools/tts.py out/shorts/gazette-1900__histoire__1789-en-20-secondes --engine files --voice \"Fish Audio – Arnold (d704cf8f…)\" --replace"
 }

@@ -93,6 +93,9 @@ Chaque short est une page d'album : un paysage peint à l'eau qui respire, un pe
 - `out/shorts/aquarelle-conte__histoire__phare-d-alexandrie/` : « Il était une fois le Phare d'Alexandrie », 16 s.
 
 ## Place de la voix off (où elle parlera, débit conseillé, ce que le visuel laisse libre)
+
+> **Voix réellement utilisée pour tous les shorts : Fish Audio « Arnold »** (`d704cf8f1216490cbfbed89955f0e938`, modèle `s2.1-pro`, conteur masculin FR). Les noms de voix Gemini (Orus, Kore, Aoede…) qui suivent sont des suggestions historiques de casting par ton : Gemini a été abandonné (quota). Le placement, le débit et les silences décrits ici restent valables.
+
 - Voix : Gemini **Aoede** (conteuse), douce, avec un sourire dans la voix. Débit ≤ 2,6 mots/s, en pratique 2,3–2,6.
 - La voix parle en continu avec des respirations de 0,1 s entre les lignes. Elle commence à 0,3 s et s'arrête avant le `fondu-papier`.
 - Le visuel laisse libre tout ce qui n'est pas écrit : l'écran ne porte qu'un mot-clé et une phrase courte, la voix raconte le reste (par exemple Ptolémée ou les 100–130 m sont dits ou montrés, pas les deux).

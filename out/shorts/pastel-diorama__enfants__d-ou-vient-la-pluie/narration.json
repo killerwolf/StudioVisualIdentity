@@ -1,7 +1,14 @@
 {
  "language": "fr",
  "style": "enjoué et tendre, conteuse pour enfants de 6-10 ans, sourire dans la voix",
- "voice": "Leda",
+ "voiceUsed": {
+  "provider": "Fish Audio",
+  "name": "Arnold",
+  "reference_id": "d704cf8f1216490cbfbed89955f0e938",
+  "model": "s2.1-pro",
+  "note": "voix réellement utilisée pour les 31 shorts ; audio par ligne dans voice_lines/NN.mp3"
+ },
+ "voiceGeminiSuggestion": "Leda (historique : Gemini abandonné, voir out/report/failures.md)",
  "lines": [
   {
    "t": 0.2,

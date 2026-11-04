@@ -5,3 +5,13 @@ node out/tools/render.mjs out/shorts/neon-lab__explicatif__lune-meme-face/src/in
 ```
 
 Fichiers : `index.html` (scène three.js + UnrealBloom, texte DOM/SVG), `field.glsl.js` (champ de force GLSL partagé avec le short abstrait, ici en ShaderMaterial), `neon_grade.py` (post OpenCV identique à l'abstrait), `sound.json`. Graine 7 (étoiles).
+
+## Dernière étape : voix off (Fish Audio « Arnold »)
+
+La commande ci-dessus produit la version **sans voix**. Pour obtenir le `short.mp4` livré (avec voix), lancer ensuite :
+
+```bash
+.venv/bin/python out/tools/tts.py out/shorts/neon-lab__explicatif__lune-meme-face --engine files --voice "Fish Audio – Arnold (d704cf8f…)" --replace
+```
+
+Les fichiers `voice_lines/NN.mp3` (une ligne de `narration.json` chacun) sont déjà dans le dossier ; pour une nouvelle narration, les générer d'abord (voir `out/report/README.md`, section « Voix off Fish Audio »).

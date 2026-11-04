@@ -42,7 +42,8 @@
   "voice": true,
   "voiceEngine": "fish-connector",
   "voiceName": "Fish Audio – Arnold (d704cf8f…)",
-  "voiceProvider": "files"
+  "voiceProvider": "files",
+  "voiceUsed": "Fish Audio – Arnold (d704cf8f1216490cbfbed89955f0e938, s2.1-pro)"
  },
  "qualityChecks": {
   "stillsReviewed": true,
@@ -50,5 +51,5 @@
   "safeAreaOk": true
  },
  "notes": "Zdog : maquette pseudo-3D du poster Phase 1 réutilisée (socle feutrine, lac, maison, arbres-boules) ; Plip = chemin bezier rempli + trait rond. GSAP : 1 tween par propriété d'un objet d'état, seek(t,false) -> stills et vidéo identiques. Vapeur représentée par des volutes blanches translucides (la vraie vapeur est invisible : la voix off le dit). Rendu 66 s/100 frames mesuré avec CPU partagé par 10 studios (attente de slot exclue).",
- "reproduce": "node out/tools/render.mjs out/shorts/pastel-diorama__enfants__d-ou-vient-la-pluie/src/index.html --out /tmp/svi/pastel-diorama__enfants__d-ou-vient-la-pluie/video.mp4 --duration 16 && .venv/bin/python out/tools/sound.py out/shorts/pastel-diorama__enfants__d-ou-vient-la-pluie/src/sound.json /tmp/svi/pastel-diorama__enfants__d-ou-vient-la-pluie/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/pastel-diorama__enfants__d-ou-vient-la-pluie/video.mp4 --music /tmp/svi/pastel-diorama__enfants__d-ou-vient-la-pluie/music.wav --out out/shorts/pastel-diorama__enfants__d-ou-vient-la-pluie/short.mp4"
+ "reproduce": "node out/tools/render.mjs out/shorts/pastel-diorama__enfants__d-ou-vient-la-pluie/src/index.html --out /tmp/svi/pastel-diorama__enfants__d-ou-vient-la-pluie/video.mp4 --duration 16 && .venv/bin/python out/tools/sound.py out/shorts/pastel-diorama__enfants__d-ou-vient-la-pluie/src/sound.json /tmp/svi/pastel-diorama__enfants__d-ou-vient-la-pluie/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/pastel-diorama__enfants__d-ou-vient-la-pluie/video.mp4 --music /tmp/svi/pastel-diorama__enfants__d-ou-vient-la-pluie/music.wav --out out/shorts/pastel-diorama__enfants__d-ou-vient-la-pluie/short.mp4 && .venv/bin/python out/tools/tts.py out/shorts/pastel-diorama__enfants__d-ou-vient-la-pluie --engine files --voice \"Fish Audio – Arnold (d704cf8f…)\" --replace"
 }

@@ -83,6 +83,9 @@ Haut 220 px, bas 320 px, droite 120 px (et marge gauche 72 px). Tag à 232 px, t
 - `out/shorts/neon-lab__explicatif__effet-papillon-double-pendule/` — 15 s, Matplotlib + OpenCV (champ de force porté en numpy, LABO/03).
 
 ## Place de la voix off (où elle parlera, débit conseillé, ce que le visuel laisse libre)
+
+> **Voix réellement utilisée pour tous les shorts : Fish Audio « Arnold »** (`d704cf8f1216490cbfbed89955f0e938`, modèle `s2.1-pro`, conteur masculin FR). Les noms de voix Gemini (Orus, Kore, Aoede…) qui suivent sont des suggestions historiques de casting par ton : Gemini a été abandonné (quota). Le placement, le débit et les silences décrits ici restent valables.
+
 - Voix documentaire posée (Gemini **Orus** pour l'explicatif, **Achernar** calme pour l'abstrait), débit ≤ 2,6 mots/s, une phrase par beat, démarrage 0,1–0,3 s après chaque impulsion.
 - Le visuel ne porte que titres courts, chiffres et légendes : la voix porte le « pourquoi » (mécanisme, cause) ; les nombres restent à l'écran (la voix peut ne pas les lire).
 - Musique déjà mixée à −18 dB ; impulsions/SFX sur les beats, jamais sous une syllabe accentuée.

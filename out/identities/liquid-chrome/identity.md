@@ -81,6 +81,9 @@ Haut 220 px, bas 320 px, droite 120 px. Légende à y = 232, titre à y = 306, x
 - `out/shorts/liquid-chrome__abstrait__pendule-de-newton-chrome/` — Babylon.js, 12 s, boucle parfaite (pendule de Newton, T = 2,4 s × 5).
 
 ## Place de la voix off (où elle parlera, débit conseillé, ce que le visuel laisse libre)
+
+> **Voix réellement utilisée pour tous les shorts : Fish Audio « Arnold »** (`d704cf8f1216490cbfbed89955f0e938`, modèle `s2.1-pro`, conteur masculin FR). Les noms de voix Gemini (Orus, Kore, Aoede…) qui suivent sont des suggestions historiques de casting par ton : Gemini a été abandonné (quota). Le placement, le débit et les silences décrits ici restent valables.
+
 Voix Gemini **Achernar** (calme), débit 2,3–2,6 mots/s, phrases de 2 à 6 mots posées **entre** les impacts sonores (les chutes et la victoire restent « à nu »). Le visuel ne porte que 1 titre + 1 légende à la fois et laisse la moitié basse de l'écran à la matière : la voix raconte ce qu'on ressent (« Chacune tombe de tout son poids »), l'écran ne la double pas mot à mot. La musique (pad / pulse) est duckée sous la voix par `assemble.py --voice`.
 
 ## Risques et limites

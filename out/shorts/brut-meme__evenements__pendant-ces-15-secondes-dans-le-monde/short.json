@@ -66,7 +66,8 @@
   "voice": true,
   "voiceEngine": "fish-connector",
   "voiceName": "Fish Audio – Arnold (d704cf8f…)",
-  "voiceProvider": "files"
+  "voiceProvider": "files",
+  "voiceUsed": "Fish Audio – Arnold (d704cf8f1216490cbfbed89955f0e938, s2.1-pro)"
  },
  "qualityChecks": {
   "stillsReviewed": true,
@@ -74,5 +75,5 @@
   "safeAreaOk": true
  },
  "notes": "Chiffres arrondis (formulation « environ » / « ≈ ») : naissances ≈ 132 millions/an ≈ 4,2/s -> 63 en 15 s ; décès ≈ 61 millions/an ≈ 1,9/s -> ≈ 29 ; éclairs ≈ 44/s (ordre de grandeur des mesures satellite, 40–50/s) -> ≈ 660 ; e-mails ≈ 350 milliards/jour (spam inclus) ≈ 4 millions/s -> ≈ 60 millions ; vitesse orbitale de la Terre ≈ 29,8 km/s -> ≈ 450 km ; cœur au repos ≈ 70/min ≈ 1,2/s -> ≈ 18. Chaque compteur affiche débit × temps écoulé du short (cohérent avec l'horloge EN DIRECT). Fonds : noir / jaune alternés, inversions espacées d'au moins 1,6 s (photosensibilité) ; éclairs dessinés en petits zigzags renouvelés 2×/s, aucun flash plein cadre. Seed 15 : position des éclairs et shake. Caméra : punch-in 1,15 -> 1 en 3 frames à chaque cut (force 0,3–1). Texte min 56 px, titres Anton auto-fit 900 px, contenu x 60–960, y 236–1590. Son : pulse 120 bpm, impact sur chaque cut, blip par naissance, thud par décès et par battement.",
- "reproduce": ""
+ "reproduce": "node out/shorts/brut-meme__evenements__pendant-ces-15-secondes-dans-le-monde/src/make_sound.mjs && node out/tools/render.mjs out/shorts/brut-meme__evenements__pendant-ces-15-secondes-dans-le-monde/src/index.html --out /tmp/svi/brut-meme__evenements__pendant-ces-15-secondes-dans-le-monde/video.mp4 --duration 16 && .venv/bin/python out/tools/sound.py out/shorts/brut-meme__evenements__pendant-ces-15-secondes-dans-le-monde/src/sound.json /tmp/svi/brut-meme__evenements__pendant-ces-15-secondes-dans-le-monde/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/brut-meme__evenements__pendant-ces-15-secondes-dans-le-monde/video.mp4 --music /tmp/svi/brut-meme__evenements__pendant-ces-15-secondes-dans-le-monde/music.wav --out out/shorts/brut-meme__evenements__pendant-ces-15-secondes-dans-le-monde/short.mp4 && .venv/bin/python out/tools/tts.py out/shorts/brut-meme__evenements__pendant-ces-15-secondes-dans-le-monde --engine files --voice \"Fish Audio – Arnold (d704cf8f…)\" --replace"
 }

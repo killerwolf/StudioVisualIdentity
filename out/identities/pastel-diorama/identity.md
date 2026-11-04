@@ -76,6 +76,9 @@ Haut 220 px (rien ; kicker/pastilles à partir de y = 236), bas 320 px (rien d'i
 - `out/shorts/pastel-diorama__engagement__choisis-ta-boite-renard/` — A-Frame + GSAP, 15 s, jeu des 3 boîtes et du petit renard.
 
 ## Place de la voix off (où elle parlera, débit conseillé, ce que le visuel laisse libre)
+
+> **Voix réellement utilisée pour tous les shorts : Fish Audio « Arnold »** (`d704cf8f1216490cbfbed89955f0e938`, modèle `s2.1-pro`, conteur masculin FR). Les noms de voix Gemini (Orus, Kore, Aoede…) qui suivent sont des suggestions historiques de casting par ton : Gemini a été abandonné (quota). Le placement, le débit et les silences décrits ici restent valables.
+
 La voix (Gemini : Leda pour expliquer, Puck pour jouer) parle sur chaque étape, une phrase courte par pastille, en démarrant 0.05–0.1 s après l'apparition de la pastille. Débit ≤ 2.6 mots/s, phrases de 4 à 10 mots. Le visuel ne montre que le mot-clé (« Évaporation », « 1, 2 ou 3 ? ») : la voix donne la phrase complète. Le ciel entre la pastille du haut et le socle (y ≈ 600–1000) reste libre pour l'action ; aucun sous-titre long. La musique music-box (−18 dB) laisse de la place aux médiums de la voix ; les SFX sont courts (pop, chime).
 
 ## Risques et limites

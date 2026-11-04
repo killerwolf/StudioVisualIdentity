@@ -60,7 +60,8 @@
   "sfx": "39 blips de collision tirés du journal physique Matter (hauteur = couleur de la bille, gain ∝ vitesse relative, 1 blip / 60 ms max), clic sur choc bille-bille, coin aux arrivées, whoosh de transition",
   "voiceEngine": "fish-connector",
   "voiceName": "Fish Audio – Arnold (d704cf8f…)",
-  "voiceProvider": "files"
+  "voiceProvider": "files",
+  "voiceUsed": "Fish Audio – Arnold (d704cf8f1216490cbfbed89955f0e938, s2.1-pro)"
  },
  "qualityChecks": {
   "stillsReviewed": true,
@@ -76,5 +77,5 @@
   ]
  },
  "notes": "Graine choisie parmi 600 pré-simulées en Node pur (35 s) : vainqueur 11,2–13,2 s, dernier ≤ 14,6 s, ≤ 2 nudges, arrivée serrée. Graine 17 : BLEUE 11,833 s, VERTE 11,933 s, JAUNE 13,35 s, ROSE 13,983 s (temps de course affichés = t − 2,4 s) ; 1 nudge anti-blocage (VERTE à 9,81 s, aucun progrès vertical pendant 1,2 s). Physique : Matter 0.20, gravité 1 × 0.001, 4 sous-pas de 8,33 ms par frame, billes friction 0 + frictionAir 0.014. Angles/longueurs des rampes en littéraux (atan2/hypot diffèrent entre Node 22 et Chromium 153). Rendu 43,4 s / 100 frames avec 4 slots CPU partagés.",
- "reproduce": "node out/shorts/pixel-arcade__engagement__quelle-bille-gagne-la-course/src/simulate.js --seed 17 && node out/shorts/pixel-arcade__engagement__quelle-bille-gagne-la-course/src/make_sound.cjs && node out/tools/render.mjs out/shorts/pixel-arcade__engagement__quelle-bille-gagne-la-course/src/index.html --out /tmp/svi/pixel-arcade__engagement__quelle-bille-gagne-la-course/video.mp4 --duration 16 && .venv/bin/python out/tools/sound.py out/shorts/pixel-arcade__engagement__quelle-bille-gagne-la-course/src/sound.json /tmp/svi/pixel-arcade__engagement__quelle-bille-gagne-la-course/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/pixel-arcade__engagement__quelle-bille-gagne-la-course/video.mp4 --music /tmp/svi/pixel-arcade__engagement__quelle-bille-gagne-la-course/music.wav --out out/shorts/pixel-arcade__engagement__quelle-bille-gagne-la-course/short.mp4"
+ "reproduce": "node out/shorts/pixel-arcade__engagement__quelle-bille-gagne-la-course/src/simulate.js --seed 17 && node out/shorts/pixel-arcade__engagement__quelle-bille-gagne-la-course/src/make_sound.cjs && node out/tools/render.mjs out/shorts/pixel-arcade__engagement__quelle-bille-gagne-la-course/src/index.html --out /tmp/svi/pixel-arcade__engagement__quelle-bille-gagne-la-course/video.mp4 --duration 16 && .venv/bin/python out/tools/sound.py out/shorts/pixel-arcade__engagement__quelle-bille-gagne-la-course/src/sound.json /tmp/svi/pixel-arcade__engagement__quelle-bille-gagne-la-course/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/pixel-arcade__engagement__quelle-bille-gagne-la-course/video.mp4 --music /tmp/svi/pixel-arcade__engagement__quelle-bille-gagne-la-course/music.wav --out out/shorts/pixel-arcade__engagement__quelle-bille-gagne-la-course/short.mp4 && .venv/bin/python out/tools/tts.py out/shorts/pixel-arcade__engagement__quelle-bille-gagne-la-course --engine files --voice \"Fish Audio – Arnold (d704cf8f…)\" --replace"
 }

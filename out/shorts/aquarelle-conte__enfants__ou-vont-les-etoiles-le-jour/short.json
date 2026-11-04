@@ -56,7 +56,8 @@
   "spec": "src/sound.json",
   "voiceEngine": "fish-connector",
   "voiceName": "Fish Audio – Arnold (d704cf8f…)",
-  "voiceProvider": "files"
+  "voiceProvider": "files",
+  "voiceUsed": "Fish Audio – Arnold (d704cf8f1216490cbfbed89955f0e938, s2.1-pro)"
  },
  "qualityChecks": {
   "stillsReviewed": true,
@@ -64,5 +65,5 @@
   "safeAreaOk": true
  },
  "notes": "Réponse correcte pour enfants : les étoiles sont toujours dans le ciel le jour, la lumière du Soleil (diffusée par l'atmosphère) est bien plus forte et les cache. Lavis p5 pré-rendus (9 calques) composés par frame ; Paper.js pour Lulu, étincelles, étoile filante, cercles pointillés, loupe. Rendu mesuré 529 s pour 450 frames (117,6 s/100 frames) avec 4 rendus concurrents sur 4 cœurs ; un 1er rendu (507 s) jeté pour une bande de 15 px non couverte à droite (calque trop étroit).",
- "reproduce": "node out/tools/render.mjs out/shorts/aquarelle-conte__enfants__ou-vont-les-etoiles-le-jour/src/index.html --out /tmp/svi/aquarelle-conte__enfants__ou-vont-les-etoiles-le-jour/video.mp4 --duration 15 && .venv/bin/python out/tools/sound.py out/shorts/aquarelle-conte__enfants__ou-vont-les-etoiles-le-jour/src/sound.json /tmp/svi/aquarelle-conte__enfants__ou-vont-les-etoiles-le-jour/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/aquarelle-conte__enfants__ou-vont-les-etoiles-le-jour/video.mp4 --music /tmp/svi/aquarelle-conte__enfants__ou-vont-les-etoiles-le-jour/music.wav --out out/shorts/aquarelle-conte__enfants__ou-vont-les-etoiles-le-jour/short.mp4"
+ "reproduce": "node out/tools/render.mjs out/shorts/aquarelle-conte__enfants__ou-vont-les-etoiles-le-jour/src/index.html --out /tmp/svi/aquarelle-conte__enfants__ou-vont-les-etoiles-le-jour/video.mp4 --duration 15 && .venv/bin/python out/tools/sound.py out/shorts/aquarelle-conte__enfants__ou-vont-les-etoiles-le-jour/src/sound.json /tmp/svi/aquarelle-conte__enfants__ou-vont-les-etoiles-le-jour/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/aquarelle-conte__enfants__ou-vont-les-etoiles-le-jour/video.mp4 --music /tmp/svi/aquarelle-conte__enfants__ou-vont-les-etoiles-le-jour/music.wav --out out/shorts/aquarelle-conte__enfants__ou-vont-les-etoiles-le-jour/short.mp4 && .venv/bin/python out/tools/tts.py out/shorts/aquarelle-conte__enfants__ou-vont-les-etoiles-le-jour --engine files --voice \"Fish Audio – Arnold (d704cf8f…)\" --replace"
 }

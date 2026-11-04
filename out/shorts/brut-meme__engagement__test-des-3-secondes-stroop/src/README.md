@@ -8,3 +8,13 @@ node out/shorts/brut-meme__engagement__test-des-3-secondes-stroop/src/make_sound
 
 Fichiers : `index.html` (scène PixiJS 8 + GSAP 3, contrat window.ready / renderAt), `brut.js` (moteur partagé de l'identité :
 Pixi headless, trame, stickers, caméra punch-in/shake, ajustement des titres), `make_sound.mjs` -> `sound.json` (pulse 120 bpm + SFX sur les cuts).
+
+## Dernière étape : voix off (Fish Audio « Arnold »)
+
+La commande ci-dessus produit la version **sans voix**. Pour obtenir le `short.mp4` livré (avec voix), lancer ensuite :
+
+```bash
+.venv/bin/python out/tools/tts.py out/shorts/brut-meme__engagement__test-des-3-secondes-stroop --engine files --voice "Fish Audio – Arnold (d704cf8f…)" --replace
+```
+
+Les fichiers `voice_lines/NN.mp3` (une ligne de `narration.json` chacun) sont déjà dans le dossier ; pour une nouvelle narration, les générer d'abord (voir `out/report/README.md`, section « Voix off Fish Audio »).

@@ -1,7 +1,14 @@
 {
  "language": "fr",
  "style": "énergique, animateur de défi TikTok, punchy, sourire dans la voix, phrases très courtes",
- "voice": "Fenrir",
+ "voiceUsed": {
+  "provider": "Fish Audio",
+  "name": "Arnold",
+  "reference_id": "d704cf8f1216490cbfbed89955f0e938",
+  "model": "s2.1-pro",
+  "note": "voix réellement utilisée pour les 31 shorts ; audio par ligne dans voice_lines/NN.mp3"
+ },
+ "voiceGeminiSuggestion": "Fenrir (historique : Gemini abandonné, voir out/report/failures.md)",
  "lines": [
   {
    "t": 0.15,

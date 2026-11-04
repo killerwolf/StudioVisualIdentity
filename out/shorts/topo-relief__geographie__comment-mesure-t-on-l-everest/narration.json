@@ -1,9 +1,44 @@
-{"language": "fr", "style": "documentaire posé, voix d'expédition, sobre et précise", "voice": "Orus",
+{
+ "language": "fr",
+ "style": "documentaire posé, voix d'expédition, sobre et précise",
+ "voiceUsed": {
+  "provider": "Fish Audio",
+  "name": "Arnold",
+  "reference_id": "d704cf8f1216490cbfbed89955f0e938",
+  "model": "s2.1-pro",
+  "note": "voix réellement utilisée pour les 31 shorts ; audio par ligne dans voice_lines/NN.mp3"
+ },
+ "voiceGeminiSuggestion": "Orus (historique : Gemini abandonné, voir out/report/failures.md)",
  "lines": [
-  {"t": 0.2, "maxDuration": 3.0, "text": "Comment mesure-t-on le toit du monde ?"},
-  {"t": 3.3, "maxDuration": 2.4, "text": "Chine et Népal, ensemble, en 2020."},
-  {"t": 5.7, "maxDuration": 2.2, "text": "Un récepteur satellite au sommet."},
-  {"t": 8.1, "maxDuration": 2.1, "text": "Un radar sonde la neige."},
-  {"t": 10.3, "maxDuration": 2.35, "text": "La gravité fixe le niveau zéro."},
-  {"t": 12.7, "maxDuration": 2.2, "text": "Et la montagne monte encore."}
- ]}
+  {
+   "t": 0.2,
+   "maxDuration": 3.0,
+   "text": "Comment mesure-t-on le toit du monde ?"
+  },
+  {
+   "t": 3.3,
+   "maxDuration": 2.4,
+   "text": "Chine et Népal, ensemble, en 2020."
+  },
+  {
+   "t": 5.7,
+   "maxDuration": 2.2,
+   "text": "Un récepteur satellite au sommet."
+  },
+  {
+   "t": 8.1,
+   "maxDuration": 2.1,
+   "text": "Un radar sonde la neige."
+  },
+  {
+   "t": 10.3,
+   "maxDuration": 2.35,
+   "text": "La gravité fixe le niveau zéro."
+  },
+  {
+   "t": 12.7,
+   "maxDuration": 2.2,
+   "text": "Et la montagne monte encore."
+  }
+ ]
+}

@@ -61,7 +61,8 @@
   "voice": true,
   "voiceEngine": "fish-connector",
   "voiceName": "Fish Audio – Arnold (d704cf8f…)",
-  "voiceProvider": "files"
+  "voiceProvider": "files",
+  "voiceUsed": "Fish Audio – Arnold (d704cf8f1216490cbfbed89955f0e938, s2.1-pro)"
  },
  "qualityChecks": {
   "stillsReviewed": true,
@@ -69,5 +70,5 @@
   "safeAreaOk": true
  },
  "notes": "Scène sans état : niveaux = intégrale de débits tabulés par seconde de course (RATES), temps de course τ(t) avec ralenti ×0,5 sur τ 10→11. Matières : chrome du poster (gouttes sources et gouttes de fond floues), liquide métal irisé, verre MeshPhysicalMaterial noir en blending additif (reflets seuls). 1er rendu avec verre en transmission abandonné (~5 s/frame, estimé 37 min). Mesure finale : 800,9 s pour 450 frames (178 s/100 frames) sous SwiftShader avec CPU saturé par 10 studios.",
- "reproduce": "node out/tools/render.mjs out/shorts/liquid-chrome__engagement__quelle-couleur-remplit-le-verre/src/index.html --out /tmp/svi/liquid-b/video.mp4 --duration 15 && .venv/bin/python out/tools/sound.py out/shorts/liquid-chrome__engagement__quelle-couleur-remplit-le-verre/src/sound.json /tmp/svi/liquid-b/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/liquid-b/video.mp4 --music /tmp/svi/liquid-b/music.wav --out out/shorts/liquid-chrome__engagement__quelle-couleur-remplit-le-verre/short.mp4"
+ "reproduce": "node out/tools/render.mjs out/shorts/liquid-chrome__engagement__quelle-couleur-remplit-le-verre/src/index.html --out /tmp/svi/liquid-b/video.mp4 --duration 15 && .venv/bin/python out/tools/sound.py out/shorts/liquid-chrome__engagement__quelle-couleur-remplit-le-verre/src/sound.json /tmp/svi/liquid-b/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/liquid-b/video.mp4 --music /tmp/svi/liquid-b/music.wav --out out/shorts/liquid-chrome__engagement__quelle-couleur-remplit-le-verre/short.mp4 && .venv/bin/python out/tools/tts.py out/shorts/liquid-chrome__engagement__quelle-couleur-remplit-le-verre --engine files --voice \"Fish Audio – Arnold (d704cf8f…)\" --replace"
 }

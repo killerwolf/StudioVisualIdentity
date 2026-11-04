@@ -12,3 +12,13 @@ Fichiers :
 - `index.html` — PixiJS 8.22 : `Application.init({preserveDrawingBuffer:true, autoStart:false})` attendu dans `window.ready`, ticker arrêté ; 17 094 `Particle` 2×2 dans un `ParticleContainer` (couleur dynamique), monde rendu dans une `RenderTexture` 270×480 nearest affichée ×4 ; pixel-mosaic = RenderTexture 1/k ; `app.renderer.render(app.stage)` dans `renderAt`. `window.SEQUENTIAL = true`. `?verify=1` -> SIM OK.
 - `make_sound.cjs` — `sound.json` (chiptune 125 bpm, blip du leader sur chaque temps, pops de poussée, coins aux changements de leader).
 - `package.json` — `{"type":"commonjs"}` pour `require()` sous la racine ESM.
+
+## Dernière étape : voix off (Fish Audio « Arnold »)
+
+La commande ci-dessus produit la version **sans voix**. Pour obtenir le `short.mp4` livré (avec voix), lancer ensuite :
+
+```bash
+.venv/bin/python out/tools/tts.py out/shorts/pixel-arcade__engagement__quelle-couleur-conquiert-l-ecran --engine files --voice "Fish Audio – Arnold (d704cf8f…)" --replace
+```
+
+Les fichiers `voice_lines/NN.mp3` (une ligne de `narration.json` chacun) sont déjà dans le dossier ; pour une nouvelle narration, les générer d'abord (voir `out/report/README.md`, section « Voix off Fish Audio »).

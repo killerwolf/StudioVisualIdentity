@@ -1,8 +1,39 @@
-{"language": "fr", "style": "documentaire posé, récit d'expédition, ton grave et précis", "voice": "Orus",
+{
+ "language": "fr",
+ "style": "documentaire posé, récit d'expédition, ton grave et précis",
+ "voiceUsed": {
+  "provider": "Fish Audio",
+  "name": "Arnold",
+  "reference_id": "d704cf8f1216490cbfbed89955f0e938",
+  "model": "s2.1-pro",
+  "note": "voix réellement utilisée pour les 31 shorts ; audio par ligne dans voice_lines/NN.mp3"
+ },
+ "voiceGeminiSuggestion": "Orus (historique : Gemini abandonné, voir out/report/failures.md)",
  "lines": [
-  {"t": 0.2, "maxDuration": 2.7, "text": "Hannibal franchit les Alpes."},
-  {"t": 3.1, "maxDuration": 2.8, "text": "Parti d'Espagne, avec environ trente-sept éléphants."},
-  {"t": 6.1, "maxDuration": 2.4, "text": "C'est l'automne. La neige tombe déjà."},
-  {"t": 8.7, "maxDuration": 3.3, "text": "Mais par quel col ? Le mystère demeure."},
-  {"t": 12.3, "maxDuration": 2.6, "text": "Les historiens en débattent encore."}
- ]}
+  {
+   "t": 0.2,
+   "maxDuration": 2.7,
+   "text": "Hannibal franchit les Alpes."
+  },
+  {
+   "t": 3.1,
+   "maxDuration": 2.8,
+   "text": "Parti d'Espagne, avec environ trente-sept éléphants."
+  },
+  {
+   "t": 6.1,
+   "maxDuration": 2.4,
+   "text": "C'est l'automne. La neige tombe déjà."
+  },
+  {
+   "t": 8.7,
+   "maxDuration": 3.3,
+   "text": "Mais par quel col ? Le mystère demeure."
+  },
+  {
+   "t": 12.3,
+   "maxDuration": 2.6,
+   "text": "Les historiens en débattent encore."
+  }
+ ]
+}

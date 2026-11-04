@@ -76,6 +76,9 @@ Haut 220 px, bas 320 px, droite 120 px (TikTok). Tout le texte entre y = 250 et 
 - `out/shorts/atlas-grave__histoire__premier-tour-du-monde-1519-1522/` — 16 s, D3 + GSAP + pycairo.
 
 ## Place de la voix off (où elle parlera, débit conseillé, ce que le visuel laisse libre)
+
+> **Voix réellement utilisée pour tous les shorts : Fish Audio « Arnold »** (`d704cf8f1216490cbfbed89955f0e938`, modèle `s2.1-pro`, conteur masculin FR). Les noms de voix Gemini (Orus, Kore, Aoede…) qui suivent sont des suggestions historiques de casting par ton : Gemini a été abandonné (quota). Le placement, le débit et les silences décrits ici restent valables.
+
 Voix documentaire posée (Orus pour la géographie, Charon pour l'histoire), débit ≤ 2,6 mots/s, une phrase courte par temps fort de 1,5 s (« Cinquième : l'Ienisseï. »). Le visuel ne montre que noms, dates et chiffres : la voix porte le récit (« Trois mois pour traverser le Pacifique »), la nuance (débat des mesures) et la question finale. Le tableau et les légendes sont fixes pendant que la voix parle ; la musique (pad ré dorien, 80 bpm) laisse le médium libre (pas de mélodie dense).
 
 ## Risques et limites

@@ -47,7 +47,8 @@
   "voice": true,
   "voiceEngine": "fish-connector",
   "voiceName": "Fish Audio – Arnold (d704cf8f…)",
-  "voiceProvider": "files"
+  "voiceProvider": "files",
+  "voiceUsed": "Fish Audio – Arnold (d704cf8f1216490cbfbed89955f0e938, s2.1-pro)"
  },
  "qualityChecks": {
   "stillsReviewed": true,
@@ -55,5 +56,5 @@
   "safeAreaOk": true
  },
  "notes": "Référence 2026-11-04 : 26 jours restants en novembre + 13 = 39 jours avant le 13 décembre 2026 (J-39 vérifié). Maximum la nuit du 13 au 14 décembre ; jusqu'à ~120 météores/h sous un ciel très noir (moins en ville) ; essaim issu de l'astéroïde 3200 Phaéton ; conseils : loin des lumières, regarder vers le nord-est après 22 h, laisser les yeux s'habituer ~20 min. Étoiles filantes pré-tirées (graine 39), horloge modulo par page. Rendu navigateur 206.2 s (480 frames) + passe OpenCV 134.0 s sous contention. Voix off prévue : Puck.",
- "reproduce": "bash out/shorts/riso-zine__evenements__geminides-j-39/src/build.sh"
+ "reproduce": "bash out/shorts/riso-zine__evenements__geminides-j-39/src/build.sh && .venv/bin/python out/tools/tts.py out/shorts/riso-zine__evenements__geminides-j-39 --engine files --voice \"Fish Audio – Arnold (d704cf8f…)\" --replace"
 }

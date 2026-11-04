@@ -12,3 +12,13 @@ Fichiers :
 - `index.html` — rendu p5.js v2 (270×480 ×4 nearest), `window.SEQUENTIAL = true`, 4 pas Matter de 8,33 ms par frame. `?verify=1` affiche SIM OK si la course du navigateur = trace Node.
 - `make_sound.cjs` — `sound.json` (chiptune 125 bpm + blips sur les collisions de `trace.json`).
 - `package.json` — `{"type":"commonjs"}` pour que `require()` marche sous la racine `"type":"module"`.
+
+## Dernière étape : voix off (Fish Audio « Arnold »)
+
+La commande ci-dessus produit la version **sans voix**. Pour obtenir le `short.mp4` livré (avec voix), lancer ensuite :
+
+```bash
+.venv/bin/python out/tools/tts.py out/shorts/pixel-arcade__engagement__quelle-bille-gagne-la-course --engine files --voice "Fish Audio – Arnold (d704cf8f…)" --replace
+```
+
+Les fichiers `voice_lines/NN.mp3` (une ligne de `narration.json` chacun) sont déjà dans le dossier ; pour une nouvelle narration, les générer d'abord (voir `out/report/README.md`, section « Voix off Fish Audio »).

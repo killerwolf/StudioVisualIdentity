@@ -58,7 +58,8 @@
   "voice": true,
   "voiceEngine": "fish-connector",
   "voiceName": "Fish Audio – Arnold (d704cf8f…)",
-  "voiceProvider": "files"
+  "voiceProvider": "files",
+  "voiceUsed": "Fish Audio – Arnold (d704cf8f1216490cbfbed89955f0e938, s2.1-pro)"
  },
  "qualityChecks": {
   "stillsReviewed": true,
@@ -66,5 +67,5 @@
   "safeAreaOk": true
  },
  "notes": "Rough.js (rough.svg, seeds fixes) génère ~45 groupes de tracés et hachures ; GSAP 3 pilote tout sur une timeline en pause (seek). Écriture par stroke-dashoffset, pops back.out, chutes bounce.out, zoom via scale+svgOrigin sur #cam. Grain de craie = feImage (rng 77) + feComposite in + flou 1,1 px sur tout le SVG. renderTimeSec = rendu complet mesuré 1437,7 s (309 s/100 frames, machine chargée 8–15 sur 4 cœurs ; le filtre SVG plein cadre domine). Correctif réel : un tracé fantôme intermittent (bug de raster Chromium/SwiftShader sous filtre, éléments à opacité 0) apparaissait 13,8–15,5 s -> display:none après le chiffon + rotation de la 2e graine supprimée ; segment 13,5–15,5 s re-rendu (60 frames, 63,4 s) et raccordé frame-exact aux 405 premières frames.",
- "reproduce": "node out/tools/render.mjs out/shorts/tableau-craie__enfants__comment-une-graine-devient-un-arbre/src/index.html --out /tmp/svi/tableau-craie__enfants__comment-une-graine-devient-un-arbre/video.mp4 --duration 15.5 && .venv/bin/python out/tools/sound.py out/shorts/tableau-craie__enfants__comment-une-graine-devient-un-arbre/src/sound.json /tmp/svi/tableau-craie__enfants__comment-une-graine-devient-un-arbre/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/tableau-craie__enfants__comment-une-graine-devient-un-arbre/video.mp4 --music /tmp/svi/tableau-craie__enfants__comment-une-graine-devient-un-arbre/music.wav --out out/shorts/tableau-craie__enfants__comment-une-graine-devient-un-arbre/short.mp4"
+ "reproduce": "node out/tools/render.mjs out/shorts/tableau-craie__enfants__comment-une-graine-devient-un-arbre/src/index.html --out /tmp/svi/tableau-craie__enfants__comment-une-graine-devient-un-arbre/video.mp4 --duration 15.5 && .venv/bin/python out/tools/sound.py out/shorts/tableau-craie__enfants__comment-une-graine-devient-un-arbre/src/sound.json /tmp/svi/tableau-craie__enfants__comment-une-graine-devient-un-arbre/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/tableau-craie__enfants__comment-une-graine-devient-un-arbre/video.mp4 --music /tmp/svi/tableau-craie__enfants__comment-une-graine-devient-un-arbre/music.wav --out out/shorts/tableau-craie__enfants__comment-une-graine-devient-un-arbre/short.mp4 && .venv/bin/python out/tools/tts.py out/shorts/tableau-craie__enfants__comment-une-graine-devient-un-arbre --engine files --voice \"Fish Audio – Arnold (d704cf8f…)\" --replace"
 }

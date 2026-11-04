@@ -66,7 +66,8 @@
   "voice": true,
   "voiceEngine": "fish-connector",
   "voiceName": "Fish Audio – Arnold (d704cf8f…)",
-  "voiceProvider": "files"
+  "voiceProvider": "files",
+  "voiceUsed": "Fish Audio – Arnold (d704cf8f1216490cbfbed89955f0e938, s2.1-pro)"
  },
  "qualityChecks": {
   "stillsReviewed": true,
@@ -74,5 +75,5 @@
   "safeAreaOk": true
  },
  "notes": "Données ONU WPP 2024 (estimations 2024 arrondies) : Asie 4,75 · Afrique 1,49 · Europe 0,74 · Am. latine 0,66 · Am. du Nord 0,38 · Océanie 0,045 Md ; % calculés sur la somme (8,07 Md). Océanie = carré d'aire 0,45. Aucun aléa (seed 0). Texte ≥ 54 px, titres 104–122 px ; tout le contenu entre y=232 et y=1600, x ≤ 960. Rendu 450 frames en 61,5 s (13,7 s/100 frames, slots CPU partagés).",
- "reproduce": "node out/tools/render.mjs out/shorts/swiss-data__geographie__ou-vivent-8-milliards/src/index.html --out /tmp/svi/swiss-geo/video.mp4 --duration 15 && .venv/bin/python out/tools/sound.py out/shorts/swiss-data__geographie__ou-vivent-8-milliards/src/sound.json /tmp/svi/swiss-geo/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/swiss-geo/video.mp4 --music /tmp/svi/swiss-geo/music.wav --out out/shorts/swiss-data__geographie__ou-vivent-8-milliards/short.mp4"
+ "reproduce": "node out/tools/render.mjs out/shorts/swiss-data__geographie__ou-vivent-8-milliards/src/index.html --out /tmp/svi/swiss-geo/video.mp4 --duration 15 && .venv/bin/python out/tools/sound.py out/shorts/swiss-data__geographie__ou-vivent-8-milliards/src/sound.json /tmp/svi/swiss-geo/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/swiss-geo/video.mp4 --music /tmp/svi/swiss-geo/music.wav --out out/shorts/swiss-data__geographie__ou-vivent-8-milliards/short.mp4 && .venv/bin/python out/tools/tts.py out/shorts/swiss-data__geographie__ou-vivent-8-milliards --engine files --voice \"Fish Audio – Arnold (d704cf8f…)\" --replace"
 }

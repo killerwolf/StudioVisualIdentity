@@ -62,7 +62,8 @@
   "voice": true,
   "voiceEngine": "fish-connector",
   "voiceName": "Fish Audio – Arnold (d704cf8f…)",
-  "voiceProvider": "files"
+  "voiceProvider": "files",
+  "voiceUsed": "Fish Audio – Arnold (d704cf8f1216490cbfbed89955f0e938, s2.1-pro)"
  },
  "qualityChecks": {
   "stillsReviewed": true,
@@ -70,5 +71,5 @@
   "safeAreaOk": true
  },
  "notes": "Référence : 3 novembre 2026 -> 272 jours avant le 2 août 2027. Totalité max ≈ 6 min 23 s près de Louxor. Bande : sud de l'Espagne (Cadix), Gibraltar, Maroc, Algérie, Tunisie, Libye, Égypte, Arabie saoudite, Yémen, Somalie ; plus longue éclipse totale visible depuis la terre ferme jusqu'en 2114. Carte : projection équirectangulaire + graticule d3-geo, ligne de centralité simplifiée à la main (10 points lon/lat approximatifs, aucune donnée téléchargée). Aucun aléa (seed 0). Texte ≥ 54 px ; contenu entre y=232 et y=1600, x ≤ 960. Les noms de pays sont gris fantôme (#B9B3A6) jusqu'au passage de la bande, puis encre.",
- "reproduce": "node out/tools/render.mjs out/shorts/swiss-data__evenements__j-272-eclipse-2-aout-2027/src/index.html --out /tmp/svi/swiss-ecl/video.mp4 --duration 15 && .venv/bin/python out/tools/sound.py out/shorts/swiss-data__evenements__j-272-eclipse-2-aout-2027/src/sound.json /tmp/svi/swiss-ecl/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/swiss-ecl/video.mp4 --music /tmp/svi/swiss-ecl/music.wav --out out/shorts/swiss-data__evenements__j-272-eclipse-2-aout-2027/short.mp4"
+ "reproduce": "node out/tools/render.mjs out/shorts/swiss-data__evenements__j-272-eclipse-2-aout-2027/src/index.html --out /tmp/svi/swiss-ecl/video.mp4 --duration 15 && .venv/bin/python out/tools/sound.py out/shorts/swiss-data__evenements__j-272-eclipse-2-aout-2027/src/sound.json /tmp/svi/swiss-ecl/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/swiss-ecl/video.mp4 --music /tmp/svi/swiss-ecl/music.wav --out out/shorts/swiss-data__evenements__j-272-eclipse-2-aout-2027/short.mp4 && .venv/bin/python out/tools/tts.py out/shorts/swiss-data__evenements__j-272-eclipse-2-aout-2027 --engine files --voice \"Fish Audio – Arnold (d704cf8f…)\" --replace"
 }

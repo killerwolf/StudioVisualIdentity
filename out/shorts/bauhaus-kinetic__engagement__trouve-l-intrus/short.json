@@ -47,7 +47,8 @@
   "voice": true,
   "voiceEngine": "fish-connector",
   "voiceName": "Fish Audio – Arnold (d704cf8f…)",
-  "voiceProvider": "files"
+  "voiceProvider": "files",
+  "voiceUsed": "Fish Audio – Arnold (d704cf8f1216490cbfbed89955f0e938, s2.1-pro)"
  },
  "qualityChecks": {
   "stillsReviewed": true,
@@ -55,5 +56,5 @@
   "safeAreaOk": true
  },
  "notes": "Intrus = tuile index 23 (colonne 4, rangée 5 en comptant depuis 1), quart de disque ancré en haut à droite au lieu d'en haut à gauche. Couleurs des tuiles en motif diagonal (i + 2j) mod 4 pour brouiller la recherche sans aléatoire. Rendu sous charge (10 studios sur 4 cœurs) : 31,7 s/100 frames ; le coût est dominé par la capture JPEG (~0,3 s/frame), le JS ne pèse que ~8 ms/frame.",
- "reproduce": "mkdir -p /tmp/svi/bauhaus-kinetic__engagement__trouve-l-intrus && node out/tools/render.mjs out/shorts/bauhaus-kinetic__engagement__trouve-l-intrus/src/index.html --out /tmp/svi/bauhaus-kinetic__engagement__trouve-l-intrus/video.mp4 --duration 14 && .venv/bin/python out/tools/sound.py out/shorts/bauhaus-kinetic__engagement__trouve-l-intrus/src/sound.json /tmp/svi/bauhaus-kinetic__engagement__trouve-l-intrus/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/bauhaus-kinetic__engagement__trouve-l-intrus/video.mp4 --music /tmp/svi/bauhaus-kinetic__engagement__trouve-l-intrus/music.wav --out out/shorts/bauhaus-kinetic__engagement__trouve-l-intrus/short.mp4"
+ "reproduce": "mkdir -p /tmp/svi/bauhaus-kinetic__engagement__trouve-l-intrus && node out/tools/render.mjs out/shorts/bauhaus-kinetic__engagement__trouve-l-intrus/src/index.html --out /tmp/svi/bauhaus-kinetic__engagement__trouve-l-intrus/video.mp4 --duration 14 && .venv/bin/python out/tools/sound.py out/shorts/bauhaus-kinetic__engagement__trouve-l-intrus/src/sound.json /tmp/svi/bauhaus-kinetic__engagement__trouve-l-intrus/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/bauhaus-kinetic__engagement__trouve-l-intrus/video.mp4 --music /tmp/svi/bauhaus-kinetic__engagement__trouve-l-intrus/music.wav --out out/shorts/bauhaus-kinetic__engagement__trouve-l-intrus/short.mp4 && .venv/bin/python out/tools/tts.py out/shorts/bauhaus-kinetic__engagement__trouve-l-intrus --engine files --voice \"Fish Audio – Arnold (d704cf8f…)\" --replace"
 }

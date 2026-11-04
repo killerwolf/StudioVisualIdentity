@@ -55,7 +55,8 @@
   "sfx": "45 blips (1 par rebond enregistré par la simulation, hauteur qui monte dans la pentatonique de C sur 2 octaves), coin tous les 10 rebonds, riser 1,5 s avant l'évasion, glass + impact + coin à l'évasion, whoosh de transition",
   "voiceEngine": "fish-connector",
   "voiceName": "Fish Audio – Arnold (d704cf8f…)",
-  "voiceProvider": "files"
+  "voiceProvider": "files",
+  "voiceUsed": "Fish Audio – Arnold (d704cf8f1216490cbfbed89955f0e938, s2.1-pro)"
  },
  "qualityChecks": {
   "stillsReviewed": true,
@@ -72,5 +73,5 @@
   ]
  },
  "notes": "Physique maison ring.js (p5 seul) : gravité 420 px/s² logiques, pas 1/240 s (8 sous-pas/frame), rebond élastique avec vitesse plancher 240 px/s, balle 5 px -> 23 px (+0,4 px par rebond), brèche de 9 tuiles (45°) sur 72, rotation d'une tuile (5°) toutes les 3 frames. Graine 1007 choisie parmi 1500 (scan < 2 s par réglage) : évasion entre 11,4 et 12,4 s avec le plus de rebonds. Pas de boucle parfaite (croissance) : fin propre sur carte de fin identique à l'engagement. Rendu 41,0 s / 100 frames avec 4 slots CPU partagés.",
- "reproduce": "node out/shorts/pixel-arcade__abstrait__la-balle-peut-elle-s-echapper/src/simulate.cjs --seed 1007 && node out/shorts/pixel-arcade__abstrait__la-balle-peut-elle-s-echapper/src/make_sound.cjs && node out/tools/render.mjs out/shorts/pixel-arcade__abstrait__la-balle-peut-elle-s-echapper/src/index.html --out /tmp/svi/pixel-arcade__abstrait__la-balle-peut-elle-s-echapper/video.mp4 --duration 15 && .venv/bin/python out/tools/sound.py out/shorts/pixel-arcade__abstrait__la-balle-peut-elle-s-echapper/src/sound.json /tmp/svi/pixel-arcade__abstrait__la-balle-peut-elle-s-echapper/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/pixel-arcade__abstrait__la-balle-peut-elle-s-echapper/video.mp4 --music /tmp/svi/pixel-arcade__abstrait__la-balle-peut-elle-s-echapper/music.wav --out out/shorts/pixel-arcade__abstrait__la-balle-peut-elle-s-echapper/short.mp4"
+ "reproduce": "node out/shorts/pixel-arcade__abstrait__la-balle-peut-elle-s-echapper/src/simulate.cjs --seed 1007 && node out/shorts/pixel-arcade__abstrait__la-balle-peut-elle-s-echapper/src/make_sound.cjs && node out/tools/render.mjs out/shorts/pixel-arcade__abstrait__la-balle-peut-elle-s-echapper/src/index.html --out /tmp/svi/pixel-arcade__abstrait__la-balle-peut-elle-s-echapper/video.mp4 --duration 15 && .venv/bin/python out/tools/sound.py out/shorts/pixel-arcade__abstrait__la-balle-peut-elle-s-echapper/src/sound.json /tmp/svi/pixel-arcade__abstrait__la-balle-peut-elle-s-echapper/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/pixel-arcade__abstrait__la-balle-peut-elle-s-echapper/video.mp4 --music /tmp/svi/pixel-arcade__abstrait__la-balle-peut-elle-s-echapper/music.wav --out out/shorts/pixel-arcade__abstrait__la-balle-peut-elle-s-echapper/short.mp4 && .venv/bin/python out/tools/tts.py out/shorts/pixel-arcade__abstrait__la-balle-peut-elle-s-echapper --engine files --voice \"Fish Audio – Arnold (d704cf8f…)\" --replace"
 }

@@ -81,6 +81,9 @@ Haut 220 px, bas 320 px, droite 120 px (+ gauche 60 px). Les en-têtes commencen
 - `out/shorts/tableau-craie__enfants__comment-une-graine-devient-un-arbre/` — Rough.js + GSAP (15,5 s).
 
 ## Place de la voix off (où elle parlera, débit conseillé, ce que le visuel laisse libre)
+
+> **Voix réellement utilisée pour tous les shorts : Fish Audio « Arnold »** (`d704cf8f1216490cbfbed89955f0e938`, modèle `s2.1-pro`, conteur masculin FR). Les noms de voix Gemini (Orus, Kore, Aoede…) qui suivent sont des suggestions historiques de casting par ton : Gemini a été abandonné (quota). Le placement, le débit et les silences décrits ici restent valables.
+
 - Voix « prof bienveillant » (Gemini `Kore`), débit ≈ 2,6 mots/s, une phrase par étape (5–8 mots), démarrage 0,1–0,2 s.
 - Le visuel ne porte que la question, les en-têtes d'étape et 1–2 mots-clés : la voix raconte le « comment » (ex. « le rouge traverse l'air, le bleu rebondit partout »).
 - Laisser 0,3–0,5 s de silence de voix sur chaque chiffon (le whoosh sonore porte la transition) ; musique boîte à musique (−18 dB) duckée sous la voix.

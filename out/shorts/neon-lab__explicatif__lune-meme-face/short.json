@@ -42,7 +42,8 @@
   "voice": true,
   "voiceEngine": "fish-connector",
   "voiceName": "Fish Audio – Arnold (d704cf8f…)",
-  "voiceProvider": "files"
+  "voiceProvider": "files",
+  "voiceUsed": "Fish Audio – Arnold (d704cf8f1216490cbfbed89955f0e938, s2.1-pro)"
  },
  "qualityChecks": {
   "stillsReviewed": true,
@@ -50,5 +51,5 @@
   "safeAreaOk": true
  },
  "notes": "Exactitude : la période de rotation sidérale de la Lune (27,3 j) est égale à sa période de révolution sidérale (27,3 j) -> rotation synchrone ; cause : couple de marée exercé par la Terre sur le renflement de marée lunaire, qui a freiné sa rotation (verrouillage gravitationnel). Simplifications assumées : échelles et distances non réalistes, orbite circulaire, libration (≈ 59 % de surface visible au total) non montrée ; le renflement est exagéré et étiqueté. La Lune fantôme garde l'orientation inertielle qu'elle avait à t=4,5 s. Rendu three.js 877,7 s pour 480 frames (182,8 s/100 frames) sous forte contention (4 slots pleins par d'autres studios, ≈ 3× le coût mesuré seul) ; post OpenCV neon_grade.py 176,0 s (36,7 s/100 frames). Champ de fond = même GLSL que le short abstrait (converti sRGB->linéaire car OutputPass).",
- "reproduce": "node out/tools/render.mjs out/shorts/neon-lab__explicatif__lune-meme-face/src/index.html --out /tmp/svi/neon-lab-exp/raw.mp4 --duration 16 && .venv/bin/python out/shorts/neon-lab__explicatif__lune-meme-face/src/neon_grade.py /tmp/svi/neon-lab-exp/raw.mp4 /tmp/svi/neon-lab-exp/video.mp4 && .venv/bin/python out/tools/sound.py out/shorts/neon-lab__explicatif__lune-meme-face/src/sound.json /tmp/svi/neon-lab-exp/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/neon-lab-exp/video.mp4 --music /tmp/svi/neon-lab-exp/music.wav --out out/shorts/neon-lab__explicatif__lune-meme-face/short.mp4"
+ "reproduce": "node out/tools/render.mjs out/shorts/neon-lab__explicatif__lune-meme-face/src/index.html --out /tmp/svi/neon-lab-exp/raw.mp4 --duration 16 && .venv/bin/python out/shorts/neon-lab__explicatif__lune-meme-face/src/neon_grade.py /tmp/svi/neon-lab-exp/raw.mp4 /tmp/svi/neon-lab-exp/video.mp4 && .venv/bin/python out/tools/sound.py out/shorts/neon-lab__explicatif__lune-meme-face/src/sound.json /tmp/svi/neon-lab-exp/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/neon-lab-exp/video.mp4 --music /tmp/svi/neon-lab-exp/music.wav --out out/shorts/neon-lab__explicatif__lune-meme-face/short.mp4 && .venv/bin/python out/tools/tts.py out/shorts/neon-lab__explicatif__lune-meme-face --engine files --voice \"Fish Audio – Arnold (d704cf8f…)\" --replace"
 }

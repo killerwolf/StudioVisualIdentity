@@ -10,7 +10,7 @@ Sources : journaux horodatés des studios (`out/report/notes/<slug>.md`), rappor
 | **Voix off Gemini abandonnée** | le plan gratuit Gemini (~10 requêtes/jour/modèle) n'a permis que 3 shorts et mélangeait les modèles ; remplacé par Fish Audio (tous les shorts refaits avec une seule voix) | historique conservé dans `facts.md` | aucune |
 | `manimpango` ne compile pas | pangocairo absent | ~5 min | `--no-deps` + stub (voir `facts.md`) ; **pas de `Text()` ni `MathTex`** (pas de LaTeX) : texte en overlays PIL |
 | Commande shell bloquée 5 min | heredoc aplati au milieu d'une commande chaînée -> attente d'`EOF` sur stdin | 5 min | fichiers écrits via l'outil d'écriture |
-| Pas de PR ouverte | le dépôt distant ne contient qu'une seule branche (`claude/new-session-ae9hjs`), pas de branche de base | — | à créer par le propriétaire (`main`) |
+| Pas de PR ouverte (résolu) | le dépôt distant ne contenait qu'une branche de travail, sans branche de base | — | résolu : `main` créée, tout y est fusionné (`main`) |
 | **Sur-souscription CPU** | les slots ne bornent que les rendus `render.mjs`/`slot.sh` ; les ré-encodages ffmpeg, Node pré-simulations, compositions numpy des 10 studios tournaient hors slot -> **load average 16–22 sur 4 cœurs** | temps de rendu × 2–3 par rapport à une machine calme | les `renderTimeSec` sont donc des mesures sous contention (voir `facts.md`) |
 | Workflow plafonné à 2 agents concurrents | moteur de workflow : min(16, CPU − 2) | — | 10 studios lancés comme sous-agents indépendants |
 
@@ -36,7 +36,7 @@ Sources : journaux horodatés des studios (`out/report/notes/<slug>.md`), rappor
 - **swiss-data / événements** : tracé de la bande de totalité simplifié à 10 points approximatifs (noté comme schématique dans les fichiers).
 - **Contrastes limites** : blanc sur rouge bauhaus 4,2:1, corail aquarelle 4,3:1, bleu aquarelle 3,7:1 -> réservés aux grands textes (≥ 54 px gras / ≥ 92 px) ; libellés gris pâles swiss-data volontairement sous AA pendant l'apparition puis passent au noir.
 - **Petits textes décoratifs** : quelques légendes de bauhaus-kinetic (« polygones réguliers pavent sans trou ») sont proches de 54 px ; les HUD des posters Phase 1 (30–34 px) n'ont pas été repris dans les shorts.
-- **Pas de boucle parfaite** sauf neon-lab/abstrait : la balle qui grossit (pixel-arcade) et les récits ont une fin, pas une boucle.
+- **Peu de boucles parfaites** (deux : neon-lab/abstrait et liquid-chrome/pendule-de-newton) : la balle qui grossit (pixel-arcade) et les récits ont une fin, pas une boucle.
 
 ## Limites de librairies constatées
 

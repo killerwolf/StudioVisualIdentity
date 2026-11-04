@@ -5,3 +5,13 @@
 
 Fichiers : `index.html` (scène : p5.js v2 couches d'encre + GSAP 3.15 timeline seekée, graine 13), `riso.js` (système partagé de l'identité : trame par encre, multiply, repérage décalé à 12 fps, blobs découpés, révélation au marqueur — copie identique dans le short evenements), `post.py` (passe OpenCV : papier qui ondule on twos, manques d'encre, rouleau, grain, fibres), `sound.json` (lofi 90 bpm ré dorien + SFX), `build.sh`.
 Formes des déserts : contours bruités dessinés par code (aucune donnée géographique téléchargée), aire ∝ superficie (r = 330·√(S/14)).
+
+## Dernière étape : voix off (Fish Audio « Arnold »)
+
+La commande ci-dessus produit la version **sans voix**. Pour obtenir le `short.mp4` livré (avec voix), lancer ensuite :
+
+```bash
+.venv/bin/python out/tools/tts.py out/shorts/riso-zine__geographie__5-plus-grands-deserts --engine files --voice "Fish Audio – Arnold (d704cf8f…)" --replace
+```
+
+Les fichiers `voice_lines/NN.mp3` (une ligne de `narration.json` chacun) sont déjà dans le dossier ; pour une nouvelle narration, les générer d'abord (voir `out/report/README.md`, section « Voix off Fish Audio »).
