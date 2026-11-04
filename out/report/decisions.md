@@ -27,3 +27,6 @@ Format : `HH:MM (UTC) — décision — raison`. Début de campagne : 20:27.
 - 2026-11-04 — Prompt TTS réduit au texte seul (le préfixe de style était lu à voix haute) ; style porté par la voix de `narration.json`.
 - 2026-11-04 — Générations strictement séquentielles, pause 21 s, attente du `retryDelay` (limite ~3 req/min) ; ordre des modèles lite > 3.1 preview > 3.8 flash pour économiser les quotas.
 - 2026-11-04 — Voix off générée pour 2 des 3 nouveaux shorts (pixel-arcade, liquid-chrome) ; neon-lab laissé sans voix (quota journalier épuisé), texte non réécrit malgré 2 débordements sur liquid-chrome.
+- 2026-11-04 00:22 — Le propriétaire demande les 4 identités écartées (« pas exactement pareilles »). 4 studios lancés en parallèle, avec pour chacune la consigne explicite de se distinguer de sa voisine (cosmos-doc ≠ neon-lab, brut-meme ≠ pixel-arcade, riso-zine ≠ swiss-data/atlas-grave, topo-relief ≠ atlas-grave) et des sujets nouveaux non redondants.
+- 00:57 — 8 shorts livrés (QA 31/31). Test mesuré : les 8 ont pour plus proche voisin un short de leur propre identité (29/31 au total). Un 2ᵉ juge aveugle est lancé sur 14 identités (56 images).
+- 01:05 — Classement mis à jour à 14 : brut-meme 4ᵉ, riso-zine 7ᵉ, topo-relief 9ᵉ, cosmos-doc 13ᵉ ; le trio recommandé ne change pas.

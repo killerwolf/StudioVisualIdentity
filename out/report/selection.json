@@ -1,46 +1,315 @@
 {
-  "phase": 1,
-  "decidedAt": "2026-11-03T21:05Z",
-  "contactSheet": "report/directions-contact-sheet.jpg",
-  "selected": [
-    {"slug": "neon-lab", "families": ["abstrait", "explicatif"], "libraries": ["three.js", "twgl.js", "OpenCV"],
-     "topics": {"abstrait": "Champ de force : 2 000 lucioles néon suivent un attracteur (boucle parfaite)", "explicatif": "Pourquoi la Lune nous montre toujours la même face ?"}},
-    {"slug": "pastel-diorama", "families": ["enfants", "engagement"], "libraries": ["A-Frame", "Zdog", "GSAP"],
-     "topics": {"enfants": "D'où vient la pluie ? (le voyage de Plip la goutte)", "engagement": "Choisis ta boîte : laquelle cache le petit renard ?"}},
-    {"slug": "atlas-grave", "families": ["geographie", "histoire"], "libraries": ["D3.js", "pycairo", "GSAP"],
-     "topics": {"geographie": "Les 5 plus longs fleuves du monde", "histoire": "Le premier tour du monde : 1519–1522"}},
-    {"slug": "tableau-craie", "families": ["explicatif", "enfants"], "libraries": ["Manim", "Rough.js", "GSAP"],
-     "topics": {"explicatif": "Pourquoi le ciel est bleu ?", "enfants": "Comment une graine devient un arbre ?"}},
-    {"slug": "swiss-data", "families": ["geographie", "evenements"], "libraries": ["D3.js", "GSAP"],
-     "topics": {"geographie": "Où vivent les 8 milliards d'humains ?", "evenements": "J-272 : l'éclipse totale du 2 août 2027"}},
-    {"slug": "pixel-arcade", "families": ["engagement", "abstrait"], "libraries": ["Matter.js", "p5.js"],
-     "topics": {"engagement": "Quelle bille gagne la course ?", "abstrait": "La balle peut-elle s'échapper du cercle ?"}},
-    {"slug": "liquid-chrome", "families": ["abstrait", "engagement"], "libraries": ["Taichi", "three.js", "OpenCV"],
-     "topics": {"abstrait": "Quatre peintures tombent et se mélangent (fluide MPM)", "engagement": "Quelle couleur remplit le verre en premier ?"}},
-    {"slug": "gazette-1900", "families": ["histoire", "evenements"], "libraries": ["GSAP", "OpenCV"],
-     "topics": {"histoire": "1789 en 20 secondes", "evenements": "Ce jour-là : 9 novembre 1989, le Mur de Berlin tombe"}},
-    {"slug": "bauhaus-kinetic", "families": ["explicatif", "engagement"], "libraries": ["anime.js", "flubber", "Paper.js"],
-     "topics": {"explicatif": "Pourquoi les abeilles construisent en hexagones ?", "engagement": "Trouve l'intrus en 5 secondes"}},
-    {"slug": "aquarelle-conte", "families": ["enfants", "histoire"], "libraries": ["p5.js", "Paper.js"],
-     "topics": {"enfants": "Où vont les étoiles le jour ? (histoire du soir)", "histoire": "Il était une fois le Phare d'Alexandrie"}}
-  ],
-  "rejected": [
-    {"slug": "cosmos-doc", "reason": "Trop proche de neon-lab (fond noir spatial, même sujet Lune) ; three.js déjà couvert. Réserve pour une chaîne astronomie."},
-    {"slug": "brut-meme", "reason": "Recouvre pixel-arcade sur l'engagement (« quelle bille gagne ») ; esthétique mème moins durable/industrialisable."},
-    {"slug": "riso-zine", "reason": "Même format liste/data que swiss-data et même sujet que atlas-grave ; p5 et OpenCV déjà couverts."},
-    {"slug": "topo-relief", "reason": "Très beau mais la géographie est déjà couverte deux fois ; première réserve si une 11e identité était ajoutée."}
-  ],
-  "coverage": {
-    "abstrait": ["neon-lab", "pixel-arcade", "liquid-chrome"],
-    "enfants": ["pastel-diorama", "tableau-craie", "aquarelle-conte"],
-    "explicatif": ["neon-lab", "tableau-craie", "bauhaus-kinetic"],
-    "histoire": ["atlas-grave", "gazette-1900", "aquarelle-conte"],
-    "geographie": ["atlas-grave", "swiss-data"],
-    "evenements": ["swiss-data", "gazette-1900"],
-    "engagement": ["pastel-diorama", "pixel-arcade", "liquid-chrome", "bauhaus-kinetic"],
-    "libsA": {"three.js": ["neon-lab", "liquid-chrome"], "Matter.js": ["pixel-arcade"], "p5.js": ["pixel-arcade", "aquarelle-conte"],
-              "GSAP": ["pastel-diorama", "atlas-grave", "tableau-craie", "swiss-data", "gazette-1900"], "D3.js": ["atlas-grave", "swiss-data"],
-              "Manim": ["tableau-craie"], "A-Frame": ["pastel-diorama"], "Taichi": ["liquid-chrome"]},
-    "libsB": ["twgl.js", "OpenCV", "Zdog", "pycairo", "Rough.js", "anime.js", "flubber", "Paper.js"]
+ "phase": 1,
+ "decidedAt": "2026-11-03T21:05Z",
+ "contactSheet": "report/directions-contact-sheet.jpg",
+ "selected": [
+  {
+   "slug": "neon-lab",
+   "families": [
+    "abstrait",
+    "explicatif"
+   ],
+   "libraries": [
+    "three.js",
+    "twgl.js",
+    "OpenCV"
+   ],
+   "topics": {
+    "abstrait": "Champ de force : 2 000 lucioles néon suivent un attracteur (boucle parfaite)",
+    "explicatif": "Pourquoi la Lune nous montre toujours la même face ?"
+   }
+  },
+  {
+   "slug": "pastel-diorama",
+   "families": [
+    "enfants",
+    "engagement"
+   ],
+   "libraries": [
+    "A-Frame",
+    "Zdog",
+    "GSAP"
+   ],
+   "topics": {
+    "enfants": "D'où vient la pluie ? (le voyage de Plip la goutte)",
+    "engagement": "Choisis ta boîte : laquelle cache le petit renard ?"
+   }
+  },
+  {
+   "slug": "atlas-grave",
+   "families": [
+    "geographie",
+    "histoire"
+   ],
+   "libraries": [
+    "D3.js",
+    "pycairo",
+    "GSAP"
+   ],
+   "topics": {
+    "geographie": "Les 5 plus longs fleuves du monde",
+    "histoire": "Le premier tour du monde : 1519–1522"
+   }
+  },
+  {
+   "slug": "tableau-craie",
+   "families": [
+    "explicatif",
+    "enfants"
+   ],
+   "libraries": [
+    "Manim",
+    "Rough.js",
+    "GSAP"
+   ],
+   "topics": {
+    "explicatif": "Pourquoi le ciel est bleu ?",
+    "enfants": "Comment une graine devient un arbre ?"
+   }
+  },
+  {
+   "slug": "swiss-data",
+   "families": [
+    "geographie",
+    "evenements"
+   ],
+   "libraries": [
+    "D3.js",
+    "GSAP"
+   ],
+   "topics": {
+    "geographie": "Où vivent les 8 milliards d'humains ?",
+    "evenements": "J-272 : l'éclipse totale du 2 août 2027"
+   }
+  },
+  {
+   "slug": "pixel-arcade",
+   "families": [
+    "engagement",
+    "abstrait"
+   ],
+   "libraries": [
+    "Matter.js",
+    "p5.js"
+   ],
+   "topics": {
+    "engagement": "Quelle bille gagne la course ?",
+    "abstrait": "La balle peut-elle s'échapper du cercle ?"
+   }
+  },
+  {
+   "slug": "liquid-chrome",
+   "families": [
+    "abstrait",
+    "engagement"
+   ],
+   "libraries": [
+    "Taichi",
+    "three.js",
+    "OpenCV"
+   ],
+   "topics": {
+    "abstrait": "Quatre peintures tombent et se mélangent (fluide MPM)",
+    "engagement": "Quelle couleur remplit le verre en premier ?"
+   }
+  },
+  {
+   "slug": "gazette-1900",
+   "families": [
+    "histoire",
+    "evenements"
+   ],
+   "libraries": [
+    "GSAP",
+    "OpenCV"
+   ],
+   "topics": {
+    "histoire": "1789 en 20 secondes",
+    "evenements": "Ce jour-là : 9 novembre 1989, le Mur de Berlin tombe"
+   }
+  },
+  {
+   "slug": "bauhaus-kinetic",
+   "families": [
+    "explicatif",
+    "engagement"
+   ],
+   "libraries": [
+    "anime.js",
+    "flubber",
+    "Paper.js"
+   ],
+   "topics": {
+    "explicatif": "Pourquoi les abeilles construisent en hexagones ?",
+    "engagement": "Trouve l'intrus en 5 secondes"
+   }
+  },
+  {
+   "slug": "aquarelle-conte",
+   "families": [
+    "enfants",
+    "histoire"
+   ],
+   "libraries": [
+    "p5.js",
+    "Paper.js"
+   ],
+   "topics": {
+    "enfants": "Où vont les étoiles le jour ? (histoire du soir)",
+    "histoire": "Il était une fois le Phare d'Alexandrie"
+   }
   }
+ ],
+ "rejected": [
+  {
+   "slug": "cosmos-doc",
+   "reason": "Trop proche de neon-lab (fond noir spatial, même sujet Lune) ; three.js déjà couvert. Réserve pour une chaîne astronomie."
+  },
+  {
+   "slug": "brut-meme",
+   "reason": "Recouvre pixel-arcade sur l'engagement (« quelle bille gagne ») ; esthétique mème moins durable/industrialisable."
+  },
+  {
+   "slug": "riso-zine",
+   "reason": "Même format liste/data que swiss-data et même sujet que atlas-grave ; p5 et OpenCV déjà couverts."
+  },
+  {
+   "slug": "topo-relief",
+   "reason": "Très beau mais la géographie est déjà couverte deux fois ; première réserve si une 11e identité était ajoutée."
+  }
+ ],
+ "coverage": {
+  "abstrait": [
+   "neon-lab",
+   "pixel-arcade",
+   "liquid-chrome"
+  ],
+  "enfants": [
+   "pastel-diorama",
+   "tableau-craie",
+   "aquarelle-conte"
+  ],
+  "explicatif": [
+   "neon-lab",
+   "tableau-craie",
+   "bauhaus-kinetic"
+  ],
+  "histoire": [
+   "atlas-grave",
+   "gazette-1900",
+   "aquarelle-conte"
+  ],
+  "geographie": [
+   "atlas-grave",
+   "swiss-data"
+  ],
+  "evenements": [
+   "swiss-data",
+   "gazette-1900"
+  ],
+  "engagement": [
+   "pastel-diorama",
+   "pixel-arcade",
+   "liquid-chrome",
+   "bauhaus-kinetic"
+  ],
+  "libsA": {
+   "three.js": [
+    "neon-lab",
+    "liquid-chrome"
+   ],
+   "Matter.js": [
+    "pixel-arcade"
+   ],
+   "p5.js": [
+    "pixel-arcade",
+    "aquarelle-conte"
+   ],
+   "GSAP": [
+    "pastel-diorama",
+    "atlas-grave",
+    "tableau-craie",
+    "swiss-data",
+    "gazette-1900"
+   ],
+   "D3.js": [
+    "atlas-grave",
+    "swiss-data"
+   ],
+   "Manim": [
+    "tableau-craie"
+   ],
+   "A-Frame": [
+    "pastel-diorama"
+   ],
+   "Taichi": [
+    "liquid-chrome"
+   ]
+  },
+  "libsB": [
+   "twgl.js",
+   "OpenCV",
+   "Zdog",
+   "pycairo",
+   "Rough.js",
+   "anime.js",
+   "flubber",
+   "Paper.js"
+  ]
+ },
+ "rehabilitated": {
+  "decidedAt": "2026-11-04T00:22Z",
+  "reason": "Demande du propriétaire : produire aussi les 4 directions écartées, jugées pas exactement pareilles à leurs voisines.",
+  "identities": [
+   {
+    "slug": "cosmos-doc",
+    "families": [
+     "explicatif",
+     "evenements"
+    ],
+    "libraries": [
+     "three.js",
+     "GSAP"
+    ],
+    "distinctFrom": "neon-lab"
+   },
+   {
+    "slug": "brut-meme",
+    "families": [
+     "engagement",
+     "evenements"
+    ],
+    "libraries": [
+     "PixiJS",
+     "GSAP"
+    ],
+    "distinctFrom": "pixel-arcade"
+   },
+   {
+    "slug": "riso-zine",
+    "families": [
+     "geographie",
+     "evenements"
+    ],
+    "libraries": [
+     "p5.js",
+     "GSAP",
+     "OpenCV"
+    ],
+    "distinctFrom": "swiss-data, atlas-grave"
+   },
+   {
+    "slug": "topo-relief",
+    "families": [
+     "geographie",
+     "histoire"
+    ],
+    "libraries": [
+     "three.js",
+     "D3.js"
+    ],
+    "distinctFrom": "atlas-grave"
+   }
+  ]
+ }
 }

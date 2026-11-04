@@ -8,18 +8,24 @@
   "infographies SVG plates : échelles linéaires, barres, unit charts (carrés unitaires), barres empilées",
   "grille typographique 12 colonnes via scaleLinear",
   "cartes schématiques sans données téléchargées : d3-geo geoEquirectangular().fitExtent + geoGraticule + d3.line(curveCatmullRom) sur des points lon/lat saisis à la main",
-  "formatage FR des nombres (d3.format + replace('.', ','))"
+  "formatage FR des nombres (d3.format + replace('.', ','))",
+  "isolignes d'un heightfield procédural : d3.contours().size([N,N]).thresholds(...) -> MultiPolygons",
+  "peindre ces contours dans un canvas 2048² via d3.geoPath(d3.geoTransform(...), ctx) puis les poser en texture three.js",
+  "teintes hypsométriques et couleur des lignes par d3.scaleLinear ; nombres FR par d3.formatLocale({decimal:',', thousands:'\\u00a0'})"
  ],
  "avoidFor": [
   "scènes à milliers d'éléments animés (SVG + filtres en SwiftShader deviennent lents)",
   "3D, particules, physique",
   "animation elle-même (d3.transition dépend de l'horloge réelle : non seekable) -> confier le temps à GSAP",
   "3D, particules, > quelques milliers de nœuds SVG",
-  "vraies cartes de pays (il faudrait un TopoJSON téléchargé : interdit ici)"
+  "vraies cartes de pays (il faudrait un TopoJSON téléchargé : interdit ici)",
+  "recalculer les contours à chaque frame (≈ 0,2 s par appel en 256²) : précalculer une fois au chargement",
+  "animer avec d3.transition (non seekable)"
  ],
  "renderCostPer100Frames": [
   "135,7 s (mesuré, shorts/atlas-grave__geographie__plus-longs-fleuves-du-monde, 450 frames en 610,8 s, sous charge ≈ 16 sur 4 cœurs avec 4 rendus simultanés ; scène SVG + 1 feDisplacementMap sur la carte + 4 PNG plein cadre) [atlas-grave]",
-  "13,7 s (mesuré, scène swiss-data__geographie__ou-vivent-8-milliards : SVG ~200 nœuds, 450 frames en 61,5 s, 1 slot CPU, 1080×1920) ; 20,5 s (mesuré, scène swiss-data__evenements__j-272-eclipse-2-aout-2027 avec d3-geo graticule + tracé, 450 frames en 92,3 s, CPU chargé par 10 studios) [swiss-data]"
+  "13,7 s (mesuré, scène swiss-data__geographie__ou-vivent-8-milliards : SVG ~200 nœuds, 450 frames en 61,5 s, 1 slot CPU, 1080×1920) ; 20,5 s (mesuré, scène swiss-data__evenements__j-272-eclipse-2-aout-2027 avec d3-geo graticule + tracé, 450 frames en 92,3 s, CPU chargé par 10 studios) [swiss-data]",
+  "0 s par frame (texture précalculée) ; coût unique mesuré : d3.contours 256², 41 niveaux, 88 285 points = 224 ms (Node 22, load ≈ 15) + peinture canvas 2048² au chargement ; le rendu complet du short (three.js dominant) = 169 s (mesuré, topo-relief__geographie__comment-mesure-t-on-l-everest : relief 256² MeshStandard + shader onBeforeCompile, 2 textures 2048², sprites, nappe 90² en fil de fer, DOM ; 450 frames en 760,5 s, load average 15–17, 4 studios) ; 108,2 s (mesuré, topo-relief__histoire__hannibal-traverse-les-alpes : même moteur + 4 tubes lumineux, 900 flocons Points recalculés par frame, 9 sprites) [topo-relief]"
  ],
  "gotchas": [
   "Anneaux dessinés à la main : d3-geo exige l'orientation sphérique ; si d3.geoArea(feature) > 2π, inverser l'anneau, sinon la « terre » remplit tout le globe",
@@ -32,21 +38,30 @@
   "d3 chargé en <script> classique (/node_modules/d3/dist/d3.min.js) puis global `d3` utilisable dans les modules ES",
   "getTotalLength() sur un path d3.line pour un tracé stroke-dashoffset ; le rythme des points se synchronise par longueur de corde cumulée (approximation suffisante en catmull-rom)",
   "fitExtent avec un MultiPoint des 4 coins : la projection garde l'aspect, la carte peut ne pas remplir toute la boîte",
-  "Archivo Black : chiffres ≈ 0,6 em de large -> 3 chiffres max à 460 px dans 888 px"
+  "Archivo Black : chiffres ≈ 0,6 em de large -> 3 chiffres max à 460 px dans 888 px",
+  "d3.contours attend un tableau plat (Array.from(Float64Array) par sécurité) rangé ligne par ligne, taille [N,N]",
+  "les coordonnées des contours sont en unités de grille : geoTransform({point(x,y){this.stream.point(x*T/N, y*T/N)}})",
+  "d3 chargé en <script> classique avant le module ES : formatLocale peut être appelé au niveau module",
+  "halo des lignes : ctx.shadowBlur 8–18 px avec shadowColor = couleur de la ligne (lueur cuite, pas de bloom)",
+  "remettre ctx.shadowBlur = 0 et globalAlpha = 1 après les courbes"
  ],
  "snippetPath": [
   "shorts/atlas-grave__geographie__plus-longs-fleuves-du-monde/src",
-  "shorts/swiss-data__geographie__ou-vivent-8-milliards/src"
+  "shorts/swiss-data__geographie__ou-vivent-8-milliards/src",
+  "shorts/topo-relief__geographie__comment-mesure-t-on-l-everest/src"
  ],
  "pairsWellWith": [
   "GSAP",
   "pycairo",
   "flubber",
-  "roughjs"
+  "roughjs",
+  "three.js",
+  "pycairo/canvas 2D pour d'autres textures"
  ],
  "usedBy": [
   "atlas-grave",
-  "swiss-data"
+  "swiss-data",
+  "topo-relief"
  ],
  "roleAsDeclaredByStudios": [
   "data"

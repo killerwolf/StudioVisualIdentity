@@ -33,6 +33,26 @@
    "flubber"
   ]
  },
+ "brut-meme": {
+  "engagement": [
+   "GSAP",
+   "PixiJS"
+  ],
+  "evenements": [
+   "GSAP",
+   "PixiJS"
+  ]
+ },
+ "cosmos-doc": {
+  "evenements": [
+   "GSAP",
+   "three.js"
+  ],
+  "explicatif": [
+   "GSAP",
+   "three.js"
+  ]
+ },
  "gazette-1900": {
   "evenements": [
    "GSAP",
@@ -84,6 +104,18 @@
    "p5.js"
   ]
  },
+ "riso-zine": {
+  "evenements": [
+   "GSAP",
+   "OpenCV",
+   "p5.js"
+  ],
+  "geographie": [
+   "GSAP",
+   "OpenCV",
+   "p5.js"
+  ]
+ },
  "swiss-data": {
   "evenements": [
    "D3.js",
@@ -102,6 +134,16 @@
   "explicatif": [
    "Manim",
    "PIL/numpy (overlays texte et grain craie)"
+  ]
+ },
+ "topo-relief": {
+  "geographie": [
+   "D3.js",
+   "three.js"
+  ],
+  "histoire": [
+   "D3.js",
+   "three.js"
   ]
  }
 }

@@ -70,6 +70,11 @@ Conditions : 10 studios en parallèle sur 4 cœurs ; load average mesuré **16�
 | PixiJS 8 ParticleContainer 17 094 cellules -> RenderTexture 270×480 ×4 | 32,6 (automate 0,11 en Node) | pixel-arcade/territoire |
 | Matplotlib Agg 1080×1920, figure réutilisée + 2 fonds plein cadre | 52,8 (+ OpenCV 15,5) | neon-lab/effet papillon |
 | Babylon.js 9 PBR + GlowLayer + DOF + reflet cube procédural | 123,2 | liquid-chrome/pendule |
+| *Identités réhabilitées, 4 studios actifs (charge 15–23) :* | | |
+| p5 v2 (calques d'encre en multiply) + GSAP à 12 i/s | 25,9 – 43,0 (+ OpenCV 28–36) | riso-zine ×2 |
+| PixiJS 8 + GSAP (typo DOM plein cadre, stickers) | 49,8 – 58,5 (scène seule 0,2) | brut-meme ×2 |
+| three.js terrain extrudé + shader courbes (texture D3 précalculée) | 108,2 – 169,0 | topo-relief ×2 |
+| three.js planètes procédurales + bloom + grain + flare anamorphique | 174,9 – 186,4 | cosmos-doc ×2 |
 
 - **La capture d'écran domine** : ~0,3 s par screenshot JPEG 1080×1920 alors que le JS de scène coûte 6–8 ms/frame (bauhaus-kinetic) ; Matter.js 0,024 s/100 frames de physique (pixel-arcade). Optimiser la scène n'a d'effet que sur les scènes WebGL lourdes ou les filtres SVG.
 - **Filtres SVG plein cadre** (feTurbulence/feImage) = poste de coût n°1 en 2D : les remplacer par des textures PNG précalculées (pycairo/PIL) — fait par atlas-grave.
@@ -90,6 +95,10 @@ Conditions : 10 studios en parallèle sur 4 cœurs ; load average mesuré **16�
 - **Matplotlib ne lit pas les `.woff2`** (FreeType sans brotli, `FT_Open_Face` 0x55) : convertir les `.woff` @fontsource en `.ttf` avec fontTools, puis `matplotlib.font_manager.fontManager.addfont`. Les sous-ensembles d'une même police (latin / grec) partagent le nom de famille : renommer pour les déclarer en repli.
 - **PixiJS 8 headless** : `await app.init({preserveDrawingBuffer:true, autoStart:false})` dans `window.ready`, ticker arrêté, `app.renderer.render(app.stage)` dans `renderAt` ; `ParticleContainer` + texture blanche 1×1 teintée pour > 10 k cellules ; RenderTexture basse résolution en `nearest` pour le pixel-art. Garder la simulation hors de Pixi (entiers + PRNG) pour la vérifier en Node.
 - **Babylon.js 9 headless** : `new BABYLON.Engine(canvas, true, {preserveDrawingBuffer:true, stencil:true})`, jamais `runRenderLoop`, `await scene.whenReadyAsync()` puis `scene.render()` dans `renderAt` ; reflets via un environnement procédural capturé une fois en cube ; le sélecteur de GlowLayer par préfixe de nom attrape d'autres meshes -> noms explicites.
+- **p5 v2 + save/restore manuel autour d'un clip** : le cache de style de p5 se désynchronise du contexte canvas ; un `stroke()` répété est ignoré et le trait disparaît — invisible sur des stills isolés, visible seulement en rendu séquentiel (riso-zine, 1 rendu jeté). Resynchroniser le style après chaque `restore()`.
+- **d3.contours** sur une grille 256² : 224 ms une seule fois au chargement, rien par frame ; peindre les courbes dans une texture canvas pour three.js (topo-relief).
+- **three.js : projeter une position monde vers l'écran** (flare, étiquettes) exige `camera.updateMatrixWorld()` avant `project()`, sinon on utilise la caméra de l'image précédente (cosmos-doc).
+- **Glyphes manquants** : « → » rend un point en JetBrains Mono 700 ; mesurer les titres auto-ajustés avec `white-space: nowrap` sinon seul le premier mot est mesuré (brut-meme).
 - **Workflow** : le moteur de workflow limite à 2 agents concurrents sur 4 CPU (min(16, CPU − 2)).
 
 ## Voix off Gemini TTS (mesures réelles)

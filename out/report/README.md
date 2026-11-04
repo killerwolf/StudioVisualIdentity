@@ -1,8 +1,8 @@
 # Identités visuelles pour shorts 9:16 — rapport de campagne (lisible par agent)
 
-**But** : 10 identités visuelles et cinématiques distinctes pour des chaînes de shorts verticaux (TikTok / Reels / Shorts), chacune **prouvée par 2 vidéos réelles** rendues par code avec des librairies open-source, puis documentée en design system exploitable par un agent de production.
+**But** : 14 identités visuelles (10 retenues en Phase 1, plus les 4 écartées puis réhabilitées à la demande) et cinématiques distinctes pour des chaînes de shorts verticaux (TikTok / Reels / Shorts), chacune **prouvée par 2 vidéos réelles** rendues par code avec des librairies open-source, puis documentée en design system exploitable par un agent de production.
 
-**Bilan** : 10 identités · **23 shorts** (20 + 3ᵉ short pour pixel-arcade, neon-lab, liquid-chrome ; 1080×1920, 30 fps, H.264, 12–18,75 s, son généré) · QA automatique **23/23 OK** · 7 familles couvertes ≥ 2 fois · **8/8 librairies niveau A + 11/11 niveau B** utilisées · reconnaissance à l'aveugle **10/10 groupes purs** (juge visuel, 20 shorts initiaux) et **21/23** (mesure couleur) · 1 h 46 de travail mural sur **4 cœurs** (20:27 -> 22:13 UTC, 2026-11-03), puis 3ᵉ shorts en 15 min (22:22 -> 22:37) · voix off **non générée** (clé Gemini absente, pipeline prêt).
+**Bilan** : **14 identités** · **31 shorts** (1080×1920, 30 fps, H.264, 12–18,75 s, son généré) · QA automatique **31/31 OK** · 7 familles couvertes ≥ 3 fois · **8/8 librairies niveau A + 11/11 niveau B** · reconnaissance à l'aveugle **14/14 groupes purs, 56/56 images** (juge visuel indépendant) et **29/31** (mesure couleur, plus proche voisin) · premier tour 1 h 46 (2026-11-03 20:27 -> 22:13 UTC), 3ᵉ shorts 22:22 -> 22:37, identités réhabilitées 2026-11-04 00:24 -> 00:57, sur **4 cœurs** · voix off Gemini **partielle** (quota du plan gratuit, voir `failures.md`).
 
 Toutes les affirmations de ce dossier sont mesurées : temps (`facts.md`, `short.json.renderTimeSec`), QA (`qa.json`), reconnaissance (`recognition.json`).
 
@@ -13,19 +13,23 @@ Toutes les affirmations de ce dossier sont mesurées : temps (`facts.md`, `short
 | `swiss-data` | Grille Suisse | geographie, evenements | D3.js, GSAP | `identities/swiss-data/` | `shorts/swiss-data__geographie__ou-vivent-8-milliards`, `shorts/swiss-data__evenements__j-272-eclipse-2-aout-2027` |
 | `gazette-1900` | Gazette 1900 | histoire, evenements | GSAP, OpenCV | `identities/gazette-1900/` | `shorts/gazette-1900__histoire__1789-en-20-secondes`, `shorts/gazette-1900__evenements__9-novembre-1989-mur-de-berlin` |
 | `pixel-arcade` | Arcade Pixel | engagement ×2, abstrait | Matter.js, p5.js, PixiJS | `identities/pixel-arcade/` | `shorts/pixel-arcade__engagement__quelle-bille-gagne-la-course`, `shorts/pixel-arcade__abstrait__la-balle-peut-elle-s-echapper`, `shorts/pixel-arcade__engagement__quelle-couleur-conquiert-l-ecran` (PixiJS) |
+| `brut-meme` | Brut Mème *(réh.)* | engagement, evenements | PixiJS, GSAP | `identities/brut-meme/` | `shorts/brut-meme__engagement__test-des-3-secondes-stroop`, `shorts/brut-meme__evenements__pendant-ces-15-secondes-dans-le-monde` |
 | `bauhaus-kinetic` | Bauhaus Cinétique | explicatif, engagement | anime.js, flubber, Paper.js | `identities/bauhaus-kinetic/` | `shorts/bauhaus-kinetic__explicatif__abeilles-hexagones`, `shorts/bauhaus-kinetic__engagement__trouve-l-intrus` |
 | `tableau-craie` | Tableau Craie | explicatif, enfants | Manim, Rough.js, GSAP | `identities/tableau-craie/` | `shorts/tableau-craie__explicatif__pourquoi-le-ciel-est-bleu`, `shorts/tableau-craie__enfants__comment-une-graine-devient-un-arbre` |
+| `riso-zine` | Zine Riso *(réh.)* | geographie, evenements | p5.js, GSAP, OpenCV | `identities/riso-zine/` | `shorts/riso-zine__geographie__5-plus-grands-deserts`, `shorts/riso-zine__evenements__geminides-j-39` |
 | `pastel-diorama` | Diorama Pastel | enfants, engagement | Zdog, A-Frame, GSAP | `identities/pastel-diorama/` | `shorts/pastel-diorama__enfants__d-ou-vient-la-pluie`, `shorts/pastel-diorama__engagement__choisis-ta-boite-renard` |
+| `topo-relief` | Relief Topo *(réh.)* | geographie, histoire | three.js, D3.js | `identities/topo-relief/` | `shorts/topo-relief__geographie__comment-mesure-t-on-l-everest`, `shorts/topo-relief__histoire__hannibal-traverse-les-alpes` |
 | `atlas-grave` | Atlas Gravé | geographie, histoire | D3.js, GSAP, pycairo | `identities/atlas-grave/` | `shorts/atlas-grave__geographie__plus-longs-fleuves-du-monde`, `shorts/atlas-grave__histoire__premier-tour-du-monde-1519-1522` |
 | `aquarelle-conte` | Aquarelle Conte | enfants, histoire | p5.js, Paper.js | `identities/aquarelle-conte/` | `shorts/aquarelle-conte__enfants__ou-vont-les-etoiles-le-jour`, `shorts/aquarelle-conte__histoire__phare-d-alexandrie` |
 | `neon-lab` | Labo Néon | abstrait, explicatif ×2 | three.js, twgl.js, OpenCV, Matplotlib | `identities/neon-lab/` | `shorts/neon-lab__abstrait__champ-de-force-lucioles` (boucle parfaite), `shorts/neon-lab__explicatif__lune-meme-face`, `shorts/neon-lab__explicatif__effet-papillon-double-pendule` (Matplotlib) |
+| `cosmos-doc` | Cosmos Doc *(réh.)* | explicatif, evenements | three.js, GSAP | `identities/cosmos-doc/` | `shorts/cosmos-doc__explicatif__pourquoi-venus-plus-chaude-que-mercure`, `shorts/cosmos-doc__evenements__voyager-1-a-un-jour-lumiere` |
 | `liquid-chrome` | Chrome Liquide | abstrait ×2, engagement | Taichi, three.js, OpenCV, Babylon.js | `identities/liquid-chrome/` | `shorts/liquid-chrome__abstrait__quatre-peintures-mpm`, `shorts/liquid-chrome__engagement__quelle-couleur-remplit-le-verre`, `shorts/liquid-chrome__abstrait__pendule-de-newton-chrome` (Babylon.js, boucle parfaite) |
 
-L'ordre du tableau est le classement de durabilité/industrialisation (argumenté dans `comparison.md` §5). Index machine complet : `report/campaign.json` (23 shorts avec durée, temps de rendu, libs, mécanique d'engagement) et `report/matrix.json` (identité × famille × libs).
+L'ordre du tableau est le classement de durabilité/industrialisation (argumenté dans `comparison.md` §5). Index machine complet : `report/campaign.json` (31 shorts avec durée, temps de rendu, libs, mécanique d'engagement) et `report/matrix.json` (identité × famille × libs).
 
 ## Recommandation
 
-Pour une chaîne durable : **1. swiss-data** (data / actu : le moins cher, 13,7–20,5 s/100 frames, < 1 Mo/short, épisode = jeu de données), **2. gazette-1900** (histoire / « ce jour-là » : identité la plus mémorable, calendrier infini), **3. pixel-arcade** (engagement : pari + photo-finish, variété infinie par graine pré-simulée). Trois publics, trois mécaniques, aucune confusion visuelle entre elles.
+Pour une chaîne durable : **1. swiss-data** (data / actu : le moins cher, 13,7–20,5 s/100 frames, < 1 Mo/short, épisode = jeu de données), **2. gazette-1900** (histoire / « ce jour-là » : identité la plus mémorable, calendrier infini), **3. pixel-arcade** (engagement : pari + photo-finish, variété infinie par graine pré-simulée). Trois publics, trois mécaniques, aucune confusion visuelle entre elles. Les 4 identités d'abord écartées (cosmos-doc, brut-meme, riso-zine, topo-relief) ont été produites ensuite : chacune est reconnue comme distincte de sa voisine (test mesuré) ; brut-meme se classe 4ᵉ.
 
 ## Comment réutiliser (pour un agent de production)
 
