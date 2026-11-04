@@ -51,13 +51,12 @@
     "voice_alt/en_energetic_v1": "Energetic Male, 1re prise des lignes 02–04 (moins contrastée)"
   },
   "brouhaha": {
-    "note": "Une voix différente par tuile audible pendant les cycles 1-2-3-5-12 (brouhaha), sur la musique du short (short_novo.mp4). Fish Audio s2.1-pro, sans balises. Fichier = brouhaha/NN.mp3, NN = rang dans AUDIBLE (build.py).",
-    "model": "s2.1-pro",
+    "note": "Brouhaha de 10 s (paliers 1-2-3-5-12, 2 s chacun) : une voix FRANÇAISE différente par tuile, sur la musique du short (short_novo.mp4). 00-07 Fish Audio s2.1-pro ; 08-11 Gemini TTS gemini-2.5-flash-preview-tts (consigne de style en préfixe, non lue : vérifié par transcription). Fichier = brouhaha/NN.mp3, NN = rang dans AUDIBLE (build.py). Les clips 07, 02 et 05 servent aussi de voix aux épisodes 2-4 (même texte que la vidéo).",
     "lines": [
       {
         "file": "brouhaha/00.mp3",
         "tile": "gazette-1900",
-        "language": "fr",
+        "engine": "Fish Audio",
         "voice": "Clémence",
         "voiceId": "a288bdc744da4ad194921adad6863175",
         "text": "Quatorze juillet 1789 : Paris se soulève. La Bastille tombe en une seule journée !"
@@ -65,23 +64,23 @@
       {
         "file": "brouhaha/01.mp3",
         "tile": "pixel-arcade",
-        "language": "ja",
-        "voice": "元気な女性",
-        "voiceId": "5161d41404314212af1254556477c17d",
-        "text": "さあ、どのビー玉が勝つかな？青、緑、黄色、それともピンク？コメントで教えてね！"
+        "engine": "Fish Audio",
+        "voice": "Fille",
+        "voiceId": "690813f2df56491b82ee02a22d1c67fd",
+        "text": "Parie sur ta couleur ! C'est parti ! Les picots dispersent tout le monde."
       },
       {
         "file": "brouhaha/02.mp3",
         "tile": "brut-meme",
-        "language": "es",
-        "voice": "Verity",
-        "voiceId": "692eb1e1023242219dc8caae8c56fb12",
-        "text": "¡Di el color, no la palabra! ¡Rojo! ¡Más rápido! ¿Cuántos acertaste? ¡Escríbelo en los comentarios!"
+        "engine": "Fish Audio",
+        "voice": "Unique",
+        "voiceId": "6d3a8a05a287483ab32da9891d7f7fc9",
+        "text": "Dis la couleur, pas le mot ! Rouge ! Bleu ! Plus vite !"
       },
       {
         "file": "brouhaha/03.mp3",
         "tile": "pastel-diorama",
-        "language": "fr",
+        "engine": "Fish Audio",
         "voice": "Féminine",
         "voiceId": "5567200c7d8341738f0892bbacd3be3c",
         "text": "Trois boîtes, un petit renard caché. Regarde bien… laquelle tu choisis ? Écris ton choix en commentaire !"
@@ -89,23 +88,23 @@
       {
         "file": "brouhaha/04.mp3",
         "tile": "swiss-data",
-        "language": "de",
-        "voice": "Christa deutsch",
-        "voiceId": "88b18e0d81474a0ca08e2ea6f9df5ff4",
-        "text": "Noch zweihundertzweiundsiebzig Tage bis zur totalen Sonnenfinsternis. Sechs Minuten und dreiundzwanzig Sekunden Dunkelheit!"
+        "engine": "Fish Audio",
+        "voice": "Lama Faché",
+        "voiceId": "3bce5f0710f949888abe982ded1ef731",
+        "text": "Dans 272 jours, le Soleil va s'éteindre. Jusqu'à six minutes de nuit."
       },
       {
         "file": "brouhaha/05.mp3",
         "tile": "neon-lab",
-        "language": "en",
-        "voice": "Ethan",
-        "voiceId": "536d3a5e000945adb7038665781a4aca",
-        "text": "Why does the Moon always show us the same face? One rotation equals one orbit. Twenty-seven point three days."
+        "engine": "Fish Audio",
+        "voice": "Fille (Jessy)",
+        "voiceId": "5f63c8657897428eac254dbf82926cc5",
+        "text": "Pourquoi la Lune nous montre-t-elle toujours la même face ?"
       },
       {
         "file": "brouhaha/06.mp3",
         "tile": "tableau-craie",
-        "language": "fr",
+        "engine": "Fish Audio",
         "voice": "Voix Mâle Dynamique",
         "voiceId": "9f0935a47689459480b820ed3f6d782d",
         "text": "Pourquoi le ciel est bleu ? La lumière bleue est diffusée cinq fois plus que la rouge. Et voilà !"
@@ -113,43 +112,65 @@
       {
         "file": "brouhaha/07.mp3",
         "tile": "cosmos-doc",
-        "language": "es",
-        "voice": "voz de locutor k",
-        "voiceId": "3f45a7fd7a614655a61eb7027b955783",
-        "text": "Voyager uno está a punto de alcanzar un día luz de distancia. Su señal tarda casi veinticuatro horas en llegar."
+        "engine": "Fish Audio",
+        "voice": "Le narrateur",
+        "voiceId": "4f2a0684dd0247dda68f339738c780e6",
+        "text": "Voyager 1 est sur le point d'atteindre un jour-lumière."
       },
       {
         "file": "brouhaha/08.mp3",
         "tile": "aquarelle-conte",
-        "language": "ja",
-        "voice": "落ち着いた女性",
-        "voiceId": "0089dce5fefb4c6ba9b9f2f0debe1ddc",
-        "text": "昔々、小さなフクロウが空を見上げていました。昼間、星はどこへ行くのでしょう？"
+        "engine": "Gemini TTS",
+        "voice": "Aoede",
+        "voiceId": null,
+        "text": "Lulu la petite chouette se demande : où vont les étoiles, le jour ?"
       },
       {
         "file": "brouhaha/09.mp3",
         "tile": "riso-zine",
-        "language": "en",
-        "voice": "Sarah",
-        "voiceId": "933563129e564b19a115bedd57b7406a",
-        "text": "The biggest desert on Earth is… frozen! Antarctica. Fourteen million square kilometers of ice."
+        "engine": "Gemini TTS",
+        "voice": "Puck",
+        "voiceId": null,
+        "text": "Le plus grand désert est… glacé ! Cinq : le Gobi."
       },
       {
         "file": "brouhaha/10.mp3",
         "tile": "atlas-grave",
-        "language": "de",
-        "voice": "Vorlesen Stimlagen",
-        "voiceId": "90042f762dbf49baa2e7776d011eee6b",
-        "text": "Die erste Weltumsegelung: fünf Schiffe brachen auf, nur eines kehrte zurück. Achtzehn Überlebende."
+        "engine": "Gemini TTS",
+        "voice": "Charon",
+        "voiceId": null,
+        "text": "Cinq navires quittent l'Espagne. Cap sur l'Amérique du Sud."
       },
       {
         "file": "brouhaha/11.mp3",
         "tile": "topo-relief",
-        "language": "en",
-        "voice": "Slax",
-        "voiceId": "c5f56a6cc2ec4fa8920cb4c5889a3fb7",
-        "text": "How do you measure Mount Everest? Satellites, radar, and gravity. Eight thousand eight hundred forty-eight meters."
+        "engine": "Gemini TTS",
+        "voice": "Leda",
+        "voiceId": null,
+        "text": "Comment mesure-t-on le toit du monde ?"
       }
     ]
-  }
+  },
+  "episodes": [
+    {
+      "episode": 1,
+      "short": "swiss-data__geographie__ou-vivent-8-milliards",
+      "voice": "son original (Arnold)"
+    },
+    {
+      "episode": 2,
+      "short": "cosmos-doc__evenements__voyager-1-a-un-jour-lumiere",
+      "voice": "Le narrateur (brouhaha/07.mp3)"
+    },
+    {
+      "episode": 3,
+      "short": "brut-meme__engagement__test-des-3-secondes-stroop",
+      "voice": "Unique (brouhaha/02.mp3)"
+    },
+    {
+      "episode": 4,
+      "short": "neon-lab__explicatif__lune-meme-face",
+      "voice": "Fille (brouhaha/05.mp3)"
+    }
+  ]
 }

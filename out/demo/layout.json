@@ -2,7 +2,7 @@
  "timeline": {
   "CUT": 3.2,
   "C0": 7.4,
-  "CD": 6.0,
+  "CD": 2.0,
   "COUNTS": [
    1,
    2,
@@ -10,27 +10,27 @@
    5,
    12
   ],
-  "CEND": 37.4,
-  "TERM": 39.4,
-  "RES0": 47.0,
-  "RES1": 51.3,
-  "SLAM": 51.3,
-  "END": 57.0,
-  "DUR": 60.6,
+  "CEND": 17.4,
+  "TERM": 19.4,
+  "RES0": 27.0,
+  "RES1": 42.1,
+  "SLAM": 42.1,
+  "END": 47.8,
+  "DUR": 51.4,
   "SLAMS": [
-   51.45,
-   53.29,
-   55.15
+   42.25,
+   44.09,
+   45.95
   ],
   "CUES": {
    "hookLine2": 1.73,
    "noneAlike": 5.44,
-   "typeStart": 39.9,
-   "typeEnd": 44.2,
+   "typeStart": 19.9,
+   "typeEnd": 24.2,
    "checks": [
-    44.6,
-    45.3,
-    46.0
+    24.599999999999998,
+    25.299999999999997,
+    26.0
    ]
   },
   "voice": [
@@ -43,20 +43,50 @@
     "file": "01"
    },
    {
-    "t": 37.7,
+    "t": 17.7,
     "file": "02"
    },
    {
-    "t": 39.5,
+    "t": 19.5,
     "file": "03"
    },
    {
-    "t": 51.4,
+    "t": 42.2,
     "file": "04"
    },
    {
-    "t": 57.1,
+    "t": 47.9,
     "file": "05"
+   }
+  ],
+  "EPS": [
+   {
+    "t0": 27.0,
+    "t1": 31.3,
+    "name": "Swiss Grid",
+    "dir": "swiss-data__geographie__ou-vivent-8-milliards",
+    "accent": "#E3241B"
+   },
+   {
+    "t0": 31.3,
+    "t1": 34.8,
+    "name": "Cosmos Doc",
+    "dir": "cosmos-doc__evenements__voyager-1-a-un-jour-lumiere",
+    "accent": "#FFB347"
+   },
+   {
+    "t0": 34.8,
+    "t1": 38.7,
+    "name": "Brut Meme",
+    "dir": "brut-meme__engagement__test-des-3-secondes-stroop",
+    "accent": "#FFE600"
+   },
+   {
+    "t0": 38.7,
+    "t1": 42.1,
+    "name": "Neon Lab",
+    "dir": "neon-lab__explicatif__lune-meme-face",
+    "accent": "#38F9FF"
    }
   ]
  },
@@ -75,7 +105,7 @@
    "name": "Neon Lab",
    "bg": "#05060B",
    "accent": "#38F9FF",
-   "audibleFrom": 31.4
+   "audibleFrom": 15.4
   },
   {
    "id": "pastel-diorama",
@@ -83,7 +113,7 @@
    "name": "Pastel Diorama",
    "bg": "#FFE8EF",
    "accent": "#FF8FAB",
-   "audibleFrom": 25.4
+   "audibleFrom": 13.4
   },
   {
    "id": "pixel-arcade",
@@ -91,7 +121,7 @@
    "name": "Pixel Arcade",
    "bg": "#0E0B1F",
    "accent": "#FF4F79",
-   "audibleFrom": 13.4
+   "audibleFrom": 9.4
   },
   {
    "id": "swiss-data",
@@ -99,7 +129,7 @@
    "name": "Swiss Grid",
    "bg": "#F4F1EA",
    "accent": "#E3241B",
-   "audibleFrom": 25.4
+   "audibleFrom": 13.4
   },
   {
    "id": "cosmos-doc",
@@ -107,7 +137,7 @@
    "name": "Cosmos Doc",
    "bg": "#000004",
    "accent": "#FFB347",
-   "audibleFrom": 31.4
+   "audibleFrom": 15.4
   },
   {
    "id": "riso-zine",
@@ -115,7 +145,7 @@
    "name": "Riso Zine",
    "bg": "#F6F0E4",
    "accent": "#FF48B0",
-   "audibleFrom": 31.4
+   "audibleFrom": 15.4
   },
   {
    "id": "tableau-craie",
@@ -123,7 +153,7 @@
    "name": "Chalkboard",
    "bg": "#1F3A30",
    "accent": "#FFF6D5",
-   "audibleFrom": 31.4
+   "audibleFrom": 15.4
   },
   {
    "id": "bauhaus-kinetic",
@@ -147,7 +177,7 @@
    "name": "Watercolor Tale",
    "bg": "#F7F1E6",
    "accent": "#E88D72",
-   "audibleFrom": 31.4
+   "audibleFrom": 15.4
   },
   {
    "id": "brut-meme",
@@ -155,7 +185,7 @@
    "name": "Brut Meme",
    "bg": "#111111",
    "accent": "#FFE600",
-   "audibleFrom": 19.4
+   "audibleFrom": 11.4
   },
   {
    "id": "atlas-grave",
@@ -163,7 +193,7 @@
    "name": "Engraved Atlas",
    "bg": "#EFE3C8",
    "accent": "#8C2F1B",
-   "audibleFrom": 31.4
+   "audibleFrom": 15.4
   },
   {
    "id": "topo-relief",
@@ -171,7 +201,7 @@
    "name": "Topo Relief",
    "bg": "#14221C",
    "accent": "#E8C872",
-   "audibleFrom": 31.4
+   "audibleFrom": 15.4
   }
  ],
  "formats": {
@@ -341,6 +371,5 @@
    ]
   }
  },
- "resultShort": "swiss-data__geographie__ou-vivent-8-milliards",
  "url": "github.com/killerwolf/StudioVisualIdentity"
 }

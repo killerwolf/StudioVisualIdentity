@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-build.py — vidéo démo « 14 styles » (≈ 60 s), en 16:9 (1920×1080) et 9:16 (1080×1920).
+build.py — vidéo démo « 14 styles » (≈ 51 s), en 16:9 (1920×1080) et 9:16 (1080×1920).
 
 USAGE (depuis la racine du dépôt)
   .venv/bin/python out/demo/build.py layout            # écrit out/demo/layout.json (géométrie + timeline, lue par overlay.html)
@@ -24,18 +24,27 @@ SHORTS = ROOT / 'out' / 'shorts'
 
 # ---- timeline (secondes) ----
 CUT = 3.2                     # fin de l'accroche (la question est dite à 3,0 s)
-C0, CD = 7.4, 6.0             # début et durée des cycles audio
+C0, CD = 7.4, 2.0             # début et durée des cycles audio (brouhaha : 10 s en tout)
 COUNTS = [1, 2, 3, 5, 12]     # vignettes audibles par cycle
-CEND = C0 + CD * len(COUNTS)  # 37.4
-TERM = 39.4                   # terminal + prompt
-RES0, RES1 = 47.0, 51.3       # épisode résultat
-SLAM = 51.3
-SLAMS = [51.45, 53.29, 55.15]  # « Fourteen styles! » « Thirty-one videos! » « Open source! » (pauses mesurées, silencedetect)
-END = 57.0
-DUR = 60.6
+CEND = C0 + CD * len(COUNTS)  # 17.4
+TERM = CEND + 2.0             # terminal + prompt (19.4)
+RES0 = TERM + 7.6             # épisodes produits (27.0)
+# épisodes montrés dans le téléphone : (dossier du short, nom du style, voix (brouhaha/NN.mp3) ou None = son original, durée)
+# épisode 1 = son original (Arnold) ; 2-4 = une autre voix française qui lit le MÊME texte que la vidéo (sa 1re ligne)
+EPISODES = [('swiss-data__geographie__ou-vivent-8-milliards', 'Swiss Grid', None, 4.3),
+            ('cosmos-doc__evenements__voyager-1-a-un-jour-lumiere', 'Cosmos Doc', '07', 3.5),
+            ('brut-meme__engagement__test-des-3-secondes-stroop', 'Brut Meme', '02', 3.9),
+            ('neon-lab__explicatif__lune-meme-face', 'Neon Lab', '05', 3.4)]
+EP_T = [round(RES0 + sum(e[3] for e in EPISODES[:k]), 2) for k in range(len(EPISODES) + 1)]
+RES1 = EP_T[-1]               # 42.1
+SLAM = RES1
+SLAMS = [round(SLAM + d, 2) for d in (0.15, 1.99, 3.85)]  # « Fourteen styles! » « Thirty-one videos! » « Open source! » (pauses mesurées)
+END = round(SLAM + 5.7, 2)
+DUR = round(END + 3.6, 2)
 # (instant, fichier, gain) — gains pour l'arc de ton : chuchotement (02) très bas à l'origine, cri (04) très haut
-VOICE = [(0.15, '00', 1.6), (3.4, '01', 1.7), (37.7, '02', 9.0), (39.5, '03', 1.9), (51.4, '04', 1.3), (57.1, '05', 1.6)]
-CUES = {'hookLine2': 1.73, 'noneAlike': 5.44, 'typeStart': 39.9, 'typeEnd': 44.2, 'checks': [44.6, 45.3, 46.0]}
+VOICE = [(0.15, '00', 1.6), (3.4, '01', 1.7), (CEND + 0.3, '02', 9.0), (TERM + 0.1, '03', 1.9), (SLAM + 0.1, '04', 1.3), (END + 0.1, '05', 1.6)]
+CUES = {'hookLine2': 1.73, 'noneAlike': 5.44, 'typeStart': TERM + 0.5, 'typeEnd': TERM + 4.8,
+        'checks': [TERM + 5.2, TERM + 5.9, TERM + 6.6]}
 
 # mosaïque : ordre d'affichage (alternance clair / sombre) et ordre d'apparition du son
 TILES = [
@@ -56,7 +65,6 @@ TILES = [
 ]
 AUDIBLE = ['gazette-1900', 'pixel-arcade', 'brut-meme', 'pastel-diorama', 'swiss-data', 'neon-lab',
            'tableau-craie', 'cosmos-doc', 'aquarelle-conte', 'riso-zine', 'atlas-grave', 'topo-relief']
-RESULT = 'swiss-data__geographie__ou-vivent-8-milliards'
 
 
 def audible_from(ident):
@@ -96,9 +104,12 @@ def write_layout():
                       'audibleFrom': audible_from(ident)})
     lay = {'timeline': {'CUT': CUT, 'C0': C0, 'CD': CD, 'COUNTS': COUNTS, 'CEND': CEND, 'TERM': TERM,
                         'RES0': RES0, 'RES1': RES1, 'SLAM': SLAM, 'END': END, 'DUR': DUR,
-                        'SLAMS': SLAMS, 'CUES': CUES, 'voice': [{'t': t, 'file': f} for t, f, g in VOICE]},
+                        'SLAMS': SLAMS, 'CUES': CUES, 'voice': [{'t': t, 'file': f} for t, f, g in VOICE],
+                        'EPS': [{'t0': EP_T[k], 't1': EP_T[k + 1], 'name': e[1], 'dir': e[0],
+                                 'accent': next((x['accent'] for x in tiles if x['dir'].split('__')[0] == e[0].split('__')[0]), '#E3241B')}
+                                for k, e in enumerate(EPISODES)]},
            'tiles': tiles, 'formats': layouts(),
-           'resultShort': RESULT, 'url': 'github.com/killerwolf/StudioVisualIdentity'}
+           'url': 'github.com/killerwolf/StudioVisualIdentity'}
     json.dump(lay, open(HERE / 'layout.json', 'w'), ensure_ascii=False, indent=1)
     print('layout.json écrit')
     return lay
@@ -127,9 +138,13 @@ def base(fmt):
         fc.append(f'[{last}][t{i}]overlay={x}:{y}:shortest=0:eof_action=pass[b{i}]')
         last = f'b{i}'
     rx, ry, rw, rh = F['result']
-    inputs += ['-i', SHORTS / RESULT / 'short.mp4']
-    fc.append(f'[{n}:v]trim=0:{RES1 - RES0 + 0.2:.2f},setpts=PTS-STARTPTS+{RES0}/TB,scale={rw}:{rh}:flags=lanczos,setsar=1[res]')
-    fc.append(f"[{last}][res]overlay={rx}:{ry}:enable='between(t,{RES0},{RES1})':eof_action=pass[vout]")
+    for k, e in enumerate(EPISODES):
+        t0, t1 = EP_T[k], EP_T[k + 1]
+        inputs += ['-i', SHORTS / e[0] / 'short.mp4']
+        fc.append(f'[{n + k}:v]trim=0:{t1 - t0 + 0.2:.2f},setpts=PTS-STARTPTS+{t0}/TB,scale={rw}:{rh}:flags=lanczos,setsar=1[res{k}]')
+        nxt = 'vout' if k == len(EPISODES) - 1 else f'r{k}'
+        fc.append(f"[{last}][res{k}]overlay={rx}:{ry}:enable='between(t,{t0},{t1})':eof_action=pass[{nxt}]")
+        last = nxt
     out = TMP / f'base_{fmt}.mp4'
     run(['ffmpeg', '-y', '-loglevel', 'error', *inputs, '-filter_complex', ';'.join(fc), '-map', '[vout]', '-t', DUR,
          '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '16', '-pix_fmt', 'yuv420p', '-r', '30', out])
@@ -147,7 +162,17 @@ def sound_specs():
     for c in range(len(COUNTS)):
         t = C0 + c * CD
         ev += [{'t': round(t - 0.25, 3), 'type': 'whoosh', 'gain': 0.45, 'dur': 0.35}, {'t': t, 'type': 'pop', 'note': 'E6', 'gain': 0.6}]
-    ev += [{'t': CEND - 3.5, 'type': 'riser', 'gain': 0.7, 'dur': 3.5}, {'t': CEND, 'type': 'thud', 'gain': 0.9}]
+    ev += [{'t': CEND - 2.4, 'type': 'riser', 'gain': 0.7, 'dur': 2.4}, {'t': CEND, 'type': 'thud', 'gain': 0.9}]
+    # apparitions de texte (en attendant de vrais SFX Freesound, cf. out/tools/freesound.py)
+    ev += [{'t': 0.12, 'type': 'whoosh', 'gain': 0.5, 'dur': 0.25}, {'t': 0.17, 'type': 'pop', 'note': 'C6', 'gain': 0.5},
+           {'t': CUES['hookLine2'] - 0.05, 'type': 'whoosh', 'gain': 0.5, 'dur': 0.25}, {'t': CUES['hookLine2'], 'type': 'impact', 'gain': 0.55},
+           {'t': CUT + 0.25, 'type': 'pop', 'note': 'G5', 'gain': 0.55}, {'t': CUES['noneAlike'], 'type': 'impact', 'gain': 0.6},
+           {'t': CUES['noneAlike'] + 0.02, 'type': 'glass', 'note': 'E6', 'gain': 0.35},
+           {'t': CEND + 0.35, 'type': 'swell', 'note': 'E3', 'gain': 0.3, 'dur': 1.6},
+           {'t': TERM, 'type': 'whoosh', 'gain': 0.4, 'dur': 0.3}, {'t': TERM + 0.05, 'type': 'blip', 'note': 'A5', 'gain': 0.3}]
+    for k in range(1, len(EPISODES)):                    # changement d'épisode
+        ev += [{'t': round(EP_T[k] - 0.15, 3), 'type': 'whoosh', 'gain': 0.55, 'dur': 0.3},
+               {'t': EP_T[k] + 0.05, 'type': 'pop', 'note': ['E6', 'G6', 'B6'][k - 1], 'gain': 0.5}]
     k = 0
     tt = TERM + 0.5
     tt = CUES['typeStart']
@@ -155,7 +180,7 @@ def sound_specs():
         ev.append({'t': round(tt, 3), 'type': 'tick', 'gain': 0.22})
         tt += 0.055 + 0.03 * ((k * 7) % 3); k += 1
     ev += [{'t': c, 'type': 'blip', 'note': n, 'gain': 0.42} for c, n in zip(CUES['checks'], ['C6', 'E6', 'G6'])]
-    ev += [{'t': RES0 - 0.2, 'type': 'whoosh', 'gain': 0.6, 'dur': 0.45}]
+    ev += [{'t': RES0 - 0.2, 'type': 'whoosh', 'gain': 0.6, 'dur': 0.45}, {'t': RES0 + 0.3, 'type': 'pop', 'note': 'C6', 'gain': 0.5}]
     ev += [{'t': SLAMS[0], 'type': 'impact', 'gain': 0.9}, {'t': SLAMS[1], 'type': 'impact', 'gain': 0.9}, {'t': SLAMS[2], 'type': 'impact', 'gain': 1.0},
            {'t': END, 'type': 'whoosh', 'gain': 0.5, 'dur': 0.5}, {'t': END + 0.3, 'type': 'chime', 'note': 'A5', 'gain': 0.5},
            {'t': END + 0.3, 'type': 'swell', 'note': 'A3', 'gain': 0.45, 'dur': 3.4}]
@@ -173,14 +198,16 @@ def sound_specs():
 
 # Brouhaha : chaque tuile audible = musique de son short (short_novo.mp4, sans Arnold) + SA voix (brouhaha/NN.mp3),
 # une voix différente par tuile (fr, ja, es, de, en ; hommes et femmes). Index = position dans AUDIBLE.
+# Voix françaises uniquement : 00-07 Fish Audio (8 voix), 08-11 Gemini TTS (Aoede, Puck, Charon, Leda).
+BROUHAHA_VOICES = 12
 BROUHAHA_GAP = [0.5, 0.9, 0.6, 0.8, 0.4, 0.7, 1.0, 0.5, 0.9, 0.6, 0.8, 0.7]   # silence entre deux répétitions
-BROUHAHA_LAG = [0.15, 0.2, 0.15, 0.15, 0.55, 0.15, 0.95, 0.35, 1.4, 0.6, 1.8, 1.1]  # entrée après l'allumage de la tuile
+BROUHAHA_LAG = [0.1, 0.15, 0.1, 0.1, 0.3, 0.1, 0.45, 0.25, 0.6, 0.35, 0.8, 0.5]  # entrée après l'allumage de la tuile
 
 
 def brouhaha_clips():
     """Normalise (loudnorm) chaque voix et ajoute le silence de fin -> TMP/bh_NN.wav, lu en boucle."""
     TMP.mkdir(parents=True, exist_ok=True)
-    for k in range(len(AUDIBLE)):
+    for k in range(BROUHAHA_VOICES):
         src, dst = HERE / 'brouhaha' / f'{k:02d}.mp3', TMP / f'bh_{k:02d}.wav'
         run(['ffmpeg', '-y', '-loglevel', 'error', '-i', src, '-af',
              f'loudnorm=I=-19:TP=-2:LRA=9,aformat=sample_rates=48000:channel_layouts=stereo,apad=pad_dur={BROUHAHA_GAP[k]}', dst])
@@ -204,6 +231,8 @@ def audio():
         fc.append(f"[{i}:a]atrim=0:{DUR - CUT:.2f},asetpts=PTS-STARTPTS,aformat=sample_rates=48000:channel_layouts=stereo,"
                   f"adelay={ms}|{ms},volume='0.28*{gate}':eval=frame,apad,atrim=0:{DUR}[m{i}]")
         bus.append(f'[m{i}]'); i += 1
+        if k >= BROUHAHA_VOICES:
+            continue
         # sa voix, en boucle, légèrement panoramiquée
         T0 = T + BROUHAHA_LAG[k]
         vms = int(T0 * 1000)
@@ -215,15 +244,26 @@ def audio():
         bus.append(f'[v{i}]'); i += 1
     # crescendo du bus : 0.8 au 1er cycle -> 1.0 au dernier, puis +60 % sur les 4 dernières secondes ; limiteur propre au bus
     last = C0 + CD * (len(COUNTS) - 1)
-    cres = f"(0.8+0.2*clip((t-{C0})/{last - C0},0,1))*(1+0.6*clip((t-({CEND}-4))/4,0,1))"
+    cres = f"(0.8+0.2*clip((t-{C0})/{last - C0},0,1))*(1+0.6*clip((t-({CEND}-2))/2,0,1))"
     fc.append(f"{''.join(bus)}amix=inputs={len(bus)}:duration=longest:normalize=0,volume='{cres}':eval=frame,"
               f"alimiter=limit=0.8:attack=4:release=60[bh]")
     labels.append('[bh]')
-    inputs += ['-i', SHORTS / RESULT / 'short.mp4']
-    ms = int((RES0 + 0.3) * 1000)   # après la fin de la voix off du prompt
-    fc.append(f"[{i}:a]atrim=0:{RES1 - RES0 - 0.3:.2f},asetpts=PTS-STARTPTS,aformat=sample_rates=48000:channel_layouts=stereo,"
-              f"afade=t=out:st={RES1 - RES0 - 0.7:.2f}:d=0.4,adelay={ms}|{ms},volume=0.75,apad,atrim=0:{DUR}[a{i}]")
-    labels.append(f'[a{i}]'); i += 1
+    for k, e in enumerate(EPISODES):
+        t0, t1 = EP_T[k], EP_T[k + 1]
+        d = t1 - t0
+        ms = int(t0 * 1000)
+        if e[2] is None:      # son original (voix Arnold comprise)
+            inputs += ['-i', SHORTS / e[0] / 'short.mp4']; g = 0.75
+        else:                 # musique seule + voix française différente
+            inputs += ['-i', SHORTS / e[0] / 'short_novo.mp4']; g = 0.6
+        fc.append(f"[{i}:a]atrim=0:{d:.2f},asetpts=PTS-STARTPTS,aformat=sample_rates=48000:channel_layouts=stereo,"
+                  f"afade=t=in:d=0.08,afade=t=out:st={d - 0.3:.2f}:d=0.3,adelay={ms}|{ms},volume={g},apad,atrim=0:{DUR}[a{i}]")
+        labels.append(f'[a{i}]'); i += 1
+        if e[2] is not None:
+            vms = int((t0 + 0.25) * 1000)
+            inputs += ['-i', TMP / f'bh_{int(e[2]):02d}.wav']
+            fc.append(f"[{i}:a]atrim=0:{d - 0.3:.2f},afade=t=out:st={d - 0.55:.2f}:d=0.25,adelay={vms}|{vms},volume=1.5,apad,atrim=0:{DUR}[a{i}]")
+            labels.append(f'[a{i}]'); i += 1
     for t, f, g in VOICE:
         inputs += ['-i', HERE / 'voice_en' / f'{f}.mp3']
         ms = int(t * 1000)
