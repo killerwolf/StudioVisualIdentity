@@ -6,7 +6,7 @@ Sources : journaux horodatés des studios (`out/report/notes/<slug>.md`), rappor
 
 | Quoi | Cause | Coût | Contournement |
 |---|---|---|---|
-| **Voix off : 1 débordement résiduel** | Fish Audio (Arnold) : la ligne « Premier : le Nil. » (atlas-grave plus-longs-fleuves, t = 8,3 s) dure 0,94 s pour un `maxDuration` de 0,8 s, même à ×1,35 | débordement de 0,14 s sur 135 lignes ; texte non réécrit | rallonger `maxDuration` de cette ligne ou la reformuler, puis relancer `tts.py --engine files` sur ce short |
+| **Voix off : 1 débordement résiduel** | Fish Audio (Arnold) : la ligne « Premier : le Nil. » (atlas-grave plus-longs-fleuves, t = 8,3 s) dure 0,94 s pour un `maxDuration` de 0,8 s, même à ×1,35 | débordement de 0,14 s sur 180 lignes (aucun nouveau débordement sur les 45 lignes des identités réhabilitées) ; texte non réécrit | rallonger `maxDuration` de cette ligne ou la reformuler, puis relancer `tts.py --engine files` sur ce short |
 | **Voix off Gemini abandonnée** | le plan gratuit Gemini (~10 requêtes/jour/modèle) n'a permis que 3 shorts et mélangeait les modèles ; remplacé par Fish Audio (tous les shorts refaits avec une seule voix) | historique conservé dans `facts.md` | aucune |
 | `manimpango` ne compile pas | pangocairo absent | ~5 min | `--no-deps` + stub (voir `facts.md`) ; **pas de `Text()` ni `MathTex`** (pas de LaTeX) : texte en overlays PIL |
 | Commande shell bloquée 5 min | heredoc aplati au milieu d'une commande chaînée -> attente d'`EOF` sur stdin | 5 min | fichiers écrits via l'outil d'écriture |
@@ -56,7 +56,7 @@ Sources : journaux horodatés des studios (`out/report/notes/<slug>.md`), rappor
 | liquid-chrome / pendule | bande grise dure à l'horizon | sol brillant infini | sol retiré, fond en calque 2D |
 | pixel-arcade / territoire (PixiJS) | écran rempli trop lentement (10 s), batailles plates à ~25 % chacune | réglages de l'automate | 2 sous-pas synchrones par frame et force d'attaque au carré, avant tout rendu |
 
-Un seul rendu complet par short, aucun rejeté. Voix off : Fish Audio (Arnold) sur les 23 premiers shorts, voir la ligne « Voix off : 1 débordement résiduel » ; les 8 shorts des identités réhabilitées (31 au total) sont encore sans voix.
+Un seul rendu complet par short, aucun rejeté. Voix off : Fish Audio (Arnold) sur les 31 shorts, voir la ligne « Voix off : 1 débordement résiduel ». Pic : `topo-relief__histoire__hannibal-traverse-les-alpes` atteint −0,0 dB (27 échantillons à 0 dB vers 3,6 s) alors que la musique seule et la voix seule plafonnent à −1,0 dB : somme des deux sous le limiteur (−0,45 dBFS) puis dépassement à l'encodage AAC ; accepté (non écouté), correctif possible : `alimiter` à 0,89 dans `assemble.py mux`.
 
 ## Identités réhabilitées (cosmos-doc, brut-meme, riso-zine, topo-relief) — 2026-11-04 00:24 → 00:57
 

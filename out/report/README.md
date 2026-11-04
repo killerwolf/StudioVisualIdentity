@@ -2,7 +2,7 @@
 
 **But** : 14 identités visuelles (10 retenues en Phase 1, plus les 4 écartées puis réhabilitées à la demande) et cinématiques distinctes pour des chaînes de shorts verticaux (TikTok / Reels / Shorts), chacune **prouvée par 2 vidéos réelles** rendues par code avec des librairies open-source, puis documentée en design system exploitable par un agent de production.
 
-**Bilan** : **14 identités** · **31 shorts** (1080×1920, 30 fps, H.264, 12–18,75 s, son généré) · QA automatique **31/31 OK** · 7 familles couvertes ≥ 3 fois · **8/8 librairies niveau A + 11/11 niveau B** · reconnaissance à l'aveugle **14/14 groupes purs, 56/56 images** (juge visuel indépendant) et **29/31** (mesure couleur, plus proche voisin) · premier tour 1 h 46 (2026-11-03 20:27 -> 22:13 UTC), 3ᵉ shorts 22:22 -> 22:37, identités réhabilitées 2026-11-04 00:24 -> 00:57, sur **4 cœurs** · voix off Gemini **partielle** (quota du plan gratuit, voir `failures.md`).
+**Bilan** : **14 identités** · **31 shorts** (1080×1920, 30 fps, H.264, 12–18,75 s, son généré) · QA automatique **31/31 OK** · 7 familles couvertes ≥ 3 fois · **8/8 librairies niveau A + 11/11 niveau B** · reconnaissance à l'aveugle **14/14 groupes purs, 56/56 images** (juge visuel indépendant) et **29/31** (mesure couleur, plus proche voisin) · premier tour 1 h 46 (2026-11-03 20:27 -> 22:13 UTC), 3ᵉ shorts 22:22 -> 22:37, identités réhabilitées 2026-11-04 00:24 -> 00:57, sur **4 cœurs** · voix off Fish Audio « Arnold » **31/31** (Gemini abandonné, voir « Voix off Fish Audio »).
 
 Toutes les affirmations de ce dossier sont mesurées : temps (`facts.md`, `short.json.renderTimeSec`), QA (`qa.json`), reconnaissance (`recognition.json`).
 
@@ -61,7 +61,7 @@ Mise en place (une fois, depuis la racine du dépôt) : `npm i` (libs + polices 
 
 ### Voix off Fish Audio (générée)
 
-**État : voix off générée et mixée pour 23 shorts sur 31** (les 8 shorts des identités réhabilitées cosmos-doc, brut-meme, riso-zine, topo-relief n'ont pas encore de voix) avec la voix Fish Audio « Arnold » (`d704cf8f1216490cbfbed89955f0e938`, modèle `s2.1-pro`, conteur masculin FR) via le connecteur Fish Audio (une ligne = un appel, 135 lignes, ≈ 4 500 crédits du plan gratuit, hors essais de voix). Chaque `short.mp4` est la version avec voix ; l'original muet+musique est gardé en `short_novo.mp4`. Rendu mesuré mais **pas écouté** par l'assistant (le choix de la voix a été fait par l'utilisateur sur échantillons).
+**État : voix off générée et mixée pour les 31 shorts sur 31** avec la voix Fish Audio « Arnold » (`d704cf8f1216490cbfbed89955f0e938`, modèle `s2.1-pro`, conteur masculin FR) via le connecteur Fish Audio (une ligne = un appel : 135 lignes pour les 23 premiers shorts, puis 45 lignes / 1 711 crédits pour les 8 shorts des identités réhabilitées). Chaque `short.mp4` est la version avec voix ; l'original muet+musique est gardé en `short_novo.mp4`. Rendu mesuré mais **pas écouté** par l'assistant (le choix de la voix a été fait par l'utilisateur sur échantillons).
 
 ```
 .venv/bin/python out/tools/tts.py --all --engine files --voice "<titre voix>" --replace   # lignes déjà synthétisées dans <short>/voice_lines/NN.mp3
@@ -87,7 +87,7 @@ Mise en place (une fois, depuis la racine du dépôt) : `npm i` (libs + polices 
 
 ## Ce qui n'a pas marché (résumé — détail dans `failures.md`)
 
-- **Voix off** : générée pour 23 shorts sur 31 avec Fish Audio (voix « Arnold ») ; voir « Voix off Fish Audio » ci-dessus et `failures.md` (1 débordement résiduel).
+- **Voix off** : générée pour les 31 shorts avec Fish Audio (voix « Arnold ») ; voir « Voix off Fish Audio » ci-dessus et `failures.md` (1 débordement résiduel, 1 pic à 0 dB après encodage AAC).
 - **CPU sur-souscrit** : 10 studios sur 4 cœurs (load 16–22) ; tous les temps de rendu sont ×2–3 au-dessus d'une machine calme.
 - **2 rendus complets jetés** (aquarelle-conte : bande non peinte ; liquid-chrome : verre réfractif à ~5 s/frame), 1 segment re-rendu (tableau-craie : bug de raster SwiftShader sous filtre SVG).
 - **Déterminisme Node ≠ navigateur** pour Matter.js (`Math.atan2` au dernier bit) : corrigé par géométrie précalculée.
