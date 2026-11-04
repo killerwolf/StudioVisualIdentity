@@ -1,0 +1,60 @@
+{
+ "identity": "riso-zine",
+ "family": "geographie",
+ "title": "Les 5 plus grands déserts du monde (le n°1 est glacé !)",
+ "hook": "Couverture de zine imprimée dès la frame 0 : « LES 5 PLUS GRANDS DÉSERTS » en deux passes rose/bleu, annotation au marqueur « le n°1 est… glacé ?! », grande découpe bleue (Antarctique) avec un « ? » jaune réservé, repérage qui tremble à 12 fps",
+ "duration": 16.0,
+ "libraries": [
+  "p5.js",
+  "GSAP",
+  "OpenCV"
+ ],
+ "seed": 13,
+ "renderTimeSec": 299.1,
+ "structure": [
+  {
+   "t": 0,
+   "beat": "hook : couverture + découpe glacée « ? »"
+  },
+  {
+   "t": 2.6,
+   "beat": "N°5 Gobi 1,3 M km² (soit 2,4 × la France) — contour pointillé « le n°1 ? »"
+  },
+  {
+   "t": 4.2,
+   "beat": "N°4 désert d'Arabie 2,3 M km² (soit 4 × la France)"
+  },
+  {
+   "t": 5.8,
+   "beat": "N°3 Sahara 9,2 M km² (soit 17 × la France), dunes rose sur jaune"
+  },
+  {
+   "t": 7.6,
+   "beat": "N°2 Arctique 13,9 M km² — « désert ? oui ! »"
+  },
+  {
+   "t": 9.8,
+   "beat": "N°1 Antarctique 14 M km² ; tampon « GLACÉ ! » à 10,7 s"
+  },
+  {
+   "t": 12.8,
+   "beat": "chute : DÉSERT = TRÈS PEU DE PLUIE, pas forcément chaud ! + planche des 5 découpes à l'échelle + CTA"
+  }
+ ],
+ "engagement": {
+  "mechanic": "suspense (compte à rebours 5 -> 1, le n°1 annoncé glacé) + question finale",
+  "cta": "Tu le savais ? Dis-le en commentaire."
+ },
+ "loopable": false,
+ "sound": {
+  "type": "generated",
+  "voice": false
+ },
+ "qualityChecks": {
+  "stillsReviewed": true,
+  "textMinPx": 54,
+  "safeAreaOk": true
+ },
+ "notes": "Superficies (désert = très peu de précipitations, pas forcément chaud) : Antarctique ≈ 14 M km², Arctique ≈ 13,9, Sahara ≈ 9,2, Arabie ≈ 2,3, Gobi ≈ 1,3 ; France métropolitaine ≈ 0,55 M km² (rapports arrondis 2,4 / 4 / 17 / 25 / 25). Formes dessinées par code (blobs bruités), aire ∝ superficie, aucune donnée géo téléchargée. Rendu navigateur 124.4 s (480 frames) + passe OpenCV 174.7 s, sous contention (4 studios). Un 1er rendu complet a été jeté (bug de cache de style p5 v2 après ctx.restore : dunes du Sahara invisibles), voir notes/riso-zine.md. Voix off prévue : Puck.",
+ "reproduce": "bash out/shorts/riso-zine__geographie__5-plus-grands-deserts/src/build.sh"
+}

@@ -1,0 +1,56 @@
+{
+ "identity": "riso-zine",
+ "family": "evenements",
+ "title": "J-39 : les Géminides, la pluie d'étoiles filantes du 13–14 décembre",
+ "hook": "Page d'agenda imprimée dès la frame 0 : « J-39 » géant en deux passes rose/bleu, tag « AGENDA DU CIEL », soleil jaune, ciel découpé bleu traversé d'étoiles filantes réservées à tête jaune",
+ "duration": 16.0,
+ "libraries": [
+  "p5.js",
+  "GSAP",
+  "OpenCV"
+ ],
+ "seed": 39,
+ "renderTimeSec": 340.2,
+ "structure": [
+  {
+   "t": 0,
+   "beat": "hook : J-39 + pluie d'étoiles filantes"
+  },
+  {
+   "t": 2.4,
+   "beat": "LES GÉMINIDES — nuit du 13 au 14 déc. (le grand max), radiant près de Castor (Gémeaux)"
+  },
+  {
+   "t": 5.6,
+   "beat": "jusqu'à 120 météores/heure : compteur + bâtons de comptage ; « dans un ciel très noir », « moins en ville ! »"
+  },
+  {
+   "t": 8.6,
+   "beat": "d'où ça vient ? l'astéroïde 3200 Phaéton, la Terre traverse ses poussières"
+  },
+  {
+   "t": 11.4,
+   "beat": "conseils : loin des lumières / nord-est après 22 h / 20 min pour tes yeux (coches)"
+  },
+  {
+   "t": 14.4,
+   "beat": "retour couverture J-39 + 13–14 DÉC. + tampon « note-le ! » (boucle visuelle)"
+  }
+ ],
+ "engagement": {
+  "mechanic": "compte à rebours + agenda à cocher",
+  "cta": "Note-le ! Tu regarderas d'où ?"
+ },
+ "loopable": false,
+ "sound": {
+  "type": "generated",
+  "voice": false
+ },
+ "qualityChecks": {
+  "stillsReviewed": true,
+  "textMinPx": 54,
+  "safeAreaOk": true
+ },
+ "notes": "Référence 2026-11-04 : 26 jours restants en novembre + 13 = 39 jours avant le 13 décembre 2026 (J-39 vérifié). Maximum la nuit du 13 au 14 décembre ; jusqu'à ~120 météores/h sous un ciel très noir (moins en ville) ; essaim issu de l'astéroïde 3200 Phaéton ; conseils : loin des lumières, regarder vers le nord-est après 22 h, laisser les yeux s'habituer ~20 min. Étoiles filantes pré-tirées (graine 39), horloge modulo par page. Rendu navigateur 206.2 s (480 frames) + passe OpenCV 134.0 s sous contention. Voix off prévue : Puck.",
+ "reproduce": "bash out/shorts/riso-zine__evenements__geminides-j-39/src/build.sh"
+}

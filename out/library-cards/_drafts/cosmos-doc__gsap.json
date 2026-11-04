@@ -1,0 +1,25 @@
+{
+ "name": "GSAP",
+ "role": "typo",
+ "bestFor": [
+  "typo documentaire en DOM au-dessus d'un canvas three.js : fondu + interlettrage qui se resserre (letterSpacing en em), sine.inOut",
+  "compteurs (00 H -> 24 H) : tween linéaire d'un objet proxy, texte écrit APRÈS tl.seek dans renderAt",
+  "une seule timeline en pause pilotée par tl.seek(t,false) : déterministe, stills dans n'importe quel ordre"
+ ],
+ "avoidFor": [
+  "animer la 3D (caméra/planètes calculées directement par t + easings svi.js, plus lisible)",
+  "valeurs non tweenables (textContent) : passer par un proxy"
+ ],
+ "renderCostPer100Frames": "13,9 ms (mesuré, bench_gsap.html : 17 blocs texte de l'explicatif cosmos-doc, 450 seeks = 30,4 ms + layout forcé 32,2 ms) — négligeable devant le rendu three.js (186,4 s/100 frames)",
+ "gotchas": [
+  "immediateRender:false sur fromTo : poser opacity:0 en CSS, sinon flash de texte à t=0",
+  "lire un proxy tweené AVANT tl.seek renvoie la valeur de la frame précédente (vu : compteur bloqué à 00 en stills)",
+  "white-space:nowrap obligatoire quand on tween letterSpacing (le tracking de départ fait passer à la ligne)",
+  "ne jamais retourner tl.seek(...) depuis renderAt (thenable)"
+ ],
+ "snippetPath": "shorts/cosmos-doc__evenements__voyager-1-a-un-jour-lumiere/src",
+ "pairsWellWith": [
+  "three.js",
+  "@fontsource Bebas Neue / Inter"
+ ]
+}

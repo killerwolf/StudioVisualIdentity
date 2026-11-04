@@ -1,0 +1,29 @@
+{
+ "name": "three.js",
+ "role": "3D",
+ "bestFor": [
+  "documentaire spatial « photographique » : planètes à textures procédurales canvas + bumpMap, atmosphères fresnel, sonde en primitives",
+  "flare d'objectif maison : 2ᵉ RenderPass orthographique en pixels (halo, traînée anamorphique, fantômes hexagonaux) avant le bloom",
+  "passe film maison (ShaderPass après OutputPass) : grain 2 px déterministe par frame, vignette, dip-to-black par uniforme",
+  "points lumineux doux avec traîne (photons, signal) en Points + ShaderMaterial additif, trajets précalculés"
+ ],
+ "avoidFor": [
+  "texte (le garder en DOM par-dessus le canvas, Bebas/Inter via @fontsource)",
+  "DoF / transmission sous SwiftShader (coût prohibitif)",
+  "scènes presque vides en noir vrai sans texte : blackdetect de check.py (98 % des pixels < 0,06)"
+ ],
+ "renderCostPer100Frames": "186,4 s (mesuré, cosmos-doc explicatif : 2 sphères 128×96 + 3 textures canvas 1024×512, atmosphère fresnel, 96 photons × 9 échos, 2 600 étoiles shader, 2 RenderPass + UnrealBloom + OutputPass + ShaderPass film, 450 frames en 838,7 s) ; 174,9 s (cosmos-doc evenements : sonde ~40 meshes, héliosphère fresnel, 3 000 étoiles, 450 frames en 787,1 s) — load average 20–23, 4 slots occupés",
+ "gotchas": [
+  "Vector3.project(cam) utilise matrixWorldInverse de la frame PRÉCÉDENTE : appeler cam.updateMatrixWorld() avant de projeter (sinon flare décalé d'une frame, et faux en mode stills)",
+  "ShaderPass placé APRÈS OutputPass : ses valeurs passent telles quelles à l'écran (pas de 2ᵉ conversion sRGB) -> grain/vignette en espace affichage",
+  "RenderPass d'overlay : pass.clear = false, OrthographicCamera(0, W, 0, -H) et position y = -py pour travailler en pixels",
+  "MeshBasicMaterial avec color > 1 (HDR) dans la cible demi-flottante du composer = cœur de flare qui déclenche le bloom",
+  "une parabole (LatheGeometry) vue de face devient un disque illisible : vue 3/4 arrière",
+  "halo de flare > ~1 000 px délave tout le sujet ; anneau > 20 % d'opacité dessine un faux second contour de planète"
+ ],
+ "snippetPath": "shorts/cosmos-doc__explicatif__pourquoi-venus-plus-chaude-que-mercure/src",
+ "pairsWellWith": [
+  "GSAP (timeline seekée pour la typo DOM)",
+  "svi.js (rng, noise3, inOutSine)"
+ ]
+}

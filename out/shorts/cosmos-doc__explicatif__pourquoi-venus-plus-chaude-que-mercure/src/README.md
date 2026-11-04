@@ -7,3 +7,4 @@ node out/tools/render.mjs out/shorts/cosmos-doc__explicatif__pourquoi-venus-plus
 ```
 
 `cosmos.js` = module commun de l'identité cosmos-doc (identique dans les deux shorts). Stills : `node out/tools/render.mjs out/shorts/cosmos-doc__explicatif__pourquoi-venus-plus-chaude-que-mercure/src/index.html --stills 0.5,3,6.5,10.5,14.2 --stills-dir /tmp/st`.
+`bench_gsap.html` : mesure du coût GSAP seul (`node out/tools/render.mjs <src>/bench_gsap.html --stills 0 --stills-dir /tmp/b`, résultat écrit dans l'image).

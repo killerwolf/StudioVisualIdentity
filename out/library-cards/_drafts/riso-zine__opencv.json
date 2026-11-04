@@ -1,0 +1,24 @@
+{
+ "name": "OpenCV (cv2 5.0, Python, pipes ffmpeg)",
+ "role": "post-traitement",
+ "bestFor": [
+  "passe « tirage riso » frame par frame : feuille qui ondule on twos (warpAffine), manques d'encre ∝ couverture, rouleau inégal, grain + fibres du papier, bavure 0,7 px",
+  "même code en mode image pour revoir les stills avant le rendu complet"
+ ],
+ "avoidFor": [
+  "séparer les encres a posteriori (faire le tramage dans le navigateur, couche par couche)",
+  "styles en aplats destinés à un fichier léger (le grain sature 8 Mb/s)"
+ ],
+ "renderCostPer100Frames": "36,4 s (geographie, 480 f en 174,7 s) et 27,9 s (evenements, 480 f en 134,0 s), 1080×1920 float32, sous slot.sh et contention",
+ "gotchas": [
+  "lancer sous out/tools/slot.sh",
+  "pré-tirer les champs (6 grains, 6 cartes de manques) et les alterner par pas : aucun tirage par frame",
+  "zoom 1,012 + BORDER_REPLICATE pour que l'ondulation ne découvre pas les bords",
+  "livrable ≈ 17 Mo / 16 s : le grain plafonne le débit du mux"
+ ],
+ "snippetPath": "shorts/riso-zine__geographie__5-plus-grands-deserts/src/post.py",
+ "pairsWellWith": [
+  "p5.js",
+  "toute scène navigateur plate"
+ ]
+}

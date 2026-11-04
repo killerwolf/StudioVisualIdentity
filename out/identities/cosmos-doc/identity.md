@@ -91,7 +91,7 @@ Module commun identique : `src/cosmos.js` dans les deux dossiers.
 Voix grave documentaire (Gemini **Orus** pour l'explicatif, **Charon** pour l'événement), **une phrase par plan**, démarrant 0,1–0,3 s après la sortie du dip, débit ≈ 2,6 mots/s **au plus** (style « lente, silences entre les phrases »). Le visuel ne porte que des noms, dates et chiffres : la voix porte le **pourquoi** (« sans atmosphère, il brûle le jour et gèle la nuit »). La dernière seconde reste silencieuse sous la musique (drone). Musique : preset `drone` 64 bpm mineur, mixée à −18 dB, SFX graves (impact, thud, swell, riser) calés sur les plans.
 
 ## Risques et limites
-- **Coût de rendu** : three.js + bloom + 2 RenderPass ≈ 2 s/frame sous contention (voir `short.json.renderTimeSec`) ; 15 s = 450 frames. Ne pas ajouter de DoF ni de transmission.
+- **Coût de rendu** (mesuré, load 20–23) : explicatif 838,7 s / 450 frames (186,4 s/100 f), événement 787,1 s / 450 frames (174,9 s/100 f) ; GSAP seul 13,9 ms/100 frames (`src/bench_gsap.html`). Ne pas ajouter de DoF ni de transmission.
 - **Noir vrai** vs `check.py` : un plan presque vide (sonde minuscule) + dip trop long déclenche blackdetect (pix_th 0,06, 98 %) — garder un sujet ou un texte assez grand à l'image et des dips à plancher 6 % de ~0,06 s.
 - **Grain** : il fait monter le débit (plafond 8 Mb/s) ; rester à 0,028 et 2 px.
 - **Flare** : un halo trop grand délave les planètes (vu en stills : 1 500 px -> 1 050 px) ; l'anneau doit rester à 16 % sinon il dessine un second contour.
