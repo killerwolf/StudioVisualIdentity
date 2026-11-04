@@ -26,4 +26,11 @@ La géométrie et le minutage sont dans `layout.json`, écrit par `build.py`. Vo
 
 ## Son
 
-Les effets sont encore synthétisés par code (`out/tools/sound.py`). Pour les remplacer par de vrais sons Freesound (CC0), avec `out/tools/freesound.py`, suivre `PROMPT_FREESOUND.md`.
+Le sound design utilise de vrais sons CC0 (domaine public) venus d'OpenGameArt : packs Kenney, bart, pyranostudios, Hazmat Harry, Cassie-OrbitGames, rubberduck et wobbleboxx.
+
+- Les sons sont dans `sfx/`, avec auteurs et liens dans `sfx/credits.json`.
+- `build.py` (`sfx_samples()`) les pose sur chaque apparition de texte, chaque transition, la frappe clavier, les ✓ et les slams.
+- Les quelques événements sans échantillon, comme les nappes « swell », restent synthétisés par `out/tools/sound.py`.
+- Le mix est limité à −1 dBFS.
+
+Freesound (`out/tools/freesound.py`, `PROMPT_FREESOUND.md`) reste une option pour une session locale. Le 2026-11-04, freesound.org et kenney.nl répondaient 403 depuis le cloud, alors qu'opengameart.org était joignable.

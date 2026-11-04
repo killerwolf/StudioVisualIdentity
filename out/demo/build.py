@@ -329,7 +329,7 @@ def audio():
         ms = int(start * 1000)
         fc.append(f"[{i}:a]aformat=sample_rates=48000:channel_layouts=stereo,adelay={ms}|{ms},volume={gain},apad,atrim=0:{DUR}[a{i}]")
         labels.append(f'[a{i}]'); i += 1
-    fc.append(f"{''.join(labels)}amix=inputs={len(labels)}:duration=longest:normalize=0,alimiter=limit=0.89:attack=5:release=80,"
+    fc.append(f"{''.join(labels)}amix=inputs={len(labels)}:duration=longest:normalize=0,alimiter=limit=0.89:attack=5:release=80:level=disabled,"
               f"afade=t=out:st={DUR - 0.6}:d=0.6[aout]")
     out = TMP / 'mix.wav'
     run(['ffmpeg', '-y', '-loglevel', 'error', *inputs, '-filter_complex', ';'.join(fc), '-map', '[aout]', '-t', DUR, '-ar', '48000', out])
