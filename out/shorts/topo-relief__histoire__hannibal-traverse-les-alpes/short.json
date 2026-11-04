@@ -1,0 +1,55 @@
+{
+ "identity": "topo-relief",
+ "family": "histoire",
+ "title": "Hannibal traverse les Alpes (218 av. J.-C.)",
+ "hook": "Frame 0 : titre « Hannibal traverse les Alpes » + kicker « 218 AV. J.-C. », la chaîne alpine s'extrude pendant que ses courbes de niveau s'allument et que l'itinéraire terre cuite commence à se tracer ; altimètre ALT en JetBrains Mono.",
+ "duration": 15.0,
+ "libraries": [
+  "three.js",
+  "D3.js"
+ ],
+ "seed": 11,
+ "renderTimeSec": 486.7,
+ "structure": [
+  {
+   "t": 0,
+   "beat": "hook : extrusion de la chaîne + courbes qui s'allument + début du tracé, titre et date"
+  },
+  {
+   "t": 3.05,
+   "beat": "départ d'Espagne : « ≈ 37 éléphants » (compteur + 37 silhouettes inventées), colonne de sprites qui suit la tête du tracé"
+  },
+  {
+   "t": 6.05,
+   "beat": "automne : flocons, calotte qui blanchit, l'armée grimpe (altimètre = maximum atteint)"
+  },
+  {
+   "t": 8.65,
+   "beat": "débat ouvert : l'itinéraire se divise en 3 hypothèses menthe, balises A ? B ? C ?, légende Petit-St-Bernard / Mont-Cenis / Traversette, HUD « COL ? 2 083–2 950 m »"
+  },
+  {
+   "t": 12.25,
+   "beat": "chute : convergence vers la balise ITALIE, « Les historiens en débattent », vote A/B/C, recul de la caméra"
+  },
+  {
+   "t": 15.0,
+   "beat": "fin propre sur vue large"
+  }
+ ],
+ "engagement": {
+  "mechanic": "vote",
+  "cta": "Ton pari : A, B ou C ? Réponds en commentaire."
+ },
+ "loopable": false,
+ "sound": {
+  "type": "generated",
+  "voice": false
+ },
+ "qualityChecks": {
+  "stillsReviewed": true,
+  "textMinPx": 54,
+  "safeAreaOk": true
+ },
+ "notes": "Faits : armée carthaginoise partie d'Espagne (218 av. J.-C.), environ 37 éléphants au départ, traversée en automne avec de la neige sur les hauteurs ; le col exact reste débattu (3 hypothèses parmi d'autres affichées : Petit-Saint-Bernard 2 188 m, Mont-Cenis 2 083 m, Traversette ≈ 2 950 m -> plage affichée 2 083–2 950 m). Relief 100 % procédural et stylisé (aucun MNT) ; l'altimètre pendant l'approche est une échelle stylisée (h normalisée × 3 600 m, maximum atteint). Silhouettes d'éléphants génériques inventées, aucun personnage. seed 11 (flocons, mulberry32) ; bruit du relief à offsets fixes 11.3/2.9. Texte ≥ 54 px, titres 100 px ; contenu entre y=236 et ≈1560, x ≤ 960. Rendu 450 frames en 486,7 s (108,2 s/100 frames) sous contention.",
+ "reproduce": "mkdir -p /tmp/svi/topo-relief__histoire__hannibal-traverse-les-alpes && node out/tools/render.mjs out/shorts/topo-relief__histoire__hannibal-traverse-les-alpes/src/index.html --out /tmp/svi/topo-relief__histoire__hannibal-traverse-les-alpes/video.mp4 --duration 15 && .venv/bin/python out/tools/sound.py out/shorts/topo-relief__histoire__hannibal-traverse-les-alpes/src/sound.json /tmp/svi/topo-relief__histoire__hannibal-traverse-les-alpes/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/topo-relief__histoire__hannibal-traverse-les-alpes/video.mp4 --music /tmp/svi/topo-relief__histoire__hannibal-traverse-les-alpes/music.wav --out out/shorts/topo-relief__histoire__hannibal-traverse-les-alpes/short.mp4"
+}

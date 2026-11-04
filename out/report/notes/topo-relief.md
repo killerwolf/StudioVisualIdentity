@@ -10,3 +10,6 @@
 - 00:44 — Décision : 3 cols nommés seulement (Petit-Saint-Bernard, Mont-Cenis, Traversette), classés du nord (gauche) au sud (droite) comme vus depuis l'ouest ; titre final « Les historiens en débattent » + vote A/B/C. Montgenèvre/Clapier non affichés (place), le débat est dit ouvert.
 - 00:46 — « → » (JetBrains Mono 700, sous-ensemble latin) rendu comme un point : kicker remplacé par « CAP SUR L'ITALIE ». Rendu complet Hannibal lancé 00:46.
 - 00:49 — Mesure D3 : `d3.contours` 256×256, 41 niveaux, 88 285 points d'anneaux = **224 ms** (une fois au chargement, Node 22, load ≈ 15) ; coût D3 par frame = 0 (texture précalculée).
+- 00:55 — Hannibal rendu : 450 frames en **486,7 s (108,2 s/100 frames)** (contention plus faible qu'au premier rendu). Mux + check.py OK. Limite connue : pendant 4,4–7,3 s l'altimètre (maximum atteint) plafonne à 450 m car le tracé suit une vallée presque plate — pas faux, mais l'idée « l'armée grimpe » repose surtout sur la voix et la caméra.
+- 00:56 — Phase 3 : tokens.json, identity.md, recipes/geographie.md + histoire.md, poster (frame 3,1 s de l'Everest), contact-sheet (9 frames, 5 Everest + 4 Hannibal), cartes librairie three.js + d3 avec coûts mesurés.
+- Temps réel total ≈ 33 min (00:24 -> 00:57 UTC), dont ≈ 21 min de rendus complets en arrière-plan. Deux rendus complets en tout (un par short), aucun re-rendu.

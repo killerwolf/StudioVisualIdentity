@@ -10,7 +10,7 @@
   "recalculer les contours à chaque frame (≈ 0,2 s par appel en 256²) : précalculer une fois au chargement",
   "animer avec d3.transition (non seekable)"
  ],
- "renderCostPer100Frames": "0 s par frame (texture précalculée) ; coût unique mesuré : d3.contours 256², 41 niveaux, 88 285 points = 224 ms (Node 22, load ≈ 15) + peinture canvas 2048² au chargement ; le rendu complet du short (three.js dominant) = 169 s (mesuré, topo-relief__geographie__comment-mesure-t-on-l-everest : relief 256² MeshStandard + shader onBeforeCompile, 2 textures 2048², sprites, nappe 90² en fil de fer, DOM ; 450 frames en 760,5 s, load average 15–17, 4 studios)",
+ "renderCostPer100Frames": "0 s par frame (texture précalculée) ; coût unique mesuré : d3.contours 256², 41 niveaux, 88 285 points = 224 ms (Node 22, load ≈ 15) + peinture canvas 2048² au chargement ; le rendu complet du short (three.js dominant) = 169 s (mesuré, topo-relief__geographie__comment-mesure-t-on-l-everest : relief 256² MeshStandard + shader onBeforeCompile, 2 textures 2048², sprites, nappe 90² en fil de fer, DOM ; 450 frames en 760,5 s, load average 15–17, 4 studios) ; 108,2 s (mesuré, topo-relief__histoire__hannibal-traverse-les-alpes : même moteur + 4 tubes lumineux, 900 flocons Points recalculés par frame, 9 sprites)",
  "gotchas": [
   "d3.contours attend un tableau plat (Array.from(Float64Array) par sécurité) rangé ligne par ligne, taille [N,N]",
   "les coordonnées des contours sont en unités de grille : geoTransform({point(x,y){this.stream.point(x*T/N, y*T/N)}})",
