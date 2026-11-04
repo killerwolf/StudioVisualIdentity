@@ -8,6 +8,7 @@ MOTEURS (--engine, défaut : fish si FISH_API_KEY est défini, sinon gemini)
           `s2.1-pro` / `s2-pro` / `s1` si du crédit API est ajouté (sinon HTTP 402).
           Voix : --voice <reference_id> ou FISH_VOICE_ID (ID d'une voix de https://fish.audio/app/discovery, ex. une voix FR).
           Sans voix, Fish choisit une voix par défaut, différente à chaque ligne : fixe toujours une voix.
+  files   Audio déjà généré par ailleurs (connecteur Fish Audio) : <short>/voice_lines/00.mp3, 01.mp3… une par ligne, même ordre.
   gemini  Gemini TTS — PRÉREQUIS : GEMINI_API_KEY (ou GOOGLE_API_KEY) ; `pip install google-genai` (>= 2.30).
 Sans clé, le script s'arrête proprement (code 3) sans toucher aux fichiers : le short muet+musique reste valide.
 
@@ -136,6 +137,18 @@ def synth_fish(key, text, voice, lang, model):
     raise RuntimeError(f'Fish Audio TTS failed: {last}')
 
 
+def load_line_file(d, i):
+    """Moteur `files` : audio déjà synthétisé (ex. via le connecteur Fish Audio) dans <short>/voice_lines/NN.mp3|wav."""
+    for ext in ('mp3', 'wav'):
+        f = Path(d) / 'voice_lines' / f'{i:02d}.{ext}'
+        if f.exists():
+            tmp = '/tmp/svi_line.wav'
+            subprocess.run(['ffmpeg', '-y', '-loglevel', 'error', '-i', str(f), '-ac', '1', '-ar', str(SR), tmp], check=True)
+            sr, x = wavfile.read(tmp)
+            return x.astype(np.float32) / 32768.0, 'fish-connector'
+    raise FileNotFoundError(f'{d}/voice_lines/{i:02d}.mp3 manquant')
+
+
 def trim_silence(x, th=0.01):
     idx = np.where(np.abs(x) > th)[0]
     if len(idx) == 0:
@@ -163,7 +176,9 @@ def process(d, a, client):
     nar = json.load(open(d / 'narration.json'))
     sj = json.load(open(d / 'short.json')) if (d / 'short.json').exists() else {}
     dur = float(sj.get('duration', 15))
-    if a.engine == 'fish':
+    if a.engine == 'files':
+        voice = a.voice or 'fish-connector'  # --voice <titre/ID de la voix Fish utilisée> pour la traçabilité
+    elif a.engine == 'fish':
         voice = a.voice or os.environ.get('FISH_VOICE_ID') or nar.get('fish_voice')
         if not voice:
             print('[tts] ATTENTION : aucune voix Fish (--voice / FISH_VOICE_ID / "fish_voice") -> voix par défaut instable.', file=sys.stderr)
@@ -171,8 +186,10 @@ def process(d, a, client):
         voice = pick_voice(nar.get('style'), a.voice or nar.get('voice'))
     track = np.zeros(int((dur + 1) * SR), np.float32)
     report = []
-    for ln in nar['lines']:
-        if a.engine == 'fish':
+    for i, ln in enumerate(nar['lines']):
+        if a.engine == 'files':
+            x, used = load_line_file(d, i)
+        elif a.engine == 'fish':
             x, used = synth_fish(client, ln['text'], voice, nar.get('language', 'fr'), a.model)
         else:
             x, used = synth(client, ln['text'], nar.get('style', 'naturel'), voice, nar.get('language', 'fr'), a.model)
@@ -221,13 +238,13 @@ def process(d, a, client):
 def main():
     p = argparse.ArgumentParser()
     p.add_argument('dir', nargs='?'); p.add_argument('--all', action='store_true')
-    p.add_argument('--engine', choices=['fish', 'gemini'], default=None)
+    p.add_argument('--engine', choices=['fish', 'gemini', 'files'], default=None)
     p.add_argument('--model', default=None); p.add_argument('--voice')
     p.add_argument('--replace', action='store_true'); p.add_argument('--dry-run', action='store_true')
     a = p.parse_args()
     a.engine = a.engine or ('fish' if os.environ.get('FISH_API_KEY') else 'gemini')
     a.model = a.model or (FISH_MODEL if a.engine == 'fish' else MODELS[0])
-    key = os.environ.get('FISH_API_KEY') if a.engine == 'fish' else (os.environ.get('GEMINI_API_KEY') or os.environ.get('GOOGLE_API_KEY'))
+    key = 'n/a' if a.engine == 'files' else os.environ.get('FISH_API_KEY') if a.engine == 'fish' else (os.environ.get('GEMINI_API_KEY') or os.environ.get('GOOGLE_API_KEY'))
     dirs = sorted(x for x in (ROOT / 'out/shorts').iterdir() if (x / 'narration.json').exists()) if a.all else [Path(a.dir)]
     if a.dry_run:
         for d in dirs:
@@ -238,7 +255,7 @@ def main():
     if not key:
         print(f'[tts] clé {"FISH_API_KEY" if a.engine == "fish" else "GEMINI_API_KEY"} absente : voix off non générée (le short sans voix reste valide).', file=sys.stderr)
         sys.exit(3)
-    if a.engine == 'fish':
+    if a.engine in ('fish', 'files'):
         client = key
     else:
         from google import genai
