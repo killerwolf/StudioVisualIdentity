@@ -15,6 +15,7 @@
  *   node out/tools/render.mjs <scene.html> --out short_video.mp4 [--duration 15] [--fps 30]
  *   node out/tools/render.mjs <scene.html> --stills 0.5,3,8,12 --stills-dir stills/   # JPEG 1080×1920
  *   options : --width 1080 --height 1920 --crf 14 --start 0 --quality 92 --no-slot --gl swiftshader|egl
+ *   --alpha : calque transparent (la page ne doit pas peindre de fond) -> PNG par frame -> .mov qtrle (RGBA) pour overlay ffmpeg
  *
  * SORTIE : écrit d'abord <out>.part.mp4, puis renomme. Imprime un JSON {frames, seconds, secPer100Frames}.
  * SLOTS CPU : chaque rendu réserve un slot parmi nproc (verrous dans /tmp/svi-slots) — plusieurs agents
@@ -167,20 +168,27 @@ async function main() {
     const secs = (Date.now() - t0) / 1000;
     console.log(JSON.stringify({ mode: 'stills', count: times.length, seconds: +secs.toFixed(1) }));
   } else {
-    const out = path.resolve(args.out || 'out.mp4');
-    const part = out.replace(/\.mp4$/, '') + '.part.mp4';
+    const alpha = !!args.alpha;
+    const out = path.resolve(args.out || (alpha ? 'out.mov' : 'out.mp4'));
+    const part = alpha ? out.replace(/\.mov$/, '') + '.part.mov' : out.replace(/\.mp4$/, '') + '.part.mp4';
     fs.mkdirSync(path.dirname(out), { recursive: true });
     const nFrames = Math.round(duration * FPS);
-    const ff = spawn('ffmpeg', ['-y', '-loglevel', 'error', '-f', 'image2pipe', '-framerate', String(FPS), '-c:v', 'mjpeg', '-i', '-',
-      '-c:v', 'libx264', '-preset', 'veryfast', '-crf', String(args.crf || 14), '-pix_fmt', 'yuv420p', '-r', String(FPS),
-      '-movflags', '+faststart', part], { stdio: ['pipe', 'inherit', 'inherit'] });
+    const ffArgs = alpha
+      ? ['-y', '-loglevel', 'error', '-f', 'image2pipe', '-framerate', String(FPS), '-c:v', 'png', '-i', '-',
+         '-c:v', 'qtrle', '-pix_fmt', 'argb', '-r', String(FPS), part]
+      : ['-y', '-loglevel', 'error', '-f', 'image2pipe', '-framerate', String(FPS), '-c:v', 'mjpeg', '-i', '-',
+         '-c:v', 'libx264', '-preset', 'veryfast', '-crf', String(args.crf || 14), '-pix_fmt', 'yuv420p', '-r', String(FPS),
+         '-movflags', '+faststart', part];
+    const ff = spawn('ffmpeg', ffArgs, { stdio: ['pipe', 'inherit', 'inherit'] });
     const ffDone = new Promise((res, rej) => ff.on('close', c => c === 0 ? res() : rej(new Error('ffmpeg exit ' + c))));
     // sequential scenes must be stepped from t=0 even if --start>0
     const firstFrame = Math.round(start * FPS);
     if (meta.seq && firstFrame > 0) for (let f = 0; f < firstFrame; f++) await renderFrame(f / FPS);
     for (let f = firstFrame; f < firstFrame + nFrames; f++) {
       await renderFrame(f / FPS);
-      const buf = await page.screenshot({ type: 'jpeg', quality, clip: { x: 0, y: 0, width: W, height: H } });
+      const buf = alpha
+        ? await page.screenshot({ type: 'png', omitBackground: true, clip: { x: 0, y: 0, width: W, height: H } })
+        : await page.screenshot({ type: 'jpeg', quality, clip: { x: 0, y: 0, width: W, height: H } });
       if (!ff.stdin.write(buf)) await new Promise(r => ff.stdin.once('drain', r));
       if ((f - firstFrame) % 60 === 0) process.stderr.write(`\r[render] ${f - firstFrame}/${nFrames}`);
     }

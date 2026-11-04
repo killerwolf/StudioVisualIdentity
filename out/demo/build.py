@@ -1,0 +1,250 @@
+#!/usr/bin/env python3
+"""
+build.py — vidéo démo « 14 styles » (≈ 60 s), en 16:9 (1920×1080) et 9:16 (1080×1920).
+
+USAGE (depuis la racine du dépôt)
+  .venv/bin/python out/demo/build.py layout            # écrit out/demo/layout.json (géométrie + timeline, lue par overlay.html)
+  .venv/bin/python out/demo/build.py base 16x9|9x16    # mosaïque des 14 vraies vidéos (+ épisode « résultat ») -> /tmp/svi/demo/base_<fmt>.mp4
+  node out/tools/render.mjs out/demo/overlay.html --query fmt=16x9 --width 1920 --height 1080 --duration 60 --alpha --out /tmp/svi/demo/overlay_16x9.mov
+  .venv/bin/python out/demo/build.py audio             # mix : son des vignettes par paliers (1,2,3,5,12), voix off, SFX, musiques
+  .venv/bin/python out/demo/build.py final 16x9|9x16   # base + overlay + audio -> out/demo/demo_<fmt>.mp4
+  .venv/bin/python out/demo/build.py gif               # aperçu muet pour le README -> out/demo/demo_preview.gif
+  .venv/bin/python out/demo/build.py all               # tout, dans l'ordre (overlay compris)
+
+Voix off : Fish Audio « Energetic Male » (802e3bc2b27e49c2995d23ef70e6ac89), modèle drama-3, lignes dans voice_en/NN.mp3
+(texte et indications de jeu dans narration.json). Variantes non utilisées : voice_alt/.
+"""
+import json, os, subprocess, sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[2]
+HERE = Path(__file__).resolve().parent
+TMP = Path('/tmp/svi/demo')
+SHORTS = ROOT / 'out' / 'shorts'
+
+# ---- timeline (secondes) ----
+CUT = 3.2                     # fin de l'accroche (la question est dite à 3,0 s)
+C0, CD = 7.4, 6.0             # début et durée des cycles audio
+COUNTS = [1, 2, 3, 5, 12]     # vignettes audibles par cycle
+CEND = C0 + CD * len(COUNTS)  # 37.4
+TERM = 39.4                   # terminal + prompt
+RES0, RES1 = 47.0, 51.3       # épisode résultat
+SLAM = 51.3
+SLAMS = [51.45, 53.29, 55.15]  # « Fourteen styles! » « Thirty-one videos! » « Open source! » (pauses mesurées, silencedetect)
+END = 57.0
+DUR = 60.6
+# (instant, fichier, gain) — gains pour l'arc de ton : chuchotement (02) très bas à l'origine, cri (04) très haut
+VOICE = [(0.15, '00', 1.6), (3.4, '01', 1.7), (37.7, '02', 9.0), (39.5, '03', 1.9), (51.4, '04', 1.3), (57.1, '05', 1.6)]
+CUES = {'hookLine2': 1.73, 'noneAlike': 5.44, 'typeStart': 39.9, 'typeEnd': 44.2, 'checks': [44.6, 45.3, 46.0]}
+
+# mosaïque : ordre d'affichage (alternance clair / sombre) et ordre d'apparition du son
+TILES = [
+    ('gazette-1900', 'gazette-1900__histoire__1789-en-20-secondes', 'Gazette 1900'),
+    ('neon-lab', 'neon-lab__explicatif__lune-meme-face', 'Neon Lab'),
+    ('pastel-diorama', 'pastel-diorama__engagement__choisis-ta-boite-renard', 'Pastel Diorama'),
+    ('pixel-arcade', 'pixel-arcade__engagement__quelle-bille-gagne-la-course', 'Pixel Arcade'),
+    ('swiss-data', 'swiss-data__evenements__j-272-eclipse-2-aout-2027', 'Swiss Grid'),
+    ('cosmos-doc', 'cosmos-doc__evenements__voyager-1-a-un-jour-lumiere', 'Cosmos Doc'),
+    ('riso-zine', 'riso-zine__geographie__5-plus-grands-deserts', 'Riso Zine'),
+    ('tableau-craie', 'tableau-craie__explicatif__pourquoi-le-ciel-est-bleu', 'Chalkboard'),
+    ('bauhaus-kinetic', 'bauhaus-kinetic__engagement__trouve-l-intrus', 'Bauhaus Kinetic'),
+    ('liquid-chrome', 'liquid-chrome__abstrait__pendule-de-newton-chrome', 'Liquid Chrome'),
+    ('aquarelle-conte', 'aquarelle-conte__enfants__ou-vont-les-etoiles-le-jour', 'Watercolor Tale'),
+    ('brut-meme', 'brut-meme__engagement__test-des-3-secondes-stroop', 'Brut Meme'),
+    ('atlas-grave', 'atlas-grave__histoire__premier-tour-du-monde-1519-1522', 'Engraved Atlas'),
+    ('topo-relief', 'topo-relief__geographie__comment-mesure-t-on-l-everest', 'Topo Relief'),
+]
+AUDIBLE = ['gazette-1900', 'pixel-arcade', 'brut-meme', 'pastel-diorama', 'swiss-data', 'neon-lab',
+           'tableau-craie', 'cosmos-doc', 'aquarelle-conte', 'riso-zine', 'atlas-grave', 'topo-relief']
+RESULT = 'swiss-data__geographie__ou-vivent-8-milliards'
+
+
+def audible_from(ident):
+    """Instant où la vignette devient audible (None = jamais)."""
+    if ident not in AUDIBLE:
+        return None
+    k = AUDIBLE.index(ident)
+    for c, n in enumerate(COUNTS):
+        if k < n:
+            return C0 + c * CD
+    return None
+
+
+def layouts():
+    L = {}
+    # 16:9 : 7 × 2 vignettes 9:16 (274 × 487), centrées verticalement
+    tw, th = 274, 487
+    x0, y0 = (1920 - 7 * tw) // 2, (1080 - 2 * th) // 2
+    L['16x9'] = {'W': 1920, 'H': 1080, 'tile': [tw, th],
+                 'cells': [[x0 + (i % 7) * tw, y0 + (i // 7) * th] for i in range(14)],
+                 'empty': [], 'result': [1240, 80, 520, 924], 'terminal': [110, 150, 1060, 640]}
+    # 9:16 : 4 × 4 vignettes (270 × 480) ; les cellules 5 et 6 (centre) accueillent la carte titre
+    tw, th = 270, 480
+    order = [i for i in range(16) if i not in (5, 6)]
+    L['9x16'] = {'W': 1080, 'H': 1920, 'tile': [tw, th],
+                 'cells': [[(i % 4) * tw, (i // 4) * th] for i in order],
+                 'empty': [[270, 480, 540, 480]], 'result': [190, 360, 700, 1244], 'terminal': [70, 420, 880, 900]}
+    return L
+
+
+def write_layout():
+    idx = {i['id']: i for i in json.load(open(ROOT / 'out/identities/index.json'))['identities']}
+    tiles = []
+    for ident, d, name in TILES:
+        c = idx[ident]['coreTokens']['color']
+        tiles.append({'id': ident, 'dir': d, 'name': name, 'bg': c['bg'], 'accent': (c['accent'] or ['#ffffff'])[0],
+                      'audibleFrom': audible_from(ident)})
+    lay = {'timeline': {'CUT': CUT, 'C0': C0, 'CD': CD, 'COUNTS': COUNTS, 'CEND': CEND, 'TERM': TERM,
+                        'RES0': RES0, 'RES1': RES1, 'SLAM': SLAM, 'END': END, 'DUR': DUR,
+                        'SLAMS': SLAMS, 'CUES': CUES, 'voice': [{'t': t, 'file': f} for t, f, g in VOICE]},
+           'tiles': tiles, 'formats': layouts(),
+           'resultShort': RESULT, 'url': 'github.com/killerwolf/StudioVisualIdentity'}
+    json.dump(lay, open(HERE / 'layout.json', 'w'), ensure_ascii=False, indent=1)
+    print('layout.json écrit')
+    return lay
+
+
+def run(cmd):
+    print('+', ' '.join(map(str, cmd))[:300], file=sys.stderr)
+    subprocess.run(list(map(str, cmd)), check=True)
+
+
+def base(fmt):
+    lay = write_layout()
+    F = lay['formats'][fmt]
+    tw, th = F['tile']
+    TMP.mkdir(parents=True, exist_ok=True)
+    inputs, fc = [], []
+    for i, t in enumerate(lay['tiles']):
+        inputs += ['-stream_loop', '-1', '-i', SHORTS / t['dir'] / 'short.mp4']
+        fc.append(f'[{i}:v]trim=0:{DUR - CUT:.2f},setpts=PTS-STARTPTS,fps=30,scale={tw}:{th}:flags=lanczos,setsar=1,'
+                  f'tpad=start_duration={CUT}:start_mode=clone[t{i}]')
+    n = len(lay['tiles'])
+    canvas = f'color=c=0x0b0b14:s={F["W"]}x{F["H"]}:r=30:d={DUR}'
+    fc.append(f'{canvas}[bg0]')
+    last = 'bg0'
+    for i, (x, y) in enumerate(F['cells']):
+        fc.append(f'[{last}][t{i}]overlay={x}:{y}:shortest=0:eof_action=pass[b{i}]')
+        last = f'b{i}'
+    rx, ry, rw, rh = F['result']
+    inputs += ['-i', SHORTS / RESULT / 'short.mp4']
+    fc.append(f'[{n}:v]trim=0:{RES1 - RES0 + 0.2:.2f},setpts=PTS-STARTPTS+{RES0}/TB,scale={rw}:{rh}:flags=lanczos,setsar=1[res]')
+    fc.append(f"[{last}][res]overlay={rx}:{ry}:enable='between(t,{RES0},{RES1})':eof_action=pass[vout]")
+    out = TMP / f'base_{fmt}.mp4'
+    run(['ffmpeg', '-y', '-loglevel', 'error', *inputs, '-filter_complex', ';'.join(fc), '-map', '[vout]', '-t', DUR,
+         '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '16', '-pix_fmt', 'yuv420p', '-r', '30', out])
+    print(out)
+
+
+def sound_specs():
+    """SFX + musiques via out/tools/sound.py (3 fichiers WAV)."""
+    TMP.mkdir(parents=True, exist_ok=True)
+    ev = []
+    for k in range(7):                                   # glitch de fin d'accroche
+        ev.append({'t': round(2.85 + 0.075 * k, 3), 'type': 'click', 'gain': 0.5})
+    ev += [{'t': CUT - 0.35, 'type': 'whoosh', 'gain': 0.8, 'dur': 0.4}, {'t': CUT, 'type': 'impact', 'gain': 1.0},
+           {'t': CUT + 0.05, 'type': 'glass', 'note': 'A5', 'gain': 0.4}]
+    for c in range(len(COUNTS)):
+        t = C0 + c * CD
+        ev += [{'t': round(t - 0.25, 3), 'type': 'whoosh', 'gain': 0.45, 'dur': 0.35}, {'t': t, 'type': 'pop', 'note': 'E6', 'gain': 0.6}]
+    ev += [{'t': CEND - 3.5, 'type': 'riser', 'gain': 0.7, 'dur': 3.5}, {'t': CEND, 'type': 'thud', 'gain': 0.9}]
+    k = 0
+    tt = TERM + 0.5
+    tt = CUES['typeStart']
+    while tt < CUES['typeEnd']:                          # frappe clavier
+        ev.append({'t': round(tt, 3), 'type': 'tick', 'gain': 0.22})
+        tt += 0.055 + 0.03 * ((k * 7) % 3); k += 1
+    ev += [{'t': c, 'type': 'blip', 'note': n, 'gain': 0.42} for c, n in zip(CUES['checks'], ['C6', 'E6', 'G6'])]
+    ev += [{'t': RES0 - 0.2, 'type': 'whoosh', 'gain': 0.6, 'dur': 0.45}]
+    ev += [{'t': SLAMS[0], 'type': 'impact', 'gain': 0.9}, {'t': SLAMS[1], 'type': 'impact', 'gain': 0.9}, {'t': SLAMS[2], 'type': 'impact', 'gain': 1.0},
+           {'t': END, 'type': 'whoosh', 'gain': 0.5, 'dur': 0.5}, {'t': END + 0.3, 'type': 'chime', 'note': 'A5', 'gain': 0.5},
+           {'t': END + 0.3, 'type': 'swell', 'note': 'A3', 'gain': 0.45, 'dur': 3.4}]
+    specs = {
+        'sfx': {'duration': DUR, 'seed': 14, 'bpm': 120, 'key': 'A', 'scale': 'minor', 'music': {'preset': 'none'}, 'events': ev, 'reverb': 0.12},
+        'hook': {'duration': CUT, 'seed': 3, 'bpm': 112, 'key': 'C', 'scale': 'major', 'music': {'preset': 'pluck-arp', 'gain': 0.5, 'loop': True}, 'events': []},
+        'outro': {'duration': DUR - TERM, 'seed': 9, 'bpm': 112, 'key': 'A', 'scale': 'minor', 'music': {'preset': 'pulse', 'gain': 0.5, 'octave': 3}, 'events': []},
+    }
+    for name, spec in specs.items():
+        p = TMP / f'{name}.json'
+        json.dump(spec, open(p, 'w'))
+        run([sys.executable, ROOT / 'out/tools/sound.py', p, TMP / f'{name}.wav'])
+    json.dump(specs, open(HERE / 'sound.json', 'w'), indent=1)
+
+
+def audio():
+    lay = write_layout()
+    sound_specs()
+    inputs, fc, labels = [], [], []
+    i = 0
+    for t in lay['tiles']:
+        T = t['audibleFrom']
+        if T is None:
+            continue
+        inputs += ['-stream_loop', '-1', '-i', SHORTS / t['dir'] / 'short.mp4']
+        ms = int(CUT * 1000)
+        vol = f"0.5*clip((t-{T})/0.25,0,1)*clip(({CEND}-t)/0.04,0,1)"
+        fc.append(f"[{i}:a]atrim=0:{DUR - CUT:.2f},asetpts=PTS-STARTPTS,aformat=sample_rates=48000:channel_layouts=stereo,"
+                  f"adelay={ms}|{ms},volume='{vol}':eval=frame,apad,atrim=0:{DUR}[a{i}]")
+        labels.append(f'[a{i}]'); i += 1
+    inputs += ['-i', SHORTS / RESULT / 'short.mp4']
+    ms = int((RES0 + 0.3) * 1000)   # après la fin de la voix off du prompt
+    fc.append(f"[{i}:a]atrim=0:{RES1 - RES0 - 0.3:.2f},asetpts=PTS-STARTPTS,aformat=sample_rates=48000:channel_layouts=stereo,"
+              f"afade=t=out:st={RES1 - RES0 - 0.7:.2f}:d=0.4,adelay={ms}|{ms},volume=0.75,apad,atrim=0:{DUR}[a{i}]")
+    labels.append(f'[a{i}]'); i += 1
+    for t, f, g in VOICE:
+        inputs += ['-i', HERE / 'voice_en' / f'{f}.mp3']
+        ms = int(t * 1000)
+        fc.append(f"[{i}:a]aformat=sample_rates=48000:channel_layouts=stereo,adelay={ms}|{ms},volume={g},apad,atrim=0:{DUR}[a{i}]")
+        labels.append(f'[a{i}]'); i += 1
+    for name, start, gain in [('sfx', 0, 0.9), ('hook', 0, 0.55), ('outro', TERM, 0.32)]:
+        inputs += ['-i', TMP / f'{name}.wav']
+        ms = int(start * 1000)
+        fc.append(f"[{i}:a]aformat=sample_rates=48000:channel_layouts=stereo,adelay={ms}|{ms},volume={gain},apad,atrim=0:{DUR}[a{i}]")
+        labels.append(f'[a{i}]'); i += 1
+    fc.append(f"{''.join(labels)}amix=inputs={len(labels)}:duration=longest:normalize=0,alimiter=limit=0.89:attack=5:release=80,"
+              f"afade=t=out:st={DUR - 0.6}:d=0.6[aout]")
+    out = TMP / 'mix.wav'
+    run(['ffmpeg', '-y', '-loglevel', 'error', *inputs, '-filter_complex', ';'.join(fc), '-map', '[aout]', '-t', DUR, '-ar', '48000', out])
+    print(out)
+
+
+def overlay(fmt):
+    write_layout()
+    F = layouts()[fmt]
+    run(['node', ROOT / 'out/tools/render.mjs', HERE / 'overlay.html', '--query', f'fmt={fmt}', '--width', F['W'], '--height', F['H'],
+         '--duration', DUR, '--alpha', '--out', TMP / f'overlay_{fmt}.mov'])
+
+
+def final(fmt):
+    out = HERE / f'demo_{fmt}.mp4'
+    run(['ffmpeg', '-y', '-loglevel', 'error', '-i', TMP / f'base_{fmt}.mp4', '-i', TMP / f'overlay_{fmt}.mov', '-i', TMP / 'mix.wav',
+         '-filter_complex', '[0:v][1:v]overlay=0:0:format=auto,format=yuv420p[v]', '-map', '[v]', '-map', '2:a',
+         '-c:v', 'libx264', '-preset', 'medium', '-crf', '21', '-maxrate', '10M', '-bufsize', '20M', '-pix_fmt', 'yuv420p', '-r', '30',
+         '-c:a', 'aac', '-b:a', '192k', '-t', DUR, '-movflags', '+faststart', out])
+    print(out)
+
+
+def gif():
+    src = HERE / 'demo_16x9.mp4'
+    pal = TMP / 'palette.png'
+    vf = 'fps=12,scale=720:-1:flags=lanczos'
+    run(['ffmpeg', '-y', '-loglevel', 'error', '-ss', '0', '-t', '12', '-i', src, '-vf', f'{vf},palettegen=max_colors=128', pal])
+    run(['ffmpeg', '-y', '-loglevel', 'error', '-ss', '0', '-t', '12', '-i', src, '-i', pal, '-lavfi', f'{vf}[x];[x][1:v]paletteuse=dither=bayer:bayer_scale=4',
+         HERE / 'demo_preview.gif'])
+    print(HERE / 'demo_preview.gif')
+
+
+if __name__ == '__main__':
+    cmd = sys.argv[1] if len(sys.argv) > 1 else 'all'
+    fmt = sys.argv[2] if len(sys.argv) > 2 else None
+    if cmd == 'layout': write_layout()
+    elif cmd == 'base': base(fmt)
+    elif cmd == 'audio': audio()
+    elif cmd == 'overlay': overlay(fmt)
+    elif cmd == 'final': final(fmt)
+    elif cmd == 'gif': gif()
+    elif cmd == 'all':
+        audio()
+        for f in ('16x9', '9x16'):
+            base(f); overlay(f); final(f)
+        gif()

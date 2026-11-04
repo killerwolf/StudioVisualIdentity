@@ -1,0 +1,53 @@
+{
+ "language": "en",
+ "voice": {
+  "provider": "Fish Audio",
+  "name": "Energetic Male",
+  "reference_id": "802e3bc2b27e49c2995d23ef70e6ac89",
+  "model": "drama-3",
+  "note": "drama-3 : les indications entre crochets règlent le jeu et ne sont pas lues (vérifié par transcription) ; arc de ton volontaire"
+ },
+ "lines": [
+  {
+   "t": 0.15,
+   "file": "voice_en/00.mp3",
+   "text": "Does your video look like everyone else's?",
+   "direction": "[urgent, provocative, leaning in] + emphasis on 'everyone'"
+  },
+  {
+   "t": 3.4,
+   "file": "voice_en/01.mp3",
+   "text": "Meet fourteen identities. None alike!",
+   "direction": "[thrilled, building energy] + emphasis on 'None'"
+  },
+  {
+   "t": 37.7,
+   "file": "voice_en/02.mp3",
+   "text": "Too many choices?",
+   "direction": "[whispering, intimate, after a long silence]"
+  },
+  {
+   "t": 39.5,
+   "file": "voice_en/03.mp3",
+   "text": "Give your agent one sentence. It picks the style, builds your studio, and makes your episodes.",
+   "direction": "[calm and close, like sharing a secret, then building excitement] + <soft> / <emphasis>"
+  },
+  {
+   "t": 51.4,
+   "file": "voice_en/04.mp3",
+   "text": "Fourteen styles! Thirty-one videos! Open source!",
+   "direction": "[shouting with pride, triumphant] + <forceful> on 'Open source!'"
+  },
+  {
+   "t": 57.1,
+   "file": "voice_en/05.mp3",
+   "text": "Studio Visual Identity. On GitHub!",
+   "direction": "[energetic call to action, smiling]"
+  }
+ ],
+ "alternatives": {
+  "voice_alt/en_adrian": "Adrian (Fish Official), s2.1-pro, posé — première version",
+  "voice_alt/fr_arnold": "Arnold, français, s2.1-pro",
+  "voice_alt/en_energetic_v1": "Energetic Male, 1re prise des lignes 02–04 (moins contrastée)"
+ }
+}

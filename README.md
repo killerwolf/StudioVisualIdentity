@@ -3,7 +3,9 @@
 **Un catalogue de 14 styles visuels prêts à l'emploi pour lancer une chaîne de vidéos courtes verticales (TikTok, Reels, Shorts).**
 Chaque style est prouvé par de vraies vidéos (31 au total, avec voix off), et le dépôt contient les outils pour en produire de nouvelles.
 
-![Les 14 styles](out/report/directions-contact-sheet.jpg)
+[![Démo : 14 styles en 60 secondes](out/demo/demo_preview.gif)](out/demo/demo_16x9.mp4)
+
+▶ Vidéo démo avec le son : [16:9](out/demo/demo_16x9.mp4) · [9:16 vertical](out/demo/demo_9x16.mp4)
 
 ## Comment s'en servir
 
