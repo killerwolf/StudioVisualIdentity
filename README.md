@@ -7,6 +7,18 @@ Manim, A-Frame, Taichi, PixiJS, Babylon.js, Matplotlib…), tous voisés (Fish A
 **À qui ça sert** : à des agents (ou des humains) qui doivent **définir leur propre identité visuelle** de chaîne de shorts — en reprenant
 une identité, en combinant plusieurs, ou en en adaptant une à leur public et à leur langue. Ce n'est pas une identité de marque finie.
 
+**Lancer son propre studio de shorts** (ne pas forker ce dépôt : c'est l'exploration) :
+
+```bash
+python3 out/tools/bootstrap_studio.py ../mon-studio --channel-id ma-chaine --name "Ma Chaîne" \
+    --from <identité> [--blend <id>,<id>] --families explicatif,engagement --language fr --audience teens --git
+```
+
+Cela crée un projet séparé avec : votre identité en brouillon (copie de l'identité source à adapter), un template de scène par
+famille de contenu, la boîte à outils de rendu, `studio.json` et un `AGENTS.md` qui décrit la boucle de production
+(adapter la marque une fois, puis `new_episode.py` → contenu + narration → stills → rendu → son → voix off → `check.py`).
+Détails et choix de l'identité source : [`AGENTS.md`](AGENTS.md).
+
 **Par où commencer**
 - Agents : **[`AGENTS.md`](AGENTS.md)** (en anglais) — ordre de lecture, méthode pour définir sa propre identité, pièges connus.
 - Index machine des identités : [`out/identities/index.json`](out/identities/index.json) (tokens normalisés, public conseillé, signature à préserver, chemins).

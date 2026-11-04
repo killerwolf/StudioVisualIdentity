@@ -12,6 +12,30 @@ adopt one identity, blend several, or adapt one to your audience, language and c
 Most prose is in **French** (identity.md, recipes, reports, tool docstrings). JSON keys are English; many JSON *values* are French.
 `out/identities/index.json` gives an English summary of every identity so you can shortlist without reading French first.
 
+## Starting a shorts studio from this repository (bootstrap)
+
+Do **not** fork this repository to produce your channel: it is the exploration. Create a separate studio project from it
+with one command, then make the brand yours and produce episodes there.
+
+```bash
+git clone https://github.com/killerwolf/StudioVisualIdentity && cd StudioVisualIdentity
+python3 out/tools/bootstrap_studio.py ../my-studio --channel-id my-channel --name "My Channel" \
+    --from <identity> [--blend <id>,<id>] --families <family>,<family> --language fr --audience teens --git
+```
+
+- `--from`: the identity whose **signature** you keep (choose it with the sections below). `--blend`: identities that lend a
+  *template* for a family the source never proved (it warns you when a family has no template and lists who proved it).
+- The studio gets: `AGENTS.md` (its own operating manual), `studio.json` (channel config), `out/identities/<channel-id>/` (**your
+  identity**, a BROUILLON copy of the source to adapt), `templates/<family>/` (one proof short's scene code per family, paths
+  replaced by `{{SHORT_DIR}}`), `reference/` (read-only source identities + their index entries), `out/tools/` (the render toolkit
+  + `new_episode.py`), `package.json`.
+- Then, in the studio: `npm i` and a Python 3.11 venv (see its AGENTS.md); **phase 1** — edit the draft identity (name, promise,
+  audience/language values, voice) keeping the signature, and restyle the templates (scene code hard-codes colours, fonts and
+  French strings); **phase 2, per episode** — `python3 out/tools/new_episode.py <family> <slug> --title "…"`, write the content and
+  `narration.json`, render stills, run `short.json.reproduce` (render → sound → mux → voice-over), then `out/tools/check.py`.
+- Tested end to end (2026-11-04): a studio bootstrapped from bauhaus-kinetic (+ neon-lab for `abstrait`) rendered a 14 s episode in
+  42 s on an idle 4-core machine (10 s / 100 frames), mixed its voice-over and passed `check.py`.
+
 ## Read in this order (≈ 10 minutes)
 
 1. **`out/identities/index.json`** — one entry per identity, ranked. For each: English promise, proven content families, libraries,
@@ -121,7 +145,7 @@ Suggested starting deltas, to validate with your own tests:
 | `out/library-cards/<lib>.json` | per-library notes merged from the studios: best/avoid, measured costs (under load), gotchas, code paths. Verbose; `_drafts/` holds the raw per-studio drafts |
 | `out/report/` | campaign report (French): `README.md`, `comparison.md`, `facts.md`, `failures.md`, `decisions.md`, JSON data (`campaign.json`, `matrix.json`, `recognition.json`, `qa.json`, `selection.json`), Phase 1 `posters/` |
 | `out/report/notes/`, `out/report/history/` | studio logs and past session prompts — provenance only, do not follow |
-| `out/tools/` | toolkit: `render.mjs` (HTML scene → mp4/stills), `lib/svi.js` (scene helpers), `sound.py`, `textpng.py`, `assemble.py`, `check.py`, `tts.py`, `recognition.py`, `aggregate.py`, `build_index.py`, `templates/`; `STUDIO_BRIEF.md` is the historical brief given to the studios |
+| `out/tools/` | toolkit: `bootstrap_studio.py` (creates a studio project, see above), `render.mjs` (HTML scene → mp4/stills), `lib/svi.js` (scene helpers), `sound.py`, `textpng.py`, `assemble.py`, `check.py`, `tts.py`, `recognition.py`, `aggregate.py`, `build_index.py`, `templates/`; `STUDIO_BRIEF.md` is the historical brief given to the studios |
 | `out/showcase/` | source of the visual showcase page (`build.py` regenerates it) |
 
 ## Set-up (only if you render)
