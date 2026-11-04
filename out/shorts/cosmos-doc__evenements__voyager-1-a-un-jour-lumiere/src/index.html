@@ -1,0 +1,153 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8">
+<title>Cosmos Doc — Voyager 1 à un jour-lumière de la Terre</title>
+<!-- cosmos-doc / evenements : three.js (sonde procédurale, héliosphère fresnel, signal = point de lumière avec traîne,
+     flare anamorphique, bloom, grain) + GSAP (textes Bebas Neue fondu + interlettrage, compteur d'heures seeké). Graine 1977. 15 s. -->
+<style>
+html,body{margin:0;background:#000004;width:1080px;height:1920px;overflow:hidden}
+canvas{display:block;position:absolute;inset:0}
+.t{position:absolute;left:72px;width:888px;white-space:nowrap;color:#EAF2FF;opacity:0;text-shadow:0 0 30px rgba(0,0,6,.9),0 0 8px rgba(0,0,6,.8)}
+.bb{font-family:'Bebas Neue';font-weight:400;line-height:.94}
+.in{font-family:'Inter';font-weight:400;font-size:56px;line-height:1.2;color:#AEBBD4}
+.am{color:#FFB347}.ic{color:#6EC6FF}
+.lab{font-family:'Bebas Neue';font-size:60px;letter-spacing:.22em;display:block;line-height:1.1}
+#tag{top:236px;font-size:54px;letter-spacing:.3em;color:#FFB347}
+#title{top:1110px;font-size:230px;line-height:.86}
+#title2{top:1320px;font-size:104px}
+#rule{position:absolute;left:72px;top:1550px;width:150px;height:3px;background:#FFB347;transform:scaleX(0);transform-origin:0 50%}
+#bLaunch{top:240px}
+#bLaunch .v{font-size:124px;display:block}
+#bInter{top:1250px}
+#bInter .v{font-size:104px;display:block}
+#cDist{top:240px}
+#cDist .v{font-size:104px;display:block}
+#cSig{top:1240px}
+#cSig .v{font-size:250px;display:block;line-height:.86}
+#dEnd{top:1170px}
+#dEnd .v{font-size:156px;display:block;color:#FFB347}
+#dSub{top:1410px}
+</style>
+<script type="importmap">{"imports":{"three":"/node_modules/three/build/three.module.js","three/addons/":"/node_modules/three/examples/jsm/"}}</script>
+</head><body>
+<div class="t bb" id="tag">Cosmos · événement</div>
+<div class="t bb" id="title">Voyager 1</div>
+<div class="t bb" id="title2">à un <span class="am">jour-lumière</span><br>de la Terre</div>
+<div id="rule"></div>
+<div class="t" id="bLaunch"><span class="lab ic">Lancée le</span><span class="bb v">5 septembre 1977</span></div>
+<div class="t" id="bInter"><span class="lab am">Depuis 2012</span><span class="bb v">espace interstellaire</span></div>
+<div class="t" id="cDist"><span class="lab ic">Distance</span><span class="bb v">25,9 milliards de km</span></div>
+<div class="t" id="cSig"><span class="lab ic">Le signal voyage depuis</span><span class="bb v"><span id="hh">00</span> <span class="am">h</span></span></div>
+<div class="t" id="dEnd"><span class="lab ic">Vers fin 2026</span><span class="bb v">1 jour-lumière</span></div>
+<div class="t in" id="dSub">l'objet humain le plus lointain</div>
+<script src="/node_modules/gsap/dist/gsap.min.js"></script>
+<script type="module">
+import { THREE, S, TOK, FONTS, setup, stars, dust, Flare, atmosphere, Motes, reveal, hide, dipAt, toScreen } from './cosmos.js';
+
+const SEED = 1977, R = S.rng(SEED), DUR = 15;
+const { scene, cam, comp, flareScene, film } = setup({ fov: 36, bloom: [0.6, 0.7, 0.8] });
+const sky = stars(scene, { seed: SEED, n: 3000 });
+dust(scene, { seed: 11, intensity: 0.1, tilt: 0.35 });
+const flare = new Flare(flareScene);
+
+const sun = new THREE.DirectionalLight(0xffe6c4, 2.6); scene.add(sun);
+const rim = new THREE.DirectionalLight(0x6ec6ff, 0.9); scene.add(rim);
+scene.add(new THREE.AmbientLight(0x6ec6ff, 0.03));
+
+// ---- sonde procédurale (silhouette générique : antenne parabolique, bus décagonal, mâts, générateurs)
+const probe = new THREE.Group(); scene.add(probe);
+{
+  const white = new THREE.MeshStandardMaterial({ color: '#ECE9E1', roughness: .55, side: THREE.DoubleSide });
+  const gold = new THREE.MeshStandardMaterial({ color: '#C4913F', roughness: .38, metalness: .55 });
+  const grey = new THREE.MeshStandardMaterial({ color: '#8E9096', roughness: .6, metalness: .3 });
+  const dark = new THREE.MeshStandardMaterial({ color: '#2B2C31', roughness: .75 });
+  const prof = []; for (let i = 0; i <= 24; i++) { const r = 1.8 * i / 24; prof.push(new THREE.Vector2(r, r * r / 5.6)); }
+  const dish = new THREE.Mesh(new THREE.LatheGeometry(prof, 72), white); dish.rotation.x = Math.PI / 2; probe.add(dish);
+  const rimRing = new THREE.Mesh(new THREE.TorusGeometry(1.8, .03, 8, 96), white); rimRing.position.z = 1.8 * 1.8 / 5.6; probe.add(rimRing);
+  const feed = new THREE.Mesh(new THREE.CylinderGeometry(.09, .12, .5, 16), grey); feed.rotation.x = Math.PI / 2; feed.position.z = 1.15; probe.add(feed);
+  for (let i = 0; i < 4; i++) {                                         // haubans du cornet
+    const a = i * Math.PI / 2 + .4, p0 = new THREE.Vector3(Math.cos(a) * 1.5, Math.sin(a) * 1.5, .42), p1 = new THREE.Vector3(0, 0, 1.3);
+    const st = new THREE.Mesh(new THREE.CylinderGeometry(.015, .015, p0.distanceTo(p1), 6), grey);
+    st.position.copy(p0).add(p1).multiplyScalar(.5); st.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), p1.clone().sub(p0).normalize()); probe.add(st);
+  }
+  const bus = new THREE.Mesh(new THREE.CylinderGeometry(.85, .85, .5, 10), gold); bus.rotation.x = Math.PI / 2; bus.position.z = -.35; probe.add(bus);
+  const boom = (p0, p1, r, m = grey) => { const b = new THREE.Mesh(new THREE.CylinderGeometry(r, r, p0.distanceTo(p1), 8), m); b.position.copy(p0).add(p1).multiplyScalar(.5); b.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), p1.clone().sub(p0).normalize()); probe.add(b); return b; };
+  const V = (x, y, z) => new THREE.Vector3(x, y, z);
+  boom(V(-.7, -.2, -.4), V(-3.1, -.9, -.6), .04);                       // mât des générateurs
+  for (let i = 0; i < 3; i++) {
+    const c = V(-1.9 - i * .52, -.55 - i * .15, -.55);
+    const g = new THREE.Mesh(new THREE.CylinderGeometry(.17, .17, .46, 12), dark); g.position.copy(c); g.rotation.z = Math.PI / 2 - .28; probe.add(g);
+    for (let f = 0; f < 6; f++) { const fin = new THREE.Mesh(new THREE.BoxGeometry(.44, .5, .02), dark); fin.position.copy(c); fin.rotation.set(f * Math.PI / 6, 0, -.28); probe.add(fin); }
+  }
+  boom(V(.7, -.1, -.4), V(2.7, -.35, -.6), .05);                        // mât scientifique
+  const plat = new THREE.Mesh(new THREE.BoxGeometry(.55, .45, .4), gold); plat.position.set(2.9, -.35, -.6); probe.add(plat);
+  const camA = new THREE.Mesh(new THREE.CylinderGeometry(.09, .09, .5, 12), dark); camA.rotation.x = Math.PI / 2; camA.position.set(2.85, -.1, -.3); probe.add(camA);
+  const camB = new THREE.Mesh(new THREE.CylinderGeometry(.12, .12, .55, 12), dark); camB.rotation.x = Math.PI / 2; camB.position.set(3.1, -.5, -.3); probe.add(camB);
+  boom(V(.2, .6, -.45), V(-1.6, 6.8, -.9), .022);                       // mât magnétomètre (très long)
+  boom(V(.4, -.6, -.5), V(2.6, -4.4, -.7), .01);                        // antennes filaires en V
+  boom(V(-.2, -.6, -.5), V(-.9, -4.8, -.7), .01);
+}
+
+// ---- héliosphère : bord fresnel ambré très doux d'une bulle immense (la sonde est dehors)
+const helio = atmosphere(1, '#FFB347', { power: 4, gain: .75, wrap: 1 }); helio.material.uniforms.night.value = 1; scene.add(helio);
+// ---- Terre (point bleu pâle) + signal (point glacier avec longue traîne)
+const ICE = new THREE.Color(TOK.ice).multiplyScalar(2.2), PALE = new THREE.Color('#9FD4FF').multiplyScalar(1.4);
+const earthDot = new Motes(scene, [{ pts: [[-1.8, -.66, 0], [-1.8, -.66, 0]], ts: [-1, 99], c0: PALE, c1: PALE, hit: 9 }], { trail: 1, size: 34 });
+const P0 = [1.62, 2.9, 0], P1 = [-1.78, -.64, 0];
+const sig = new Motes(scene, [{ pts: [P0, P1], ts: [8.95, 12.15], c0: ICE, c1: ICE, hit: 9 }], { trail: 26, dt: .03, size: 70 });
+
+// ---- textes + compteur d'heures (GSAP seeké)
+const tl = gsap.timeline({ paused: true }), clock = { h: 0 };
+reveal(tl, '#tag', 0.0, { dur: 1.2, from: '0.7em', to: '0.3em' });
+reveal(tl, '#title', 0.0, { dur: 0.9, from: '0.2em', to: '0.01em' });
+reveal(tl, '#title2', 0.35, { dur: 1.0, from: '0.22em', to: '0.01em' });
+tl.fromTo('#rule', { scaleX: 0 }, { scaleX: 1, duration: 1.0, ease: 'sine.inOut', immediateRender: false }, 0.9);
+['#tag', '#title', '#title2', '#rule'].forEach(s => hide(tl, s, 3.5));
+reveal(tl, '#bLaunch', 4.6, { dur: 1.2 }); reveal(tl, '#bInter', 5.9, { dur: 1.2 });
+['#bLaunch', '#bInter'].forEach(s => hide(tl, s, 7.55, .5));
+reveal(tl, '#cDist', 8.55, { dur: 1.1 }); reveal(tl, '#cSig', 8.85, { dur: 1.0 });
+tl.fromTo(clock, { h: 0 }, { h: 24, duration: 3.2, ease: 'none', immediateRender: false }, 8.95);
+['#cDist', '#cSig'].forEach(s => hide(tl, s, 12.45, .55));
+reveal(tl, '#dEnd', 13.0, { dur: 1.2 }); reveal(tl, '#dSub', 13.45, { dur: 1.0, from: '.08em', to: '0em' });
+const hh = document.getElementById('hh');
+
+const L = new THREE.Vector3();
+S.installContract({
+  duration: DUR,
+  ready: S.loadFonts(FONTS),
+  renderAt: t => {
+    sky.material.uniforms.t.value = t;
+    const shot = t < 4.45 ? 0 : t < 8.3 ? 1 : t < 12.75 ? 2 : 3;
+    helio.visible = shot === 1; earthDot.pts.visible = sig.pts.visible = shot === 2;
+    if (shot === 0) {                                   // A : gros plan, la sonde dérive, Soleil = étoile flare haut-gauche
+      const k = S.ease.inOutSine(S.clamp(t / 4.45));
+      probe.scale.setScalar(1); probe.position.set(0, 0, 0); probe.rotation.set(.35, -2.05 + k * .22, .12);
+      cam.position.set(.6 - k * .5, .3, 13.6 - k * 1.2); cam.lookAt(0, -1.25, 0);
+      L.set(-1, .7, .45).normalize(); flare.set(170, 300, .95, .62);
+    } else if (shot === 1) {                            // B : recul, bord ambré de l'héliosphère derrière la sonde
+      const k = S.ease.inOutSine(S.clamp((t - 4.45) / 3.85));
+      probe.scale.setScalar(1); probe.position.set(0, 0, 0); probe.rotation.set(.2, 1.1 + k * .2, .05);
+      cam.position.set(-.8 + k * 1.2, .5, 14 + k * 5); cam.lookAt(0, -.4, 0);
+      helio.scale.setScalar(60); helio.position.set(-8, -40, -90);
+      L.set(-1, .2, -.4).normalize(); flare.set(60, 1500, .7, .55);
+    } else if (shot === 2) {                            // C : vue large, le signal rejoint le point bleu pâle en « 24 h »
+      const k = S.ease.inOutSine(S.clamp((t - 8.3) / 4.45));
+      probe.scale.setScalar(.2); probe.position.set(P0[0], P0[1], 0); probe.rotation.set(.3, .9 + t * .02, .1);
+      cam.position.set(.15 - k * .2, 0, 20.5 - k * .9); cam.lookAt(0, 0, 0);
+      L.set(-1, -.6, .4).normalize();
+      cam.updateMatrixWorld(); const [sx, sy] = toScreen(new THREE.Vector3(-2.4, -1.2, 0), cam); flare.set(sx, sy, .9, .6);
+      earthDot.mat.uniforms.gain.value = 1 + 2.2 * Math.exp(-Math.max(0, t - 12.15) / .35) * (t > 12.15 ? 1 : 0);
+      earthDot.update(t); sig.update(t);
+    } else {                                            // D : la sonde s'éloigne dans le noir, chute
+      const k = S.ease.inOutSine(S.clamp((t - 12.75) / 2.25));
+      probe.scale.setScalar(1); probe.position.set(0, 0, -k * 2.6); probe.rotation.set(.3, -1.75 + k * .12, .1);
+      cam.position.set(-.3 + k * .2, .25, 12.8); cam.lookAt(0, -1.3, -k * 2.6);
+      L.set(-1, .6, .5).normalize(); flare.set(170, 300, .85, .6);
+    }
+    sun.position.copy(L).multiplyScalar(10); rim.position.set(-L.x * 6 + 2, -L.y * 2 + 3, -8);
+    film.uniforms.frame.value = Math.round(t * 30);
+    film.uniforms.dip.value = dipAt(t, [[4.15, 4.75], [8.0, 8.6], [12.45, 13.05]]);
+    tl.seek(t, false);
+    hh.textContent = String(Math.min(24, Math.floor(clock.h + 1e-6))).padStart(2, '0');
+    comp.render();
+  },
+});
+</script></body></html>

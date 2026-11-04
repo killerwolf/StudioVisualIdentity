@@ -1,0 +1,37 @@
+{
+ "language": "fr",
+ "style": "énergique, rythmé, ton de flash info survolté mais pas moqueur ; énumération sur le beat",
+ "voice": "Fenrir",
+ "lines": [
+  {
+   "t": 0.1,
+   "maxDuration": 2.75,
+   "text": "Pendant ces quinze secondes, dans le monde…"
+  },
+  {
+   "t": 2.9,
+   "maxDuration": 3.15,
+   "text": "une soixantaine de naissances, une trentaine de décès,"
+  },
+  {
+   "t": 6.1,
+   "maxDuration": 3.1,
+   "text": "plus de six cents éclairs, soixante millions d'e-mails,"
+  },
+  {
+   "t": 9.25,
+   "maxDuration": 2.35,
+   "text": "la Terre : quatre cent cinquante kilomètres…"
+  },
+  {
+   "t": 11.65,
+   "maxDuration": 1.95,
+   "text": "et ton cœur, dix-huit battements."
+  },
+  {
+   "t": 13.95,
+   "maxDuration": 1.95,
+   "text": "Et toi, t'as fait quoi ?"
+  }
+ ]
+}

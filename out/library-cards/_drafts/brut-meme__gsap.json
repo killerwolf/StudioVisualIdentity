@@ -1,0 +1,26 @@
+{
+ "name": "GSAP 3.15",
+ "role": "typo",
+ "bestFor": [
+  "slams de texte/stickers DOM (scale 2,4 -> 1 + rotation, power4.in, 0,1 s) et slides 0,1 s calés sur des cuts au beat",
+  "timeline en pause pilotée par tl.seek(t, false) : déterministe, rendu non séquentiel",
+  "tweener un objet proxy ({s:0} -> {s:1}) lu ensuite par PixiJS pour animer une forme Pixi avec la même courbe que le DOM"
+ ],
+ "avoidFor": [
+  "visibilité des scènes à coupe franche à t = 0 (un tl.set placé à 0 peut ne pas se rendre au premier seek) : calculer display en JS",
+  "animer des compteurs numériques (formule débit × t plus simple et exacte)"
+ ],
+ "renderCostPer100Frames": "49,8–58,5 s (mesuré, 2 shorts brut-meme PixiJS + GSAP, sous contention load 17–23) ; tl.seek + rendu Pixi = 0,2 s / 100 frames, le reste est la capture",
+ "gotchas": [
+  "`fromTo(..., {immediateRender:false})` : l'état de départ n'existe pas avant le début du tween -> cacher les éléments tardifs en CSS (`.later{visibility:hidden}`) et animer `autoAlpha` de 0 à 1.",
+  "Un tween à t = 0 n'est pas rendu par seek(0) : démarrer les slams à ≥ 1 frame (0,034 s) ou laisser l'état final en CSS pour la frame 0.",
+  "Plusieurs fromTo successifs sur le même élément et la même propriété se battent au seek : un seul tween d'entrée par élément, les punch-in de caméra sont calculés en JS.",
+  "Ne jamais retourner la timeline depuis renderAt (thenable)."
+ ],
+ "snippetPath": "shorts/brut-meme__engagement__test-des-3-secondes-stroop/src",
+ "pairsWellWith": [
+  "PixiJS 8 (formes)",
+  "DOM @fontsource",
+  "caméra JS (punch/shake) appliquée au conteneur"
+ ]
+}

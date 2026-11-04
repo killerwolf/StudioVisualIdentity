@@ -1,0 +1,9 @@
+# Recette — un short `evenements` dans l'identité Zine Riso
+
+Short de référence : `out/shorts/riso-zine__evenements__geminides-j-39/` (16 s, 6 pages, boucle J-39 -> J-39).
+
+- **Ouvrir par (0–2,4 s)** la page d'agenda : tag jaune « AGENDA DU CIEL », compte à rebours géant `J-39` en Space Mono 700 340 px / −14 px (deux passes rose/bleu), soleil jaune derrière, annotation au marqueur (« pluie d'étoiles en vue ! »), et le visuel de l'événement déjà en action (ciel découpé bleu, étoiles filantes **réservées** en papier avec tête jaune et traîne rose). Vérifier l'arithmétique du J-xx et la noter dans short.json.
+- **Structurer en** pages de ~3 s : (1) quoi/quand — titre deux passes 104 px + étiquette date (« NUIT DU 13 AU 14 DÉC. ») ; (2) le chiffre — compteur géant qui monte (GSAP power2.out 1,7 s, ticks son calculés sur l'easing) + bâtons de comptage roses + nuance (« moins en ville ! » sur une ville découpée) ; (3) pourquoi — découpe de l'objet (astéroïde 3200 Phaéton rose cratérisé) + traînée de poussières + la Terre qui la traverse ; (4) conseils pratiques — 3 étiquettes jaunes qui glissent (stagger 0,6 s) + coches roses tracées au marqueur + flèche NE réservée.
+- **Fermer par (1,6 s)** le retour à la couverture (`J-39` + étiquette date courte « 13–14 DÉC. » + tampon « note-le ! » back.out(2.2)) pour une boucle visuelle ; CTA = noter dans l'agenda.
+- Tokens : `out/identities/riso-zine/tokens.json`. Coupe sèche + kick de repérage à chaque page, tout on twos (12 pas/s). Son : `lofi` 90 bpm, glass discrets sur les étoiles filantes, pop par page, coin à la fin du compteur, chime sur le tampon.
+- Pièges : une pluie d'étoiles trop dense devient un feu d'artifice (≤ ~4 météores visibles) ; horloge modulo pour que la pluie continue sur toutes les pages ; dates en « 13–14 » (pas de flèche → dans la police).

@@ -1,0 +1,27 @@
+{
+ "language": "fr",
+ "style": "documentaire astronomique, voix grave et posée, lente, silences entre les phrases, ton d'émerveillement contenu",
+ "voice": "Orus",
+ "lines": [
+  {
+   "t": 0.3,
+   "maxDuration": 3.5,
+   "text": "Pourquoi Vénus est-elle plus chaude que Mercure ?"
+  },
+  {
+   "t": 4.5,
+   "maxDuration": 3.9,
+   "text": "Mercure, sans atmosphère, brûle le jour et gèle la nuit."
+  },
+  {
+   "t": 8.5,
+   "maxDuration": 3.5,
+   "text": "Vénus, plus loin, garde la chaleur sous son CO2."
+  },
+  {
+   "t": 12.1,
+   "maxDuration": 2.8,
+   "text": "Quatre cent soixante-cinq degrés, jour et nuit."
+  }
+ ]
+}

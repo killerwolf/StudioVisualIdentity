@@ -1,0 +1,116 @@
+{
+ "duration": 15.0,
+ "seed": 404,
+ "bpm": 64,
+ "key": "D",
+ "scale": "minor",
+ "music": {
+  "preset": "drone",
+  "gain": 0.5,
+  "octave": 3,
+  "density": 0.3,
+  "loop": false
+ },
+ "events": [
+  {
+   "t": 0.0,
+   "type": "impact",
+   "gain": 0.55
+  },
+  {
+   "t": 0.0,
+   "type": "swell",
+   "note": "D3",
+   "gain": 0.45,
+   "dur": 3.5
+  },
+  {
+   "t": 0.75,
+   "type": "chime",
+   "note": "A5",
+   "gain": 0.25
+  },
+  {
+   "t": 3.55,
+   "type": "riser",
+   "gain": 0.3,
+   "dur": 0.9
+  },
+  {
+   "t": 4.45,
+   "type": "thud",
+   "gain": 0.7
+  },
+  {
+   "t": 4.7,
+   "type": "whoosh",
+   "gain": 0.28,
+   "dur": 1.4
+  },
+  {
+   "t": 5.5,
+   "type": "chime",
+   "note": "F5",
+   "gain": 0.3
+  },
+  {
+   "t": 6.0,
+   "type": "glass",
+   "note": "C6",
+   "gain": 0.25
+  },
+  {
+   "t": 6.5,
+   "type": "whoosh",
+   "gain": 0.2,
+   "dur": 1.0
+  },
+  {
+   "t": 7.4,
+   "type": "riser",
+   "gain": 0.3,
+   "dur": 0.9
+  },
+  {
+   "t": 8.3,
+   "type": "thud",
+   "gain": 0.7
+  },
+  {
+   "t": 8.75,
+   "type": "whoosh",
+   "gain": 0.25,
+   "dur": 1.6
+  },
+  {
+   "t": 9.7,
+   "type": "swell",
+   "note": "D3",
+   "gain": 0.35,
+   "dur": 2.0
+  },
+  {
+   "t": 10.6,
+   "type": "riser",
+   "gain": 0.4,
+   "dur": 1.45
+  },
+  {
+   "t": 12.05,
+   "type": "impact",
+   "gain": 0.85
+  },
+  {
+   "t": 12.6,
+   "type": "chime",
+   "note": "D5",
+   "gain": 0.3
+  },
+  {
+   "t": 13.1,
+   "type": "chime",
+   "note": "A5",
+   "gain": 0.25
+  }
+ ]
+}

@@ -1,0 +1,178 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8">
+<title>Brut Mème — Le test des 3 secondes (Stroop)</title>
+<!-- Identité brut-meme / famille engagement. PixiJS 8 (fond, trame, blocs couleur, anneau de compte à rebours,
+     starburst, jauge rubalise) + GSAP 3 (slams des textes DOM, seek à t). Caméra JS : punch-in 1,15 en 3 frames
+     à chaque cut, shake seedé sur les révélations. Déterministe, seed 47 (shake). -->
+<style id="base"></style>
+<style>
+.ir{color:var(--red)}.iy{color:var(--yel)}.iw{color:var(--white)}.ik{color:var(--bg)}
+.row{position:absolute;left:0;width:1080px;text-align:center}
+.row>span{display:inline-block;white-space:nowrap}
+.circ{position:absolute;border-radius:50%;background:var(--red);border:8px solid var(--bg);box-shadow:0 0 0 7px var(--white),16px 16px 0 7px #000;
+  display:flex;align-items:center;justify-content:center;text-align:center}
+.lbl{position:absolute;display:flex;align-items:center;justify-content:center}
+.cd{position:absolute;left:390px;top:1210px;width:300px;height:300px;display:flex;align-items:center;justify-content:center;
+  font:400 190px/1 'Anton';color:var(--white)}
+.cd.stop{font-size:112px;color:var(--yel)}
+.sub{font:900 64px/1 'Inter';letter-spacing:-2px;color:var(--white)}
+</style></head><body>
+<div id="cam">
+  <div id="pix"></div>
+  <div id="dom">
+    <!-- 0 : hook -->
+    <div class="sc" id="s0">
+      <div class="a tag" style="left:60px;top:236px">TEST DES 3 SECONDES</div>
+      <div class="row" style="top:440px"><span class="big iy" data-fit="900" data-max="600">ROUGE</span></div>
+      <div class="row" style="top:840px"><span class="sub">Dis la couleur, pas le mot.</span></div>
+      <div class="circ later" id="stk0" style="left:520px;top:1030px;width:390px;height:390px"><div class="stk">DIS LA<br>COULEUR<br>!</div></div>
+    </div>
+    <!-- 1 : la règle (fond jaune) -->
+    <div class="sc" id="s1">
+      <div class="a tag" style="left:60px;top:236px;background:var(--bg);color:var(--yel)">LA RÈGLE</div>
+      <div class="row" style="top:350px"><span class="big ik" data-fit="900" data-max="330" id="r1a">DIS LA</span></div>
+      <div class="row" style="top:660px"><span class="big ik" data-fit="900" data-max="330" id="r1b">COULEUR,</span></div>
+      <div class="row" style="top:960px"><span class="big" style="background:var(--red);color:var(--white);padding:22px 26px 4px" data-fit="840" data-max="300" id="r1c">PAS LE MOT</span></div>
+    </div>
+    <!-- 2,3,4 : rounds (générés) -->
+    <div class="sc" id="s2"></div><div class="sc" id="s3"></div><div class="sc" id="s4"></div>
+    <!-- 5 : explication -->
+    <div class="sc" id="s5">
+      <div class="a tag" style="left:60px;top:236px">EFFET STROOP</div>
+      <div class="row" style="top:340px"><span class="big iy" data-fit="900" data-max="360" id="e1">LIRE</span></div>
+      <div class="row" style="top:680px"><span class="sub" id="e2">VA PLUS VITE QUE</span></div>
+      <div class="row" style="top:780px"><span class="big ir" data-fit="900" data-max="330" id="e3">NOMMER</span></div>
+      <div class="row" style="top:1075px"><span class="sub" id="e4">UNE COULEUR.</span></div>
+      <div class="row later" id="e5" style="top:1210px"><span class="sub" style="color:var(--bg);font-size:56px;line-height:1.08;text-align:left;letter-spacing:-1.5px">Ton cerveau lit le mot<br>plus vite qu'il ne nomme<br>la couleur de l'encre.</span></div>
+    </div>
+    <!-- 6 : CTA (fond jaune) -->
+    <div class="sc" id="s6">
+      <div class="a tag" style="left:60px;top:236px;background:var(--bg);color:var(--yel)">À TOI</div>
+      <div class="row" style="top:350px"><span class="big ik" data-fit="900" data-max="330" id="c1">TON SCORE</span></div>
+      <div class="row" style="top:660px"><span class="big inv" data-fit="860" data-max="300" id="c2">EN COMMENTAIRE</span></div>
+      <div class="lbl later" id="c3" style="left:110px;top:1010px;width:380px;height:380px;font:400 170px/1 'Anton';color:var(--yel)">/3</div>
+      <div class="circ later" id="c4" style="left:540px;top:1030px;width:360px;height:360px"><div class="stk">0, 1, 2<br>OU 3 ?</div></div>
+    </div>
+  </div>
+</div>
+<script src="/node_modules/pixi.js/dist/pixi.min.js"></script>
+<script src="/node_modules/gsap/dist/gsap.min.js"></script>
+<script type="module">
+import * as S from '/out/tools/lib/svi.js';
+import * as B from './brut.js';
+document.getElementById('base').textContent = B.BASE_CSS;
+const DUR = 15.5, SEED = 47;
+const INK = { ROUGE: 'red', JAUNE: 'yel', BLANC: 'white' };
+const HEX = { red: B.X.red, yel: B.X.yel, white: B.X.white };
+const TXT = { red: '#FFFFFF', yel: '#111111', white: '#111111' };
+
+// ---- rounds : mots (texte, encre), positions, temps (accélèrent : 0,5 s -> 0,4 s -> 0,3 s par tic)
+const ROUNDS = [
+  { id: 's2', tag: 'ROUND 1/3', t0: 2.0, step: 0.5, end: 4.25, size: 0, words: [
+    { w: 'BLEU', ink: 'red', cx: 540, top: 480, bw: 840, bh: 420 }] },
+  { id: 's3', tag: 'ROUND 2/3 · PLUS VITE', t0: 4.25, step: 0.4, end: 6.45, size: 232, words: [
+    { w: 'JAUNE', ink: 'white', cx: 540, top: 410, bw: 800, bh: 220 },
+    { w: 'BLANC', ink: 'red', cx: 540, top: 670, bw: 800, bh: 220 },
+    { w: 'ROUGE', ink: 'yel', cx: 540, top: 930, bw: 800, bh: 220 }] },
+  { id: 's4', tag: 'ROUND 3/3 · TURBO', t0: 6.45, step: 0.3, end: 8.6, size: 168, words: [
+    { w: 'NOIR', ink: 'yel', cx: 320, top: 420, bw: 380, bh: 190 }, { w: 'ROUGE', ink: 'white', cx: 760, top: 420, bw: 380, bh: 190 },
+    { w: 'VERT', ink: 'red', cx: 320, top: 640, bw: 380, bh: 190 }, { w: 'JAUNE', ink: 'red', cx: 760, top: 640, bw: 380, bh: 190 },
+    { w: 'BLEU', ink: 'white', cx: 320, top: 860, bw: 380, bh: 190 }, { w: 'BLANC', ink: 'yel', cx: 760, top: 860, bw: 380, bh: 190 }] },
+];
+const NAME = { red: 'ROUGE', yel: 'JAUNE', white: 'BLANC' };
+ROUNDS.forEach(R => {
+  R.rev = R.t0 + R.step * 3;
+  const el = document.getElementById(R.id);
+  let h = `<div class="a tag" style="left:60px;top:236px">${R.tag}</div><div class="words">`;
+  R.words.forEach(w => {
+    const sz = R.size ? `style="font-size:${R.size}px"` : 'data-fit="840" data-max="470"';
+    h += `<div class="a" style="left:${w.cx - 540}px;width:1080px;text-align:center;top:${w.top}px"><span class="big i${w.ink[0]}" style="display:inline-block" ${sz}>${w.w}</span></div>`;
+  });
+  h += `</div><div class="ans" style="display:none">`;
+  R.words.forEach(w => {
+    const fs = Math.round(w.bh * 0.62);
+    h += `<div class="lbl big" style="left:${w.cx - w.bw / 2}px;top:${w.top + (R.size ? -12 : 0)}px;width:${w.bw}px;height:${w.bh}px;font-size:${fs}px;line-height:1;color:${TXT[w.ink]}">${NAME[w.ink]}</div>`;
+  });
+  h += `</div><div class="cd">3</div>`;
+  el.innerHTML = h;
+  R.el = el; R.words$ = el.querySelector('.words'); R.ans$ = el.querySelector('.ans'); R.cd$ = el.querySelector('.cd');
+});
+
+const SC = [['s0', 0, 1.0], ['s1', 1.0, 2.0], ['s2', 2.0, 4.25], ['s3', 4.25, 6.45], ['s4', 6.45, 8.6], ['s5', 8.6, 12.2], ['s6', 12.2, DUR + 1]]
+  .map(([id, a, b]) => [document.getElementById(id), a, b]);
+const BG = [B.X.bg, B.X.yel, B.X.bg, B.X.bg, B.X.bg, B.X.bg, B.X.yel];
+
+// ---- caméra : cuts [t, force] et shakes [t, px]
+const CUTS = [[0, 1], [1.0, 1], [8.6, 1], [10.4, 0.7], [12.2, 1], [12.7, 0.5], [13.0, 0.4], [13.5, 0.25], [14.0, 0.25], [14.5, 0.25]];
+ROUNDS.forEach(R => { CUTS.push([R.t0, 1], [R.t0 + R.step, 0.4], [R.t0 + 2 * R.step, 0.4], [R.rev, 1]); });
+const SHAKES = [[0.4, 10], [12.7, 10], [13.0, 8]];
+ROUNDS.forEach((R, i) => SHAKES.push([R.rev, 14 + i * 2]));
+
+// ---- GSAP : slams
+const tl = gsap.timeline({ paused: true });
+const P = { star: { s: 0 } };
+B.slam(tl, '#stk0', 0.4, { rot: -10 });
+tl.fromTo('#r1a', { scale: 1.6 }, { scale: 1, duration: 0.1, ease: 'power4.out', immediateRender: false }, 1.0);
+B.slide(tl, '#r1b', 1.25, { x: 1200 });
+B.slam(tl, '#r1c', 1.5, { rot: -3, from: 2.0 });
+tl.fromTo('#e1', { scale: 1.8 }, { scale: 1, duration: 0.1, ease: 'power4.out', immediateRender: false }, 8.6);
+B.slide(tl, '#e3', 9.1, { x: -1200 });
+B.slam(tl, '#e5', 10.4, { from: 1.4 });
+tl.fromTo('#c1', { scale: 1.6 }, { scale: 1, duration: 0.1, ease: 'power4.out', immediateRender: false }, 12.2);
+B.slide(tl, '#c2', 12.45, { x: -1200 });
+B.slam(tl, '#c4', 12.7, { rot: -10 });
+tl.fromTo(P.star, { s: 0 }, { s: 1, duration: 0.1, ease: 'power4.in', immediateRender: false }, 13.0);
+B.slam(tl, '#c3', 13.0, { rot: 8 });
+
+let app, g, dots;
+const ready = (async () => {
+  await S.loadFonts(B.FONTS);
+  app = await B.initPixi(document.getElementById('pix'));
+  dots = B.halftone(app); app.stage.addChild(dots);
+  g = new PIXI.Graphics(); app.stage.addChild(g);
+  B.fitAll();
+})();
+
+function renderAt(t) {
+  tl.seek(t, false);
+  const idx = B.scenes(t, SC);
+  B.applyCamera(document.getElementById('cam'), B.camera(t, CUTS, SHAKES));
+  app.renderer.background.color = BG[idx];
+  dots.tint = BG[idx] === B.X.yel ? 0xE8D000 : 0x262626;
+  g.clear();
+  // rounds
+  ROUNDS.forEach(R => {
+    if (t < R.t0 || t >= R.end) return;
+    const rev = t >= R.rev - 1e-6;
+    R.words$.style.display = rev ? 'none' : 'block';
+    R.ans$.style.display = rev ? 'block' : 'none';
+    const n = 3 - Math.floor((t - R.t0 + 1e-6) / R.step);
+    R.cd$.textContent = rev ? 'STOP' : String(Math.max(1, n));
+    R.cd$.classList.toggle('stop', rev);
+    if (rev) R.words.forEach(w => B.block(g, w.cx - w.bw / 2, w.top + (R.size ? -12 : 0), w.bw, w.bh, HEX[w.ink], 0x000000, 14));
+    // anneau de compte à rebours : arc jaune qui se vide
+    const cx = 540, cy = 1360;
+    B.sticker(g, cx, cy, 130, rev ? B.X.bg : B.X.red, B.X.white);
+    const k = rev ? 0 : 1 - S.clamp((t - R.t0) / (3 * R.step));
+    g.circle(cx, cy, 168).stroke({ width: 22, color: 0x333333 });
+    if (k > 0.002) { g.moveTo(cx, cy - 168).arc(cx, cy, 168, -Math.PI / 2, -Math.PI / 2 + k * Math.PI * 2).stroke({ width: 22, color: B.X.yel, cap: 'butt' }); }
+  });
+  if (idx === 0 && t >= 0.4) {/* sticker CSS */}
+  if (idx === 5 && t >= 10.4) B.block(g, 120, 1180, 840, 250, B.X.white, B.X.red, 16);
+  if (idx === 6 && P.star.s > 0) {
+    const s = 2.4 - 1.4 * P.star.s;
+    B.starburst(g, 300, 1200, 190 * s, 128 * s, 12, 0.2 + (1 - P.star.s) * 0.6, B.X.bg, B.X.bg, 6);
+  }
+  if (idx === 6) { // chevrons vers les commentaires, pulsés sur le temps
+    const beat = 0.5, ph = ((t - 12.2) % beat) / beat, dy = 14 * (1 - ph) * (1 - ph);
+    for (let i = 0; i < 3; i++) {
+      const y = 1430 + i * 34 + dy;
+      g.poly([700, y, 790, y + 52, 880, y, 880, y + 22, 790, y + 74, 700, y + 22]).fill({ color: i === 2 ? B.X.red : B.X.bg });
+    }
+  }
+  // jauge rubalise : progression du short
+  B.hazardBar(g, 60, 1556, 900, 30, t / DUR, BG[idx] === B.X.yel ? B.X.bg : B.X.yel, BG[idx] === B.X.yel ? B.X.yel : B.X.bg);
+  app.renderer.render(app.stage);
+}
+
+S.installContract({ duration: DUR, ready, renderAt });
+</script></body></html>

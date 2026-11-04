@@ -1,0 +1,27 @@
+{
+ "language": "fr",
+ "style": "documentaire spatial, voix grave, lente et solennelle, ouverture de film",
+ "voice": "Charon",
+ "lines": [
+  {
+   "t": 0.3,
+   "maxDuration": 3.6,
+   "text": "Voyager 1 est sur le point d'atteindre un jour-lumière."
+  },
+  {
+   "t": 4.6,
+   "maxDuration": 3.5,
+   "text": "Partie en 1977, interstellaire depuis 2012."
+  },
+  {
+   "t": 8.6,
+   "maxDuration": 3.9,
+   "text": "Son signal met près de vingt-quatre heures à nous joindre."
+  },
+  {
+   "t": 12.9,
+   "maxDuration": 2.0,
+   "text": "Notre messager le plus lointain."
+  }
+ ]
+}
