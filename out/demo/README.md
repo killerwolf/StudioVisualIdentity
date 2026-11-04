@@ -33,4 +33,4 @@ Le sound design utilise de vrais sons CC0 (domaine public) venus d'OpenGameArt :
 - Les quelques événements sans échantillon, comme les nappes « swell », restent synthétisés par `out/tools/sound.py`.
 - Le mix est limité à −1 dBFS.
 
-Freesound (`out/tools/freesound.py`, `PROMPT_FREESOUND.md`) reste une option pour une session locale. Le 2026-11-04, freesound.org et kenney.nl répondaient 403 depuis le cloud, alors qu'opengameart.org était joignable.
+Pour ajouter ou remplacer des sons : `out/tools/freesound.py` (clé `FREESOUND_API_KEY`), ou le skill [`sound-design`](https://github.com/killerwolf/skills/tree/main/skills/sound-design), qui reprend cette méthode pour n'importe quelle vidéo.

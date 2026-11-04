@@ -1,11 +1,14 @@
 # StudioVisualIdentity
 
-**Un catalogue de 14 styles visuels prêts à l'emploi pour lancer une chaîne de vidéos courtes verticales (TikTok, Reels, Shorts).**
-Chaque style est prouvé par de vraies vidéos (31 au total, avec voix off), et le dépôt contient les outils pour en produire de nouvelles.
+**14 styles visuels prêts à l'emploi pour lancer une chaîne de vidéos courtes verticales (TikTok, Reels, Shorts), et l'agent qui fabrique les épisodes avec vous.**
 
-[![Démo : 14 styles en 60 secondes](out/demo/demo_preview.gif)](out/demo/demo_16x9.mp4)
+[![Avant : toutes pareilles. Après : 14 styles, aucun ne se ressemble.](out/demo/thumb/thumbnail_fr_1280.jpg)](out/demo/demo_16x9.mp4)
 
-▶ Vidéo démo avec le son : [16:9](out/demo/demo_16x9.mp4) · [9:16 vertical](out/demo/demo_9x16.mp4)
+▶ **La démo en 51 s, avec le son** : [16:9](out/demo/demo_16x9.mp4) · [9:16 vertical](out/demo/demo_9x16.mp4)
+
+- **14 identités complètes** (couleurs, typographies, mouvements, transitions, structure d'un short), chacune prouvée par 2 ou 3 vraies vidéos : **31 shorts** en tout, avec voix off.
+- **Les outils pour produire la suite** : rendu image par image, voix off, sons, contrôle qualité, et un script qui crée en une commande le projet de votre chaîne.
+- **Tout est open source** : les 31 shorts sont rendus par du code, sans image ni musique téléchargée.
 
 ## Comment s'en servir
 
@@ -20,14 +23,37 @@ puis réalise notre premier épisode sur [sujet de l'épisode] et montre-moi le 
 
 L'agent choisit un style, crée un projet séparé pour votre chaîne (votre identité visuelle, des modèles de scènes, les outils de rendu), puis fabrique les épisodes un par un.
 
+## Pour aller plus loin : voix et sound design
+
+Deux skills Claude Code complètent le studio, dans [killerwolf/skills](https://github.com/killerwolf/skills) :
+
+| Skill | Ce qu'il apporte |
+| --- | --- |
+| [`gemini-voices`](https://github.com/killerwolf/skills/tree/main/skills/gemini-voices) | Les voix off avec Gemini : narration, personnages, dialogue à deux voix. |
+| [`sound-design`](https://github.com/killerwolf/skills/tree/main/skills/sound-design) | Les bruitages (whoosh, pop, impact, frappe, ding) calés sur les apparitions de texte et mixés sous la voix, à partir d'une bibliothèque de sons CC0 qu'on peut enrichir avec Freesound. |
+
+```bash
+claude plugin marketplace add killerwolf/skills
+```
+
+```bash
+claude plugin install gemini-voices@killerwolf
+```
+
+```bash
+claude plugin install sound-design@killerwolf
+```
+
 ## Ce que vous devrez faire ou valider
 
 - **Valider l'identité** proposée par l'agent (nom, couleurs, ton) avant de produire en série.
-- **La voix off** : la génération de l'audio (Fish Audio) n'est pas automatique ; l'agent mixe ensuite les fichiers.
+- **Fournir les clés des services de voix** : Fish Audio (connecteur MCP) ou `GEMINI_API_KEY`. Ajoutez `FREESOUND_API_KEY` si vous voulez d'autres bruitages que ceux fournis.
+- **Écouter et regarder chaque épisode** avant de le publier. L'agent mesure les niveaux sonores, mais il ne peut pas écouter.
 - **Relire les faits** énoncés dans chaque épisode.
 
-## Pour aller plus loin
+## Pour aller encore plus loin
 
 - [`AGENTS.md`](AGENTS.md) : le guide détaillé pour les agents (en anglais).
 - [`out/identities/index.json`](out/identities/index.json) : les 14 styles en données (couleurs, polices, public conseillé).
 - [`out/report/`](out/report/README.md) : le rapport complet de l'exploration (en français).
+- [`out/demo/`](out/demo/README.md) : comment la vidéo démo et sa vignette sont fabriquées.
