@@ -14,7 +14,7 @@ Par défaut on ne garde que les sons CC0 (domaine public, pas d'attribution obli
 consigné dans <dir>/credits.json (id, nom, auteur, licence, URL) : gardez-le à côté des sons, même pour du CC0.
 L'aperçu HQ suffit pour des SFX de vidéo courte ; le fichier original exige OAuth2 et n'est pas géré ici.
 """
-import argparse, json, os, sys, urllib.parse, urllib.request
+import argparse, json, os, sys, urllib.error, urllib.parse, urllib.request
 from pathlib import Path
 
 API = 'https://freesound.org/apiv2'
@@ -32,13 +32,18 @@ def key():
 def call(path, **params):
     params['token'] = key()
     url = f'{API}{path}?{urllib.parse.urlencode(params)}'
-    with urllib.request.urlopen(urllib.request.Request(url, headers={'User-Agent': 'svi-freesound/1.0'}), timeout=30) as r:
-        return json.load(r)
+    try:
+        with urllib.request.urlopen(urllib.request.Request(url, headers={'User-Agent': 'svi-freesound/1.0'}), timeout=30) as r:
+            return json.load(r)
+    except urllib.error.HTTPError as e:
+        if e.code == 404 and path == '/search/':          # anciennes versions de l'API : /search/text/
+            return call('/search/text/', **{k: v for k, v in params.items() if k != 'token'})
+        raise
 
 
 def search(a):
     filt = ' '.join(x for x in [LICENSES[a.license], f'duration:[0 TO {a.max_dur}]' if a.max_dur else ''] if x)
-    res = call('/search/text/', query=a.query, filter=filt, fields=FIELDS, page_size=a.n, sort=a.sort)
+    res = call('/search/', query=a.query, filter=filt, fields=FIELDS, page_size=a.n, sort=a.sort)
     for s in res['results']:
         print(f"{s['id']:>8}  {s['duration']:5.2f}s  ★{s.get('avg_rating', 0):.1f}  ↓{s.get('num_downloads', 0):<6} "
               f"{s['name'][:50]:<50}  {s['username']}  [{s['license'].rstrip('/').split('/')[-2]}]")
