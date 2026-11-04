@@ -63,6 +63,24 @@ def check(d):
         else:
             try: json.load(open(d / f))
             except Exception as e: err.append(f'{f} invalide: {e}')
+    # livrabilité : voix off, rythme de narration, relecture des stills (avertissements seulement)
+    try:
+        nar = json.load(open(d / 'narration.json')) if (d / 'narration.json').exists() else {}
+        sj = json.load(open(d / 'short.json')) if (d / 'short.json').exists() else {}
+        lines = nar.get('lines') or []
+        if lines and not (sj.get('sound') or {}).get('voice'):
+            warn.append('voix off absente (narration.json a des lignes mais short.json.sound.voice est faux)')
+        nvl = len(list((d / 'voice_lines').glob('*.mp3'))) if (d / 'voice_lines').exists() else 0
+        if lines and (sj.get('sound') or {}).get('voice') and (d / 'voice_lines').exists() and nvl != len(lines):
+            warn.append(f'voice_lines : {nvl} fichiers pour {len(lines)} lignes')
+        for i, l in enumerate(lines):
+            md = float(l.get('maxDuration') or 0)
+            if md > 0 and len(str(l.get('text', '')).split()) / md > 3.2:
+                warn.append(f"ligne {i} : {len(str(l['text']).split())} mots en {md} s (> 3,2 mots/s)")
+        if (sj.get('qualityChecks') or {}).get('stillsReviewed') is False:
+            warn.append('stills non relus (qualityChecks.stillsReviewed = false)')
+    except Exception as e:
+        warn.append('lecture narration/short.json : ' + str(e))
     stills = list((d / 'stills').glob('*.jpg')) + list((d / 'stills').glob('*.png')) if (d / 'stills').exists() else []
     if not (3 <= len(stills)): err.append(f'stills: {len(stills)} (3–5 attendus)')
     if not (d / 'src').exists() or not any((d / 'src').iterdir()): err.append('src/ vide')

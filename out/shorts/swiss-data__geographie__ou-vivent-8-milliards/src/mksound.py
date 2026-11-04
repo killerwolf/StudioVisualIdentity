@@ -5,6 +5,14 @@ base = lambda: {"duration": 15.0, "seed": 7, "bpm": 120, "key": "D", "scale": "m
                 "music": {"preset": "pulse", "gain": 0.42, "octave": 3, "density": 0.5, "loop": False}}
 r = lambda x: round(x, 3)
 
+
+def save(path, obj):  # n'écrit que si le dossier du short existe (ex. studio : un seul des deux shorts)
+    import os
+    if os.path.isdir(os.path.dirname(path)):
+        json.dump(obj, open(path, 'w'), indent=1)
+    else:
+        print('ignoré (dossier absent) :', path)
+
 def wipe(ev, at):  # signature volet rouge : whoosh + thud à la coupe
     ev += [{"t": r(at), "type": "whoosh", "gain": 0.7, "dur": 0.5}, {"t": r(at + 0.475), "type": "thud", "gain": 0.8}]
 
@@ -26,7 +34,7 @@ for i, n in enumerate(["A5", "F5", "D5", "C5", "A4"]):
     ev.append({"t": r(8.475 + 0.45 + 0.12 * i), "type": "blip", "note": n, "gain": 0.45})
 ev += [{"t": 10.6, "type": "pop", "note": "A5", "gain": 0.5}, {"t": 11.0, "type": "impact", "gain": 0.7},
        {"t": 11.0, "type": "chime", "note": "D5", "gain": 0.4}, {"t": 11.6, "type": "swell", "note": "D4", "gain": 0.35, "dur": 3.2}]
-g["events"] = sorted(ev, key=lambda e: e["t"]); json.dump(g, open(GEO, 'w'), indent=1)
+g["events"] = sorted(ev, key=lambda e: e["t"]); save(GEO, g)
 
 # ---------- evenements ----------
 e = base(); e["key"] = "A"; ev = [{"t": 0.0, "type": "impact", "gain": 0.9}, {"t": 0.1, "type": "whoosh", "gain": 0.35, "dur": 0.6}]
@@ -53,5 +61,5 @@ for i in range(10):
 wipe(ev, 12.0)
 ev += [{"t": 12.875, "type": "impact", "gain": 0.8}, {"t": 12.975, "type": "whoosh", "gain": 0.3, "dur": 1.0},
        {"t": 14.075, "type": "chime", "note": "A5", "gain": 0.45}, {"t": 14.075, "type": "chime", "note": "E5", "gain": 0.3}]
-e["events"] = sorted(ev, key=lambda x: x["t"]); json.dump(e, open(ECL, 'w'), indent=1)
+e["events"] = sorted(ev, key=lambda x: x["t"]); save(ECL, e)
 print(len(g["events"]), len(e["events"]))

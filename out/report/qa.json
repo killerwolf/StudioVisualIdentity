@@ -31,7 +31,9 @@
   "short": "atlas-grave__geographie__plus-longs-fleuves-du-monde",
   "ok": true,
   "errors": [],
-  "warnings": [],
+  "warnings": [
+   "ligne 5 : 4 mots en 0.8 s (> 3,2 mots/s)"
+  ],
   "info": {
    "duration": 15.0,
    "width": 1080,
@@ -143,7 +145,9 @@
   "short": "gazette-1900__evenements__9-novembre-1989-mur-de-berlin",
   "ok": true,
   "errors": [],
-  "warnings": [],
+  "warnings": [
+   "ligne 7 : 5 mots en 1.55 s (> 3,2 mots/s)"
+  ],
   "info": {
    "duration": 15.0,
    "width": 1080,
@@ -269,7 +273,9 @@
   "short": "pastel-diorama__engagement__choisis-ta-boite-renard",
   "ok": true,
   "errors": [],
-  "warnings": [],
+  "warnings": [
+   "ligne 2 : 9 mots en 2.7 s (> 3,2 mots/s)"
+  ],
   "info": {
    "duration": 15.0,
    "width": 1080,
@@ -339,7 +345,10 @@
   "short": "riso-zine__geographie__5-plus-grands-deserts",
   "ok": true,
   "errors": [],
-  "warnings": [],
+  "warnings": [
+   "ligne 5 : 9 mots en 2.75 s (> 3,2 mots/s)",
+   "ligne 6 : 10 mots en 3.1 s (> 3,2 mots/s)"
+  ],
   "info": {
    "duration": 16.0,
    "width": 1080,
@@ -381,7 +390,10 @@
   "short": "tableau-craie__enfants__comment-une-graine-devient-un-arbre",
   "ok": true,
   "errors": [],
-  "warnings": [],
+  "warnings": [
+   "ligne 4 : 9 mots en 2.7 s (> 3,2 mots/s)",
+   "ligne 5 : 7 mots en 2.0 s (> 3,2 mots/s)"
+  ],
   "info": {
    "duration": 15.5,
    "width": 1080,

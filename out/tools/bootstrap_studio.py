@@ -63,14 +63,34 @@ def copy_template(src_short, dest, placeholder):
     shutil.copytree(src_short / 'src', dest / 'src', ignore=shutil.ignore_patterns('__pycache__', 'node_modules'))
     for f in ('narration.json', 'short.json'):
         shutil.copy2(src_short / f, dest / f)
-    n = 0
+    n, others = 0, set()
     for p in list((dest / 'src').rglob('*')) + [dest / 'narration.json', dest / 'short.json']:
         if p.is_file() and p.suffix in ('.html', '.js', '.mjs', '.py', '.sh', '.json', '.md', '.css', '.txt'):
             s = p.read_text(encoding='utf-8', errors='surrogateescape')
-            if name in s:
-                p.write_text(s.replace(name, placeholder), encoding='utf-8', errors='surrogateescape')
+            t = s.replace(name, placeholder)
+            t = re.sub(r'/tmp/svi/[A-Za-z0-9_.-]+/', '/tmp/svi/' + placeholder + '/', t)   # un dossier temporaire par épisode
+            if t != s:
+                p.write_text(t, encoding='utf-8', errors='surrogateescape')
                 n += 1
-    return n
+            others |= {m for m in re.findall(r'out/shorts/([a-z0-9-]+__[a-z]+__[a-z0-9-]+)', t)}
+    # commande de reproduction : mkdir du dossier temporaire
+    sj = json.load(open(dest / 'short.json'))
+    rp = sj.get('reproduce') or ''
+    if rp and not rp.startswith('mkdir -p /tmp/svi/'):
+        sj['reproduce'] = f'mkdir -p /tmp/svi/{placeholder} && ' + rp
+        json.dump(sj, open(dest / 'short.json', 'w'), ensure_ascii=False, indent=1)
+    # README du template : en-tête + étape voix off propre au studio
+    rd = dest / 'src' / 'README.md'
+    if rd.exists():
+        txt = rd.read_text()
+        txt = re.split(r'\n## Dernière étape : voix off', txt)[0].rstrip()
+        txt = (f"> **Template de studio** issu du short de preuve `{name}` ({REPO_URL}/tree/main/out/shorts/{name}). "
+               "Le contenu (titre, données, textes, timings du son) est celui du short d'origine : **à remplacer** pour chaque épisode.\n\n"
+               + txt + "\n\n## Dernière étape : voix off\n\nGénérer un fichier audio par ligne de `narration.json` dans `voice_lines/00.mp3, 01.mp3…` "
+               "(texte seul, voix de `studio.json`), puis lancer l'étape `tts.py … --engine files --replace` de `short.json.reproduce`. "
+               "Voir `AGENTS.md` du studio, phase 2.\n")
+        rd.write_text(txt)
+    return n, sorted(o for o in others if o != name)
 
 
 def draft_identity_md(src_md, name, channel_id, source, blend, language, audience):
@@ -110,6 +130,9 @@ python3 out/tools/new_episode.py <family> <slug> --title "<title>"      # copies
 Then, in the new folder:
 1. **Write** `narration.json` (timed lines, ≈ 2.6 words/s, no overlap) and the on-screen content in `src/` (texts, data, beats).
    Update `short.json` (title, hook, structure, engagement, seed). Templates contain the proof short's topic: replace all of it.
+   {audience_row}
+   The template's `maxDuration` slots and sound events (`src/sound.json`, or the script that generates it) are tuned for the
+   proof short's text and beats: re-time them for your own lines.
 2. **Stills first**: `node out/tools/render.mjs out/shorts/<dir>/src/index.html --stills 0.5,4,8,12 --stills-dir out/shorts/<dir>/stills`
    — look at them (hook < 1 s, text ≥ 54 px, titles ≥ 90 px, safe areas: top 220 / bottom 320 / right 120 px, AA contrast).
 3. **Render, sound, mux**: run the command in `short.json.reproduce` (it was rewritten for this folder; Python scenes use their own script
@@ -117,14 +140,17 @@ Then, in the new folder:
 4. **Voice-over**: generate one audio file per narration line into `voice_lines/00.mp3, 01.mp3…` (Fish Audio connector or any TTS),
    then `.venv/bin/python out/tools/tts.py out/shorts/<dir> --engine files --voice "<voice name>" --replace`
    (`--engine fish` with `FISH_API_KEY` exists but was never tested against the real API).
-5. **QA**: `.venv/bin/python out/tools/check.py out/shorts/<dir>` must be OK (format, 10–20 s, audio, no black frames, files present).
+5. **QA**: `.venv/bin/python out/tools/check.py out/shorts/<dir>` must be OK (format, 10–20 s, audio, no black frames, 3–5 stills,
+   files present) **and its warnings read**: missing voice-over, lines faster than 3.2 words/s, stills not marked reviewed in `short.json`.
 
 ## Rules (from the exploration, measured)
 
 - Determinism: scenes expose `window.renderAt(t)`; stateful scenes set `window.SEQUENTIAL = true`; seeds go in `short.json`.
 - Photosensitivity: at most 3 flashes/s, no full-frame flash, large luminance swaps ≥ 1.6 s apart.
 - Body text needs ≥ 4.5:1 contrast; decorative colours (see `reference/index-entries.json` → `coreTokens.color.contrastOnBg`) never carry text.
-- Pitfalls and fixes: {repo}/blob/main/out/report/facts.md ; library notes: {repo}/tree/main/out/library-cards
+- Pitfalls and fixes: `reference/facts.md` ; library notes: `reference/library-cards/` (copied from {repo}).
+- Templates borrowed with `--blend` (see `studio.json` → templates[].note) are **structure references** (pace, mechanic), not a
+  second signature: restyle them fully with your tokens, or start from a template of your source identity when one fits.
 - Render cost of the source identity (measured under heavy load, expect 2–3× faster on a dedicated machine): see `reference/index-entries.json`.
 
 ## Set-up
@@ -178,6 +204,10 @@ def main():
     if a.title:
         sj['title'] = a.title
     sj['renderTimeSec'] = None
+    sj['qualityChecks'] = {'stillsReviewed': False, 'textMinPx': None, 'safeAreaOk': None}
+    sj['notes'] = 'TODO'
+    sj['TODO'] = 'remplacer hook, structure, engagement, seed et notes (hérités du short de preuve) ; renseigner renderTimeSec et qualityChecks après rendu'
+    sj['loopable'] = sj.get('loopable', False)
     sj.setdefault('sound', {})['voice'] = False
     v = cfg.get('voice', {})
     if sj.get('reproduce'):
@@ -239,10 +269,13 @@ def main():
     (tdst / 'new_episode.py').write_text(NEW_EPISODE)
     (target / 'out' / 'shorts').mkdir(parents=True)
     (target / 'out' / 'report').mkdir(parents=True)
-    shutil.copy2(ROOT / 'package.json', target / 'package.json')
+    pk = json.load(open(ROOT / 'package.json'))
+    pk['name'] = cid
+    pk['description'] = f'Studio de shorts « {a.name} » — amorcé depuis {REPO_URL} (identité source : {a.source}) ; élaguer les dépendances inutiles'
+    json.dump(pk, open(target / 'package.json', 'w'), ensure_ascii=False, indent=2)
     if (ROOT / 'package-lock.json').exists():
         shutil.copy2(ROOT / 'package-lock.json', target / 'package-lock.json')
-    (target / '.gitignore').write_text('node_modules/\n.venv/\n__pycache__/\n*.part.mp4\nout/shorts/*/voice.wav\nout/shorts/*/short_vo.mp4\n')
+    (target / '.gitignore').write_text('node_modules\n.venv\n__pycache__/\n*.part.mp4\nout/shorts/*/voice.wav\nout/shorts/*/short_vo.mp4\n')
 
     # 2. identité de la chaîne (brouillon)
     src_id = OUT / 'identities' / a.source
@@ -262,7 +295,7 @@ def main():
             proven = sorted(i for i, e in idx.items() if fam in e['familiesProven'])
             print(f"ATTENTION : aucune identité source n'a prouvé la famille '{fam}' — ajoutez --blend avec l'une de : {', '.join(proven)}")
             continue
-        n = copy_template(sdir, target / 'templates' / fam, '{{SHORT_DIR}}')
+        n, others = copy_template(sdir, target / 'templates' / fam, '{{SHORT_DIR}}')
         sj = json.load(open(target / 'templates' / fam / 'short.json'))
         sj['templateFrom'] = f'{REPO_URL}/tree/main/out/shorts/{sdir.name}'
         json.dump(sj, open(target / 'templates' / fam / 'short.json', 'w'), ensure_ascii=False, indent=1)
@@ -270,7 +303,9 @@ def main():
         if rec.exists():
             shutil.copy2(rec, bdst / 'recipes' / f'{fam}.md')
         report.append({'family': fam, 'templateFrom': sdir.name, 'identity': sid, 'pathRewrites': n,
-                       'note': None if sid == a.source else f'template emprunté à {sid} : à restyler avec vos tokens'})
+                       'referencesOtherShorts': others or None,
+                       'note': None if sid == a.source else (f'template emprunté à {sid} : référence de STRUCTURE (rythme, mécanique), '
+                                                             f'pas de signature — à restyler entièrement avec vos tokens')})
 
     # 4. référence
     ref = target / 'reference'
@@ -284,6 +319,13 @@ def main():
                 shutil.copy2(OUT / 'identities' / s / f, d / f)
         entries[s] = idx[s]
     json.dump(entries, open(ref / 'index-entries.json', 'w'), ensure_ascii=False, indent=1)
+    # faits vérifiés + cartes des librairies utilisées (lisibles hors ligne)
+    shutil.copy2(OUT / 'report' / 'facts.md', ref / 'facts.md')
+    (ref / 'library-cards').mkdir()
+    libs = {re.sub(r'[^a-z0-9]+', '-', l.lower()).strip('-') for s in [a.source] + blend for l in (idx[s]['libraries'] or [])}
+    for card in (OUT / 'library-cards').glob('*.json'):
+        if card.stem in libs:
+            shutil.copy2(card, ref / 'library-cards' / card.name)
     (ref / 'README.md').write_text(f'# Référence (lecture seule)\n\nIdentités sources copiées depuis {REPO_URL} (out/identities/).\n'
                                    f'Ne pas modifier : votre identité est dans `out/identities/{cid}/`.\n')
 
@@ -300,8 +342,12 @@ def main():
               'voice': voice, 'templates': report}
     json.dump(studio, open(target / 'studio.json', 'w'), ensure_ascii=False, indent=1)
     blend_txt = f'; structure borrowed from {", ".join(blend)}' if blend else ''
+    AUD = {'kids': 'Audience **kids 6–10** (judgment, not measured): beats 3–4 s, 2.0–2.3 words/s, ≤ 4 on-screen words per beat, warm gentle voice.',
+           'teens': 'Audience **teens 13–17** (judgment, not measured): beats 2–3 s, 2.6–3.0 words/s, ≤ 6 on-screen words per beat (keywords), younger energetic voice, CTA = challenge/bet in comments.',
+           'adults': 'Audience **adults** (judgment, not measured): beats 3–4 s, 2.4–2.8 words/s, ≤ 8 on-screen words per beat, documentary or neutral voice.'}
     (target / 'AGENTS.md').write_text(STUDIO_AGENTS.format(name=a.name, channel_id=cid, repo=REPO_URL, source=a.source, blend_txt=blend_txt,
-                                                           language=a.language, audience=a.audience, families=', '.join(families)))
+                                                           language=a.language, audience=a.audience, families=', '.join(r['family'] for r in report),
+                                                           audience_row=AUD[a.audience]))
     (target / 'README.md').write_text(f'# {a.name}\n\nStudio de shorts verticaux (chaîne `{cid}`), amorcé depuis {REPO_URL} '
                                       f'(identité source : {a.source}). Mode d’emploi : `AGENTS.md`. Configuration : `studio.json`.\n')
     if a.git:

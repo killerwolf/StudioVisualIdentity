@@ -18,7 +18,7 @@ Do **not** fork this repository to produce your channel: it is the exploration. 
 with one command, then make the brand yours and produce episodes there.
 
 ```bash
-git clone https://github.com/killerwolf/StudioVisualIdentity && cd StudioVisualIdentity
+git clone https://github.com/killerwolf/StudioVisualIdentity && cd StudioVisualIdentity   # or: from the root of your checkout
 python3 out/tools/bootstrap_studio.py ../my-studio --channel-id my-channel --name "My Channel" \
     --from <identity> [--blend <id>,<id>] --families <family>,<family> --language fr --audience teens --git
 ```
