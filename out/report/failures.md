@@ -6,8 +6,8 @@ Sources : journaux horodatés des studios (`out/report/notes/<slug>.md`), rappor
 
 | Quoi | Cause | Coût | Contournement |
 |---|---|---|---|
-| **Voix off Gemini partielle (3/23)** | la clé est présente mais en plan gratuit : ~3 requêtes/min et ~10 requêtes/jour par modèle (429 `PerDay`) sur `gemini-3.8-flash-lite-tts`, `gemini-3.1-flash-tts-preview`, `gemini-3.8-flash-tts` ; 138 lignes à synthétiser au total | voix générée pour 3 shorts (swiss-data ou-vivent-8-milliards, pixel-arcade quelle-couleur-conquiert-l-ecran, liquid-chrome pendule-de-newton-chrome) — le 3ᵉ sans suite ; 20 sans voix dont neon-lab effet-papillon (429 journalier) | activer la facturation du projet de la clé, puis `.venv/bin/python out/tools/tts.py --all --replace` (les shorts déjà voisés sont à repasser avec `--replace` seulement s'ils sont à refaire) |
-| **Voix mélangées entre modèles** | quand un modèle atteint son quota journalier, `tts.py` bascule sur le suivant au milieu d'un short | timbre possiblement différent entre lignes d'un même short (pixel-arcade, liquid-chrome) ; non écouté | avec facturation, un seul modèle sert tout un short |
+| **Voix off : 1 débordement résiduel** | Fish Audio (Arnold) : la ligne « Premier : le Nil. » (atlas-grave plus-longs-fleuves, t = 8,3 s) dure 0,94 s pour un `maxDuration` de 0,8 s, même à ×1,35 | débordement de 0,14 s sur 135 lignes ; texte non réécrit | rallonger `maxDuration` de cette ligne ou la reformuler, puis relancer `tts.py --engine files` sur ce short |
+| **Voix off Gemini abandonnée** | le plan gratuit Gemini (~10 requêtes/jour/modèle) n'a permis que 3 shorts et mélangeait les modèles ; remplacé par Fish Audio (tous les shorts refaits avec une seule voix) | historique conservé dans `facts.md` | aucune |
 | `manimpango` ne compile pas | pangocairo absent | ~5 min | `--no-deps` + stub (voir `facts.md`) ; **pas de `Text()` ni `MathTex`** (pas de LaTeX) : texte en overlays PIL |
 | Commande shell bloquée 5 min | heredoc aplati au milieu d'une commande chaînée -> attente d'`EOF` sur stdin | 5 min | fichiers écrits via l'outil d'écriture |
 | Pas de PR ouverte | le dépôt distant ne contient qu'une seule branche (`claude/new-session-ae9hjs`), pas de branche de base | — | à créer par le propriétaire (`main`) |
@@ -56,4 +56,4 @@ Sources : journaux horodatés des studios (`out/report/notes/<slug>.md`), rappor
 | liquid-chrome / pendule | bande grise dure à l'horizon | sol brillant infini | sol retiré, fond en calque 2D |
 | pixel-arcade / territoire (PixiJS) | écran rempli trop lentement (10 s), batailles plates à ~25 % chacune | réglages de l'automate | 2 sous-pas synchrones par frame et force d'attaque au carré, avant tout rendu |
 
-Un seul rendu complet par short, aucun rejeté. Voix off : pixel-arcade et liquid-chrome générées, neon-lab non (quota), voir la ligne « Voix off Gemini partielle ».
+Un seul rendu complet par short, aucun rejeté. Voix off : 23/23 générées avec Fish Audio (Arnold), voir la ligne « Voix off : 1 débordement résiduel ».

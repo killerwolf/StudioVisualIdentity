@@ -39,7 +39,10 @@
  "loopable": true,
  "sound": {
   "type": "generated",
-  "voice": false
+  "voice": true,
+  "voiceEngine": "fish-connector",
+  "voiceName": "Fish Audio – Arnold (d704cf8f…)",
+  "voiceProvider": "files"
  },
  "qualityChecks": {
   "stillsReviewed": true,

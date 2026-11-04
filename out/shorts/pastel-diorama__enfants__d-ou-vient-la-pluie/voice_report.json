@@ -1,0 +1,37 @@
+[
+ {
+  "t": 0.2,
+  "sec": 2.2,
+  "max": 3.0,
+  "over": false,
+  "model": "fish-connector"
+ },
+ {
+  "t": 3.3,
+  "sec": 3.21,
+  "max": 3.7,
+  "over": false,
+  "model": "fish-connector"
+ },
+ {
+  "t": 7.1,
+  "sec": 2.72,
+  "max": 3.3,
+  "over": false,
+  "model": "fish-connector"
+ },
+ {
+  "t": 10.5,
+  "sec": 2.66,
+  "max": 3.15,
+  "over": false,
+  "model": "fish-connector"
+ },
+ {
+  "t": 13.75,
+  "sec": 1.21,
+  "max": 2.2,
+  "over": false,
+  "model": "fish-connector"
+ }
+]

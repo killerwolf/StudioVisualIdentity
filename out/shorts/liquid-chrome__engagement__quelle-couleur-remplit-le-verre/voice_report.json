@@ -1,0 +1,51 @@
+[
+ {
+  "t": 0.1,
+  "sec": 1.8,
+  "max": 3.1,
+  "over": false,
+  "model": "fish-connector"
+ },
+ {
+  "t": 3.3,
+  "sec": 1.14,
+  "max": 2.0,
+  "over": false,
+  "model": "fish-connector"
+ },
+ {
+  "t": 5.5,
+  "sec": 1.0,
+  "max": 2.0,
+  "over": false,
+  "model": "fish-connector"
+ },
+ {
+  "t": 7.7,
+  "sec": 1.1,
+  "max": 1.7,
+  "over": false,
+  "model": "fish-connector"
+ },
+ {
+  "t": 9.7,
+  "sec": 1.91,
+  "max": 1.9,
+  "over": false,
+  "model": "fish-connector"
+ },
+ {
+  "t": 11.7,
+  "sec": 0.8,
+  "max": 1.2,
+  "over": false,
+  "model": "fish-connector"
+ },
+ {
+  "t": 12.9,
+  "sec": 0.92,
+  "max": 1.6,
+  "over": false,
+  "model": "fish-connector"
+ }
+]

@@ -1,23 +1,80 @@
-{"identity": "pixel-arcade", "family": "engagement", "title": "Quelle bille gagne la course ?",
+{
+ "identity": "pixel-arcade",
+ "family": "engagement",
+ "title": "Quelle bille gagne la course ?",
  "hook": "Frame 0 : panneau « QUELLE BILLE GAGNE ? » + « PARIE SUR TA COULEUR ▶ » clignotant, les 4 billes (rose, verte, jaune, bleue) sur la grille de départ avec flèches de couleur ; son coin ; compte à rebours 3-2-1-GO sur les temps (0,96–2,4 s).",
  "duration": 16.0,
- "libraries": ["Matter.js", "p5.js"],
+ "libraries": [
+  "Matter.js",
+  "p5.js"
+ ],
  "seed": 17,
  "renderTimeSec": 208.5,
  "structure": [
-  {"t": 0, "beat": "hook : titre-question + pari « parie sur ta couleur » + billes sur la grille"},
-  {"t": 0.96, "beat": "compte à rebours 3-2-1 (125 bpm, pop-scale en paliers)"},
-  {"t": 2.4, "beat": "GO : la grille s'ouvre, le titre sort en step-slide-out, screenshake"},
-  {"t": 2.6, "beat": "champ de picots puis rampes en zigzag, hélices ; chrono TIME, flèche du leader, 8 changements de leader"},
-  {"t": 9.37, "beat": "la bleue repasse devant la verte"},
-  {"t": 11.83, "beat": "arrivée : BLEUE 1re, VERTE 0,10 s derrière ; cases du classement qui se remplissent"},
-  {"t": 12.0, "beat": "bannière PHOTO FINISH ! +0.10 S (blink-in)"},
-  {"t": 13.95, "beat": "transition pixel-mosaic"},
-  {"t": 14.25, "beat": "carte de fin : BLEUE GAGNE ! + classement + CTA « TU AVAIS PARIÉ SUR QUI ? ▼ COMMENTE ▼ »"}
+  {
+   "t": 0,
+   "beat": "hook : titre-question + pari « parie sur ta couleur » + billes sur la grille"
+  },
+  {
+   "t": 0.96,
+   "beat": "compte à rebours 3-2-1 (125 bpm, pop-scale en paliers)"
+  },
+  {
+   "t": 2.4,
+   "beat": "GO : la grille s'ouvre, le titre sort en step-slide-out, screenshake"
+  },
+  {
+   "t": 2.6,
+   "beat": "champ de picots puis rampes en zigzag, hélices ; chrono TIME, flèche du leader, 8 changements de leader"
+  },
+  {
+   "t": 9.37,
+   "beat": "la bleue repasse devant la verte"
+  },
+  {
+   "t": 11.83,
+   "beat": "arrivée : BLEUE 1re, VERTE 0,10 s derrière ; cases du classement qui se remplissent"
+  },
+  {
+   "t": 12.0,
+   "beat": "bannière PHOTO FINISH ! +0.10 S (blink-in)"
+  },
+  {
+   "t": 13.95,
+   "beat": "transition pixel-mosaic"
+  },
+  {
+   "t": 14.25,
+   "beat": "carte de fin : BLEUE GAGNE ! + classement + CTA « TU AVAIS PARIÉ SUR QUI ? ▼ COMMENTE ▼ »"
+  }
  ],
- "engagement": {"mechanic": "pari / vote en commentaire + suspense (photo finish à 0,10 s)", "cta": "TU AVAIS PARIÉ SUR QUI ? ▼ COMMENTE ▼ (commente ta couleur)"},
+ "engagement": {
+  "mechanic": "pari / vote en commentaire + suspense (photo finish à 0,10 s)",
+  "cta": "TU AVAIS PARIÉ SUR QUI ? ▼ COMMENTE ▼ (commente ta couleur)"
+ },
  "loopable": false,
- "sound": {"type": "generated", "voice": false, "music": "chiptune 125 bpm, C pentatonique majeure", "sfx": "39 blips de collision tirés du journal physique Matter (hauteur = couleur de la bille, gain ∝ vitesse relative, 1 blip / 60 ms max), clic sur choc bille-bille, coin aux arrivées, whoosh de transition"},
- "qualityChecks": {"stillsReviewed": true, "textMinPx": 56, "safeAreaOk": true, "simVerified": "Chromium == Node (temps d'arrivée identiques, ?verify=1 -> SIM OK)", "finalFramesReviewed": [0.3, 1.6, 5.0, 12.5, 15.5]},
+ "sound": {
+  "type": "generated",
+  "voice": true,
+  "music": "chiptune 125 bpm, C pentatonique majeure",
+  "sfx": "39 blips de collision tirés du journal physique Matter (hauteur = couleur de la bille, gain ∝ vitesse relative, 1 blip / 60 ms max), clic sur choc bille-bille, coin aux arrivées, whoosh de transition",
+  "voiceEngine": "fish-connector",
+  "voiceName": "Fish Audio – Arnold (d704cf8f…)",
+  "voiceProvider": "files"
+ },
+ "qualityChecks": {
+  "stillsReviewed": true,
+  "textMinPx": 56,
+  "safeAreaOk": true,
+  "simVerified": "Chromium == Node (temps d'arrivée identiques, ?verify=1 -> SIM OK)",
+  "finalFramesReviewed": [
+   0.3,
+   1.6,
+   5.0,
+   12.5,
+   15.5
+  ]
+ },
  "notes": "Graine choisie parmi 600 pré-simulées en Node pur (35 s) : vainqueur 11,2–13,2 s, dernier ≤ 14,6 s, ≤ 2 nudges, arrivée serrée. Graine 17 : BLEUE 11,833 s, VERTE 11,933 s, JAUNE 13,35 s, ROSE 13,983 s (temps de course affichés = t − 2,4 s) ; 1 nudge anti-blocage (VERTE à 9,81 s, aucun progrès vertical pendant 1,2 s). Physique : Matter 0.20, gravité 1 × 0.001, 4 sous-pas de 8,33 ms par frame, billes friction 0 + frictionAir 0.014. Angles/longueurs des rampes en littéraux (atan2/hypot diffèrent entre Node 22 et Chromium 153). Rendu 43,4 s / 100 frames avec 4 slots CPU partagés.",
- "reproduce": "node out/shorts/pixel-arcade__engagement__quelle-bille-gagne-la-course/src/simulate.js --seed 17 && node out/shorts/pixel-arcade__engagement__quelle-bille-gagne-la-course/src/make_sound.cjs && node out/tools/render.mjs out/shorts/pixel-arcade__engagement__quelle-bille-gagne-la-course/src/index.html --out /tmp/svi/pixel-arcade__engagement__quelle-bille-gagne-la-course/video.mp4 --duration 16 && .venv/bin/python out/tools/sound.py out/shorts/pixel-arcade__engagement__quelle-bille-gagne-la-course/src/sound.json /tmp/svi/pixel-arcade__engagement__quelle-bille-gagne-la-course/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/pixel-arcade__engagement__quelle-bille-gagne-la-course/video.mp4 --music /tmp/svi/pixel-arcade__engagement__quelle-bille-gagne-la-course/music.wav --out out/shorts/pixel-arcade__engagement__quelle-bille-gagne-la-course/short.mp4"}
+ "reproduce": "node out/shorts/pixel-arcade__engagement__quelle-bille-gagne-la-course/src/simulate.js --seed 17 && node out/shorts/pixel-arcade__engagement__quelle-bille-gagne-la-course/src/make_sound.cjs && node out/tools/render.mjs out/shorts/pixel-arcade__engagement__quelle-bille-gagne-la-course/src/index.html --out /tmp/svi/pixel-arcade__engagement__quelle-bille-gagne-la-course/video.mp4 --duration 16 && .venv/bin/python out/tools/sound.py out/shorts/pixel-arcade__engagement__quelle-bille-gagne-la-course/src/sound.json /tmp/svi/pixel-arcade__engagement__quelle-bille-gagne-la-course/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/pixel-arcade__engagement__quelle-bille-gagne-la-course/video.mp4 --music /tmp/svi/pixel-arcade__engagement__quelle-bille-gagne-la-course/music.wav --out out/shorts/pixel-arcade__engagement__quelle-bille-gagne-la-course/short.mp4"
+}

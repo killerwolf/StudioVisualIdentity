@@ -57,8 +57,9 @@
   "voice": true,
   "music": "chiptune 125 bpm, C pentatonique majeure",
   "sfx": "blip du leader sur chaque temps (note = couleur : E5/G5/A5/C6, comme la course de billes), pop à chaque poussée de force 5, coin à chaque changement de leader, chime + impact à l'écran plein, impact + coin au gel, whoosh de transition, coin + chime sur la carte de fin ; tous tirés des événements de trace.json",
-  "voiceEngine": "gemini-3.8-flash-lite-tts",
-  "voiceName": "Fenrir"
+  "voiceEngine": "fish-connector",
+  "voiceName": "Fish Audio – Arnold (d704cf8f…)",
+  "voiceProvider": "files"
  },
  "qualityChecks": {
   "stillsReviewed": true,

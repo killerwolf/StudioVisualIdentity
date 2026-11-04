@@ -101,3 +101,11 @@ Conditions : 10 studios en parallèle sur 4 cœurs ; load average mesuré **16�
 - Débordements après ×1,35 : swiss-data 0 ; pixel-arcade 0 ; liquid-chrome 2 (ligne 2 : 2,27 s pour 2,0 ; ligne 5 : 1,03 s pour 0,9 ; texte non réécrit).
 - Niveaux (moyenne / pic du short final) : swiss-data −17,5 / −1,3 dB ; pixel-arcade −20,6 / −1,7 dB ; liquid-chrome −18,1 / −1,6 dB. Réglages inchangés : musique −20 dB + sidechain, voix normalisée à 0,89. Durées identiques à la vidéo d'origine ; `check.py --all` : 23/23 OK.
 - Le rendu de swiss-data (test) n'est pas conservé : à refaire avec le reste. Voix non écoutée, seulement mesurée.
+
+## Voix off Fish Audio (connecteur) — mesures réelles
+
+- Connecteur Fish Audio : plan **gratuit**, 10 000 crédits (1 crédit/octet UTF-8), 500 octets max par appel ; modèle `s2.1-pro` (défaut), `drama-3` (acteur, 85 crédits pour la même phrase avec balises). Un appel identique répété dans les 5 min est gratuit (observé : 2 lignes à 0 crédit). Les URL `platform.r2.fish.audio` sont téléchargeables depuis le conteneur.
+- Voix testées (même phrase, 47 crédits chacune) : Clémence, Voix de documentaire, Le narrateur (Axel Frances), Féminine, Voix Mâle Dynamique, Arnold, Yuta, voix fr, Arnold `drama-3` ; **choix de l'utilisateur : Arnold**. Voix clonant des personnalités réelles volontairement non utilisées.
+- 135 lignes × Arnold, 23 shorts ; remix `tts.py --engine files --replace` en 2 min 38 s au total. Débordements : 1 (voir `failures.md`). Niveaux (moyenne / pic) : atlas-grave fleuves −15,6 / −1,5 dB ; pixel-arcade bille −17,6 / −1,5 dB ; tableau-craie graine −16,2 / −1,5 dB. Durées identiques aux vidéos ; piste audio AAC présente ; `check.py --all` : 23/23 OK.
+- Voix non écoutée par l'assistant, seulement mesurée.
+

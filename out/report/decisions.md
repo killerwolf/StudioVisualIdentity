@@ -27,3 +27,7 @@ Format : `HH:MM (UTC) — décision — raison`. Début de campagne : 20:27.
 - 2026-11-04 — Prompt TTS réduit au texte seul (le préfixe de style était lu à voix haute) ; style porté par la voix de `narration.json`.
 - 2026-11-04 — Générations strictement séquentielles, pause 21 s, attente du `retryDelay` (limite ~3 req/min) ; ordre des modèles lite > 3.1 preview > 3.8 flash pour économiser les quotas.
 - 2026-11-04 — Voix off générée pour 2 des 3 nouveaux shorts (pixel-arcade, liquid-chrome) ; neon-lab laissé sans voix (quota journalier épuisé), texte non réécrit malgré 2 débordements sur liquid-chrome.
+- 2026-11-04 — Voix off basculée de Gemini (quota gratuit) vers Fish Audio ; `tts.py` reçoit les moteurs `fish` (REST), `files` (lignes `voice_lines/NN.mp3` produites via le connecteur) et `gemini` (conservé).
+- 2026-11-04 — Voix choisie par l'utilisateur sur échantillons : « Arnold » (conteur chaleureux), après essais de 9 voix ; clones de personnalités réelles écartés ; un seul modèle `s2.1-pro` pour toute la série.
+- 2026-11-04 — Les 23 shorts refaits avec Arnold (dont 3 déjà voisés Gemini/Clémence en test) ; `voice.wav` non versionné, `voice_lines/*.mp3` et `short_novo.mp4` conservés ; 1 débordement noté, texte non réécrit.
+

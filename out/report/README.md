@@ -47,7 +47,7 @@ Pour une chaîne durable : **1. swiss-data** (data / actu : le moins cher, 13,7�
 | `textpng.py` | overlays texte PNG (polices @fontsource woff2 via PIL) pour les pipelines Python |
 | `assemble.py` | `mux` (son, voix + ducking, overlays, ré-encodage livrable crf 20 / 8 Mb/s), `concat` (xfade), `frames`, `sheet` |
 | `check.py` | QA d'un short ou `--all` -> `report/qa.json` |
-| `tts.py` | **voix off Gemini TTS** depuis `narration.json`, calée sur les temps, musique duckée |
+| `tts.py` | **voix off** (Fish Audio / lignes pré-générées / Gemini) depuis `narration.json`, calée sur les temps, musique duckée |
 | `slot.sh` | réserve un slot CPU pour un rendu Python |
 | `aggregate.py` | fusion des cartes librairie + index `campaign.json` / `matrix.json` |
 | `recognition.py` | test de reconnaissance mesuré + paquet anonymisé pour juge aveugle |
@@ -55,16 +55,17 @@ Pour une chaîne durable : **1. swiss-data** (data / actu : le moins cher, 13,7�
 
 Mise en place (une fois, depuis la racine du dépôt) : `npm i` (libs + polices @fontsource listées dans `package.json`), `uv venv --python 3.11 .venv` + paquets Python (voir `facts.md` pour Manim sans manimpango). Playwright/Chromium préinstallés (ne pas réinstaller).
 
-### Voix off Gemini (à lancer)
+### Voix off Fish Audio (générée)
 
-**État : voix off générée pour 2 shorts sur 23** (pixel-arcade « quelle-couleur-conquiert-l-ecran », liquid-chrome « pendule-de-newton-chrome ») ; les 21 autres sont sans voix car le plan gratuit de la clé est limité à ~10 requêtes/jour/modèle (détail : `failures.md`, `facts.md`). Après activation de la facturation :
+**État : voix off générée et mixée pour les 23 shorts** avec la voix Fish Audio « Arnold » (`d704cf8f1216490cbfbed89955f0e938`, modèle `s2.1-pro`, conteur masculin FR) via le connecteur Fish Audio (une ligne = un appel, 135 lignes, ≈ 4 500 crédits du plan gratuit, hors essais de voix). Chaque `short.mp4` est la version avec voix ; l'original muet+musique est gardé en `short_novo.mp4`. Rendu mesuré mais **pas écouté** par l'assistant (le choix de la voix a été fait par l'utilisateur sur échantillons).
 
 ```
-.venv/bin/python out/tools/tts.py --all --dry-run      # liste voix / lignes
-.venv/bin/python out/tools/tts.py --all --replace      # génère voice.wav, remixe short.mp4 (original -> short_novo.mp4)
+.venv/bin/python out/tools/tts.py --all --engine files --voice "<titre voix>" --replace   # lignes déjà synthétisées dans <short>/voice_lines/NN.mp3
+.venv/bin/python out/tools/tts.py --all --engine fish --voice <reference_id> --replace    # synthèse directe (FISH_API_KEY requis)
+.venv/bin/python out/tools/tts.py --all --engine gemini --replace                          # moteur Gemini d'origine (GEMINI_API_KEY)
 ```
 
-`tts.py` synthétise chaque ligne avec `gemini-3.8-flash-tts` (repli `gemini-3.8-flash-lite-tts`), voix préconstruite choisie par `narration.json.voice` ou le style, accélère légèrement (≤ ×1,35) une ligne qui dépasse son `maxDuration`, place chaque ligne à son temps `t`, puis remixe avec la musique duckée (sidechain) et met `short.json.sound.voice = true`. Testé contre l'API réelle (modèles `gemini-3.8-flash-lite-tts` / `gemini-3.1-flash-tts-preview` / `gemini-3.8-flash-tts`, voix `Fenrir` et `Achernar`) ; rendu mesuré mais pas écouté.
+`tts.py` place chaque ligne à son temps `t`, accélère légèrement (≤ ×1,35) une ligne qui dépasse son `maxDuration`, puis remixe avec la musique duckée (sidechain) et met `short.json.sound.voice = true` (`voiceProvider`, `voiceName` renseignés). Moteurs : `files` (audio préparé via le connecteur), `fish` (API REST directe, non testée contre l'API réelle), `gemini` (historique : 3 shorts avaient été voisés ainsi avant le passage à Fish ; tous ont été refaits avec Arnold).
 
 ## Fichiers du rapport
 
@@ -82,7 +83,7 @@ Mise en place (une fois, depuis la racine du dépôt) : `npm i` (libs + polices 
 
 ## Ce qui n'a pas marché (résumé — détail dans `failures.md`)
 
-- **Voix off** : clé Gemini indisponible dans cette session ; une seconde session (prompt : `report/VOICEOVER_PROMPT.md`) génère la voix à partir des `narration.json`.
+- **Voix off** : générée pour les 23 shorts avec Fish Audio (voix « Arnold ») ; voir « Voix off Fish Audio » ci-dessus et `failures.md` (1 débordement résiduel).
 - **CPU sur-souscrit** : 10 studios sur 4 cœurs (load 16–22) ; tous les temps de rendu sont ×2–3 au-dessus d'une machine calme.
 - **2 rendus complets jetés** (aquarelle-conte : bande non peinte ; liquid-chrome : verre réfractif à ~5 s/frame), 1 segment re-rendu (tableau-craie : bug de raster SwiftShader sous filtre SVG).
 - **Déterminisme Node ≠ navigateur** pour Matter.js (`Math.atan2` au dernier bit) : corrigé par géométrie précalculée.

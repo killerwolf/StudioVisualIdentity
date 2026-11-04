@@ -55,9 +55,12 @@
  "loopable": false,
  "sound": {
   "type": "generated",
-  "voice": false,
+  "voice": true,
   "preset": "pad",
-  "spec": "src/sound.json"
+  "spec": "src/sound.json",
+  "voiceEngine": "fish-connector",
+  "voiceName": "Fish Audio – Arnold (d704cf8f…)",
+  "voiceProvider": "files"
  },
  "qualityChecks": {
   "stillsReviewed": true,

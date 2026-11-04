@@ -39,8 +39,9 @@
  "sound": {
   "type": "generated",
   "voice": true,
-  "voiceEngine": "gemini-3.1-flash-tts-preview",
-  "voiceName": "Achernar"
+  "voiceEngine": "fish-connector",
+  "voiceName": "Fish Audio – Arnold (d704cf8f…)",
+  "voiceProvider": "files"
  },
  "qualityChecks": {
   "stillsReviewed": true,
