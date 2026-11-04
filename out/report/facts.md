@@ -91,3 +91,13 @@ Conditions : 10 studios en parallèle sur 4 cœurs ; load average mesuré **16�
 - **PixiJS 8 headless** : `await app.init({preserveDrawingBuffer:true, autoStart:false})` dans `window.ready`, ticker arrêté, `app.renderer.render(app.stage)` dans `renderAt` ; `ParticleContainer` + texture blanche 1×1 teintée pour > 10 k cellules ; RenderTexture basse résolution en `nearest` pour le pixel-art. Garder la simulation hors de Pixi (entiers + PRNG) pour la vérifier en Node.
 - **Babylon.js 9 headless** : `new BABYLON.Engine(canvas, true, {preserveDrawingBuffer:true, stencil:true})`, jamais `runRenderLoop`, `await scene.whenReadyAsync()` puis `scene.render()` dans `renderAt` ; reflets via un environnement procédural capturé une fois en cube ; le sélecteur de GlowLayer par préfixe de nom attrape d'autres meshes -> noms explicites.
 - **Workflow** : le moteur de workflow limite à 2 agents concurrents sur 4 CPU (min(16, CPU − 2)).
+
+## Voix off Gemini TTS (mesures réelles)
+
+- Modèles TTS visibles avec la clé : `gemini-3.8-flash-tts`, `gemini-3.8-flash-lite-tts`, `gemini-3.1-flash-tts-preview`, `gemini-2.5-*-preview-tts` (le 2.5 flash est refusé en 400). Réponse : `audio/wav` 24 kHz, lu tel quel par `pcm_from_part`.
+- **Un préfixe de consigne dans le prompt est lu à voix haute** (3,1 s -> 6,1 s pour la même phrase) : `tts.py` envoie le texte seul.
+- Plan gratuit : ~3 requêtes/min (pause de 21 s entre requêtes, attente du `retryDelay`) et ~10 requêtes/jour par modèle ; générations strictement séquentielles.
+- Temps mesuré par short : swiss-data 177 s (6 lignes), pixel-arcade 153 s (6), liquid-chrome 125 s (5) ; neon-lab : échec immédiat (429 journalier).
+- Débordements après ×1,35 : swiss-data 0 ; pixel-arcade 0 ; liquid-chrome 2 (ligne 2 : 2,27 s pour 2,0 ; ligne 5 : 1,03 s pour 0,9 ; texte non réécrit).
+- Niveaux (moyenne / pic du short final) : swiss-data −17,5 / −1,3 dB ; pixel-arcade −20,6 / −1,7 dB ; liquid-chrome −18,1 / −1,6 dB. Réglages inchangés : musique −20 dB + sidechain, voix normalisée à 0,89. Durées identiques à la vidéo d'origine ; `check.py --all` : 23/23 OK.
+- Le rendu de swiss-data (test) n'est pas conservé : à refaire avec le reste. Voix non écoutée, seulement mesurée.

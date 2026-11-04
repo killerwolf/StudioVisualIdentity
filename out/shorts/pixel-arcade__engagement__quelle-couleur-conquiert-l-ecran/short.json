@@ -1,23 +1,79 @@
-{"identity": "pixel-arcade", "family": "engagement", "title": "Quelle couleur conquiert l'écran ?",
+{
+ "identity": "pixel-arcade",
+ "family": "engagement",
+ "title": "Quelle couleur conquiert l'écran ?",
  "hook": "Frame 0 : panneau « QUELLE COULEUR CONQUIERT L'ÉCRAN ? » + « PARIE SUR TA COULEUR ▶ » clignotant, HUD des 4 pourcentages (00 %) dans leur couleur, 4 germes colorés dans les coins avec flèches clignotantes ; son coin ; compte à rebours 3-2-1-GO sur les temps (0,96–2,4 s).",
  "duration": 15.5,
- "libraries": ["PixiJS"],
+ "libraries": [
+  "PixiJS"
+ ],
  "seed": 175,
  "renderTimeSec": 151.4,
  "structure": [
-  {"t": 0, "beat": "hook : titre-question + pari + 4 couleurs dans les coins"},
-  {"t": 0.96, "beat": "compte à rebours 3-2-1 (125 bpm, pop-scale en paliers)"},
-  {"t": 2.4, "beat": "GO : le titre sort en step-slide-out, les 4 couleurs se répandent (17 094 cellules PixiJS)"},
-  {"t": 5.73, "beat": "écran plein : bannière BATAILLE ! (blink-in), screenshake"},
-  {"t": 6.0, "beat": "bataille aux frontières : poussées de force (cadre qui clignote), HUD % en direct, barre empilée, soulignement du leader"},
-  {"t": 9.3, "beat": "la jaune prend la tête"},
-  {"t": 12.0, "beat": "gel à la dernière frame : la rose repasse devant (30,11 % contre 29,92 %) ; bannière PHOTO FINISH ! +0.19 %"},
-  {"t": 13.3, "beat": "transition pixel-mosaic (RenderTexture 1/k)"},
-  {"t": 13.6, "beat": "carte de fin : ROSE GAGNE ! + classement au centième + CTA « TU AVAIS PARIÉ SUR QUI ? ▼ COMMENTE ▼ »"}
+  {
+   "t": 0,
+   "beat": "hook : titre-question + pari + 4 couleurs dans les coins"
+  },
+  {
+   "t": 0.96,
+   "beat": "compte à rebours 3-2-1 (125 bpm, pop-scale en paliers)"
+  },
+  {
+   "t": 2.4,
+   "beat": "GO : le titre sort en step-slide-out, les 4 couleurs se répandent (17 094 cellules PixiJS)"
+  },
+  {
+   "t": 5.73,
+   "beat": "écran plein : bannière BATAILLE ! (blink-in), screenshake"
+  },
+  {
+   "t": 6.0,
+   "beat": "bataille aux frontières : poussées de force (cadre qui clignote), HUD % en direct, barre empilée, soulignement du leader"
+  },
+  {
+   "t": 9.3,
+   "beat": "la jaune prend la tête"
+  },
+  {
+   "t": 12.0,
+   "beat": "gel à la dernière frame : la rose repasse devant (30,11 % contre 29,92 %) ; bannière PHOTO FINISH ! +0.19 %"
+  },
+  {
+   "t": 13.3,
+   "beat": "transition pixel-mosaic (RenderTexture 1/k)"
+  },
+  {
+   "t": 13.6,
+   "beat": "carte de fin : ROSE GAGNE ! + classement au centième + CTA « TU AVAIS PARIÉ SUR QUI ? ▼ COMMENTE ▼ »"
+  }
  ],
- "engagement": {"mechanic": "pari / vote en commentaire + suspense (photo finish à 0,19 %, leader changé à la dernière frame)", "cta": "TU AVAIS PARIÉ SUR QUI ? ▼ COMMENTE ▼ (commente ta couleur)"},
+ "engagement": {
+  "mechanic": "pari / vote en commentaire + suspense (photo finish à 0,19 %, leader changé à la dernière frame)",
+  "cta": "TU AVAIS PARIÉ SUR QUI ? ▼ COMMENTE ▼ (commente ta couleur)"
+ },
  "loopable": false,
- "sound": {"type": "generated", "voice": false, "music": "chiptune 125 bpm, C pentatonique majeure", "sfx": "blip du leader sur chaque temps (note = couleur : E5/G5/A5/C6, comme la course de billes), pop à chaque poussée de force 5, coin à chaque changement de leader, chime + impact à l'écran plein, impact + coin au gel, whoosh de transition, coin + chime sur la carte de fin ; tous tirés des événements de trace.json"},
- "qualityChecks": {"stillsReviewed": true, "textMinPx": 56, "safeAreaOk": true, "simVerified": "Chromium == Node (compteurs de cellules identiques au gel : 5147/4597/5115/2235 ; ?verify=1 -> SIM OK)", "finalFramesReviewed": [0.3, 4, 6, 12.3, 12.8, 14.8]},
+ "sound": {
+  "type": "generated",
+  "voice": true,
+  "music": "chiptune 125 bpm, C pentatonique majeure",
+  "sfx": "blip du leader sur chaque temps (note = couleur : E5/G5/A5/C6, comme la course de billes), pop à chaque poussée de force 5, coin à chaque changement de leader, chime + impact à l'écran plein, impact + coin au gel, whoosh de transition, coin + chime sur la carte de fin ; tous tirés des événements de trace.json",
+  "voiceEngine": "gemini-3.8-flash-lite-tts",
+  "voiceName": "Fenrir"
+ },
+ "qualityChecks": {
+  "stillsReviewed": true,
+  "textMinPx": 56,
+  "safeAreaOk": true,
+  "simVerified": "Chromium == Node (compteurs de cellules identiques au gel : 5147/4597/5115/2235 ; ?verify=1 -> SIM OK)",
+  "finalFramesReviewed": [
+   0.3,
+   4,
+   6,
+   12.3,
+   12.8,
+   14.8
+  ]
+ },
  "notes": "PixiJS 8.22 : Application.init({preserveDrawingBuffer:true, autoStart:false}) attendu dans window.ready, ticker arrêté, ParticleContainer de 17 094 Particle 2×2 (Texture.WHITE teintée, couleur dynamique, tint mis en cache), monde rendu dans une RenderTexture 270×480 nearest affichée ×4, pixel-mosaic = RenderTexture 1/k, app.renderer.render(app.stage) dans renderAt ; texte en DOM. Automate conquest.js : 111×154 cellules, 2 sous-pas synchrones/frame, conquête vide p=1, ennemie p=0.12·force²/9, forces 1–5 retirées toutes les 24 frames ; entiers + mulberry32 uniquement (pas d'atan2). Graine 175 choisie parmi 300 pré-simulées en Node (78,5 s) : écran plein à 5,73 s, 9 changements de leader, écart final 0,19 %. Rendu 32,6 s / 100 frames (CPU moins chargé que pour les deux premiers shorts).",
- "reproduce": "node out/shorts/pixel-arcade__engagement__quelle-couleur-conquiert-l-ecran/src/simulate.cjs --seed 175 && node out/shorts/pixel-arcade__engagement__quelle-couleur-conquiert-l-ecran/src/make_sound.cjs && node out/tools/render.mjs out/shorts/pixel-arcade__engagement__quelle-couleur-conquiert-l-ecran/src/index.html --out /tmp/svi/pixel-arcade__engagement__quelle-couleur-conquiert-l-ecran/video.mp4 --duration 15.5 && .venv/bin/python out/tools/sound.py out/shorts/pixel-arcade__engagement__quelle-couleur-conquiert-l-ecran/src/sound.json /tmp/svi/pixel-arcade__engagement__quelle-couleur-conquiert-l-ecran/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/pixel-arcade__engagement__quelle-couleur-conquiert-l-ecran/video.mp4 --music /tmp/svi/pixel-arcade__engagement__quelle-couleur-conquiert-l-ecran/music.wav --out out/shorts/pixel-arcade__engagement__quelle-couleur-conquiert-l-ecran/short.mp4"}
+ "reproduce": "node out/shorts/pixel-arcade__engagement__quelle-couleur-conquiert-l-ecran/src/simulate.cjs --seed 175 && node out/shorts/pixel-arcade__engagement__quelle-couleur-conquiert-l-ecran/src/make_sound.cjs && node out/tools/render.mjs out/shorts/pixel-arcade__engagement__quelle-couleur-conquiert-l-ecran/src/index.html --out /tmp/svi/pixel-arcade__engagement__quelle-couleur-conquiert-l-ecran/video.mp4 --duration 15.5 && .venv/bin/python out/tools/sound.py out/shorts/pixel-arcade__engagement__quelle-couleur-conquiert-l-ecran/src/sound.json /tmp/svi/pixel-arcade__engagement__quelle-couleur-conquiert-l-ecran/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/pixel-arcade__engagement__quelle-couleur-conquiert-l-ecran/video.mp4 --music /tmp/svi/pixel-arcade__engagement__quelle-couleur-conquiert-l-ecran/music.wav --out out/shorts/pixel-arcade__engagement__quelle-couleur-conquiert-l-ecran/short.mp4"
+}

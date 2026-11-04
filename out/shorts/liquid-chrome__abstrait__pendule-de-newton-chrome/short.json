@@ -38,7 +38,9 @@
  "loopable": true,
  "sound": {
   "type": "generated",
-  "voice": false
+  "voice": true,
+  "voiceEngine": "gemini-3.1-flash-tts-preview",
+  "voiceName": "Achernar"
  },
  "qualityChecks": {
   "stillsReviewed": true,

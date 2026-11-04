@@ -24,3 +24,6 @@ Format : `HH:MM (UTC) — décision — raison`. Début de campagne : 20:27.
 - 22:18 — La clé `GEMINI_API_KEY` ajoutée par l'utilisateur n'est pas visible dans ce conteneur (démarré avant) ; rédaction d'un prompt autonome pour une nouvelle session (`report/VOICEOVER_PROMPT.md`).
 - 22:31 — La session voix off pousse sur la même branche (corrections de `tts.py`) : chaque push de l'orchestrateur se fait désormais après `fetch` + `rebase`, sans toucher `tts.py`.
 - 22:37 — 3ᵉ shorts livrés (QA 23/23). Le short Babylon de liquid-chrome adopte la variante « graphite chaud / perle » recommandée par le test de reconnaissance : la mesure le classe bien avec son identité.
+- 2026-11-04 — Prompt TTS réduit au texte seul (le préfixe de style était lu à voix haute) ; style porté par la voix de `narration.json`.
+- 2026-11-04 — Générations strictement séquentielles, pause 21 s, attente du `retryDelay` (limite ~3 req/min) ; ordre des modèles lite > 3.1 preview > 3.8 flash pour économiser les quotas.
+- 2026-11-04 — Voix off générée pour 2 des 3 nouveaux shorts (pixel-arcade, liquid-chrome) ; neon-lab laissé sans voix (quota journalier épuisé), texte non réécrit malgré 2 débordements sur liquid-chrome.

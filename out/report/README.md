@@ -57,14 +57,14 @@ Mise en place (une fois, depuis la racine du dépôt) : `npm i` (libs + polices 
 
 ### Voix off Gemini (à lancer)
 
-La clé `GEMINI_API_KEY` n'était pas disponible dans le conteneur pendant la campagne. Dès qu'elle l'est :
+**État : voix off générée pour 2 shorts sur 23** (pixel-arcade « quelle-couleur-conquiert-l-ecran », liquid-chrome « pendule-de-newton-chrome ») ; les 21 autres sont sans voix car le plan gratuit de la clé est limité à ~10 requêtes/jour/modèle (détail : `failures.md`, `facts.md`). Après activation de la facturation :
 
 ```
 .venv/bin/python out/tools/tts.py --all --dry-run      # liste voix / lignes
 .venv/bin/python out/tools/tts.py --all --replace      # génère voice.wav, remixe short.mp4 (original -> short_novo.mp4)
 ```
 
-`tts.py` synthétise chaque ligne avec `gemini-3.8-flash-tts` (repli `gemini-3.8-flash-lite-tts`), voix préconstruite choisie par `narration.json.voice` ou le style, accélère légèrement (≤ ×1,35) une ligne qui dépasse son `maxDuration`, place chaque ligne à son temps `t`, puis remixe avec la musique duckée (sidechain) et met `short.json.sound.voice = true`. **Non testé contre l'API** (pas de clé) : vérifier le premier short à l'oreille.
+`tts.py` synthétise chaque ligne avec `gemini-3.8-flash-tts` (repli `gemini-3.8-flash-lite-tts`), voix préconstruite choisie par `narration.json.voice` ou le style, accélère légèrement (≤ ×1,35) une ligne qui dépasse son `maxDuration`, place chaque ligne à son temps `t`, puis remixe avec la musique duckée (sidechain) et met `short.json.sound.voice = true`. Testé contre l'API réelle (modèles `gemini-3.8-flash-lite-tts` / `gemini-3.1-flash-tts-preview` / `gemini-3.8-flash-tts`, voix `Fenrir` et `Achernar`) ; rendu mesuré mais pas écouté.
 
 ## Fichiers du rapport
 

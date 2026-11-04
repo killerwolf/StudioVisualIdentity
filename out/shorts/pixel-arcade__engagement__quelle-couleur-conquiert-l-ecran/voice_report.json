@@ -1,0 +1,44 @@
+[
+ {
+  "t": 0.15,
+  "sec": 1.38,
+  "max": 2.0,
+  "over": false,
+  "model": "gemini-3.8-flash-lite-tts"
+ },
+ {
+  "t": 2.5,
+  "sec": 1.75,
+  "max": 2.4,
+  "over": false,
+  "model": "gemini-3.8-flash-lite-tts"
+ },
+ {
+  "t": 5.75,
+  "sec": 1.31,
+  "max": 2.0,
+  "over": false,
+  "model": "gemini-3.8-flash-lite-tts"
+ },
+ {
+  "t": 9.35,
+  "sec": 2.36,
+  "max": 3.1,
+  "over": false,
+  "model": "gemini-3.8-flash-lite-tts"
+ },
+ {
+  "t": 12.5,
+  "sec": 1.1,
+  "max": 1.2,
+  "over": false,
+  "model": "gemini-3.1-flash-tts-preview"
+ },
+ {
+  "t": 13.8,
+  "sec": 0.91,
+  "max": 1.6,
+  "over": false,
+  "model": "gemini-3.1-flash-tts-preview"
+ }
+]

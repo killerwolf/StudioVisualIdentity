@@ -6,7 +6,8 @@ Sources : journaux horodatés des studios (`out/report/notes/<slug>.md`), rappor
 
 | Quoi | Cause | Coût | Contournement |
 |---|---|---|---|
-| **Voix off Gemini non générée** | `GEMINI_API_KEY` absente du conteneur (l'API répond 403 « unregistered callers ») ; `aistudio.google.com` (doc) hors politique réseau | voix absente des 20 shorts | `out/tools/tts.py` prêt ; `narration.json` horodaté pour chaque short. À lancer dès que la clé existe : `.venv/bin/python out/tools/tts.py --all --replace` |
+| **Voix off Gemini partielle (3/23)** | la clé est présente mais en plan gratuit : ~3 requêtes/min et ~10 requêtes/jour par modèle (429 `PerDay`) sur `gemini-3.8-flash-lite-tts`, `gemini-3.1-flash-tts-preview`, `gemini-3.8-flash-tts` ; 138 lignes à synthétiser au total | voix générée pour 3 shorts (swiss-data ou-vivent-8-milliards, pixel-arcade quelle-couleur-conquiert-l-ecran, liquid-chrome pendule-de-newton-chrome) — le 3ᵉ sans suite ; 20 sans voix dont neon-lab effet-papillon (429 journalier) | activer la facturation du projet de la clé, puis `.venv/bin/python out/tools/tts.py --all --replace` (les shorts déjà voisés sont à repasser avec `--replace` seulement s'ils sont à refaire) |
+| **Voix mélangées entre modèles** | quand un modèle atteint son quota journalier, `tts.py` bascule sur le suivant au milieu d'un short | timbre possiblement différent entre lignes d'un même short (pixel-arcade, liquid-chrome) ; non écouté | avec facturation, un seul modèle sert tout un short |
 | `manimpango` ne compile pas | pangocairo absent | ~5 min | `--no-deps` + stub (voir `facts.md`) ; **pas de `Text()` ni `MathTex`** (pas de LaTeX) : texte en overlays PIL |
 | Commande shell bloquée 5 min | heredoc aplati au milieu d'une commande chaînée -> attente d'`EOF` sur stdin | 5 min | fichiers écrits via l'outil d'écriture |
 | Pas de PR ouverte | le dépôt distant ne contient qu'une seule branche (`claude/new-session-ae9hjs`), pas de branche de base | — | à créer par le propriétaire (`main`) |
@@ -55,4 +56,4 @@ Sources : journaux horodatés des studios (`out/report/notes/<slug>.md`), rappor
 | liquid-chrome / pendule | bande grise dure à l'horizon | sol brillant infini | sol retiré, fond en calque 2D |
 | pixel-arcade / territoire (PixiJS) | écran rempli trop lentement (10 s), batailles plates à ~25 % chacune | réglages de l'automate | 2 sous-pas synchrones par frame et force d'attaque au carré, avant tout rendu |
 
-Un seul rendu complet par short, aucun rejeté. Les voix off de ces 3 shorts sont à générer comme les autres (`tts.py`).
+Un seul rendu complet par short, aucun rejeté. Voix off : pixel-arcade et liquid-chrome générées, neon-lab non (quota), voir la ligne « Voix off Gemini partielle ».
