@@ -25,3 +25,5 @@ Pour un short evenements dans cette identité :
 - à 15,0 s, l'horloge devient « TEMPS ÉCOULÉ · 15,0 S » (tag jaune `slam`, punch 1, shake 16 px, `impact` + `chime`) ; tenue 1 s, fin propre.
 
 Chiffres : arrondis, formulation « environ / ≈ », sources d'ordre de grandeur notées dans `short.json`. Tokens : `motion.punchIn`, `motion.beat`, `shapes.hazardBar`, `typography.caption` (tabular-nums), `color.danger` réservé au chiffre grave (décès). Voix : Fenrir, énumération rythmée qui suit les cuts avec ~0,5 s de retard.
+
+> Voix réellement utilisée pour les shorts de preuve : Fish Audio « Arnold » (`d704cf8f1216490cbfbed89955f0e938`, `s2.1-pro`). Les noms Gemini ci-dessus sont des suggestions historiques de casting par ton.

@@ -22,3 +22,5 @@ Pour un short engagement dans cette identité :
 - fin propre tenue 2,5 s ; jauge rubalise pleine à la dernière frame.
 
 Tokens : `motion.punchIn`, `motion.shake`, `typography.display` (auto-fit), `shapes.sticker`, `layout.countdownCenter`, `sound` (pulse 120 bpm, impact par cut). Voix : Fenrir, mots-clés seulement pendant les rounds.
+
+> Voix réellement utilisée pour les shorts de preuve : Fish Audio « Arnold » (`d704cf8f1216490cbfbed89955f0e938`, `s2.1-pro`). Les noms Gemini ci-dessus sont des suggestions historiques de casting par ton.

@@ -28,6 +28,37 @@ Most prose is in **French** (identity.md, recipes, reports, tool docstrings). JS
 5. **`out/report/comparison.md`** — side-by-side table, the identity × family × library matrix, blind recognition tests, and the ranking rationale.
 6. Before building: **`out/report/facts.md`** (verified technical facts and pitfalls) and **`out/library-cards/<lib>.json`**.
 
+## Where to start, by content family
+
+The global ranking (`rank`, `out/report/comparison.md` §5) is for a *generic durable channel* (cost, templatability, breadth);
+it does **not** depend on content family. For a given family, start from the identities that actually proved it (global rank in brackets):
+
+| Family | Proven by |
+|---|---|
+| `explicatif` (explainer / science) | bauhaus-kinetic (5), tableau-craie (6), neon-lab (12), cosmos-doc (13) |
+| `histoire` (history) | gazette-1900 (2), topo-relief (9), atlas-grave (10), aquarelle-conte (11) |
+| `geographie` (geography) | swiss-data (1), riso-zine (7), topo-relief (9), atlas-grave (10) |
+| `evenements` (on this day / countdowns) | swiss-data (1), gazette-1900 (2), brut-meme (4), riso-zine (7), cosmos-doc (13) |
+| `engagement` (quiz / vote / bet) | pixel-arcade (3), brut-meme (4), bauhaus-kinetic (5), pastel-diorama (8), liquid-chrome (14) |
+| `enfants` (kids) | tableau-craie (6), pastel-diorama (8), aquarelle-conte (11) |
+| `abstrait` (satisfying / loops) | pixel-arcade (3), neon-lab (12), liquid-chrome (14) |
+
+**Episode effort** (how much code a new topic needs): *data-driven* — swiss-data (new dataset in the same 4-screen grammar), brut-meme
+(new words/numbers), pixel-arcade (new seed / new rules); *new scene per topic* — most others (neon-lab, cosmos-doc, topo-relief,
+tableau-craie, atlas-grave, aquarelle-conte, pastel-diorama, gazette-1900 engravings). Tokens are documentation: scene code hard-codes
+the values, it does not read `tokens.json`.
+
+## Adapting to an audience (orchestrator judgment, not measured)
+
+All proof shorts use the same French male storyteller voice and ≈ 2.6 words/s; no short was made specifically for teens.
+Suggested starting deltas, to validate with your own tests:
+
+| Audience | Beat length | Voice pace | On-screen words per beat | Voice casting | Hook / CTA |
+|---|---|---|---|---|---|
+| kids 6–10 | 3–4 s | 2.0–2.3 words/s | ≤ 4 | warm, gentle, recurring character | a child's question; no pressure CTA |
+| teens 13–17 | 2–3 s | 2.6–3.0 words/s | ≤ 6, keywords only | younger, energetic, conversational | question in the viewer's own words, challenge or bet in comments |
+| adults | 3–4 s | 2.4–2.8 words/s | ≤ 8 | documentary or neutral | a surprising fact; open question |
+
 ## How to define your own identity from this work
 
 1. **Write your brief**: audience (age, language), content families, cadence, budget per short (render time), voice.
@@ -39,27 +70,41 @@ Most prose is in **French** (identity.md, recipes, reports, tool docstrings). JS
    - *Blend*: keep **one** identity's `signatureToPreserve` intact (its type pair, palette core and signature transition — that is what
      makes it recognisable, as the blind tests showed). Borrow from others only *structure* (recipes, beat grids, engagement mechanics)
      and *tooling*. Mixing two signatures produces a generic look.
-   - *Adapt*: change audience-dependent values (pace, text size, voice, colour temperature) but keep the signature.
+   - *Adapt*: change audience-dependent values (pace, text size, voice, colour temperature — see the table above) but keep the signature.
+   - `status` in the index: `selected` = kept in Phase 1; `rehabilitated` = set aside in Phase 1 only to avoid topic overlap, then produced
+     with the same rules — same evidence level.
 4. **Avoid confusion with neighbours**: check `curation.confusableWith` (e.g. dark identities neon-lab / cosmos-doc / liquid-chrome,
    or the cream flat styles swiss-data / bauhaus-kinetic). If your channel will sit next to one of them, push your palette or type further apart.
 5. **Write your design system in the same format**: an `identity.md` with the same 16 sections, and a `tokens.json` whose core follows
    `out/identities/core-tokens.schema.json` (seconds, px on 1080×1920, @fontsource slugs, four-sided safe area). Keep extra blocks
    (`sound`, `layout`, `post`…) if you need them; several identities do.
 6. **Prove it**: build 2 shorts from the closest proof short's `src/` (each `src/README.md` and `short.json.reproduce` give the exact
-   command), run `out/tools/check.py`, and optionally `out/tools/recognition.py` to measure that your two shorts look more alike than
-   they look like the existing identities.
+   command). When you copy a proof-short folder, **delete `short_novo.mp4`, `voice_lines/` and `voice_report.json` first**: `tts.py` uses
+   `short_novo.mp4` as its video source when present. Shared modules contain French UI strings (e.g. the masthead "LE PETIT CRIEUR" in
+   `gazette.js`, `lang="fr"`): grep for them when localising. Check one short with `out/tools/check.py out/shorts/<dir>` (`--all` rewrites
+   `out/report/qa.json`); `out/tools/recognition.py` measures that your shorts look more alike than they look like the existing identities,
+   but it rewrites `out/report/recognition.json` — run it on a copy if you want to keep the original report.
 
 ## Facts you should not have to rediscover
 
 - **Canvas and safe areas**: 1080×1920, 30 fps, H.264 yuv420p. Keep anything important out of the top 220 px, bottom 320 px and right
   120 px (TikTok UI); left margin 60–72 px. Body text ≥ 54 px, titles ≥ 90 px, AA contrast. Hook visible within 1 s.
 - **Voice-over actually used** for all 31 shorts: Fish Audio "Arnold" (`d704cf8f1216490cbfbed89955f0e938`, model `s2.1-pro`, French male storyteller),
-  one API call per narration line, mixed with music ducking by `out/tools/tts.py --engine files`. Narration pace ≈ 2.6 words/s; lines must
+  generated **through the Fish Audio MCP connector**, one call per narration line, saved as `voice_lines/NN.mp3`, then mixed with music
+  ducking by `out/tools/tts.py --engine files`. The direct REST engine (`--engine fish`, needs `FISH_API_KEY`, default model
+  `s2.1-pro-free`) was **not tested against the real API**. Send only the line text: any style prefix is read aloud. Narration pace ≈ 2.6 words/s; lines must
   not overlap. Gemini voice names that still appear in identity.md / narration.json (`voiceGeminiSuggestion`) are historical casting suggestions
   (Gemini was dropped because of free-tier quotas). For another language, cast a new voice; Arnold is French only.
+- **Captions**: no identity defines burned-in subtitles synced to the voice. Many viewers watch muted; if you need captions, define them
+  yourself (inside the safe area, above the bottom 320 px, timings from `narration.json` lines).
+- **Photosensitivity (all identities)**: at most 3 flashes per second, no full-frame flash, large luminance swaps ≥ 1.6 s apart
+  (rule written for brut-meme; apply it to neon-lab bloom pulses and any flash transition).
+- **Colours**: `coreTokens.color.contrastOnBg` gives the computed contrast of each colour; muted/accent colours are often decorative
+  (gazette-1900 `muted` is an engraving fill at 1.07:1) — body text needs ≥ 4.5:1.
 - **Render costs** in `short.json.renderTimeSec` and in the index were measured with up to 10 renders sharing 4 CPU cores (load 15–23):
   expect roughly 2–3× faster on a dedicated machine. Idle reference: three.js + bloom ≈ 60 s / 100 frames; Manim ≈ 5 s / 100 frames.
-  The screenshot capture, not your scene code, dominates browser renders (~0.3 s/frame).
+  The screenshot capture, not your scene code, dominates browser renders (~0.3 s/frame). What is included differs per identity
+  (e.g. riso-zine includes its OpenCV pass, gazette-1900 and neon-lab do not): read `renderCostNote` in the index.
 - **Determinism**: every scene exposes `window.renderAt(t)` and is rendered frame by frame (`out/tools/render.mjs`); seeds are in `short.json`.
 - **Pitfalls with measured fixes** are in `out/report/facts.md` (e.g. GSAP `tl.seek()` must not be returned, A-Frame geometry as strings,
   `Math.atan2` differs between Node and Chromium for pre-simulated physics, p5 v2 style cache after save/restore, Matplotlib cannot read

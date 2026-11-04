@@ -12,3 +12,5 @@ Référence : `out/shorts/gazette-1900__histoire__1789-en-20-secondes/` (18,75 s
 - **Son** : `gen_sound.py` (preset `pulse` mineur, whoosh au tourniquet, thud à la pose, impact au tampon, ticks de machine à écrire, click au zoom).
 - **Voix** : Orus, une phrase de 5–7 mots par une, démarrée 0,1–0,2 s après le tourniquet.
 - **Pièges** : silhouettes inventées uniquement ; jour de la semaine retiré de la ligne méta (débordement) ; `<br>` explicite dans les titres.
+
+> Voix réellement utilisée pour les shorts de preuve : Fish Audio « Arnold » (`d704cf8f1216490cbfbed89955f0e938`, `s2.1-pro`). Les noms Gemini ci-dessus sont des suggestions historiques de casting par ton.

@@ -121,7 +121,12 @@ def core_tokens(t):
     ease = (m.get('easing') or {})
     return {
         'color': {'bg': c.get('bg'), 'surface': c.get('surface'), 'text': c.get('text'), 'muted': c.get('muted'),
-                  'accent': c.get('accent') or [], 'success': c.get('success'), 'danger': c.get('danger')},
+                  'accent': c.get('accent') or [], 'success': c.get('success'), 'danger': c.get('danger'),
+                  'contrastOnBg': {k: contrast(v, c.get('bg')) for k, v in
+                                   [('text', c.get('text')), ('muted', c.get('muted')), ('success', c.get('success')), ('danger', c.get('danger'))]
+                                   + [(f'accent{i + 1}', a) for i, a in enumerate(c.get('accent') or [])]
+                                   if isinstance(v, str) and v.startswith('#') and isinstance(c.get('bg'), str)},
+                  'textSafeOnBg': 'only colours with contrastOnBg >= 4.5 may be used for body text (>= 3 for titles >= 90 px bold); check identity.md palette roles'},
         'typography': {'display': font(ty.get('display')), 'title': font(ty.get('title')), 'body': font(ty.get('body')),
                        'caption': font(ty.get('caption'))},
         'motion': {'durationSec': {k: (round(v / div, 4) if v is not None else None) for k, v in vals.items()},
@@ -135,6 +140,31 @@ def core_tokens(t):
                        'left': num(sa.get('left'), 60)},
         'canvas': {'width': 1080, 'height': 1920, 'fps': 30},
     }
+
+
+def _lum(h):
+    h = h.lstrip('#')[:6]
+    r, g, b = (int(h[i:i + 2], 16) / 255 for i in (0, 2, 4))
+    f = lambda c: c / 12.92 if c <= 0.03928 else ((c + 0.055) / 1.055) ** 2.4
+    return 0.2126 * f(r) + 0.7152 * f(g) + 0.0722 * f(b)
+
+
+def contrast(a, b):
+    try:
+        la, lb = sorted((_lum(a), _lum(b)), reverse=True)
+        return round((la + 0.05) / (lb + 0.05), 2)
+    except Exception:
+        return None
+
+
+# Comment le coût de rendu a été mesuré (renderTimeSec) — à lire avant de comparer les identités
+COST_NOTE = {
+    'riso-zine': 'includes its mandatory OpenCV post pass',
+    'gazette-1900': 'browser render only; the mandatory OpenCV post pass adds 21–28 s/100 frames',
+    'neon-lab': 'browser/Matplotlib render only; the OpenCV grade pass adds 15–37 s/100 frames',
+    'liquid-chrome': 'Taichi short includes simulation + OpenCV shading; three.js/Babylon shorts are browser only',
+    'tableau-craie': 'Manim short 19 s/100; the Rough.js short is 309 s/100 because of a full-frame SVG filter (avoidable)',
+}
 
 
 def md5(p):
@@ -171,10 +201,11 @@ def main():
         cur = CURATION[s]
         ids.append({
             'id': s, 'name': t.get('name'), 'rank': rank,
-            'status': 'rehabilitated' if s in REHAB else 'selected',
+            'status': 'rehabilitated' if s in REHAB else 'selected',  # rehabilitated = set aside in Phase 1 to avoid topic overlap, produced later; same evidence level
             'promiseFr': promise, 'promiseEn': cur['promiseEn'],
             'familiesProven': sorted({x['family'] for x in shorts}),
-            'libraries': t.get('libraries'),
+            'libraries': [re.sub(r'\s+\d+(\.\d+)*$', '', l) for l in (t.get('libraries') or [])],
+            'renderCostNote': COST_NOTE.get(s, 'browser render only (renderTimeSec)') + '; measured with up to 10 renders sharing 4 cores: expect ~2–3x faster on a dedicated machine',
             'renderCostSecPer100Frames': {'min': min(costs), 'max': max(costs), 'measuredUnderLoad': True} if costs else None,
             'sharedModule': shared or None,
             'voiceUsed': VOICE,
@@ -187,6 +218,13 @@ def main():
             'curation': {'by': 'orchestrator judgment, not measured', 'audience': cur['audience'],
                          'signatureToPreserve': cur['signature'], 'confusableWith': cur['confusableWith']},
         })
+    # confusableWith symétrique
+    conf = {i['id']: set(i['curation']['confusableWith']) for i in ids}
+    for a, bs in list(conf.items()):
+        for b in bs:
+            conf.setdefault(b, set()).add(a)
+    for i in ids:
+        i['curation']['confusableWith'] = sorted(conf[i['id']])
     index = {
         'schemaVersion': '1.0',
         'description': ('Machine index of the 14 visual identities for 9:16 shorts. Use it to shortlist identities, then read each '
@@ -194,6 +232,11 @@ def main():
                         '(seconds, pixels on a 1080x1920 canvas, @fontsource slugs); the original tokens.json is authoritative for '
                         'everything else. curation.* is orchestrator judgment. See AGENTS.md.'),
         'generatedBy': 'out/tools/build_index.py',
+        'fieldNotes': {'status': 'selected = kept in Phase 1; rehabilitated = set aside in Phase 1 only to avoid topic overlap with a neighbour, then produced on request with the same rules and evidence level',
+                       'coreTokens.motion.staggerSec': "the identity's default stagger as written in its tokens.json; meaning varies (per-item stagger for most, spacing between beats/captions for atlas-grave 1.5 and liquid-chrome 1.55, title-to-body delay for neon-lab 0.8)",
+                       'coreTokens.motion.durationSec.slow': 'longest standard duration; for gazette-1900 it is one page (6 beats at 128 bpm)',
+                       'coreTokens.color.contrastOnBg': 'WCAG contrast ratio against bg, computed; muted/accent colours are often decorative (e.g. gazette-1900 muted = engraving fill, 1.07:1) and must not carry text',
+                       'renderCostSecPer100Frames': 'see renderCostNote: what is included differs per identity'},
         'rankingCriteria': 'durability/industrialisability: measured render cost 25%, templatability 25%, editorial breadth 20%, recognisability 15%, production risk 15% (out/report/comparison.md §5)',
         'recognition': {'blindJudge14': (recog.get('blindJudge14') or {}).get('pureGroups'), 'blindJudgeGroups': 14,
                         'measuredTop1': f"{sum(1 for r in recog.get('rows', []) if r.get('sameIdentity'))}/{len(recog.get('rows', []))}"},

@@ -21,7 +21,7 @@ USAGE
 FORMAT narration.json (cf. mission §6) :
   {"language": "fr", "style": "enjoué, pour enfants de 6-10 ans", "voice": "Leda" (optionnel),
    "lines": [{"t": 0.3, "maxDuration": 2.5, "text": "…"}, …]}
-Chaque ligne est synthétisée séparément avec la consigne de style, puis posée à son temps t. Si l'audio
+Chaque ligne est synthétisée séparément (texte seul : un préfixe de style serait lu à voix haute), puis posée à son temps t. Si l'audio
 dépasse maxDuration, il est accéléré (atempo ≤ 1.35) ; au-delà, il déborde et un avertissement est noté.
 La musique est duckée sous la voix par assemble.py mux (sidechaincompress).
 Les fichiers sources (music.wav / video_silent.mp4) doivent exister dans le dossier du short (src/ ou racine).

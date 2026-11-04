@@ -13,3 +13,5 @@ Référence : `out/shorts/bauhaus-kinetic__explicatif__abeilles-hexagones/` (16 
 - **Son** : `pluck-arp` 120 bpm, do pentatonique majeur, gain 0,42 ; pop par élément de stagger, whoosh + thud sur chaque wipe, riser sous les barres, coin/chime sur les révélations.
 - **Voix** : Orus, une phrase de 7–9 mots par scène, 0,2 s après chaque coupe.
 - **Tokens** : `out/identities/bauhaus-kinetic/tokens.json`.
+
+> Voix réellement utilisée pour les shorts de preuve : Fish Audio « Arnold » (`d704cf8f1216490cbfbed89955f0e938`, `s2.1-pro`). Les noms Gemini ci-dessus sont des suggestions historiques de casting par ton.

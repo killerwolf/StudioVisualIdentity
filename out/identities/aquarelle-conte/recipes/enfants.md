@@ -14,3 +14,5 @@ Pour un short enfants dans cette identité :
 - **Tokens** : `out/identities/aquarelle-conte/tokens.json` (palette, Fraunces/Nunito, outCubic/inOutSine/outBack, safeArea 220/320/120). Mise en page « page d'album » : illustration 0–1090 px, texte à x = 64 entre 1150 et 1560 px.
 - **Voix** : Aoede, chuchotée et lente, 6 lignes de ≤ 3,1 s, ≤ 2,6 mots/s.
 - **À éviter** : la peur, la vitesse, plus de 2 blocs de texte, les animaux dans un comportement faux présenté comme un fait (rester dans le registre du conte).
+
+> Voix réellement utilisée pour les shorts de preuve : Fish Audio « Arnold » (`d704cf8f1216490cbfbed89955f0e938`, `s2.1-pro`). Les noms Gemini ci-dessus sont des suggestions historiques de casting par ton.

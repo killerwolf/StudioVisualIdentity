@@ -23,3 +23,5 @@ Référence : `out/shorts/neon-lab__explicatif__effet-papillon-double-pendule/` 
 - **Structurer en** : même grille de beats (0 / 4,5 / 8,25 / 12,0 s) ; zone schéma 640–1250 px ; graphe de mesure 1410–1590 px avec deux repères physiques seulement (`1 mm`, `1 m`, mono 54 px) et la valeur live en lime à droite ; deux objets comparés = cyan (référence, fin, dessus) et magenta (variante, large, dessous) pour rester lisibles superposés.
 - **Fermer par** : titre lime (« Imprévisible ») + la donnée chiffrée tirée de la simulation (`×1 000 en 10,0 s`).
 - **Physique** : RK4 à pas fixe, paramètres et conditions initiales écrits dans `short.json` ; choisir les conditions initiales par pré-simulation pour caler l'événement sur un beat.
+
+> Voix réellement utilisée pour les shorts de preuve : Fish Audio « Arnold » (`d704cf8f1216490cbfbed89955f0e938`, `s2.1-pro`). Les noms Gemini ci-dessus sont des suggestions historiques de casting par ton.

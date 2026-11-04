@@ -2,6 +2,13 @@
  "schemaVersion": "1.0",
  "description": "Machine index of the 14 visual identities for 9:16 shorts. Use it to shortlist identities, then read each identity's identity.md (16 sections, French) and tokens.json. coreTokens is a normalised subset (seconds, pixels on a 1080x1920 canvas, @fontsource slugs); the original tokens.json is authoritative for everything else. curation.* is orchestrator judgment. See AGENTS.md.",
  "generatedBy": "out/tools/build_index.py",
+ "fieldNotes": {
+  "status": "selected = kept in Phase 1; rehabilitated = set aside in Phase 1 only to avoid topic overlap with a neighbour, then produced on request with the same rules and evidence level",
+  "coreTokens.motion.staggerSec": "the identity's default stagger as written in its tokens.json; meaning varies (per-item stagger for most, spacing between beats/captions for atlas-grave 1.5 and liquid-chrome 1.55, title-to-body delay for neon-lab 0.8)",
+  "coreTokens.motion.durationSec.slow": "longest standard duration; for gazette-1900 it is one page (6 beats at 128 bpm)",
+  "coreTokens.color.contrastOnBg": "WCAG contrast ratio against bg, computed; muted/accent colours are often decorative (e.g. gazette-1900 muted = engraving fill, 1.07:1) and must not carry text",
+  "renderCostSecPer100Frames": "see renderCostNote: what is included differs per identity"
+ },
  "rankingCriteria": "durability/industrialisability: measured render cost 25%, templatability 25%, editorial breadth 20%, recognisability 15%, production risk 15% (out/report/comparison.md §5)",
  "recognition": {
   "blindJudge14": 14,
@@ -24,6 +31,7 @@
     "D3.js",
     "GSAP"
    ],
+   "renderCostNote": "browser render only (renderTimeSec); measured with up to 10 renders sharing 4 cores: expect ~2–3x faster on a dedicated machine",
    "renderCostSecPer100Frames": {
     "min": 13.7,
     "max": 20.5,
@@ -94,7 +102,17 @@
       "#1B4DE3"
      ],
      "success": "#1B4DE3",
-     "danger": "#E3241B"
+     "danger": "#E3241B",
+     "contrastOnBg": {
+      "text": 16.74,
+      "muted": 5.06,
+      "success": 5.79,
+      "danger": 4.11,
+      "accent1": 4.11,
+      "accent2": 16.74,
+      "accent3": 5.79
+     },
+     "textSafeOnBg": "only colours with contrastOnBg >= 4.5 may be used for body text (>= 3 for titles >= 90 px bold); check identity.md palette roles"
     },
     "typography": {
      "display": {
@@ -211,6 +229,7 @@
     "GSAP",
     "OpenCV"
    ],
+   "renderCostNote": "browser render only; the mandatory OpenCV post pass adds 21–28 s/100 frames; measured with up to 10 renders sharing 4 cores: expect ~2–3x faster on a dedicated machine",
    "renderCostSecPer100Frames": {
     "min": 33.3,
     "max": 65.3,
@@ -282,7 +301,17 @@
       "#E4DAC4"
      ],
      "success": "#1E1B18",
-     "danger": "#B3261E"
+     "danger": "#B3261E",
+     "contrastOnBg": {
+      "text": 13.17,
+      "muted": 1.07,
+      "success": 13.17,
+      "danger": 5.02,
+      "accent1": 5.02,
+      "accent2": 13.17,
+      "accent3": 1.07
+     },
+     "textSafeOnBg": "only colours with contrastOnBg >= 4.5 may be used for body text (>= 3 for titles >= 90 px bold); check identity.md palette roles"
     },
     "typography": {
      "display": {
@@ -398,6 +427,7 @@
     "p5.js",
     "PixiJS"
    ],
+   "renderCostNote": "browser render only (renderTimeSec); measured with up to 10 renders sharing 4 cores: expect ~2–3x faster on a dedicated machine",
    "renderCostSecPer100Frames": {
     "min": 32.6,
     "max": 43.4,
@@ -480,7 +510,18 @@
       "#4FB3FF"
      ],
      "success": "#3CF2A0",
-     "danger": "#FF4F79"
+     "danger": "#FF4F79",
+     "contrastOnBg": {
+      "text": 19.33,
+      "muted": 5.6,
+      "success": 13.26,
+      "danger": 6.12,
+      "accent1": 6.12,
+      "accent2": 13.26,
+      "accent3": 13.39,
+      "accent4": 8.49
+     },
+     "textSafeOnBg": "only colours with contrastOnBg >= 4.5 may be used for body text (>= 3 for titles >= 90 px bold); check identity.md palette roles"
     },
     "typography": {
      "display": {
@@ -587,9 +628,10 @@
     "evenements"
    ],
    "libraries": [
-    "PixiJS 8.22",
-    "GSAP 3.15"
+    "PixiJS",
+    "GSAP"
    ],
+   "renderCostNote": "browser render only (renderTimeSec); measured with up to 10 renders sharing 4 cores: expect ~2–3x faster on a dedicated machine",
    "renderCostSecPer100Frames": {
     "min": 49.8,
     "max": 58.5,
@@ -660,7 +702,17 @@
       "#FFFFFF"
      ],
      "success": "#FFE600",
-     "danger": "#FF2D2D"
+     "danger": "#FF2D2D",
+     "contrastOnBg": {
+      "text": 18.88,
+      "muted": 1.25,
+      "success": 14.9,
+      "danger": 5.09,
+      "accent1": 14.9,
+      "accent2": 5.09,
+      "accent3": 18.88
+     },
+     "textSafeOnBg": "only colours with contrastOnBg >= 4.5 may be used for body text (>= 3 for titles >= 90 px bold); check identity.md palette roles"
     },
     "typography": {
      "display": {
@@ -783,6 +835,7 @@
     "flubber",
     "anime.js"
    ],
+   "renderCostNote": "browser render only (renderTimeSec); measured with up to 10 renders sharing 4 cores: expect ~2–3x faster on a dedicated machine",
    "renderCostSecPer100Frames": {
     "min": 28.2,
     "max": 31.7,
@@ -856,7 +909,18 @@
       "#111111"
      ],
      "success": "#111111",
-     "danger": "#E63B2E"
+     "danger": "#E63B2E",
+     "contrastOnBg": {
+      "text": 16.18,
+      "muted": 5.01,
+      "success": 16.18,
+      "danger": 3.58,
+      "accent1": 3.58,
+      "accent2": 1.54,
+      "accent3": 5.74,
+      "accent4": 16.18
+     },
+     "textSafeOnBg": "only colours with contrastOnBg >= 4.5 may be used for body text (>= 3 for titles >= 90 px bold); check identity.md palette roles"
     },
     "typography": {
      "display": {
@@ -969,6 +1033,7 @@
     "Rough.js",
     "GSAP"
    ],
+   "renderCostNote": "Manim short 19 s/100; the Rough.js short is 309 s/100 because of a full-frame SVG filter (avoidable); measured with up to 10 renders sharing 4 cores: expect ~2–3x faster on a dedicated machine",
    "renderCostSecPer100Frames": {
     "min": 19.1,
     "max": 309.2,
@@ -1038,7 +1103,18 @@
       "#FF7A7A"
      ],
      "success": "#9BE58A",
-     "danger": "#FF7A7A"
+     "danger": "#FF7A7A",
+     "contrastOnBg": {
+      "text": 11.07,
+      "muted": 6.31,
+      "success": 8.19,
+      "danger": 4.87,
+      "accent1": 11.37,
+      "accent2": 7.16,
+      "accent3": 7.31,
+      "accent4": 4.87
+     },
+     "textSafeOnBg": "only colours with contrastOnBg >= 4.5 may be used for body text (>= 3 for titles >= 90 px bold); check identity.md palette roles"
     },
     "typography": {
      "display": {
@@ -1142,6 +1218,7 @@
     "GSAP",
     "OpenCV"
    ],
+   "renderCostNote": "includes its mandatory OpenCV post pass; measured with up to 10 renders sharing 4 cores: expect ~2–3x faster on a dedicated machine",
    "renderCostSecPer100Frames": {
     "min": 62.3,
     "max": 70.9,
@@ -1214,7 +1291,17 @@
       "#FFE800"
      ],
      "success": "#FF48B0",
-     "danger": "#FF48B0"
+     "danger": "#FF48B0",
+     "contrastOnBg": {
+      "text": 15.33,
+      "muted": 4.17,
+      "success": 2.72,
+      "danger": 2.72,
+      "accent1": 2.72,
+      "accent2": 4.17,
+      "accent3": 1.1
+     },
+     "textSafeOnBg": "only colours with contrastOnBg >= 4.5 may be used for body text (>= 3 for titles >= 90 px bold); check identity.md palette roles"
     },
     "typography": {
      "display": {
@@ -1324,6 +1411,7 @@
     "GSAP",
     "A-Frame"
    ],
+   "renderCostNote": "browser render only (renderTimeSec); measured with up to 10 renders sharing 4 cores: expect ~2–3x faster on a dedicated machine",
    "renderCostSecPer100Frames": {
     "min": 66.0,
     "max": 82.9,
@@ -1393,7 +1481,18 @@
       "#9BE7B0"
      ],
      "success": "#9BE7B0",
-     "danger": "#E23D72"
+     "danger": "#E23D72",
+     "contrastOnBg": {
+      "text": 10.46,
+      "muted": 1.28,
+      "success": 1.25,
+      "danger": 3.51,
+      "accent1": 1.85,
+      "accent2": 1.37,
+      "accent3": 1.19,
+      "accent4": 1.25
+     },
+     "textSafeOnBg": "only colours with contrastOnBg >= 4.5 may be used for body text (>= 3 for titles >= 90 px bold); check identity.md palette roles"
     },
     "typography": {
      "display": {
@@ -1483,7 +1582,9 @@
      "Baloo 2 titles and pill labels",
      "bouncy back.out motion"
     ],
-    "confusableWith": []
+    "confusableWith": [
+     "aquarelle-conte"
+    ]
    }
   },
   {
@@ -1501,6 +1602,7 @@
     "three.js",
     "D3.js"
    ],
+   "renderCostNote": "browser render only (renderTimeSec); measured with up to 10 renders sharing 4 cores: expect ~2–3x faster on a dedicated machine",
    "renderCostSecPer100Frames": {
     "min": 108.2,
     "max": 169.0,
@@ -1571,7 +1673,17 @@
       "#9FD3C7"
      ],
      "success": "#9FD3C7",
-     "danger": "#D9734E"
+     "danger": "#D9734E",
+     "contrastOnBg": {
+      "text": 14.12,
+      "muted": 6.61,
+      "success": 9.89,
+      "danger": 5.11,
+      "accent1": 10.14,
+      "accent2": 5.11,
+      "accent3": 9.89
+     },
+     "textSafeOnBg": "only colours with contrastOnBg >= 4.5 may be used for body text (>= 3 for titles >= 90 px bold); check identity.md palette roles"
     },
     "typography": {
      "display": {
@@ -1689,6 +1801,7 @@
     "GSAP",
     "pycairo"
    ],
+   "renderCostNote": "browser render only (renderTimeSec); measured with up to 10 renders sharing 4 cores: expect ~2–3x faster on a dedicated machine",
    "renderCostSecPer100Frames": {
     "min": 128.7,
     "max": 135.7,
@@ -1762,7 +1875,17 @@
       "#B8862B"
      ],
      "success": "#2D4A5A",
-     "danger": "#8C2F1B"
+     "danger": "#8C2F1B",
+     "contrastOnBg": {
+      "text": 12.64,
+      "muted": 5.2,
+      "success": 7.37,
+      "danger": 6.5,
+      "accent1": 6.5,
+      "accent2": 7.37,
+      "accent3": 2.54
+     },
+     "textSafeOnBg": "only colours with contrastOnBg >= 4.5 may be used for body text (>= 3 for titles >= 90 px bold); check identity.md palette roles"
     },
     "typography": {
      "display": {
@@ -1879,6 +2002,7 @@
     "p5.js",
     "Paper.js"
    ],
+   "renderCostNote": "browser render only (renderTimeSec); measured with up to 10 renders sharing 4 cores: expect ~2–3x faster on a dedicated machine",
    "renderCostSecPer100Frames": {
     "min": 109.2,
     "max": 117.6,
@@ -1950,7 +2074,18 @@
       "#7FB685"
      ],
      "success": "#7FB685",
-     "danger": "#B2573E"
+     "danger": "#B2573E",
+     "contrastOnBg": {
+      "text": 11.11,
+      "muted": 4.37,
+      "success": 2.09,
+      "danger": 4.32,
+      "accent1": 2.2,
+      "accent2": 2.58,
+      "accent3": 1.49,
+      "accent4": 2.09
+     },
+     "textSafeOnBg": "only colours with contrastOnBg >= 4.5 may be used for body text (>= 3 for titles >= 90 px bold); check identity.md palette roles"
     },
     "typography": {
      "display": {
@@ -2069,6 +2204,7 @@
     "OpenCV",
     "Matplotlib"
    ],
+   "renderCostNote": "browser/Matplotlib render only; the OpenCV grade pass adds 15–37 s/100 frames; measured with up to 10 renders sharing 4 cores: expect ~2–3x faster on a dedicated machine",
    "renderCostSecPer100Frames": {
     "min": 54.0,
     "max": 182.9,
@@ -2155,7 +2291,17 @@
       "#B6FF3B"
      ],
      "success": "#B6FF3B",
-     "danger": "#FF3DCB"
+     "danger": "#FF3DCB",
+     "contrastOnBg": {
+      "text": 18.7,
+      "muted": 10.31,
+      "success": 16.73,
+      "danger": 6.54,
+      "accent1": 15.58,
+      "accent2": 6.54,
+      "accent3": 16.73
+     },
+     "textSafeOnBg": "only colours with contrastOnBg >= 4.5 may be used for body text (>= 3 for titles >= 90 px bold); check identity.md palette roles"
     },
     "typography": {
      "display": {
@@ -2247,8 +2393,8 @@
      "LABO/0X tag + JetBrains Mono data captions"
     ],
     "confusableWith": [
-     "liquid-chrome",
-     "cosmos-doc"
+     "cosmos-doc",
+     "liquid-chrome"
     ]
    }
   },
@@ -2267,6 +2413,7 @@
     "three.js",
     "GSAP"
    ],
+   "renderCostNote": "browser render only (renderTimeSec); measured with up to 10 renders sharing 4 cores: expect ~2–3x faster on a dedicated machine",
    "renderCostSecPer100Frames": {
     "min": 174.9,
     "max": 186.4,
@@ -2337,7 +2484,17 @@
       "#FF6A2A"
      ],
      "success": "#6EC6FF",
-     "danger": "#FF6A2A"
+     "danger": "#FF6A2A",
+     "contrastOnBg": {
+      "text": 18.61,
+      "muted": 10.84,
+      "success": 11.17,
+      "danger": 7.33,
+      "accent1": 11.77,
+      "accent2": 11.17,
+      "accent3": 7.33
+     },
+     "textSafeOnBg": "only colours with contrastOnBg >= 4.5 may be used for body text (>= 3 for titles >= 90 px bold); check identity.md palette roles"
     },
     "typography": {
      "display": {
@@ -2429,8 +2586,8 @@
      "film grain, no HUD or neon lines"
     ],
     "confusableWith": [
-     "neon-lab",
-     "liquid-chrome"
+     "liquid-chrome",
+     "neon-lab"
     ]
    }
   },
@@ -2451,6 +2608,7 @@
     "three.js",
     "Babylon.js"
    ],
+   "renderCostNote": "Taichi short includes simulation + OpenCV shading; three.js/Babylon shorts are browser only; measured with up to 10 renders sharing 4 cores: expect ~2–3x faster on a dedicated machine",
    "renderCostSecPer100Frames": {
     "min": 105.6,
     "max": 178.0,
@@ -2533,7 +2691,18 @@
       "#FFE29A"
      ],
      "success": "#7CF7E4",
-     "danger": "#FF9AE8"
+     "danger": "#FF9AE8",
+     "contrastOnBg": {
+      "text": 19.63,
+      "muted": 13.29,
+      "success": 15.22,
+      "danger": 10.32,
+      "accent1": 13.29,
+      "accent2": 10.32,
+      "accent3": 15.22,
+      "accent4": 15.52
+     },
+     "textSafeOnBg": "only colours with contrastOnBg >= 4.5 may be used for body text (>= 3 for titles >= 90 px bold); check identity.md palette roles"
     },
     "typography": {
      "display": {
@@ -2626,8 +2795,8 @@
      "prefer the warm graphite/pearl background to stay distinct from neon-lab and cosmos-doc"
     ],
     "confusableWith": [
-     "neon-lab",
-     "cosmos-doc"
+     "cosmos-doc",
+     "neon-lab"
     ]
    }
   }

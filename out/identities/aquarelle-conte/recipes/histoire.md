@@ -14,3 +14,5 @@ Pour un short histoire dans cette identité :
 - **Tokens** : `out/identities/aquarelle-conte/tokens.json`. Durée 15–16 s. Parallaxe ciel −10 / mer −20 / près −30 px.
 - **Voix** : Aoede, ton d'album documentaire, 5 lignes, la dernière avant 15,6 s.
 - **À éviter** : les cartes chiffrées denses, les visages de personnages historiques réels, les dates à la seconde près, les reconstitutions présentées comme exactes.
+
+> Voix réellement utilisée pour les shorts de preuve : Fish Audio « Arnold » (`d704cf8f1216490cbfbed89955f0e938`, `s2.1-pro`). Les noms Gemini ci-dessus sont des suggestions historiques de casting par ton.

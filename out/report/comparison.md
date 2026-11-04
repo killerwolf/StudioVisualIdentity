@@ -2,7 +2,7 @@
 
 La voix off **réellement utilisée** pour les 31 shorts est Fish Audio « Arnold » ; les noms de voix Gemini de la table §2 sont les suggestions d'origine de `narration.json` (`voiceGeminiSuggestion`).
 
-Toutes les valeurs viennent des fichiers livrés (`identities/*/tokens.json`, `shorts/*/short.json`) ou de mesures faites pendant la campagne. Index machine : `report/campaign.json`, matrice : `report/matrix.json`, tests de reconnaissance : `report/recognition.json`.
+Toutes les valeurs viennent des fichiers livrés (`identities/*/tokens.json`, `shorts/*/short.json`) ou de mesures faites pendant la campagne. Index machine des identités : `identities/index.json` ; index des shorts : `report/campaign.json`, matrice : `report/matrix.json`, tests de reconnaissance : `report/recognition.json`.
 
 ## 1. Tableau comparatif
 
@@ -27,7 +27,7 @@ Toutes les valeurs viennent des fichiers livrés (`identities/*/tokens.json`, `s
 
 ## 2. Les 31 shorts
 
-| Short | Durée (s) | renderTimeSec | s/100 frames | Poids (Mo) | Narration (lignes / mots / voix Gemini suggérée à l'origine) |
+| Short | Durée (s) | renderTimeSec | s/100 frames | Poids sans voix (Mo) | Narration (lignes / mots / voix Gemini suggérée à l'origine) |
 |---|---|---|---|---|---|
 | `aquarelle-conte__enfants__ou-vont-les-etoiles-le-jour` | 15.0 | 529 | 117.6 | 6.7 | 6 / 38 mots / Aoede |
 | `aquarelle-conte__histoire__phare-d-alexandrie` | 16.0 | 524.2 | 109.2 | 5.8 | 5 / 38 mots / Aoede |
@@ -120,6 +120,6 @@ Critères (pondération) : coût de rendu mesuré (25 %), facilité de templatis
 | 11 | aquarelle-conte | Charme fort pour « histoire du soir » ; coût 109–118 s/100 ; chaque épisode demande des décors et personnages vectoriels nouveaux. |
 | 12 | neon-lab | Spectaculaire ; la boucle abstraite est bon marché (twgl 55 s/100) mais l'explicatif three.js + bloom est cher (183 s/100 sous contention) et chaque sujet scientifique demande une scène 3D. |
 | 13 | cosmos-doc *(réhabilitée)* | Le plus « cinéma » de la campagne, distinct de neon-lab ; mais chaque sujet demande une scène 3D (planètes, sonde) et le rendu est parmi les plus chers (175–186 s/100 sous contention). |
-| 14 | liquid-chrome | Hypnotique mais le plus coûteux par seconde utile (Taichi 106, three.js 178 s/100), le moins varié (toujours des fluides) et le seul confondu par la mesure couleur (avec neon-lab). |
+| 14 | liquid-chrome | Hypnotique mais le plus coûteux par seconde utile (Taichi 106, three.js 178 s/100), le moins varié (toujours des fluides) et le seul confondu par la mesure couleur (un short avec neon-lab, l'autre avec cosmos-doc). |
 
 **Recommandation** : pour une chaîne durable, lancer **swiss-data** (data/actu), **gazette-1900** (histoire/éphémérides) et **pixel-arcade** (engagement) — trois publics, trois mécaniques, trois coûts bas à moyens, aucune confusion visuelle entre elles. Parmi les identités réhabilitées, **brut-meme** (rang 4) est la plus industrialisable : elle peut remplacer ou compléter pixel-arcade sur l'engagement pour un public plus âgé.

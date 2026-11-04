@@ -2,7 +2,7 @@
 
 > Les chemins de ce document sont relatifs au dossier `out/` (ex. `identities/swiss-data/` = `out/identities/swiss-data/`). Pour un agent qui veut **définir sa propre identité** à partir de ce travail : lire d'abord `AGENTS.md` (racine) et charger `out/identities/index.json`.
 
-**But** : 14 identités visuelles (10 retenues en Phase 1, plus les 4 écartées puis réhabilitées à la demande) et cinématiques distinctes pour des chaînes de shorts verticaux (TikTok / Reels / Shorts), chacune **prouvée par 2 vidéos réelles** rendues par code avec des librairies open-source, puis documentée en design system exploitable par un agent de production.
+**But** : 14 identités visuelles (10 retenues en Phase 1, plus les 4 écartées puis réhabilitées à la demande) et cinématiques distinctes pour des chaînes de shorts verticaux (TikTok / Reels / Shorts), chacune **prouvée par 2 ou 3 vidéos réelles** rendues par code avec des librairies open-source, puis documentée en design system exploitable par un agent de production.
 
 **Bilan** : **14 identités** · **31 shorts** (1080×1920, 30 fps, H.264, 12–18,75 s, son généré) · QA automatique **31/31 OK** · 7 familles couvertes ≥ 3 fois · **8/8 librairies niveau A + 11/11 niveau B** · reconnaissance à l'aveugle **14/14 groupes purs, 56/56 images** (juge visuel indépendant) et **29/31** (mesure couleur, plus proche voisin) · premier tour 1 h 46 (2026-11-03 20:27 -> 22:13 UTC), 3ᵉ shorts 22:22 -> 22:37, identités réhabilitées 2026-11-04 00:24 -> 00:57, sur **4 cœurs** · voix off Fish Audio « Arnold » **31/31** (Gemini abandonné, voir « Voix off Fish Audio »).
 
@@ -27,7 +27,7 @@ Toutes les affirmations de ce dossier sont mesurées : temps (`facts.md`, `short
 | `cosmos-doc` | Cosmos Doc *(réh.)* | explicatif, evenements | three.js, GSAP | `identities/cosmos-doc/` | `shorts/cosmos-doc__explicatif__pourquoi-venus-plus-chaude-que-mercure`, `shorts/cosmos-doc__evenements__voyager-1-a-un-jour-lumiere` |
 | `liquid-chrome` | Chrome Liquide | abstrait ×2, engagement | Taichi, three.js, OpenCV, Babylon.js | `identities/liquid-chrome/` | `shorts/liquid-chrome__abstrait__quatre-peintures-mpm`, `shorts/liquid-chrome__engagement__quelle-couleur-remplit-le-verre`, `shorts/liquid-chrome__abstrait__pendule-de-newton-chrome` (Babylon.js, boucle parfaite) |
 
-L'ordre du tableau est le classement de durabilité/industrialisation (argumenté dans `comparison.md` §5). Index machine complet : `report/campaign.json` (31 shorts avec durée, temps de rendu, libs, mécanique d'engagement) et `report/matrix.json` (identité × famille × libs).
+L'ordre du tableau est le classement de durabilité/industrialisation (argumenté dans `comparison.md` §5). Index machine des identités : **`identities/index.json`** (voir `AGENTS.md`) ; index des shorts : `report/campaign.json` (31 shorts avec durée, temps de rendu, libs, mécanique d'engagement) et `report/matrix.json` (identité × famille × libs).
 
 ## Recommandation
 

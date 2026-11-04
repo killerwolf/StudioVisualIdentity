@@ -12,3 +12,5 @@ Pour un short **enfants** (6–10 ans) dans cette identité :
 - **Tokens** : mêmes que l'explicatif (palette, Caveat/Nunito, grain 77, chiffon, music-box F majpent 92 bpm) → reconnaissable à l'aveugle.
 - **Voix** : 7 phrases de 3–7 mots (Kore, ton enjoué), ≈ 2,6 mots/s.
 - **Pipeline** : `node out/tools/render.mjs …/src/index.html --out /tmp/v.mp4 --duration 15.5` → `sound.py` → `assemble.py mux` (voir `src/README.md`).
+
+> Voix réellement utilisée pour les shorts de preuve : Fish Audio « Arnold » (`d704cf8f1216490cbfbed89955f0e938`, `s2.1-pro`). Les noms Gemini ci-dessus sont des suggestions historiques de casting par ton.

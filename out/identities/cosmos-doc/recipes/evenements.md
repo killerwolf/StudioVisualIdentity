@@ -12,3 +12,5 @@ Référence : `out/shorts/cosmos-doc__evenements__voyager-1-a-un-jour-lumiere/` 
 - **Fermer par** une tenue en mouvement (l'objet continue de s'éloigner), `impact` à 13,0 s, `chime` à 13,45 s, drone qui s'éteint en 0,8 s ; pas de boucle.
 
 Règles : dates futures toujours au conditionnel visuel (« vers », « environ ») ; une phrase de voix off par plan (Charon, lente) ; tokens dans `identities/cosmos-doc/tokens.json`.
+
+> Voix réellement utilisée pour les shorts de preuve : Fish Audio « Arnold » (`d704cf8f1216490cbfbed89955f0e938`, `s2.1-pro`). Les noms Gemini ci-dessus sont des suggestions historiques de casting par ton.

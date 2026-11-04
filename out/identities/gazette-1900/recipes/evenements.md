@@ -12,3 +12,5 @@ Référence : `out/shorts/gazette-1900__evenements__9-novembre-1989-mur-de-berli
 - **Son** : `gen_sound.py` (preset `pulse` en la mineur ; verre + thud à la fissure, impact lourd à la chute, blips du compteur, chime à 37).
 - **Voix** : Orus ; « Ce jour-là, 9 novembre 1989 : le Mur de Berlin tombe ! » puis un chiffre par phrase.
 - **Pièges** : rester exact (le Mur n'est pas démoli dans la nuit : on dit frontière ouverte, Berlinois qui attaquent le béton) ; l'anniversaire se calcule depuis la date de publication.
+
+> Voix réellement utilisée pour les shorts de preuve : Fish Audio « Arnold » (`d704cf8f1216490cbfbed89955f0e938`, `s2.1-pro`). Les noms Gemini ci-dessus sont des suggestions historiques de casting par ton.

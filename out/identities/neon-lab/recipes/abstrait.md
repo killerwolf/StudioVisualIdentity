@@ -10,3 +10,5 @@ Référence : `out/shorts/neon-lab__abstrait__champ-de-force-lucioles/` (12 s, b
 - **Post** : `neon_grade.py` (glow 0,55, aberration 0,0022, vignette 0,22) via `out/tools/slot.sh`.
 - **Budget** : ≈ 55 s / 100 frames (twgl, 20 000 points + champ plein écran) + ≈ 32 s / 100 frames (OpenCV).
 - **Voix** : 3 phrases maximum, calme (Achernar), une toutes les ~4 s.
+
+> Voix réellement utilisée pour les shorts de preuve : Fish Audio « Arnold » (`d704cf8f1216490cbfbed89955f0e938`, `s2.1-pro`). Les noms Gemini ci-dessus sont des suggestions historiques de casting par ton.

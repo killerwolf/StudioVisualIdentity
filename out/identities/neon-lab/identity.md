@@ -33,7 +33,7 @@ Les lignes de champ du fond mélangent cyan et magenta à ~10 % d'opacité. Jama
 ## Formes & matières
 - Sphères sombres à **grille lat/long néon** et **liseré fresnel** cyan ; halo additif.
 - **Points lumineux** (cœur blanc + halo coloré, mélange additif) pour les particules/lucioles.
-- Fond = **champ de force** : lignes iso d'un potentiel (bruit fbm + puits radial), même shader GLSL dans les deux shorts (`field.glsl.js`).
+- Fond = **champ de force** : lignes iso d'un potentiel (bruit fbm + puits radial), même shader GLSL dans les deux shorts navigateur (`field.glsl.js`) ; le 3ᵉ short (Matplotlib, double pendule) en utilise un portage numpy.
 - Traits fins : orbite en pointillés, filets de rappel (3 px) entre légende et objet, arcs de progression (9 px, lueur).
 - Matière finale : grade OpenCV (glow des hautes lumières, aberration chromatique radiale ≈ 2 px dans les coins, vignette 22 %).
 

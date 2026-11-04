@@ -10,3 +10,5 @@ Référence : `out/shorts/topo-relief__geographie__comment-mesure-t-on-l-everest
 
 Tokens : `tokens.json` (palette, Inter 800 / JetBrains Mono 500-700, `rise`, `glide`, fov 54°, brouillard 9–40). Voix off : Orus, une phrase de 5–7 mots par beat, posée 0,1 s après le kicker.
 Pièges : satellites ou objets hauts qui montent dans le HUD (garder < 2,6 unités au-dessus du sommet) ; balise 3D projetée hors écran -> poser l'étiquette en position fixe.
+
+> Voix réellement utilisée pour les shorts de preuve : Fish Audio « Arnold » (`d704cf8f1216490cbfbed89955f0e938`, `s2.1-pro`). Les noms Gemini ci-dessus sont des suggestions historiques de casting par ton.

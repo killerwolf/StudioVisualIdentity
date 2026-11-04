@@ -12,3 +12,5 @@ Référence : `out/shorts/bauhaus-kinetic__engagement__trouve-l-intrus/` (14 s, 
 - **Son** : même lit `pluck-arp` 120 bpm que l'explicatif ; pops sur les staggers, ticks au compte à rebours, impact + chime à la révélation, whoosh + thud au wipe.
 - **Voix** : Fenrir, tutoiement, ne compte que « trois, deux, un » ; question CTA répétée à l'oral.
 - **Tokens** : `out/identities/bauhaus-kinetic/tokens.json`. Pour varier le jeu : changer la différence de l'intrus (rotation 90°, couleur du point, miroir) et l'index (`SEED`), garder le motif de couleurs `(i + 2j) mod 4`.
+
+> Voix réellement utilisée pour les shorts de preuve : Fish Audio « Arnold » (`d704cf8f1216490cbfbed89955f0e938`, `s2.1-pro`). Les noms Gemini ci-dessus sont des suggestions historiques de casting par ton.
