@@ -1,33 +1,31 @@
 # StudioVisualIdentity
 
-Recherche exploratoire d'identités visuelles et cinématiques pour des shorts verticaux 9:16 (TikTok / Reels / Shorts) :
-**14 identités**, chacune documentée en design system et prouvée par **31 shorts** rendus par code (three.js, Matter.js, p5.js, GSAP, D3.js,
-Manim, A-Frame, Taichi, PixiJS, Babylon.js, Matplotlib…), tous voisés (Fish Audio « Arnold »).
+**Un catalogue de 14 styles visuels prêts à l'emploi pour lancer une chaîne de vidéos courtes verticales (TikTok, Reels, Shorts).**
+Chaque style est prouvé par de vraies vidéos (31 au total, avec voix off), et le dépôt contient les outils pour en produire de nouvelles.
 
-**À qui ça sert** : à des agents (ou des humains) qui doivent **définir leur propre identité visuelle** de chaîne de shorts — en reprenant
-une identité, en combinant plusieurs, ou en en adaptant une à leur public et à leur langue. Ce n'est pas une identité de marque finie.
+![Les 14 styles](out/report/directions-contact-sheet.jpg)
 
-**Lancer son propre studio de shorts** (ne pas forker ce dépôt : c'est l'exploration) :
+## Comment s'en servir
 
-```bash
-python3 out/tools/bootstrap_studio.py ../mon-studio --channel-id ma-chaine --name "Ma Chaîne" \
-    --from <identité> [--blend <id>,<id>] --families explicatif,engagement --language fr --audience teens --git
+Donnez ce prompt à votre agent (Claude Code, etc.) en remplaçant ce qui est entre crochets :
+
+```text
+Lis AGENTS.md de https://github.com/killerwolf/StudioVisualIdentity.
+Choisis le style qui convient à une chaîne de [sujet, ex. quiz de géographie] pour [public, ex. ados de 13 à 17 ans] en [langue].
+Crée notre studio avec out/tools/bootstrap_studio.py, adapte l'identité visuelle à notre chaîne,
+puis réalise notre premier épisode sur [sujet de l'épisode] et montre-moi le résultat.
 ```
 
-Cela crée un projet séparé avec : votre identité en brouillon (copie de l'identité source à adapter), un template de scène par
-famille de contenu, la boîte à outils de rendu, `studio.json` et un `AGENTS.md` qui décrit la boucle de production
-(adapter la marque une fois, puis `new_episode.py` → contenu + narration → stills → rendu → son → voix off → `check.py`).
-Détails et choix de l'identité source : [`AGENTS.md`](AGENTS.md).
+L'agent choisit un style, crée un projet séparé pour votre chaîne (votre identité visuelle, des modèles de scènes, les outils de rendu), puis fabrique les épisodes un par un.
 
-**Par où commencer**
-- Agents : **[`AGENTS.md`](AGENTS.md)** (en anglais) — ordre de lecture, méthode pour définir sa propre identité, pièges connus.
-- Index machine des identités : [`out/identities/index.json`](out/identities/index.json) (tokens normalisés, public conseillé, signature à préserver, chemins).
-- Rapport complet (en français) : [`out/report/README.md`](out/report/README.md) et [`out/report/comparison.md`](out/report/comparison.md).
+## Ce que vous devrez faire ou valider
 
-| Dossier | Contenu |
-|---|---|
-| `out/identities/<id>/` | design system : `identity.md` (16 sections), `tokens.json`, recettes par famille, poster, planche-contact |
-| `out/shorts/<id>__<famille>__<sujet>/` | short de preuve : `short.mp4` (voisé), `short.json`, `narration.json`, `stills/`, `src/` (code + commande de reproduction) |
-| `out/library-cards/` | une carte par librairie (coûts mesurés, pièges) |
-| `out/tools/` | harnais : rendu, son, assemblage, QA, voix off (`tts.py`), index (`build_index.py`) |
-| `out/report/` | rapport, données JSON, faits vérifiés, échecs, décisions |
+- **Valider l'identité** proposée par l'agent (nom, couleurs, ton) avant de produire en série.
+- **La voix off** : la génération de l'audio (Fish Audio) n'est pas automatique ; l'agent mixe ensuite les fichiers.
+- **Relire les faits** énoncés dans chaque épisode.
+
+## Pour aller plus loin
+
+- [`AGENTS.md`](AGENTS.md) : le guide détaillé pour les agents (en anglais).
+- [`out/identities/index.json`](out/identities/index.json) : les 14 styles en données (couleurs, polices, public conseillé).
+- [`out/report/`](out/report/README.md) : le rapport complet de l'exploration (en français).
