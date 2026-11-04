@@ -27,23 +27,20 @@ L'agent choisit un style, crée un projet séparé pour votre chaîne (votre ide
 
 ## Pour aller plus loin : voix et sound design
 
-Deux skills Claude Code complètent le studio, dans [killerwolf/skills](https://github.com/killerwolf/skills) :
+Le plugin `studio` de [killerwolf/skills](https://github.com/killerwolf/skills) complète le studio avec trois skills Claude Code :
 
 | Skill | Ce qu'il apporte |
 | --- | --- |
 | [`gemini-voices`](https://github.com/killerwolf/skills/tree/main/skills/gemini-voices) | Les voix off avec Gemini : narration, personnages, dialogue à deux voix. |
 | [`sound-design`](https://github.com/killerwolf/skills/tree/main/skills/sound-design) | Les bruitages (whoosh, pop, impact, frappe, ding) calés sur les apparitions de texte et mixés sous la voix, à partir d'une bibliothèque de sons CC0 qu'on peut enrichir avec Freesound. |
+| [`studio-mate`](https://github.com/killerwolf/skills/tree/main/skills/studio-mate) | Le pilotage des studios depuis Notion, en conversation, sans code : ce qui attend, les idées à valider, les retours de relecture. |
 
 ```bash
 claude plugin marketplace add killerwolf/skills
 ```
 
 ```bash
-claude plugin install gemini-voices@killerwolf
-```
-
-```bash
-claude plugin install sound-design@killerwolf
+claude plugin install studio@killerwolf
 ```
 
 ## Ce que vous devrez faire ou valider
