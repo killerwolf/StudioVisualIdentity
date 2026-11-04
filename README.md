@@ -55,4 +55,5 @@ claude plugin install studio@killerwolf
 - [`AGENTS.md`](AGENTS.md) : le guide détaillé pour les agents (en anglais).
 - [`out/identities/index.json`](out/identities/index.json) : les 14 styles en données (couleurs, polices, public conseillé).
 - [`out/report/`](out/report/README.md) : le rapport complet de l'exploration (en français).
+- [`out/library-cards/catalogue.md`](out/library-cards/catalogue.md) : toutes les librairies et outils envisageables, ceux déjà utilisés et où : la base pour créer de nouvelles identités.
 - [`out/demo/`](out/demo/README.md) : comment la vidéo démo et sa vignette sont fabriquées.

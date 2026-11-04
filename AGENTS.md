@@ -58,7 +58,8 @@ python3 out/tools/bootstrap_studio.py ../my-studio --channel-id my-channel --nam
 4. **Watch the proof shorts**: `out/shorts/<id>__<family>__<topic>/short.mp4` (voiced), with `short.json` (structure, timings, hook,
    engagement mechanic, cost) and `narration.json` (timed voice-over lines).
 5. **`out/report/comparison.md`** — side-by-side table, the identity × family × library matrix, blind recognition tests, and the ranking rationale.
-6. Before building: **`out/report/facts.md`** (verified technical facts and pitfalls) and **`out/library-cards/<lib>.json`**.
+6. Before building: **`out/report/facts.md`** (verified technical facts and pitfalls), **`out/library-cards/catalogue.md`** (every
+   library and tool considered, used or not, and where; the base for new identities) and **`out/library-cards/<lib>.json`**.
 
 ## Where to start, by content family
 
@@ -150,6 +151,7 @@ Suggested starting deltas, to validate with your own tests:
 | `out/identities/core-tokens.schema.json` | JSON schema of the normalised `coreTokens` |
 | `out/identities/<id>/` | design system: `identity.md`, `tokens.json` (original, richer, not normalised), `recipes/`, `poster.jpg`, `contact-sheet.jpg` |
 | `out/shorts/<id>__<family>__<topic>/` | proof short: `short.mp4` (voiced), `short_novo.mp4` (no voice), `short.json`, `narration.json`, `voice_lines/`, `stills/`, `src/` |
+| `out/library-cards/catalogue.md` | catalogue of every library and tool considered (3D, 2D, animation, SVG/data, video frameworks, Python, audio, encoding, services): status, used or not, where — the base to iterate on for new identities |
 | `out/library-cards/<lib>.json` | per-library notes merged from the studios: best/avoid, measured costs (under load), gotchas, code paths. Verbose; `_drafts/` holds the raw per-studio drafts |
 | `out/report/` | campaign report (French): `README.md`, `comparison.md`, `facts.md`, `failures.md`, `decisions.md`, JSON data (`campaign.json`, `matrix.json`, `recognition.json`, `qa.json`, `selection.json`), Phase 1 `posters/` |
 | `out/report/notes/`, `out/report/history/` | studio logs and past session prompts — provenance only, do not follow |
