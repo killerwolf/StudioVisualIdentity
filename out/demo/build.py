@@ -184,8 +184,9 @@ def sound_specs():
     ev += [{'t': SLAMS[0], 'type': 'impact', 'gain': 0.9}, {'t': SLAMS[1], 'type': 'impact', 'gain': 0.9}, {'t': SLAMS[2], 'type': 'impact', 'gain': 1.0},
            {'t': END, 'type': 'whoosh', 'gain': 0.5, 'dur': 0.5}, {'t': END + 0.3, 'type': 'chime', 'note': 'A5', 'gain': 0.5},
            {'t': END + 0.3, 'type': 'swell', 'note': 'A3', 'gain': 0.45, 'dur': 3.4}]
+    ev, synth_ev = sfx_samples(ev)               # vrais sons CC0 (out/demo/sfx/) quand ils existent, synthèse sinon
     specs = {
-        'sfx': {'duration': DUR, 'seed': 14, 'bpm': 120, 'key': 'A', 'scale': 'minor', 'music': {'preset': 'none'}, 'events': ev, 'reverb': 0.12},
+        'sfx': {'duration': DUR, 'seed': 14, 'bpm': 120, 'key': 'A', 'scale': 'minor', 'music': {'preset': 'none'}, 'events': synth_ev, 'reverb': 0.12},
         'hook': {'duration': CUT, 'seed': 3, 'bpm': 112, 'key': 'C', 'scale': 'major', 'music': {'preset': 'pluck-arp', 'gain': 0.5, 'loop': True}, 'events': []},
         'outro': {'duration': DUR - TERM, 'seed': 9, 'bpm': 112, 'key': 'A', 'scale': 'minor', 'music': {'preset': 'pulse', 'gain': 0.5, 'octave': 3}, 'events': []},
     }
@@ -193,7 +194,58 @@ def sound_specs():
         p = TMP / f'{name}.json'
         json.dump(spec, open(p, 'w'))
         run([sys.executable, ROOT / 'out/tools/sound.py', p, TMP / f'{name}.wav'])
+    specs['samples'] = ev
     json.dump(specs, open(HERE / 'sound.json', 'w'), indent=1)
+
+
+SFX = HERE / 'sfx'
+
+
+def _sample_role(e, k):
+    """Type d'événement (sound.py) -> rôle de fichier CC0 dans out/demo/sfx/ (None = garder la synthèse)."""
+    ty = e['type']
+    if ty == 'whoosh':
+        return 'whoosh_fast' if e.get('dur', 0.4) <= 0.35 else 'whoosh_soft'
+    if ty == 'impact':
+        return 'impact' if e['gain'] >= 0.8 else 'impact_light'
+    if ty == 'tick':
+        keys = sorted(p.stem for p in SFX.glob('key*.wav'))
+        return keys[k % len(keys)] if keys else None
+    return {'pop': 'pop', 'click': 'click', 'thud': 'impact', 'glass': 'shimmer', 'blip': 'ding',
+            'chime': 'ding', 'riser': 'riser'}.get(ty)
+
+
+def _peak_db(f):
+    out = subprocess.run(['ffmpeg', '-i', str(f), '-af', 'volumedetect', '-f', 'null', '-'], capture_output=True, text=True).stderr
+    return float(out.split('max_volume:')[1].split('dB')[0])
+
+
+def sfx_samples(ev):
+    """Pose les sons CC0 aux instants des événements -> TMP/samples.wav ; renvoie (événements posés, événements à synthétiser)."""
+    placed, synth, inputs, fc = [], [], [], []
+    peaks = {}
+    for k, e in enumerate(ev):
+        role = _sample_role(e, k)
+        f = SFX / f'{role}.wav' if role else None
+        if not f or not f.exists():
+            synth.append(e); continue
+        if role not in peaks:
+            peaks[role] = _peak_db(f)
+        g = e['gain'] * 0.9 * 10 ** ((-1 - peaks[role]) / 20)    # crête ramenée à -1 dBFS, puis gain de l'événement
+        i = len(inputs) // 2
+        ms = int(e['t'] * 1000)
+        inputs += ['-i', f]
+        trim = f"atrim=0:{e['dur'] + 0.4:.2f},afade=t=out:st={e['dur']:.2f}:d=0.4," if e['type'] == 'riser' else ''
+        fc.append(f"[{i}:a]aformat=sample_rates=48000:channel_layouts=stereo,{trim}adelay={ms}|{ms},volume={g:.3f},apad,atrim=0:{DUR}[s{i}]")
+        placed.append({**e, 'file': f'sfx/{role}.wav'})
+    out = TMP / 'samples.wav'
+    if placed:
+        fc.append(f"{''.join(f'[s{i}]' for i in range(len(placed)))}amix=inputs={len(placed)}:duration=longest:normalize=0[out]")
+        run(['ffmpeg', '-y', '-loglevel', 'error', *inputs, '-filter_complex', ';'.join(fc), '-map', '[out]', '-t', DUR, '-ar', '48000', out])
+    elif out.exists():
+        out.unlink()
+    print(f'SFX : {len(placed)} sons CC0, {len(synth)} synthétisés', file=sys.stderr)
+    return placed, synth
 
 
 # Brouhaha : chaque tuile audible = musique de son short (short_novo.mp4, sans Arnold) + SA voix (brouhaha/NN.mp3),
@@ -269,7 +321,10 @@ def audio():
         ms = int(t * 1000)
         fc.append(f"[{i}:a]aformat=sample_rates=48000:channel_layouts=stereo,adelay={ms}|{ms},volume={g},apad,atrim=0:{DUR}[a{i}]")
         labels.append(f'[a{i}]'); i += 1
-    for name, start, gain in [('sfx', 0, 0.9), ('hook', 0, 0.55), ('outro', TERM, 0.32)]:
+    tracks = [('sfx', 0, 0.9), ('hook', 0, 0.55), ('outro', TERM, 0.32)]
+    if (TMP / 'samples.wav').exists():
+        tracks.append(('samples', 0, 0.8))
+    for name, start, gain in tracks:
         inputs += ['-i', TMP / f'{name}.wav']
         ms = int(start * 1000)
         fc.append(f"[{i}:a]aformat=sample_rates=48000:channel_layouts=stereo,adelay={ms}|{ms},volume={gain},apad,atrim=0:{DUR}[a{i}]")
