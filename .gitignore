@@ -10,3 +10,4 @@ out/**/_frames/
 __pycache__/
 out/tools/tests/*.wav
 out/shorts/*/voice.wav
+out/showcase/build/

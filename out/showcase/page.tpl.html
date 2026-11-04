@@ -1,0 +1,360 @@
+<title>Studio Visual Identity</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout : banc de montage — une bande par identité, des écrans 9:16 alignés comme des rushes ; données et chiffres en police mono façon timecode. */
+:root {
+  --bg: #ECEEF1;          /* table lumineuse, gris froid */
+  --panel: #F8F9FA;
+  --ink: #15171C;
+  --ink-2: #4A4F5A;
+  --line: #C9CDD4;
+  --safelight: #C2591E;   /* lampe inactinique de labo photo */
+  --safelight-soft: #C2591E1F;
+  --ok: #217A4B;
+  --display: "Bricolage Grotesque", "Arial Narrow", system-ui, sans-serif;
+  --body: "Hanken Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s5: 24px; --s6: 40px; --s7: 64px;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #131419; --panel: #1B1D23; --ink: #E9EBEF; --ink-2: #A3A8B3; --line: #2E313A;
+  --safelight: #F08A4B; --safelight-soft: #F08A4B24; --ok: #5FC48E; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #131419; --panel: #1B1D23; --ink: #E9EBEF; --ink-2: #A3A8B3; --line: #2E313A;
+  --safelight: #F08A4B; --safelight-soft: #F08A4B24; --ok: #5FC48E; color-scheme: dark }
+
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 16px; line-height: 1.5; }
+.wrap { max-width: 1240px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: var(--s6) var(--s7); }
+h1, h2, h3 { font-family: var(--display); text-wrap: balance; margin: 0; letter-spacing: -0.02em; }
+p { margin: 0; }
+.mono { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+.eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-2); }
+a { color: var(--safelight); }
+
+/* ---------- hero ---------- */
+.hero { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: var(--s6); align-items: end; padding-bottom: var(--s6); border-bottom: 1px solid var(--line); }
+.hero h1 { font-size: clamp(40px, 6.4vw, 84px); line-height: 0.95; font-weight: 800; }
+.hero h1 em { font-style: normal; color: var(--safelight); }
+.hero .lede { margin-top: var(--s4); max-width: 60ch; color: var(--ink-2); font-size: 18px; }
+.ledger { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: 2px solid var(--ink); }
+.ledger div { padding: var(--s3) 0; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; gap: var(--s3); padding-right: var(--s3); }
+.ledger div:nth-child(even) { padding-left: var(--s3); padding-right: 0; border-left: 1px solid var(--line); }
+.ledger b { font-family: var(--mono); font-weight: 600; font-variant-numeric: tabular-nums; }
+.ledger span { color: var(--ink-2); font-size: 14px; }
+
+.reco { margin-top: var(--s5); display: grid; grid-template-columns: auto 1fr; gap: var(--s3) var(--s4); align-items: baseline; }
+.reco .eyebrow { color: var(--safelight); }
+.reco ol { margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: var(--s2); }
+.reco li a { display: inline-flex; gap: var(--s2); align-items: center; padding: 6px 12px; border: 1px solid var(--ink); border-radius: 999px; color: var(--ink); text-decoration: none; font-weight: 600; }
+.reco li a:hover, .reco li a:focus-visible { background: var(--ink); color: var(--bg); outline: none; }
+
+/* ---------- toolbar ---------- */
+.toolbar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); display: flex; flex-wrap: wrap; gap: var(--s2) var(--s4); align-items: center; justify-content: space-between; padding-block: var(--s3); border-bottom: 1px solid var(--line); }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { font: 500 14px var(--body); padding: 5px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--panel); color: var(--ink); cursor: pointer; }
+.chip[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.chip:focus-visible, .switch input:focus-visible + span { outline: 2px solid var(--safelight); outline-offset: 2px; }
+.chip .n { font-family: var(--mono); font-size: 12px; opacity: 0.7; margin-left: 4px; }
+.switch { display: inline-flex; gap: var(--s2); align-items: center; font-size: 14px; color: var(--ink-2); cursor: pointer; }
+.switch input { position: absolute; opacity: 0; }
+.switch span { width: 34px; height: 20px; border-radius: 999px; background: var(--line); position: relative; flex: none; transition: background .2s; }
+.switch span::after { content: ""; position: absolute; top: 3px; left: 3px; width: 14px; height: 14px; border-radius: 50%; background: var(--panel); transition: transform .2s; }
+.switch input:checked + span { background: var(--safelight); }
+.switch input:checked + span::after { transform: translateX(14px); }
+
+/* ---------- identity reels ---------- */
+.reel { display: grid; grid-template-columns: minmax(0, 300px) minmax(0, 1fr); gap: var(--s5); padding-block: var(--s6); border-bottom: 1px solid var(--line); scroll-margin-top: 72px; }
+.meta { display: flex; flex-direction: column; gap: var(--s3); min-width: 0; }
+.rankline { display: flex; align-items: baseline; gap: var(--s2); }
+.rank { font-family: var(--mono); font-size: 13px; color: var(--ink-2); }
+.rank.top { color: var(--safelight); font-weight: 600; }
+.reh { font: 600 11px var(--mono); text-transform: uppercase; letter-spacing: .05em; padding: 1px 7px; border-radius: 3px; border: 1px solid var(--safelight); color: var(--safelight); }
+.meta h2 { font-size: 34px; line-height: 1; }
+.meta .slug { font-family: var(--mono); font-size: 13px; color: var(--ink-2); }
+.meta .promise { font-size: 15px; color: var(--ink-2); }
+.swatches { display: flex; height: 28px; border-radius: 4px; overflow: hidden; border: 1px solid var(--line); }
+.swatches i { flex: 1; }
+.swatches i:first-child { flex: 2; }
+.kv { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 4px var(--s3); font-size: 14px; }
+.kv dt { font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-2); padding-top: 2px; }
+.kv dd { margin: 0; min-width: 0; }
+.tags { display: flex; flex-wrap: wrap; gap: 4px; }
+.tag { font-family: var(--mono); font-size: 12px; padding: 1px 7px; border: 1px solid var(--line); border-radius: 3px; background: var(--panel); }
+
+.strip { display: flex; gap: var(--s4); overflow-x: auto; padding-bottom: var(--s2); scroll-snap-type: x proximity; min-width: 0; }
+.short { flex: 0 0 236px; scroll-snap-align: start; display: flex; flex-direction: column; gap: var(--s2); }
+.short[hidden] { display: none !important; }
+.screen { position: relative; aspect-ratio: 9 / 16; max-width: 100%; border-radius: 10px; overflow: hidden; background: #000; box-shadow: 0 0 0 1px var(--line); }
+.screen video, .screen img { width: 100%; height: 100%; display: block; object-fit: cover; }
+.play { position: absolute; inset: 0; display: grid; place-items: center; background: transparent; border: 0; cursor: pointer; }
+.play::before { content: ""; width: 54px; height: 54px; border-radius: 50%; background: rgba(10,10,12,.62); box-shadow: 0 0 0 1px rgba(255,255,255,.35); }
+.play::after { content: ""; position: absolute; border-style: solid; border-width: 10px 0 10px 17px; border-color: transparent transparent transparent #fff; margin-left: 5px; }
+.play:focus-visible::before { box-shadow: 0 0 0 3px var(--safelight); }
+.safe { position: absolute; inset: 0; pointer-events: none; display: none; }
+body.show-safe .safe { display: block; }
+.safe i { position: absolute; background: repeating-linear-gradient(135deg, rgba(240,70,40,.38) 0 6px, rgba(240,70,40,.16) 6px 12px); }
+.safe .t { top: 0; left: 0; right: 0; height: 11.46%; }
+.safe .b { bottom: 0; left: 0; right: 0; height: 16.67%; }
+.safe .r { top: 11.46%; bottom: 16.67%; right: 0; width: 11.11%; }
+.badge { position: absolute; top: 8px; left: 8px; font: 600 11px var(--mono); letter-spacing: .04em; padding: 2px 7px; border-radius: 3px; background: rgba(10,10,12,.72); color: #fff; text-transform: uppercase; }
+.short h3 { font-family: var(--body); font-weight: 600; font-size: 15px; line-height: 1.3; letter-spacing: 0; }
+.short .facts { display: flex; flex-wrap: wrap; gap: 4px 10px; font-family: var(--mono); font-size: 12px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.short .vo { font-size: 13px; color: var(--ink-2); border-left: 2px solid var(--safelight); padding-left: 8px; font-style: italic; }
+
+/* ---------- analysis sections ---------- */
+.section { padding-block: var(--s7) 0; }
+.section > header { display: flex; flex-direction: column; gap: var(--s2); margin-bottom: var(--s5); max-width: 70ch; }
+.section h2 { font-size: clamp(28px, 3.6vw, 42px); }
+.section header p { color: var(--ink-2); }
+
+.bars { display: grid; gap: 6px; }
+.bar { display: grid; grid-template-columns: minmax(0, 300px) minmax(0, 1fr) 64px; gap: var(--s3); align-items: center; font-size: 13px; }
+.bar .lbl { display: flex; gap: 8px; align-items: center; min-width: 0; }
+.bar .lbl span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bar .dot { width: 12px; height: 12px; border-radius: 2px; flex: none; box-shadow: 0 0 0 1px var(--line); }
+.bar .track { height: 14px; position: relative; background: linear-gradient(to right, var(--line) 1px, transparent 1px) 0 0 / 25% 100%; }
+.bar .fill { position: absolute; inset: 2px auto 2px 0; background: var(--ink); border-radius: 0 2px 2px 0; }
+.bar.third .fill { background: var(--safelight); }
+.bar .v { font-family: var(--mono); font-variant-numeric: tabular-nums; text-align: right; }
+.axis { display: grid; grid-template-columns: minmax(0, 300px) minmax(0, 1fr) 64px; gap: var(--s3); font: 12px var(--mono); color: var(--ink-2); margin-top: 4px; }
+.axis div { display: flex; justify-content: space-between; }
+.legend { display: flex; flex-wrap: wrap; gap: var(--s4); font-size: 13px; color: var(--ink-2); margin-top: var(--s3); }
+.legend i { display: inline-block; width: 12px; height: 12px; border-radius: 2px; vertical-align: -1px; margin-right: 6px; }
+
+.tablebox { overflow-x: auto; border: 1px solid var(--line); border-radius: 6px; background: var(--panel); }
+table { border-collapse: collapse; width: 100%; min-width: 760px; font-size: 13px; }
+th, td { padding: 9px 12px; text-align: left; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font: 600 12px var(--mono); text-transform: uppercase; letter-spacing: .05em; color: var(--ink-2); }
+td.cell { font-family: var(--mono); font-size: 12px; }
+td.cell.on { background: var(--safelight-soft); }
+tbody tr:last-child td { border-bottom: 0; }
+
+.duo { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s5); }
+.result { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: var(--s5); display: flex; flex-direction: column; gap: var(--s3); }
+.result .big { font-family: var(--display); font-size: 56px; line-height: 1; font-weight: 800; }
+.result .big small { font-size: 22px; color: var(--ink-2); font-weight: 500; }
+.result p { color: var(--ink-2); font-size: 15px; }
+
+.sheet { border-radius: 8px; overflow: hidden; border: 1px solid var(--line); }
+.sheet img { display: block; width: 100%; }
+
+.misses { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s3) var(--s6); padding: 0; margin: 0; list-style: none; }
+.misses li { padding-top: var(--s3); border-top: 1px solid var(--line); font-size: 15px; }
+.misses b { display: block; font-family: var(--display); font-size: 18px; margin-bottom: 2px; }
+.misses span { color: var(--ink-2); }
+
+footer.colophon { margin-top: var(--s7); padding-top: var(--s4); border-top: 1px solid var(--line); font-size: 13px; color: var(--ink-2); display: flex; flex-wrap: wrap; gap: var(--s2) var(--s5); justify-content: space-between; }
+
+@media (max-width: 860px) {
+  .hero { grid-template-columns: minmax(0, 1fr); }
+  .reel { grid-template-columns: minmax(0, 1fr); }
+  .duo, .misses { grid-template-columns: minmax(0, 1fr); }
+  .bar, .axis { grid-template-columns: minmax(0, 150px) minmax(0, 1fr) 52px; }
+  .reco { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 480px) { .short { flex-basis: 200px; } .meta h2 { font-size: 28px; } }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }
+</style>
+
+<div class="wrap">
+  <section class="hero">
+    <div>
+      <p class="eyebrow">Recherche exploratoire · shorts verticaux 1080×1920 · 30 fps</p>
+      <h1>Quatorze identités visuelles, <em>31 shorts</em> rendus par code</h1>
+      <p class="lede">Chaque identité est un design system lisible par un agent (tokens, mouvement, caméra, recettes par famille) et elle est prouvée par des vidéos réelles, rendues avec des librairies open-source sur 4 cœurs CPU, sans aucun asset téléchargé.</p>
+      <div class="reco">
+        <span class="eyebrow">Recommandées pour une chaîne durable</span>
+        <ol id="reco"></ol>
+      </div>
+    </div>
+    <div class="ledger" aria-label="Chiffres de la campagne">
+      <div><span>Identités</span><b>14</b></div>
+      <div><span>Shorts livrés</span><b>31</b></div>
+      <div><span>Contrôle qualité</span><b>31 / 31</b></div>
+      <div><span>Familles couvertes</span><b>7 / 7</b></div>
+      <div><span>Librairies A + B</span><b>8 + 11</b></div>
+      <div><span>Test à l'aveugle</span><b>56 / 56</b></div>
+      <div><span>Production</span><b>4 cœurs</b></div>
+      <div><span>Voix off</span><b>31 / 31</b></div>
+    </div>
+  </section>
+
+  <div class="toolbar">
+    <div class="chips" id="chips" role="group" aria-label="Filtrer par famille de contenu"></div>
+    <label class="switch"><input type="checkbox" id="safe-toggle"><span aria-hidden="true"></span>Zones sûres TikTok</label>
+  </div>
+
+  <div id="reels"></div>
+
+  <section class="section" id="couts">
+    <header>
+      <p class="eyebrow">Coût de rendu mesuré</p>
+      <h2>Secondes de calcul pour 100 images</h2>
+      <p>Mesuré pendant la campagne : jusqu'à 10 studios rendaient en même temps sur 4 cœurs (charge 15–23), donc la plupart des shorts sont environ 2 à 3 fois plus lents que sur une machine calme. Les trois 3ᵉ shorts ont été rendus avec seulement 3 studios actifs.</p>
+    </header>
+    <div class="bars" id="bars"></div>
+    <div class="axis" aria-hidden="true"><span></span><div><span>0</span><span>80</span><span>160</span><span>240</span><span>320</span></div><span></span></div>
+    <div class="legend"><span><i style="background:var(--ink)"></i>CPU saturé (premier tour et identités réhabilitées)</span><span><i style="background:var(--safelight)"></i>3ᵉ short, CPU peu chargé</span><span>pastille = couleur de fond de l'identité</span></div>
+  </section>
+
+  <section class="section" id="matrice">
+    <header>
+      <p class="eyebrow">Couverture</p>
+      <h2>Identité × famille × librairie</h2>
+      <p>Chaque famille de contenu est prouvée par au moins trois identités ; les 8 librairies du niveau A et les 11 du niveau B apparaissent toutes dans au moins un short livré.</p>
+    </header>
+    <div class="tablebox"><table id="matrix"></table></div>
+  </section>
+
+  <section class="section" id="aveugle">
+    <header>
+      <p class="eyebrow">Reconnaissance à l'aveugle</p>
+      <h2>Deux shorts d'une identité se ressemblent plus que deux shorts de deux identités</h2>
+    </header>
+    <div class="duo">
+      <div class="result">
+        <p class="eyebrow">Juge visuel indépendant, 14 identités</p>
+        <div class="big">14<small> / 14 groupes purs</small></div>
+        <p>Un agent sans contexte a reçu 56 images anonymisées (2 shorts par identité, 2 images par short, clé cachée) avec la consigne de former 14 groupes de 4 par style. Les 56 images ont été bien classées, y compris les quatre identités réhabilitées face à leurs voisines. Les plus difficiles à séparer : Grille Suisse et Bauhaus (fonds crème), et les cinq styles sur fond sombre.</p>
+      </div>
+      <div class="result">
+        <p class="eyebrow">Signature couleur et contours mesurée</p>
+        <div class="big">29<small> / 31 plus proches voisins</small></div>
+        <p>Histogramme couleur Lab et densité de contours sur 8 images par short. Distance moyenne entre shorts d'une même identité 0,25 contre 0,85 entre identités. Les 8 shorts réhabilités sont tous reconnus. Les 2 erreurs : les deux premiers shorts Chrome Liquide, trop proches d'autres fonds noirs ; son 3ᵉ short, sur graphite chaud, est reconnu correctement.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="directions">
+    <header>
+      <p class="eyebrow">Phase 1</p>
+      <h2>Les 14 directions explorées</h2>
+      <p>Un poster 1080×1920 par direction, puis une sélection de 10. Les 4 directions d'abord écartées (Cosmos Doc, Brut Mème, Zine Riso, Relief Topo) pour éviter des doublons de sujet ont ensuite été produites à part entière, avec la consigne de se distinguer de leur voisine. Les tests à l'aveugle confirment qu'elles sont bien distinctes.</p>
+    </header>
+    <div class="sheet"><img src="p/directions.jpg" alt="Planche des 14 posters de directions : Labo Néon, Diorama Pastel, Atlas Gravé, Tableau Craie, Grille Suisse, Arcade Pixel, Chrome Liquide, Gazette 1900, Cosmos Doc, Bauhaus Cinétique, Zine Riso, Relief Topo, Brut Mème, Aquarelle Conte" loading="lazy" width="1600" height="871"></div>
+  </section>
+
+  <section class="section" id="limites">
+    <header>
+      <p class="eyebrow">Ce qui n'a pas marché</p>
+      <h2>Limites constatées pendant la production</h2>
+    </header>
+    <ul class="misses">
+      <li><b>Voix off : Gemini abandonné</b><span>Le plan gratuit Gemini (environ 10 requêtes par jour) ne suffisait pas. Les 31 shorts ont finalement été voisés avec Fish Audio, voix « Arnold », une ligne par appel. Les voix ont été mesurées, pas écoutées par l'assistant.</span></li>
+      <li><b>CPU sur-souscrit</b><span>Les slots de rendu ne couvraient pas ffmpeg ni les pré-simulations : charge 16–22 sur 4 cœurs, tous les temps du premier tour sont gonflés.</span></li>
+      <li><b>Trois rendus jetés</b><span>Une bande non peinte en fin de travelling (Aquarelle Conte), un verre réfractif à environ 5 s par image (Chrome Liquide) et un trait p5 qui disparaissait en rendu séquentiel (Zine Riso).</span></li>
+      <li><b>Physique Node ≠ navigateur</b><span>Math.atan2 diffère au dernier bit entre Node 22 et Chromium : la course de billes divergeait à l'image 102. Corrigé par une géométrie précalculée.</span></li>
+      <li><b>Manim sans texte</b><span>Pas de Pango ni de LaTeX dans l'environnement : les titres des shorts Manim sont des calques PNG.</span></li>
+      <li><b>Blender et Remotion non tentés</b><span>Niveau optionnel ; Blender Cycles coûte 25–30 s par image, incompatible avec 4 cœurs déjà saturés.</span></li>
+    </ul>
+  </section>
+
+  <footer class="colophon">
+    <span>Dépôt killerwolf/StudioVisualIdentity · branche main · point d'entrée out/report/README.md</span>
+    <span class="mono">Aperçus 540×960 ; fichiers livrés en 1080×1920</span>
+  </footer>
+</div>
+
+<script>
+const DATA = __DATA__;
+const FAM = { abstrait: "Abstrait", enfants: "Enfants", explicatif: "Explicatif", histoire: "Histoire", geographie: "Géographie", evenements: "Événements", engagement: "Engagement" };
+const FAM_ORDER = ["abstrait", "enfants", "explicatif", "histoire", "geographie", "evenements", "engagement"];
+const THIRD = new Set(["pixel-arcade__engagement__quelle-couleur-conquiert-l-ecran", "liquid-chrome__abstrait__pendule-de-newton-chrome", "neon-lab__explicatif__effet-papillon-double-pendule"]);
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const fmt = n => String(n).replace(".", ",");
+
+// recommandations
+document.getElementById("reco").innerHTML = DATA.slice(0, 3).map(d =>
+  `<li><a href="#${d.id}"><span class="mono">${d.rank}</span>${esc(d.name)}</a></li>`).join("");
+
+// reels
+document.getElementById("reels").innerHTML = DATA.map(d => {
+  const sw = [d.bg, d.surface, ...d.accent, d.text].filter(Boolean);
+  const shorts = d.shorts.map(s => `
+    <article class="short" data-family="${s.family}">
+      <div class="screen">
+        <video preload="none" playsinline poster="p/${s.dir}.jpg" src="v/${s.dir}.mp4" aria-label="${esc(s.title)}"></video>
+        <button class="play" type="button" aria-label="Lire « ${esc(s.title)} »"></button>
+        <span class="badge">${FAM[s.family]}${THIRD.has(s.dir) ? " · 3ᵉ" : ""}${s.loop ? " · boucle" : ""}</span>
+        <div class="safe" aria-hidden="true"><i class="t"></i><i class="b"></i><i class="r"></i></div>
+      </div>
+      <h3>${esc(s.title)}</h3>
+      <div class="facts"><span>${fmt(s.duration)} s</span><span>${fmt(s.cost)} s/100 img</span><span>${esc(s.libs.join(" + "))}</span></div>
+      <p class="vo">« ${esc(s.line)} » <span class="mono">— ${esc(s.voice)}</span></p>
+    </article>`).join("");
+  return `
+  <section class="reel" id="${d.id}">
+    <div class="meta">
+      <div class="rankline"><span class="rank ${d.rank <= 3 ? "top" : ""}">N° ${d.rank} / 14</span><span class="slug">${d.id}</span>${d.reh ? '<span class="reh">réhabilitée</span>' : ""}</div>
+      <h2>${esc(d.name)}</h2>
+      <p class="promise">${esc(d.promise)}</p>
+      <div class="swatches" aria-label="Palette">${sw.map(c => `<i style="background:${c}" title="${c}"></i>`).join("")}</div>
+      <dl class="kv">
+        <dt>Titres</dt><dd>${esc(d.display)}</dd>
+        <dt>Texte</dt><dd>${esc(d.body)}</dd>
+        <dt>Libs</dt><dd class="tags">${(d.libs || []).map(l => `<span class="tag">${esc(l)}</span>`).join("")}</dd>
+      </dl>
+    </div>
+    <div class="strip">${shorts}</div>
+  </section>`;
+}).join("");
+
+// lecture : une seule vidéo à la fois
+const videos = [...document.querySelectorAll(".screen video")];
+document.querySelectorAll(".screen").forEach(scr => {
+  const v = scr.querySelector("video"), b = scr.querySelector(".play");
+  b.addEventListener("click", () => {
+    videos.forEach(o => { if (o !== v && !o.paused) o.pause(); });
+    v.controls = true; b.hidden = true; v.play().catch(() => { b.hidden = false; });
+  });
+  v.addEventListener("ended", () => { b.hidden = false; v.controls = false; });
+});
+
+// filtres par famille
+const counts = {};
+DATA.forEach(d => d.shorts.forEach(s => counts[s.family] = (counts[s.family] || 0) + 1));
+const chips = document.getElementById("chips");
+const allN = Object.values(counts).reduce((a, b) => a + b, 0);
+chips.innerHTML = `<button class="chip" type="button" id="chip-all" data-f="" aria-pressed="true">Tout<span class="n">${allN}</span></button>` +
+  FAM_ORDER.map(f => `<button class="chip" type="button" id="chip-${f}" data-f="${f}" aria-pressed="false">${FAM[f]}<span class="n">${counts[f] || 0}</span></button>`).join("");
+function applyFilter(f) {
+  chips.querySelectorAll(".chip").forEach(c => c.setAttribute("aria-pressed", String(c.dataset.f === f)));
+  document.querySelectorAll(".reel").forEach(r => {
+    let any = false;
+    r.querySelectorAll(".short").forEach(s => { const on = !f || s.dataset.family === f; s.hidden = !on; any = any || on; });
+    r.hidden = !any;
+  });
+  try { localStorage.setItem("svi-filter", f); } catch (e) {}
+}
+chips.addEventListener("click", e => { const c = e.target.closest(".chip"); if (c) applyFilter(c.dataset.f); });
+try { const saved = localStorage.getItem("svi-filter"); if (saved && counts[saved]) applyFilter(saved); } catch (e) {}
+
+// zones sûres
+const st = document.getElementById("safe-toggle");
+st.addEventListener("change", () => document.body.classList.toggle("show-safe", st.checked));
+
+// barres de coût (échelle 0–320)
+const MAX = 320;
+const rows = DATA.flatMap(d => d.shorts.map(s => ({ ...s, idName: d.name, bg: d.bg }))).sort((a, b) => a.cost - b.cost);
+document.getElementById("bars").innerHTML = rows.map(r => `
+  <div class="bar ${THIRD.has(r.dir) ? "third" : ""}">
+    <div class="lbl"><i class="dot" style="background:${r.bg}"></i><span title="${esc(r.idName)} — ${esc(r.title)}">${esc(r.idName)} · ${esc(r.title)}</span></div>
+    <div class="track"><div class="fill" style="width:${(r.cost / MAX * 100).toFixed(2)}%"></div></div>
+    <div class="v">${fmt(r.cost)}</div>
+  </div>`).join("");
+
+// matrice
+const head = `<thead><tr><th>Identité</th>${FAM_ORDER.map(f => `<th>${FAM[f]}</th>`).join("")}</tr></thead>`;
+const body = DATA.map(d => `<tr><td><a href="#${d.id}">${esc(d.name)}</a></td>${FAM_ORDER.map(f => {
+  const ss = d.shorts.filter(s => s.family === f);
+  if (!ss.length) return `<td class="cell"></td>`;
+  return `<td class="cell on">${ss.map(s => esc(s.libs.join(", "))).join("<br>")}</td>`;
+}).join("")}</tr>`).join("");
+const foot = `<tr><td><b>Shorts</b></td>${FAM_ORDER.map(f => `<td class="cell"><b>${counts[f] || 0}</b></td>`).join("")}</tr>`;
+document.getElementById("matrix").innerHTML = head + `<tbody>${body}${foot}</tbody>`;
+</script>
