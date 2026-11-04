@@ -1,0 +1,75 @@
+{
+ "identity": "brut-meme",
+ "family": "evenements",
+ "title": "Pendant ces 15 secondes, dans le monde…",
+ "hook": "Frame 0 : « PENDANT CES 15 SECONDES, » en Anton géant + tag rouge « ● EN DIRECT · 00,0 S » qui tourne ; « DANS LE MONDE… » claque à 0,6 s (punch-in + shake)",
+ "duration": 16.0,
+ "libraries": [
+  "PixiJS",
+  "GSAP"
+ ],
+ "seed": 15,
+ "renderTimeSec": 280.8,
+ "structure": [
+  {
+   "t": 0,
+   "beat": "hook : PENDANT CES 15 SECONDES, horloge EN DIRECT, jauge rubalise"
+  },
+  {
+   "t": 0.6,
+   "beat": "slam DANS LE MONDE…"
+  },
+  {
+   "t": 2.2,
+   "beat": "fond jaune : NAISSANCES, compteur 4,2 × t, une pastille par bébé"
+  },
+  {
+   "t": 3.9,
+   "beat": "DÉCÈS, compteur 1,9 × t en rouge, carrés neutres"
+  },
+  {
+   "t": 5.5,
+   "beat": "ÉCLAIRS, 44 × t, salves de zigzags à chaque temps"
+  },
+  {
+   "t": 7.2,
+   "beat": "fond jaune : E-MAILS, 4 M × t, flux d'enveloppes"
+  },
+  {
+   "t": 8.9,
+   "beat": "LA TERRE, 29,8 km × t autour du Soleil, orbite"
+  },
+  {
+   "t": 10.9,
+   "beat": "TON CŒUR, 1,2 × t, cœur qui bat à 72/min"
+  },
+  {
+   "t": 12.4,
+   "beat": "fond jaune : récap EN 15 SECONDES, 6 barres en stagger 0,2 s"
+  },
+  {
+   "t": 13.9,
+   "beat": "ET TOI, T'AS FAIT QUOI ? + sticker DIS-LE EN COMM'"
+  },
+  {
+   "t": 15.0,
+   "beat": "horloge figée : TEMPS ÉCOULÉ · 15,0 S (slam, shake) ; tenue jusqu'à 16 s"
+  }
+ ],
+ "engagement": {
+  "mechanic": "compte à rebours / chiffres live + question directe",
+  "cta": "Et toi, t'as fait quoi pendant ces 15 secondes ? Dis-le en commentaire."
+ },
+ "loopable": false,
+ "sound": {
+  "type": "generated",
+  "voice": false
+ },
+ "qualityChecks": {
+  "stillsReviewed": true,
+  "textMinPx": 56,
+  "safeAreaOk": true
+ },
+ "notes": "Chiffres arrondis (formulation « environ » / « ≈ ») : naissances ≈ 132 millions/an ≈ 4,2/s -> 63 en 15 s ; décès ≈ 61 millions/an ≈ 1,9/s -> ≈ 29 ; éclairs ≈ 44/s (ordre de grandeur des mesures satellite, 40–50/s) -> ≈ 660 ; e-mails ≈ 350 milliards/jour (spam inclus) ≈ 4 millions/s -> ≈ 60 millions ; vitesse orbitale de la Terre ≈ 29,8 km/s -> ≈ 450 km ; cœur au repos ≈ 70/min ≈ 1,2/s -> ≈ 18. Chaque compteur affiche débit × temps écoulé du short (cohérent avec l'horloge EN DIRECT). Fonds : noir / jaune alternés, inversions espacées d'au moins 1,6 s (photosensibilité) ; éclairs dessinés en petits zigzags renouvelés 2×/s, aucun flash plein cadre. Seed 15 : position des éclairs et shake. Caméra : punch-in 1,15 -> 1 en 3 frames à chaque cut (force 0,3–1). Texte min 56 px, titres Anton auto-fit 900 px, contenu x 60–960, y 236–1590. Son : pulse 120 bpm, impact sur chaque cut, blip par naissance, thud par décès et par battement.",
+ "reproduce": ""
+}

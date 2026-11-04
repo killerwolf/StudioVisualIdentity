@@ -1,0 +1,30 @@
+{
+ "name": "PixiJS 8.22",
+ "role": "typo",
+ "bestFor": [
+  "habillage graphique 2D plat d'une scène typographique : fonds, blocs à ombre dure, stickers, starbursts, jauges, anneaux de compte à rebours, pictos (éclairs, orbite, cœur en béziers)",
+  "un seul PIXI.Graphics vidé (g.clear()) et redessiné à chaque frame : ≈ 2 ms/frame de scène",
+  "textures pré-rendues une fois (trame de points via renderer.generateTexture) puis teintées (sprite.tint) selon le fond",
+  "compteurs/pictos pilotés par une formule de t (débit × t) : aucun état, rendu non séquentiel"
+ ],
+ "avoidFor": [
+  "texte principal (le garder en DOM : crénage, @fontsource, ajustement auto à la largeur)",
+  "3D",
+  "ticker temps réel (inutilisable en rendu déterministe)"
+ ],
+ "renderCostPer100Frames": "49,8 s (mesuré, brut-meme engagement Stroop : 465 frames en 231,6 s) et 58,5 s (brut-meme evenements compteurs : 480 frames en 280,8 s), Graphics redessiné + 1 sprite tramé + DOM GSAP, 1080×1920, sous contention (load average 17–23, 4 studios) ; renderAt seul (GSAP seek + rendu Pixi) mesuré à 0,2 s / 100 frames : la capture Playwright fait > 99 % du coût",
+ "gotchas": [
+  "Init v8 headless : `const app = new PIXI.Application(); await app.init({width:1080,height:1920,background:0x111111,antialias:true,autoStart:false,preserveDrawingBuffer:true,preference:'webgl'})` attendu dans window.ready, puis `app.ticker.stop()` et `host.appendChild(app.canvas)` ; dans renderAt : `app.renderer.render(app.stage)`.",
+  "Changer la couleur de fond par frame : `app.renderer.background.color = 0xFFE600` (pas besoin de rect plein cadre).",
+  "Graphics v8 : style APRÈS la forme (`g.circle(x,y,r).fill({color}).stroke({width,color})`) ; un arc seul = `g.moveTo(x0,y0).arc(cx,cy,r,a0,a1).stroke({...})` ; plusieurs sous-chemins tracés puis un seul `.stroke()` les dessine tous.",
+  "generateTexture d'un Graphics : la texture est rognée à la boîte englobante -> ajouter un rect plein cadre quasi transparent (alpha 0.001) pour garder l'alignement 1080×1920.",
+  "Le canvas Pixi et les textes DOM sont dans le même conteneur : appliquer la caméra (punch-in scale 1,15 -> 1 en 3 frames, shake) en CSS transform sur ce conteneur, les deux bougent ensemble sans rendu supplémentaire.",
+  "Rayures diagonales d'une jauge partiellement remplie : découper chaque parallélogramme entre deux verticales (Sutherland–Hodgman, 15 lignes) plutôt qu'un masque."
+ ],
+ "snippetPath": "shorts/brut-meme__evenements__pendant-ces-15-secondes-dans-le-monde/src",
+ "pairsWellWith": [
+  "GSAP (slams des textes DOM, proxy d'objet lu par Pixi)",
+  "DOM + @fontsource Anton / Inter 900",
+  "out/tools/sound.py (impact par cut)"
+ ]
+}

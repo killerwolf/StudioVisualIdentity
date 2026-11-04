@@ -1,0 +1,183 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8">
+<title>riso-zine · geographie · Les 5 plus grands déserts du monde</title>
+<!-- p5.js v2 (instance) : couches d'encre + trame + multiply (via riso.js) ; GSAP 3.15 : timeline seekée sur temps
+     quantifié à 12 fps (on twos). Formes découpées « à la main » (bruit), aire ∝ superficie, AUCUNE donnée géo téléchargée.
+     Grain / manques d'encre / papier qui ondule : post.py (OpenCV). Graine : 13. -->
+<style>
+:root{--pink:#FF48B0;--blue:#0078BF;--yel:#FFE800;--ink:#1A1A1A;--paper:#F6F0E4}
+html,body{margin:0;background:var(--paper);width:1080px;height:1920px;overflow:hidden}
+#stage{position:absolute;inset:0} canvas{position:absolute;inset:0;display:block}
+.page{position:absolute;inset:0;display:none}
+.grp,.t,.mk,.tag{position:absolute;mix-blend-mode:multiply;white-space:nowrap}
+.mono{font-family:'Space Mono';font-weight:700}
+.grp>span{mix-blend-mode:multiply;display:block}
+.grp>.passP{position:absolute;left:0;top:0;color:var(--pink)} .grp>.passB{color:var(--blue)}
+.mk{font-family:'Permanent Marker';color:var(--blue);line-height:1}
+.sm{font-family:'Space Mono';font-weight:700;font-size:.92em}
+.tag{background:var(--yel);color:var(--ink);padding:8px 20px 4px;line-height:1}
+.num{left:52px;top:226px;font-size:236px;line-height:1;letter-spacing:-10px}
+.pre{left:66px;top:478px;font-size:62px;transform:rotate(-3deg)}
+.name{left:60px;top:548px;font-size:112px;line-height:1;color:var(--ink);letter-spacing:-4px}
+.val{left:60px;top:678px;font-size:74px}
+.ratio{left:64px;top:784px;font-size:60px;transform:rotate(-3deg);transform-origin:left center}
+.fr{left:742px;top:410px;font-size:54px;transform:rotate(4deg)}
+.title{left:56px;top:322px;font-size:112px;line-height:1.0;letter-spacing:-4px}
+</style></head><body>
+<div id="stage"></div>
+<div id="pages"></div>
+<script src="/node_modules/p5/lib/p5.min.js"></script>
+<script src="/node_modules/gsap/dist/gsap.min.js"></script>
+<script type="module">
+import * as S from '/out/tools/lib/svi.js';
+import * as R from './riso.js';
+const SEED = 13, DUR = 16;
+const tp = s => `<span class="passP">${s}</span><span class="passB">${s}</span>`;
+const RMAX = 330, rOf = a => RMAX * Math.sqrt(a / 14);            // aire ∝ superficie (14 M km² -> r 330 px)
+const RF = rOf(0.55);                                                // France métropolitaine ≈ 0,55 M km²
+// rang, nom, superficie (M km²), encre, ombre, forme, texture, rapport à la France
+const D = [
+  { rank: 5, pre: 'désert de', name: 'GOBI', val: '1,3 M km²', a: 1.3, ink: 'yel', sh: 'pink', sx: 1.42, sy: 0.7, lobes: [[0.4, 0.5, 0.18]], tex: 'stones', fr: '2,4', seed: 3 },
+  { rank: 4, pre: "désert d'", name: 'ARABIE', val: '2,3 M km²', a: 2.3, ink: 'pink', sh: 'blue', sx: 0.92, sy: 1.12, lobes: [[2.3, 0.45, 0.28]], tex: 'dunesY', fr: '4', seed: 7 },
+  { rank: 3, pre: 'le', name: 'SAHARA', val: '9,2 M km²', a: 9.2, ink: 'yel', sh: 'blue', sx: 1.45, sy: 0.69, lobes: [[3.3, 0.5, 0.12]], tex: 'dunesP', fr: '17', seed: 11 },
+  { rank: 2, pre: "l'", name: 'ARCTIQUE', val: '13,9 M km²', a: 13.9, ink: 'blue', tint: 0.42, sh: 'pink', sx: 1.05, sy: 0.95, lobes: [[5.2, 0.35, 0.2], [1.9, 0.3, -0.18]], tex: 'cracks', fr: '25', seed: 17 },
+  { rank: 1, pre: "l'", name: 'ANTARCTIQUE', val: '14 M km²', a: 14, ink: 'blue', sh: 'pink', sx: 1, sy: 1, lobes: [[3.75, 0.22, 0.42]], tex: 'cracks', fr: '25', seed: 23 },
+];
+const T = [0, 2.6, 4.2, 5.8, 7.6, 9.8, 12.8, DUR];                  // débuts de pages : hook, n°5..n°1, fin
+const CX = 540, CY = 1175;
+
+// ---------- DOM ----------
+const pages = document.getElementById('pages');
+pages.innerHTML = `
+<div class="page" id="pg0">
+  <div class="tag mono" style="left:60px;top:236px;font-size:48px">ZINE GÉO #13</div>
+  <div class="grp mono title" id="hookT">${tp('LES 5 PLUS<br>GRANDS<br>DÉSERTS')}</div>
+  <div class="mk" id="hookM" style="left:64px;top:688px;font-size:78px;transform:rotate(-6deg)">le n°<b class="sm">1</b> est… glacé ?!</div>
+</div>
+${D.map((d, i) => `
+<div class="page" id="pg${i + 1}">
+  <div class="grp mono num">${tp('N°' + d.rank)}</div>
+  <div class="mk pre">${d.pre}</div>
+  <div class="t mono name">${d.name}</div>
+  <div class="tag mono val">${d.val}</div>
+  <div class="mk ratio">soit ${d.fr} × la France</div>
+  <div class="mk fr">la France</div>
+  ${d.rank === 2 ? `<div class="mk" id="oui" style="left:560px;top:1430px;font-size:64px;color:var(--ink);transform:rotate(-5deg)">désert ? oui !</div>` : ''}
+</div>`).join('')}
+<div class="mk" id="tgt" style="left:770px;top:850px;font-size:60px;transform:rotate(6deg);display:none">le n°<b class="sm">1</b> ?</div>
+<div class="page" id="pg6">
+  <div class="grp mono title" style="top:250px;font-size:104px">${tp('DÉSERT =<br>TRÈS PEU<br>DE PLUIE')}</div>
+  <div class="mk" id="endM" style="left:70px;top:588px;font-size:70px;transform:rotate(-4deg)">pas forcément chaud !</div>
+  ${[1, 2, 3, 4, 5].map(k => `<div class="t mono endn" id="en${k}" style="font-size:64px;color:var(--ink)">${k}</div>`).join('')}
+  <div class="mk" id="cta" style="left:300px;top:1478px;font-size:68px;color:var(--ink);transform:rotate(-3deg)">tu le savais ?</div>
+</div>`;
+// fin : collage à l'échelle 0,5 (mêmes proportions que les pages)
+const END = { 1: [300, 960], 2: [748, 990], 3: [330, 1300], 4: [672, 1310], 5: [860, 1300] };
+for (const k in END) { const e = document.getElementById('en' + k); e.style.left = (END[k][0] - 20) + 'px'; e.style.top = (END[k][1] - 40) + 'px'; }
+
+// ---------- GSAP : états ----------
+const st = { d: D.map(() => ({ v: 0 })), m: D.map(() => ({ v: 0 })), e: [0, 1, 2, 3, 4].map(() => ({ v: 0 })), hook: { v: 0 }, endM: { v: 0 } };
+const tl = gsap.timeline({ paused: true });
+tl.fromTo(st.hook, { v: 0 }, { v: 1, duration: 1.4, ease: 'none', immediateRender: false }, 0);
+D.forEach((d, i) => {
+  const t0 = T[i + 1], P = `#pg${i + 1} `;
+  tl.fromTo(st.d[i], { v: 0 }, { v: 1, duration: 0.42, ease: 'back.out(1.7)', immediateRender: false }, t0);
+  tl.fromTo(P + '.num', { x: -160, rotation: -9 }, { x: 0, rotation: 0, duration: 0.3, ease: 'power3.out', immediateRender: false }, t0);
+  tl.fromTo(P + '.name', { y: 50, opacity: 0 }, { y: 0, opacity: 1, duration: 0.25, ease: 'power2.out', immediateRender: false }, t0 + 0.08);
+  tl.fromTo(P + '.val', { scaleX: 0, transformOrigin: 'left center' }, { scaleX: 1, duration: 0.25, ease: 'power2.out', immediateRender: false }, t0 + 0.2);
+  tl.fromTo(st.m[i], { v: 0 }, { v: 1, duration: 0.45, ease: 'none', immediateRender: false }, t0 + 0.45);
+});
+const glace = { v: 0 };
+tl.fromTo(glace, { v: 0 }, { v: 1, duration: 0.3, ease: 'back.out(2.2)', immediateRender: false }, T[5] + 0.9);
+st.e.forEach((o, k) => tl.fromTo(o, { v: 0 }, { v: 1, duration: 0.33, ease: 'back.out(2)', immediateRender: false }, T[6] + 0.15 + (4 - k) * 0.13));
+tl.fromTo(st.endM, { v: 0 }, { v: 1, duration: 0.5, ease: 'none', immediateRender: false }, T[6] + 0.5);
+tl.fromTo('#cta', { scale: 0.2, rotation: 12 }, { scale: 1, rotation: -3, duration: 0.3, ease: 'back.out(2)', immediateRender: false }, T[6] + 1.2);
+
+// ---------- dessin des couches ----------
+const shapeCache = {};
+function shapeOf(d, cx, cy, scale, rot) {
+  return R.blobPts(cx, cy, rOf(d.a) * scale / Math.sqrt(d.sx * d.sy), d.seed, { sx: d.sx, sy: d.sy, lobes: d.lobes, amp: 0.15, rot });
+}
+function clipTo(g, pts, fn) {
+  const c = g.drawingContext; c.save(); c.beginPath(); pts.forEach(([x, y], i) => i ? c.lineTo(x, y) : c.moveTo(x, y)); c.closePath(); c.clip(); fn(); c.restore(); R.resync(g);
+}
+function bbox(pts) { let a = 1e9, b = 1e9, c = -1e9, e = -1e9; for (const [x, y] of pts) { a = Math.min(a, x); b = Math.min(b, y); c = Math.max(c, x); e = Math.max(e, y); } return [a, b, c, e]; }
+function desert(L, d, cx, cy, scale, rot, tex = true) {
+  const pts = shapeOf(d, cx, cy, scale, rot);
+  const sh = pts.map(([x, y]) => [x + 18 * scale + 4, y + 20 * scale + 4]);
+  L[d.sh].fill(95); L[d.sh].noStroke(); R.poly(L[d.sh], sh);          // ombre de collage (autre encre, 37 %)
+  for (const k of R.ORDER) if (k !== d.ink) { L[k].fill(0); R.poly(L[k], pts); }   // le découpage est opaque : il masque ce qui est dessous
+  const g = L[d.ink]; g.noStroke(); g.fill(255 * (d.tint || 1)); R.poly(g, pts);
+  if (!tex) return pts;
+  const [x0, y0, x1, y1] = bbox(pts), rr = S.rng(d.seed * 101);
+  if (d.tex === 'stones') clipTo(L.pink, pts, () => { L.pink.fill(210); L.pink.noStroke(); for (let k = 0; k < 70; k++) L.pink.circle(S.lerp(x0, x1, rr()), S.lerp(y0, y1, rr()), (5 + 9 * rr()) * Math.max(scale, .5)); });
+  if (d.tex === 'dunesY' || d.tex === 'dunesP') {
+    const gl = d.tex === 'dunesY' ? L.yel : L.pink;
+    clipTo(gl, pts, () => { gl.noFill(); gl.stroke(d.tex === 'dunesY' ? 255 : 230); gl.strokeWeight(11 * scale + 2);
+      for (let y = y0 + 20; y < y1; y += 34 * scale + 6) { gl.beginShape(); for (let x = x0 - 10; x <= x1 + 10; x += 12) gl.vertex(x, y + Math.sin(x * 0.03 / Math.max(scale, .4) + y * 0.05) * 9 * scale); gl.endShape(); } });
+  }
+  if (d.tex === 'cracks') clipTo(g, pts, () => { g.stroke(0); g.strokeWeight(7 * scale + 1); g.noFill();
+    for (let k = 0; k < 7; k++) { let x = S.lerp(x0, x1, rr()), y = S.lerp(y0, y1, rr()), a = rr() * 6.28; g.beginShape(); for (let s = 0; s < 6; s++) { g.vertex(x, y); a += (rr() - .5) * 1.4; x += Math.cos(a) * 46 * scale; y += Math.sin(a) * 46 * scale; } g.endShape(); } });
+  return pts;
+}
+function ghost(L, d) {  // contour pointillé du désert précédent (même échelle)
+  const pts = shapeOf(d, CX, CY, 1, 0), g = L.blue; g.noFill(); g.stroke(185); g.strokeWeight(6);
+  g.drawingContext.setLineDash([16, 14]); R.poly(g, pts); g.drawingContext.setLineDash([]); g.noStroke();
+}
+function knock(L, txt, x, y, size, rot) {   // texte « réservé » dans le bleu, imprimé en jaune
+  for (const [k, v] of [['blue', 0], ['pink', 0], ['yel', 255]]) { const g = L[k]; g.push(); g.translate(x, y); g.rotate(rot); g.noStroke(); g.fill(v);
+    g.textFont('Permanent Marker'); g.textSize(size); g.textAlign('center', 'center'); g.text(txt, 0, 0); g.pop(); }
+}
+function target(L) {
+  const pts = shapeOf(D[4], CX, CY, 1, 0), g = L.blue; g.noFill(); g.stroke(150); g.strokeWeight(6);
+  g.drawingContext.setLineDash([16, 14]); R.poly(g, pts); g.drawingContext.setLineDash([]); g.noStroke();
+}
+function france(L, x, y, s = 1) {
+  const pts = R.blobPts(x, y, RF * s, 5, { sx: 1, sy: 1, amp: 0.12, freq: 1.2, n: 60, lobes: [[0.7, 0.3, 0.12]] });
+  L.pink.noStroke(); L.pink.fill(255); R.poly(L.pink, pts);
+}
+
+let press, lastStep = -1;
+function renderAt(t) {
+  const step = R.stepIndex(t); if (step === lastStep) return; lastStep = step;
+  const tf = R.qt(t); tl.seek(tf, false);
+  let pg = 0; for (let i = 0; i < 7; i++) if (tf >= T[i]) pg = i;
+  for (let i = 0; i < 7; i++) document.getElementById('pg' + i).style.display = i === pg ? 'block' : 'none';
+  if (pg === 0) document.getElementById('tgt').style.display = 'none';
+  const L = press.L; press.clear();
+  const local = tf - T[pg], kick = Math.max(0, 1 - local / 0.34);
+  const wob = (S.noise2(step * 0.37, SEED) - 0.5);                   // tremblement de collage, change à chaque pas
+  if (pg === 0) {
+    L.yel.fill(255); L.yel.circle(820, 470, 470);                     // soleil jaune derrière le titre
+    const d = D[4], pts = desert(L, d, CX, 1250, 0.98, wob * 0.08 + 0.05);
+    knock(L, '?', CX + 10, 1230, 470 + 30 * Math.sin(step * 1.7), 0.12 + wob * 0.3);
+  } else if (pg <= 5) {
+    const i = pg - 1, d = D[i], k = st.d[i].v;
+    if (i < 4) target(L);
+    document.getElementById('tgt').style.display = i < 4 ? 'block' : 'none';
+    france(L, 852, 336);
+    desert(L, d, CX, CY + (1 - k) * 160, 0.55 + 0.45 * k, (1 - k) * -0.35 + wob * 0.05);
+    if (d.rank === 1 && glace.v > 0) knock(L, 'GLACÉ !', CX + 30, CY - 10, 150 * (2.2 - 1.2 * glace.v), -0.16 - 0.25 * (1 - glace.v));
+    if (d.tex === 'dunesP') { L.pink.noStroke(); L.pink.fill(255); L.pink.circle(CX + 250, CY - 175, 120); }  // soleil du Sahara
+    const pg$ = document.getElementById('pg' + pg);
+    R.markerReveal(pg$.querySelector('.ratio'), st.m[i].v);
+    R.markerReveal(pg$.querySelector('.pre'), st.d[i].v * 1.5);
+    if (d.rank === 2) R.markerReveal(document.getElementById('oui'), (local - 1.0) / 0.4);
+  } else {
+    document.getElementById('tgt').style.display = 'none';
+    const sc = 0.5;
+    [4, 3, 2, 1, 0].forEach((i, n) => { const v = st.e[4 - i].v; if (v <= 0) return; const [x, y] = END[D[i].rank];
+      desert(L, D[i], x, y + (1 - v) * 60, sc * (0.4 + 0.6 * v), wob * 0.06 * (n % 2 ? 1 : -1), true); });
+    for (let k = 1; k <= 5; k++) document.getElementById('en' + k).style.opacity = st.e[5 - k].v > 0.6 ? 1 : 0;
+    france(L, 900, 1110, 0.5);
+    R.markerReveal(document.getElementById('endM'), st.endM.v);
+  }
+  const mis = R.misreg(step, SEED, kick);
+  press.print(mis); R.shiftPasses(mis);
+}
+
+S.installContract({
+  duration: DUR,
+  ready: Promise.all([R.makePress('stage', SEED).then(p => { press = p; }), S.loadFonts(R.FONTS)]),
+  renderAt,
+});
+</script></body></html>

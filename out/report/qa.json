@@ -84,6 +84,62 @@
   }
  },
  {
+  "short": "brut-meme__engagement__test-des-3-secondes-stroop",
+  "ok": true,
+  "errors": [],
+  "warnings": [],
+  "info": {
+   "duration": 15.5,
+   "width": 1080,
+   "height": 1920,
+   "fps": "30/1",
+   "codec": "h264",
+   "pix": "yuv420p"
+  }
+ },
+ {
+  "short": "brut-meme__evenements__pendant-ces-15-secondes-dans-le-monde",
+  "ok": true,
+  "errors": [],
+  "warnings": [],
+  "info": {
+   "duration": 16.0,
+   "width": 1080,
+   "height": 1920,
+   "fps": "30/1",
+   "codec": "h264",
+   "pix": "yuv420p"
+  }
+ },
+ {
+  "short": "cosmos-doc__evenements__voyager-1-a-un-jour-lumiere",
+  "ok": true,
+  "errors": [],
+  "warnings": [],
+  "info": {
+   "duration": 15.0,
+   "width": 1080,
+   "height": 1920,
+   "fps": "30/1",
+   "codec": "h264",
+   "pix": "yuv420p"
+  }
+ },
+ {
+  "short": "cosmos-doc__explicatif__pourquoi-venus-plus-chaude-que-mercure",
+  "ok": true,
+  "errors": [],
+  "warnings": [],
+  "info": {
+   "duration": 15.0,
+   "width": 1080,
+   "height": 1920,
+   "fps": "30/1",
+   "codec": "h264",
+   "pix": "yuv420p"
+  }
+ },
+ {
   "short": "gazette-1900__evenements__9-novembre-1989-mur-de-berlin",
   "ok": true,
   "errors": [],
@@ -266,6 +322,34 @@
   }
  },
  {
+  "short": "riso-zine__evenements__geminides-j-39",
+  "ok": true,
+  "errors": [],
+  "warnings": [],
+  "info": {
+   "duration": 16.0,
+   "width": 1080,
+   "height": 1920,
+   "fps": "30/1",
+   "codec": "h264",
+   "pix": "yuv420p"
+  }
+ },
+ {
+  "short": "riso-zine__geographie__5-plus-grands-deserts",
+  "ok": true,
+  "errors": [],
+  "warnings": [],
+  "info": {
+   "duration": 16.0,
+   "width": 1080,
+   "height": 1920,
+   "fps": "30/1",
+   "codec": "h264",
+   "pix": "yuv420p"
+  }
+ },
+ {
   "short": "swiss-data__evenements__j-272-eclipse-2-aout-2027",
   "ok": true,
   "errors": [],
@@ -314,6 +398,34 @@
   "warnings": [],
   "info": {
    "duration": 16.5,
+   "width": 1080,
+   "height": 1920,
+   "fps": "30/1",
+   "codec": "h264",
+   "pix": "yuv420p"
+  }
+ },
+ {
+  "short": "topo-relief__geographie__comment-mesure-t-on-l-everest",
+  "ok": true,
+  "errors": [],
+  "warnings": [],
+  "info": {
+   "duration": 15.0,
+   "width": 1080,
+   "height": 1920,
+   "fps": "30/1",
+   "codec": "h264",
+   "pix": "yuv420p"
+  }
+ },
+ {
+  "short": "topo-relief__histoire__hannibal-traverse-les-alpes",
+  "ok": true,
+  "errors": [],
+  "warnings": [],
+  "info": {
+   "duration": 15.0,
    "width": 1080,
    "height": 1920,
    "fps": "30/1",

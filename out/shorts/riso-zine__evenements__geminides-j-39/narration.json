@@ -1,0 +1,37 @@
+{
+ "language": "fr",
+ "style": "décontracté, complice, comme un pote qui te glisse un bon plan ; énergie qui monte sur le chiffre",
+ "voice": "Puck",
+ "lines": [
+  {
+   "t": 0.2,
+   "maxDuration": 2.2,
+   "text": "J moins trente-neuf : pluie d'étoiles !"
+  },
+  {
+   "t": 2.5,
+   "maxDuration": 3.1,
+   "text": "Les Géminides, nuit du treize au quatorze décembre."
+  },
+  {
+   "t": 5.7,
+   "maxDuration": 2.7,
+   "text": "Jusqu'à cent vingt météores par heure !"
+  },
+  {
+   "t": 8.7,
+   "maxDuration": 2.7,
+   "text": "Ce sont les poussières de l'astéroïde Phaéton."
+  },
+  {
+   "t": 11.45,
+   "maxDuration": 2.85,
+   "text": "Loin des lumières, nord-est, après vingt-deux heures."
+  },
+  {
+   "t": 14.4,
+   "maxDuration": 1.5,
+   "text": "Note-le !"
+  }
+ ]
+}

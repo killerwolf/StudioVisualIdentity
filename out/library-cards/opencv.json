@@ -10,7 +10,9 @@
   "dessin antialiasé (verre, liserés) et composition numpy",
   "analyse des vidéos rendues (détection des impacts par différence de frames pour caler le son)",
   "grade signature appliqué à toute vidéo rendue (glow des hautes lumières, aberration chromatique radiale, vignette)",
-  "uniformiser des shorts rendus par des moteurs différents (twgl, three.js) sous une même identité"
+  "uniformiser des shorts rendus par des moteurs différents (twgl, three.js) sous une même identité",
+  "passe « tirage riso » frame par frame : feuille qui ondule on twos (warpAffine), manques d'encre ∝ couverture, rouleau inégal, grain + fibres du papier, bavure 0,7 px",
+  "même code en mode image pour revoir les stills avant le rendu complet"
  ],
  "avoidFor": [
   "génération de l'image elle-même (texte, mise en page)",
@@ -19,12 +21,15 @@
   "typographie (pas de polices @fontsource : passer par PIL/textpng)",
   "opérations pleine résolution 1080×1920 float32 à chaque frame sans nécessité (≈ 1 s/frame mesuré)",
   "effets dépendant de la profondeur ou de la géométrie 3D (à faire dans le moteur)",
-  "flous très larges à pleine résolution (travailler à 1/4 puis remonter)"
+  "flous très larges à pleine résolution (travailler à 1/4 puis remonter)",
+  "séparer les encres a posteriori (faire le tramage dans le navigateur, couche par couche)",
+  "styles en aplats destinés à un fichier léger (le grain sature 8 Mb/s)"
  ],
  "renderCostPer100Frames": [
   "21,2 s (mesuré, short gazette-1900 evenements, 450 frames en 95,5 s) ; 27,6 s (short histoire 1789, 563 frames en 155,2 s) — 1080×1920, décodage + encodage ffmpeg par pipes rawvideo bgr24 inclus, via out/tools/slot.sh [gazette-1900]",
   "25 s (mesuré, liquid-chrome__abstrait__quatre-peintures-mpm : ombrage demi-résolution 540×960 + agrandissement cubique + composition limitée à la bbox, 1 thread) ; 100 s/100 frames en pleine résolution au 1er essai [liquid-chrome]",
-  "31,9 s (mesuré, neon_grade.py sur 360 frames 1080×1920 : 114,7 s, lecture cv2.VideoCapture + pipe rawvideo ffmpeg crf 14, 4 slots CPU occupés) [neon-lab]"
+  "31,9 s (mesuré, neon_grade.py sur 360 frames 1080×1920 : 114,7 s, lecture cv2.VideoCapture + pipe rawvideo ffmpeg crf 14, 4 slots CPU occupés) [neon-lab]",
+  "36,4 s (geographie, 480 f en 174,7 s) et 27,9 s (evenements, 480 f en 134,0 s), 1080×1920 float32, sous slot.sh et contention [riso-zine]"
  ],
  "gotchas": [
   "lire/écrire via pipes ffmpeg (-f rawvideo -pix_fmt bgr24) : pas de cv2.VideoWriter (codec H.264 absent du build headless)",
@@ -41,12 +46,17 @@
   "opencv 5 headless : pas d'écriture H.264 fiable via VideoWriter -> pipe rawvideo bgr24 vers ffmpeg",
   "travailler en float32 [0,1] et clipper avant conversion uint8",
   "aberration radiale via warpAffine d'échelle par canal (≈2,4 px dans les coins pour 0,0022) : rester faible pour garder la typo nette",
-  "lancer via out/tools/slot.sh (rendu Python lourd)"
+  "lancer via out/tools/slot.sh (rendu Python lourd)",
+  "lancer sous out/tools/slot.sh",
+  "pré-tirer les champs (6 grains, 6 cartes de manques) et les alterner par pas : aucun tirage par frame",
+  "zoom 1,012 + BORDER_REPLICATE pour que l'ondulation ne découvre pas les bords",
+  "livrable ≈ 17 Mo / 16 s : le grain plafonne le débit du mux"
  ],
  "snippetPath": [
   "shorts/gazette-1900__histoire__1789-en-20-secondes/src/post.py",
   "shorts/liquid-chrome__abstrait__quatre-peintures-mpm/src",
-  "shorts/neon-lab__abstrait__champ-de-force-lucioles/src/neon_grade.py"
+  "shorts/neon-lab__abstrait__champ-de-force-lucioles/src/neon_grade.py",
+  "shorts/riso-zine__geographie__5-plus-grands-deserts/src/post.py"
  ],
  "pairsWellWith": [
   "GSAP / toute scène navigateur rendue par render.mjs",
@@ -56,12 +66,15 @@
   "numpy",
   "PIL (textpng.py)",
   "twgl.js",
-  "three.js"
+  "three.js",
+  "p5.js",
+  "toute scène navigateur plate"
  ],
  "usedBy": [
   "gazette-1900",
   "liquid-chrome",
-  "neon-lab"
+  "neon-lab",
+  "riso-zine"
  ],
  "roleAsDeclaredByStudios": [
   "post-traitement"

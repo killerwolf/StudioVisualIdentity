@@ -1,0 +1,29 @@
+{
+ "name": "three.js",
+ "role": "3D",
+ "bestFor": [
+  "maquette de relief extrudée (PlaneGeometry 256² déplacée par un heightfield) + flancs à strates",
+  "shader onBeforeCompile sur MeshStandardMaterial : balayage d'altitude (courbes qui s'allument), neige par hauteur",
+  "itinéraires en TubeGeometry révélés par setDrawRange, sprites lumineux additifs, balises DOM projetées (Vector3.project)",
+  "survols drone déterministes par images clés (scène sans état, rendu parallélisable)"
+ ],
+ "avoidFor": [
+  "UnrealBloom et MeshPhysical transmission (trop coûteux sous SwiftShader) : cuire la lueur dans une emissiveMap (shadowBlur canvas)",
+  "texte en 3D : garder la typo en DOM par-dessus le canvas"
+ ],
+ "renderCostPer100Frames": "169 s (mesuré, topo-relief__geographie__comment-mesure-t-on-l-everest : relief 256² MeshStandard + shader onBeforeCompile, 2 textures 2048², sprites, nappe 90² en fil de fer, DOM ; 450 frames en 760,5 s, load average 15–17, 4 studios) ; 108,2 s (mesuré, topo-relief__histoire__hannibal-traverse-les-alpes : même moteur + 4 tubes lumineux, 900 flocons Points recalculés par frame, 9 sprites)",
+ "gotchas": [
+  "onBeforeCompile : injecter après '#include <begin_vertex>' (varying vH = position.y, hauteur non affectée par mesh.scale.y) et après '#include <emissivemap_fragment>' (totalEmissiveRadiance *= ...) ; partager les uniforms par Object.assign(sh.uniforms, U)",
+  "PlaneGeometry.rotateX(-PI/2) : l'indice k = j*N + i correspond à z = j/(N-1)*SZ - SZ/2 (rangée 0 au fond)",
+  "TubeGeometry : setDrawRange(0, floor(p*tubularSegments)*radialSegments*6) révèle le tube progressivement",
+  "en vertical 1080×1920 (fov 54°), la fenêtre utile entre HUD et bloc titre ne couvre que ≈ 22° : reculer la caméra plutôt que zoomer, et ajouter une 'visée' (lookAt avancé/reculé) aux images clés",
+  "PointsMaterial sans map = carrés : lui donner une texture radiale pour des flocons ronds",
+  "renderer.toneMapping = NoToneMapping + textures CanvasTexture en SRGBColorSpace pour garder les couleurs de la palette"
+ ],
+ "snippetPath": "shorts/topo-relief__geographie__comment-mesure-t-on-l-everest/src",
+ "pairsWellWith": [
+  "D3.js (d3.contours -> textures)",
+  "DOM/CSS pour la typo",
+  "svi.js (bruit déterministe)"
+ ]
+}

@@ -1,0 +1,202 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8">
+<title>topo-relief — Hannibal traverse les Alpes</title>
+<!-- Identité topo-relief. Alpes procédurales stylisées (pas de MNT), courbes d3.contours, maquette three.js,
+     itinéraire = tube lumineux ; 3 cols candidats (débat ouvert). Silhouettes d'éléphants inventées. Sans état. -->
+<style>
+:root{--bg:#14221C;--surface:#1E3329;--gold:#E8C872;--clay:#D9734E;--mint:#9FD3C7;--text:#F1EEDC}
+html,body{margin:0;background:var(--bg);width:1080px;height:1920px;overflow:hidden}
+canvas{position:absolute;inset:0;display:block}
+#fade{position:absolute;left:0;right:0;top:1040px;height:880px;background:linear-gradient(to bottom,rgba(20,34,28,0),rgba(20,34,28,.88) 22%,#14221C 40%)}
+#topfade{position:absolute;left:0;right:0;top:0;height:470px;background:linear-gradient(to bottom,#14221C 0,rgba(20,34,28,.85) 55%,rgba(20,34,28,0))}
+.hud{position:absolute;left:60px;color:var(--mint);font:500 54px/1 'JetBrains Mono';letter-spacing:1px}
+#coord{top:236px}
+#alt{top:304px;display:flex;align-items:baseline;gap:22px}
+#alt span{font:700 104px/1 'JetBrains Mono';color:var(--gold);letter-spacing:-2px}
+#alt span.rng{font-size:76px;letter-spacing:-1px}
+.beat{position:absolute;left:60px;width:900px;top:1170px;color:var(--text)}
+.k{font:700 54px/1 'JetBrains Mono';color:var(--clay);letter-spacing:2px;margin-bottom:26px}
+.h{font:800 100px/1.0 'Inter';letter-spacing:-3.5px}
+.h em{font-style:normal;color:var(--gold)}
+.s{font:500 54px/1.15 'JetBrains Mono';color:var(--mint);margin-top:28px}
+.row{font:500 54px/1.15 'JetBrains Mono';color:var(--text);margin-top:10px}
+.row b{display:inline-block;width:64px;color:var(--gold);font-weight:700}
+#herd{display:grid;grid-template-columns:repeat(10,64px);gap:10px 22px;margin-top:30px}
+#herd svg{width:64px;height:44px;fill:var(--text)}
+.pin{position:absolute;transform:translate(-50%,-100%);text-align:center;color:var(--gold);font:700 54px/1 'JetBrains Mono';white-space:nowrap}
+.pin:after{content:'';display:block;width:4px;height:var(--l,90px);margin:10px auto 0;background:currentColor}
+.pin b{display:block;width:18px;height:18px;border-radius:50%;background:currentColor;margin:-6px auto 0;box-shadow:0 0 0 8px rgba(232,200,114,.22)}
+.pin.m{color:var(--mint)}
+</style>
+<script type="importmap">{"imports":{"three":"/node_modules/three/build/three.module.js","three/addons/":"/node_modules/three/examples/jsm/"}}</script>
+</head><body>
+<svg width="0" height="0" style="position:absolute"><defs><symbol id="el" viewBox="0 0 64 44">
+  <ellipse cx="25" cy="19" rx="18" ry="12"/><circle cx="45" cy="14" r="9"/>
+  <path d="M51 15 C58 21 58 30 55 37 L50 37 C52 31 52 24 47 20 Z"/>
+  <rect x="10" y="24" width="7" height="17" rx="2"/><rect x="19" y="25" width="7" height="16" rx="2"/>
+  <rect x="30" y="25" width="7" height="16" rx="2"/><rect x="38" y="23" width="7" height="18" rx="2"/>
+  <path d="M8 15 C3 19 3 25 5 29" stroke="currentColor" stroke-width="2.5" fill="none"/></symbol></defs></svg>
+<div id="topfade"></div><div id="fade"></div>
+<div class="hud" id="coord">ALPES · 218 AV. J.-C.</div>
+<div class="hud" id="alt"><em id="altk" style="font-style:normal">ALT</em> <span id="altv">0 m</span></div>
+<div class="pin" id="pA">A ?<b></b></div><div class="pin" id="pB">B ?<b></b></div><div class="pin" id="pC">C ?<b></b></div>
+<div class="pin m" id="pI" style="--l:70px">ITALIE<b></b></div>
+<div class="beat" id="b0"><div class="k">218 AV. J.-C.</div><div class="h">Hannibal<br>traverse<br><em>les Alpes</em></div></div>
+<div class="beat" id="b1"><div class="k">DÉPART : ESPAGNE</div><div class="h">≈ <em id="n37">37</em> éléphants</div><div id="herd"></div></div>
+<div class="beat" id="b2"><div class="k">EN AUTOMNE</div><div class="h">Déjà de la<br><em>neige</em> en haut</div><div class="s">l'armée grimpe</div></div>
+<div class="beat" id="b3"><div class="k">DÉBAT OUVERT</div><div class="h">Mais quel <em>col&nbsp;?</em></div>
+  <div class="row" style="margin-top:30px"><b>A</b>Petit-St-Bernard</div><div class="row"><b>B</b>Mont-Cenis</div><div class="row"><b>C</b>Traversette</div></div>
+<div class="beat" id="b4"><div class="k">CAP SUR L'ITALIE</div><div class="h">Les historiens<br><em>en débattent</em></div><div class="s">ton pari : A, B ou C ?</div></div>
+<script src="/node_modules/d3/dist/d3.min.js"></script>
+<script type="module">
+import * as THREE from 'three';
+import * as S from '/out/tools/lib/svi.js';
+import * as T from './topo.js';
+
+const SEED = 11, rnd = S.rng(SEED);
+// ---------- Alpes procédurales (stylisées) : chaîne principale + 3 cols ----------
+const ry = x => .45 + .04 * Math.sin(x * 9);                 // ligne de crête (y carte)
+const COLS = [[.25, .52], [.5, .55], [.75, .22]];            // [x, profondeur d'entaille] A,B,C (C = le plus haut)
+const N = 256;
+const H = T.heightfield(N, (x, y) => {
+  const r = T.ridged(x, y, { f0: 3.4, ox: 11.3, oy: 2.9 });
+  let chain = Math.exp(-Math.pow((y - ry(x)) / .13, 2)) * (.85 + .5 * r);
+  for (const [cx, d] of COLS) chain *= 1 - d * Math.exp(-Math.pow((x - cx) / .045, 2)) * Math.exp(-Math.pow((y - ry(x)) / .2, 2));
+  let h = chain + r * .32;
+  const valley = Math.exp(-Math.pow((x - .5 - .03 * Math.sin(y * 9)) / .07, 2)) * S.smoothstep(.5, .7, y);
+  h -= valley * .28;
+  h *= .35 + .65 * (S.smoothstep(.97, .78, y) * S.smoothstep(.04, .22, y));   // plaines (Gaule devant, Italie au fond)
+  return h;
+});
+const maps = T.contourMaps(H, N, { levels: 36, hiGold: .6 });
+const { ren, scene, cam } = T.setup({ fogNear: 12, fogFar: 34 });
+const SZ = 12, AMP = 2.7;
+const R = T.makeRelief(H, N, maps, { SZ, AMP });
+scene.add(R.group);
+const ALTMAX = 3600;   // échelle stylisée : hauteur normalisée 1 -> 3 600 m
+
+// ---------- itinéraires ----------
+const P = [.5, .63], I = [.5, .07];
+function dense(ctrl, per = 40, lift = .07) {
+  const out = [];
+  for (let s = 0; s < ctrl.length - 1; s++) for (let k = 0; k < per; k++) {
+    const u = k / per, x = S.lerp(ctrl[s][0], ctrl[s + 1][0], u), y = S.lerp(ctrl[s][1], ctrl[s + 1][1], u);
+    const v = R.toLocal(x, y); v.y += lift; out.push(v);
+  }
+  const l = ctrl[ctrl.length - 1], v = R.toLocal(l[0], l[1]); v.y += lift; out.push(v);
+  return out;
+}
+const approachCtrl = [[.5, .84], [.47, .78], [.53, .72], [.49, .67], P];
+const branchCtrl = [
+  [P, [.4, .58], [.29, .52], [.25, ry(.25)], [.29, .36], [.4, .2], I],
+  [P, [.5, .55], [.5, ry(.5)], [.5, .32], I],
+  [P, [.61, .58], [.71, .52], [.75, ry(.75)], [.71, .36], [.6, .2], I],
+];
+const approach = T.glowTube(dense(approachCtrl), 0xd9734e, { r: .075 });
+const branches = branchCtrl.map(c => T.glowTube(dense(c, 30), 0x9fd3c7, { r: .05 }));
+R.group.add(approach, ...branches);
+const head = T.glowSprite(0xe8c872, .8); R.group.add(head);
+const bHeads = branches.map(() => { const s = T.glowSprite(0x9fd3c7, .6); R.group.add(s); return s; });
+const colPts = COLS.map(([cx]) => { const v = R.toLocal(cx, ry(cx)); v.y += .1; return v; });
+const italy = R.toLocal(I[0], I[1]);
+
+// ---------- colonne d'éléphants (silhouettes inventées, sprites) ----------
+const ec = document.createElement('canvas'); ec.width = 128; ec.height = 88; const eg = ec.getContext('2d');
+eg.scale(2, 2); eg.fillStyle = '#F1EEDC'; eg.strokeStyle = '#F1EEDC';
+eg.beginPath(); eg.ellipse(25, 19, 18, 12, 0, 0, 7); eg.fill(); eg.beginPath(); eg.arc(45, 14, 9, 0, 7); eg.fill();
+eg.fill(new Path2D('M51 15 C58 21 58 30 55 37 L50 37 C52 31 52 24 47 20 Z'));
+[[10, 24, 17], [19, 25, 16], [30, 25, 16], [38, 23, 18]].forEach(([x, y, h]) => eg.fillRect(x, y, 7, h));
+const eTex = new THREE.CanvasTexture(ec); eTex.colorSpace = THREE.SRGBColorSpace;
+// altitude affichée = maximum atteint depuis le départ (compteur monotone)
+const ALTS = d3.range(0, 1.0001, .005).map(u => approach.curve.getPointAt(u).y);
+for (let i = 1; i < ALTS.length; i++) ALTS[i] = Math.max(ALTS[i], ALTS[i - 1]);
+const herd3d = d3.range(9).map(() => { const s = new THREE.Sprite(new THREE.SpriteMaterial({ map: eTex, transparent: true, depthWrite: false })); s.scale.set(.26, .18, 1); s.center.set(.5, 0); R.group.add(s); return s; });
+
+// ---------- neige ----------
+const NS = 900, sBase = new Float32Array(NS * 3), sPos = new Float32Array(NS * 3);
+for (let i = 0; i < NS; i++) { sBase[i * 3] = rnd() * 9 - 4.5; sBase[i * 3 + 1] = rnd() * 5; sBase[i * 3 + 2] = rnd() * 9 - 4.5; }
+const sg = new THREE.BufferGeometry(); sg.setAttribute('position', new THREE.BufferAttribute(sPos, 3));
+const snow = new THREE.Points(sg, new THREE.PointsMaterial({ map: T.glowTexture(), color: 0xf1eedc, size: .12, transparent: true, opacity: 0, depthWrite: false }));
+scene.add(snow);
+
+// ---------- caméra drone : (t, cible x, cible y carte, azimut, rayon, hauteur, avance de visée) ----------
+const KEYS = [
+  [0.0, .5, .64, -0.35, 10.5, 11.0, -0.2],
+  [3.0, .5, .63, -0.20, 9.6, 10.2, -0.2],
+  [6.0, .5, .60, 0.0, 9.0, 9.4, 0.0],
+  [8.6, .5, .56, 0.10, 8.8, 8.6, 0.4],
+  [12.2, .5, .46, 0.0, 10.4, 8.6, 1.4],
+  [15.0, .5, .36, -0.10, 12.0, 10.0, 1.4],
+];
+const tgt = new THREE.Vector3();
+function camAt(t) {
+  let i = 0; while (i < KEYS.length - 2 && t > KEYS[i + 1][0]) i++;
+  const A = KEYS[i], B = KEYS[i + 1], k = T.E.glide(S.clamp((t - A[0]) / (B[0] - A[0])));
+  const v = A.map((a, n) => S.lerp(a, B[n], k));
+  tgt.copy(R.toLocal(v[1], v[2])); tgt.y *= R.group.scale.y;
+  cam.position.set(tgt.x + Math.sin(v[3]) * v[4], tgt.y + v[5], tgt.z + Math.cos(v[3]) * v[4]);
+  cam.lookAt(tgt.x, tgt.y - .6, tgt.z - v[6]);
+}
+
+const $ = id => document.getElementById(id);
+const herd = $('herd'); for (let i = 0; i < 37; i++) herd.insertAdjacentHTML('beforeend', '<svg><use href="#el"/></svg>');
+const icons = [...herd.children];
+const beats = [['b0', 0, .15, 2.75, 3.05], ['b1', 3.05, 3.35, 5.75, 6.05], ['b2', 6.05, 6.35, 8.35, 8.65], ['b3', 8.65, 8.95, 11.95, 12.25], ['b4', 12.25, 12.55]];
+const fm = T.fmt.format(',.0f');
+const pinAt = (el, v, k) => { const w = v.clone().applyMatrix4(R.group.matrixWorld); const [x, y] = T.toScreen(w, cam); el.style.left = x + 'px'; el.style.top = y + 'px'; el.style.opacity = k.toFixed(3); el.style.display = k > .001 ? '' : 'none'; };
+
+S.installContract({
+  duration: 15,
+  ready: S.loadFonts(T.FONTS),
+  renderAt: t => {
+    R.group.scale.y = S.lerp(.3, 1, T.E.rise(S.seg(t, 0, 2.2)));
+    R.U.uLevel.value = S.lerp(.03, 1.02, S.seg(t, .1, 2.9, S.ease.inOutSine));
+    R.U.uScan.value = 1 - S.seg(t, 2.8, 3.2);
+    R.U.uSnow.value = .35 + .65 * S.seg(t, 6.0, 7.0);
+    R.group.updateMatrixWorld(true);
+    camAt(t);
+    // route d'approche
+    const u = S.seg(t, .4, 8.6, S.ease.inOutSine);
+    approach.draw(u);
+    const hp = approach.curve.getPointAt(Math.max(u, .001)); head.position.copy(hp); head.position.y += .05;
+    head.visible = t < 9.2; head.material.opacity = 1 - S.seg(t, 8.6, 9.2);
+    // éléphants qui suivent la tête
+    herd3d.forEach((s, i) => {
+      const uu = u - (i + 1) * .03; const k = Math.min(S.seg(t, 3.0, 3.6), 1 - S.seg(t, 9.0, 9.6));
+      s.visible = uu > 0 && k > .01; if (!s.visible) return;
+      s.position.copy(approach.curve.getPointAt(uu)); s.material.opacity = k;
+    });
+    // cols candidats
+    const ub = S.seg(t, 8.7, 12.2, S.ease.inOutSine);
+    branches.forEach((b, i) => {
+      b.draw(ub);
+      bHeads[i].visible = ub > 0 && ub < 1; if (bHeads[i].visible) bHeads[i].position.copy(b.curve.getPointAt(Math.max(ub, .001)));
+    });
+    // neige
+    const kS = Math.min(S.seg(t, 5.9, 6.6), 1 - .5 * S.seg(t, 9, 10));
+    snow.visible = kS > .01; snow.material.opacity = .85 * kS;
+    if (snow.visible) {
+      for (let i = 0; i < NS; i++) {
+        sPos[i * 3] = tgt.x + sBase[i * 3] + .25 * Math.sin(t * .7 + i);
+        sPos[i * 3 + 1] = tgt.y + .3 + ((sBase[i * 3 + 1] - t * .55) % 5 + 5) % 5;
+        sPos[i * 3 + 2] = tgt.z - 1.2 + sBase[i * 3 + 2];
+      }
+      sg.attributes.position.needsUpdate = true;
+    }
+    ren.render(scene, cam);
+    // HUD
+    const range = t > 9.6;
+    $('altk').textContent = range ? 'COL ?' : 'ALT';
+    $('altv').className = range ? 'rng' : '';
+    $('altv').textContent = range ? '2 083–2 950 m' : fm(Math.round(ALTS[Math.round(u * 200)] / AMP * ALTMAX / 10) * 10) + ' m';
+    // balises
+    ['pA', 'pB', 'pC'].forEach((id, i) => pinAt($(id), colPts[i], S.seg(t, 9.3 + i * .25, 9.8 + i * .25, S.ease.outCubic)));
+    pinAt($('pI'), italy, S.seg(t, 12.0, 12.6, S.ease.outCubic));
+    // troupeau DOM (37 silhouettes)
+    const nE = Math.round(37 * S.seg(t, 3.1, 5.0, S.ease.outCubic));
+    icons.forEach((el, i) => { el.style.opacity = i < nE ? 1 : .12; el.style.fill = i < nE ? '' : ''; });
+    $('n37').textContent = String(nE);
+    for (const [id, a, b, c, d] of beats) T.show($(id), t, a, b, c, d);
+    if (t < .15) { $('b0').style.opacity = 1; $('b0').style.transform = 'none'; $('b0').style.display = ''; }
+  },
+});
+</script></body></html>

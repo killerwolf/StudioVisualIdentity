@@ -1,0 +1,24 @@
+{
+ "name": "GSAP 3.15",
+ "role": "typo",
+ "bestFor": [
+  "timeline unique pausée seekée sur un temps quantifié floor(t·12)/12 (animation on twos)",
+  "slams de titres DOM en deux passes, étiquettes scaleX, tampons back.out",
+  "objets d'état ({v}) lus par p5 à chaque frame (chute des découpes, compteur 0->120, coches)"
+ ],
+ "avoidFor": [
+  "piloter des milliers d'éléments canvas (calculer dans p5)"
+ ],
+ "renderCostPer100Frames": "négligeable (< 1 ms/frame) ; coût global de la scène p5+GSAP : 25,9–43,0 s/100 frames mesurés (riso-zine, sous contention)",
+ "gotchas": [
+  "immediateRender:false sur les fromTo + pages en display:none hors de leur intervalle : l'état initial n'est jamais visible",
+  "tl.seek(t, false) sans retour (thenable)",
+  "GSAP écrit transform : pour décaler la passe rose d'un titre, utiliser la propriété CSS translate (indépendante)",
+  "ticks sonores d'un compteur power2.out : t = t0 + d·(1-sqrt(1-n/N))"
+ ],
+ "snippetPath": "shorts/riso-zine__evenements__geminides-j-39/src",
+ "pairsWellWith": [
+  "p5.js",
+  "DOM + @fontsource"
+ ]
+}

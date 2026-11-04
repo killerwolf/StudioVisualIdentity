@@ -1,0 +1,180 @@
+{
+ "duration": 15.0,
+ "seed": 11,
+ "bpm": 72,
+ "key": "D",
+ "scale": "dorian",
+ "music": {
+  "preset": "drone",
+  "gain": 0.55,
+  "octave": 2,
+  "density": 0.4,
+  "loop": false
+ },
+ "events": [
+  {
+   "t": 0.0,
+   "type": "riser",
+   "gain": 0.5,
+   "dur": 2.8
+  },
+  {
+   "t": 2.95,
+   "type": "impact",
+   "gain": 0.75
+  },
+  {
+   "t": 3.2,
+   "type": "thud",
+   "gain": 0.32
+  },
+  {
+   "t": 3.2,
+   "type": "tick",
+   "gain": 0.3
+  },
+  {
+   "t": 3.5,
+   "type": "tick",
+   "gain": 0.33999999999999997
+  },
+  {
+   "t": 3.8,
+   "type": "tick",
+   "gain": 0.38
+  },
+  {
+   "t": 3.82,
+   "type": "thud",
+   "gain": 0.32
+  },
+  {
+   "t": 4.1,
+   "type": "tick",
+   "gain": 0.42
+  },
+  {
+   "t": 4.4,
+   "type": "tick",
+   "gain": 0.45999999999999996
+  },
+  {
+   "t": 4.44,
+   "type": "thud",
+   "gain": 0.32
+  },
+  {
+   "t": 4.7,
+   "type": "tick",
+   "gain": 0.5
+  },
+  {
+   "t": 5.0,
+   "type": "tick",
+   "gain": 0.54
+  },
+  {
+   "t": 5.05,
+   "type": "chime",
+   "note": "A5",
+   "gain": 0.3
+  },
+  {
+   "t": 5.06,
+   "type": "thud",
+   "gain": 0.32
+  },
+  {
+   "t": 5.68,
+   "type": "thud",
+   "gain": 0.32
+  },
+  {
+   "t": 6.05,
+   "type": "whoosh",
+   "gain": 0.45,
+   "dur": 0.6
+  },
+  {
+   "t": 6.2,
+   "type": "glass",
+   "note": "E6",
+   "gain": 0.25
+  },
+  {
+   "t": 6.3,
+   "type": "thud",
+   "gain": 0.32
+  },
+  {
+   "t": 6.9,
+   "type": "glass",
+   "note": "A6",
+   "gain": 0.2
+  },
+  {
+   "t": 6.92,
+   "type": "thud",
+   "gain": 0.32
+  },
+  {
+   "t": 7.54,
+   "type": "thud",
+   "gain": 0.32
+  },
+  {
+   "t": 8.16,
+   "type": "thud",
+   "gain": 0.32
+  },
+  {
+   "t": 8.6,
+   "type": "whoosh",
+   "gain": 0.55,
+   "dur": 0.5
+  },
+  {
+   "t": 9.3,
+   "type": "blip",
+   "note": "D5",
+   "gain": 0.45
+  },
+  {
+   "t": 9.55,
+   "type": "blip",
+   "note": "F5",
+   "gain": 0.45
+  },
+  {
+   "t": 9.8,
+   "type": "blip",
+   "note": "A5",
+   "gain": 0.45
+  },
+  {
+   "t": 12.0,
+   "type": "swell",
+   "note": "D4",
+   "gain": 0.4,
+   "dur": 2.4
+  },
+  {
+   "t": 12.25,
+   "type": "whoosh",
+   "gain": 0.45,
+   "dur": 0.5
+  },
+  {
+   "t": 12.6,
+   "type": "chime",
+   "note": "D5",
+   "gain": 0.35
+  },
+  {
+   "t": 14.3,
+   "type": "chime",
+   "note": "A4",
+   "gain": 0.25
+  }
+ ]
+}

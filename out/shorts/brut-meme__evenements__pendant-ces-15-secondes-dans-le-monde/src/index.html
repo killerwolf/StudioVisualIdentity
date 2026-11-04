@@ -1,0 +1,193 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8">
+<title>Brut Mème — Pendant ces 15 secondes, dans le monde…</title>
+<!-- Identité brut-meme / famille evenements. Compteurs « live » calés sur l'horloge du short (valeur = débit × t).
+     PixiJS 8 : fond, trame, pastilles (naissances/décès), éclairs, flux d'e-mails, orbite, coeur, barres du récap,
+     jauge rubalise. GSAP 3 : slams/slides des textes DOM. Caméra JS : punch-in 1,15 en 3 frames à chaque cut + shake.
+     Déterministe (seed 15 pour les éclairs et le shake). -->
+<style id="base"></style>
+<style>
+.ir{color:var(--red)}.iy{color:var(--yel)}.iw{color:var(--white)}.ik{color:var(--bg)}
+.row{position:absolute;left:0;width:1080px;text-align:center}
+.row>span{display:inline-block;white-space:nowrap}
+.circ{position:absolute;border-radius:50%;background:var(--red);border:8px solid var(--bg);box-shadow:0 0 0 7px var(--white),16px 16px 0 7px #000;
+  display:flex;align-items:center;justify-content:center;text-align:center}
+.sub{font:900 60px/1.05 'Inter';letter-spacing:-2px}
+#clock{left:60px;top:236px;font-variant-numeric:tabular-nums;z-index:5}
+#clock i{display:inline-block;width:26px;height:26px;border-radius:50%;background:var(--white);margin-right:14px;vertical-align:4px}
+.num{font-variant-numeric:tabular-nums}
+.rl{position:absolute;left:60px;width:900px;height:130px}
+.rl b{position:absolute;left:30px;top:16px;font:400 112px/1 'Anton';color:var(--yel);white-space:nowrap}
+.rl em{position:absolute;right:30px;top:38px;font:900 58px/1 'Inter';font-style:normal;letter-spacing:-2px;color:var(--white);white-space:nowrap}
+</style></head><body>
+<div id="cam">
+  <div id="pix"></div>
+  <div id="dom">
+    <div class="sc" id="s0">
+      <div class="row" style="top:340px"><span class="big iw" data-fit="900" data-max="330" id="h1">PENDANT</span></div>
+      <div class="row" style="top:655px"><span class="big iw" data-fit="900" data-max="330" id="h2">CES <span class="iy">15</span></span></div>
+      <div class="row" style="top:975px"><span class="big iw" data-fit="900" data-max="330" id="h3">SECONDES,</span></div>
+      <div class="row later" id="h4" style="top:1290px"><span class="big hl" data-fit="820" data-max="170">DANS LE MONDE…</span></div>
+    </div>
+    <div class="sc" id="s1"></div><div class="sc" id="s2"></div><div class="sc" id="s3"></div>
+    <div class="sc" id="s4"></div><div class="sc" id="s5"></div><div class="sc" id="s6"></div>
+    <div class="sc" id="s7">
+      <div class="row" style="top:330px"><span class="big ik" data-fit="900" data-max="200" id="rt">EN 15 SECONDES</span></div>
+    </div>
+    <div class="sc" id="s8">
+      <div class="row" style="top:340px"><span class="big iw" data-fit="900" data-max="330" id="f1">ET TOI,</span></div>
+      <div class="row" style="top:655px"><span class="big iw" data-fit="900" data-max="330" id="f2">T'AS FAIT</span></div>
+      <div class="row" style="top:975px"><span class="big hl" data-fit="760" data-max="270" id="f3">QUOI ?</span></div>
+      <div class="circ later" id="f4" style="left:590px;top:1250px;width:280px;height:280px"><div class="stk" style="font-size:58px">DIS-LE<br>EN<br>COMM'</div></div>
+      <div class="a later" id="f5" style="left:120px;top:1300px;width:300px;text-align:center;font:400 130px/1 'Anton';color:var(--bg)">?!</div>
+    </div>
+    <div class="a tag" id="clock"><i></i><span>EN DIRECT · 00,0 S</span></div>
+  </div>
+</div>
+<script src="/node_modules/pixi.js/dist/pixi.min.js"></script>
+<script src="/node_modules/gsap/dist/gsap.min.js"></script>
+<script type="module">
+import * as S from '/out/tools/lib/svi.js';
+import * as B from './brut.js';
+document.getElementById('base').textContent = B.BASE_CSS;
+const DUR = 16.0, SEED = 15, END = 15.0;
+
+// ---- compteurs : débit par seconde (valeurs arrondies, sources dans short.json)
+const CNT = [
+  { id: 's1', t0: 2.2, t1: 3.9, bg: 'yel', label: 'NAISSANCES', rate: 4.2, unit: 'bébés sont nés', stk: '≈ 4,2<br>PAR<br>SECONDE', vis: 'pips' },
+  { id: 's2', t0: 3.9, t1: 5.5, bg: 'bg', label: 'DÉCÈS', rate: 1.9, unit: 'personnes sont mortes', stk: '≈ 1,9<br>PAR<br>SECONDE', vis: 'squares' },
+  { id: 's3', t0: 5.5, t1: 7.2, bg: 'bg', label: 'ÉCLAIRS', rate: 44, unit: 'éclairs ont frappé', stk: '≈ 44<br>PAR<br>SECONDE', vis: 'bolts' },
+  { id: 's4', t0: 7.2, t1: 8.9, bg: 'yel', label: 'E-MAILS', rate: 4e6, unit: 'e-mails envoyés', stk: '≈ 4<br>MILLIONS<br>/ SECONDE', vis: 'mails' },
+  { id: 's5', t0: 8.9, t1: 10.9, bg: 'bg', label: 'LA TERRE', rate: 29.8, unit: 'parcourus autour du Soleil', stk: '≈ 30<br>KM<br>/ SECONDE', vis: 'orbit', suffix: ' KM' },
+  { id: 's6', t0: 10.9, t1: 12.4, bg: 'bg', label: 'TON CŒUR', rate: 1.2, unit: 'battements, environ', stk: '≈ 70<br>PAR<br>MINUTE', vis: 'heart' },
+];
+CNT.forEach((c, i) => {
+  const el = document.getElementById(c.id);
+  const onY = c.bg === 'yel';
+  const maxStr = B.fmt(c.rate * c.t1) + (c.suffix || '');
+  el.innerHTML = `
+    <div class="row" style="top:340px"><span class="big ${onY ? 'inv' : 'hl'}" style="font-size:132px;padding:16px 24px 2px">${c.label}</span></div>
+    <div class="row" style="top:560px"><span class="big num ${onY ? 'ik' : (i === 1 ? 'ir' : 'iy')}" data-fit="900" data-max="480">${maxStr}</span></div>
+    <div class="row" style="top:1000px"><span class="sub ${onY ? 'ik' : 'iw'}">${c.unit}</span></div>
+    <div class="circ later" style="left:610px;top:1140px;width:300px;height:300px"><div class="stk" style="font-size:58px">${c.stk}</div></div>`;
+  c.el = el; c.num = el.querySelector('.num'); c.stkEl = el.querySelector('.circ'); c.lab = el.querySelector('.row span');
+});
+
+// ---- récap
+const RECAP = [['≈ 63', 'NAISSANCES'], ['≈ 29', 'DÉCÈS'], ['≈ 660', 'ÉCLAIRS'], ['≈ 60 M', 'E-MAILS'], ['≈ 450 KM', 'LA TERRE'], ['≈ 18', 'TES BATTEMENTS']];
+const s7 = document.getElementById('s7');
+RECAP.forEach(([n, l], i) => {
+  const d = document.createElement('div'); d.className = 'rl later'; d.id = 'rc' + i;
+  d.style.top = (560 + i * 160) + 'px'; d.innerHTML = `<b${i === 1 ? ' style="color:var(--red)"' : ''}>${n}</b><em>${l}</em>`; s7.appendChild(d);
+});
+const RT = RECAP.map((_, i) => 12.55 + i * 0.2);
+
+const SC = [['s0', 0, 2.2], ...CNT.map(c => [c.id, c.t0, c.t1]), ['s7', 12.4, 13.9], ['s8', 13.9, DUR + 1]]
+  .map(([id, a, b]) => [document.getElementById(id), a, b]);
+const BG = [B.X.bg, ...CNT.map(c => c.bg === 'yel' ? B.X.yel : B.X.bg), B.X.yel, B.X.bg];
+
+// ---- caméra
+const CUTS = [[0, 1], [0.6, 0.5], [12.4, 1], [13.9, 1], [14.4, 0.5], [END, 1]];
+CNT.forEach(c => CUTS.push([c.t0, 1], [c.t0 + 0.5, 0.5], [c.t0 + 1.0, 0.3]));
+RT.forEach(t => CUTS.push([t, 0.3]));
+const SHAKES = [[0.6, 8], [14.4, 10], [END, 16]];
+CNT.forEach(c => SHAKES.push([c.t0 + 0.5, 9]));
+
+// ---- GSAP
+const tl = gsap.timeline({ paused: true });
+tl.fromTo('#h1', { scale: 1.6 }, { scale: 1, duration: 0.1, ease: 'power4.out', immediateRender: false }, 0.034);
+B.slam(tl, '#h4', 0.6, { rot: -3, from: 2.0 });
+CNT.forEach(c => {
+  B.slide(tl, c.lab, c.t0 + 0.034, { x: -1100 });
+  B.slam(tl, c.stkEl, c.t0 + 0.5, { rot: -10 });
+});
+tl.fromTo('#rt', { scale: 1.6 }, { scale: 1, duration: 0.1, ease: 'power4.out', immediateRender: false }, 12.434);
+RT.forEach((t, i) => B.slide(tl, '#rc' + i, t, { x: i % 2 ? 1100 : -1100 }));
+tl.fromTo('#f1', { scale: 1.6 }, { scale: 1, duration: 0.1, ease: 'power4.out', immediateRender: false }, 13.934);
+B.slide(tl, '#f2', 14.1, { x: 1100 });
+B.slam(tl, '#f3', 14.25, { rot: -2, from: 2.0 });
+B.slam(tl, '#f4', 14.4, { rot: -10 });
+B.slam(tl, '#f5', 14.4, { rot: 8 });
+B.slam(tl, '#clock', END, { from: 1.8, rot: 0 });
+
+let app, g, dots;
+const clockTxt = document.querySelector('#clock span'), clockEl = document.getElementById('clock');
+const ready = (async () => {
+  await S.loadFonts(B.FONTS);
+  app = await B.initPixi(document.getElementById('pix'));
+  dots = B.halftone(app); app.stage.addChild(dots);
+  g = new PIXI.Graphics(); app.stage.addChild(g);
+  B.fitAll();
+})();
+
+function visual(c, t) {
+  const n = Math.floor(c.rate * t);
+  const onY = c.bg === 'yel';
+  if (c.vis === 'pips' || c.vis === 'squares') {
+    // une pastille par unité comptée depuis le début du short ; la plus récente « pop »
+    for (let k = 0; k < n; k++) {
+      const col = k % 8, rowi = Math.floor(k / 8);
+      const x = 100 + col * 64, y = 1180 + rowi * 70;
+      const born = k / c.rate, age = t - born;
+      const s = age < 0.1 ? 1 + 0.6 * (1 - age / 0.1) : 1;
+      if (c.vis === 'pips') g.circle(x, y, 24 * s).fill({ color: B.X.bg });
+      else g.rect(x - 22 * s, y - 22 * s, 44 * s, 44 * s).fill({ color: B.X.white });
+    }
+  } else if (c.vis === 'bolts') {
+    const beat = Math.floor((t - c.t0) / 0.5);
+    for (let k = 0; k < 4; k++) {
+      const r = S.rng(SEED * 1000 + beat * 10 + k);
+      B.bolt(g, 110 + k * 125 + r() * 40, 1130 + r() * 60, 300 + r() * 80, SEED + beat * 7 + k, k % 2 ? B.X.yel : B.X.white);
+    }
+  } else if (c.vis === 'mails') {
+    for (let rI = 0; rI < 3; rI++) {
+      const sp = 900 + rI * 300, y = 1160 + rI * 110, off = ((t * sp) % 150);
+      for (let x = -150 - off + 60; x < 620; x += 150) {
+        const xx = Math.max(60, x), w = Math.min(x + 116, 600) - xx;
+        if (w < 10) continue;
+        g.rect(xx, y, w, 76).fill({ color: B.X.bg });
+        if (x >= 60 && x + 116 <= 600) g.moveTo(x + 6, y + 8).lineTo(x + 58, y + 44).lineTo(x + 110, y + 8).stroke({ width: 7, color: B.X.yel });
+      }
+    }
+  } else if (c.vis === 'orbit') {
+    const sx = -60, sy = 1560, R = 430;
+    g.circle(sx, sy, 230).fill({ color: B.X.yel }).stroke({ width: 10, color: B.X.white });
+    for (let a = -1.25; a < -0.05; a += 0.06) g.moveTo(sx + Math.cos(a) * R, sy + Math.sin(a) * R).lineTo(sx + Math.cos(a + 0.03) * R, sy + Math.sin(a + 0.03) * R);
+    g.stroke({ width: 8, color: B.X.white });
+    const a = -1.2 + S.clamp((t - c.t0) / (c.t1 - c.t0)) * 1.05;
+    const ex = sx + Math.cos(a) * R, ey = sy + Math.sin(a) * R;
+    for (let k = 1; k <= 3; k++) { const b = a - 0.05 * k - 0.04; g.moveTo(sx + Math.cos(b) * (R - 30 + k * 15), sy + Math.sin(b) * (R - 30 + k * 15)).lineTo(sx + Math.cos(b - 0.12) * (R - 30 + k * 15), sy + Math.sin(b - 0.12) * (R - 30 + k * 15)); }
+    g.stroke({ width: 9, color: B.X.yel, cap: 'round' });
+    g.circle(ex + 10, ey + 10, 44).fill({ color: B.X.black });
+    g.circle(ex, ey, 44).fill({ color: B.X.white }).stroke({ width: 8, color: B.X.bg });
+    g.circle(ex - 10, ey - 6, 16).fill({ color: B.X.red });
+  } else if (c.vis === 'heart') {
+    const last = Math.floor(t * c.rate) / c.rate, age = t - last;
+    const s = 1 + 0.15 * (1 - S.clamp(age / 0.1)) ** 2;
+    B.heart(g, 330, 1310, 170 * s, B.X.red);
+  }
+}
+
+function renderAt(t) {
+  tl.seek(t, false);
+  const idx = B.scenes(t, SC);
+  B.applyCamera(document.getElementById('cam'), B.camera(t, CUTS, SHAKES));
+  const bg = BG[idx];
+  app.renderer.background.color = bg;
+  dots.tint = bg === B.X.yel ? 0xE8D000 : 0x262626;
+  g.clear();
+  const tc = Math.min(t, END);
+  if (t < END - 1e-6) { clockTxt.textContent = 'EN DIRECT · ' + tc.toFixed(1).padStart(4, '0').replace('.', ',') + ' S'; clockEl.style.background = 'var(--red)'; clockEl.style.color = 'var(--white)'; }
+  else { clockTxt.textContent = 'TEMPS ÉCOULÉ · 15,0 S'; clockEl.style.background = 'var(--yel)'; clockEl.style.color = 'var(--bg)'; }
+  const c = CNT[idx - 1];
+  if (c) {
+    c.num.textContent = B.fmt(c.rate * t) + (c.suffix || '');
+    visual(c, t);
+  }
+  if (idx === 7) RT.forEach((rt, i) => { if (t >= rt) B.block(g, 60, 560 + i * 160, 900, 130, B.X.bg, B.X.white, 10); });
+  if (idx === 8 && t >= 14.4) B.starburst(g, 270, 1370, 160, 108, 10, 0.3, B.X.yel, B.X.bg, 6);
+  B.hazardBar(g, 60, 1556, 900, 30, tc / END, bg === B.X.yel ? B.X.bg : B.X.yel, bg === B.X.yel ? B.X.yel : B.X.bg);
+  app.renderer.render(app.stage);
+}
+
+S.installContract({ duration: DUR, ready, renderAt });
+</script></body></html>

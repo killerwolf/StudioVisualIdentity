@@ -1,0 +1,202 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8">
+<title>riso-zine · evenements · Géminides J-39</title>
+<!-- p5.js v2 (instance) : couches d'encre + trame + multiply (riso.js) ; GSAP 3.15 : timeline seekée sur temps quantifié
+     à 12 fps (on twos). Ciel = découpe bleue ; étoiles filantes « réservées » (papier) avec tête jaune. Graine : 39.
+     Grain / manques d'encre / papier qui ondule : post.py (OpenCV). Référence : 2026-11-04 -> 2026-12-13 = 39 jours. -->
+<style>
+:root{--pink:#FF48B0;--blue:#0078BF;--yel:#FFE800;--ink:#1A1A1A;--paper:#F6F0E4}
+html,body{margin:0;background:var(--paper);width:1080px;height:1920px;overflow:hidden}
+#stage{position:absolute;inset:0} canvas{position:absolute;inset:0;display:block}
+.page{position:absolute;inset:0;display:none}
+.grp,.t,.mk,.tag{position:absolute;mix-blend-mode:multiply;white-space:nowrap}
+.mono{font-family:'Space Mono';font-weight:700}
+.grp>span{mix-blend-mode:multiply;display:block}
+.grp>.passP{position:absolute;left:0;top:0;color:var(--pink)} .grp>.passB{color:var(--blue)}
+.mk{font-family:'Permanent Marker';color:var(--blue);line-height:1}
+.sm{font-family:'Space Mono';font-weight:700;font-size:.92em}
+.tag{background:var(--yel);color:var(--ink);padding:8px 20px 4px;line-height:1}
+.big{font-size:340px;line-height:1;letter-spacing:-14px}
+.h{left:56px;top:250px;font-size:104px;line-height:1;letter-spacing:-4px}
+.tk{left:60px;font-size:60px;transform-origin:left center}
+</style></head><body>
+<div id="stage"></div>
+<div id="pages"></div>
+<script src="/node_modules/p5/lib/p5.min.js"></script>
+<script src="/node_modules/gsap/dist/gsap.min.js"></script>
+<script type="module">
+import * as S from '/out/tools/lib/svi.js';
+import * as R from './riso.js';
+const SEED = 39, DUR = 16;
+const tp = s => `<span class="passP">${s}</span><span class="passB">${s}</span>`;
+const T = [0, 2.4, 5.6, 8.6, 11.4, 14.4, DUR];   // hook J-39, Géminides, 120/h, Phaéton, conseils, fin
+
+document.getElementById('pages').innerHTML = `
+<div class="page" id="pg0">
+  <div class="tag mono" style="left:60px;top:236px;font-size:48px">AGENDA DU CIEL</div>
+  <div class="grp mono big" style="left:50px;top:300px">${tp('J-39')}</div>
+  <div class="mk" id="m0" style="left:66px;top:676px;font-size:72px;transform:rotate(-4deg)">pluie d'étoiles en vue !</div>
+</div>
+<div class="page" id="pg1">
+  <div class="grp mono h">${tp('LES<br>GÉMINIDES')}</div>
+  <div class="tag mono" id="date" style="left:60px;top:480px;font-size:58px">NUIT DU 13 AU 14 DÉC.</div>
+  <div class="mk" id="m1" style="left:70px;top:590px;font-size:70px;transform:rotate(-4deg)">le grand max !</div>
+  <div class="mk" style="left:470px;top:1010px;font-size:56px;color:var(--paper);mix-blend-mode:normal;transform:rotate(-3deg)">Gémeaux</div>
+</div>
+<div class="page" id="pg2">
+  <div class="mk" style="left:64px;top:240px;font-size:70px;transform:rotate(-4deg)">jusqu'à</div>
+  <div class="grp mono big" id="cnt" style="left:50px;top:300px">${tp('120')}</div>
+  <div class="t mono" style="left:60px;top:650px;font-size:76px;color:var(--ink);letter-spacing:-2px">MÉTÉORES/HEURE</div>
+  <div class="mk" id="m2" style="left:66px;top:752px;font-size:62px;transform:rotate(-3deg)">dans un ciel très noir</div>
+  <div class="mk" id="m2b" style="left:300px;top:1228px;font-size:74px;color:var(--ink);transform:rotate(-5deg)">moins en ville !</div>
+</div>
+<div class="page" id="pg3">
+  <div class="grp mono h" style="font-size:96px">${tp("D'OÙ ÇA<br>VIENT ?")}</div>
+  <div class="mk" id="m3" style="left:520px;top:600px;font-size:66px;transform:rotate(-6deg)">un astéroïde !</div>
+  <div class="tag mono" id="pha" style="left:60px;top:1130px;font-size:62px"><span class="sm" style="font-size:1em">3200</span> PHAÉTON</div>
+  <div class="mk" id="m3b" style="left:60px;top:1474px;font-size:56px;color:var(--ink);transform:rotate(-3deg)">la Terre traverse ses poussières</div>
+</div>
+<div class="page" id="pg4">
+  <div class="grp mono h" style="font-size:110px">${tp('CONSEILS')}</div>
+  <div class="tag mono tk" id="tk0" style="top:430px;transform:rotate(-2deg)">LOIN DES LUMIÈRES</div>
+  <div class="tag mono tk" id="tk1" style="top:610px;transform:rotate(1.5deg)">NORD-EST, APRÈS 22 H</div>
+  <div class="tag mono tk" id="tk2" style="top:790px;transform:rotate(-1deg)">20 MIN POUR TES YEUX</div>
+  <div class="mk" id="ne" style="left:560px;top:898px;font-size:72px;transform:rotate(8deg)">vers le NE</div>
+</div>
+<div class="page" id="pg5">
+  <div class="tag mono" style="left:60px;top:236px;font-size:48px">AGENDA DU CIEL</div>
+  <div class="grp mono big" style="left:50px;top:300px">${tp('J-39')}</div>
+  <div class="tag mono" style="left:60px;top:660px;font-size:72px">13–14 DÉC.</div>
+  <div class="mk" id="m5" style="left:560px;top:668px;font-size:86px;transform:rotate(-8deg)">note-le !</div>
+</div>`;
+
+// ---------- GSAP ----------
+const st = { cnt: { v: 0 }, earth: { v: 0 }, chk: [0, 1, 2].map(() => ({ v: 0 })), m: { v: 0 }, burst: { v: 0 } };
+const tl = gsap.timeline({ paused: true });
+const slam = (sel, t0) => tl.fromTo(sel, { x: -150, rotation: -8 }, { x: 0, rotation: 0, duration: 0.3, ease: 'power3.out', immediateRender: false }, t0);
+slam('#pg1 .h', T[1]); slam('#pg2 #cnt', T[2]); slam('#pg3 .h', T[3]); slam('#pg4 .h', T[4]); slam('#pg5 .big', T[5]);
+tl.fromTo('#date', { scaleX: 0, transformOrigin: 'left center' }, { scaleX: 1, duration: 0.25, ease: 'power2.out', immediateRender: false }, T[1] + 0.3);
+tl.fromTo(st.cnt, { v: 0 }, { v: 120, duration: 1.7, ease: 'power2.out', immediateRender: false }, T[2] + 0.1);
+tl.fromTo('#pha', { scale: 0.2, rotation: 10 }, { scale: 1, rotation: -2, duration: 0.3, ease: 'back.out(2)', immediateRender: false }, T[3] + 0.5);
+tl.fromTo(st.earth, { v: 0 }, { v: 1, duration: 2.4, ease: 'none', immediateRender: false }, T[3] + 0.3);
+[0, 1, 2].forEach(i => {
+  tl.fromTo('#tk' + i, { x: -700 }, { x: 0, duration: 0.3, ease: 'power3.out', immediateRender: false }, T[4] + 0.35 + i * 0.6);
+  tl.fromTo(st.chk[i], { v: 0 }, { v: 1, duration: 0.3, ease: 'none', immediateRender: false }, T[4] + 0.7 + i * 0.6);
+});
+tl.fromTo('#m5', { scale: 2, rotation: -24 }, { scale: 1, rotation: -8, duration: 0.3, ease: 'back.out(2.2)', immediateRender: false }, T[5] + 0.5);
+// texte marqueur qui s'écrit : [id, début, durée]
+const MK = [['m0', 0, 0], ['m1', T[1] + 0.6, 0.45], ['m2', T[2] + 1.2, 0.5], ['m2b', T[2] + 1.8, 0.45], ['m3', T[3] + 0.3, 0.4], ['m3b', T[3] + 1.4, 0.6], ['ne', T[4] + 1.3, 0.2]];
+
+// ---------- dessin ----------
+function rough(x0, y0, x1, y1, seed, j = 9) {   // rectangle déchiré (bords bruités)
+  const pts = [], r = S.rng(seed), edge = (ax, ay, bx, by) => { const n = Math.ceil(Math.hypot(bx - ax, by - ay) / 22); for (let i = 0; i < n; i++) { const k = i / n; pts.push([S.lerp(ax, bx, k) + (r() - .5) * j, S.lerp(ay, by, k) + (r() - .5) * j]); } };
+  edge(x0, y0, x1, y0); edge(x1, y0, x1, y1); edge(x1, y1, x0, y1); edge(x0, y1, x0, y0); return pts;
+}
+function clipTo(g, pts, fn) { const c = g.drawingContext; c.save(); c.beginPath(); pts.forEach(([x, y], i) => i ? c.lineTo(x, y) : c.moveTo(x, y)); c.closePath(); c.clip(); fn(); c.restore(); R.resync(g); }
+// étoiles filantes pré-tirées : rayonnent depuis le radiant
+const MET = (() => { const r = S.rng(SEED * 3), a = []; for (let i = 0; i < 160; i++) a.push({ tb: i * 0.25 + r() * 0.2, ang: r() * 6.283, d0: 130 + r() * 260, len: 260 + r() * 260, sp: 1500 + r() * 900, life: 0.32 + r() * 0.25 }); return a; })();
+const STARS = (() => { const r = S.rng(SEED * 5), a = []; for (let i = 0; i < 90; i++) a.push([r(), r(), 3 + r() * 5]); return a; })();
+function sky(L, tf, box, rad, rate = 1, seed = 1) {
+  const [x0, y0, x1, y1] = box, pts = rough(x0, y0, x1, y1, seed);
+  const sh = pts.map(([x, y]) => [x + 16, y + 18]);
+  L.pink.noStroke(); L.pink.fill(110); R.poly(L.pink, sh);                       // ombre de collage rose
+  L.pink.fill(0); R.poly(L.pink, pts);
+  clipTo(L.blue, pts, () => { L.blue.noStroke(); for (let y = y0 - 10; y < y1 + 10; y += 6) { L.blue.fill(255 - 80 * S.smoothstep(y0, y1 + 200, y)); L.blue.rect(x0 - 20, y, x1 - x0 + 40, 6); } });
+  clipTo(L.pink, pts, () => { L.pink.noStroke(); for (let y = y1 - 200; y < y1 + 10; y += 6) { L.pink.fill(150 * S.smoothstep(y1 - 200, y1, y)); L.pink.rect(x0 - 20, y, x1 - x0 + 40, 6); } });   // lueur d'horizon rose
+  for (const [u, v, s] of STARS) { const x = S.lerp(x0 + 20, x1 - 20, u), y = S.lerp(y0 + 20, y1 - 60, v); L.blue.fill(0); L.blue.circle(x, y, s * 2.6); L.pink.fill(0); L.pink.circle(x, y, s * 2.6); L.yel.fill(255); L.yel.circle(x, y, s * 1.5); }
+  // Castor & Pollux (radiant des Géminides près de Castor)
+  for (const [dx, dy, s] of [[0, 0, 26], [70, 34, 30]]) { L.blue.fill(0); L.blue.circle(rad[0] + dx, rad[1] + dy, s * 1.5); L.yel.fill(255); L.yel.circle(rad[0] + dx, rad[1] + dy, s); }
+  for (const m of MET) {
+    const age = (tf % (40 * rate)) - m.tb * rate;   // pluie périodique (période 40·rate s) if (age < 0 || age > m.life) continue;
+    const dx = Math.cos(m.ang), dy = Math.sin(m.ang), hd = m.d0 + m.sp * age, tl_ = Math.min(m.len, m.sp * age * 0.8);
+    const hx = rad[0] + dx * hd, hy = rad[1] + dy * hd, fade = 1 - age / m.life;
+    clipTo(L.blue, pts, () => { for (let k = 0; k < 3; k++) { const a = k / 3, b = (k + 1) / 3; L.blue.stroke(0); L.blue.strokeWeight((22 - k * 6) * (0.6 + 0.4 * fade));
+      L.blue.line(hx - dx * tl_ * a, hy - dy * tl_ * a, hx - dx * tl_ * b, hy - dy * tl_ * b); } L.blue.noStroke(); });
+    clipTo(L.pink, pts, () => { L.pink.stroke(170 * fade + 20); L.pink.strokeWeight(8); L.pink.line(hx - dx * tl_ * 0.2, hy - dy * tl_ * 0.2, hx - dx * tl_, hy - dy * tl_); L.pink.noStroke(); });
+    clipTo(L.blue, pts, () => { L.blue.noStroke(); L.blue.fill(0); L.blue.circle(hx, hy, 40); });
+    clipTo(L.yel, pts, () => { L.yel.noStroke(); L.yel.fill(255); L.yel.circle(hx, hy, 26 * (0.6 + 0.4 * fade)); });
+  }
+}
+function tally(L, n) {   // bâtons de comptage, groupes de 5
+  const g = L.pink; g.stroke(255); g.strokeWeight(10); g.strokeCap('round');
+  for (let i = 0; i < n; i++) {
+    const grp = Math.floor(i / 5), k = i % 5, gx = 74 + (grp % 6) * 150, gy = 860 + Math.floor(grp / 6) * 96, w = S.rng(i * 13 + 1);
+    if (k < 4) g.line(gx + k * 26 + (w() - .5) * 6, gy + (w() - .5) * 6, gx + k * 26 + (w() - .5) * 8, gy + 70);
+    else g.line(gx - 12, gy + 58, gx + 96, gy + 10);
+  }
+  g.noStroke();
+}
+function city(L, step) {
+  const r = S.rng(SEED * 11); let x = 40;
+  L.yel.noStroke(); for (let y = 1180; y < 1560; y += 6) { L.yel.fill(190 * S.smoothstep(1180, 1480, y)); L.yel.rect(40, y, 1000, 6); }   // halo lumineux
+  while (x < 1040) { const w = 70 + r() * 110, h = 90 + r() * 170, y = 1560 - h; L.blue.fill(255); L.blue.rect(x, y, w, h); L.yel.fill(0); L.yel.rect(x - 4, y - 4, w + 8, h + 8);
+    for (let wy = y + 18; wy < 1540; wy += 34) for (let wx = x + 14; wx < x + w - 20; wx += 30) if (r() < 0.55) { L.blue.fill(0); L.blue.rect(wx - 4, wy - 4, 22, 26); L.yel.fill(255); L.yel.rect(wx, wy, 14, 18); }
+    x += w + 6; }
+}
+function asteroid(L, x, y, s, rot) {
+  const pts = R.blobPts(x, y, 150 * s, 9, { sx: 1.25, sy: 0.82, amp: 0.26, freq: 2.1, rot });
+  L.blue.fill(100); R.poly(L.blue, pts.map(([a, b]) => [a + 16, b + 18]));
+  L.blue.fill(0); R.poly(L.blue, pts); L.yel.fill(0); R.poly(L.yel, pts);
+  L.pink.fill(255); R.poly(L.pink, pts);
+  const r = S.rng(77); for (let i = 0; i < 6; i++) { L.pink.fill(0); L.pink.circle(x + (r() - .5) * 220 * s, y + (r() - .5) * 120 * s, (18 + r() * 30) * s); }
+}
+function debris(L, step) {   // traînée de poussières le long de l'orbite
+  const r = S.rng(SEED * 17);
+  for (let i = 0; i < 320; i++) { const u = r(), x = 380 + u * 640, y = 900 + u * u * 560 + Math.sin(u * 5) * 30, j = (r() - .5) * 90, k = r() < 0.5 ? 'yel' : 'pink';
+    const tw = (step + i) % 5 === 0 ? 0.6 : 1; L[k].fill(255 * tw); L[k].noStroke(); L[k].circle(x + j * 0.4, y + j, 7 + r() * 14); }
+}
+function earth(L, x, y) {
+  L.pink.fill(110); L.pink.circle(x + 12, y + 14, 200);
+  for (const k of ['pink', 'yel']) { L[k].fill(0); L[k].circle(x, y, 200); }
+  L.blue.fill(255); L.blue.circle(x, y, 200);
+  const pts = R.blobPts(x - 18, y - 10, 34, 4, { sx: 1.2, sy: 0.9, amp: 0.3 }); L.blue.fill(0); R.poly(L.blue, pts); L.yel.fill(255); R.poly(L.yel, pts);
+  const p2 = R.blobPts(x + 30, y + 28, 20, 6, { amp: 0.3 }); L.blue.fill(0); R.poly(L.blue, p2); L.yel.fill(255); R.poly(L.yel, p2);
+}
+function check(L, x, y, k) {  // coche au marqueur (rose), tracée par pas
+  if (k <= 0) return; const g = L.pink; g.noFill(); g.stroke(255); g.strokeWeight(16); g.strokeCap('round');
+  const a = [[x, y], [x + 34, y + 38], [x + 100, y - 52]], u = k * 2;
+  g.line(a[0][0], a[0][1], S.lerp(a[0][0], a[1][0], Math.min(1, u)), S.lerp(a[0][1], a[1][1], Math.min(1, u)));
+  if (u > 1) g.line(a[1][0], a[1][1], S.lerp(a[1][0], a[2][0], u - 1), S.lerp(a[1][1], a[2][1], u - 1));
+  g.noStroke();
+}
+function arrowNE(L, x, y) {   // flèche réservée dans le bleu, imprimée en jaune
+  for (const [k, v, w] of [['blue', 0, 34], ['pink', 0, 34], ['yel', 255, 18]]) { const g = L[k]; g.stroke(v); g.strokeWeight(w); g.strokeCap('round');
+    g.line(x, y, x + 150, y - 150); g.line(x + 150, y - 150, x + 70, y - 148); g.line(x + 150, y - 150, x + 148, y - 70); g.noStroke(); }
+}
+
+let press, lastStep = -1;
+function renderAt(t) {
+  const step = R.stepIndex(t); if (step === lastStep) return; lastStep = step;
+  const tf = R.qt(t); tl.seek(tf, false);
+  let pg = 0; for (let i = 0; i < 6; i++) if (tf >= T[i]) pg = i;
+  for (let i = 0; i < 6; i++) document.getElementById('pg' + i).style.display = i === pg ? 'block' : 'none';
+  for (const [id, a, d] of MK) R.markerReveal(document.getElementById(id), d ? (tf - a) / d : 1);
+  const L = press.L; press.clear();
+  const local = tf - T[pg], kick = Math.max(0, 1 - local / 0.34);
+  if (pg === 0) { L.yel.fill(255); L.yel.circle(900, 330, 300); sky(L, tf + 3, [60, 820, 1020, 1560], [330, 960], 0.5, 1); }
+  else if (pg === 1) {
+    sky(L, tf, [60, 760, 1020, 1560], [360, 930], 0.6, 2);
+  } else if (pg === 2) {
+    const n = Math.round(st.cnt.v); document.querySelectorAll('#cnt span').forEach(e => { e.textContent = String(n); });
+    tally(L, n); city(L, step);
+  } else if (pg === 3) {
+    debris(L, step);
+    asteroid(L, 300, 930, 1, Math.sin(step * 0.4) * 0.06);
+    const e = st.earth.v; earth(L, S.lerp(980, 640, e), S.lerp(1120, 1330, e));
+  } else if (pg === 4) {
+    check(L, 900, 490, st.chk[0].v); check(L, 900, 670, st.chk[1].v); check(L, 900, 850, st.chk[2].v);
+    sky(L, tf, [60, 1000, 1020, 1560], [940, 1040], 1, 4);
+    if (tf > T[4] + 1.3) arrowNE(L, 660, 1180);
+  } else {
+    L.yel.fill(255); L.yel.circle(900, 330, 300);
+    sky(L, tf + 1, [60, 820, 1020, 1560], [330, 960], 0.8, 5);
+  }
+  const mis = R.misreg(step, SEED, kick);
+  press.print(mis); R.shiftPasses(mis);
+}
+
+S.installContract({
+  duration: DUR,
+  ready: Promise.all([R.makePress('stage', SEED).then(p => { press = p; }), S.loadFonts(R.FONTS)]),
+  renderAt,
+});
+</script></body></html>

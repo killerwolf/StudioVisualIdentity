@@ -1,10 +1,10 @@
 {
  "method": "Lab 8x8x8 Bhattacharyya + edge-histogram chi2, 8 frames/short, nearest neighbour",
- "shorts": 23,
- "top1Accuracy": 0.913,
- "meanIntra": 0.2736,
- "meanInter": 0.8366,
- "ratioIntraOverInter": 0.327,
+ "shorts": 31,
+ "top1Accuracy": 0.935,
+ "meanIntra": 0.2502,
+ "meanInter": 0.8461,
+ "ratioIntraOverInter": 0.296,
  "rows": [
   {
    "short": "aquarelle-conte__enfants__ou-vont-les-etoiles-le-jour",
@@ -43,6 +43,30 @@
    "distance": 0.1505
   },
   {
+   "short": "brut-meme__engagement__test-des-3-secondes-stroop",
+   "nearest": "brut-meme__evenements__pendant-ces-15-secondes-dans-le-monde",
+   "sameIdentity": true,
+   "distance": 0.1128
+  },
+  {
+   "short": "brut-meme__evenements__pendant-ces-15-secondes-dans-le-monde",
+   "nearest": "brut-meme__engagement__test-des-3-secondes-stroop",
+   "sameIdentity": true,
+   "distance": 0.1128
+  },
+  {
+   "short": "cosmos-doc__evenements__voyager-1-a-un-jour-lumiere",
+   "nearest": "cosmos-doc__explicatif__pourquoi-venus-plus-chaude-que-mercure",
+   "sameIdentity": true,
+   "distance": 0.2268
+  },
+  {
+   "short": "cosmos-doc__explicatif__pourquoi-venus-plus-chaude-que-mercure",
+   "nearest": "cosmos-doc__evenements__voyager-1-a-un-jour-lumiere",
+   "sameIdentity": true,
+   "distance": 0.2268
+  },
+  {
    "short": "gazette-1900__evenements__9-novembre-1989-mur-de-berlin",
    "nearest": "gazette-1900__histoire__1789-en-20-secondes",
    "sameIdentity": true,
@@ -58,7 +82,7 @@
    "short": "liquid-chrome__abstrait__pendule-de-newton-chrome",
    "nearest": "liquid-chrome__abstrait__quatre-peintures-mpm",
    "sameIdentity": true,
-   "distance": 0.5074
+   "distance": 0.5054
   },
   {
    "short": "liquid-chrome__abstrait__quatre-peintures-mpm",
@@ -68,9 +92,9 @@
   },
   {
    "short": "liquid-chrome__engagement__quelle-couleur-remplit-le-verre",
-   "nearest": "neon-lab__explicatif__lune-meme-face",
+   "nearest": "cosmos-doc__evenements__voyager-1-a-un-jour-lumiere",
    "sameIdentity": false,
-   "distance": 0.5921
+   "distance": 0.4573
   },
   {
    "short": "neon-lab__abstrait__champ-de-force-lucioles",
@@ -118,7 +142,19 @@
    "short": "pixel-arcade__engagement__quelle-couleur-conquiert-l-ecran",
    "nearest": "pixel-arcade__engagement__quelle-bille-gagne-la-course",
    "sameIdentity": true,
-   "distance": 0.3491
+   "distance": 0.3489
+  },
+  {
+   "short": "riso-zine__evenements__geminides-j-39",
+   "nearest": "riso-zine__geographie__5-plus-grands-deserts",
+   "sameIdentity": true,
+   "distance": 0.2082
+  },
+  {
+   "short": "riso-zine__geographie__5-plus-grands-deserts",
+   "nearest": "riso-zine__evenements__geminides-j-39",
+   "sameIdentity": true,
+   "distance": 0.2082
   },
   {
    "short": "swiss-data__evenements__j-272-eclipse-2-aout-2027",
@@ -143,6 +179,18 @@
    "nearest": "tableau-craie__enfants__comment-une-graine-devient-un-arbre",
    "sameIdentity": true,
    "distance": 0.1122
+  },
+  {
+   "short": "topo-relief__geographie__comment-mesure-t-on-l-everest",
+   "nearest": "topo-relief__histoire__hannibal-traverse-les-alpes",
+   "sameIdentity": true,
+   "distance": 0.0813
+  },
+  {
+   "short": "topo-relief__histoire__hannibal-traverse-les-alpes",
+   "nearest": "topo-relief__geographie__comment-mesure-t-on-l-everest",
+   "sameIdentity": true,
+   "distance": 0.0813
   }
  ],
  "blindJudge": {
@@ -263,5 +311,169 @@
     "pure": true
    }
   ]
+ },
+ "blindJudge14": {
+  "method": "2e juge agent indépendant, 56 frames anonymisées (2 shorts par identité x 2 frames, 14 identités, graine 1104, clé cachée), consigne : 14 groupes de 4 par style",
+  "pureGroups": 14,
+  "groups": 14,
+  "imagesCorrectlyGrouped": 56,
+  "images": 56,
+  "judgeGroups": [
+   {
+    "style": "Black live-broadcast, yellow condensed, hazard stripes",
+    "confidence": 0.97,
+    "identities": [
+     "brut-meme",
+     "brut-meme",
+     "brut-meme",
+     "brut-meme"
+    ],
+    "pure": true
+   },
+   {
+    "style": "Risograph zine, pink/blue grainy cream",
+    "confidence": 0.95,
+    "identities": [
+     "riso-zine",
+     "riso-zine",
+     "riso-zine",
+     "riso-zine"
+    ],
+    "pure": true
+   },
+   {
+    "style": "Green chalkboard hand-drawn chalk",
+    "confidence": 0.98,
+    "identities": [
+     "tableau-craie",
+     "tableau-craie",
+     "tableau-craie",
+     "tableau-craie"
+    ],
+    "pure": true
+   },
+   {
+    "style": "Retro pixel arcade on navy grid",
+    "confidence": 0.95,
+    "identities": [
+     "pixel-arcade",
+     "pixel-arcade",
+     "pixel-arcade",
+     "pixel-arcade"
+    ],
+    "pure": true
+   },
+   {
+    "style": "Pastel pink 3D isometric island",
+    "confidence": 0.97,
+    "identities": [
+     "pastel-diorama",
+     "pastel-diorama",
+     "pastel-diorama",
+     "pastel-diorama"
+    ],
+    "pure": true
+   },
+   {
+    "style": "Vintage newspaper front page, serif",
+    "confidence": 0.98,
+    "identities": [
+     "gazette-1900",
+     "gazette-1900",
+     "gazette-1900",
+     "gazette-1900"
+    ],
+    "pure": true
+   },
+   {
+    "style": "Antique atlas plate, parchment engraving",
+    "confidence": 0.98,
+    "identities": [
+     "atlas-grave",
+     "atlas-grave",
+     "atlas-grave",
+     "atlas-grave"
+    ],
+    "pure": true
+   },
+   {
+    "style": "Swiss editorial data, red/black on cream",
+    "confidence": 0.95,
+    "identities": [
+     "swiss-data",
+     "swiss-data",
+     "swiss-data",
+     "swiss-data"
+    ],
+    "pure": true
+   },
+   {
+    "style": "Dark neon lab, cyan/magenta glow",
+    "confidence": 0.96,
+    "identities": [
+     "neon-lab",
+     "neon-lab",
+     "neon-lab",
+     "neon-lab"
+    ],
+    "pure": true
+   },
+   {
+    "style": "Watercolor storybook with serif captions",
+    "confidence": 0.95,
+    "identities": [
+     "aquarelle-conte",
+     "aquarelle-conte",
+     "aquarelle-conte",
+     "aquarelle-conte"
+    ],
+    "pure": true
+   },
+   {
+    "style": "Cinematic photoreal space, lens flares",
+    "confidence": 0.95,
+    "identities": [
+     "cosmos-doc",
+     "cosmos-doc",
+     "cosmos-doc",
+     "cosmos-doc"
+    ],
+    "pure": true
+   },
+   {
+    "style": "Dark green topographic contour lines",
+    "confidence": 0.96,
+    "identities": [
+     "topo-relief",
+     "topo-relief",
+     "topo-relief",
+     "topo-relief"
+    ],
+    "pure": true
+   },
+   {
+    "style": "Bauhaus primary-color geometric puzzles",
+    "confidence": 0.94,
+    "identities": [
+     "bauhaus-kinetic",
+     "bauhaus-kinetic",
+     "bauhaus-kinetic",
+     "bauhaus-kinetic"
+    ],
+    "pure": true
+   },
+   {
+    "style": "Iridescent 3D glass fluid simulation",
+    "confidence": 0.94,
+    "identities": [
+     "liquid-chrome",
+     "liquid-chrome",
+     "liquid-chrome",
+     "liquid-chrome"
+    ],
+    "pure": true
+   }
+  ],
+  "hardestConfusions": "Swiss data vs Bauhaus (fonds crème, grotesques grasses, rouge/noir/jaune) ; et les 5 styles sur fond sombre (neon-lab, cosmos-doc, liquid-chrome, topo-relief, pixel-arcade), séparés par la technique de rendu : particules lumineuses vs flares photoréalistes vs 3D brillante vs courbes de niveau vs pixels."
  }
 }

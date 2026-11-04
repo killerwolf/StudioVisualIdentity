@@ -1,0 +1,170 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8">
+<title>Cosmos Doc — Pourquoi Vénus est plus chaude que Mercure ?</title>
+<!-- cosmos-doc / explicatif : three.js (planètes procédurales, atmosphère fresnel, photons, flare anamorphique, bloom, grain)
+     + GSAP (textes Bebas Neue : fondu + interlettrage, timeline seekée). Graine 404. 15 s. -->
+<style>
+html,body{margin:0;background:#000004;width:1080px;height:1920px;overflow:hidden}
+canvas{display:block;position:absolute;inset:0}
+.t{position:absolute;left:72px;width:888px;white-space:nowrap;color:#EAF2FF;opacity:0;text-shadow:0 0 30px rgba(0,0,6,.9),0 0 8px rgba(0,0,6,.8)}
+.bb{font-family:'Bebas Neue';font-weight:400;line-height:.94}
+.in{font-family:'Inter';font-weight:400;font-size:56px;line-height:1.2;color:#AEBBD4}
+.am{color:#FFB347}.ic{color:#6EC6FF}
+sub{font-size:.55em;vertical-align:baseline;position:relative;top:.12em}
+#tag{top:236px;font-size:54px;letter-spacing:.3em;color:#FFB347}
+#title{top:1140px;font-size:118px}
+#rule{position:absolute;left:72px;top:1500px;width:150px;height:3px;background:#FFB347;transform:scaleX(0);transform-origin:0 50%}
+#mName{top:244px;font-size:150px}
+#mSub{top:400px}
+#mDay{top:1150px;width:400px}
+#mNight{top:1150px;left:560px;width:400px;text-align:right}
+.lab{font-size:58px;letter-spacing:.2em;display:block}
+.big{font-size:150px;display:block}
+#mAtm{top:1390px;font-size:96px}
+#mAtm2{top:1488px}
+#vName{top:244px;font-size:150px}
+#vSub{top:400px}
+#vAtm{top:1300px;font-size:100px}
+#vAtm2{top:1404px}
+#vNum{top:236px;font-size:300px;line-height:.86;color:#FFB347}
+#vEnd{top:1330px;font-size:120px}
+#vEnd2{top:1450px;color:#6EC6FF}
+</style>
+<script type="importmap">{"imports":{"three":"/node_modules/three/build/three.module.js","three/addons/":"/node_modules/three/examples/jsm/"}}</script>
+</head><body>
+<div class="t bb" id="tag">Cosmos · épisode 04</div>
+<div class="t bb" id="title">Pourquoi Vénus<br>est <span class="am">plus chaude</span><br>que Mercure ?</div>
+<div id="rule"></div>
+<div class="t bb" id="mName">Mercure</div>
+<div class="t in" id="mSub">58 millions de km du Soleil</div>
+<div class="t bb" id="mDay"><span class="lab am">Jour</span><span class="big am">430 °C</span></div>
+<div class="t bb" id="mNight"><span class="lab ic">Nuit</span><span class="big ic">–180 °C</span></div>
+<div class="t bb" id="mAtm">Pas d'atmosphère</div>
+<div class="t in" id="mAtm2">la chaleur repart dans l'espace</div>
+<div class="t bb" id="vName">Vénus</div>
+<div class="t in" id="vSub">108 millions de km<br><span class="am">presque 2× plus loin</span></div>
+<div class="t bb" id="vAtm">Atmosphère de CO<sub>2</sub></div>
+<div class="t in" id="vAtm2"><span class="ic">92 fois</span> la pression terrestre</div>
+<div class="t bb" id="vNum">465 °C</div>
+<div class="t bb" id="vEnd">Jour <span class="am">et</span> nuit</div>
+<div class="t in" id="vEnd2">un effet de serre emballé</div>
+<script src="/node_modules/gsap/dist/gsap.min.js"></script>
+<script type="module">
+import { THREE, S, TOK, FONTS, setup, stars, dust, Flare, atmosphere, craterTex, bandTex, hotTex, Motes, reveal, hide, dipAt } from './cosmos.js';
+
+const SEED = 404, R = S.rng(SEED), DUR = 15;
+const { scene, cam, comp, flareScene, film, bloomPass } = setup({ fov: 36 });
+const sky = stars(scene, { seed: SEED, n: 2600 });
+dust(scene, { seed: 4, intensity: 0.08, tilt: 0.9 });
+const flare = new Flare(flareScene);
+
+// ---- lumières : soleil chaud + contre-jour glacier très faible (pas d'ambiance plate)
+const sun = new THREE.DirectionalLight(0xfff0dc, 3.2); scene.add(sun);
+const rim = new THREE.DirectionalLight(0x6ec6ff, 0.22); rim.position.set(1, -.3, -1); scene.add(rim);
+scene.add(new THREE.AmbientLight(0x6ec6ff, 0.02));
+
+// ---- Vénus : nuages crème/ocre + surface brûlante émissive (révélée à la fin)
+const vMat = new THREE.MeshStandardMaterial({ map: bandTex({ seed: 9, c0: [138, 98, 52], c1: [246, 226, 178], bands: 6, warp: 1 }), roughness: .95, metalness: 0,
+  emissiveMap: hotTex({ seed: 21 }), emissive: new THREE.Color(1, .32, .08), emissiveIntensity: 0 });
+const venus = new THREE.Mesh(new THREE.SphereGeometry(1, 128, 96), vMat); scene.add(venus);
+const vAtm = atmosphere(1.2, '#FFD9A0', { power: 2.2, gain: 1.5, wrap: .45 }); scene.add(vAtm);
+// ---- Mercure : roche grise cratérisée, sans atmosphère
+const mt = craterTex({ seed: 5, n: 560, tint: [1, .95, .88], base: .46 });
+const mercury = new THREE.Mesh(new THREE.SphereGeometry(1, 128, 96), new THREE.MeshStandardMaterial({ map: mt.map, bumpMap: mt.bump, bumpScale: 2.2, roughness: 1, metalness: 0 }));
+scene.add(mercury);
+
+// ---- photons : Mercure (s'échappent) / Vénus (piégés entre sol et atmosphère)
+const WARM = new THREE.Color('#FFE6B8').multiplyScalar(1.6), EMBER = new THREE.Color(TOK.ember).multiplyScalar(1.5);
+const MP = new THREE.Vector3(0, .85, 0), MR = 1.45, VP = new THREE.Vector3(0, .5, 0), VR = 1.6, VRA = VR * 1.24;
+function mercuryPaths() {
+  const out = [];
+  for (let i = 0; i < 42; i++) {
+    const t0 = 4.75 + i * .07 + R() * .05, b = (R() * 2 - 1) * MR * .92, x0 = -3.6;
+    const hx = -Math.sqrt(MR * MR - b * b), t1 = t0 + (hx - x0) / 4.2;
+    const a = Math.atan2(b, hx) + (R() * 2 - 1) * .55, L = 3.6;
+    out.push({ pts: [[MP.x + x0, MP.y + b, 0], [MP.x + hx, MP.y + b, 0], [MP.x + hx + Math.cos(a) * L, MP.y + b + Math.sin(a) * L, 0]],
+      ts: [t0, t1, t1 + L / 2.0], c0: WARM, c1: EMBER, hit: 1 });
+  }
+  return out;
+}
+function venusPaths() {
+  const out = [];
+  for (let i = 0; i < 54; i++) {
+    const t0 = 8.75 + i * .075 + R() * .05, b = (R() * 2 - 1) * VR * .9, x0 = -3.6;
+    const hx = -Math.sqrt(VR * VR - b * b), t1 = t0 + (hx - x0) / 3.6;
+    const pts = [[VP.x + x0, VP.y + b, 0], [VP.x + hx, VP.y + b, 0]], ts = [t0, t1];
+    let ang = Math.atan2(b, hx), up = true, tt = t1, px = hx, py = b;
+    while (tt < DUR + .5) {                                    // marche aléatoire dans la coquille : rebonds sol <-> atmosphère
+      ang += (R() < .5 ? -1 : 1) * (.22 + R() * .4);
+      const rr = up ? VRA * (.94 - R() * .06) : VR * 1.03;
+      const nx = Math.cos(ang) * rr, ny = Math.sin(ang) * rr; tt += Math.hypot(nx - px, ny - py) / 1.25;
+      pts.push([VP.x + nx, VP.y + ny, 0]); ts.push(tt); px = nx; py = ny; up = !up;
+    }
+    out.push({ pts, ts, c0: WARM, c1: EMBER, hit: 1 });
+  }
+  return out;
+}
+const mm = new Motes(scene, mercuryPaths(), { size: 44 }), vm = new Motes(scene, venusPaths(), { size: 40 });
+
+// ---- textes (GSAP, seek) : fondu + interlettrage qui se resserre, sine.inOut
+const tl = gsap.timeline({ paused: true });
+reveal(tl, '#tag', 0.0, { dur: 1.2, from: '0.7em', to: '0.3em' });
+reveal(tl, '#title', 0.05, { dur: 0.9, from: '0.22em', to: '0.01em' });
+tl.fromTo('#rule', { scaleX: 0 }, { scaleX: 1, duration: 1.0, ease: 'sine.inOut', immediateRender: false }, 0.7);
+hide(tl, '#tag', 3.5); hide(tl, '#title', 3.55); hide(tl, '#rule', 3.55);
+reveal(tl, '#mName', 4.55, { dur: 1.2 }); reveal(tl, '#mSub', 4.9, { dur: 1.0, from: '.08em', to: '0em' });
+reveal(tl, '#mDay', 5.5, { dur: 1.0 }); reveal(tl, '#mNight', 6.0, { dur: 1.0 });
+reveal(tl, '#mAtm', 6.5, { dur: 1.0 }); reveal(tl, '#mAtm2', 6.8, { dur: .9, from: '.08em', to: '0em' });
+['#mName', '#mSub', '#mDay', '#mNight', '#mAtm', '#mAtm2'].forEach(s => hide(tl, s, 7.55, .5));
+reveal(tl, '#vName', 8.5, { dur: 1.2 }); reveal(tl, '#vSub', 8.85, { dur: 1.0, from: '.08em', to: '0em' });
+reveal(tl, '#vAtm', 9.7, { dur: 1.0 }); reveal(tl, '#vAtm2', 10.0, { dur: .9, from: '.08em', to: '0em' });
+['#vName', '#vSub', '#vAtm', '#vAtm2'].forEach(s => hide(tl, s, 11.55, .6));
+reveal(tl, '#vNum', 12.05, { dur: 1.3, from: '0.18em', to: '0em' });
+reveal(tl, '#vEnd', 12.6, { dur: 1.1 }); reveal(tl, '#vEnd2', 13.1, { dur: 1.0, from: '.08em', to: '0em' });
+
+const L = new THREE.Vector3();
+function shotCam(z0, z1, x0, x1, k, ty = 0) { cam.position.set(S.lerp(x0, x1, k), S.lerp(-.25, -.05, k), S.lerp(z0, z1, k)); cam.lookAt(0, ty, 0); }
+
+S.installContract({
+  duration: DUR,
+  ready: S.loadFonts(FONTS),
+  renderAt: t => {
+    sky.material.uniforms.t.value = t;
+    let shot = t < 4.45 ? 0 : t < 8.3 ? 1 : 2;
+    venus.visible = vAtm.visible = shot !== 1; mercury.visible = shot === 1;
+    mm.pts.visible = shot === 1; vm.pts.visible = shot === 2;
+    if (shot === 0) {                                     // A : Vénus en croissant, soleil haut-gauche, titre
+      const k = S.ease.inOutSine(S.clamp(t / 4.45));
+      venus.scale.setScalar(1.9); venus.position.set(.15, 1.5, 0); vAtm.scale.setScalar(1.9 * 1.14 / 1.2); vAtm.position.copy(venus.position);
+      L.set(-1, .55, -.18).normalize(); venus.rotation.set(.12, -.6 + t * .03, 0);
+      shotCam(13.4, 12.4, .35, .05, k);
+      flare.set(150 - k * 20, 330 + k * 12, 1.0, 1.0);
+      vMat.emissiveIntensity = 0; vAtm.material.uniforms.night.value = 0;
+    } else if (shot === 1) {                              // B : Mercure, Soleil tout proche à gauche, photons qui repartent
+      const k = S.ease.inOutSine(S.clamp((t - 4.45) / 3.85));
+      mercury.scale.setScalar(MR); mercury.position.copy(MP); mercury.rotation.set(.1, 1.2 + t * .025, 0);
+      L.set(-1, .12, .2).normalize();
+      shotCam(13.2, 12.5, -.15, .15, k);
+      flare.set(-60, 760, 1.35, 1.45);
+      mm.update(t);
+    } else {                                              // C : Vénus, photons piégés, la surface s'embrase
+      const k = S.ease.inOutSine(S.clamp((t - 8.3) / 6.7));
+      venus.scale.setScalar(VR); venus.position.copy(VP); vAtm.scale.setScalar(VR * 1.24 / 1.2); vAtm.position.copy(VP);
+      venus.rotation.set(.08, .4 + t * .025, 0);
+      L.set(-1, .15, .22).normalize();
+      shotCam(13.6, 12.3, .1, -.1, k, -.05);
+      const heat = S.seg(t, 10.6, 13.6, S.ease.inOutSine);
+      flare.set(-30, 700, .85 - heat * .25, 1.05);
+      vMat.emissiveIntensity = heat * 0.95;
+      vAtm.material.uniforms.night.value = heat * .85;
+      vAtm.material.uniforms.C.value.set(TOK.white).lerp(new THREE.Color('#FFD9A0'), 1 - heat).lerp(new THREE.Color('#FF8A3A'), heat);
+      vAtm.material.uniforms.gain.value = 1.5 + heat * 1.1;
+      vm.update(t, 1 - S.seg(t, 13.8, 15, S.ease.inOutSine) * .45);
+    }
+    sun.position.copy(L).multiplyScalar(10); vAtm.material.uniforms.L.value.copy(L);
+    film.uniforms.frame.value = Math.round(t * 30);
+    film.uniforms.dip.value = dipAt(t, [[4.15, 4.75], [8.0, 8.6]]);
+    tl.seek(t, false);
+    comp.render();
+  },
+});
+</script></body></html>

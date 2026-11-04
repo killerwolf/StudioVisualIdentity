@@ -1,0 +1,79 @@
+{
+ "identity": "brut-meme",
+ "family": "engagement",
+ "title": "Le test des 3 secondes : dis la COULEUR, pas le mot",
+ "hook": "Frame 0 : « ROUGE » géant écrit en jaune + tag rouge « TEST DES 3 SECONDES » ; à 0,4 s le sticker « DIS LA COULEUR ! » claque (punch-in + shake)",
+ "duration": 15.5,
+ "libraries": [
+  "PixiJS",
+  "GSAP"
+ ],
+ "seed": 47,
+ "renderTimeSec": 231.6,
+ "structure": [
+  {
+   "t": 0,
+   "beat": "hook : ROUGE écrit en jaune, sticker DIS LA COULEUR !"
+  },
+  {
+   "t": 1.0,
+   "beat": "cut fond jaune : DIS LA / COULEUR, / PAS LE MOT (règle)"
+  },
+  {
+   "t": 2.0,
+   "beat": "round 1/3 : BLEU écrit en rouge, compte à rebours 3-2-1 (0,5 s par tic, anneau jaune)"
+  },
+  {
+   "t": 3.5,
+   "beat": "STOP : bloc-réponse ROUGE + shake"
+  },
+  {
+   "t": 4.25,
+   "beat": "round 2/3 PLUS VITE : 3 mots, 0,4 s par tic"
+  },
+  {
+   "t": 5.45,
+   "beat": "STOP : blocs BLANC / ROUGE / JAUNE"
+  },
+  {
+   "t": 6.45,
+   "beat": "round 3/3 TURBO : 6 mots, 0,3 s par tic"
+  },
+  {
+   "t": 7.35,
+   "beat": "STOP : 6 blocs-réponses"
+  },
+  {
+   "t": 8.6,
+   "beat": "explication : LIRE va plus vite que NOMMER une couleur (effet Stroop)"
+  },
+  {
+   "t": 10.4,
+   "beat": "étiquette : ton cerveau lit le mot plus vite qu'il ne nomme la couleur de l'encre"
+  },
+  {
+   "t": 12.2,
+   "beat": "CTA fond jaune : TON SCORE EN COMMENTAIRE, sticker 0, 1, 2 OU 3 ?, starburst /3, chevrons au temps"
+  },
+  {
+   "t": 15.5,
+   "beat": "fin propre (tenue)"
+  }
+ ],
+ "engagement": {
+  "mechanic": "défi / test chronométré à 3 rounds qui accélèrent + score",
+  "cta": "Ton score sur 3 en commentaire : 0, 1, 2 ou 3 ?"
+ },
+ "loopable": false,
+ "sound": {
+  "type": "generated",
+  "voice": false
+ },
+ "qualityChecks": {
+  "stillsReviewed": true,
+  "textMinPx": 56,
+  "safeAreaOk": true
+ },
+ "notes": "Effet Stroop (J. R. Stroop, 1935) : nommer la couleur de l'encre d'un mot de couleur incongruent est plus lent et plus sujet aux erreurs, car la lecture du mot est plus automatique que la dénomination de la couleur. Encres limitées à la palette de l'identité (rouge #FF2D2D, jaune #FFE600, blanc) ; les mots distracteurs NOIR / VERT / BLEU ne sont jamais des encres. Rounds : 1 mot (tic 0,5 s), 3 mots (0,4 s), 6 mots (0,3 s). Caméra : punch-in 1,15 -> 1 en 3 frames sur chaque cut (force 0,4 sur les tics), shake seedé (seed 47) amorti 0,12 s sur les STOP. Photosensibilité : 2 inversions de fond noir/jaune seulement (1,0 s et 12,2 s, + retour à 2,0 s), aucun flash plein cadre. Titres Anton ajustés automatiquement à 900 px de large (contenu x 60–960, y 236–1590). Texte min 56 px (Inter 900), titres 158–470 px (Anton). Sound : preset pulse 120 bpm, impact sur chaque cut, tick sur chaque tic, coin sur les révélations.",
+ "reproduce": "node out/shorts/brut-meme__engagement__test-des-3-secondes-stroop/src/make_sound.mjs && node out/tools/render.mjs out/shorts/brut-meme__engagement__test-des-3-secondes-stroop/src/index.html --out /tmp/svi/brut-meme__engagement__test-des-3-secondes-stroop/video.mp4 --duration 15.5 && .venv/bin/python out/tools/sound.py out/shorts/brut-meme__engagement__test-des-3-secondes-stroop/src/sound.json /tmp/svi/brut-meme__engagement__test-des-3-secondes-stroop/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/brut-meme__engagement__test-des-3-secondes-stroop/video.mp4 --music /tmp/svi/brut-meme__engagement__test-des-3-secondes-stroop/music.wav --out out/shorts/brut-meme__engagement__test-des-3-secondes-stroop/short.mp4"
+}

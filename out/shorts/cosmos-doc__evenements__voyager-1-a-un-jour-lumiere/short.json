@@ -1,0 +1,67 @@
+{
+ "identity": "cosmos-doc",
+ "family": "evenements",
+ "title": "Voyager 1 à un jour-lumière de la Terre",
+ "hook": "Frame 0 : la sonde en vue 3/4 arrière, feuille d'or et parabole en contre-jour, le Soleil réduit à une étoile avec flare ; « VOYAGER 1 » en Bebas 230 entre en fondu + interlettrage dès 0 s",
+ "duration": 15.0,
+ "libraries": [
+  "three.js",
+  "GSAP"
+ ],
+ "seed": 1977,
+ "renderTimeSec": 787.1,
+ "structure": [
+  {
+   "t": 0,
+   "beat": "hook : sonde + flare, tag COSMOS · ÉVÉNEMENT, VOYAGER 1 / à un jour-lumière de la Terre"
+  },
+  {
+   "t": 4.15,
+   "beat": "dip-to-black 0,6 s"
+  },
+  {
+   "t": 4.45,
+   "beat": "recul de 5 u : la sonde devant le bord ambré de l'héliosphère ; LANCÉE LE 5 SEPTEMBRE 1977"
+  },
+  {
+   "t": 5.9,
+   "beat": "DEPUIS 2012 — ESPACE INTERSTELLAIRE"
+  },
+  {
+   "t": 8.0,
+   "beat": "dip-to-black 0,6 s"
+  },
+  {
+   "t": 8.3,
+   "beat": "plan large : DISTANCE 25,9 MILLIARDS DE KM ; le signal (point glacier à longue traîne) part de la sonde"
+  },
+  {
+   "t": 8.95,
+   "beat": "compteur GSAP 00 H -> 24 H (3,2 s, 24 ticks) ; arrivée sur le point bleu pâle qui pulse à 12,15 s"
+  },
+  {
+   "t": 12.45,
+   "beat": "dip-to-black 0,6 s"
+  },
+  {
+   "t": 12.75,
+   "beat": "chute : la sonde s'éloigne dans le noir ; VERS FIN 2026 — 1 JOUR-LUMIÈRE — l'objet humain le plus lointain"
+  }
+ ],
+ "engagement": {
+  "mechanic": "suspense / compte qui monte (24 h de trajet du signal)",
+  "cta": "À ton avis, quand atteindra-t-elle deux jours-lumière ?"
+ },
+ "loopable": false,
+ "sound": {
+  "type": "generated",
+  "voice": false
+ },
+ "qualityChecks": {
+  "stillsReviewed": true,
+  "textMinPx": 54,
+  "safeAreaOk": true
+ },
+ "notes": "Faits : lancement le 5 septembre 1977 ; espace interstellaire depuis août 2012 ; vers novembre 2026 la sonde atteint ≈ 1 jour-lumière (≈ 25,9 milliards de km) de la Terre -> un signal radio met ≈ 24 h. Date affichée prudemment « VERS FIN 2026 ». Sonde = silhouette générique en primitives three.js (parabole LatheGeometry, bus décagonal, mâts, générateurs) — pas de modèle téléchargé. Licence artistique : la Terre est écartée du Soleil (vue de 170 UA, l'écart réel est d'environ 0,3°) et le bord de l'héliosphère est symbolique. Graine 1977. Rendu 450 frames en 787,1 s (174,9 s/100 frames) sous contention (load 20–23). Module commun src/cosmos.js identique au short explicatif.",
+ "reproduce": "node out/tools/render.mjs out/shorts/cosmos-doc__evenements__voyager-1-a-un-jour-lumiere/src/index.html --out /tmp/svi/cosmos-doc__evenements__voyager-1-a-un-jour-lumiere/video.mp4 --duration 15 && .venv/bin/python out/tools/sound.py out/shorts/cosmos-doc__evenements__voyager-1-a-un-jour-lumiere/src/sound.json /tmp/svi/cosmos-doc__evenements__voyager-1-a-un-jour-lumiere/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/cosmos-doc__evenements__voyager-1-a-un-jour-lumiere/video.mp4 --music /tmp/svi/cosmos-doc__evenements__voyager-1-a-un-jour-lumiere/music.wav --out out/shorts/cosmos-doc__evenements__voyager-1-a-un-jour-lumiere/short.mp4"
+}

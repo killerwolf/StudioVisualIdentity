@@ -8,7 +8,10 @@
   "rendu pixel-art basse résolution (canvas 270×480, pixelDensity(1), noSmooth, upscale CSS ×4 image-rendering:pixelated)",
   "mécaniques « satisfying » à physique maison (balle dans un anneau tournant, rebonds, croissance)",
   "sprites dessinés en rect() : billes, tuiles d'anneau, étincelles, ondes",
-  "effets plein cadre via drawingContext (mosaïque pixel-mosaic par drawImage sans lissage)"
+  "effets plein cadre via drawingContext (mosaïque pixel-mosaic par drawImage sans lissage)",
+  "simulation d'impression risographie : une p5.Graphics en niveaux de gris par encre, tramée (grille tournée par encre) et imprimée en multiply avec défaut de repérage",
+  "formes découpées « main » (blobs bruités, rectangles déchirés) et textes/étoiles réservés dans l'encre",
+  "scènes 2D plates animées on twos (12 pas/s)"
  ],
  "avoidFor": [
   "génération de lavis à chaque frame (des milliers de polygones semi-transparents : trop lent)",
@@ -16,11 +19,14 @@
   "typographie fine (préférer le DOM + @fontsource)",
   "texte net (faire le texte en DOM au-dessus du canvas)",
   "3D / shaders lourds (préférer three.js ou twgl)",
-  "milliers de primitives par frame sans précalcul (rect() a un coût JS par appel)"
+  "milliers de primitives par frame sans précalcul (rect() a un coût JS par appel)",
+  "texte courant (préférer le DOM + @fontsource en mix-blend-mode multiply)",
+  "dégradés lisses (tout passe par la trame)"
  ],
  "renderCostPer100Frames": [
   "117,6 s (mesuré, short aquarelle-conte enfants « Où vont les étoiles le jour ? », 450 frames en 529 s, 9 calques p5 + Paper.js + grain CSS, 4 rendus concurrents sur 4 cœurs) ; pré-rendu des 9 calques de lavis au ready ≈ 1–2 s [aquarelle-conte]",
-  "41,0 s (mesuré, scène pixel-arcade abstrait : p5 seul 270×480 ×4 + texte DOM, rendu SEQUENTIAL 450 frames en 184,3 s avec 4 slots CPU partagés) ; la physique maison ring.js coûte 0,0002 s / 100 frames : le coût est celui de la capture Playwright, pas de p5 [pixel-arcade]"
+  "41,0 s (mesuré, scène pixel-arcade abstrait : p5 seul 270×480 ×4 + texte DOM, rendu SEQUENTIAL 450 frames en 184,3 s avec 4 slots CPU partagés) ; la physique maison ring.js coûte 0,0002 s / 100 frames : le coût est celui de la capture Playwright, pas de p5 [pixel-arcade]",
+  "25,9 s (geographie, 480 f en 124,4 s) et 43,0 s (evenements, 480 f en 206,2 s) mesurés sous contention (4 studios, load ~16), p5 + GSAP + capture ; trame ≈ 100 k points/frame en un seul path ctx.arc par encre ; frames identiques sautées (cache par pas on twos) [riso-zine]"
  ],
  "gotchas": [
   "p5 2.x : plus de preload(), setup peut être async ; utiliser new p5(p => …) en mode instance et p.noLoop()",
@@ -34,11 +40,17 @@
   "Avec le contrat SEQUENTIAL, renderAt doit faire avancer la simulation de la frame courante à f = round(t·30) et reconstruire l'état si t recule (stills).",
   "Précalculer les pixels de chaque tuile d'anneau (72 × ~50 pixels) une fois, puis p.fill + p.rect(…,1,1) : ~3 600 rect/frame restent fluides.",
   "Mosaïque : copier le canvas vers un canvas temporaire réduit puis re-dessiner agrandi avec imageSmoothingEnabled=false (setTransform identité dans save/restore).",
-  "Physique maison déterministe Node/Chromium : seulement sqrt, + − × ÷ et cos/sin d'angles tabulés ; pas d'atan2/asin/hypot dans la boucle (vérifié : évasion 11.825 s / 45 rebonds identiques)."
+  "Physique maison déterministe Node/Chromium : seulement sqrt, + − × ÷ et cos/sin d'angles tabulés ; pas d'atan2/asin/hypot dans la boucle (vérifié : évasion 11.825 s / 45 rebonds identiques).",
+  "p5 2.x : pas de preload ; new p5(p => {...}, parent) et p.noLoop() ; pixelDensity(1) sur le canvas et chaque createGraphics",
+  "ctx.save()/clip()/restore() manuel sur une Graphics : p5 v2 garde son cache de style -> un stroke() identique au précédent n'est plus réappliqué (trait noir = pas d'encre). Invisible sur des stills isolés, visible en rendu séquentiel. Réaligner avec fill(1)/stroke(1)/strokeWeight puis rétablir (R.resync)",
+  "endShape('close') / textAlign('center','center') : les constantes p5 v2 sont des chaînes",
+  "lire la couverture via g.drawingContext.getImageData (1 appel/encre/frame), pas de loadPixels répétés",
+  "jaune imprimé sur bleu = vert : réserver (fill 0) le bleu sous chaque élément jaune"
  ],
  "snippetPath": [
   "shorts/aquarelle-conte__enfants__ou-vont-les-etoiles-le-jour/src",
-  "shorts/pixel-arcade__abstrait__la-balle-peut-elle-s-echapper/src"
+  "shorts/pixel-arcade__abstrait__la-balle-peut-elle-s-echapper/src",
+  "shorts/riso-zine__geographie__5-plus-grands-deserts/src"
  ],
  "pairsWellWith": [
   "Paper.js",
@@ -46,11 +58,15 @@
   "GSAP (timeline de texte)",
   "Matter.js (physique) — p5 ne fait alors que le rendu",
   "out/tools/sound.py (blips ascendants par rebond)",
-  "DOM + @fontsource Press Start 2P / Rubik Mono One pour le texte"
+  "DOM + @fontsource Press Start 2P / Rubik Mono One pour le texte",
+  "GSAP (timeline seekée sur temps quantifié)",
+  "OpenCV (passe papier/grain)",
+  "DOM + @fontsource en multiply"
  ],
  "usedBy": [
   "aquarelle-conte",
-  "pixel-arcade"
+  "pixel-arcade",
+  "riso-zine"
  ],
  "roleAsDeclaredByStudios": [
   "post-traitement",

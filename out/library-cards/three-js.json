@@ -2,26 +2,47 @@
  "name": "three.js",
  "role": "3D",
  "bestFor": [
+  "documentaire spatial « photographique » : planètes à textures procédurales canvas + bumpMap, atmosphères fresnel, sonde en primitives",
+  "flare d'objectif maison : 2ᵉ RenderPass orthographique en pixels (halo, traînée anamorphique, fantômes hexagonaux) avant le bloom",
+  "passe film maison (ShaderPass après OutputPass) : grain 2 px déterministe par frame, vignette, dip-to-black par uniforme",
+  "points lumineux doux avec traîne (photons, signal) en Points + ShaderMaterial additif, trajets précalculés",
   "chrome, verre et liquides métalliques irisés (MeshPhysicalMaterial : metalness, iridescence, clearcoat)",
   "environnement PMREM procédural (panneaux néon) sans aucune texture téléchargée",
   "scènes sans état (renderAt(t) pur) -> stills à n'importe quel instant",
   "profondeur de champ macro (BokehPass)",
   "schémas astronomiques/scientifiques 3D (sphères à grille, orbites, fresnel)",
   "bloom natif (UnrealBloomPass) pour une identité néon",
-  "réutiliser un shader GLSL maison en ShaderMaterial plein écran"
+  "réutiliser un shader GLSL maison en ShaderMaterial plein écran",
+  "maquette de relief extrudée (PlaneGeometry 256² déplacée par un heightfield) + flancs à strates",
+  "shader onBeforeCompile sur MeshStandardMaterial : balayage d'altitude (courbes qui s'allument), neige par hauteur",
+  "itinéraires en TubeGeometry révélés par setDrawRange, sprites lumineux additifs, balises DOM projetées (Vector3.project)",
+  "survols drone déterministes par images clés (scène sans état, rendu parallélisable)"
  ],
  "avoidFor": [
+  "texte (le garder en DOM par-dessus le canvas, Bebas/Inter via @fontsource)",
+  "DoF / transmission sous SwiftShader (coût prohibitif)",
+  "scènes presque vides en noir vrai sans texte : blackdetect de check.py (98 % des pixels < 0,06)",
   "transmission physique (verre réfractif) sous SwiftShader sur CPU partagé : ~5 s/frame mesuré",
   "fluides réellement simulés (passer par Taichi)",
   "milliers d'objets non instanciés",
   "> quelques milliers de particules animées sans InstancedMesh (préférer twgl/points)",
-  "texte : le garder en DOM/SVG par-dessus le canvas"
+  "texte : le garder en DOM/SVG par-dessus le canvas",
+  "UnrealBloom et MeshPhysical transmission (trop coûteux sous SwiftShader) : cuire la lueur dans une emissiveMap (shadowBlur canvas)",
+  "texte en 3D : garder la typo en DOM par-dessus le canvas"
  ],
  "renderCostPer100Frames": [
+  "186,4 s (mesuré, cosmos-doc explicatif : 2 sphères 128×96 + 3 textures canvas 1024×512, atmosphère fresnel, 96 photons × 9 échos, 2 600 étoiles shader, 2 RenderPass + UnrealBloom + OutputPass + ShaderPass film, 450 frames en 838,7 s) ; 174,9 s (cosmos-doc evenements : sonde ~40 meshes, héliosphère fresnel, 3 000 étoiles, 450 frames en 787,1 s) — load average 20–23, 4 slots occupés [cosmos-doc]",
   "178 s (mesuré, liquid-chrome__engagement__quelle-couleur-remplit-le-verre : 4 éprouvettes, 9 gouttes chrome déformées au bruit CPU, PMREM, BokehPass, 1080×1920, SwiftShader, CPU saturé par 10 studios) ; même scène avec verre en transmission ≈ 500 s/100 frames (60 frames en ~5 min, rendu abandonné) [liquid-chrome]",
-  "182,8 s (mesuré, neon-lab explicatif : Terre + Lune ShaderMaterial + UnrealBloom + champ GLSL plein écran + DOM/SVG, 480 frames en 877,7 s avec 4 slots CPU occupés par d'autres studios) ; ≈ 60 s/100 frames hors contention (facts.md) [neon-lab]"
+  "182,8 s (mesuré, neon-lab explicatif : Terre + Lune ShaderMaterial + UnrealBloom + champ GLSL plein écran + DOM/SVG, 480 frames en 877,7 s avec 4 slots CPU occupés par d'autres studios) ; ≈ 60 s/100 frames hors contention (facts.md) [neon-lab]",
+  "169 s (mesuré, topo-relief__geographie__comment-mesure-t-on-l-everest : relief 256² MeshStandard + shader onBeforeCompile, 2 textures 2048², sprites, nappe 90² en fil de fer, DOM ; 450 frames en 760,5 s, load average 15–17, 4 studios) ; 108,2 s (mesuré, topo-relief__histoire__hannibal-traverse-les-alpes : même moteur + 4 tubes lumineux, 900 flocons Points recalculés par frame, 9 sprites) [topo-relief]"
  ],
  "gotchas": [
+  "Vector3.project(cam) utilise matrixWorldInverse de la frame PRÉCÉDENTE : appeler cam.updateMatrixWorld() avant de projeter (sinon flare décalé d'une frame, et faux en mode stills)",
+  "ShaderPass placé APRÈS OutputPass : ses valeurs passent telles quelles à l'écran (pas de 2ᵉ conversion sRGB) -> grain/vignette en espace affichage",
+  "RenderPass d'overlay : pass.clear = false, OrthographicCamera(0, W, 0, -H) et position y = -py pour travailler en pixels",
+  "MeshBasicMaterial avec color > 1 (HDR) dans la cible demi-flottante du composer = cœur de flare qui déclenche le bloom",
+  "une parabole (LatheGeometry) vue de face devient un disque illisible : vue 3/4 arrière",
+  "halo de flare > ~1 000 px délave tout le sujet ; anneau > 20 % d'opacité dessine un faux second contour de planète",
   "verre bon marché : MeshPhysicalMaterial color #000 + AdditiveBlending + depthWrite:false -> seuls les reflets s'ajoutent, pas de passe de transmission",
   "IcosahedronGeometry est non indexée : detail 20 ≈ 26 k sommets, déformation CPU + computeVertexNormals à chaque frame — rester ≤ detail 20 pour les petites gouttes",
   "setViewOffset(W,H,30,0,W,H) pour recentrer l'image sur la zone sûre (droite 120 px)",
@@ -32,23 +53,38 @@
   "setViewOffset(W,H,0,-70,W,H) pour descendre le sujet sous le titre sans changer la perspective",
   "project() d'un Vector3 utilise la viewOffset : parfait pour accrocher des légendes DOM/SVG",
   "quad plein écran : gl_Position=vec4(position.xy,0.9999,1.), frustumCulled=false, renderOrder négatif, depthTest false",
-  "importmap 'three' + 'three/addons/' vers /node_modules/three/..."
+  "importmap 'three' + 'three/addons/' vers /node_modules/three/...",
+  "onBeforeCompile : injecter après '#include <begin_vertex>' (varying vH = position.y, hauteur non affectée par mesh.scale.y) et après '#include <emissivemap_fragment>' (totalEmissiveRadiance *= ...) ; partager les uniforms par Object.assign(sh.uniforms, U)",
+  "PlaneGeometry.rotateX(-PI/2) : l'indice k = j*N + i correspond à z = j/(N-1)*SZ - SZ/2 (rangée 0 au fond)",
+  "TubeGeometry : setDrawRange(0, floor(p*tubularSegments)*radialSegments*6) révèle le tube progressivement",
+  "en vertical 1080×1920 (fov 54°), la fenêtre utile entre HUD et bloc titre ne couvre que ≈ 22° : reculer la caméra plutôt que zoomer, et ajouter une 'visée' (lookAt avancé/reculé) aux images clés",
+  "PointsMaterial sans map = carrés : lui donner une texture radiale pour des flocons ronds",
+  "renderer.toneMapping = NoToneMapping + textures CanvasTexture en SRGBColorSpace pour garder les couleurs de la palette"
  ],
  "snippetPath": [
+  "shorts/cosmos-doc__explicatif__pourquoi-venus-plus-chaude-que-mercure/src",
   "shorts/liquid-chrome__engagement__quelle-couleur-remplit-le-verre/src",
-  "shorts/neon-lab__explicatif__lune-meme-face/src"
+  "shorts/neon-lab__explicatif__lune-meme-face/src",
+  "shorts/topo-relief__geographie__comment-mesure-t-on-l-everest/src"
  ],
  "pairsWellWith": [
+  "GSAP (timeline seekée pour la typo DOM)",
+  "svi.js (rng, noise3, inOutSine)",
   "svi.js (noise3, seg, ease)",
   "Taichi (même palette en 2D)",
   "sound.py",
   "OpenCV (grade commun)",
   "twgl.js (même GLSL)",
-  "GSAP/DOM pour la typo"
+  "GSAP/DOM pour la typo",
+  "D3.js (d3.contours -> textures)",
+  "DOM/CSS pour la typo",
+  "svi.js (bruit déterministe)"
  ],
  "usedBy": [
+  "cosmos-doc",
   "liquid-chrome",
-  "neon-lab"
+  "neon-lab",
+  "topo-relief"
  ],
  "roleAsDeclaredByStudios": [
   "3D"

@@ -1,0 +1,42 @@
+{
+ "language": "fr",
+ "style": "énergique, animateur de défi TikTok, punchy, sourire dans la voix, phrases très courtes",
+ "voice": "Fenrir",
+ "lines": [
+  {
+   "t": 0.15,
+   "maxDuration": 2.35,
+   "text": "Dis la couleur, pas le mot !"
+  },
+  {
+   "t": 3.5,
+   "maxDuration": 0.75,
+   "text": "Rouge !"
+  },
+  {
+   "t": 4.3,
+   "maxDuration": 1.1,
+   "text": "Plus vite !"
+  },
+  {
+   "t": 5.45,
+   "maxDuration": 1.6,
+   "text": "Blanc, rouge, jaune !"
+  },
+  {
+   "t": 7.1,
+   "maxDuration": 1.2,
+   "text": "Turbo… stop !"
+  },
+  {
+   "t": 8.65,
+   "maxDuration": 3.9,
+   "text": "Ton cerveau lit plus vite qu'il ne nomme les couleurs."
+  },
+  {
+   "t": 12.6,
+   "maxDuration": 2.8,
+   "text": "Ton score sur trois ? En commentaire !"
+  }
+ ]
+}

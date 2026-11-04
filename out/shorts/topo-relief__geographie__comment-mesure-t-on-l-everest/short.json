@@ -1,0 +1,59 @@
+{
+ "identity": "topo-relief",
+ "family": "geographie",
+ "title": "Comment mesure-t-on l'Everest ?",
+ "hook": "Frame 0 : la maquette du massif s'extrude du plat pendant que les courbes de niveau s'allument une à une et que le compteur ALT (JetBrains Mono, or) grimpe de 0 à 8 848,86 m ; titre-question présent dès la frame 0.",
+ "duration": 15.0,
+ "libraries": [
+  "three.js",
+  "D3.js"
+ ],
+ "seed": 0,
+ "renderTimeSec": 760.5,
+ "structure": [
+  {
+   "t": 0,
+   "beat": "hook : extrusion du relief + courbes qui s'allument + compteur d'altitude 0 -> 8 848,86 m"
+  },
+  {
+   "t": 3.45,
+   "beat": "décembre 2020 : Chine + Népal, une mesure commune (balise sommet)"
+  },
+  {
+   "t": 5.65,
+   "beat": "01 / GNSS : récepteur au sommet, 4 satellites symboliques, impulsions le long des faisceaux"
+  },
+  {
+   "t": 8.05,
+   "beat": "02 / RADAR : anneaux radar terre cuite, calotte de neige qui blanchit"
+  },
+  {
+   "t": 10.25,
+   "beat": "03 / GÉOÏDE : caméra rasante, nappe ondulée menthe « NIVEAU 0 » (nivellement + gravimétrie)"
+  },
+  {
+   "t": 12.65,
+   "beat": "chute : la montagne bouge encore (flèches tectoniques, relief exagéré signalé), survol qui se retire en plongée"
+  },
+  {
+   "t": 15.0,
+   "beat": "fin propre sur vue large de la maquette"
+  }
+ ],
+ "engagement": {
+  "mechanic": "question",
+  "cta": "Quel sommet veux-tu voir mesuré ensuite ? Dis-le en commentaire."
+ },
+ "loopable": false,
+ "sound": {
+  "type": "generated",
+  "voice": false
+ },
+ "qualityChecks": {
+  "stillsReviewed": true,
+  "textMinPx": 54,
+  "safeAreaOk": true
+ },
+ "notes": "Faits : 8 848,86 m annoncé conjointement par la Chine et le Népal le 8 décembre 2020 ; méthodes : GNSS au sommet, radar (épaisseur de neige), nivellement + gravimétrie pour le géoïde (niveau zéro) ; soulèvement tectonique de quelques mm/an (ordre de grandeur, effet exagéré à l'écran et signalé). Relief 100 % procédural (bruit ridged + gaussiennes), stylisé, aucun MNT. Pas d'aléa : bruit à valeur déterministe (offsets fixes 3.1/7.7) -> seed 0 ; son seed 7. Texte ≥ 54 px (titres 100 px Inter 800, HUD 104 px JetBrains Mono 700), contenu entre y=236 et y≈1560, x ≤ 960 (sauf satellites, décor). Rendu 450 frames en 760,5 s (169 s/100 frames) sous forte contention (4 studios).",
+ "reproduce": "mkdir -p /tmp/svi/topo-relief__geographie__comment-mesure-t-on-l-everest && node out/tools/render.mjs out/shorts/topo-relief__geographie__comment-mesure-t-on-l-everest/src/index.html --out /tmp/svi/topo-relief__geographie__comment-mesure-t-on-l-everest/video.mp4 --duration 15 && .venv/bin/python out/tools/sound.py out/shorts/topo-relief__geographie__comment-mesure-t-on-l-everest/src/sound.json /tmp/svi/topo-relief__geographie__comment-mesure-t-on-l-everest/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/topo-relief__geographie__comment-mesure-t-on-l-everest/video.mp4 --music /tmp/svi/topo-relief__geographie__comment-mesure-t-on-l-everest/music.wav --out out/shorts/topo-relief__geographie__comment-mesure-t-on-l-everest/short.mp4"
+}

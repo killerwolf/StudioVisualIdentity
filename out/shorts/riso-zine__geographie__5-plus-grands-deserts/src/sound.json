@@ -1,0 +1,20 @@
+{
+ "duration": 16.0, "seed": 13, "bpm": 90, "key": "D", "scale": "dorian",
+ "music": {"preset": "lofi", "gain": 0.5, "octave": 3, "density": 0.55, "loop": false},
+ "events": [
+  {"t": 0.0, "type": "thud", "gain": 0.8}, {"t": 0.02, "type": "click", "gain": 0.6},
+  {"t": 0.6, "type": "blip", "note": "A4", "gain": 0.3},
+  {"t": 2.6, "type": "pop", "note": "D5", "gain": 0.55}, {"t": 2.62, "type": "click", "gain": 0.5}, {"t": 3.05, "type": "tick", "gain": 0.35},
+  {"t": 4.2, "type": "pop", "note": "E5", "gain": 0.55}, {"t": 4.22, "type": "click", "gain": 0.5}, {"t": 4.65, "type": "tick", "gain": 0.35},
+  {"t": 5.8, "type": "pop", "note": "F5", "gain": 0.6}, {"t": 5.82, "type": "thud", "gain": 0.5}, {"t": 6.25, "type": "tick", "gain": 0.35},
+  {"t": 7.6, "type": "pop", "note": "A5", "gain": 0.6}, {"t": 7.62, "type": "thud", "gain": 0.6}, {"t": 8.8, "type": "blip", "note": "C6", "gain": 0.3},
+  {"t": 9.55, "type": "riser", "gain": 0.3, "dur": 0.25},
+  {"t": 9.8, "type": "impact", "gain": 0.75}, {"t": 9.82, "type": "pop", "note": "D6", "gain": 0.5},
+  {"t": 10.7, "type": "glass", "gain": 0.55}, {"t": 10.72, "type": "chime", "note": "A5", "gain": 0.45},
+  {"t": 12.8, "type": "whoosh", "gain": 0.4, "dur": 0.3},
+  {"t": 12.95, "type": "pop", "note": "D5", "gain": 0.4}, {"t": 13.08, "type": "pop", "note": "E5", "gain": 0.4},
+  {"t": 13.21, "type": "pop", "note": "F5", "gain": 0.4}, {"t": 13.34, "type": "pop", "note": "A5", "gain": 0.4},
+  {"t": 13.47, "type": "pop", "note": "D6", "gain": 0.45},
+  {"t": 14.0, "type": "chime", "note": "D6", "gain": 0.4}, {"t": 14.0, "type": "click", "gain": 0.5}
+ ]
+}

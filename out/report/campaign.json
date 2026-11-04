@@ -101,6 +101,70 @@
    "video": "shorts/bauhaus-kinetic__explicatif__abeilles-hexagones/short.mp4"
   },
   {
+   "dir": "shorts/brut-meme__engagement__test-des-3-secondes-stroop",
+   "identity": "brut-meme",
+   "family": "engagement",
+   "title": "Le test des 3 secondes : dis la COULEUR, pas le mot",
+   "duration": 15.5,
+   "renderTimeSec": 231.6,
+   "libraries": [
+    "PixiJS",
+    "GSAP"
+   ],
+   "loopable": false,
+   "mechanic": "défi / test chronométré à 3 rounds qui accélèrent + score",
+   "narrationLines": 7,
+   "video": "shorts/brut-meme__engagement__test-des-3-secondes-stroop/short.mp4"
+  },
+  {
+   "dir": "shorts/brut-meme__evenements__pendant-ces-15-secondes-dans-le-monde",
+   "identity": "brut-meme",
+   "family": "evenements",
+   "title": "Pendant ces 15 secondes, dans le monde…",
+   "duration": 16.0,
+   "renderTimeSec": 280.8,
+   "libraries": [
+    "PixiJS",
+    "GSAP"
+   ],
+   "loopable": false,
+   "mechanic": "compte à rebours / chiffres live + question directe",
+   "narrationLines": 6,
+   "video": "shorts/brut-meme__evenements__pendant-ces-15-secondes-dans-le-monde/short.mp4"
+  },
+  {
+   "dir": "shorts/cosmos-doc__evenements__voyager-1-a-un-jour-lumiere",
+   "identity": "cosmos-doc",
+   "family": "evenements",
+   "title": "Voyager 1 à un jour-lumière de la Terre",
+   "duration": 15.0,
+   "renderTimeSec": 787.1,
+   "libraries": [
+    "three.js",
+    "GSAP"
+   ],
+   "loopable": false,
+   "mechanic": "suspense / compte qui monte (24 h de trajet du signal)",
+   "narrationLines": 4,
+   "video": "shorts/cosmos-doc__evenements__voyager-1-a-un-jour-lumiere/short.mp4"
+  },
+  {
+   "dir": "shorts/cosmos-doc__explicatif__pourquoi-venus-plus-chaude-que-mercure",
+   "identity": "cosmos-doc",
+   "family": "explicatif",
+   "title": "Pourquoi Vénus est plus chaude que Mercure ?",
+   "duration": 15.0,
+   "renderTimeSec": 838.7,
+   "libraries": [
+    "three.js",
+    "GSAP"
+   ],
+   "loopable": false,
+   "mechanic": "question / paradoxe (la plus éloignée est la plus chaude)",
+   "narrationLines": 4,
+   "video": "shorts/cosmos-doc__explicatif__pourquoi-venus-plus-chaude-que-mercure/short.mp4"
+  },
+  {
    "dir": "shorts/gazette-1900__evenements__9-novembre-1989-mur-de-berlin",
    "identity": "gazette-1900",
    "family": "evenements",
@@ -305,6 +369,40 @@
    "video": "shorts/pixel-arcade__engagement__quelle-couleur-conquiert-l-ecran/short.mp4"
   },
   {
+   "dir": "shorts/riso-zine__evenements__geminides-j-39",
+   "identity": "riso-zine",
+   "family": "evenements",
+   "title": "J-39 : les Géminides, la pluie d'étoiles filantes du 13–14 décembre",
+   "duration": 16.0,
+   "renderTimeSec": 340.2,
+   "libraries": [
+    "p5.js",
+    "GSAP",
+    "OpenCV"
+   ],
+   "loopable": false,
+   "mechanic": "compte à rebours + agenda à cocher",
+   "narrationLines": 6,
+   "video": "shorts/riso-zine__evenements__geminides-j-39/short.mp4"
+  },
+  {
+   "dir": "shorts/riso-zine__geographie__5-plus-grands-deserts",
+   "identity": "riso-zine",
+   "family": "geographie",
+   "title": "Les 5 plus grands déserts du monde (le n°1 est glacé !)",
+   "duration": 16.0,
+   "renderTimeSec": 299.1,
+   "libraries": [
+    "p5.js",
+    "GSAP",
+    "OpenCV"
+   ],
+   "loopable": false,
+   "mechanic": "suspense (compte à rebours 5 -> 1, le n°1 annoncé glacé) + question finale",
+   "narrationLines": 7,
+   "video": "shorts/riso-zine__geographie__5-plus-grands-deserts/short.mp4"
+  },
+  {
    "dir": "shorts/swiss-data__evenements__j-272-eclipse-2-aout-2027",
    "identity": "swiss-data",
    "family": "evenements",
@@ -367,6 +465,38 @@
    "mechanic": "question",
    "narrationLines": 6,
    "video": "shorts/tableau-craie__explicatif__pourquoi-le-ciel-est-bleu/short.mp4"
+  },
+  {
+   "dir": "shorts/topo-relief__geographie__comment-mesure-t-on-l-everest",
+   "identity": "topo-relief",
+   "family": "geographie",
+   "title": "Comment mesure-t-on l'Everest ?",
+   "duration": 15.0,
+   "renderTimeSec": 760.5,
+   "libraries": [
+    "three.js",
+    "D3.js"
+   ],
+   "loopable": false,
+   "mechanic": "question",
+   "narrationLines": 6,
+   "video": "shorts/topo-relief__geographie__comment-mesure-t-on-l-everest/short.mp4"
+  },
+  {
+   "dir": "shorts/topo-relief__histoire__hannibal-traverse-les-alpes",
+   "identity": "topo-relief",
+   "family": "histoire",
+   "title": "Hannibal traverse les Alpes (218 av. J.-C.)",
+   "duration": 15.0,
+   "renderTimeSec": 486.7,
+   "libraries": [
+    "three.js",
+    "D3.js"
+   ],
+   "loopable": false,
+   "mechanic": "vote",
+   "narrationLines": 5,
+   "video": "shorts/topo-relief__histoire__hannibal-traverse-les-alpes/short.mp4"
   }
  ]
 }

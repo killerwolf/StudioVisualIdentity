@@ -1,0 +1,9 @@
+# Recette — un short `geographie` dans l'identité Zine Riso
+
+Short de référence : `out/shorts/riso-zine__geographie__5-plus-grands-deserts/` (16 s, 7 pages).
+
+- **Ouvrir par (0–2,6 s)** une couverture déjà imprimée à la frame 0 : tag jaune « ZINE GÉO #nn » (Space Mono 700, 48 px), titre en deux passes rose/bleu 112 px / −4 px (3 lignes max, 10 car./ligne), annotation-question au marqueur bleu 78 px (« le n°1 est… glacé ?! »), et la forme-surprise découpée en grand (r ≈ 320 px) avec un « ? » réservé en jaune dans le bleu. Kick de repérage ±14 px sur les 0,34 premières s.
+- **Structurer en** une page par élément (1,6–2,2 s ; la dernière 3 s) : numéro géant `N°5` 236 px (deux passes, slam x −150 px / −8°, power3.out 0,3 s), petit article au marqueur, nom en encre noire 112 px, étiquette jaune de la valeur (« 9,2 M km² », scaleX 0,25 s), comparaison au marqueur (« soit 17 × la France ») révélée en 0,45 s. La forme découpée tombe (échelle 0,55→1, back.out(1.7) 0,42 s), **aire ∝ superficie** (r = 330·√(S/S_max)), ombre de collage dans une autre encre à 37 %, texture par encre (dunes roses sur jaune, fissures réservées dans le bleu), référence d'échelle constante (blob rose « la France ») et contour pointillé du n°1 attendu pour la tension. Coupe sèche entre pages + pop/click.
+- **Fermer par (2,5–3 s)** la planche-récap : toutes les découpes à la même échelle (×0,5) qui tombent en stagger 0,13 s, numéros en Space Mono, définition/chute en titre deux passes (« DÉSERT = TRÈS PEU DE PLUIE ») + nuance au marqueur, CTA au marqueur noir (« tu le savais ? »).
+- Tokens : `out/identities/riso-zine/tokens.json` (encres, trames, typo, on twos 12 pas/s). Son : preset `lofi` 90 bpm, pop+click par page, glass+chime sur la révélation.
+- Pièges : jaune×bleu = vert (réserver le bleu sous le jaune), rose seul illisible, glyphes ≈ → absents, chiffres en Space Mono dans le marqueur.

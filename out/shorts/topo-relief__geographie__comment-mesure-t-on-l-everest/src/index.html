@@ -1,0 +1,186 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8">
+<title>topo-relief — Comment mesure-t-on l'Everest ?</title>
+<!-- Identité topo-relief. Relief procédural (pas de MNT téléchargé, stylisé), courbes d3.contours,
+     maquette three.js. Contrat window.ready / window.renderAt(t), sans état (rendu parallélisable). -->
+<style>
+:root{--bg:#14221C;--surface:#1E3329;--gold:#E8C872;--clay:#D9734E;--mint:#9FD3C7;--text:#F1EEDC}
+html,body{margin:0;background:var(--bg);width:1080px;height:1920px;overflow:hidden}
+canvas{position:absolute;inset:0;display:block}
+#fade{position:absolute;left:0;right:0;top:1040px;height:880px;background:linear-gradient(to bottom,rgba(20,34,28,0),rgba(20,34,28,.88) 22%,#14221C 40%)}
+#topfade{position:absolute;left:0;right:0;top:0;height:470px;background:linear-gradient(to bottom,#14221C 0,rgba(20,34,28,.85) 55%,rgba(20,34,28,0))}
+.hud{position:absolute;left:60px;color:var(--mint);font:500 54px/1 'JetBrains Mono';letter-spacing:1px}
+#coord{top:236px}
+#alt{top:304px;display:flex;align-items:baseline;gap:22px}
+#alt span{font:700 104px/1 'JetBrains Mono';color:var(--gold);letter-spacing:-2px}
+#alt i{font-style:normal;font:700 64px/1 'JetBrains Mono';color:var(--clay)}
+.beat{position:absolute;left:60px;width:900px;top:1170px;color:var(--text)}
+.k{font:700 54px/1 'JetBrains Mono';color:var(--clay);letter-spacing:2px;margin-bottom:26px}
+.h{font:800 100px/1.0 'Inter';letter-spacing:-3.5px}
+.h em{font-style:normal;color:var(--gold)}
+.s{font:500 54px/1.15 'JetBrains Mono';color:var(--mint);margin-top:28px}
+.pin{position:absolute;transform:translate(-50%,-100%);text-align:center;color:var(--gold);font:700 54px/1 'JetBrains Mono';white-space:nowrap}
+.pin:after{content:'';display:block;width:4px;height:var(--l,110px);margin:12px auto 0;background:currentColor}
+.pin b{display:block;width:20px;height:20px;border-radius:50%;background:currentColor;margin:-6px auto 0;box-shadow:0 0 0 9px rgba(232,200,114,.25)}
+#geo{color:var(--mint)}
+#scale{position:absolute;left:60px;top:1040px;font:500 54px/1 'JetBrains Mono';color:var(--mint)}
+#scale div{width:240px;height:12px;margin-top:12px;background:repeating-linear-gradient(90deg,var(--mint) 0 60px,transparent 60px 120px);border:2px solid var(--mint)}
+</style>
+<script type="importmap">{"imports":{"three":"/node_modules/three/build/three.module.js","three/addons/":"/node_modules/three/examples/jsm/"}}</script>
+</head><body>
+<div id="topfade"></div><div id="fade"></div>
+<div class="hud" id="coord">27°59′N · 86°55′E</div>
+<div class="hud" id="alt">ALT <span id="altv">0 m</span><i id="up"></i></div>
+<div class="pin" id="pin" style="--l:120px"><em id="pinl" style="font-style:normal"></em><b></b></div>
+<div class="pin" id="geo" style="--l:90px">NIVEAU 0<b></b></div>
+<div class="beat" id="b0"><div class="k">HIMALAYA · 1 QUESTION</div><div class="h">Comment<br>mesure-t-on<br><em>l'Everest&nbsp;?</em></div></div>
+<div class="beat" id="b1"><div class="k">DÉCEMBRE 2020</div><div class="h">Chine + Népal<br><em>ensemble</em></div><div class="s">une seule mesure commune</div></div>
+<div class="beat" id="b2"><div class="k">01 / GNSS</div><div class="h">Un récepteur<br>au <em>sommet</em></div><div class="s">les satellites le situent</div></div>
+<div class="beat" id="b3"><div class="k">02 / RADAR</div><div class="h">Et la <em>neige&nbsp;?</em></div><div class="s">le radar mesure<br>son épaisseur</div></div>
+<div class="beat" id="b4"><div class="k">03 / GÉOÏDE</div><div class="h">Où est le<br><em>niveau&nbsp;0&nbsp;?</em></div><div class="s">nivellement + gravimétrie</div></div>
+<div class="beat" id="b5"><div class="k">ET DEMAIN&nbsp;?</div><div class="h">La montagne<br><em>bouge encore</em></div><div class="s">tectonique : quelques mm/an<br><span style="color:#9aa898">(relief exagéré)</span></div></div>
+<script src="/node_modules/d3/dist/d3.min.js"></script>
+<script type="module">
+import * as THREE from 'three';
+import * as S from '/out/tools/lib/svi.js';
+import * as T from './topo.js';
+
+// ---------- relief procédural « massif himalayen » (stylisé) ----------
+const N = 256;
+const H = T.heightfield(N, (x, y) => {
+  const r = T.ridged(x, y);
+  const dx = x - .52, dy = y - .42, peak = Math.exp(-Math.sqrt(dx * dx + dy * dy) / .11) * (.75 + .25 * r);
+  const ridge = Math.exp(-Math.pow((dy - dx * .55) / .05, 2)) * Math.exp(-(dx * dx) / .09) * .35;
+  return r * .7 + peak * .9 + ridge + Math.exp(-Math.pow((x - .2) / .1, 2) - Math.pow((y - .6) / .14, 2)) * .35;
+});
+const maps = T.contourMaps(H, N, { levels: 40, hiGold: .62 });
+const { ren, scene, cam } = T.setup({ fogNear: 9, fogFar: 24 });
+const R = T.makeRelief(H, N, maps, { SZ: 12, AMP: 3.4 });
+scene.add(R.group);
+
+let best = 0; for (let k = 1; k < H.length; k++) if (H[k] > H[best]) best = k;
+const sx = (best % N) / (N - 1), sy = Math.floor(best / N) / (N - 1);
+const summitL = R.toLocal(sx, sy, 1);
+const summitW = () => summitL.clone().applyMatrix4(R.group.matrixWorld);
+
+// ---------- satellites GNSS (symboliques, rapprochés) ----------
+const sats = [[-1.9, 2.0, -1.0], [1.0, 2.0, -1.8], [2.0, 1.8, .4], [-0.8, 2.6, 1.2]].map(o => {
+  const g = new THREE.Group();
+  g.add(T.glowSprite(0x9fd3c7, .9));
+  const body = new THREE.Mesh(new THREE.BoxGeometry(.16, .16, .16), new THREE.MeshBasicMaterial({ color: 0xf1eedc, fog: false }));
+  const wing = new THREE.Mesh(new THREE.BoxGeometry(.7, .03, .18), new THREE.MeshBasicMaterial({ color: 0x9fd3c7, fog: false }));
+  g.add(body, wing); g.position.set(summitL.x + o[0], summitL.y + o[1], summitL.z + o[2]); g.userData.o = o;
+  scene.add(g); return g;
+});
+const beams = sats.map(s => {
+  const a = s.position, b = summitL, len = a.distanceTo(b);
+  const m = new THREE.Mesh(new THREE.CylinderGeometry(.018, .018, len, 6, 1, true),
+    new THREE.MeshBasicMaterial({ color: 0x9fd3c7, transparent: true, opacity: .6, blending: THREE.AdditiveBlending, depthWrite: false, fog: false }));
+  m.position.copy(a).add(b).multiplyScalar(.5); m.lookAt(b); m.rotateX(Math.PI / 2); scene.add(m);
+  const pulse = T.glowSprite(0xe8c872, .35); scene.add(pulse);
+  return { m, pulse, a: a.clone(), b: b.clone() };
+});
+// ---------- anneaux radar ----------
+const rings = [0, 1, 2].map(() => {
+  const m = new THREE.Mesh(new THREE.RingGeometry(.92, 1, 64), new THREE.MeshBasicMaterial({ color: 0xd9734e, transparent: true, side: THREE.DoubleSide, blending: THREE.AdditiveBlending, depthWrite: false, fog: false }));
+  m.rotation.x = -Math.PI / 2; m.position.copy(summitL).add(new THREE.Vector3(0, -.12, 0)); scene.add(m); return m;
+});
+// ---------- géoïde : nappe ondulée « niveau 0 » ----------
+const gg = new THREE.PlaneGeometry(26, 26, 90, 90); gg.rotateX(-Math.PI / 2);
+{ const p = gg.attributes.position; for (let k = 0; k < p.count; k++) { const x = p.getX(k), z = p.getZ(k); p.setY(k, .18 + .16 * Math.sin(x * .45 + 1) * Math.cos(z * .38) + .07 * Math.sin(x * 1.1 - z * .8)); } }
+const geoFill = new THREE.Mesh(gg, new THREE.MeshBasicMaterial({ color: 0x9fd3c7, transparent: true, opacity: .14, depthWrite: false, side: THREE.DoubleSide }));
+const geoWire = new THREE.Mesh(gg, new THREE.MeshBasicMaterial({ color: 0x9fd3c7, wireframe: true, transparent: true, opacity: .35, depthWrite: false }));
+scene.add(geoFill, geoWire);
+// ---------- flèches tectoniques ----------
+const arrows = [-2.2, 2.4].map(dx => {
+  const g = new THREE.Group();
+  const cone = new THREE.Mesh(new THREE.ConeGeometry(.28, .55, 24), new THREE.MeshBasicMaterial({ color: 0xd9734e, fog: false }));
+  const stem = new THREE.Mesh(new THREE.CylinderGeometry(.07, .07, 1.0, 12), new THREE.MeshBasicMaterial({ color: 0xd9734e, fog: false }));
+  cone.position.y = .75; g.add(cone, stem); g.position.set(summitL.x + dx, summitL.y - 1.2, summitL.z + 1.2); scene.add(g); return g;
+});
+
+// ---------- caméra drone : images clés (t, azimut, rayon, hauteur, visée Y) ----------
+const KEYS = [
+  [0.0, -0.70, 7.6, 6.6, -2.3],
+  [3.4, -0.36, 8.0, 5.4, -2.0],
+  [5.6, -0.20, 6.6, 4.2, -1.5],
+  [8.0, 0.18, 9.4, 5.6, -0.2],
+  [10.2, 0.42, 5.4, 2.6, -0.7],
+  [12.6, 0.80, 9.0, 2.0, -2.4],
+  [15.0, 0.79, 18.0, 11.0, -3.0],
+];
+function camAt(t) {
+  let i = 0; while (i < KEYS.length - 2 && t > KEYS[i + 1][0]) i++;
+  const A = KEYS[i], B = KEYS[i + 1], k = T.E.glide(S.clamp((t - A[0]) / (B[0] - A[0])));
+  const v = A.map((a, n) => S.lerp(a, B[n], k));
+  const s = summitW();
+  cam.position.set(s.x + Math.sin(v[1]) * v[2], s.y + v[3], s.z + Math.cos(v[1]) * v[2]);
+  cam.lookAt(s.x - Math.sin(v[1]) * .8, s.y + v[4], s.z - Math.cos(v[1]) * .8);
+  return v;
+}
+
+const $ = id => document.getElementById(id);
+const beats = [['b0', 0, .15, 3.1, 3.45], ['b1', 3.45, 3.75, 5.35, 5.65], ['b2', 5.65, 5.95, 7.75, 8.05], ['b3', 8.05, 8.35, 9.95, 10.25], ['b4', 10.25, 10.55, 12.35, 12.65], ['b5', 12.65, 12.95]];
+const fm = T.fmt.format(',.2f');
+const ALT = 8848.86;
+
+S.installContract({
+  duration: 15,
+  ready: S.loadFonts(T.FONTS),
+  renderAt: t => {
+    // extrusion + montée des courbes
+    const rise = S.lerp(.12, 1, T.E.rise(S.seg(t, 0, 2.6)));
+    const tect = 1 + .07 * S.seg(t, 12.9, 14.6, S.ease.inOutSine);
+    R.group.scale.y = rise * tect;
+    R.U.uLevel.value = S.lerp(.02, 1.02, S.seg(t, .1, 3.2, S.ease.inOutSine));
+    R.U.uScan.value = 1 - S.seg(t, 3.1, 3.5);
+    R.U.uSnow.value = S.seg(t, 8.1, 8.8) * (1 - .6 * S.seg(t, 10.2, 11));
+    R.group.updateMatrixWorld(true);
+    const fogFar = S.lerp(24, 40, S.seg(t, 10.2, 12.6, T.E.glide)) + 14 * S.seg(t, 12.6, 15);
+    scene.fog.far = fogFar; scene.fog.near = S.lerp(9, 16, S.seg(t, 10.2, 12.6));
+    camAt(t);
+    // satellites + faisceaux (01)
+    const kS = Math.min(S.seg(t, 5.6, 6.3, S.ease.outCubic), 1 - S.seg(t, 7.9, 8.4));
+    sats.forEach((g, i) => { g.visible = kS > .01; g.scale.setScalar(kS); g.rotation.y = t * .6 + i; });
+    beams.forEach((b, i) => {
+      const kb = S.seg(t, 6.0 + i * .15, 6.5 + i * .15) * (1 - S.seg(t, 7.9, 8.3));
+      b.m.visible = kb > .01; b.m.material.opacity = .55 * kb;
+      const u = ((t * .9 + i * .27) % 1); b.pulse.position.lerpVectors(b.a, b.b, u); b.pulse.visible = kb > .01; b.pulse.material.opacity = kb;
+    });
+    // radar (02)
+    const kR = Math.min(S.seg(t, 8.2, 8.6), 1 - S.seg(t, 9.9, 10.3));
+    rings.forEach((m, i) => {
+      const u = ((t - 8.2) * .8 + i / 3) % 1;
+      m.visible = kR > .01 && t > 8.2; m.scale.setScalar(.2 + u * 2.2); m.material.opacity = kR * (1 - u) * .95;
+    });
+    // géoïde (03)
+    const kG = S.seg(t, 10.3, 11.1, S.ease.outCubic) * (1 - .55 * S.seg(t, 12.7, 13.4));
+    geoFill.visible = geoWire.visible = kG > .01;
+    geoFill.material.opacity = .24 * kG; geoWire.material.opacity = .55 * kG;
+    geoFill.position.y = geoWire.position.y = S.lerp(-1.4, 0, kG);
+    // tectonique
+    const kT = S.seg(t, 12.8, 13.3, S.ease.outCubic);
+    arrows.forEach((a, i) => { a.visible = kT > .01; a.scale.setScalar(kT); a.position.y = summitL.y * R.group.scale.y - 1.6 + ((t * .6 + i * .5) % 1) * .5; });
+    ren.render(scene, cam);
+    // HUD altitude
+    const lv = S.clamp(R.U.uLevel.value);
+    const altv = t < 3.2 ? ALT * S.seg(t, .1, 3.2, S.ease.inOutSine) : ALT;
+    $('altv').textContent = fm(altv) + ' m';
+    $('up').textContent = t > 12.9 ? '↑' : '';
+    $('up').style.opacity = t > 12.9 ? (.55 + .45 * Math.sin(t * 9)).toFixed(2) : 0;
+    // balise sommet
+    const [px, py] = T.toScreen(summitW(), cam);
+    const pin = $('pin'); pin.style.left = px + 'px'; pin.style.top = (py - 6) + 'px';
+    const kp = S.seg(t, 2.6, 3.2, S.ease.outCubic); pin.style.opacity = kp.toFixed(3);
+    $('pinl').textContent = t > 5.6 && t < 8.05 ? 'GNSS' : (t > 8.05 && t < 10.25 ? 'RADAR' : '');
+    pin.style.setProperty('--l', (t > 10.2 && t < 12.7 ? 60 : 120) + 'px');
+    // balise géoïde
+    const geo = $('geo'); geo.style.left = '250px'; geo.style.top = '760px';
+    geo.style.opacity = (S.seg(t, 10.7, 11.2) * (1 - S.seg(t, 12.4, 12.8))).toFixed(3);
+    geo.style.display = t > 10.6 && t < 12.9 ? '' : 'none';
+    for (const [id, a, b, c, d] of beats) T.show($(id), t, a, b, c, d);
+    $('b0').style.opacity = t < .15 ? 1 : $('b0').style.opacity;   // titre présent dès la frame 0
+    $('b0').style.transform = t < .15 ? 'none' : $('b0').style.transform;
+    $('b0').style.display = t < 3.45 ? '' : 'none';
+  },
+});
+</script></body></html>

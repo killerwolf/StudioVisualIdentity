@@ -56,4 +56,18 @@ Sources : journaux horodatés des studios (`out/report/notes/<slug>.md`), rappor
 | liquid-chrome / pendule | bande grise dure à l'horizon | sol brillant infini | sol retiré, fond en calque 2D |
 | pixel-arcade / territoire (PixiJS) | écran rempli trop lentement (10 s), batailles plates à ~25 % chacune | réglages de l'automate | 2 sous-pas synchrones par frame et force d'attaque au carré, avant tout rendu |
 
-Un seul rendu complet par short, aucun rejeté. Voix off : 23/23 générées avec Fish Audio (Arnold), voir la ligne « Voix off : 1 débordement résiduel ».
+Un seul rendu complet par short, aucun rejeté. Voix off : Fish Audio (Arnold) sur les 23 premiers shorts, voir la ligne « Voix off : 1 débordement résiduel » ; les 8 shorts des identités réhabilitées (31 au total) sont encore sans voix.
+
+## Identités réhabilitées (cosmos-doc, brut-meme, riso-zine, topo-relief) — 2026-11-04 00:24 → 00:57
+
+| Short | Problème | Cause | Résolution |
+|---|---|---|---|
+| riso-zine / déserts | **1er rendu complet jeté** : les dunes du Sahara disparaissent après la 1ʳᵉ image de leur page | bug p5 v2 : cache de style désynchronisé après un save/restore manuel autour d'un clip ; invisible sur stills isolés | resynchronisation du style après chaque restore, appliquée aux 2 shorts, 1 re-rendu |
+| riso-zine / Géminides | jaune imprimé sur bleu = vert ; pluie de météores qui s'arrête à ~6 s ; trop dense (« feu d'artifice ») | surimpression multiply ; horloge non bouclée | défonce du bleu/rose sous le jaune, horloge bouclée, densité réduite (stills) |
+| topo-relief / Hannibal | 8 séries de stills pour le cadrage | crête des Alpes + départ d'itinéraire impossibles à tenir ensemble en vertical ; signe de l'offset de visée inversé | itinéraire raccourci, caméra reculée, offset de visée par keyframe |
+| topo-relief / Hannibal | compteur d'altitude plat (450 m) de 4,4 à 7,3 s alors que le texte dit « l'armée grimpe » | le compteur affiche l'altitude max atteinte et l'itinéraire suit une vallée | accepté ; la montée est portée par la caméra et la voix off |
+| cosmos-doc / Voyager | compteur d'heures figé à 00 sur les stills ; flare mal placé | texte écrit avant le seek GSAP ; projection avec la caméra de l'image précédente | écriture après le seek ; `updateMatrixWorld()` avant projection |
+| brut-meme / Stroop | « TON SCORE EN COMMENTAIRE » débordait de 1080 px | titre auto-ajusté mesuré pendant qu'il passait à la ligne | `white-space: nowrap` pendant la mesure |
+| riso-zine (les 2) | 17 Mo par short | grain + trames saturent le plafond 8 Mb/s | accepté, comme gazette-1900 |
+
+Aucune librairie bloquée ni remplacée. Les commits de l'orchestrateur ont parfois embarqué des fichiers de studios encore en cours d'écriture (les studios ne committent pas) ; sans conséquence, chaque livraison finale a été recommittée.

@@ -1,0 +1,10 @@
+{"language": "fr", "style": "décontracté, complice, ton de fanzine fait maison, petites pauses avant les chiffres", "voice": "Puck",
+ "lines": [
+  {"t": 0.2, "maxDuration": 2.35, "text": "Le plus grand désert est… glacé !"},
+  {"t": 2.7, "maxDuration": 1.4, "text": "Cinq : le Gobi."},
+  {"t": 4.3, "maxDuration": 1.4, "text": "Quatre : l'Arabie."},
+  {"t": 5.9, "maxDuration": 1.6, "text": "Trois : le Sahara, brûlant."},
+  {"t": 7.7, "maxDuration": 2.0, "text": "Deux : l'Arctique. Désert, oui !"},
+  {"t": 9.9, "maxDuration": 2.75, "text": "Numéro un : l'Antarctique, vingt-cinq fois la France !"},
+  {"t": 12.85, "maxDuration": 3.1, "text": "Désert : presque pas de pluie, pas forcément chaud !"}
+ ]}

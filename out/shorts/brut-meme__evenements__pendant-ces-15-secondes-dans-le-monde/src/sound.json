@@ -1,0 +1,328 @@
+{
+ "duration": 16,
+ "seed": 15,
+ "bpm": 120,
+ "key": "A",
+ "scale": "minor",
+ "music": {
+  "preset": "pulse",
+  "gain": 0.45,
+  "octave": 3,
+  "density": 0.6,
+  "loop": false
+ },
+ "events": [
+  {
+   "t": 0,
+   "type": "impact",
+   "gain": 0.95
+  },
+  {
+   "t": 0.6,
+   "type": "pop",
+   "gain": 0.7
+  },
+  {
+   "t": 2.2,
+   "type": "impact",
+   "gain": 0.95
+  },
+  {
+   "t": 2.381,
+   "type": "blip",
+   "gain": 0.3,
+   "note": "E6"
+  },
+  {
+   "t": 2.619,
+   "type": "blip",
+   "gain": 0.3,
+   "note": "E6"
+  },
+  {
+   "t": 2.7,
+   "type": "pop",
+   "gain": 0.7
+  },
+  {
+   "t": 2.857,
+   "type": "blip",
+   "gain": 0.3,
+   "note": "E6"
+  },
+  {
+   "t": 3.095,
+   "type": "blip",
+   "gain": 0.3,
+   "note": "E6"
+  },
+  {
+   "t": 3.333,
+   "type": "blip",
+   "gain": 0.3,
+   "note": "E6"
+  },
+  {
+   "t": 3.571,
+   "type": "blip",
+   "gain": 0.3,
+   "note": "E6"
+  },
+  {
+   "t": 3.81,
+   "type": "blip",
+   "gain": 0.3,
+   "note": "E6"
+  },
+  {
+   "t": 3.9,
+   "type": "impact",
+   "gain": 0.95
+  },
+  {
+   "t": 4.211,
+   "type": "thud",
+   "gain": 0.35
+  },
+  {
+   "t": 4.4,
+   "type": "pop",
+   "gain": 0.7
+  },
+  {
+   "t": 4.737,
+   "type": "thud",
+   "gain": 0.35
+  },
+  {
+   "t": 5.263,
+   "type": "thud",
+   "gain": 0.35
+  },
+  {
+   "t": 5.5,
+   "type": "impact",
+   "gain": 0.95
+  },
+  {
+   "t": 5.5,
+   "type": "click",
+   "gain": 0.7
+  },
+  {
+   "t": 6,
+   "type": "pop",
+   "gain": 0.7
+  },
+  {
+   "t": 6,
+   "type": "click",
+   "gain": 0.7
+  },
+  {
+   "t": 6.5,
+   "type": "click",
+   "gain": 0.7
+  },
+  {
+   "t": 7,
+   "type": "click",
+   "gain": 0.7
+  },
+  {
+   "t": 7.2,
+   "type": "impact",
+   "gain": 0.95
+  },
+  {
+   "t": 7.3,
+   "type": "tick",
+   "gain": 0.22,
+   "note": "A6"
+  },
+  {
+   "t": 7.425,
+   "type": "tick",
+   "gain": 0.22,
+   "note": "A6"
+  },
+  {
+   "t": 7.55,
+   "type": "tick",
+   "gain": 0.22,
+   "note": "A6"
+  },
+  {
+   "t": 7.675,
+   "type": "tick",
+   "gain": 0.22,
+   "note": "A6"
+  },
+  {
+   "t": 7.7,
+   "type": "pop",
+   "gain": 0.7
+  },
+  {
+   "t": 7.8,
+   "type": "tick",
+   "gain": 0.22,
+   "note": "A6"
+  },
+  {
+   "t": 7.925,
+   "type": "tick",
+   "gain": 0.22,
+   "note": "A6"
+  },
+  {
+   "t": 8.05,
+   "type": "tick",
+   "gain": 0.22,
+   "note": "A6"
+  },
+  {
+   "t": 8.175,
+   "type": "tick",
+   "gain": 0.22,
+   "note": "A6"
+  },
+  {
+   "t": 8.3,
+   "type": "tick",
+   "gain": 0.22,
+   "note": "A6"
+  },
+  {
+   "t": 8.425,
+   "type": "tick",
+   "gain": 0.22,
+   "note": "A6"
+  },
+  {
+   "t": 8.55,
+   "type": "tick",
+   "gain": 0.22,
+   "note": "A6"
+  },
+  {
+   "t": 8.675,
+   "type": "tick",
+   "gain": 0.22,
+   "note": "A6"
+  },
+  {
+   "t": 8.8,
+   "type": "tick",
+   "gain": 0.22,
+   "note": "A6"
+  },
+  {
+   "t": 8.9,
+   "type": "impact",
+   "gain": 0.95
+  },
+  {
+   "t": 8.95,
+   "type": "whoosh",
+   "gain": 0.6
+  },
+  {
+   "t": 9.4,
+   "type": "pop",
+   "gain": 0.7
+  },
+  {
+   "t": 9.9,
+   "type": "whoosh",
+   "gain": 0.45
+  },
+  {
+   "t": 10.9,
+   "type": "impact",
+   "gain": 0.95
+  },
+  {
+   "t": 11.4,
+   "type": "pop",
+   "gain": 0.7
+  },
+  {
+   "t": 11.667,
+   "type": "thud",
+   "gain": 0.9
+  },
+  {
+   "t": 12.4,
+   "type": "impact",
+   "gain": 0.95
+  },
+  {
+   "t": 12.55,
+   "type": "tick",
+   "gain": 0.6,
+   "note": "A5"
+  },
+  {
+   "t": 12.75,
+   "type": "tick",
+   "gain": 0.6,
+   "note": "B5"
+  },
+  {
+   "t": 12.95,
+   "type": "tick",
+   "gain": 0.6,
+   "note": "C6"
+  },
+  {
+   "t": 13.15,
+   "type": "tick",
+   "gain": 0.6,
+   "note": "D6"
+  },
+  {
+   "t": 13.35,
+   "type": "tick",
+   "gain": 0.6,
+   "note": "E6"
+  },
+  {
+   "t": 13.55,
+   "type": "tick",
+   "gain": 0.6,
+   "note": "A6"
+  },
+  {
+   "t": 13.9,
+   "type": "impact",
+   "gain": 0.95
+  },
+  {
+   "t": 14.1,
+   "type": "whoosh",
+   "gain": 0.5
+  },
+  {
+   "t": 14.25,
+   "type": "impact",
+   "gain": 0.7
+  },
+  {
+   "t": 14.4,
+   "type": "pop",
+   "gain": 0.8
+  },
+  {
+   "t": 15,
+   "type": "impact",
+   "gain": 1
+  },
+  {
+   "t": 15,
+   "type": "chime",
+   "gain": 0.6,
+   "note": "A5"
+  }
+ ]
+}

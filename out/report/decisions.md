@@ -31,3 +31,6 @@ Format : `HH:MM (UTC) — décision — raison`. Début de campagne : 20:27.
 - 2026-11-04 — Voix choisie par l'utilisateur sur échantillons : « Arnold » (conteur chaleureux), après essais de 9 voix ; clones de personnalités réelles écartés ; un seul modèle `s2.1-pro` pour toute la série.
 - 2026-11-04 — Les 23 shorts refaits avec Arnold (dont 3 déjà voisés Gemini/Clémence en test) ; `voice.wav` non versionné, `voice_lines/*.mp3` et `short_novo.mp4` conservés ; 1 débordement noté, texte non réécrit.
 
+- 2026-11-04 00:22 — Le propriétaire demande les 4 identités écartées (« pas exactement pareilles »). 4 studios lancés en parallèle, avec pour chacune la consigne explicite de se distinguer de sa voisine (cosmos-doc ≠ neon-lab, brut-meme ≠ pixel-arcade, riso-zine ≠ swiss-data/atlas-grave, topo-relief ≠ atlas-grave) et des sujets nouveaux non redondants.
+- 00:57 — 8 shorts livrés (QA 31/31). Test mesuré : les 8 ont pour plus proche voisin un short de leur propre identité (29/31 au total). Un 2ᵉ juge aveugle est lancé sur 14 identités (56 images).
+- 01:05 — Classement mis à jour à 14 : brut-meme 4ᵉ, riso-zine 7ᵉ, topo-relief 9ᵉ, cosmos-doc 13ᵉ ; le trio recommandé ne change pas.
