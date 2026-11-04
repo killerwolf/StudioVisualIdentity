@@ -1,0 +1,23 @@
+{
+ "language": "fr",
+ "style": "vive et rythmée, comme une conteuse, chaleureuse",
+ "voiceUsed": {
+  "provider": "Gemini",
+  "name": "Sulafat",
+  "model": "gemini-3.8-flash-tts",
+  "note": "une réplique par appel, silences de début et de fin rognés ; l'audio est mixé par le moteur papier, pas par tts.py"
+ },
+ "lines": [
+  {
+   "t": 0.15,
+   "maxDuration": 2.22,
+   "text": "D'où vient le mot sandwich ?"
+  },
+  {
+   "t": 2.37,
+   "maxDuration": 6.76,
+   "text": "D'un aristocrate anglais : John Montagu, quatrième comte de Sandwich."
+  }
+ ],
+ "duration": 12.33
+}

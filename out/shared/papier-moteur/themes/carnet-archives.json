@@ -1,0 +1,6 @@
+{"nom": "B · Carnet d'archives", "resume": "Vieux papiers sur papier kraft, encre sépia, tampons et machine à écrire : on ouvre un dossier d'archives.",
+ "tapis": "kraft",
+ "couleurs": {"MAT": [178, 140, 96], "MAT_DEEP": [150, 116, 78], "PAPER": [246, 238, 216], "INK": [52, 36, 26], "INK_SOFT": [104, 84, 66],
+   "BLUE": [40, 74, 92], "RED": [168, 44, 36], "YELLOW": [228, 190, 104], "PINK": [222, 170, 150], "CYAN": [134, 160, 140], "KRAFT": [190, 150, 104]},
+ "polices": {"display": "AbrilFatface-Regular.ttf", "hand": "SpecialElite-Regular.ttf", "hand-r": "SpecialElite-Regular.ttf",
+   "mono": "CourierPrime-Regular.ttf", "mono-r": "CourierPrime-Regular.ttf"}}

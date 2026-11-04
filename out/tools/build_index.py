@@ -20,7 +20,12 @@ ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / 'out'
 
 ORDER = ['swiss-data', 'gazette-1900', 'pixel-arcade', 'brut-meme', 'bauhaus-kinetic', 'tableau-craie', 'riso-zine',
-         'pastel-diorama', 'topo-relief', 'atlas-grave', 'aquarelle-conte', 'neon-lab', 'cosmos-doc', 'liquid-chrome']
+         'pastel-diorama', 'topo-relief', 'atlas-grave', 'aquarelle-conte', 'neon-lab', 'cosmos-doc', 'liquid-chrome',
+         # ajoutées le 2026-11-04 (hors campagne de classement) : le papier découpé du gabarit StudioGabarit et ses 3 déclinaisons
+         'papier-decoupe', 'atelier-papier', 'carnet-archives', 'cabinet-curiosites']
+ADDED = {'papier-decoupe', 'atelier-papier', 'carnet-archives', 'cabinet-curiosites'}
+VOICE_ADDED = {'provider': 'Gemini', 'name': 'Sulafat', 'model': 'gemini-3.8-flash-tts', 'language': 'fr'}
+PAPIER_MODULE = 'out/shared/papier-moteur/'
 REHAB = {'brut-meme', 'riso-zine', 'topo-relief', 'cosmos-doc'}
 VOICE = {'provider': 'Fish Audio', 'name': 'Arnold', 'reference_id': 'd704cf8f1216490cbfbed89955f0e938', 'model': 's2.1-pro', 'language': 'fr'}
 
@@ -69,6 +74,20 @@ CURATION = {
         promiseEn='Hypnotic liquid chrome matter watched until the end: each short is one continuous satisfying shot where physics is the show.',
         signature=['chrome / iridescent liquid matter in one continuous macro shot', 'Syne 800 titles with a pastel-gradient keyword', 'slow motion, no cuts', 'prefer the warm graphite/pearl background to stay distinct from neon-lab and cosmos-doc']),
 }
+CURATION.update({
+    'papier-decoupe': dict(audience=['kids', 'teens', 'adults'], confusableWith=['atelier-papier'],
+        promiseEn='Every idea is a cut-out paper piece that pops onto a green cutting mat in stop-motion: a craft table where things get explained with scissors.',
+        signature=['green graduated cutting mat', 'Dela Gothic One titles on alternately tilted paper strips', 'pieces pop in 4 steps at 12 fps with drop shadow and scissor-cut edges', 'burned-in Kalam captions on a paper strip']),
+    'atelier-papier': dict(audience=['teens', 'adults'], confusableWith=['papier-decoupe'],
+        promiseEn='The template cut-paper look, warmer: a midnight-blue cutting mat with cream, coral and mustard paper.',
+        signature=['midnight-blue graduated cutting mat', 'Dela Gothic One strips in cream / royal blue / coral', 'stop-motion pop at 12 fps', 'Kalam captions on cream strips']),
+    'carnet-archives': dict(audience=['teens', 'adults'], confusableWith=['gazette-1900'],
+        promiseEn='Opening an archive file: cream papers on kraft, sepia ink, red rubber stamps and typewriter captions.',
+        signature=['fibrous brown kraft ground, no grid', 'Abril Fatface titles on cream / ink-blue / stamp-red strips', 'Special Elite typewriter captions and notes', 'sepia palette with stamp red and ochre']),
+    'cabinet-curiosites': dict(audience=['teens', 'adults'], confusableWith=['cosmos-doc'],
+        promiseEn='Every object becomes a collection piece: midnight-blue ground, cream and gold museum labels, serif lettering.',
+        signature=['plain vignetted midnight-blue ground', 'DM Serif Display titles on cream / teal / burgundy strips', 'DM Serif Display italic captions', 'gold accent for notes']),
+})
 SHARED = {  # modules identiques (md5) dans les shorts de l'identité — vérifié par ce script
     'swiss-data': ['grille.js'], 'gazette-1900': ['gazette.js', 'post.py'], 'bauhaus-kinetic': ['bk.js'], 'aquarelle-conte': ['aq.js'],
     'atlas-grave': ['atlas.js', 'textures.py'], 'neon-lab': ['field.glsl.js', 'neon_grade.py'], 'brut-meme': ['brut.js'],
@@ -201,18 +220,19 @@ def main():
         cur = CURATION[s]
         ids.append({
             'id': s, 'name': t.get('name'), 'rank': rank,
-            'status': 'rehabilitated' if s in REHAB else 'selected',  # rehabilitated = set aside in Phase 1 to avoid topic overlap, produced later; same evidence level
+            'status': 'added' if s in ADDED else ('rehabilitated' if s in REHAB else 'selected'),  # rehabilitated = set aside in Phase 1 to avoid topic overlap, produced later; same evidence level
             'promiseFr': promise, 'promiseEn': cur['promiseEn'],
             'familiesProven': sorted({x['family'] for x in shorts}),
             'libraries': [re.sub(r'\s+\d+(\.\d+)*$', '', l) for l in (t.get('libraries') or [])],
-            'renderCostNote': COST_NOTE.get(s, 'browser render only (renderTimeSec)') + '; measured with up to 10 renders sharing 4 cores: expect ~2–3x faster on a dedicated machine',
-            'renderCostSecPer100Frames': {'min': min(costs), 'max': max(costs), 'measuredUnderLoad': True} if costs else None,
-            'sharedModule': shared or None,
-            'voiceUsed': VOICE,
+            'renderCostNote': ('Python cut-paper engine (Pillow/OpenCV, 4 parallel slices) including voice mix and mastering; measured alone on 4 cores'
+                               if s in ADDED else COST_NOTE.get(s, 'browser render only (renderTimeSec)') + '; measured with up to 10 renders sharing 4 cores: expect ~2–3x faster on a dedicated machine'),
+            'renderCostSecPer100Frames': {'min': min(costs), 'max': max(costs), 'measuredUnderLoad': s not in ADDED} if costs else None,
+            'sharedModule': ([PAPIER_MODULE] if s in ADDED else shared) or None,
+            'voiceUsed': VOICE_ADDED if s in ADDED else VOICE,
             'paths': {'identityMd': f'out/identities/{s}/identity.md', 'tokens': f'out/identities/{s}/tokens.json',
                       'recipes': sorted(f'out/identities/{s}/recipes/{os.path.basename(x)}' for x in glob.glob(str(base / 'recipes' / '*.md'))),
                       'poster': f'out/identities/{s}/poster.jpg', 'contactSheet': f'out/identities/{s}/contact-sheet.jpg',
-                      'phase1Poster': f'out/report/posters/{s}.jpg'},
+                      'phase1Poster': None if s in ADDED else f'out/report/posters/{s}.jpg'},
             'shorts': shorts,
             'coreTokens': core_tokens(t),
             'curation': {'by': 'orchestrator judgment, not measured', 'audience': cur['audience'],
@@ -227,12 +247,12 @@ def main():
         i['curation']['confusableWith'] = sorted(conf[i['id']])
     index = {
         'schemaVersion': '1.0',
-        'description': ('Machine index of the 14 visual identities for 9:16 shorts. Use it to shortlist identities, then read each '
+        'description': (f'Machine index of the {len(ids)} visual identities for 9:16 shorts. Use it to shortlist identities, then read each '
                         "identity's identity.md (16 sections, French) and tokens.json. coreTokens is a normalised subset "
                         '(seconds, pixels on a 1080x1920 canvas, @fontsource slugs); the original tokens.json is authoritative for '
                         'everything else. curation.* is orchestrator judgment. See AGENTS.md.'),
         'generatedBy': 'out/tools/build_index.py',
-        'fieldNotes': {'status': 'selected = kept in Phase 1; rehabilitated = set aside in Phase 1 only to avoid topic overlap with a neighbour, then produced on request with the same rules and evidence level',
+        'fieldNotes': {'status': 'selected = kept in Phase 1; rehabilitated = set aside in Phase 1 only to avoid topic overlap with a neighbour, then produced on request with the same rules and evidence level; added = added after the campaign (cut-paper family from the StudioGabarit template, rendered by the shared Python engine out/shared/papier-moteur/), appended after the ranked 14 and not part of the ranking or the blind recognition tests',
                        'coreTokens.motion.staggerSec': "the identity's default stagger as written in its tokens.json; meaning varies (per-item stagger for most, spacing between beats/captions for atlas-grave 1.5 and liquid-chrome 1.55, title-to-body delay for neon-lab 0.8)",
                        'coreTokens.motion.durationSec.slow': 'longest standard duration; for gazette-1900 it is one page (6 beats at 128 bpm)',
                        'coreTokens.color.contrastOnBg': 'WCAG contrast ratio against bg, computed; muted/accent colours are often decorative (e.g. gazette-1900 muted = engraving fill, 1.07:1) and must not carry text',

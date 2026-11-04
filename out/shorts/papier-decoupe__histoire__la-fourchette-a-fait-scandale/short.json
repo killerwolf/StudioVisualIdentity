@@ -1,0 +1,63 @@
+{
+ "identity": "papier-decoupe",
+ "family": "histoire",
+ "title": "La fourchette a fait scandale",
+ "hook": "Dès la 1re image : étiquette de série et titre en bandes de papier déjà posés ; la voix démarre à 0,15 s.",
+ "duration": 19.71,
+ "libraries": [
+  "Pillow",
+  "OpenCV",
+  "NumPy",
+  "ffmpeg"
+ ],
+ "seed": 1004,
+ "renderTimeSec": 21,
+ "structure": [
+  {
+   "t": 0.15,
+   "beat": "La fourchette a fait scandale !"
+  },
+  {
+   "t": 2.42,
+   "beat": "An mille, à Venise : une princesse byzantine mange avec une fourchette d'or."
+  },
+  {
+   "t": 7.71,
+   "beat": "Un moine s'indigne : quel luxe scandaleux !"
+  },
+  {
+   "t": 11.15,
+   "beat": "Il faudra des siècles pour qu'elle gagne nos tables."
+  },
+  {
+   "t": 14.05,
+   "beat": "Et vous : les doigts ou la fourchette ?"
+  },
+  {
+   "t": 16.51,
+   "beat": "écran de fin (bouton, nom, slogan, personnage qui salue)"
+  }
+ ],
+ "engagement": {
+  "mechanic": "vote",
+  "cta": "doigts ou fourchette ? (en commentaire)"
+ },
+ "loopable": false,
+ "sound": {
+  "type": "moteur papier : fond_short + bruitages papier/glissement/bouton",
+  "voice": true,
+  "voiceEngine": "gemini",
+  "voiceName": "Gemini – Sulafat",
+  "voiceUsed": "Gemini Sulafat (gemini-3.8-flash-tts), réutilisée depuis le studio Un Jour Une Histoire"
+ },
+ "qualityChecks": {
+  "stillsReviewed": true,
+  "textMinPx": 28,
+  "safeAreaOk": true
+ },
+ "notes": "Short de preuve rendu par le moteur papier du gabarit StudioGabarit (Python), pas par render.mjs. Même texte pour les 4 identités papier : seul le thème change (src/THEME).",
+ "sources": [
+  "Pierre Damien (XIe s.) sur la dogaresse byzantine de Venise (Maria Argyropoulina, 1004) — https://en.wikipedia.org/wiki/Maria_Argyropoulina"
+ ],
+ "reproduce": "bash out/shorts/papier-decoupe__histoire__la-fourchette-a-fait-scandale/src/build.sh"
+}

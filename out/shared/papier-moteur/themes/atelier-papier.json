@@ -1,0 +1,5 @@
+{"nom": "A · Atelier papier", "resume": "Papier découpé sur tapis de découpe, couleurs vives : la famille des autres chaînes, en plus chaud.",
+ "tapis": "grille",
+ "couleurs": {"MAT": [33, 52, 92], "MAT_DEEP": [25, 40, 72], "PAPER": [248, 242, 228], "INK": [24, 28, 40], "INK_SOFT": [70, 76, 92],
+   "BLUE": [36, 98, 214], "RED": [226, 82, 58], "YELLOW": [246, 196, 70], "PINK": [244, 160, 180], "CYAN": [120, 200, 214], "KRAFT": [201, 154, 91]},
+ "polices": {}}

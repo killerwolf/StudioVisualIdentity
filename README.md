@@ -6,7 +6,7 @@
 
 ▶ **La démo en 51 s, avec le son** : [16:9](out/demo/demo_16x9.mp4) · [9:16 vertical](out/demo/demo_9x16.mp4)
 
-- **14 identités complètes** (couleurs, typographies, mouvements, transitions, structure d'un short), chacune prouvée par 2 ou 3 vraies vidéos : **31 shorts** en tout, avec voix off.
+- **18 identités complètes** (couleurs, typographies, mouvements, transitions, structure d'un short), chacune prouvée par 2 ou 3 vraies vidéos : **39 shorts** en tout, avec voix off. Dont, depuis le 2026-11-04, le **papier découpé du gabarit StudioGabarit** et ses 3 déclinaisons (atelier papier, carnet d'archives, cabinet de curiosités), rendus par le moteur Python partagé `out/shared/papier-moteur/`.
 - **Les outils pour produire la suite** : rendu image par image, voix off, sons, contrôle qualité, et un script qui crée en une commande le projet de votre chaîne.
 - **Tout est open source** : les 31 shorts sont rendus par du code, sans image ni musique téléchargée.
 

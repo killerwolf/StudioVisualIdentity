@@ -267,6 +267,10 @@ def main():
     shutil.copy2(OUT / 'tools' / 'lib' / 'svi.js', tdst / 'lib' / 'svi.js')
     shutil.copytree(OUT / 'tools' / 'templates', tdst / 'templates')
     (tdst / 'new_episode.py').write_text(NEW_EPISODE)
+    # identités « papier » (papier-decoupe et ses déclinaisons) : leurs scènes Python utilisent le moteur partagé du gabarit
+    srcs = [a.source] + [b.strip() for b in (a.blend or '').split(',') if b.strip()]
+    if any('papier-moteur' in (OUT / 'identities' / s / 'tokens.json').read_text() for s in srcs if (OUT / 'identities' / s / 'tokens.json').exists()):
+        shutil.copytree(OUT / 'shared' / 'papier-moteur', target / 'out' / 'shared' / 'papier-moteur', ignore=shutil.ignore_patterns('__pycache__'))
     (target / 'out' / 'shorts').mkdir(parents=True)
     (target / 'out' / 'report').mkdir(parents=True)
     pk = json.load(open(ROOT / 'package.json'))

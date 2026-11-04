@@ -1,9 +1,9 @@
 {
  "schemaVersion": "1.0",
- "description": "Machine index of the 14 visual identities for 9:16 shorts. Use it to shortlist identities, then read each identity's identity.md (16 sections, French) and tokens.json. coreTokens is a normalised subset (seconds, pixels on a 1080x1920 canvas, @fontsource slugs); the original tokens.json is authoritative for everything else. curation.* is orchestrator judgment. See AGENTS.md.",
+ "description": "Machine index of the 18 visual identities for 9:16 shorts. Use it to shortlist identities, then read each identity's identity.md (16 sections, French) and tokens.json. coreTokens is a normalised subset (seconds, pixels on a 1080x1920 canvas, @fontsource slugs); the original tokens.json is authoritative for everything else. curation.* is orchestrator judgment. See AGENTS.md.",
  "generatedBy": "out/tools/build_index.py",
  "fieldNotes": {
-  "status": "selected = kept in Phase 1; rehabilitated = set aside in Phase 1 only to avoid topic overlap with a neighbour, then produced on request with the same rules and evidence level",
+  "status": "selected = kept in Phase 1; rehabilitated = set aside in Phase 1 only to avoid topic overlap with a neighbour, then produced on request with the same rules and evidence level; added = added after the campaign (cut-paper family from the StudioGabarit template, rendered by the shared Python engine out/shared/papier-moteur/), appended after the ranked 14 and not part of the ranking or the blind recognition tests",
   "coreTokens.motion.staggerSec": "the identity's default stagger as written in its tokens.json; meaning varies (per-item stagger for most, spacing between beats/captions for atlas-grave 1.5 and liquid-chrome 1.55, title-to-body delay for neon-lab 0.8)",
   "coreTokens.motion.durationSec.slow": "longest standard duration; for gazette-1900 it is one page (6 beats at 128 bpm)",
   "coreTokens.color.contrastOnBg": "WCAG contrast ratio against bg, computed; muted/accent colours are often decorative (e.g. gazette-1900 muted = engraving fill, 1.07:1) and must not carry text",
@@ -408,7 +408,9 @@
      "red rubber stamp",
      "sepia + film-grain OpenCV pass"
     ],
-    "confusableWith": []
+    "confusableWith": [
+     "carnet-archives"
+    ]
    }
   },
   {
@@ -2586,6 +2588,7 @@
      "film grain, no HUD or neon lines"
     ],
     "confusableWith": [
+     "cabinet-curiosites",
      "liquid-chrome",
      "neon-lab"
     ]
@@ -2797,6 +2800,787 @@
     "confusableWith": [
      "cosmos-doc",
      "neon-lab"
+    ]
+   }
+  },
+  {
+   "id": "papier-decoupe",
+   "name": "Papier découpé",
+   "rank": 15,
+   "status": "added",
+   "promiseFr": "Chaque idée est une pièce de papier découpée qui saute sur un tapis de découpe vert, en stop-motion : un plateau d'atelier où l'on explique avec des ciseaux.",
+   "promiseEn": "Every idea is a cut-out paper piece that pops onto a green cutting mat in stop-motion: a craft table where things get explained with scissors.",
+   "familiesProven": [
+    "explicatif",
+    "histoire"
+   ],
+   "libraries": [
+    "Pillow",
+    "OpenCV",
+    "NumPy",
+    "ffmpeg"
+   ],
+   "renderCostNote": "Python cut-paper engine (Pillow/OpenCV, 4 parallel slices) including voice mix and mastering; measured alone on 4 cores",
+   "renderCostSecPer100Frames": {
+    "min": 3.6,
+    "max": 3.8,
+    "measuredUnderLoad": false
+   },
+   "sharedModule": [
+    "out/shared/papier-moteur/"
+   ],
+   "voiceUsed": {
+    "provider": "Gemini",
+    "name": "Sulafat",
+    "model": "gemini-3.8-flash-tts",
+    "language": "fr"
+   },
+   "paths": {
+    "identityMd": "out/identities/papier-decoupe/identity.md",
+    "tokens": "out/identities/papier-decoupe/tokens.json",
+    "recipes": [
+     "out/identities/papier-decoupe/recipes/explicatif.md",
+     "out/identities/papier-decoupe/recipes/histoire.md"
+    ],
+    "poster": "out/identities/papier-decoupe/poster.jpg",
+    "contactSheet": "out/identities/papier-decoupe/contact-sheet.jpg",
+    "phase1Poster": null
+   },
+   "shorts": [
+    {
+     "dir": "out/shorts/papier-decoupe__explicatif__d-ou-vient-le-mot-sandwich",
+     "family": "explicatif",
+     "title": "D'où vient le mot sandwich ?",
+     "durationSec": 12.33,
+     "libraries": [
+      "Pillow",
+      "OpenCV",
+      "NumPy",
+      "ffmpeg"
+     ],
+     "renderCostSecPer100Frames": 3.8,
+     "loopable": false,
+     "voiced": true,
+     "recognitionNearestShort": null,
+     "recognitionSameIdentity": null
+    },
+    {
+     "dir": "out/shorts/papier-decoupe__histoire__la-fourchette-a-fait-scandale",
+     "family": "histoire",
+     "title": "La fourchette a fait scandale",
+     "durationSec": 19.71,
+     "libraries": [
+      "Pillow",
+      "OpenCV",
+      "NumPy",
+      "ffmpeg"
+     ],
+     "renderCostSecPer100Frames": 3.6,
+     "loopable": false,
+     "voiced": true,
+     "recognitionNearestShort": null,
+     "recognitionSameIdentity": null
+    }
+   ],
+   "coreTokens": {
+    "color": {
+     "bg": "#1F5A4A",
+     "surface": "#F7F4EC",
+     "text": "#10231D",
+     "muted": "#3D4F49",
+     "accent": [
+      "#2F5CF5",
+      "#E4432D",
+      "#FFD23F",
+      "#FF9EC7",
+      "#7FE3D6"
+     ],
+     "success": "#7FE3D6",
+     "danger": "#E4432D",
+     "contrastOnBg": {
+      "text": 2.05,
+      "muted": 1.09,
+      "success": 5.29,
+      "danger": 1.96,
+      "accent1": 1.52,
+      "accent2": 1.96,
+      "accent3": 5.55,
+      "accent4": 4.19,
+      "accent5": 5.29
+     },
+     "textSafeOnBg": "only colours with contrastOnBg >= 4.5 may be used for body text (>= 3 for titles >= 90 px bold); check identity.md palette roles"
+    },
+    "typography": {
+     "display": {
+      "family": "Dela Gothic One",
+      "fontsourceSlug": "dela-gothic-one",
+      "weight": 400,
+      "sizePx": 86.0,
+      "sizeNote": "86–120px (titres en bandes, 1 à 3 bandes)"
+     },
+     "title": {
+      "family": "Dela Gothic One",
+      "fontsourceSlug": "dela-gothic-one",
+      "weight": 400,
+      "sizePx": 46.0,
+      "sizeNote": "46px (titre de carte)"
+     },
+     "body": {
+      "family": "Kalam",
+      "fontsourceSlug": "kalam",
+      "weight": 700,
+      "sizePx": 54.0,
+      "sizeNote": "54px (sous-titres incrustés, bande papier, y ≈ 1330)"
+     },
+     "caption": {
+      "family": "DM Mono",
+      "fontsourceSlug": "dm-mono",
+      "weight": 500,
+      "sizePx": 28.0,
+      "sizeNote": "28px (étiquette de série) ; 24px (œil de carte)"
+     }
+    },
+    "motion": {
+     "durationSec": {
+      "fast": 0.25,
+      "base": 0.333,
+      "slow": 0.417
+     },
+     "staggerSec": 0.5,
+     "easingRaw": {
+      "enter": "pop en 4 pas à 12 i/s : échelle 0,35 → 1,15 → 0,96 → 1",
+      "exit": "glissé de sortie de scène vers la gauche (0,25 s, en pas)",
+      "emphasis": "chute (5 pas, ralenti à l'arrivée) ; tampon"
+     },
+     "hookDeadlineSec": 0.15,
+     "sourceUnits": "s"
+    },
+    "transitions": [
+     {
+      "name": "glissé de scène",
+      "ffmpegXfade": "none (dans le moteur : la scène sort vers la gauche en pas)",
+      "durationSec": 0.25,
+      "use": "à chaque nouvelle scène, sur le début de phrase"
+     },
+     {
+      "name": "écran de fin",
+      "ffmpegXfade": "none",
+      "durationSec": 3.2,
+      "use": "fin de chaque Short : bouton, nom en deux bandes, slogan, personnage qui salue"
+     }
+    ],
+    "safeAreaPx": {
+     "top": 220.0,
+     "bottom": 320.0,
+     "right": 120.0,
+     "left": 60.0
+    },
+    "canvas": {
+     "width": 1080,
+     "height": 1920,
+     "fps": 30
+    }
+   },
+   "curation": {
+    "by": "orchestrator judgment, not measured",
+    "audience": [
+     "kids",
+     "teens",
+     "adults"
+    ],
+    "signatureToPreserve": [
+     "green graduated cutting mat",
+     "Dela Gothic One titles on alternately tilted paper strips",
+     "pieces pop in 4 steps at 12 fps with drop shadow and scissor-cut edges",
+     "burned-in Kalam captions on a paper strip"
+    ],
+    "confusableWith": [
+     "atelier-papier"
+    ]
+   }
+  },
+  {
+   "id": "atelier-papier",
+   "name": "Atelier papier",
+   "rank": 16,
+   "status": "added",
+   "promiseFr": "Le papier découpé du gabarit, en plus chaud : un tapis de découpe bleu nuit, du crème, du corail et de la moutarde pour une chaîne de culture générale grand public.",
+   "promiseEn": "The template cut-paper look, warmer: a midnight-blue cutting mat with cream, coral and mustard paper.",
+   "familiesProven": [
+    "explicatif",
+    "histoire"
+   ],
+   "libraries": [
+    "Pillow",
+    "OpenCV",
+    "NumPy",
+    "ffmpeg"
+   ],
+   "renderCostNote": "Python cut-paper engine (Pillow/OpenCV, 4 parallel slices) including voice mix and mastering; measured alone on 4 cores",
+   "renderCostSecPer100Frames": {
+    "min": 3.7,
+    "max": 3.8,
+    "measuredUnderLoad": false
+   },
+   "sharedModule": [
+    "out/shared/papier-moteur/"
+   ],
+   "voiceUsed": {
+    "provider": "Gemini",
+    "name": "Sulafat",
+    "model": "gemini-3.8-flash-tts",
+    "language": "fr"
+   },
+   "paths": {
+    "identityMd": "out/identities/atelier-papier/identity.md",
+    "tokens": "out/identities/atelier-papier/tokens.json",
+    "recipes": [
+     "out/identities/atelier-papier/recipes/explicatif.md",
+     "out/identities/atelier-papier/recipes/histoire.md"
+    ],
+    "poster": "out/identities/atelier-papier/poster.jpg",
+    "contactSheet": "out/identities/atelier-papier/contact-sheet.jpg",
+    "phase1Poster": null
+   },
+   "shorts": [
+    {
+     "dir": "out/shorts/atelier-papier__explicatif__d-ou-vient-le-mot-sandwich",
+     "family": "explicatif",
+     "title": "D'où vient le mot sandwich ?",
+     "durationSec": 12.33,
+     "libraries": [
+      "Pillow",
+      "OpenCV",
+      "NumPy",
+      "ffmpeg"
+     ],
+     "renderCostSecPer100Frames": 3.8,
+     "loopable": false,
+     "voiced": true,
+     "recognitionNearestShort": null,
+     "recognitionSameIdentity": null
+    },
+    {
+     "dir": "out/shorts/atelier-papier__histoire__la-fourchette-a-fait-scandale",
+     "family": "histoire",
+     "title": "La fourchette a fait scandale",
+     "durationSec": 19.71,
+     "libraries": [
+      "Pillow",
+      "OpenCV",
+      "NumPy",
+      "ffmpeg"
+     ],
+     "renderCostSecPer100Frames": 3.7,
+     "loopable": false,
+     "voiced": true,
+     "recognitionNearestShort": null,
+     "recognitionSameIdentity": null
+    }
+   ],
+   "coreTokens": {
+    "color": {
+     "bg": "#21345C",
+     "surface": "#F8F2E4",
+     "text": "#181C28",
+     "muted": "#464C5C",
+     "accent": [
+      "#2462D6",
+      "#E2523A",
+      "#F6C446",
+      "#F4A0B4",
+      "#78C8D6"
+     ],
+     "success": "#78C8D6",
+     "danger": "#E2523A",
+     "contrastOnBg": {
+      "text": 1.38,
+      "muted": 1.43,
+      "success": 6.45,
+      "danger": 3.22,
+      "accent1": 2.22,
+      "accent2": 3.22,
+      "accent3": 7.54,
+      "accent4": 6.16,
+      "accent5": 6.45
+     },
+     "textSafeOnBg": "only colours with contrastOnBg >= 4.5 may be used for body text (>= 3 for titles >= 90 px bold); check identity.md palette roles"
+    },
+    "typography": {
+     "display": {
+      "family": "Dela Gothic One",
+      "fontsourceSlug": "dela-gothic-one",
+      "weight": 400,
+      "sizePx": 86.0,
+      "sizeNote": "86–120px (titres en bandes, 1 à 3 bandes)"
+     },
+     "title": {
+      "family": "Dela Gothic One",
+      "fontsourceSlug": "dela-gothic-one",
+      "weight": 400,
+      "sizePx": 46.0,
+      "sizeNote": "46px (titre de carte)"
+     },
+     "body": {
+      "family": "Kalam",
+      "fontsourceSlug": "kalam",
+      "weight": 700,
+      "sizePx": 54.0,
+      "sizeNote": "54px (sous-titres incrustés, bande papier, y ≈ 1330)"
+     },
+     "caption": {
+      "family": "DM Mono",
+      "fontsourceSlug": "dm-mono",
+      "weight": 500,
+      "sizePx": 28.0,
+      "sizeNote": "28px (étiquette de série) ; 24px (œil de carte)"
+     }
+    },
+    "motion": {
+     "durationSec": {
+      "fast": 0.25,
+      "base": 0.333,
+      "slow": 0.417
+     },
+     "staggerSec": 0.5,
+     "easingRaw": {
+      "enter": "pop en 4 pas à 12 i/s : échelle 0,35 → 1,15 → 0,96 → 1",
+      "exit": "glissé de sortie de scène vers la gauche (0,25 s, en pas)",
+      "emphasis": "chute (5 pas, ralenti à l'arrivée) ; tampon"
+     },
+     "hookDeadlineSec": 0.15,
+     "sourceUnits": "s"
+    },
+    "transitions": [
+     {
+      "name": "glissé de scène",
+      "ffmpegXfade": "none (dans le moteur : la scène sort vers la gauche en pas)",
+      "durationSec": 0.25,
+      "use": "à chaque nouvelle scène, sur le début de phrase"
+     },
+     {
+      "name": "écran de fin",
+      "ffmpegXfade": "none",
+      "durationSec": 3.2,
+      "use": "fin de chaque Short : bouton, nom en deux bandes, slogan, personnage qui salue"
+     }
+    ],
+    "safeAreaPx": {
+     "top": 220.0,
+     "bottom": 320.0,
+     "right": 120.0,
+     "left": 60.0
+    },
+    "canvas": {
+     "width": 1080,
+     "height": 1920,
+     "fps": 30
+    }
+   },
+   "curation": {
+    "by": "orchestrator judgment, not measured",
+    "audience": [
+     "teens",
+     "adults"
+    ],
+    "signatureToPreserve": [
+     "midnight-blue graduated cutting mat",
+     "Dela Gothic One strips in cream / royal blue / coral",
+     "stop-motion pop at 12 fps",
+     "Kalam captions on cream strips"
+    ],
+    "confusableWith": [
+     "papier-decoupe"
+    ]
+   }
+  },
+  {
+   "id": "carnet-archives",
+   "name": "Carnet d'archives",
+   "rank": 17,
+   "status": "added",
+   "promiseFr": "On ouvre un dossier d'archives : vieux papiers crème posés sur du kraft, encre sépia, tampons rouges et sous-titres à la machine à écrire.",
+   "promiseEn": "Opening an archive file: cream papers on kraft, sepia ink, red rubber stamps and typewriter captions.",
+   "familiesProven": [
+    "explicatif",
+    "histoire"
+   ],
+   "libraries": [
+    "Pillow",
+    "OpenCV",
+    "NumPy",
+    "ffmpeg"
+   ],
+   "renderCostNote": "Python cut-paper engine (Pillow/OpenCV, 4 parallel slices) including voice mix and mastering; measured alone on 4 cores",
+   "renderCostSecPer100Frames": {
+    "min": 3.8,
+    "max": 3.9,
+    "measuredUnderLoad": false
+   },
+   "sharedModule": [
+    "out/shared/papier-moteur/"
+   ],
+   "voiceUsed": {
+    "provider": "Gemini",
+    "name": "Sulafat",
+    "model": "gemini-3.8-flash-tts",
+    "language": "fr"
+   },
+   "paths": {
+    "identityMd": "out/identities/carnet-archives/identity.md",
+    "tokens": "out/identities/carnet-archives/tokens.json",
+    "recipes": [
+     "out/identities/carnet-archives/recipes/explicatif.md",
+     "out/identities/carnet-archives/recipes/histoire.md"
+    ],
+    "poster": "out/identities/carnet-archives/poster.jpg",
+    "contactSheet": "out/identities/carnet-archives/contact-sheet.jpg",
+    "phase1Poster": null
+   },
+   "shorts": [
+    {
+     "dir": "out/shorts/carnet-archives__explicatif__d-ou-vient-le-mot-sandwich",
+     "family": "explicatif",
+     "title": "D'où vient le mot sandwich ?",
+     "durationSec": 12.33,
+     "libraries": [
+      "Pillow",
+      "OpenCV",
+      "NumPy",
+      "ffmpeg"
+     ],
+     "renderCostSecPer100Frames": 3.8,
+     "loopable": false,
+     "voiced": true,
+     "recognitionNearestShort": null,
+     "recognitionSameIdentity": null
+    },
+    {
+     "dir": "out/shorts/carnet-archives__histoire__la-fourchette-a-fait-scandale",
+     "family": "histoire",
+     "title": "La fourchette a fait scandale",
+     "durationSec": 19.71,
+     "libraries": [
+      "Pillow",
+      "OpenCV",
+      "NumPy",
+      "ffmpeg"
+     ],
+     "renderCostSecPer100Frames": 3.9,
+     "loopable": false,
+     "voiced": true,
+     "recognitionNearestShort": null,
+     "recognitionSameIdentity": null
+    }
+   ],
+   "coreTokens": {
+    "color": {
+     "bg": "#B28C60",
+     "surface": "#F6EED8",
+     "text": "#34241A",
+     "muted": "#685442",
+     "accent": [
+      "#284A5C",
+      "#A82C24",
+      "#E4BE68",
+      "#DEAA96",
+      "#86A08C"
+     ],
+     "success": "#86A08C",
+     "danger": "#A82C24",
+     "contrastOnBg": {
+      "text": 4.82,
+      "muted": 2.32,
+      "success": 1.09,
+      "danger": 2.23,
+      "accent1": 3.06,
+      "accent2": 2.23,
+      "accent3": 1.74,
+      "accent4": 1.51,
+      "accent5": 1.09
+     },
+     "textSafeOnBg": "only colours with contrastOnBg >= 4.5 may be used for body text (>= 3 for titles >= 90 px bold); check identity.md palette roles"
+    },
+    "typography": {
+     "display": {
+      "family": "Abril Fatface",
+      "fontsourceSlug": "abril-fatface",
+      "weight": 400,
+      "sizePx": 86.0,
+      "sizeNote": "86–120px (titres en bandes, 1 à 3 bandes)"
+     },
+     "title": {
+      "family": "Abril Fatface",
+      "fontsourceSlug": "abril-fatface",
+      "weight": 400,
+      "sizePx": 46.0,
+      "sizeNote": "46px (titre de carte)"
+     },
+     "body": {
+      "family": "Special Elite",
+      "fontsourceSlug": "special-elite",
+      "weight": 400,
+      "sizePx": 54.0,
+      "sizeNote": "54px (sous-titres incrustés, bande papier, y ≈ 1330)"
+     },
+     "caption": {
+      "family": "Courier Prime",
+      "fontsourceSlug": "courier-prime",
+      "weight": 400,
+      "sizePx": 28.0,
+      "sizeNote": "28px (étiquette de série) ; 24px (œil de carte)"
+     }
+    },
+    "motion": {
+     "durationSec": {
+      "fast": 0.25,
+      "base": 0.333,
+      "slow": 0.417
+     },
+     "staggerSec": 0.5,
+     "easingRaw": {
+      "enter": "pop en 4 pas à 12 i/s : échelle 0,35 → 1,15 → 0,96 → 1",
+      "exit": "glissé de sortie de scène vers la gauche (0,25 s, en pas)",
+      "emphasis": "chute (5 pas, ralenti à l'arrivée) ; tampon"
+     },
+     "hookDeadlineSec": 0.15,
+     "sourceUnits": "s"
+    },
+    "transitions": [
+     {
+      "name": "glissé de scène",
+      "ffmpegXfade": "none (dans le moteur : la scène sort vers la gauche en pas)",
+      "durationSec": 0.25,
+      "use": "à chaque nouvelle scène, sur le début de phrase"
+     },
+     {
+      "name": "écran de fin",
+      "ffmpegXfade": "none",
+      "durationSec": 3.2,
+      "use": "fin de chaque Short : bouton, nom en deux bandes, slogan, personnage qui salue"
+     }
+    ],
+    "safeAreaPx": {
+     "top": 220.0,
+     "bottom": 320.0,
+     "right": 120.0,
+     "left": 60.0
+    },
+    "canvas": {
+     "width": 1080,
+     "height": 1920,
+     "fps": 30
+    }
+   },
+   "curation": {
+    "by": "orchestrator judgment, not measured",
+    "audience": [
+     "teens",
+     "adults"
+    ],
+    "signatureToPreserve": [
+     "fibrous brown kraft ground, no grid",
+     "Abril Fatface titles on cream / ink-blue / stamp-red strips",
+     "Special Elite typewriter captions and notes",
+     "sepia palette with stamp red and ochre"
+    ],
+    "confusableWith": [
+     "gazette-1900"
+    ]
+   }
+  },
+  {
+   "id": "cabinet-curiosites",
+   "name": "Cabinet de curiosités",
+   "rank": 18,
+   "status": "added",
+   "promiseFr": "Chaque objet devient une pièce de collection : fond bleu nuit, étiquettes de musée crème et or, lettres à empattements.",
+   "promiseEn": "Every object becomes a collection piece: midnight-blue ground, cream and gold museum labels, serif lettering.",
+   "familiesProven": [
+    "explicatif",
+    "histoire"
+   ],
+   "libraries": [
+    "Pillow",
+    "OpenCV",
+    "NumPy",
+    "ffmpeg"
+   ],
+   "renderCostNote": "Python cut-paper engine (Pillow/OpenCV, 4 parallel slices) including voice mix and mastering; measured alone on 4 cores",
+   "renderCostSecPer100Frames": {
+    "min": 3.7,
+    "max": 3.8,
+    "measuredUnderLoad": false
+   },
+   "sharedModule": [
+    "out/shared/papier-moteur/"
+   ],
+   "voiceUsed": {
+    "provider": "Gemini",
+    "name": "Sulafat",
+    "model": "gemini-3.8-flash-tts",
+    "language": "fr"
+   },
+   "paths": {
+    "identityMd": "out/identities/cabinet-curiosites/identity.md",
+    "tokens": "out/identities/cabinet-curiosites/tokens.json",
+    "recipes": [
+     "out/identities/cabinet-curiosites/recipes/explicatif.md",
+     "out/identities/cabinet-curiosites/recipes/histoire.md"
+    ],
+    "poster": "out/identities/cabinet-curiosites/poster.jpg",
+    "contactSheet": "out/identities/cabinet-curiosites/contact-sheet.jpg",
+    "phase1Poster": null
+   },
+   "shorts": [
+    {
+     "dir": "out/shorts/cabinet-curiosites__explicatif__d-ou-vient-le-mot-sandwich",
+     "family": "explicatif",
+     "title": "D'où vient le mot sandwich ?",
+     "durationSec": 12.33,
+     "libraries": [
+      "Pillow",
+      "OpenCV",
+      "NumPy",
+      "ffmpeg"
+     ],
+     "renderCostSecPer100Frames": 3.8,
+     "loopable": false,
+     "voiced": true,
+     "recognitionNearestShort": null,
+     "recognitionSameIdentity": null
+    },
+    {
+     "dir": "out/shorts/cabinet-curiosites__histoire__la-fourchette-a-fait-scandale",
+     "family": "histoire",
+     "title": "La fourchette a fait scandale",
+     "durationSec": 19.71,
+     "libraries": [
+      "Pillow",
+      "OpenCV",
+      "NumPy",
+      "ffmpeg"
+     ],
+     "renderCostSecPer100Frames": 3.7,
+     "loopable": false,
+     "voiced": true,
+     "recognitionNearestShort": null,
+     "recognitionSameIdentity": null
+    }
+   ],
+   "coreTokens": {
+    "color": {
+     "bg": "#161E34",
+     "surface": "#F2E8D0",
+     "text": "#141826",
+     "muted": "#56545C",
+     "accent": [
+      "#1C4C54",
+      "#841E30",
+      "#D6AC58",
+      "#CE969C",
+      "#76A8AA"
+     ],
+     "success": "#76A8AA",
+     "danger": "#841E30",
+     "contrastOnBg": {
+      "text": 1.07,
+      "muted": 2.22,
+      "success": 6.26,
+      "danger": 1.74,
+      "accent1": 1.74,
+      "accent2": 1.74,
+      "accent3": 7.8,
+      "accent4": 6.67,
+      "accent5": 6.26
+     },
+     "textSafeOnBg": "only colours with contrastOnBg >= 4.5 may be used for body text (>= 3 for titles >= 90 px bold); check identity.md palette roles"
+    },
+    "typography": {
+     "display": {
+      "family": "DM Serif Display",
+      "fontsourceSlug": "dm-serif-display",
+      "weight": 400,
+      "sizePx": 86.0,
+      "sizeNote": "86–120px (titres en bandes, 1 à 3 bandes)"
+     },
+     "title": {
+      "family": "DM Serif Display",
+      "fontsourceSlug": "dm-serif-display",
+      "weight": 400,
+      "sizePx": 46.0,
+      "sizeNote": "46px (titre de carte)"
+     },
+     "body": {
+      "family": "DM Serif Display",
+      "fontsourceSlug": "dm-serif-display",
+      "weight": 400,
+      "sizePx": 54.0,
+      "sizeNote": "54px (sous-titres incrustés, bande papier, y ≈ 1330)"
+     },
+     "caption": {
+      "family": "DM Mono",
+      "fontsourceSlug": "dm-mono",
+      "weight": 500,
+      "sizePx": 28.0,
+      "sizeNote": "28px (étiquette de série) ; 24px (œil de carte)"
+     }
+    },
+    "motion": {
+     "durationSec": {
+      "fast": 0.25,
+      "base": 0.333,
+      "slow": 0.417
+     },
+     "staggerSec": 0.5,
+     "easingRaw": {
+      "enter": "pop en 4 pas à 12 i/s : échelle 0,35 → 1,15 → 0,96 → 1",
+      "exit": "glissé de sortie de scène vers la gauche (0,25 s, en pas)",
+      "emphasis": "chute (5 pas, ralenti à l'arrivée) ; tampon"
+     },
+     "hookDeadlineSec": 0.15,
+     "sourceUnits": "s"
+    },
+    "transitions": [
+     {
+      "name": "glissé de scène",
+      "ffmpegXfade": "none (dans le moteur : la scène sort vers la gauche en pas)",
+      "durationSec": 0.25,
+      "use": "à chaque nouvelle scène, sur le début de phrase"
+     },
+     {
+      "name": "écran de fin",
+      "ffmpegXfade": "none",
+      "durationSec": 3.2,
+      "use": "fin de chaque Short : bouton, nom en deux bandes, slogan, personnage qui salue"
+     }
+    ],
+    "safeAreaPx": {
+     "top": 220.0,
+     "bottom": 320.0,
+     "right": 120.0,
+     "left": 60.0
+    },
+    "canvas": {
+     "width": 1080,
+     "height": 1920,
+     "fps": 30
+    }
+   },
+   "curation": {
+    "by": "orchestrator judgment, not measured",
+    "audience": [
+     "teens",
+     "adults"
+    ],
+    "signatureToPreserve": [
+     "plain vignetted midnight-blue ground",
+     "DM Serif Display titles on cream / teal / burgundy strips",
+     "DM Serif Display italic captions",
+     "gold accent for notes"
+    ],
+    "confusableWith": [
+     "cosmos-doc"
     ]
    }
   }

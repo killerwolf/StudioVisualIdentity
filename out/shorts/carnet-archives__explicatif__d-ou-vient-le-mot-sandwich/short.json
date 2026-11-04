@@ -1,0 +1,51 @@
+{
+ "identity": "carnet-archives",
+ "family": "explicatif",
+ "title": "D'où vient le mot sandwich ?",
+ "hook": "Dès la 1re image : étiquette de série et titre en bandes de papier déjà posés ; la voix démarre à 0,15 s.",
+ "duration": 12.33,
+ "libraries": [
+  "Pillow",
+  "OpenCV",
+  "NumPy",
+  "ffmpeg"
+ ],
+ "seed": 1762,
+ "renderTimeSec": 14,
+ "structure": [
+  {
+   "t": 0.15,
+   "beat": "D'où vient le mot sandwich ?"
+  },
+  {
+   "t": 2.37,
+   "beat": "D'un aristocrate anglais : John Montagu, quatrième comte de Sandwich."
+  },
+  {
+   "t": 9.13,
+   "beat": "écran de fin (bouton, nom, slogan, personnage qui salue)"
+  }
+ ],
+ "engagement": {
+  "mechanic": "révélation",
+  "cta": "date en tampon"
+ },
+ "loopable": false,
+ "sound": {
+  "type": "moteur papier : fond_short + bruitages papier/glissement/bouton",
+  "voice": true,
+  "voiceEngine": "gemini",
+  "voiceName": "Gemini – Sulafat",
+  "voiceUsed": "Gemini Sulafat (gemini-3.8-flash-tts), réutilisée depuis le studio Un Jour Une Histoire"
+ },
+ "qualityChecks": {
+  "stillsReviewed": true,
+  "textMinPx": 28,
+  "safeAreaOk": true
+ },
+ "notes": "Short de preuve rendu par le moteur papier du gabarit StudioGabarit (Python), pas par render.mjs. Même texte pour les 4 identités papier : seul le thème change (src/THEME).",
+ "sources": [
+  "Première attestation écrite du mot, journal d'Edward Gibbon, 24 novembre 1762 (Oxford English Dictionary)"
+ ],
+ "reproduce": "bash out/shorts/carnet-archives__explicatif__d-ou-vient-le-mot-sandwich/src/build.sh"
+}

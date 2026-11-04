@@ -1,0 +1,6 @@
+{"nom": "C · Cabinet de curiosités", "resume": "Fond bleu nuit, étiquettes de musée crème et or, lettres à empattements : chaque objet devient une pièce de collection.",
+ "tapis": "nuit",
+ "couleurs": {"MAT": [22, 30, 52], "MAT_DEEP": [16, 22, 40], "PAPER": [242, 232, 208], "INK": [20, 24, 38], "INK_SOFT": [86, 84, 92],
+   "BLUE": [28, 76, 84], "RED": [132, 30, 48], "YELLOW": [214, 172, 88], "PINK": [206, 150, 156], "CYAN": [118, 168, 170], "KRAFT": [176, 140, 100]},
+ "polices": {"display": "DMSerifDisplay-Regular.ttf", "hand": "DMSerifDisplay-Italic.ttf", "hand-r": "DMSerifDisplay-Italic.ttf",
+   "mono": "DMMono-Medium.woff2", "mono-r": "DMMono-Regular.woff2"}}

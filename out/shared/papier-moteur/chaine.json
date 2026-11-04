@@ -1,0 +1,12 @@
+{
+  "nom_1": "Un Jour",
+  "nom_2": "Une Histoire",
+  "slogan": "Tout a une histoire.",
+  "fin_short": "{{TEXTE_FIN_SHORT}}",
+  "fin_long": "{{TEXTE_FIN_LONG}}",
+  "site": "",
+  "themes": ["Objets", "Mots et expressions", "Lieux", "Œuvres d'art"],
+  "avatar": "avatar",
+  "avatar_salut": "avatar-salut",
+  "bouche": [214, 291, 268, 287]
+}

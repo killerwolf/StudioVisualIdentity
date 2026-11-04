@@ -1,0 +1,38 @@
+{
+ "language": "fr",
+ "style": "vive et rythmée, comme une crieuse de journaux, chaleureuse",
+ "voiceUsed": {
+  "provider": "Gemini",
+  "name": "Sulafat",
+  "model": "gemini-3.8-flash-tts",
+  "note": "une réplique par appel, silences de début et de fin rognés ; l'audio est mixé par le moteur papier, pas par tts.py"
+ },
+ "lines": [
+  {
+   "t": 0.15,
+   "maxDuration": 2.27,
+   "text": "La fourchette a fait scandale !"
+  },
+  {
+   "t": 2.42,
+   "maxDuration": 5.29,
+   "text": "An mille, à Venise : une princesse byzantine mange avec une fourchette d'or."
+  },
+  {
+   "t": 7.71,
+   "maxDuration": 3.44,
+   "text": "Un moine s'indigne : quel luxe scandaleux !"
+  },
+  {
+   "t": 11.15,
+   "maxDuration": 2.89,
+   "text": "Il faudra des siècles pour qu'elle gagne nos tables."
+  },
+  {
+   "t": 14.05,
+   "maxDuration": 2.46,
+   "text": "Et vous : les doigts ou la fourchette ?"
+  }
+ ],
+ "duration": 19.71
+}
