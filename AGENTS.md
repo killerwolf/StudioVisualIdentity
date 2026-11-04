@@ -12,6 +12,14 @@ adopt one identity, blend several, or adapt one to your audience, language and c
 Most prose is in **French** (identity.md, recipes, reports, tool docstrings). JSON keys are English; many JSON *values* are French.
 `out/identities/index.json` gives an English summary of every identity so you can shortlist without reading French first.
 
+## Where this repository fits
+
+- **Choosing a visual identity** is what this repository is for: 14 proven styles, their design systems and their evidence.
+- **Running a production channel** needs more than a style: writing, validation, voice, review, publishing and scheduling. Two ways:
+  - you already have a studio template (for the owner of this repository, the private **StudioGabarit**, which runs on the Mac and is piloted from Notion): use this repository at its *design system* phase to pick 2–3 candidate styles, then port the chosen signature into that template's own render engine;
+  - you don't: `bootstrap_studio.py` below gives a lightweight studio (identity + scene templates + render toolkit) to prototype a style and produce episodes by hand.
+- **Shared skills** for any studio (sound design, Gemini voices, Notion piloting) live in [killerwolf/skills](https://github.com/killerwolf/skills).
+
 ## Starting a shorts studio from this repository (bootstrap)
 
 Do **not** fork this repository to produce your channel: it is the exploration. Create a separate studio project from it

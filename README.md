@@ -23,6 +23,8 @@ puis réalise notre premier épisode sur [sujet de l'épisode] et montre-moi le 
 
 L'agent choisit un style, crée un projet séparé pour votre chaîne (votre identité visuelle, des modèles de scènes, les outils de rendu), puis fabrique les épisodes un par un.
 
+**Vous avez déjà un modèle de studio complet** (agents, Notion, relecture, publication) ? Servez-vous de ce dépôt seulement pour **choisir le style** : l'agent en retient 2 ou 3 au moment de définir l'identité visuelle, puis transpose le style choisi dans votre propre moteur. C'est ainsi que l'utilise le modèle de studio privé de l'auteur, qui tourne sur Mac et se pilote depuis Notion.
+
 ## Pour aller plus loin : voix et sound design
 
 Deux skills Claude Code complètent le studio, dans [killerwolf/skills](https://github.com/killerwolf/skills) :
