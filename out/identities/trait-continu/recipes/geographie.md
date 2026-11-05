@@ -1,11 +1,11 @@
 # Recette — short `geographie` en Trait continu
 
-Référence : `out/shorts/trait-continu__geographie__l-italie-a-la-forme-d-une-botte/` (shapely + opensimplex + pycairo, 16 s, 30 i/s, graine 11, rendu 21,5 s).
+Référence : `out/shorts/trait-continu__geographie__l-italie-a-la-forme-d-une-botte/` (shapely + opensimplex + pycairo, 16 s, 30 i/s, graine 11, rendu 23,4 s).
 
 Pour un short **géographie** (enfants et parents) dans cette identité :
 
 - **Ouvrir par (0–1 s)** : une question d'enfant sur une forme (« L'Italie, une botte ? ») dans la bande orange dès t = 0 ; sur la plaque 1, le trait dessine **l'objet familier** que la forme rappelle (une botte générique inclinée comme la péninsule, 2 700 px à 850 px/s, ≈ 3,2 s).
-- **Avance plaque** à ≈ 3,8 s (0,8 s), titre « Suis le trait ».
+- **Avance plaque** à 3,81 s (0,6 s : 3 crans, plaque vierge lancée 0,25 s après le 1er cran, clac à la fin du 3ᵉ), titre « Suis le trait ».
 - **Plaque 2 : le pays d'un seul trait** (≈ 4 100 px à 900 px/s) :
   - contour **tracé à la main** en lon/lat (40–80 points, ≈ 0,1° près), projection équirectangulaire (cos de la latitude moyenne, ≈ 76 px/degré pour 10° de latitude), réduit par `shapely.simplify` (1,2 px) ; c'est un choix de style, le trait simplifie ;
   - ordre du tracé choisi pour la narration : partir d'un point qui permet de finir sur l'image forte (ici : pointe → côte ouest → Alpes → Adriatique → **talon** → golfe → **pointe** → Sicile) ;

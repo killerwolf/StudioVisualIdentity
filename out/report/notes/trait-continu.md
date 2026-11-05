@@ -3,7 +3,7 @@
 Studio lancé le 2026-11-05. Heures en UTC. Autre studio en parallèle : carte-meteo (4 cœurs partagés).
 
 ## 00:32 — Lecture et installation
-- Lu : STUDIO_BRIEF.md, AGENTS.md, facts.md, failures.md, directions §1, challenge §1 (correctifs obligatoires appliqués : traceur et non jouet, escalier ≥ 12 px, trait 6–8 px, bruit calculé une fois, Fredoka seule, pas de nostalgie, ≤ 33 mots / 15 s).
+- Lu : STUDIO_BRIEF.md, AGENTS.md, facts.md, failures.md, directions §1, challenge §1 (correctifs obligatoires appliqués : traceur et non objet de loisir, escalier ≥ 12 px, trait 6–8 px, bruit calculé une fois, Fredoka seule, pas d'argument de souvenir, ≤ 33 mots / 15 s).
 - Installé (seul usage de pip du studio) : `/root/.local/bin/uv pip install --python .venv/bin/python shapely==2.2.0 opensimplex==0.4.5.1` → 2 paquets en 6 ms ; `import shapely, opensimplex` OK.
 - Versions : shapely 2.2.0, opensimplex 0.4.5.1, numpy 2.4.6, pycairo 1.29.2, Pillow 13.0.0, ffmpeg 6.1.1. Charge machine 0,05.
 
@@ -32,5 +32,14 @@ Studio lancé le 2026-11-05. Heures en UTC. Autre studio en parallèle : carte-m
 ## 00:50–00:55 — Design system
 - `identity.md` (16 sections), `tokens.json`, `recipes/enfants.md`, `recipes/geographie.md`, `poster.jpg` (escargot à 4,0 s), `contact-sheet.jpg` (9 frames, 3 colonnes).
 - Cartes : `_drafts/trait-continu__shapely.json`, `_drafts/trait-continu__opensimplex.json`.
-- Ce qui n'a pas été fait : la voix (Fish Audio Arnold) n'est pas enregistrée (narration écrite seulement) ; la variante « la plaque se démagnétise » (dissolution opensimplex) est documentée mais pas prouvée dans un short.
+- Ce qui n'a pas été fait : la voix (Fish Audio Arnold) n'est pas enregistrée (narration écrite seulement) ; la variante « la plaque se vide » (dissolution opensimplex) est documentée mais pas prouvée dans un short.
 - Temps réel total du studio : ≈ 25 min (00:32 → 00:56).
+
+## 01:05–01:20 — Corrections de la revue finale (out/report/notes/revue-2026-11-05.md, section trait-continu)
+- **Avance plaque** : la revue mesurait 3 images (escargot, 5,90–5,97 s) et 2 (Italie, 4,23–4,27 s) à plus de 85 % d'orange uni. Mon sondage (scratchpad `orange_probe.py`, part de pixels à ± 24 de `#F26A21`) reproduit exactement ces chiffres. Dans le code, `OVERLAP = 0,45` était en fait le **délai** avant l'entrée de la plaque vierge (et non un chevauchement) : le porter à 0,55 l'aurait fait entrer plus tard. Délais essayés : 0,45 → 3 et 2 images > 85 % (max 97,6 %) ; 0,35 → 0 (max 80,4 %) ; 0,30 → 0 (max 80,4 %) ; **0,25 → 0 (max 77,7 %)**. Retenu : `ENTER_DELAY = 0,25 s` (chevauchement réel `OVERLAP = 3 × 0,2 − 0,25 = 0,35 s`, contre 0,15 s avant) ; le clac tombe pile à la fin du 3ᵉ cran. Plancher normal hors transition ≈ 62 % d'orange (la plaque couvre 38 % du cadre).
+- Conséquence : plaque 2 et narration avancées de 0,2 s (escargot ligne 3 : 6,35 → 6,25 ; Italie lignes 2–5 : −0,2 s). `sound.json` régénérés (50 et 41 événements). `voice_lines/00.mp3` de l'escargot laissé tel quel (ligne 1 inchangée à 0,2 s).
+- **Rendus complets v2** (un par short, `slot.sh`, en parallèle, charge ≈ 3,3) : escargot **22,8 s** / 465 images (4,91 s / 100) ; Italie **23,4 s** / 480 images (4,87 s / 100). Mesure sur les fichiers finaux muxés (42 images de transition chacun) : maximum 77,7 % et 76,9 % d'orange, 0 image > 85 %.
+- **Vocabulaire** : trois termes de la v1 (la matière du grain, le métal de la plaque et le nom de la variante d'effacement) décrivaient le mécanisme d'objets du commerce. Remplacés par « grain de surface », « plaque gris métal », « grain de mine de crayon » (trait) et « la plaque se vide » (variante). Les interdits d'identity.md sont reformulés sans les mots du produit (« objet de dessin du commerce », « boutons ronds », « agitation de l'objet », « souvenir d'enfance »). Fichiers : traceur.py (×2), identity.md, tokens.json, carte opensimplex, ce journal.
+- **Escargot, sens de la coquille** : note ajoutée (short.json `notes`, identity.md Risques) : « dextre » se juge vu depuis l'apex ; la flèche horaire sur un escargot de profil est une simplification ; « la plupart tournent à droite » reste juste.
+- Détails de la revue repris : bande titre 230–470 dans identity.md, vitesses 820 / 850 / 900 px/s, `uv` au lieu de `/root/.local/bin/uv` dans les README, transition 0,6 s dans tokens/identity/recettes, stills de transition remplacés (5,85 s et 4,15 s), poster et planche-contact refaits.
+- Vérification : `grep -riE "poudre|aluminium|démagnétise|molette|secousse|jouet|nostalgie"` sur out/identities/trait-continu et les 2 dossiers de shorts → aucune occurrence (exit 1). `check.py` : OK pour les 2. Nouvel avertissement escargot : « image figée ≥ 3 s à 12 s » (tenue finale de 3,47 s sur le dessin complet et la question, 0,2 s plus longue qu'en v1) : c'est une fin propre voulue, laissée sans re-rendu (un seul rendu par short).

@@ -13,7 +13,7 @@
   "ffmpeg"
  ],
  "seed": 11,
- "renderTimeSec": 21.5,
+ "renderTimeSec": 23.4,
  "structure": [
   {
    "t": 0,
@@ -25,23 +25,23 @@
   },
   {
    "t": 3.81,
-   "beat": "avance plaque (3 crans, 0,6 s) ; plaque vierge, clac à 4,61 s ; titre « Suis le trait »"
+   "beat": "avance plaque (3 crans, 0,6 s) ; plaque vierge lancée à 4,06 s, clac à 4,41 s (fin du 3e cran) ; titre « Suis le trait »"
   },
   {
-   "t": 4.73,
+   "t": 4.53,
    "beat": "le trait part de la pointe, remonte la côte tyrrhénienne, longe les Alpes, descend l'Adriatique"
   },
   {
-   "t": 8.04,
+   "t": 7.84,
    "beat": "« Le talon » : arrêt 1,9 s, repère bleu au talon + fil, étiquette « Pouilles »"
   },
   {
-   "t": 10.47,
+   "t": 10.27,
    "beat": "« La pointe » : golfe de Tarente puis arrêt 1,7 s à la pointe, repère bleu, étiquette « Calabre »"
   },
   {
-   "t": 12.17,
-   "beat": "« Et le ballon ? » : pont calculé (le coup de pied) puis tour de la Sicile, fini à 12,90 s, étiquette « Sicile »"
+   "t": 11.97,
+   "beat": "« Et le ballon ? » : pont calculé (le coup de pied) puis tour de la Sicile, fini à 12,70 s, étiquette « Sicile »"
   },
   {
    "t": 16.0,
@@ -74,6 +74,6 @@
   "narrationWords": 30,
   "wordsPerSecond": "2,0-2,2"
  },
- "notes": "Contours tracés à la main (choix de style : le trait simplifie) : péninsule 80 points lon/lat saisis à ≈ 0,1° près, 74 après shapely.simplify (1,2 px), Sicile 18 points ; projection équirectangulaire cos 42°, 76 px/degré. Talon = Pouilles (repère à Santa Maria di Leuca), pointe = Calabre (repère à Reggio), faits vérifiés par la contre-expertise ; la Sicile « ballon » est l'image scolaire, pas une affirmation. Pont vers la Sicile : nearest_points (le plus court depuis la pointe). Plaque 2 : 4 103 px à 900 px/s + 2 arrêts. Rendu 21,5 s pour 480 images (4,49 s / 100 images), carte-meteo actif. Voix off prévue, non enregistrée.",
+ "notes": "Contours tracés à la main (choix de style : le trait simplifie) : péninsule 80 points lon/lat saisis à ≈ 0,1° près, 74 après shapely.simplify (1,2 px), Sicile 18 points ; projection équirectangulaire cos 42°, 76 px/degré. Talon = Pouilles (repère à Santa Maria di Leuca), pointe = Calabre (repère à Reggio), faits vérifiés par la contre-expertise ; la Sicile « ballon » est l'image scolaire, pas une affirmation. Pont vers la Sicile : nearest_points (le plus court depuis la pointe). Plaque 2 : 4 115 px à 900 px/s + 2 arrêts. v2 (revue du 2026-11-05) : plaque vierge lancée 0,25 s après le 1er cran (chevauchement 0,35 s) ; plus aucune image à plus de 85 % d'orange uni pendant l'avance plaque (maximum 76,9 % sur le fichier final, contre 97 % en v1) ; narration recalée de −0,2 s après la transition. Rendu complet v2 23,4 s pour 480 images (4,87 s / 100 images), carte-meteo actif ; v1 21,5 s. Voix off prévue, non enregistrée.",
  "reproduce": "out/tools/slot.sh .venv/bin/python out/shorts/trait-continu__geographie__l-italie-a-la-forme-d-une-botte/src/video.py --out /tmp/svi/trait-continu__geographie__l-italie-a-la-forme-d-une-botte/video.mp4 && .venv/bin/python out/tools/sound.py out/shorts/trait-continu__geographie__l-italie-a-la-forme-d-une-botte/src/sound.json /tmp/svi/trait-continu__geographie__l-italie-a-la-forme-d-une-botte/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/trait-continu__geographie__l-italie-a-la-forme-d-une-botte/video.mp4 --music /tmp/svi/trait-continu__geographie__l-italie-a-la-forme-d-une-botte/music.wav --out out/shorts/trait-continu__geographie__l-italie-a-la-forme-d-une-botte/short.mp4"
 }

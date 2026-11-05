@@ -7,7 +7,7 @@
  "lines": [
   {"t": 0.2, "maxDuration": 2.4, "text": "Un escargot, d'un seul trait ?"},
   {"t": 2.8, "maxDuration": 2.0, "text": "Du centre, on tourne."},
-  {"t": 6.35, "maxDuration": 2.8, "text": "Il grandit : un tour de plus."},
+  {"t": 6.25, "maxDuration": 2.8, "text": "Il grandit : un tour de plus."},
   {"t": 9.25, "maxDuration": 2.35, "text": "La plupart tournent à droite."},
   {"t": 11.75, "maxDuration": 3.7, "text": "Et toi, ta spirale tourne dans quel sens ?"}
  ]

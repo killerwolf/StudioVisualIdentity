@@ -13,7 +13,7 @@
   "ffmpeg"
  ],
  "seed": 7,
- "renderTimeSec": 21.1,
+ "renderTimeSec": 22.8,
  "structure": [
   {
    "t": 0,
@@ -29,11 +29,11 @@
   },
   {
    "t": 5.49,
-   "beat": "avance plaque : 3 crans (0,6 s), la plaque sort par le haut ; plaque vierge par le bas, clac à 6,29 s"
+   "beat": "avance plaque : 3 crans (0,6 s), la plaque sort par le haut ; plaque vierge lancée à 5,74 s par le bas, clac à 6,09 s (fin du 3e cran)"
   },
   {
-   "t": 6.44,
-   "beat": "« Un tour de plus » : l'escargot a grandi, coquille de 4 tours ; repère bleu « +1 » à 8,54 s quand commence le 4e tour"
+   "t": 6.24,
+   "beat": "« Un tour de plus » : l'escargot a grandi, coquille de 4 tours ; repère bleu « +1 » à 8,34 s quand commence le 4e tour"
   },
   {
    "t": 9.2,
@@ -41,7 +41,7 @@
   },
   {
    "t": 11.7,
-   "beat": "chute : « Et toi, quel sens ? » ; dessin fini à 12,23 s, tenue jusqu'à la fin"
+   "beat": "chute : « Et toi, quel sens ? » ; dessin fini à 12,03 s, tenue jusqu'à la fin"
   },
   {
    "t": 15.5,
@@ -74,6 +74,6 @@
   "narrationWords": 28,
   "wordsPerSecond": "2,0-2,2"
  },
- "notes": "Fait vérifié par la contre-expertise : chez la plupart des espèces d'escargots, la coquille s'enroule vers la droite (dextre) ; la coquille grandit en ajoutant des tours à partir du centre (apex). Chemin unique par plaque construit avec shapely (escalier de 12 px, trait 7 px, 820 px/s puis 900 px/s) : 3 888 px (plaque 1) et 5 210 px (plaque 2). Rendu complet 21,1 s pour 465 images (4,55 s / 100 images) avec le studio carte-meteo actif (charge 1,7–5) ; bruit opensimplex 3,8 s une seule fois, en cache. Voix off prévue (narration.json), non enregistrée.",
+ "notes": "Fait vérifié par la contre-expertise : chez la plupart des espèces d'escargots, la coquille s'enroule vers la droite (dextre) ; la coquille grandit en ajoutant des tours à partir du centre (apex). Simplification assumée : la convention « dextre » se juge vu depuis l'apex de la coquille ; la flèche bleue « vers la droite » (arc horaire) posée au-dessus d'un escargot vu de profil est une simplification (vue de profil, selon le côté regardé, une coquille dextre peut sembler tourner dans l'autre sens) ; le texte « la plupart tournent à droite » reste juste. Chemin unique par plaque construit avec shapely (escalier de 12 px, trait 7 px, 820 px/s puis 900 px/s) : 3 888 px (plaque 1) et 5 210 px (plaque 2). v2 (revue du 2026-11-05) : la plaque vierge entre 0,25 s après le 1er cran (chevauchement 0,35 s au lieu de 0,15 s) ; plus aucune image à plus de 85 % d'orange uni pendant l'avance plaque (maximum mesuré 77,7 % sur le fichier final, contre 97,6 % en v1). Rendu complet v2 22,8 s pour 465 images (4,91 s / 100 images), carte-meteo actif (charge ≈ 3,3) ; v1 21,1 s. Bruit opensimplex 3,8 s une seule fois, en cache. Voix off prévue (narration.json), non mixée.",
  "reproduce": "out/tools/slot.sh .venv/bin/python out/shorts/trait-continu__enfants__dessine-un-escargot-d-un-seul-trait/src/video.py --out /tmp/svi/trait-continu__enfants__dessine-un-escargot-d-un-seul-trait/video.mp4 && .venv/bin/python out/tools/sound.py out/shorts/trait-continu__enfants__dessine-un-escargot-d-un-seul-trait/src/sound.json /tmp/svi/trait-continu__enfants__dessine-un-escargot-d-un-seul-trait/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/trait-continu__enfants__dessine-un-escargot-d-un-seul-trait/video.mp4 --music /tmp/svi/trait-continu__enfants__dessine-un-escargot-d-un-seul-trait/music.wav --out out/shorts/trait-continu__enfants__dessine-un-escargot-d-un-seul-trait/short.mp4"
 }

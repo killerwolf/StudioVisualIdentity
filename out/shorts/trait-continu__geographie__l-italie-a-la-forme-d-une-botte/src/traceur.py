@@ -3,13 +3,13 @@
 traceur.py — moteur de l'identité « Trait continu » (le traceur). Copie identique dans chaque short.
 
 Principe : un seul trait graphite continu, jamais levé, avance à vitesse constante en escalier (deux axes, pas de 12 px)
-sur une plaque gris aluminium à angles vifs posée sur un fond orange plein cadre. Deux règles graduées (bord haut, bord
+sur une plaque gris métal à angles vifs posée sur un fond orange plein cadre. Deux règles graduées (bord haut, bord
 gauche) portent chacune un curseur triangulaire qui suit x et y ; un chariot suit la pointe. Entre deux scènes,
 « l'avance plaque » : la plaque remonte en 3 crans (0,6 s) et sort par le haut, une plaque vierge entre par le bas (clac).
 
 - shapely 2.2.0 : construction du chemin unique (segmentize, simplify, linemerge, ponts entre composantes par
   nearest_points, état à t = substring(chemin, 0, L(t))).
-- opensimplex 0.4.5.1 : grain de poudre de la plaque, masque de grain du trait, vibration ±0,5 px. Champs calculés
+- opensimplex 0.4.5.1 : grain de surface de la plaque, masque de grain du trait, vibration ±0,5 px. Champs calculés
   UNE fois par short et mis en cache (.npy), jamais par image.
 - pycairo : dessin ; Pillow (polices @fontsource .woff2 via out/tools/textpng.py) : textes ; ffmpeg rawvideo bgra.
 
@@ -33,7 +33,7 @@ W, H, FPS = 1080, 1920, 30
 
 # ---------- palette (contrastes vérifiés : voir identity.md) ----------
 ORANGE = '#F26A21'      # fond plein cadre
-PLATE = '#D3D4CE'       # plaque aluminium
+PLATE = '#D3D4CE'       # plaque gris métal
 GRAPHITE = '#3A3D42'    # trait, curseurs, chariot (7,31:1 sur la plaque)
 INK_ORANGE = '#1A1410'  # texte sur l'orange (5,96:1)
 INK_PLATE = '#22252A'   # texte sur plaque / étiquette crème (10,3:1 / 14,6:1)
@@ -53,12 +53,13 @@ CRAN = 0.2                                    # durée d'un cran d'avance plaque
 ENTER = 0.35                                  # entrée de la plaque vierge
 D_OUT = PY1 + 24                              # course de sortie (la plaque quitte le cadre par le haut)
 D_IN = H - PY0 + 20                           # course d'entrée (depuis le bas)
-OVERLAP = 0.45                                # la plaque vierge commence à entrer pendant le 3e cran
+ENTER_DELAY = 0.25                            # la plaque vierge commence à entrer 0,25 s après le 1er cran
+OVERLAP = 3 * CRAN - ENTER_DELAY              # = 0,35 s de chevauchement : aucune image quasi uniforme (mesuré ≤ 78 % d'orange)
 
 
 def next_enter(exit_t):
     """Instant du « clac » de la plaque suivante quand la précédente commence ses crans à exit_t."""
-    return round(exit_t + OVERLAP + ENTER, 3)
+    return round(exit_t + ENTER_DELAY + ENTER, 3)   # clac à la fin du 3e cran
 
 
 def rgb(h, a=1.0):
@@ -79,7 +80,7 @@ def ease_back_out(u, s=1.6):
 
 # ---------- bruit (opensimplex, une seule fois) ----------
 def noise_fields(seed, cache_dir):
-    """Champs de grain mis en cache : fine (poudre) et coarse (marbrure), taille plaque, valeurs ~[-1, 1]."""
+    """Champs de grain mis en cache : fine (grain) et coarse (marbrure), taille plaque, valeurs ~[-1, 1]."""
     cache_dir = Path(cache_dir); cache_dir.mkdir(parents=True, exist_ok=True)
     f = cache_dir / f'noise_seed{seed}.npz'
     pw, ph = PX1 - PX0, PY1 - PY0

@@ -14,7 +14,7 @@
     "formes disjointes à relier : linemerge ne relie que des lignes qui se touchent ; il faut calculer les ponts soi-même",
     "projections cartographiques réelles (pas de CRS) : passer par d3-geo ou pyproj si la précision compte"
   ],
-  "renderCostPer100Frames": "≈ 0,02 s / 100 images pour substring + interpolate sur un chemin de 223 sommets / 4 116 px (mesuré, Italie) ; construction du chemin (simplify + segmentize + escalier) 1–3 ms une fois. Négligeable devant pycairo + encodage (≈ 2,8–4,5 s / 100 images au total).",
+  "renderCostPer100Frames": "≈ 0,02 s / 100 images pour substring + interpolate sur un chemin de 223 sommets / 4 116 px (mesuré, Italie) ; construction du chemin (simplify + segmentize + escalier) 1–3 ms une fois. Négligeable devant pycairo + encodage (≈ 2,8–4,9 s / 100 images au total).",
   "gotchas": [
     "Nommer sa propre classe `Path` masque pathlib.Path dans le même module (TypeError) : l'appeler autrement (Trace).",
     "substring(ligne, 0, L) renvoie un Point quand L = 0 : tester L ≤ 0 avant.",
