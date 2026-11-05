@@ -1,5 +1,12 @@
 # Papier découpé
 
+> **Identité racine d'une famille de quatre.** Papier découpé est l'identité d'origine ; trois **dérivations** reprennent exactement le même moteur (`out/shared/papier-moteur/`), le même pop en stop-motion à 12 i/s, les mêmes bandes de papier inclinées et les mêmes sous-titres sur bande, et ne changent que le fond, la palette et les polices :
+> - [Atelier papier](../atelier-papier/identity.md) : tapis bleu nuit, papier crème, corail et moutarde (même polices) ;
+> - [Carnet d'archives](../carnet-archives/identity.md) : fond kraft, Abril Fatface et machine à écrire, sépia et rouge tampon ;
+> - [Cabinet de curiosités](../cabinet-curiosites/identity.md) : fond bleu nuit uni, DM Serif Display, étiquettes crème et or.
+>
+> Les dossiers, ids et slugs restent distincts (StudioGabarit les consomme) ; dans `index.json`, les trois portent `variantOf: "papier-decoupe"`.
+
 ## Nom
 Papier découpé (`papier-decoupe`) — design system d'origine du gabarit StudioGabarit (chaîne AI Reboot, puis P'tits Savants et Motion de Culture) ; tokens de référence : hors-git/artifacts/design-cut-paper/ du gabarit.
 

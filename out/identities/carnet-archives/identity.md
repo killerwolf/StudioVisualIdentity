@@ -1,5 +1,7 @@
 # Carnet d'archives
 
+> **Dérivation de [Papier découpé](../papier-decoupe/identity.md)** (`variantOf: "papier-decoupe"`). Même moteur `out/shared/papier-moteur/`, même pop stop-motion, mêmes bandes inclinées et mêmes sous-titres sur bande ; ce qui change : le fond (**kraft** fibreux, sans quadrillage), la palette (sépia, rouge tampon, ocre) et les polices (Abril Fatface pour les titres, Special Elite pour les sous-titres à la machine à écrire). Voir aussi les deux autres dérivations : [Atelier papier](../atelier-papier/identity.md), [Cabinet de curiosités](../cabinet-curiosites/identity.md).
+
 ## Nom
 Carnet d'archives (`carnet-archives`) — déclinaison B de la phase 1 du studio Un Jour Une Histoire (2026-11-03), recommandée pour les histoires d'objets et de mots ; thème themes/carnet-archives.json.
 

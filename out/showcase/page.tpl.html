@@ -70,10 +70,12 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 /* ---------- identity reels ---------- */
 .reel { display: grid; grid-template-columns: minmax(0, 300px) minmax(0, 1fr); gap: var(--s5); padding-block: var(--s6); border-bottom: 1px solid var(--line); scroll-margin-top: 72px; }
 .meta { display: flex; flex-direction: column; gap: var(--s3); min-width: 0; }
-.rankline { display: flex; align-items: baseline; gap: var(--s2); }
+.rankline { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--s1) var(--s2); }
 .rank { font-family: var(--mono); font-size: 13px; color: var(--ink-2); }
 .rank.top { color: var(--safelight); font-weight: 600; }
 .reh.add { border-color: var(--ok); color: var(--ok); }
+.reh.deriv { border-color: var(--ink-2); color: var(--ink-2); }
+.reh.root { border-color: var(--ink); color: var(--ink); }
 .short .vo.novo { border-left-color: var(--line); }
 .short .vo .mono.none { color: var(--safelight); }
 .reh { font: 600 11px var(--mono); text-transform: uppercase; letter-spacing: .05em; padding: 1px 7px; border-radius: 3px; border: 1px solid var(--safelight); color: var(--safelight); }
@@ -108,6 +110,18 @@ body.show-safe .safe { display: block; }
 .short h3 { font-family: var(--body); font-weight: 600; font-size: 15px; line-height: 1.3; letter-spacing: 0; }
 .short .facts { display: flex; flex-wrap: wrap; gap: 4px 10px; font-family: var(--mono); font-size: 12px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
 .short .vo { font-size: 13px; color: var(--ink-2); border-left: 2px solid var(--safelight); padding-left: 8px; font-style: italic; }
+
+/* ---------- identité racine + dérivations (Papier découpé) ---------- */
+.reel.has-deriv { border-bottom: 0; padding-bottom: var(--s5); }
+.deriv-group { border-left: 3px solid var(--safelight); padding-left: var(--s4); margin-bottom: var(--s2); border-bottom: 1px solid var(--line); padding-bottom: var(--s5); min-width: 0; }
+.deriv-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--s2) var(--s4); padding-bottom: var(--s2); }
+.deriv-head h3 { font-size: 22px; }
+.deriv-head p { color: var(--ink-2); font-size: 14px; max-width: 80ch; flex: 1 1 320px; }
+.reel.deriv { padding-block: var(--s5) 0; border-bottom: 0; border-top: 1px dashed var(--line); margin-top: var(--s4); }
+.reel.deriv:first-of-type { border-top: 0; margin-top: 0; }
+.reel.deriv .meta h2 { font-size: 26px; }
+.deriv-group[hidden] { display: none !important; }
+.matrix-sub td:first-child { padding-left: 28px; }
 
 /* ---------- analysis sections ---------- */
 .section { padding-block: var(--s7) 0; }
@@ -161,7 +175,7 @@ footer.colophon { margin-top: var(--s7); padding-top: var(--s4); border-top: 1px
   .bar, .axis { grid-template-columns: minmax(0, 150px) minmax(0, 1fr) 52px; }
   .reco { grid-template-columns: minmax(0, 1fr); }
 }
-@media (max-width: 480px) { .short { flex-basis: 200px; } .meta h2 { font-size: 28px; } }
+@media (max-width: 480px) { .short { flex-basis: 200px; } .meta h2 { font-size: 28px; } .reel.deriv .meta h2 { font-size: 24px; } .deriv-group { padding-left: 12px; } }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }
 </style>
 
@@ -169,15 +183,17 @@ footer.colophon { margin-top: var(--s7); padding-top: var(--s4); border-top: 1px
   <section class="hero">
     <div>
       <p class="eyebrow">Recherche exploratoire · shorts verticaux 1080×1920 · 30 fps</p>
-      <h1>Vingt identités visuelles, <em>43 shorts</em> rendus par code</h1>
-      <p class="lede">Chaque identité est un design system lisible par un agent (tokens, mouvement, caméra, recettes par famille) et elle est prouvée par des vidéos réelles, rendues avec des librairies open-source sur 4 cœurs CPU. Les 14 identités de la campagne, les 4 identités papier de StudioGabarit et les 2 du lot 2 de la fabrique d'identités (Carte Météo, Trait continu).</p>
+      <h1>Dix-sept identités visuelles, <em>43 shorts</em> rendus par code</h1>
+      <p class="lede">Chaque identité est un design system lisible par un agent (tokens, mouvement, caméra, recettes par famille) et elle est prouvée par des vidéos réelles, rendues avec des librairies open-source sur 4 cœurs CPU. Les 14 identités de la campagne, l'identité papier de StudioGabarit (Papier découpé, avec ses 3 dérivations : même moteur, seuls le fond, la palette et les polices changent) et les 2 du lot 2 de la fabrique d'identités (Carte Météo, Trait continu) : 17 identités, 20 déclinaisons.</p>
       <div class="reco">
         <span class="eyebrow">Recommandées pour une chaîne durable</span>
         <ol id="reco"></ol>
       </div>
     </div>
     <div class="ledger" aria-label="Chiffres de la campagne">
-      <div><span>Identités</span><b id="m-ids">20</b></div>
+      <div><span>Identités</span><b id="m-ids">17</b></div>
+      <div><span>Déclinaisons</span><b id="m-decl">20</b></div>
+      <div><span>Dérivations de Papier découpé</span><b id="m-deriv">3</b></div>
       <div><span>Shorts livrés</span><b id="m-shorts">43</b></div>
       <div><span>Contrôle qualité</span><b id="m-qa">43 / 43</b></div>
       <div><span>Familles couvertes</span><b>7 / 7</b></div>
@@ -224,7 +240,7 @@ footer.colophon { margin-top: var(--s7); padding-top: var(--s4); border-top: 1px
       <div class="result">
         <p class="eyebrow">Juge visuel indépendant, 14 identités · 2026-11-04</p>
         <div class="big">14<small> / 14 groupes purs</small></div>
-        <p>Résultat historique de la campagne : un agent sans contexte a reçu 56 images anonymisées (2 shorts par identité, 2 images par short, clé cachée) avec la consigne de former 14 groupes de 4 par style. Les 56 images ont été bien classées, y compris les quatre identités réhabilitées face à leurs voisines. Les plus difficiles à séparer : Grille Suisse et Bauhaus (fonds crème), et les cinq styles sur fond sombre. Le lot 2 a eu son propre juge le 2026-11-05 : 8 groupes purs sur 8 (Carte Météo, Trait continu et 6 voisines, 32 images) ; les identités papier n'ont pas de juge visuel.</p>
+        <p>Résultat historique de la campagne : un agent sans contexte a reçu 56 images anonymisées (2 shorts par identité, 2 images par short, clé cachée) avec la consigne de former 14 groupes de 4 par style. Les 56 images ont été bien classées, y compris les quatre identités réhabilitées face à leurs voisines. Les plus difficiles à séparer : Grille Suisse et Bauhaus (fonds crème), et les cinq styles sur fond sombre. Le lot 2 a eu son propre juge le 2026-11-05 : 8 groupes purs sur 8 (Carte Météo, Trait continu et 6 voisines, 32 images) ; l'identité papier et ses dérivations n'ont pas de juge visuel.</p>
       </div>
       <div class="result">
         <p class="eyebrow">Signature couleur et contours mesurée</p>
@@ -238,7 +254,7 @@ footer.colophon { margin-top: var(--s7); padding-top: var(--s4); border-top: 1px
     <header>
       <p class="eyebrow">Phase 1</p>
       <h2>Les 14 directions explorées</h2>
-      <p>Un poster 1080×1920 par direction, puis une sélection de 10. Les 4 directions d'abord écartées (Cosmos Doc, Brut Mème, Zine Riso, Relief Topo) pour éviter des doublons de sujet ont ensuite été produites à part entière, avec la consigne de se distinguer de leur voisine. Les tests à l'aveugle confirment qu'elles sont bien distinctes. Ensuite sont venues les 4 identités papier du gabarit StudioGabarit (papier découpé et 3 déclinaisons, 2026-11-04), puis le lot 2 de la fabrique d'identités (2026-11-05) : 4 directions repérées dans le catalogue des librairies, un challenge adversarial, 2 retenues (Carte Météo, Trait continu).</p>
+      <p>Un poster 1080×1920 par direction, puis une sélection de 10. Les 4 directions d'abord écartées (Cosmos Doc, Brut Mème, Zine Riso, Relief Topo) pour éviter des doublons de sujet ont ensuite été produites à part entière, avec la consigne de se distinguer de leur voisine. Les tests à l'aveugle confirment qu'elles sont bien distinctes. Ensuite est venue l'identité papier du gabarit StudioGabarit (Papier découpé et ses 3 dérivations, 2026-11-04 ; regroupées en une seule identité le 2026-11-05), puis le lot 2 de la fabrique d'identités (2026-11-05) : 4 directions repérées dans le catalogue des librairies, un challenge adversarial, 2 retenues (Carte Météo, Trait continu).</p>
     </header>
     <div class="sheet"><img src="p/directions.jpg" alt="Planche des 14 posters de directions : Labo Néon, Diorama Pastel, Atlas Gravé, Tableau Craie, Grille Suisse, Arcade Pixel, Chrome Liquide, Gazette 1900, Cosmos Doc, Bauhaus Cinétique, Zine Riso, Relief Topo, Brut Mème, Aquarelle Conte" loading="lazy" width="1600" height="871"></div>
   </section>
@@ -260,7 +276,7 @@ footer.colophon { margin-top: var(--s7); padding-top: var(--s4); border-top: 1px
   </section>
 
   <footer class="colophon">
-    <span>Dépôt killerwolf/StudioVisualIdentity · branche main · point d'entrée out/report/README.md · 20 identités, 43 shorts, mis à jour le 2026-11-05</span>
+    <span>Dépôt killerwolf/StudioVisualIdentity · branche main · point d'entrée out/report/README.md · 17 identités (20 déclinaisons), 43 shorts, mis à jour le 2026-11-05</span>
     <span class="mono">Aperçus 540×960 ; fichiers livrés en 1080×1920</span>
   </footer>
 </div>
@@ -276,7 +292,7 @@ const fmt = n => String(n).replace(".", ",");
 
 // chiffres de l'en-tête et de la reconnaissance (calculés par build.py)
 const setText = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
-setText("m-ids", META.identities); setText("m-shorts", META.shorts);
+setText("m-ids", META.identities); setText("m-decl", META.declinations); setText("m-deriv", META.derivations); setText("m-shorts", META.shorts);
 setText("m-qa", `${META.qaOk} / ${META.qaTotal}`); setText("m-recog", `${META.recogHits} / ${META.recogTotal}`);
 setText("r-hits", META.recogHits); setText("r-total", META.recogTotal);
 {
@@ -284,17 +300,15 @@ setText("r-hits", META.recogHits); setText("r-total", META.recogTotal);
   const addedIds = new Set(DATA.filter(d => d.added).map(d => d.id));
   const addedOk = !META.recogFails.some(f => addedIds.has(f.short.split("__")[0]));
   const fails = META.recogFails.map(f => `${nm(f.short)} → ${nm(f.nearest)} (${fmt(f.distance.toFixed(2))})`).join(" ; ");
-  setText("r-text", `Histogramme couleur Lab et densité de contours sur 8 images par short, relancé sur les ${META.recogTotal} shorts des ${META.identities} identités. Distance moyenne entre shorts d'une même identité ${fmt(META.recogIntra.toFixed(2))} contre ${fmt(META.recogInter.toFixed(2))} entre identités. ${addedOk ? "Les shorts des identités ajoutées (papier, lot 2) sont tous reconnus. " : ""}Les ${META.recogFails.length} erreurs : ${fails} — des fonds sombres que la couleur seule ne sépare pas.`);
+  setText("r-text", `Histogramme couleur Lab et densité de contours sur 8 images par short, relancé sur les ${META.recogTotal} shorts des ${META.declinations} déclinaisons. Distance moyenne entre shorts d'une même identité ${fmt(META.recogIntra.toFixed(2))} contre ${fmt(META.recogInter.toFixed(2))} entre identités. ${addedOk ? "Les shorts des identités ajoutées (papier, lot 2) sont tous reconnus. " : ""}Les ${META.recogFails.length} erreurs : ${fails} — des fonds sombres que la couleur seule ne sépare pas.`);
 }
 
 // recommandations
 document.getElementById("reco").innerHTML = DATA.slice(0, 3).map(d =>
   `<li><a href="#${d.id}"><span class="mono">${d.rank}</span>${esc(d.name)}</a></li>`).join("");
 
-// reels
-document.getElementById("reels").innerHTML = DATA.map(d => {
-  const sw = [d.bg, d.surface, ...d.accent, d.text].filter(Boolean);
-  const shorts = d.shorts.map(s => `
+// reels : une identité = une bande ; une identité racine est suivie de ses dérivations, regroupées sous « Dérivations »
+const shortsHtml = d => d.shorts.map(s => `
     <article class="short" data-family="${s.family}">
       <div class="screen">
         <video preload="none" playsinline poster="p/${s.dir}.jpg" src="v/${s.dir}.mp4" aria-label="${esc(s.title)}"></video>
@@ -306,11 +320,19 @@ document.getElementById("reels").innerHTML = DATA.map(d => {
       <div class="facts"><span>${fmt(s.duration)} s</span><span>${s.cost == null ? "coût n. c." : fmt(s.cost) + " s/100 img"}</span><span>${esc(s.libs.join(" + "))}</span></div>
       <p class="vo${s.voiced ? "" : " novo"}">« ${esc(s.line)} » <span class="mono${s.voiced ? "" : " none"}">— ${esc(s.voice)}</span></p>
     </article>`).join("");
+const reelHtml = d => {
+  const sw = [d.bg, d.surface, ...d.accent, d.text].filter(Boolean);
+  const isRoot = d.variants.length > 0, isDeriv = !!d.variantOf;
+  const root = isDeriv ? DATA.find(e => e.id === d.variantOf) : null;
+  const tags = (d.reh ? '<span class="reh">réhabilitée</span>' : "") + (d.added ? '<span class="reh add">ajoutée</span>' : "") +
+    (isRoot ? `<span class="reh root">identité · ${d.variants.length} dérivations</span>` : "") +
+    (isDeriv ? `<span class="reh deriv">dérivation</span>` : "");
   return `
-  <section class="reel" id="${d.id}">
+  <section class="reel${isRoot ? " has-deriv" : ""}${isDeriv ? " deriv" : ""}" id="${d.id}">
     <div class="meta">
-      <div class="rankline"><span class="rank ${d.rank <= 3 ? "top" : ""}">N° ${d.rank} / ${DATA.length}</span><span class="slug">${d.id}</span>${d.reh ? '<span class="reh">réhabilitée</span>' : ""}${d.added ? '<span class="reh add">ajoutée</span>' : ""}</div>
+      <div class="rankline"><span class="rank ${d.rank <= 3 ? "top" : ""}">N° ${d.rank} / ${DATA.length}</span><span class="slug">${d.id}</span>${tags}</div>
       <h2>${esc(d.name)}</h2>
+      ${isDeriv ? `<p class="slug">Dérivation de <a href="#${root.id}">${esc(root.name)}</a></p>` : ""}
       <p class="promise">${esc(d.promise)}</p>
       <div class="swatches" aria-label="Palette">${sw.map(c => `<i style="background:${c}" title="${c}"></i>`).join("")}</div>
       <dl class="kv">
@@ -319,8 +341,20 @@ document.getElementById("reels").innerHTML = DATA.map(d => {
         <dt>Libs</dt><dd class="tags">${(d.libs || []).map(l => `<span class="tag">${esc(l)}</span>`).join("")}</dd>
       </dl>
     </div>
-    <div class="strip">${shorts}</div>
+    <div class="strip">${shortsHtml(d)}</div>
   </section>`;
+};
+document.getElementById("reels").innerHTML = DATA.filter(d => !d.variantOf).map(d => {
+  if (!d.variants.length) return reelHtml(d);
+  const kids = d.variants.map(id => DATA.find(e => e.id === id)).filter(Boolean);
+  return reelHtml(d) + `
+  <div class="deriv-group" role="group" aria-label="Dérivations de ${esc(d.name)}">
+    <div class="deriv-head">
+      <h3>Dérivations <span class="mono">· ${kids.length}</span></h3>
+      <p>${esc(d.axis || "")}</p>
+    </div>
+    ${kids.map(reelHtml).join("")}
+  </div>`;
 }).join("");
 
 // lecture : une seule vidéo à la fois
@@ -348,6 +382,7 @@ function applyFilter(f) {
     r.querySelectorAll(".short").forEach(s => { const on = !f || s.dataset.family === f; s.hidden = !on; any = any || on; });
     r.hidden = !any;
   });
+  document.querySelectorAll(".deriv-group").forEach(g => { g.hidden = ![...g.querySelectorAll(".reel")].some(r => !r.hidden); });
   try { localStorage.setItem("svi-filter", f); } catch (e) {}
 }
 chips.addEventListener("click", e => { const c = e.target.closest(".chip"); if (c) applyFilter(c.dataset.f); });
@@ -369,7 +404,7 @@ document.getElementById("bars").innerHTML = rows.map(r => `
 
 // matrice
 const head = `<thead><tr><th>Identité</th>${FAM_ORDER.map(f => `<th>${FAM[f]}</th>`).join("")}</tr></thead>`;
-const body = DATA.map(d => `<tr><td><a href="#${d.id}">${esc(d.name)}</a></td>${FAM_ORDER.map(f => {
+const body = DATA.map(d => `<tr${d.variantOf ? ' class="matrix-sub"' : ""}><td>${d.variantOf ? "↳ " : ""}<a href="#${d.id}">${esc(d.name)}</a></td>${FAM_ORDER.map(f => {
   const ss = d.shorts.filter(s => s.family === f);
   if (!ss.length) return `<td class="cell"></td>`;
   return `<td class="cell on">${ss.map(s => esc(s.libs.join(", "))).join("<br>")}</td>`;

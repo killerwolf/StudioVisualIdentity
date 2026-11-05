@@ -9,7 +9,8 @@ USAGE (depuis la racine du dépôt)
                                                                #   ex. après l'ajout de la voix off du lot 2
   .venv/bin/python out/showcase/build.py --no-media            # data.json + index.html seulement
 
-ENTRÉES : out/identities/index.json (ordre = `rank`, statut `selected` / `rehabilitated` / `added`), tokens.json et identity.md
+ENTRÉES : out/identities/index.json (ordre = `rank`, statut `selected` / `rehabilitated` / `added`, `variantOf` / `variants` :
+  une identité racine présentée avec ses dérivations — Papier découpé et ses 3 dérivations), tokens.json et identity.md
   de chaque identité, short.json + narration.json de chaque short, out/report/qa.json et out/report/recognition.json (chiffres
   de l'en-tête et de la section reconnaissance, injectés à la place de __META__).
 SORTIE : out/showcase/build/   (non versionné, voir .gitignore)
@@ -86,7 +87,10 @@ def build_data():
                     'bg': c.get('bg'), 'surface': c.get('surface'), 'text': c.get('text'),
                     'accent': (c.get('accent') or [])[:4], 'display': (ty.get('display') or {}).get('family'),
                     'title': (ty.get('title') or {}).get('family'),
-                    'body': (ty.get('body') or {}).get('family'), 'libs': libs, 'shorts': shorts})
+                    'body': (ty.get('body') or {}).get('family'), 'libs': libs, 'shorts': shorts,
+                    # une identité racine et ses dérivations (index.json : variantOf / variants / variantAxis)
+                    'variantOf': e.get('variantOf'), 'variants': e.get('variants') or [],
+                    'axis': (e.get('variantAxis') or {}).get('axisFr')})
     return ids
 
 
@@ -99,8 +103,10 @@ def build_meta(ids):
         k = s['voice'] if s['voiced'] else 'non enregistrée'
         voices[k] = voices.get(k, 0) + 1
     fails = [r for r in rec.get('rows', []) if not r.get('sameIdentity')]
+    derivations = sum(1 for i in ids if i.get('variantOf'))
     return {
-        'identities': len(ids), 'shorts': len(shorts),
+        # identités = racines seules ; déclinaisons = toutes les entrées de l'index (racines + dérivations)
+        'identities': len(ids) - derivations, 'derivations': derivations, 'declinations': len(ids), 'shorts': len(shorts),
         'qaOk': sum(1 for r in qa if r.get('ok')), 'qaTotal': len(qa),
         'recogHits': sum(1 for r in rec.get('rows', []) if r.get('sameIdentity')), 'recogTotal': len(rec.get('rows', [])),
         'recogIntra': rec.get('meanIntra'), 'recogInter': rec.get('meanInter'), 'recogRatio': rec.get('ratioIntraOverInter'),
@@ -157,7 +163,8 @@ def main():
     if not a.no_media:
         build_media(ids, a.force_videos, set(a.videos_for) or None)
     n = sum(len(i['shorts']) for i in ids)
-    print(f'{len(ids)} identités, {n} shorts -> {BUILD / "index.html"}')
+    nd = sum(1 for i in ids if i['variantOf'])
+    print(f'{len(ids) - nd} identités, {len(ids)} déclinaisons, {n} shorts -> {BUILD / "index.html"}')
 
 
 if __name__ == '__main__':

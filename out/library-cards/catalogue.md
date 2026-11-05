@@ -1,17 +1,19 @@
 # Catalogue des librairies et outils
 
 **Base de travail pour créer de nouvelles identités de chaîne.** Ce catalogue recense toutes les librairies et tous les outils
-envisageables pour rendre des shorts par code, et dit pour chacun s'il a déjà servi dans les 20 identités (43 shorts), où, et
+envisageables pour rendre des shorts par code, et dit pour chacun s'il a déjà servi dans les 17 identités (20 déclinaisons, 43 shorts), où, et
 sinon pourquoi. On itère à partir de cette liste : une nouvelle identité part d'abord des cases « Non » pour trouver une
 signature que personne n'a encore, ou recombine des cases « Oui » déjà maîtrisées (fiches dans `out/library-cards/<lib>.json`).
 
 Établi le 2026-11-04, mis à jour le 2026-11-05 en scannant le code source des 39 shorts (`out/shorts/*/src`), le moteur partagé
-(`out/shared`, dont `out/shared/papier-moteur` des 4 identités papier), les outils (`out/tools`, dont le nouvel outil
+(`out/shared`, dont `out/shared/papier-moteur` de Papier découpé et de ses 3 dérivations), les outils (`out/tools`, dont le nouvel outil
 `out/tools/catalogue_scan.py`), la démo (`out/demo`, `out/showcase`), les rapports (`out/report`) et les skills de
 [killerwolf/skills](https://github.com/killerwolf/skills). Le rescan se fait avec `out/tools/catalogue_scan.py --check` (nouvel outil,
 stdlib seule), qui confronte le code à la colonne « Déjà utilisée ? ». Mis à jour une seconde fois le 2026-11-05 (≈ 01:15 UTC) pour le
 **lot 2** de la fabrique d'identités (`carte-meteo`, `trait-continu`, 4 shorts) : shapely, opensimplex, topojson-client et world-atlas
 passent à **Oui**, Atkinson Hyperlegible est ajoutée et Fredoka est désormais utilisée ; rescan des 43 shorts.
+
+**Comptage** : 17 identités, dont « Papier découpé » avec 3 dérivations (`atelier-papier`, `carnet-archives`, `cabinet-curiosites`, même moteur `out/shared/papier-moteur/`) : 20 déclinaisons, 43 shorts. Les lignes ci-dessous citent les quatre slugs papier car ce sont les noms de dossiers.
 
 ## Légende
 
@@ -122,7 +124,7 @@ polices, contrat `renderAt`), `out/tools/textpng.py` (overlays de texte en PNG) 
 
 ## Comment s'en servir pour une nouvelle identité
 
-1. **Chercher la signature dans les « Non »** : une librairie jamais utilisée donne plus facilement un rendu que les 20 identités
+1. **Chercher la signature dans les « Non »** : une librairie jamais utilisée donne plus facilement un rendu que les 17 identités
    n'ont pas (voir `curation.confusableWith` dans `out/identities/index.json`). Vérifier d'abord son statut et son coût de rendu
    sur CPU ; une ligne ⚠️ ou un moteur 3D lourd peut coûter plus que les ≈ 60 s / 100 images de three.js avec bloom.
 2. **Recombiner des « Oui »** quand le budget est serré : les fiches `out/library-cards/<lib>.json` donnent les pièges déjà payés

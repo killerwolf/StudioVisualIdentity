@@ -1,12 +1,12 @@
 # StudioVisualIdentity
 
-**20 styles visuels prêts à l'emploi pour lancer une chaîne de vidéos courtes verticales (TikTok, Reels, Shorts), et l'agent qui fabrique les épisodes avec vous.**
+**17 styles visuels (20 déclinaisons) prêts à l'emploi pour lancer une chaîne de vidéos courtes verticales (TikTok, Reels, Shorts), et l'agent qui fabrique les épisodes avec vous.**
 
 [![Avant : toutes pareilles. Après : 14 styles, aucun ne se ressemble.](out/demo/thumb/thumbnail_fr_1280.jpg)](out/demo/demo_16x9.mp4)
 
 ▶ **La démo en 51 s, avec le son** : [16:9](out/demo/demo_16x9.mp4) · [9:16 vertical](out/demo/demo_9x16.mp4)
 
-- **20 identités complètes** (couleurs, typographies, mouvements, transitions, structure d'un short), chacune prouvée par 2 ou 3 vraies vidéos : **43 shorts** en tout. Dont, depuis le 2026-11-04, le **papier découpé du gabarit StudioGabarit** et ses 3 déclinaisons (atelier papier, carnet d'archives, cabinet de curiosités), rendus par le moteur Python partagé `out/shared/papier-moteur/`, et depuis le 2026-11-05 le **lot 2 de la fabrique d'identités** : `carte-meteo` (carte météo claire, vraies côtes Natural Earth) et `trait-continu` (un seul trait jamais levé).
+- **17 identités complètes** (couleurs, typographies, mouvements, transitions, structure d'un short), chacune prouvée par 2 ou 3 vraies vidéos : **20 déclinaisons, 43 shorts** en tout. Dont, depuis le 2026-11-04, le **papier découpé du gabarit StudioGabarit** et ses 3 **dérivations** (atelier papier, carnet d'archives, cabinet de curiosités : une seule identité, même moteur, seuls le fond, la palette et les polices changent), rendus par le moteur Python partagé `out/shared/papier-moteur/`, et depuis le 2026-11-05 le **lot 2 de la fabrique d'identités** : `carte-meteo` (carte météo claire, vraies côtes Natural Earth) et `trait-continu` (un seul trait jamais levé).
 - **Voix off** : 31 shorts voisés par Fish Audio « Arnold », les 8 shorts papier par Gemini « Sulafat » ; les 4 shorts du lot 2 aussi par Gemini « Sulafat » (décision du propriétaire : Arnold était prévu, mais le plan gratuit Fish Audio n'a permis qu'une ligne sur 20). Soit 31 Arnold + 12 Sulafat.
 - **La fabrique d'identités** : le skill Claude Code `fabrique-identites` (`.claude/skills/fabrique-identites/`) fait créer de nouvelles identités par des sous-agents (repérage dans le catalogue, challenge adversarial, studios, intégration, revue), à partir du [catalogue des librairies](out/library-cards/catalogue.md).
 - **Les outils pour produire la suite** : rendu image par image, voix off, sons, contrôle qualité, et un script qui crée en une commande le projet de votre chaîne.
