@@ -92,7 +92,8 @@ Haut 220 px, bas 320 px, droite 120 px, gauche 60 px. Bande titre entre y 230 et
 - `out/shorts/trait-continu__geographie__l-italie-a-la-forme-d-une-botte/` — 16,0 s, graine 11, 2 plaques (2 688 px puis 4 115 px + 2 arrêts), rendu 23,4 s.
 
 ## Place de la voix off (où elle parlera, débit conseillé, ce que le visuel laisse libre)
-- Voix prévue : **Fish Audio « Arnold »** (conteur masculin FR), ton doux et enjoué ; narration écrite (`narration.json`), non enregistrée dans cette livraison.
+- Voix réellement utilisée : **Gemini « Sulafat »** (`gemini-3.8-flash-tts`, voix féminine chaude, la même que les identités papier), style « conteuse chaleureuse et douce pour enfants, débit lent et posé » ; un appel par short, découpé en `voice_lines/NN.mp3`, mixé par `tts.py --engine files`. Arnold (Fish Audio) était prévu ; décision du propriétaire après épuisement des crédits Fish Audio (`out/report/notes/voix-lot2.md`).
+- Débit mesuré une fois voisé : ≈ 2,3 mots/s parlés (pauses internes des lignes trop longues ramenées à 0,25 s, accélération `tts.py` jusqu'à ×1,35 sur « Là, la pointe : la Calabre »). Sulafat marque fortement les deux-points : prévoir 0,3–0,5 s de plus par « : » dans `maxDuration`.
 - Public 6–10 ans : **2,0–2,3 mots/s**, **28 à 33 mots pour 15 s**, 4 à 6 lignes, une phrase courte par plaque ou par repère ; `maxDuration ≥ mots / 2,2`.
 - La voix démarre avec le trait (0,2 s), se tait pendant l'avance plaque (le clac porte la transition), et reprend quand le traceur **s'arrête sur un repère** : l'arrêt laisse la phrase finir avant que le trait reparte.
 - Le visuel ne porte que la question (titre), 1–2 mots par temps et les noms de lieux ; la voix nomme ce que le trait fait (« du centre, on tourne », « ici, le talon »). Pas de CTA pressant : une question ouverte à la fin.
@@ -105,5 +106,5 @@ Haut 220 px, bas 320 px, droite 120 px, gauche 60 px. Bande titre entre y 230 et
 - **Rythme** : un trait linéaire est lent ; au-delà de 5 200 px par plaque l'enfant décroche. Les arrêts sur repère servent à caler la voix, pas à meubler (≤ 2 s).
 - **Contours tracés à la main** (80 et 18 points lon/lat, ≈ 0,1°) : silhouettes plausibles, pas des cartes exactes ; ne pas s'en servir pour des distances.
 - **Typographie ronde** cousine de Baloo 2 (pastel-diorama) et Nunito (tableau-craie) : l'identité tient par le fond orange plein, la plaque grise et le trait unique, pas par la police.
-- **Voix** : narration écrite mais non enregistrée ; débit enfant (2,2 mots/s) à vérifier avec Arnold, plus lent que les 2,6 mots/s des autres identités.
+- **Voix** : Sulafat, lente et posée, fait des pauses longues aux deux-points et aux virgules ; avec des `maxDuration` serrés (2,3 s pour 5–6 mots) il faut raccourcir ces pauses ou accélérer. Débit enfant ≈ 2,3 mots/s, plus lent que les 2,6 mots/s des autres identités.
 - Moteur dupliqué dans chaque `src/` (même fichier) : toute correction doit être recopiée dans les deux shorts.

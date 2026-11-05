@@ -211,9 +211,7 @@
   "short": "carte-meteo__evenements__28-juin-2019-46-degres-record-de-chaleur",
   "ok": true,
   "errors": [],
-  "warnings": [
-   "voix off absente (narration.json a des lignes mais short.json.sound.voice est faux)"
-  ],
+  "warnings": [],
   "info": {
    "duration": 15.0,
    "width": 1080,
@@ -227,9 +225,7 @@
   "short": "carte-meteo__geographie__le-mistral-pourquoi-il-souffle-si-fort",
   "ok": true,
   "errors": [],
-  "warnings": [
-   "voix off absente (narration.json a des lignes mais short.json.sound.voice est faux)"
-  ],
+  "warnings": [],
   "info": {
    "duration": 16.0,
    "width": 1080,
@@ -606,8 +602,7 @@
   "ok": true,
   "errors": [],
   "warnings": [
-   "image figée ≥3 s à ['12']",
-   "voix off absente (narration.json a des lignes mais short.json.sound.voice est faux)"
+   "image figée ≥3 s à ['12']"
   ],
   "info": {
    "duration": 15.5,
@@ -622,9 +617,7 @@
   "short": "trait-continu__geographie__l-italie-a-la-forme-d-une-botte",
   "ok": true,
   "errors": [],
-  "warnings": [
-   "voix off absente (narration.json a des lignes mais short.json.sound.voice est faux)"
-  ],
+  "warnings": [],
   "info": {
    "duration": 16.0,
    "width": 1080,

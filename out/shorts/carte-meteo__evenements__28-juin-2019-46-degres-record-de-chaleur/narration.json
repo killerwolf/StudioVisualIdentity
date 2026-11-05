@@ -1,8 +1,15 @@
 {
  "language": "fr",
  "style": "documentaire clair et posé, ton de bulletin météo sans imitation de présentateur ; adultes d'abord, ados ensuite",
- "voice": "Arnold (Fish Audio)",
- "voiceNote": "voix prévue, non enregistrée par ce studio : Fish Audio « Arnold » (d704cf8f1216490cbfbed89955f0e938, s2.1-pro), une ligne par appel -> voice_lines/NN.mp3, puis tts.py --engine files",
+ "voice": "Sulafat (Gemini)",
+ "voiceUsed": {
+  "provider": "Gemini",
+  "name": "Sulafat",
+  "model": "gemini-3.8-flash-tts",
+  "date": "2026-11-05",
+  "note": "un seul appel pour tout le short (lignes séparées par <long pause>), découpé en voice_lines/NN.mp3 dans l'ordre des lignes (bornes : horodatage des mots par faster-whisper + silences) ; style « voix documentaire claire et posée, ton de bulletin météo naturel, débit régulier et un peu soutenu » (annotation, non lue) ; nombres envoyés en toutes lettres (quarante-quatre virgule un, deux mille trois, quarante-six), texte affiché inchangé ; pauses internes des lignes trop longues ramenées à 0,25 s ; mixé par out/tools/tts.py --engine files --replace ; décision du propriétaire : Sulafat au lieu d'Arnold (crédits Fish Audio épuisés)"
+ },
+ "voicePlannedHistory": "Arnold (Fish Audio), non enregistrée faute de crédits : voir out/report/notes/voix-lot2.md",
  "pace": "maxDuration ≥ mots prononcés / 2,4 (chiffres comptés en mots dits : « quarante-quatre virgule un » = 4, « deux mille trois » = 3) ; la date n'est plus lue, elle est à l'écran (revue finale)",
  "lines": [
   {

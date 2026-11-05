@@ -18,8 +18,8 @@ SORTIE : out/showcase/build/   (non versionné, voir .gitignore)
   v/<short>.mp4       aperçus 540×960 (crf 27, ≤ 1,6 Mb/s, AAC 112 kb/s)
   p/<short>.jpg       posters des vidéos (image à 2,2 s), p/directions.jpg (planche des 14 directions)
 
-VOIX : short.json.sound.voice faux -> « voix prévue : <nom>, non enregistrée » (lot 2) ; narration.json.voiceUsed (dict, ex.
-  Gemini Sulafat des identités papier) ou narration.json.voice (texte) sinon.
+VOIX : short.json.sound.voice faux -> « voix prévue : <nom>, non enregistrée » (cas d'un short sans voix) ; narration.json.voiceUsed
+  (dict, ex. Gemini Sulafat des identités papier et du lot 2) ou narration.json.voice (texte) sinon.
 
 PUBLIER : outil Artifact, file_path = out/showcase/build/index.html, root = out/showcase/build,
   files = tous les chemins v/*.mp4 et p/*.jpg (une publication accepte ≤ 64 Mo, ≤ 15 Mo par fichier).

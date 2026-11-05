@@ -1,0 +1,30 @@
+[
+ {
+  "t": 0.3,
+  "sec": 2.83,
+  "max": 2.9,
+  "over": false,
+  "model": "gemini-3.8-flash-tts"
+ },
+ {
+  "t": 3.6,
+  "sec": 4.32,
+  "max": 4.5,
+  "over": false,
+  "model": "gemini-3.8-flash-tts"
+ },
+ {
+  "t": 8.6,
+  "sec": 4.02,
+  "max": 4.3,
+  "over": false,
+  "model": "gemini-3.8-flash-tts"
+ },
+ {
+  "t": 13.1,
+  "sec": 2.31,
+  "max": 2.6,
+  "over": false,
+  "model": "gemini-3.8-flash-tts"
+ }
+]

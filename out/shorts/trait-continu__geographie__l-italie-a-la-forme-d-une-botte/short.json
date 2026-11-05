@@ -55,8 +55,7 @@
  "loopable": false,
  "sound": {
   "type": "generated",
-  "voice": false,
-  "voicePlanned": "Arnold (Fish Audio)",
+  "voice": true,
   "music": "music-box (D majpent, 92 bpm)",
   "sfx": [
    "tick",
@@ -64,7 +63,11 @@
    "thud (clac)",
    "pop (repères)",
    "chime (Sicile)"
-  ]
+  ],
+  "voiceEngine": "gemini",
+  "voiceName": "Gemini – Sulafat",
+  "voiceProvider": "files",
+  "voiceUsed": "Gemini Sulafat (gemini-3.8-flash-tts), 1 appel par short découpé en voice_lines/, mixé par tts.py --engine files (2026-11-05)"
  },
  "qualityChecks": {
   "stillsReviewed": true,

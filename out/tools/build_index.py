@@ -26,13 +26,13 @@ ORDER = ['swiss-data', 'gazette-1900', 'pixel-arcade', 'brut-meme', 'carte-meteo
          # ajoutées le 2026-11-04 (hors campagne de classement) : le papier découpé du gabarit StudioGabarit et ses 3 déclinaisons
          'papier-decoupe', 'atelier-papier', 'carnet-archives', 'cabinet-curiosites']
 PAPIER = {'papier-decoupe', 'atelier-papier', 'carnet-archives', 'cabinet-curiosites'}   # non classées, moteur papier partagé
-LOT2 = {'trait-continu', 'carte-meteo'}                                                  # lot 2, classées, voix non enregistrée
+LOT2 = {'trait-continu', 'carte-meteo'}                                                  # lot 2, classées, voix Gemini Sulafat
 ADDED = PAPIER | LOT2
-# Lot 2 : voix prévue, non enregistrée (crédits Fish Audio épuisés : 1 ligne sur 20, voir out/report/notes/voix-lot2.md)
-VOICE_PLANNED_LOT2 = {'provider': 'Fish Audio', 'name': 'Arnold', 'reference_id': 'd704cf8f1216490cbfbed89955f0e938', 'model': 's2.1-pro',
-                      'language': 'fr', 'recorded': False,
-                      'note': 'planned voice, not recorded: Fish Audio free-plan credits ran out (1 line of 20 generated); '
-                              'short.mp4 is music + SFX only, narration.json is ready; see out/report/notes/voix-lot2.md'}
+# Lot 2 : Arnold prévu, crédits Fish Audio épuisés (1 ligne sur 20) ; décision du propriétaire (2026-11-05) : Gemini Sulafat,
+# comme les identités papier (1 appel par short, découpé en voice_lines/, mixé par tts.py --engine files ; out/report/notes/voix-lot2.md)
+VOICE_LOT2 = {'provider': 'Gemini', 'name': 'Sulafat', 'model': 'gemini-3.8-flash-tts', 'language': 'fr',
+              'note': 'owner decision 2026-11-05: Sulafat instead of the planned Fish Audio Arnold (Fish Audio credits ran out); '
+                      'one Gemini call per short, split into voice_lines/NN.mp3, mixed by out/tools/tts.py --engine files'}
 VOICE_ADDED = {'provider': 'Gemini', 'name': 'Sulafat', 'model': 'gemini-3.8-flash-tts', 'language': 'fr'}
 PAPIER_MODULE = 'out/shared/papier-moteur/'
 REHAB = {'brut-meme', 'riso-zine', 'topo-relief', 'cosmos-doc'}
@@ -262,8 +262,7 @@ def main():
                                COST_NOTE.get(s, 'browser render only (renderTimeSec)') + '; measured with up to 10 renders sharing 4 cores: expect ~2–3x faster on a dedicated machine'),
             'renderCostSecPer100Frames': {'min': min(costs), 'max': max(costs), 'measuredUnderLoad': s not in PAPIER} if costs else None,
             'sharedModule': ([PAPIER_MODULE] if s in PAPIER else shared) or None,
-            'voiceUsed': VOICE_ADDED if s in PAPIER else (None if s in LOT2 else VOICE),
-            **({'voicePlanned': VOICE_PLANNED_LOT2} if s in LOT2 else {}),
+            'voiceUsed': VOICE_ADDED if s in PAPIER else (VOICE_LOT2 if s in LOT2 else VOICE),
             'paths': {'identityMd': f'out/identities/{s}/identity.md', 'tokens': f'out/identities/{s}/tokens.json',
                       'recipes': sorted(f'out/identities/{s}/recipes/{os.path.basename(x)}' for x in glob.glob(str(base / 'recipes' / '*.md'))),
                       'poster': f'out/identities/{s}/poster.jpg', 'contactSheet': f'out/identities/{s}/contact-sheet.jpg',
@@ -287,8 +286,8 @@ def main():
                         '(seconds, pixels on a 1080x1920 canvas, @fontsource slugs); the original tokens.json is authoritative for '
                         'everything else. curation.* is orchestrator judgment. See AGENTS.md.'),
         'generatedBy': 'out/tools/build_index.py',
-        'fieldNotes': {'status': 'selected = kept in Phase 1; rehabilitated = set aside in Phase 1 only to avoid topic overlap with a neighbour, then produced on request with the same rules and evidence level; added = added after the campaign: (a) the cut-paper family from the StudioGabarit template (papier-decoupe, atelier-papier, carnet-archives, cabinet-curiosites), rendered by the shared Python engine out/shared/papier-moteur/, appended after the ranked identities and not part of the ranking or the blind visual judge; (b) lot 2 of the identity factory (trait-continu, carte-meteo, 2026-11-05: scouting + adversarial challenge + studio + review), ranked with the others, blind visual judge on 8 identities (lot 2 + 6 neighbours, 8/8 pure groups, out/report/notes/revue-2026-11-05.md), voice-over planned but not recorded (see voicePlanned)',
-                       'voiceUsed': 'voice actually mixed into short.mp4; null when the voice-over is not recorded yet (lot 2: see voicePlanned and shorts[].voiced)',
+        'fieldNotes': {'status': 'selected = kept in Phase 1; rehabilitated = set aside in Phase 1 only to avoid topic overlap with a neighbour, then produced on request with the same rules and evidence level; added = added after the campaign: (a) the cut-paper family from the StudioGabarit template (papier-decoupe, atelier-papier, carnet-archives, cabinet-curiosites), rendered by the shared Python engine out/shared/papier-moteur/, appended after the ranked identities and not part of the ranking or the blind visual judge; (b) lot 2 of the identity factory (trait-continu, carte-meteo, 2026-11-05: scouting + adversarial challenge + studio + review), ranked with the others, blind visual judge on 8 identities (lot 2 + 6 neighbours, 8/8 pure groups, out/report/notes/revue-2026-11-05.md), voice-over Gemini Sulafat like the cut-paper family (owner decision: Fish Audio credits ran out before Arnold could be recorded)',
+                       'voiceUsed': 'voice actually mixed into short.mp4 (Fish Audio Arnold for the 31 campaign shorts, Gemini Sulafat for the 8 cut-paper and 4 lot 2 shorts; see shorts[].voiced)',
                        'coreTokens.motion.staggerSec': "the identity's default stagger as written in its tokens.json; meaning varies (per-item stagger for most, spacing between beats/captions for atlas-grave 1.5 and liquid-chrome 1.55, title-to-body delay for neon-lab 0.8)",
                        'coreTokens.motion.durationSec.slow': 'longest standard duration; for gazette-1900 it is one page (6 beats at 128 bpm)',
                        'coreTokens.color.contrastOnBg': 'WCAG contrast ratio against bg, computed; muted/accent colours are often decorative (e.g. gazette-1900 muted = engraving fill, 1.07:1) and must not carry text',

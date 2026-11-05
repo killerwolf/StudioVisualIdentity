@@ -3,8 +3,8 @@
  "description": "Machine index of the 20 visual identities for 9:16 shorts. Use it to shortlist identities, then read each identity's identity.md (16 sections, French) and tokens.json. coreTokens is a normalised subset (seconds, pixels on a 1080x1920 canvas, @fontsource slugs); the original tokens.json is authoritative for everything else. curation.* is orchestrator judgment. See AGENTS.md.",
  "generatedBy": "out/tools/build_index.py",
  "fieldNotes": {
-  "status": "selected = kept in Phase 1; rehabilitated = set aside in Phase 1 only to avoid topic overlap with a neighbour, then produced on request with the same rules and evidence level; added = added after the campaign: (a) the cut-paper family from the StudioGabarit template (papier-decoupe, atelier-papier, carnet-archives, cabinet-curiosites), rendered by the shared Python engine out/shared/papier-moteur/, appended after the ranked identities and not part of the ranking or the blind visual judge; (b) lot 2 of the identity factory (trait-continu, carte-meteo, 2026-11-05: scouting + adversarial challenge + studio + review), ranked with the others, blind visual judge on 8 identities (lot 2 + 6 neighbours, 8/8 pure groups, out/report/notes/revue-2026-11-05.md), voice-over planned but not recorded (see voicePlanned)",
-  "voiceUsed": "voice actually mixed into short.mp4; null when the voice-over is not recorded yet (lot 2: see voicePlanned and shorts[].voiced)",
+  "status": "selected = kept in Phase 1; rehabilitated = set aside in Phase 1 only to avoid topic overlap with a neighbour, then produced on request with the same rules and evidence level; added = added after the campaign: (a) the cut-paper family from the StudioGabarit template (papier-decoupe, atelier-papier, carnet-archives, cabinet-curiosites), rendered by the shared Python engine out/shared/papier-moteur/, appended after the ranked identities and not part of the ranking or the blind visual judge; (b) lot 2 of the identity factory (trait-continu, carte-meteo, 2026-11-05: scouting + adversarial challenge + studio + review), ranked with the others, blind visual judge on 8 identities (lot 2 + 6 neighbours, 8/8 pure groups, out/report/notes/revue-2026-11-05.md), voice-over Gemini Sulafat like the cut-paper family (owner decision: Fish Audio credits ran out before Arnold could be recorded)",
+  "voiceUsed": "voice actually mixed into short.mp4 (Fish Audio Arnold for the 31 campaign shorts, Gemini Sulafat for the 8 cut-paper and 4 lot 2 shorts; see shorts[].voiced)",
   "coreTokens.motion.staggerSec": "the identity's default stagger as written in its tokens.json; meaning varies (per-item stagger for most, spacing between beats/captions for atlas-grave 1.5 and liquid-chrome 1.55, title-to-body delay for neon-lab 0.8)",
   "coreTokens.motion.durationSec.slow": "longest standard duration; for gazette-1900 it is one page (6 beats at 128 bpm)",
   "coreTokens.color.contrastOnBg": "WCAG contrast ratio against bg, computed; muted/accent colours are often decorative (e.g. gazette-1900 muted = engraving fill, 1.07:1) and must not carry text",
@@ -850,15 +850,12 @@
    "sharedModule": [
     "out/shorts/carte-meteo__evenements__28-juin-2019-46-degres-record-de-chaleur/src/meteo.js"
    ],
-   "voiceUsed": null,
-   "voicePlanned": {
-    "provider": "Fish Audio",
-    "name": "Arnold",
-    "reference_id": "d704cf8f1216490cbfbed89955f0e938",
-    "model": "s2.1-pro",
+   "voiceUsed": {
+    "provider": "Gemini",
+    "name": "Sulafat",
+    "model": "gemini-3.8-flash-tts",
     "language": "fr",
-    "recorded": false,
-    "note": "planned voice, not recorded: Fish Audio free-plan credits ran out (1 line of 20 generated); short.mp4 is music + SFX only, narration.json is ready; see out/report/notes/voix-lot2.md"
+    "note": "owner decision 2026-11-05: Sulafat instead of the planned Fish Audio Arnold (Fish Audio credits ran out); one Gemini call per short, split into voice_lines/NN.mp3, mixed by out/tools/tts.py --engine files"
    },
    "paths": {
     "identityMd": "out/identities/carte-meteo/identity.md",
@@ -884,7 +881,7 @@
      ],
      "renderCostSecPer100Frames": 18.7,
      "loopable": false,
-     "voiced": false,
+     "voiced": true,
      "recognitionNearestShort": "carte-meteo__geographie__le-mistral-pourquoi-il-souffle-si-fort",
      "recognitionSameIdentity": true
     },
@@ -900,7 +897,7 @@
      ],
      "renderCostSecPer100Frames": 18.1,
      "loopable": false,
-     "voiced": false,
+     "voiced": true,
      "recognitionNearestShort": "carte-meteo__evenements__28-juin-2019-46-degres-record-de-chaleur",
      "recognitionSameIdentity": true
     }
@@ -1631,15 +1628,12 @@
    "sharedModule": [
     "out/shorts/trait-continu__enfants__dessine-un-escargot-d-un-seul-trait/src/traceur.py"
    ],
-   "voiceUsed": null,
-   "voicePlanned": {
-    "provider": "Fish Audio",
-    "name": "Arnold",
-    "reference_id": "d704cf8f1216490cbfbed89955f0e938",
-    "model": "s2.1-pro",
+   "voiceUsed": {
+    "provider": "Gemini",
+    "name": "Sulafat",
+    "model": "gemini-3.8-flash-tts",
     "language": "fr",
-    "recorded": false,
-    "note": "planned voice, not recorded: Fish Audio free-plan credits ran out (1 line of 20 generated); short.mp4 is music + SFX only, narration.json is ready; see out/report/notes/voix-lot2.md"
+    "note": "owner decision 2026-11-05: Sulafat instead of the planned Fish Audio Arnold (Fish Audio credits ran out); one Gemini call per short, split into voice_lines/NN.mp3, mixed by out/tools/tts.py --engine files"
    },
    "paths": {
     "identityMd": "out/identities/trait-continu/identity.md",
@@ -1668,7 +1662,7 @@
      ],
      "renderCostSecPer100Frames": 4.9,
      "loopable": false,
-     "voiced": false,
+     "voiced": true,
      "recognitionNearestShort": "trait-continu__geographie__l-italie-a-la-forme-d-une-botte",
      "recognitionSameIdentity": true
     },
@@ -1687,7 +1681,7 @@
      ],
      "renderCostSecPer100Frames": 4.9,
      "loopable": false,
-     "voiced": false,
+     "voiced": true,
      "recognitionNearestShort": "trait-continu__enfants__dessine-un-escargot-d-un-seul-trait",
      "recognitionSameIdentity": true
     }
