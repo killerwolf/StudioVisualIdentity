@@ -83,6 +83,10 @@ indépendant ; attendre la notification de fin, ne pas interroger en boucle.
    `out/showcase/build/index.html`, `root` = `out/showcase/build`, `files` = tous les `v/*.mp4` et `p/*.jpg`, ≤ 64 Mo et
    ≤ 255 fichiers par publication, en plusieurs publications sinon) et vérifier la page publiée. La vitrine fait partie
    du livrable : une identité absente de la page n'est pas livrée.
+   Piège connu de l'environnement cloud : si `git push` échoue avec « missing necessary objects » en n'envoyant aucun objet
+   (`Total 0`), c'est la négociation de push injectée dans la configuration (`push.negotiate=true`) qui croit à tort que le
+   serveur a déjà les objets ; pousser avec `git -c push.negotiate=false push`. Un refus « fatal error in commit_refs » vient
+   de GitHub lui-même : attendre et retenter.
 
 ## Enrichir le catalogue
 
