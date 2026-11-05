@@ -31,6 +31,7 @@ chaîne donnée revient à StudioGabarit, pas à ce skill.
 | `out/report/facts.md`, `out/report/failures.md` | pièges mesurés, coûts de rendu, ce qui a échoué |
 | `AGENTS.md` | format des livrables, voix off Fish Audio « Arnold », zones sûres, contraintes |
 | `out/tools/catalogue_scan.py` | rescan des librairies réellement importées (base de l'enrichissement) |
+| `out/showcase/README.md`, `build.py`, `page.tpl.html` | la vitrine publiée (artifact claude.ai https://claude.ai/artifact/VJEgxZpSjAn3cGGb51c1nK) : comment la régénérer et la republier |
 
 ## Déroulé pour N identités
 
@@ -66,15 +67,22 @@ indépendant ; attendre la notification de fin, ne pas interroger en boucle.
    parce que le connecteur peut n'être joignable que depuis la session). Cela dépense des crédits : le dire dans le rapport.
 7. **Intégration** (1 agent) : `aggregate.py` (fusion des cartes), `build_index.py`, `check.py --all`, `recognition.py`
    (sur copie si on veut garder l'ancien rapport), mise à jour de `comparison.md`, `README.md`, `AGENTS.md` (nombres
-   d'identités et de shorts, tableau par famille), `catalogue.md` (lignes passées à « Oui » avec « Où »), vitrine
-   `out/showcase/build.py`.
+   d'identités et de shorts, tableau par famille), `catalogue.md` (lignes passées à « Oui » avec « Où »), et la **vitrine** :
+   ajouter les nouvelles identités à `ORDER` dans `out/showcase/build.py` (et à `REHAB` si besoin), mettre à jour les
+   chiffres fixes de `page.tpl.html` (en-tête, « N° x / N », tests de reconnaissance, limites, voix), régénérer
+   `out/showcase/build/` avec `.venv/bin/python out/showcase/build.py` et vérifier `index.html` dans un navigateur
+   (Playwright) : toutes les identités, tous les shorts, aperçus et posters présents.
 8. **Revue adversariale aval** (1 agent) : juge aveugle sur des frames anonymisées (chaque nouvelle identité doit être
    reconnue entre elle-même et ses voisines), conformité d'`identity.md` (16 sections dans l'ordre), `tokens.json` contre
    `core-tokens.schema.json`, zones sûres et tailles de texte sur les stills, cohérence `short.json` / `narration.json`
    (lignes sans chevauchement, débit ≈ 2,6 mots/s), poids des mp4. Verdict : bloquant / à corriger / accepté. Un seul
    tour de corrections par les studios concernés, puis re-vérification ciblée.
 9. **Livraison** (orchestrateur) : commit par lots cohérents, push, PR avec le résumé des identités, des coûts mesurés,
-   des crédits voix dépensés et des défauts acceptés ; abonnement à la PR.
+   des crédits voix dépensés et des défauts acceptés ; abonnement à la PR. Puis **republier la vitrine** avec l'outil
+   Artifact sur la même adresse (`url` = https://claude.ai/artifact/VJEgxZpSjAn3cGGb51c1nK, `file_path` =
+   `out/showcase/build/index.html`, `root` = `out/showcase/build`, `files` = tous les `v/*.mp4` et `p/*.jpg`, ≤ 64 Mo et
+   ≤ 255 fichiers par publication, en plusieurs publications sinon) et vérifier la page publiée. La vitrine fait partie
+   du livrable : une identité absente de la page n'est pas livrée.
 
 ## Enrichir le catalogue
 
