@@ -12,7 +12,7 @@
     "contours sur une grille qui s'arrête au bord du cadre : les anneaux suivent le bord et dessinent un cadre parasite",
     "SVG plein cadre filtré (309 s/100 ailleurs) : ici tout est en canvas 2D"
   ],
-  "renderCostPer100Frames": "18,1 s (mesuré, mistral : 480 images en 87,0 s) et 18,8 s (mesuré, record de chaleur : 450 images en 84,6 s), 1080×1920, machine partagée avec 1 autre studio ; référence page canvas vide 13,2 s/100 à vide ; JS par image : isobares 10–25 ms (23 200 échantillons noise3 + contours), vent ≈ 1 ms, carte 0,1 ms (blit du cache)",
+  "renderCostPer100Frames": "18,1 s (mesuré, mistral : 480 images en 87,0 s) et 18,7 s (mesuré, record de chaleur sans traînées de vent : 450 images en 84,1 s), 1080×1920, machine partagée avec 1 autre studio ; référence page canvas vide 13,2 s/100 à vide ; JS par image : isobares 10–25 ms (23 200 échantillons noise3 + contours), vent ≈ 1 ms, carte 0,1 ms (blit du cache)",
   "gotchas": [
     "contours : lisser par courbes quadratiques entre milieux de segments, sinon l'escalier de la grille se voit",
     "fond de carte : le re-rastériser à chaque image (caméra qui dérive) coûtait 20,5 s/100 à vide ; plan fixe + cache canvas par caméra = 17,6",

@@ -11,7 +11,7 @@
     "géométries non topologiques (GeoJSON déjà prêt : d3-geo suffit)",
     "le style : la librairie ne dessine rien, c'est un décodeur de 2 fonctions utiles (feature, mesh)"
   ],
-  "renderCostPer100Frames": "≈ 0 par image (décodage unique 308 ms dans window.ready, mesuré) ; coût total de la scène : 18,1 s (mesuré, mistral : 480 images en 87,0 s) et 18,8 s (mesuré, record de chaleur : 450 images en 84,6 s), 1080×1920, machine partagée avec 1 autre studio ; référence page canvas vide 13,2 s/100 à vide",
+  "renderCostPer100Frames": "≈ 0 par image (décodage unique 308 ms dans window.ready, mesuré) ; coût total de la scène : 18,1 s (mesuré, mistral : 480 images en 87,0 s) et 18,7 s (mesuré, record de chaleur sans traînées de vent : 450 images en 84,1 s), 1080×1920, machine partagée avec 1 autre studio ; référence page canvas vide 13,2 s/100 à vide",
   "gotchas": [
     "le bundle UMD /node_modules/topojson-client/dist/topojson-client.min.js marche sous render.mjs (global `topojson`) ; l'ESM src/index.js marche en Node (import par chemin)",
     "topojson.mesh avec un filtre sur les ids (keep.has(a.id)) pour ne garder que les côtes de la découpe",

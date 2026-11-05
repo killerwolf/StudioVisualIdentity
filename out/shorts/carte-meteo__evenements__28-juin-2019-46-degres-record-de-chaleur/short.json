@@ -2,19 +2,19 @@
  "identity": "carte-meteo",
  "family": "evenements",
  "title": "28 juin 2019 : 46 °C, record de chaleur en France",
- "hook": "Dès la frame 0 : la France sur sa carte, bandeau rouge « 28 juin 2019 · Record de chaleur en France » qui pope en 0,35 s, pastille « ? °C » dont l'anneau hésite entre orange et rouge, reliée à Vérargues",
+ "hook": "Dès la frame 0 : la France sur sa carte et ses isobares, bandeau rouge « 28 juin 2019 · Record de chaleur en France » qui pope en 0,35 s, pastille « ? °C » dont l'anneau hésite entre orange et rouge, reliée à Vérargues",
  "duration": 15.0,
  "libraries": [
   "D3.js",
   "topojson-client",
   "world-atlas"
  ],
- "seed": 28,
- "renderTimeSec": 84.6,
+ "seed": 0,
+ "renderTimeSec": 84.1,
  "structure": [
   {
    "t": 0,
-   "beat": "hook : France entière, flux de sud, A (Europe centrale) / D (péninsule Ibérique), pastille « ? »"
+   "beat": "hook : France entière, isobares, A (Europe centrale) / D (péninsule Ibérique), pastille « ? »"
   },
   {
    "t": 3.6,
@@ -62,11 +62,12 @@
   "safeAreaOk": true,
   "finalFramesChecked": [
    0.4,
+   4.0,
    6.5,
    11.6,
    14.5
   ]
  },
- "notes": "Faits (Météo-France) : 46,0 °C à Vérargues (Hérault) le 28 juin 2019, record national absolu de température ; ancien record 44,1 °C à Conqueyrac (Gard) le 12 août 2003 ; écart 1,9 °C. Aucun « J-N ». Positions des communes approchées (Vérargues 43,72 N 4,07 E ; Conqueyrac 43,96 N 3,93 E). Le compteur 44,1 -> 46,0 est un effet de révélation, pas une série horaire. Flux de sud et champ de pression SCHÉMATIQUES (precompute.js, graine 28 : 783 lignes de courant, 1,5 Mo), pas l'analyse du 28/06/2019. Carte : world-atlas 2.0.2 countries-50m (Natural Earth, domaine public) décodée par topojson-client 3.1.0 (DROM retirés), projection geoConicConformal une fois, fond de carte mis en cache par plan fixe. Rendu complet 450 images en 84.6 s = 18.8 s/100 images (machine partagée avec le studio trait-continu). Texte ≥ 54 px, titres 108 px (« L'ancien record » auto-ajusté) ; contenu entre y = 246 et y = 1560, x ≤ 960. Corrigé avant rendu sur les stills : voile de chaleur radial (orange sur vert = olive « sale », mer beige) remplacé par des anneaux rouges plats autour de la pastille record. GSAP non utilisé.",
- "reproduce": "node out/shorts/carte-meteo__evenements__28-juin-2019-46-degres-record-de-chaleur/src/precompute.js && node out/tools/render.mjs out/shorts/carte-meteo__evenements__28-juin-2019-46-degres-record-de-chaleur/src/index.html --out /tmp/svi/carte-meteo__evenements__28-juin-2019-46-degres-record-de-chaleur/video.mp4 --duration 15 && .venv/bin/python out/tools/sound.py out/shorts/carte-meteo__evenements__28-juin-2019-46-degres-record-de-chaleur/src/sound.json /tmp/svi/carte-meteo__evenements__28-juin-2019-46-degres-record-de-chaleur/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/carte-meteo__evenements__28-juin-2019-46-degres-record-de-chaleur/video.mp4 --music /tmp/svi/carte-meteo__evenements__28-juin-2019-46-degres-record-de-chaleur/music.wav --out out/shorts/carte-meteo__evenements__28-juin-2019-46-degres-record-de-chaleur/short.mp4"
+ "notes": "Faits (Météo-France) : 46,0 °C à Vérargues (Hérault) le 28 juin 2019, record national absolu de température ; ancien record 44,1 °C le 12 août 2003, PARTAGÉ entre Conqueyrac et Saint-Christol-lès-Alès (Gard) (vérifié par la revue finale : Futura-Sciences, Europe 1) — d'où « Août 2003, dans le Gard » à l'écran ; la pastille 2003 est reliée à Conqueyrac ; écart 1,9 °C. Aucun « J-N ». Positions des communes approchées (Vérargues 43,72 N 4,07 E ; Conqueyrac 43,96 N 3,93 E). Le compteur 44,1 -> 46,0 est un effet de révélation, pas une série horaire. Champ de pression SCHÉMATIQUE (aucun aléa : seed 0 ; noise3 déterministe), pas l'analyse du 28/06/2019. Pas de traînées de vent dans ce short : la revue finale a jugé que les traînées lentes du flux de sud se lisaient comme de la pluie ; allongées et courbées (stills de test), elles restaient des hachures obliques -> retirées, precompute.js et wind.json supprimés. Carte : world-atlas 2.0.2 countries-50m (Natural Earth, domaine public) décodée par topojson-client 3.1.0 (DROM retirés), projection geoConicConformal une fois, fond de carte mis en cache par plan fixe. Rendu complet 450 images en 84.1 s = 18.7 s/100 images (machine partagée avec le studio trait-continu). Texte ≥ 54 px, titres 108 px (« L'ancien record » auto-ajusté) ; contenu entre y = 246 et y = 1560, x ≤ 960. 2e rendu complet (après revue) ; 1er rendu 84,6 s. Corrigé avant le 1er rendu sur les stills : voile de chaleur radial (orange sur vert = olive « sale », mer beige) remplacé par des anneaux rouges plats autour de la pastille record. GSAP non utilisé.",
+ "reproduce": "node out/tools/render.mjs out/shorts/carte-meteo__evenements__28-juin-2019-46-degres-record-de-chaleur/src/index.html --out /tmp/svi/carte-meteo__evenements__28-juin-2019-46-degres-record-de-chaleur/video.mp4 --duration 15 && .venv/bin/python out/tools/sound.py out/shorts/carte-meteo__evenements__28-juin-2019-46-degres-record-de-chaleur/src/sound.json /tmp/svi/carte-meteo__evenements__28-juin-2019-46-degres-record-de-chaleur/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/carte-meteo__evenements__28-juin-2019-46-degres-record-de-chaleur/video.mp4 --music /tmp/svi/carte-meteo__evenements__28-juin-2019-46-degres-record-de-chaleur/music.wav --out out/shorts/carte-meteo__evenements__28-juin-2019-46-degres-record-de-chaleur/short.mp4"
 }

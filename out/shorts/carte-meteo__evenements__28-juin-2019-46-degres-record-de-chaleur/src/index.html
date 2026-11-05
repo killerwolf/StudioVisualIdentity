@@ -3,7 +3,7 @@
      Faits : 46,0 °C à Vérargues (Hérault) le 28 juin 2019, record national absolu de température en France ; ancien record
      44,1 °C à Conqueyrac (Gard) le 12 août 2003 ; écart 1,9 °C. Positions des communes approchées (≈ 1 km).
      Carte : world-atlas 2.0.2 (Natural Earth, domaine public) via topojson-client 3.1.0, d3-geo, d3.contours.
-     Vent (flux de sud) et pression SCHÉMATIQUES : src/precompute.js -> wind.json (graine 28). Ce n'est pas l'analyse du jour. -->
+     Pression SCHÉMATIQUE (D ibérique, A d'Europe centrale), pas l'analyse du jour. Pas de traînées de vent dans ce short (revue finale). -->
 <script src="/node_modules/d3/dist/d3.min.js"></script>
 <script src="/node_modules/topojson-client/dist/topojson-client.min.js"></script>
 <style>html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:#CFE6F5}canvas{position:absolute;inset:0}</style>
@@ -15,12 +15,11 @@ const DUR = 15;
 const FR = [3.6, 8.6, 12.6];                 // 3 passages de front CHAUD (demi-cercles rouges), 0,9 s chacun
 const CONQ = [3.93, 43.96], VERA = [4.07, 43.72];
 const ctx = document.getElementById('c').getContext('2d');
-let geo, W, P, B, cams;
+let geo, P, B, cams;
 
 async function ready() {
   await S.loadFonts(M.FONTS);
   geo = await M.loadGeo();
-  W = M.prepareWind(geo, await (await fetch('./wind.json')).json());
   B = (lon, lat) => geo.P(lon, lat);
   const [hx, hy] = B(11, 50.5), [lx, ly] = B(-4, 40.5);
   P = M.pressureField([{ x: hx, y: hy, a: 15, s: 470 }, { x: lx, y: ly, a: -12, s: 420 }], S.noise3);
@@ -46,7 +45,7 @@ function drawState(i, t) {
   const c = cams[i];
   M.drawMap(ctx, geo, c);
   M.drawIsobars(ctx, c, P, t);
-  M.drawWind(ctx, c, W, t, { density: i === 0 || i === 3 ? 0.42 : 0.5, slow: 2, fast: 6, trail: 20 });
+  // pas de traînées de vent : sous le dôme de chaleur l'air est lent ; des traînées courtes se lisaient comme de la pluie (revue finale)
   if (i === 0) {
     const [ax, ay] = sc(c, [7.4, 49.6]), [dx, dy] = sc(c, [-2.4, 42.7]);
     M.pressureMark(ctx, Math.min(880, ax), ay, 'A', M.seg(t, 0.3, 0.65));
