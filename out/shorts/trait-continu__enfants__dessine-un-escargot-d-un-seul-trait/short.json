@@ -1,0 +1,79 @@
+{
+ "identity": "trait-continu",
+ "family": "enfants",
+ "title": "Dessine un escargot d'un seul trait",
+ "hook": "Dès 0 s : « Un escargot d'un trait ? » (Fredoka 700, 104 px) sur la bande orange, plaque grise vierge avec un repère bleu au centre ; le trait graphite part du centre à 0,3 s, les deux curseurs et le chariot bougent dès la 1re seconde",
+ "duration": 15.5,
+ "libraries": [
+  "shapely",
+  "opensimplex",
+  "pycairo",
+  "Pillow",
+  "numpy",
+  "ffmpeg"
+ ],
+ "seed": 7,
+ "renderTimeSec": 21.1,
+ "structure": [
+  {
+   "t": 0,
+   "beat": "hook : question d'enfant en titre, plaque vierge, repère bleu au centre"
+  },
+  {
+   "t": 0.3,
+   "beat": "le trait part du centre et s'enroule (spirale de 2,5 tours, sens horaire) ; étiquette crème « Du centre » à 2,7 s"
+  },
+  {
+   "t": 2.47,
+   "beat": "sans lever le crayon : dessous de la coquille, cou, deux antennes en aller-retour, pied ; dessin fini à 5,04 s"
+  },
+  {
+   "t": 5.49,
+   "beat": "avance plaque : 3 crans (0,6 s), la plaque sort par le haut ; plaque vierge par le bas, clac à 6,29 s"
+  },
+  {
+   "t": 6.44,
+   "beat": "« Un tour de plus » : l'escargot a grandi, coquille de 4 tours ; repère bleu « +1 » à 8,54 s quand commence le 4e tour"
+  },
+  {
+   "t": 9.2,
+   "beat": "« Vers la droite » : flèche bleue en arc horaire au-dessus de la coquille ; le corps se dessine"
+  },
+  {
+   "t": 11.7,
+   "beat": "chute : « Et toi, quel sens ? » ; dessin fini à 12,23 s, tenue jusqu'à la fin"
+  },
+  {
+   "t": 15.5,
+   "beat": "fin propre sur l'escargot complet et la question"
+  }
+ ],
+ "engagement": {
+  "mechanic": "question",
+  "cta": "Et toi, ta spirale tourne dans quel sens ? (invitation à dessiner, sans pression)"
+ },
+ "loopable": false,
+ "sound": {
+  "type": "generated",
+  "voice": false,
+  "voicePlanned": "Arnold (Fish Audio)",
+  "music": "music-box (F majpent, 92 bpm)",
+  "sfx": [
+   "tick (cliquetis du traceur toutes les 0,24 s quand il avance)",
+   "click (chaque cran)",
+   "thud (clac de butée)",
+   "pop (étiquette, +1)",
+   "chime (flèche)"
+  ]
+ },
+ "qualityChecks": {
+  "stillsReviewed": true,
+  "textMinPx": 60,
+  "safeAreaOk": true,
+  "maxWordsOnScreen": 4,
+  "narrationWords": 28,
+  "wordsPerSecond": "2,0-2,2"
+ },
+ "notes": "Fait vérifié par la contre-expertise : chez la plupart des espèces d'escargots, la coquille s'enroule vers la droite (dextre) ; la coquille grandit en ajoutant des tours à partir du centre (apex). Chemin unique par plaque construit avec shapely (escalier de 12 px, trait 7 px, 820 px/s puis 900 px/s) : 3 888 px (plaque 1) et 5 210 px (plaque 2). Rendu complet 21,1 s pour 465 images (4,55 s / 100 images) avec le studio carte-meteo actif (charge 1,7–5) ; bruit opensimplex 3,8 s une seule fois, en cache. Voix off prévue (narration.json), non enregistrée.",
+ "reproduce": "out/tools/slot.sh .venv/bin/python out/shorts/trait-continu__enfants__dessine-un-escargot-d-un-seul-trait/src/video.py --out /tmp/svi/trait-continu__enfants__dessine-un-escargot-d-un-seul-trait/video.mp4 && .venv/bin/python out/tools/sound.py out/shorts/trait-continu__enfants__dessine-un-escargot-d-un-seul-trait/src/sound.json /tmp/svi/trait-continu__enfants__dessine-un-escargot-d-un-seul-trait/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/trait-continu__enfants__dessine-un-escargot-d-un-seul-trait/video.mp4 --music /tmp/svi/trait-continu__enfants__dessine-un-escargot-d-un-seul-trait/music.wav --out out/shorts/trait-continu__enfants__dessine-un-escargot-d-un-seul-trait/short.mp4"
+}

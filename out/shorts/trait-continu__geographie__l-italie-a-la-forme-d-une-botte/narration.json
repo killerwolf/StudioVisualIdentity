@@ -1,0 +1,14 @@
+{
+ "language": "fr",
+ "style": "conteur doux et enjoué pour enfants de 6-10 ans, 2,0-2,3 mots/s ; chaque ligne démarre quand le traceur s'arrête sur un repère bleu",
+ "voice": "Arnold (Fish Audio)",
+ "wordsPerSecondTarget": 2.2,
+ "totalWords": 30,
+ "lines": [
+  {"t": 0.2, "maxDuration": 4.15, "text": "C'est vrai que l'Italie a la forme d'une botte ?"},
+  {"t": 4.8, "maxDuration": 2.8, "text": "Suis le trait : voici la jambe."},
+  {"t": 8.1, "maxDuration": 2.3, "text": "Ici, le talon : les Pouilles."},
+  {"t": 10.5, "maxDuration": 2.3, "text": "Là, la pointe : la Calabre."},
+  {"t": 12.95, "maxDuration": 2.4, "text": "Et la Sicile ? Le ballon !"}
+ ]
+}

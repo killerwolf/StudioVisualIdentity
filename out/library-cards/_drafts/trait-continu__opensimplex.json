@@ -1,0 +1,30 @@
+{
+  "name": "opensimplex",
+  "version": "0.4.5.1 (PyPI, installée par uv pip dans .venv ; numpy pur, sans numba)",
+  "role": "bruit procédural (matière)",
+  "bestFor": [
+    "grain de poudre d'une surface (plaque aluminium) et masque de grain d'un trait graphite, calculés une fois",
+    "vibration fixe par sommet (±0,5 px) d'un tracé, sans « boil »",
+    "masque de dissolution (seuil qui monte dans le temps) à partir d'un champ précalculé"
+  ],
+  "avoidFor": [
+    "tout appel par image : noise2array sur un champ demi-résolution coûte plusieurs secondes",
+    "champs pleine résolution 1080×1920 : calculer à 1/2 ou 1/8 puis agrandir en bilinéaire (PIL resize mode F)",
+    "bruit animé en temps réel : préférer un bruit de valeurs numpy ou un shader"
+  ],
+  "renderCostPer100Frames": "0 s par image (champs en cache .npz) ; calcul unique 3,83 s pour 410×480 (fin) + 102×120 (marbrure) + 2×4096 (vibration), machine partagée avec carte-meteo (mesuré, traceur.py noise_fields). La contre-expertise mesurait 9,9 s pour 540×960 + 270×480.",
+  "gotchas": [
+    "opensimplex.seed(n) est global : appeler seed juste avant de calculer les champs, une fois.",
+    "noise2array(x, y) renvoie un tableau de forme (len(y), len(x)) : attention à l'ordre des axes.",
+    "Mettre les champs en cache (np.savez) par graine ; le cache vit dans /tmp/svi/<dossier>/, pas dans le dépôt.",
+    "Valeurs ≈ [-1, 1] mais rarement aux bornes : normaliser par le max absolu pour une amplitude exacte (vibration ±0,5 px).",
+    "Agrandir avec Image.fromarray(a.astype(float32), 'F').resize(..., BILINEAR) : un agrandissement au plus proche montre des blocs."
+  ],
+  "snippetPath": "shorts/trait-continu__enfants__dessine-un-escargot-d-un-seul-trait/src/traceur.py (noise_fields, _make_plate_surface, _make_stroke_mask)",
+  "pairsWellWith": [
+    "pycairo",
+    "numpy",
+    "Pillow",
+    "shapely"
+  ]
+}

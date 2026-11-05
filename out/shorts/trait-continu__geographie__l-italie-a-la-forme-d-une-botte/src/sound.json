@@ -1,0 +1,224 @@
+{
+ "seed": 11,
+ "bpm": 92,
+ "key": "D",
+ "scale": "majpent",
+ "music": {
+  "preset": "music-box",
+  "gain": 0.45,
+  "octave": 5,
+  "density": 0.55,
+  "loop": false
+ },
+ "events": [
+  {
+   "t": 0.54,
+   "type": "tick",
+   "gain": 0.22
+  },
+  {
+   "t": 0.78,
+   "type": "tick",
+   "gain": 0.22
+  },
+  {
+   "t": 1.02,
+   "type": "tick",
+   "gain": 0.22
+  },
+  {
+   "t": 1.26,
+   "type": "tick",
+   "gain": 0.22
+  },
+  {
+   "t": 1.5,
+   "type": "tick",
+   "gain": 0.22
+  },
+  {
+   "t": 1.74,
+   "type": "tick",
+   "gain": 0.22
+  },
+  {
+   "t": 1.98,
+   "type": "tick",
+   "gain": 0.22
+  },
+  {
+   "t": 2.22,
+   "type": "tick",
+   "gain": 0.22
+  },
+  {
+   "t": 2.46,
+   "type": "tick",
+   "gain": 0.22
+  },
+  {
+   "t": 2.7,
+   "type": "tick",
+   "gain": 0.22
+  },
+  {
+   "t": 2.94,
+   "type": "tick",
+   "gain": 0.22
+  },
+  {
+   "t": 3.18,
+   "type": "tick",
+   "gain": 0.22
+  },
+  {
+   "t": 3.42,
+   "type": "tick",
+   "gain": 0.22
+  },
+  {
+   "t": 3.81,
+   "type": "click",
+   "gain": 0.7
+  },
+  {
+   "t": 4.01,
+   "type": "click",
+   "gain": 0.7
+  },
+  {
+   "t": 4.21,
+   "type": "click",
+   "gain": 0.7
+  },
+  {
+   "t": 4.61,
+   "type": "thud",
+   "gain": 0.75
+  },
+  {
+   "t": 4.97,
+   "type": "tick",
+   "gain": 0.22
+  },
+  {
+   "t": 5.21,
+   "type": "tick",
+   "gain": 0.22
+  },
+  {
+   "t": 5.45,
+   "type": "tick",
+   "gain": 0.22
+  },
+  {
+   "t": 5.69,
+   "type": "tick",
+   "gain": 0.22
+  },
+  {
+   "t": 5.93,
+   "type": "tick",
+   "gain": 0.22
+  },
+  {
+   "t": 6.17,
+   "type": "tick",
+   "gain": 0.22
+  },
+  {
+   "t": 6.41,
+   "type": "tick",
+   "gain": 0.22
+  },
+  {
+   "t": 6.65,
+   "type": "tick",
+   "gain": 0.22
+  },
+  {
+   "t": 6.89,
+   "type": "tick",
+   "gain": 0.22
+  },
+  {
+   "t": 7.13,
+   "type": "tick",
+   "gain": 0.22
+  },
+  {
+   "t": 7.37,
+   "type": "tick",
+   "gain": 0.22
+  },
+  {
+   "t": 7.61,
+   "type": "tick",
+   "gain": 0.22
+  },
+  {
+   "t": 7.85,
+   "type": "tick",
+   "gain": 0.22
+  },
+  {
+   "t": 8.037,
+   "type": "click",
+   "gain": 0.5
+  },
+  {
+   "t": 8.037,
+   "type": "pop",
+   "gain": 0.5,
+   "note": "A5"
+  },
+  {
+   "t": 10.01,
+   "type": "tick",
+   "gain": 0.22
+  },
+  {
+   "t": 10.25,
+   "type": "tick",
+   "gain": 0.22
+  },
+  {
+   "t": 10.47,
+   "type": "click",
+   "gain": 0.5
+  },
+  {
+   "t": 10.47,
+   "type": "pop",
+   "gain": 0.5,
+   "note": "C6"
+  },
+  {
+   "t": 12.17,
+   "type": "tick",
+   "gain": 0.22
+  },
+  {
+   "t": 12.41,
+   "type": "tick",
+   "gain": 0.22
+  },
+  {
+   "t": 12.65,
+   "type": "tick",
+   "gain": 0.22
+  },
+  {
+   "t": 12.89,
+   "type": "tick",
+   "gain": 0.22
+  },
+  {
+   "t": 12.952,
+   "type": "chime",
+   "gain": 0.35,
+   "note": "E6"
+  }
+ ],
+ "duration": 16.0
+}

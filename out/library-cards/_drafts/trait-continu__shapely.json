@@ -1,0 +1,33 @@
+{
+  "name": "shapely",
+  "version": "2.2.0 (PyPI, installée par uv pip dans .venv)",
+  "role": "géométrie 2D (construction de chemin)",
+  "bestFor": [
+    "un chemin unique et continu qui se dessine : raccorder des morceaux (linemerge), ponts les plus courts entre composantes disjointes (nearest_points), état à t = substring(chemin, 0, v·t)",
+    "contours tracés à la main en lon/lat puis simplify (tolérance en px) : silhouettes de pays lisibles en 40–80 points",
+    "rééchantillonnage régulier (segmentize) avant une quantification sur grille (escalier, pixel, broderie)",
+    "transformations de dessins (affinity.rotate / scale / translate) avec ajustement automatique à une boîte (bounds)"
+  ],
+  "avoidFor": [
+    "rendu : shapely ne dessine rien (pycairo, Pillow ou le navigateur dessinent)",
+    "allers-retours superposés : simplify(0) supprime les demi-tours colinéaires (une antenne aller-retour disparaît) — fusionner les points alignés de même sens à la main",
+    "formes disjointes à relier : linemerge ne relie que des lignes qui se touchent ; il faut calculer les ponts soi-même",
+    "projections cartographiques réelles (pas de CRS) : passer par d3-geo ou pyproj si la précision compte"
+  ],
+  "renderCostPer100Frames": "≈ 0,02 s / 100 images pour substring + interpolate sur un chemin de 223 sommets / 4 116 px (mesuré, Italie) ; construction du chemin (simplify + segmentize + escalier) 1–3 ms une fois. Négligeable devant pycairo + encodage (≈ 2,8–4,5 s / 100 images au total).",
+  "gotchas": [
+    "Nommer sa propre classe `Path` masque pathlib.Path dans le même module (TypeError) : l'appeler autrement (Trace).",
+    "substring(ligne, 0, L) renvoie un Point quand L = 0 : tester L ≤ 0 avant.",
+    "Jalons exacts sur un escalier : chaque pas fait exactement le pas de grille, donc longueur au jalon = index du pas × pas ; project() est ambigu quand le chemin repasse au même endroit (pointe de la botte, aller-retour).",
+    "linemerge peut renvoyer la ligne dans l'autre sens : vérifier le premier point et inverser si besoin.",
+    "Polygon(...).exterior.simplify(tol) garde un anneau fermé ; retirer le dernier point (doublon) avant de découper le contour en morceaux.",
+    "Version épinglée 2.2.0 : API 2.x (fonctions vectorisées shapely.segmentize), différente de shapely 1.8."
+  ],
+  "snippetPath": "shorts/trait-continu__enfants__dessine-un-escargot-d-un-seul-trait/src/traceur.py (Trace, build_path, stair_cells, bridge_ring) ; shorts/trait-continu__geographie__l-italie-a-la-forme-d-une-botte/src/video.py (italy_pieces)",
+  "pairsWellWith": [
+    "pycairo",
+    "opensimplex",
+    "numpy",
+    "Pillow"
+  ]
+}
