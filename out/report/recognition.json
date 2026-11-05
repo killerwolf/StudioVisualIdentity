@@ -1,196 +1,268 @@
 {
  "method": "Lab 8x8x8 Bhattacharyya + edge-histogram chi2, 8 frames/short, nearest neighbour",
- "shorts": 31,
- "top1Accuracy": 0.935,
- "meanIntra": 0.2502,
- "meanInter": 0.8461,
- "ratioIntraOverInter": 0.296,
+ "shorts": 43,
+ "top1Accuracy": 0.93,
+ "meanIntra": 0.2149,
+ "meanInter": 0.8586,
+ "ratioIntraOverInter": 0.25,
  "rows": [
   {
    "short": "aquarelle-conte__enfants__ou-vont-les-etoiles-le-jour",
    "nearest": "aquarelle-conte__histoire__phare-d-alexandrie",
    "sameIdentity": true,
-   "distance": 0.2827
+   "distance": 0.282
   },
   {
    "short": "aquarelle-conte__histoire__phare-d-alexandrie",
    "nearest": "aquarelle-conte__enfants__ou-vont-les-etoiles-le-jour",
    "sameIdentity": true,
-   "distance": 0.2827
+   "distance": 0.282
+  },
+  {
+   "short": "atelier-papier__explicatif__d-ou-vient-le-mot-sandwich",
+   "nearest": "atelier-papier__histoire__la-fourchette-a-fait-scandale",
+   "sameIdentity": true,
+   "distance": 0.0908
+  },
+  {
+   "short": "atelier-papier__histoire__la-fourchette-a-fait-scandale",
+   "nearest": "atelier-papier__explicatif__d-ou-vient-le-mot-sandwich",
+   "sameIdentity": true,
+   "distance": 0.0908
   },
   {
    "short": "atlas-grave__geographie__plus-longs-fleuves-du-monde",
    "nearest": "atlas-grave__histoire__premier-tour-du-monde-1519-1522",
    "sameIdentity": true,
-   "distance": 0.0436
+   "distance": 0.0447
   },
   {
    "short": "atlas-grave__histoire__premier-tour-du-monde-1519-1522",
    "nearest": "atlas-grave__geographie__plus-longs-fleuves-du-monde",
    "sameIdentity": true,
-   "distance": 0.0436
+   "distance": 0.0447
   },
   {
    "short": "bauhaus-kinetic__engagement__trouve-l-intrus",
    "nearest": "bauhaus-kinetic__explicatif__abeilles-hexagones",
    "sameIdentity": true,
-   "distance": 0.1505
+   "distance": 0.15
   },
   {
    "short": "bauhaus-kinetic__explicatif__abeilles-hexagones",
    "nearest": "bauhaus-kinetic__engagement__trouve-l-intrus",
    "sameIdentity": true,
-   "distance": 0.1505
+   "distance": 0.15
   },
   {
    "short": "brut-meme__engagement__test-des-3-secondes-stroop",
    "nearest": "brut-meme__evenements__pendant-ces-15-secondes-dans-le-monde",
    "sameIdentity": true,
-   "distance": 0.1128
+   "distance": 0.1126
   },
   {
    "short": "brut-meme__evenements__pendant-ces-15-secondes-dans-le-monde",
    "nearest": "brut-meme__engagement__test-des-3-secondes-stroop",
    "sameIdentity": true,
-   "distance": 0.1128
+   "distance": 0.1126
+  },
+  {
+   "short": "cabinet-curiosites__explicatif__d-ou-vient-le-mot-sandwich",
+   "nearest": "cabinet-curiosites__histoire__la-fourchette-a-fait-scandale",
+   "sameIdentity": true,
+   "distance": 0.0754
+  },
+  {
+   "short": "cabinet-curiosites__histoire__la-fourchette-a-fait-scandale",
+   "nearest": "cabinet-curiosites__explicatif__d-ou-vient-le-mot-sandwich",
+   "sameIdentity": true,
+   "distance": 0.0754
+  },
+  {
+   "short": "carnet-archives__explicatif__d-ou-vient-le-mot-sandwich",
+   "nearest": "carnet-archives__histoire__la-fourchette-a-fait-scandale",
+   "sameIdentity": true,
+   "distance": 0.0762
+  },
+  {
+   "short": "carnet-archives__histoire__la-fourchette-a-fait-scandale",
+   "nearest": "carnet-archives__explicatif__d-ou-vient-le-mot-sandwich",
+   "sameIdentity": true,
+   "distance": 0.0762
+  },
+  {
+   "short": "carte-meteo__evenements__28-juin-2019-46-degres-record-de-chaleur",
+   "nearest": "carte-meteo__geographie__le-mistral-pourquoi-il-souffle-si-fort",
+   "sameIdentity": true,
+   "distance": 0.1699
+  },
+  {
+   "short": "carte-meteo__geographie__le-mistral-pourquoi-il-souffle-si-fort",
+   "nearest": "carte-meteo__evenements__28-juin-2019-46-degres-record-de-chaleur",
+   "sameIdentity": true,
+   "distance": 0.1699
   },
   {
    "short": "cosmos-doc__evenements__voyager-1-a-un-jour-lumiere",
    "nearest": "cosmos-doc__explicatif__pourquoi-venus-plus-chaude-que-mercure",
    "sameIdentity": true,
-   "distance": 0.2268
+   "distance": 0.2261
   },
   {
    "short": "cosmos-doc__explicatif__pourquoi-venus-plus-chaude-que-mercure",
    "nearest": "cosmos-doc__evenements__voyager-1-a-un-jour-lumiere",
    "sameIdentity": true,
-   "distance": 0.2268
+   "distance": 0.2261
   },
   {
    "short": "gazette-1900__evenements__9-novembre-1989-mur-de-berlin",
    "nearest": "gazette-1900__histoire__1789-en-20-secondes",
    "sameIdentity": true,
-   "distance": 0.0841
+   "distance": 0.1079
   },
   {
    "short": "gazette-1900__histoire__1789-en-20-secondes",
    "nearest": "gazette-1900__evenements__9-novembre-1989-mur-de-berlin",
    "sameIdentity": true,
-   "distance": 0.0841
+   "distance": 0.1079
   },
   {
    "short": "liquid-chrome__abstrait__pendule-de-newton-chrome",
-   "nearest": "liquid-chrome__abstrait__quatre-peintures-mpm",
-   "sameIdentity": true,
-   "distance": 0.5054
+   "nearest": "atelier-papier__histoire__la-fourchette-a-fait-scandale",
+   "sameIdentity": false,
+   "distance": 0.4833
   },
   {
    "short": "liquid-chrome__abstrait__quatre-peintures-mpm",
    "nearest": "neon-lab__abstrait__champ-de-force-lucioles",
    "sameIdentity": false,
-   "distance": 0.3674
+   "distance": 0.367
   },
   {
    "short": "liquid-chrome__engagement__quelle-couleur-remplit-le-verre",
    "nearest": "cosmos-doc__evenements__voyager-1-a-un-jour-lumiere",
    "sameIdentity": false,
-   "distance": 0.4573
+   "distance": 0.4556
   },
   {
    "short": "neon-lab__abstrait__champ-de-force-lucioles",
    "nearest": "neon-lab__explicatif__lune-meme-face",
    "sameIdentity": true,
-   "distance": 0.1873
+   "distance": 0.1888
   },
   {
    "short": "neon-lab__explicatif__effet-papillon-double-pendule",
    "nearest": "neon-lab__abstrait__champ-de-force-lucioles",
    "sameIdentity": true,
-   "distance": 0.197
+   "distance": 0.1995
   },
   {
    "short": "neon-lab__explicatif__lune-meme-face",
    "nearest": "neon-lab__abstrait__champ-de-force-lucioles",
    "sameIdentity": true,
-   "distance": 0.1873
+   "distance": 0.1888
+  },
+  {
+   "short": "papier-decoupe__explicatif__d-ou-vient-le-mot-sandwich",
+   "nearest": "papier-decoupe__histoire__la-fourchette-a-fait-scandale",
+   "sameIdentity": true,
+   "distance": 0.1041
+  },
+  {
+   "short": "papier-decoupe__histoire__la-fourchette-a-fait-scandale",
+   "nearest": "papier-decoupe__explicatif__d-ou-vient-le-mot-sandwich",
+   "sameIdentity": true,
+   "distance": 0.1041
   },
   {
    "short": "pastel-diorama__enfants__d-ou-vient-la-pluie",
    "nearest": "pastel-diorama__engagement__choisis-ta-boite-renard",
    "sameIdentity": true,
-   "distance": 0.3967
+   "distance": 0.3968
   },
   {
    "short": "pastel-diorama__engagement__choisis-ta-boite-renard",
    "nearest": "pastel-diorama__enfants__d-ou-vient-la-pluie",
    "sameIdentity": true,
-   "distance": 0.3967
+   "distance": 0.3968
   },
   {
    "short": "pixel-arcade__abstrait__la-balle-peut-elle-s-echapper",
    "nearest": "pixel-arcade__engagement__quelle-bille-gagne-la-course",
    "sameIdentity": true,
-   "distance": 0.1315
+   "distance": 0.1295
   },
   {
    "short": "pixel-arcade__engagement__quelle-bille-gagne-la-course",
    "nearest": "pixel-arcade__abstrait__la-balle-peut-elle-s-echapper",
    "sameIdentity": true,
-   "distance": 0.1315
+   "distance": 0.1295
   },
   {
    "short": "pixel-arcade__engagement__quelle-couleur-conquiert-l-ecran",
    "nearest": "pixel-arcade__engagement__quelle-bille-gagne-la-course",
    "sameIdentity": true,
-   "distance": 0.3489
+   "distance": 0.3486
   },
   {
    "short": "riso-zine__evenements__geminides-j-39",
    "nearest": "riso-zine__geographie__5-plus-grands-deserts",
    "sameIdentity": true,
-   "distance": 0.2082
+   "distance": 0.2091
   },
   {
    "short": "riso-zine__geographie__5-plus-grands-deserts",
    "nearest": "riso-zine__evenements__geminides-j-39",
    "sameIdentity": true,
-   "distance": 0.2082
+   "distance": 0.2091
   },
   {
    "short": "swiss-data__evenements__j-272-eclipse-2-aout-2027",
    "nearest": "swiss-data__geographie__ou-vivent-8-milliards",
    "sameIdentity": true,
-   "distance": 0.1251
+   "distance": 0.125
   },
   {
    "short": "swiss-data__geographie__ou-vivent-8-milliards",
    "nearest": "swiss-data__evenements__j-272-eclipse-2-aout-2027",
    "sameIdentity": true,
-   "distance": 0.1251
+   "distance": 0.125
   },
   {
    "short": "tableau-craie__enfants__comment-une-graine-devient-un-arbre",
    "nearest": "tableau-craie__explicatif__pourquoi-le-ciel-est-bleu",
    "sameIdentity": true,
-   "distance": 0.1122
+   "distance": 0.1123
   },
   {
    "short": "tableau-craie__explicatif__pourquoi-le-ciel-est-bleu",
    "nearest": "tableau-craie__enfants__comment-une-graine-devient-un-arbre",
    "sameIdentity": true,
-   "distance": 0.1122
+   "distance": 0.1123
   },
   {
    "short": "topo-relief__geographie__comment-mesure-t-on-l-everest",
    "nearest": "topo-relief__histoire__hannibal-traverse-les-alpes",
    "sameIdentity": true,
-   "distance": 0.0813
+   "distance": 0.0814
   },
   {
    "short": "topo-relief__histoire__hannibal-traverse-les-alpes",
    "nearest": "topo-relief__geographie__comment-mesure-t-on-l-everest",
    "sameIdentity": true,
-   "distance": 0.0813
+   "distance": 0.0814
+  },
+  {
+   "short": "trait-continu__enfants__dessine-un-escargot-d-un-seul-trait",
+   "nearest": "trait-continu__geographie__l-italie-a-la-forme-d-une-botte",
+   "sameIdentity": true,
+   "distance": 0.0408
+  },
+  {
+   "short": "trait-continu__geographie__l-italie-a-la-forme-d-une-botte",
+   "nearest": "trait-continu__enfants__dessine-un-escargot-d-un-seul-trait",
+   "sameIdentity": true,
+   "distance": 0.0408
   }
  ],
  "blindJudge": {
@@ -475,5 +547,13 @@
    }
   ],
   "hardestConfusions": "Swiss data vs Bauhaus (fonds crème, grotesques grasses, rouge/noir/jaune) ; et les 5 styles sur fond sombre (neon-lab, cosmos-doc, liquid-chrome, topo-relief, pixel-arcade), séparés par la technique de rendu : particules lumineuses vs flares photoréalistes vs 3D brillante vs courbes de niveau vs pixels."
+ },
+ "blindJudgeLot2": {
+  "method": "Juge agent indépendant lancé par l'orchestrateur pendant la revue du lot 2 (2026-11-05) : 32 images anonymisées (8 identités : trait-continu, carte-meteo et 6 voisines — tableau-craie, pastel-diorama, bauhaus-kinetic, swiss-data, riso-zine, atlas-grave — × 2 shorts × 2 images à 35 % et 75 %), ordre random.Random(20261105), clé hors de portée ; consigne : 8 groupes de 4 par style. Images du lot 2 tirées des vidéos v1 (avant les re-rendus de la revue). Détail : out/report/notes/revue-2026-11-05.md",
+  "pureGroups": 8,
+  "groups": 8,
+  "imagesCorrectlyGrouped": 32,
+  "images": 32,
+  "notes": "trait-continu lu comme « planche technique sur fond orange », pas comme un jouet ; carte-meteo lue comme une carte météo (genre bulletin) ; une hésitation déclarée : une image swiss-data entre swiss-data et bauhaus-kinetic, bien classée. Limites : titres français visibles, un seul juge, images fixes."
  }
 }

@@ -5,6 +5,10 @@
   "cartes vectorielles sans fichier téléchargé : côtes dessinées à la main projetées par d3-geo (geoNaturalEarth1, geoEquirectangular, geoGraticule)",
   "classements et échelles (scaleLinear/scalePoint) rendus en SVG gravé",
   "tracés de fleuves/routes avec d3.line + curveCatmullRom/curveBasis, animés par stroke-dashoffset ou par échantillonnage getPointAtLength",
+  "d3.geoConicConformal().parallels([44,49]).rotate([-2.5,0]).fitExtent(box, France).clipExtent(...) : projection conforme centrée France, calée une fois",
+  "d3.geoPath(proj) -> chaîne SVG -> new Path2D(...) : dessin canvas rapide, caméra par setTransform",
+  "d3.contours sur une grille écran 116×200 (pas 10 px, débordant de 40 px) : isobares recalculées à chaque image pour qu'elles respirent",
+  "d3.geoCentroid / d3.geoBounds pour filtrer polygones et pays",
   "infographies SVG plates : échelles linéaires, barres, unit charts (carrés unitaires), barres empilées",
   "grille typographique 12 colonnes via scaleLinear",
   "cartes schématiques sans données téléchargées : d3-geo geoEquirectangular().fitExtent + geoGraticule + d3.line(curveCatmullRom) sur des points lon/lat saisis à la main",
@@ -16,6 +20,9 @@
  "avoidFor": [
   "scènes à milliers d'éléments animés (SVG + filtres en SwiftShader deviennent lents)",
   "3D, particules, physique",
+  "d3.transition (horloge réelle, non seekable)",
+  "contours sur une grille qui s'arrête au bord du cadre : les anneaux suivent le bord et dessinent un cadre parasite",
+  "SVG plein cadre filtré (309 s/100 ailleurs) : ici tout est en canvas 2D",
   "animation elle-même (d3.transition dépend de l'horloge réelle : non seekable) -> confier le temps à GSAP",
   "3D, particules, > quelques milliers de nœuds SVG",
   "vraies cartes de pays (il faudrait un TopoJSON téléchargé : interdit ici)",
@@ -24,6 +31,7 @@
  ],
  "renderCostPer100Frames": [
   "135,7 s (mesuré, shorts/atlas-grave__geographie__plus-longs-fleuves-du-monde, 450 frames en 610,8 s, sous charge ≈ 16 sur 4 cœurs avec 4 rendus simultanés ; scène SVG + 1 feDisplacementMap sur la carte + 4 PNG plein cadre) [atlas-grave]",
+  "18,1 s (mesuré, mistral : 480 images en 87,0 s) et 18,7 s (mesuré, record de chaleur sans traînées de vent : 450 images en 84,1 s), 1080×1920, machine partagée avec 1 autre studio ; référence page canvas vide 13,2 s/100 à vide ; JS par image : isobares 10–25 ms (23 200 échantillons noise3 + contours), vent ≈ 1 ms, carte 0,1 ms (blit du cache) [carte-meteo]",
   "13,7 s (mesuré, scène swiss-data__geographie__ou-vivent-8-milliards : SVG ~200 nœuds, 450 frames en 61,5 s, 1 slot CPU, 1080×1920) ; 20,5 s (mesuré, scène swiss-data__evenements__j-272-eclipse-2-aout-2027 avec d3-geo graticule + tracé, 450 frames en 92,3 s, CPU chargé par 10 studios) [swiss-data]",
   "0 s par frame (texture précalculée) ; coût unique mesuré : d3.contours 256², 41 niveaux, 88 285 points = 224 ms (Node 22, load ≈ 15) + peinture canvas 2048² au chargement ; le rendu complet du short (three.js dominant) = 169 s (mesuré, topo-relief__geographie__comment-mesure-t-on-l-everest : relief 256² MeshStandard + shader onBeforeCompile, 2 textures 2048², sprites, nappe 90² en fil de fer, DOM ; 450 frames en 760,5 s, load average 15–17, 4 studios) ; 108,2 s (mesuré, topo-relief__histoire__hannibal-traverse-les-alpes : même moteur + 4 tubes lumineux, 900 flocons Points recalculés par frame, 9 sprites) [topo-relief]"
  ],
@@ -34,6 +42,10 @@
   "pathLength=1 sur les côtes permet de tracer tous les contours avec un seul dashoffset",
   "Filtres SVG feTurbulence plein cadre = coût par frame élevé ; précalculer le papier en PNG (pycairo)",
   "Polices @fontsource : mesurer les textes (getComputedTextLength) seulement après window.ready",
+  "contours : lisser par courbes quadratiques entre milieux de segments, sinon l'escalier de la grille se voit",
+  "fond de carte : le re-rastériser à chaque image (caméra qui dérive) coûtait 20,5 s/100 à vide ; plan fixe + cache canvas par caméra = 17,6",
+  "d3 chargé en <script> classique (global d3) puis utilisé dans des modules ES ; en Node, importer /node_modules/d3/dist/d3.mjs",
+  "vent : ne pas intégrer dans le navigateur (SEQUENTIAL) ; lignes de courant précalculées en Node, position fermée en t",
   "ne pas utiliser d3.transition : construire le SVG une fois avec D3 et animer les attributs avec une timeline GSAP seekée",
   "d3 chargé en <script> classique (/node_modules/d3/dist/d3.min.js) puis global `d3` utilisable dans les modules ES",
   "getTotalLength() sur un path d3.line pour un tracé stroke-dashoffset ; le rythme des points se synchronise par longueur de corde cumulée (approximation suffisante en catmull-rom)",
@@ -47,12 +59,15 @@
  ],
  "snippetPath": [
   "shorts/atlas-grave__geographie__plus-longs-fleuves-du-monde/src",
+  "shorts/carte-meteo__geographie__le-mistral-pourquoi-il-souffle-si-fort/src",
   "shorts/swiss-data__geographie__ou-vivent-8-milliards/src",
   "shorts/topo-relief__geographie__comment-mesure-t-on-l-everest/src"
  ],
  "pairsWellWith": [
   "GSAP",
   "pycairo",
+  "topojson-client",
+  "world-atlas",
   "flubber",
   "roughjs",
   "three.js",
@@ -60,6 +75,7 @@
  ],
  "usedBy": [
   "atlas-grave",
+  "carte-meteo",
   "swiss-data",
   "topo-relief"
  ],

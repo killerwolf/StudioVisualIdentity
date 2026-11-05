@@ -9,6 +9,20 @@
    "p5.js"
   ]
  },
+ "atelier-papier": {
+  "explicatif": [
+   "NumPy",
+   "OpenCV",
+   "Pillow",
+   "ffmpeg"
+  ],
+  "histoire": [
+   "NumPy",
+   "OpenCV",
+   "Pillow",
+   "ffmpeg"
+  ]
+ },
  "atlas-grave": {
   "geographie": [
    "D3.js",
@@ -41,6 +55,46 @@
   "evenements": [
    "GSAP",
    "PixiJS"
+  ]
+ },
+ "cabinet-curiosites": {
+  "explicatif": [
+   "NumPy",
+   "OpenCV",
+   "Pillow",
+   "ffmpeg"
+  ],
+  "histoire": [
+   "NumPy",
+   "OpenCV",
+   "Pillow",
+   "ffmpeg"
+  ]
+ },
+ "carnet-archives": {
+  "explicatif": [
+   "NumPy",
+   "OpenCV",
+   "Pillow",
+   "ffmpeg"
+  ],
+  "histoire": [
+   "NumPy",
+   "OpenCV",
+   "Pillow",
+   "ffmpeg"
+  ]
+ },
+ "carte-meteo": {
+  "evenements": [
+   "D3.js",
+   "topojson-client",
+   "world-atlas"
+  ],
+  "geographie": [
+   "D3.js",
+   "topojson-client",
+   "world-atlas"
   ]
  },
  "cosmos-doc": {
@@ -82,6 +136,20 @@
    "Matplotlib",
    "OpenCV",
    "three.js"
+  ]
+ },
+ "papier-decoupe": {
+  "explicatif": [
+   "NumPy",
+   "OpenCV",
+   "Pillow",
+   "ffmpeg"
+  ],
+  "histoire": [
+   "NumPy",
+   "OpenCV",
+   "Pillow",
+   "ffmpeg"
   ]
  },
  "pastel-diorama": {
@@ -144,6 +212,24 @@
   "histoire": [
    "D3.js",
    "three.js"
+  ]
+ },
+ "trait-continu": {
+  "enfants": [
+   "Pillow",
+   "ffmpeg",
+   "numpy",
+   "opensimplex",
+   "pycairo",
+   "shapely"
+  ],
+  "geographie": [
+   "Pillow",
+   "ffmpeg",
+   "numpy",
+   "opensimplex",
+   "pycairo",
+   "shapely"
   ]
  }
 }

@@ -73,6 +73,9 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .rankline { display: flex; align-items: baseline; gap: var(--s2); }
 .rank { font-family: var(--mono); font-size: 13px; color: var(--ink-2); }
 .rank.top { color: var(--safelight); font-weight: 600; }
+.reh.add { border-color: var(--ok); color: var(--ok); }
+.short .vo.novo { border-left-color: var(--line); }
+.short .vo .mono.none { color: var(--safelight); }
 .reh { font: 600 11px var(--mono); text-transform: uppercase; letter-spacing: .05em; padding: 1px 7px; border-radius: 3px; border: 1px solid var(--safelight); color: var(--safelight); }
 .meta h2 { font-size: 34px; line-height: 1; }
 .meta .slug { font-family: var(--mono); font-size: 13px; color: var(--ink-2); }
@@ -120,6 +123,7 @@ body.show-safe .safe { display: block; }
 .bar .track { height: 14px; position: relative; background: linear-gradient(to right, var(--line) 1px, transparent 1px) 0 0 / 25% 100%; }
 .bar .fill { position: absolute; inset: 2px auto 2px 0; background: var(--ink); border-radius: 0 2px 2px 0; }
 .bar.third .fill { background: var(--safelight); }
+.bar.added .fill { background: var(--ok); }
 .bar .v { font-family: var(--mono); font-variant-numeric: tabular-nums; text-align: right; }
 .axis { display: grid; grid-template-columns: minmax(0, 300px) minmax(0, 1fr) 64px; gap: var(--s3); font: 12px var(--mono); color: var(--ink-2); margin-top: 4px; }
 .axis div { display: flex; justify-content: space-between; }
@@ -165,22 +169,22 @@ footer.colophon { margin-top: var(--s7); padding-top: var(--s4); border-top: 1px
   <section class="hero">
     <div>
       <p class="eyebrow">Recherche exploratoire · shorts verticaux 1080×1920 · 30 fps</p>
-      <h1>Quatorze identités visuelles, <em>31 shorts</em> rendus par code</h1>
-      <p class="lede">Chaque identité est un design system lisible par un agent (tokens, mouvement, caméra, recettes par famille) et elle est prouvée par des vidéos réelles, rendues avec des librairies open-source sur 4 cœurs CPU, sans aucun asset téléchargé.</p>
+      <h1>Vingt identités visuelles, <em>43 shorts</em> rendus par code</h1>
+      <p class="lede">Chaque identité est un design system lisible par un agent (tokens, mouvement, caméra, recettes par famille) et elle est prouvée par des vidéos réelles, rendues avec des librairies open-source sur 4 cœurs CPU. Les 14 identités de la campagne, les 4 identités papier de StudioGabarit et les 2 du lot 2 de la fabrique d'identités (Carte Météo, Trait continu).</p>
       <div class="reco">
         <span class="eyebrow">Recommandées pour une chaîne durable</span>
         <ol id="reco"></ol>
       </div>
     </div>
     <div class="ledger" aria-label="Chiffres de la campagne">
-      <div><span>Identités</span><b>14</b></div>
-      <div><span>Shorts livrés</span><b>31</b></div>
-      <div><span>Contrôle qualité</span><b>31 / 31</b></div>
+      <div><span>Identités</span><b id="m-ids">20</b></div>
+      <div><span>Shorts livrés</span><b id="m-shorts">43</b></div>
+      <div><span>Contrôle qualité</span><b id="m-qa">43 / 43</b></div>
       <div><span>Familles couvertes</span><b>7 / 7</b></div>
-      <div><span>Librairies A + B</span><b>8 + 11</b></div>
-      <div><span>Test à l'aveugle</span><b>56 / 56</b></div>
+      <div><span>Librairies A + B (+ lot 2)</span><b>8 + 11 (+4)</b></div>
+      <div><span>Plus proche voisin</span><b id="m-recog">40 / 43</b></div>
       <div><span>Production</span><b>4 cœurs</b></div>
-      <div><span>Voix off</span><b>31 / 31</b></div>
+      <div><span>Voix off</span><b title="31 Arnold (Fish Audio) + 8 Sulafat (Gemini, papier) + 4 à venir (lot 2)">31 + 8 + 4 à venir</b></div>
     </div>
   </section>
 
@@ -195,18 +199,18 @@ footer.colophon { margin-top: var(--s7); padding-top: var(--s4); border-top: 1px
     <header>
       <p class="eyebrow">Coût de rendu mesuré</p>
       <h2>Secondes de calcul pour 100 images</h2>
-      <p>Mesuré pendant la campagne : jusqu'à 10 studios rendaient en même temps sur 4 cœurs (charge 15–23), donc la plupart des shorts sont environ 2 à 3 fois plus lents que sur une machine calme. Les trois 3ᵉ shorts ont été rendus avec seulement 3 studios actifs.</p>
+      <p>Mesuré pendant la campagne : jusqu'à 10 studios rendaient en même temps sur 4 cœurs (charge 15–23), donc la plupart des shorts sont environ 2 à 3 fois plus lents que sur une machine calme. Les trois 3ᵉ shorts ont été rendus avec seulement 3 studios actifs. Les shorts papier (moteur Python, voix comprise) ont été rendus seuls, ceux du lot 2 à deux studios en parallèle (charge 1–5,5).</p>
     </header>
     <div class="bars" id="bars"></div>
     <div class="axis" aria-hidden="true"><span></span><div><span>0</span><span>80</span><span>160</span><span>240</span><span>320</span></div><span></span></div>
-    <div class="legend"><span><i style="background:var(--ink)"></i>CPU saturé (premier tour et identités réhabilitées)</span><span><i style="background:var(--safelight)"></i>3ᵉ short, CPU peu chargé</span><span>pastille = couleur de fond de l'identité</span></div>
+    <div class="legend"><span><i style="background:var(--ink)"></i>CPU saturé (premier tour et identités réhabilitées)</span><span><i style="background:var(--safelight)"></i>3ᵉ short, CPU peu chargé</span><span><i style="background:var(--ok)"></i>identités ajoutées (papier, lot 2), CPU peu chargé</span><span>pastille = couleur de fond de l'identité</span></div>
   </section>
 
   <section class="section" id="matrice">
     <header>
       <p class="eyebrow">Couverture</p>
       <h2>Identité × famille × librairie</h2>
-      <p>Chaque famille de contenu est prouvée par au moins trois identités ; les 8 librairies du niveau A et les 11 du niveau B apparaissent toutes dans au moins un short livré.</p>
+      <p>Chaque famille de contenu est prouvée par au moins trois identités ; les 8 librairies du niveau A et les 11 du niveau B apparaissent toutes dans au moins un short livré. Le lot 2 ajoute shapely, opensimplex, topojson-client et world-atlas (côtes Natural Earth, domaine public, version épinglée).</p>
     </header>
     <div class="tablebox"><table id="matrix"></table></div>
   </section>
@@ -218,14 +222,14 @@ footer.colophon { margin-top: var(--s7); padding-top: var(--s4); border-top: 1px
     </header>
     <div class="duo">
       <div class="result">
-        <p class="eyebrow">Juge visuel indépendant, 14 identités</p>
+        <p class="eyebrow">Juge visuel indépendant, 14 identités · 2026-11-04</p>
         <div class="big">14<small> / 14 groupes purs</small></div>
-        <p>Un agent sans contexte a reçu 56 images anonymisées (2 shorts par identité, 2 images par short, clé cachée) avec la consigne de former 14 groupes de 4 par style. Les 56 images ont été bien classées, y compris les quatre identités réhabilitées face à leurs voisines. Les plus difficiles à séparer : Grille Suisse et Bauhaus (fonds crème), et les cinq styles sur fond sombre.</p>
+        <p>Résultat historique de la campagne : un agent sans contexte a reçu 56 images anonymisées (2 shorts par identité, 2 images par short, clé cachée) avec la consigne de former 14 groupes de 4 par style. Les 56 images ont été bien classées, y compris les quatre identités réhabilitées face à leurs voisines. Les plus difficiles à séparer : Grille Suisse et Bauhaus (fonds crème), et les cinq styles sur fond sombre. Le lot 2 a eu son propre juge le 2026-11-05 : 8 groupes purs sur 8 (Carte Météo, Trait continu et 6 voisines, 32 images) ; les identités papier n'ont pas de juge visuel.</p>
       </div>
       <div class="result">
         <p class="eyebrow">Signature couleur et contours mesurée</p>
-        <div class="big">29<small> / 31 plus proches voisins</small></div>
-        <p>Histogramme couleur Lab et densité de contours sur 8 images par short. Distance moyenne entre shorts d'une même identité 0,25 contre 0,85 entre identités. Les 8 shorts réhabilités sont tous reconnus. Les 2 erreurs : les deux premiers shorts Chrome Liquide, trop proches d'autres fonds noirs ; son 3ᵉ short, sur graphite chaud, est reconnu correctement.</p>
+        <div class="big"><span id="r-hits">40</span><small> / <span id="r-total">43</span> plus proches voisins</small></div>
+        <p id="r-text">Histogramme couleur Lab et densité de contours sur 8 images par short, relancé sur les 43 shorts.</p>
       </div>
     </div>
   </section>
@@ -234,7 +238,7 @@ footer.colophon { margin-top: var(--s7); padding-top: var(--s4); border-top: 1px
     <header>
       <p class="eyebrow">Phase 1</p>
       <h2>Les 14 directions explorées</h2>
-      <p>Un poster 1080×1920 par direction, puis une sélection de 10. Les 4 directions d'abord écartées (Cosmos Doc, Brut Mème, Zine Riso, Relief Topo) pour éviter des doublons de sujet ont ensuite été produites à part entière, avec la consigne de se distinguer de leur voisine. Les tests à l'aveugle confirment qu'elles sont bien distinctes.</p>
+      <p>Un poster 1080×1920 par direction, puis une sélection de 10. Les 4 directions d'abord écartées (Cosmos Doc, Brut Mème, Zine Riso, Relief Topo) pour éviter des doublons de sujet ont ensuite été produites à part entière, avec la consigne de se distinguer de leur voisine. Les tests à l'aveugle confirment qu'elles sont bien distinctes. Ensuite sont venues les 4 identités papier du gabarit StudioGabarit (papier découpé et 3 déclinaisons, 2026-11-04), puis le lot 2 de la fabrique d'identités (2026-11-05) : 4 directions repérées dans le catalogue des librairies, un challenge adversarial, 2 retenues (Carte Météo, Trait continu).</p>
     </header>
     <div class="sheet"><img src="p/directions.jpg" alt="Planche des 14 posters de directions : Labo Néon, Diorama Pastel, Atlas Gravé, Tableau Craie, Grille Suisse, Arcade Pixel, Chrome Liquide, Gazette 1900, Cosmos Doc, Bauhaus Cinétique, Zine Riso, Relief Topo, Brut Mème, Aquarelle Conte" loading="lazy" width="1600" height="871"></div>
   </section>
@@ -250,23 +254,38 @@ footer.colophon { margin-top: var(--s7); padding-top: var(--s4); border-top: 1px
       <li><b>Trois rendus jetés</b><span>Une bande non peinte en fin de travelling (Aquarelle Conte), un verre réfractif à environ 5 s par image (Chrome Liquide) et un trait p5 qui disparaissait en rendu séquentiel (Zine Riso).</span></li>
       <li><b>Physique Node ≠ navigateur</b><span>Math.atan2 diffère au dernier bit entre Node 22 et Chromium : la course de billes divergeait à l'image 102. Corrigé par une géométrie précalculée.</span></li>
       <li><b>Manim sans texte</b><span>Pas de Pango ni de LaTeX dans l'environnement : les titres des shorts Manim sont des calques PNG.</span></li>
+      <li><b>Voix off lot 2 : crédits Fish Audio épuisés</b><span>Le plan gratuit n'avait que 35 crédits : 1 ligne générée sur 20. Les 4 shorts de Carte Météo et Trait continu sont présentés sans voix (musique et bruitages) ; la narration est écrite pour Arnold et sera mixée après recharge.</span></li>
       <li><b>Blender et Remotion non tentés</b><span>Niveau optionnel ; Blender Cycles coûte 25–30 s par image, incompatible avec 4 cœurs déjà saturés.</span></li>
     </ul>
   </section>
 
   <footer class="colophon">
-    <span>Dépôt killerwolf/StudioVisualIdentity · branche main · point d'entrée out/report/README.md</span>
+    <span>Dépôt killerwolf/StudioVisualIdentity · branche main · point d'entrée out/report/README.md · 20 identités, 43 shorts, mis à jour le 2026-11-05</span>
     <span class="mono">Aperçus 540×960 ; fichiers livrés en 1080×1920</span>
   </footer>
 </div>
 
 <script>
 const DATA = __DATA__;
+const META = __META__;
 const FAM = { abstrait: "Abstrait", enfants: "Enfants", explicatif: "Explicatif", histoire: "Histoire", geographie: "Géographie", evenements: "Événements", engagement: "Engagement" };
 const FAM_ORDER = ["abstrait", "enfants", "explicatif", "histoire", "geographie", "evenements", "engagement"];
 const THIRD = new Set(["pixel-arcade__engagement__quelle-couleur-conquiert-l-ecran", "liquid-chrome__abstrait__pendule-de-newton-chrome", "neon-lab__explicatif__effet-papillon-double-pendule"]);
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const fmt = n => String(n).replace(".", ",");
+
+// chiffres de l'en-tête et de la reconnaissance (calculés par build.py)
+const setText = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+setText("m-ids", META.identities); setText("m-shorts", META.shorts);
+setText("m-qa", `${META.qaOk} / ${META.qaTotal}`); setText("m-recog", `${META.recogHits} / ${META.recogTotal}`);
+setText("r-hits", META.recogHits); setText("r-total", META.recogTotal);
+{
+  const nm = d => { const id = d.split("__")[0]; const x = DATA.find(e => e.id === id); return x ? x.name : id; };
+  const addedIds = new Set(DATA.filter(d => d.added).map(d => d.id));
+  const addedOk = !META.recogFails.some(f => addedIds.has(f.short.split("__")[0]));
+  const fails = META.recogFails.map(f => `${nm(f.short)} → ${nm(f.nearest)} (${fmt(f.distance.toFixed(2))})`).join(" ; ");
+  setText("r-text", `Histogramme couleur Lab et densité de contours sur 8 images par short, relancé sur les ${META.recogTotal} shorts des ${META.identities} identités. Distance moyenne entre shorts d'une même identité ${fmt(META.recogIntra.toFixed(2))} contre ${fmt(META.recogInter.toFixed(2))} entre identités. ${addedOk ? "Les shorts des identités ajoutées (papier, lot 2) sont tous reconnus. " : ""}Les ${META.recogFails.length} erreurs : ${fails} — des fonds sombres que la couleur seule ne sépare pas.`);
+}
 
 // recommandations
 document.getElementById("reco").innerHTML = DATA.slice(0, 3).map(d =>
@@ -284,13 +303,13 @@ document.getElementById("reels").innerHTML = DATA.map(d => {
         <div class="safe" aria-hidden="true"><i class="t"></i><i class="b"></i><i class="r"></i></div>
       </div>
       <h3>${esc(s.title)}</h3>
-      <div class="facts"><span>${fmt(s.duration)} s</span><span>${fmt(s.cost)} s/100 img</span><span>${esc(s.libs.join(" + "))}</span></div>
-      <p class="vo">« ${esc(s.line)} » <span class="mono">— ${esc(s.voice)}</span></p>
+      <div class="facts"><span>${fmt(s.duration)} s</span><span>${s.cost == null ? "coût n. c." : fmt(s.cost) + " s/100 img"}</span><span>${esc(s.libs.join(" + "))}</span></div>
+      <p class="vo${s.voiced ? "" : " novo"}">« ${esc(s.line)} » <span class="mono${s.voiced ? "" : " none"}">— ${esc(s.voice)}</span></p>
     </article>`).join("");
   return `
   <section class="reel" id="${d.id}">
     <div class="meta">
-      <div class="rankline"><span class="rank ${d.rank <= 3 ? "top" : ""}">N° ${d.rank} / 14</span><span class="slug">${d.id}</span>${d.reh ? '<span class="reh">réhabilitée</span>' : ""}</div>
+      <div class="rankline"><span class="rank ${d.rank <= 3 ? "top" : ""}">N° ${d.rank} / ${DATA.length}</span><span class="slug">${d.id}</span>${d.reh ? '<span class="reh">réhabilitée</span>' : ""}${d.added ? '<span class="reh add">ajoutée</span>' : ""}</div>
       <h2>${esc(d.name)}</h2>
       <p class="promise">${esc(d.promise)}</p>
       <div class="swatches" aria-label="Palette">${sw.map(c => `<i style="background:${c}" title="${c}"></i>`).join("")}</div>
@@ -340,9 +359,9 @@ st.addEventListener("change", () => document.body.classList.toggle("show-safe", 
 
 // barres de coût (échelle 0–320)
 const MAX = 320;
-const rows = DATA.flatMap(d => d.shorts.map(s => ({ ...s, idName: d.name, bg: d.bg }))).sort((a, b) => a.cost - b.cost);
+const rows = DATA.flatMap(d => d.shorts.map(s => ({ ...s, idName: d.name, bg: d.bg, added: d.added }))).filter(r => r.cost != null).sort((a, b) => a.cost - b.cost);
 document.getElementById("bars").innerHTML = rows.map(r => `
-  <div class="bar ${THIRD.has(r.dir) ? "third" : ""}">
+  <div class="bar ${THIRD.has(r.dir) ? "third" : ""}${r.added ? " added" : ""}">
     <div class="lbl"><i class="dot" style="background:${r.bg}"></i><span title="${esc(r.idName)} — ${esc(r.title)}">${esc(r.idName)} · ${esc(r.title)}</span></div>
     <div class="track"><div class="fill" style="width:${(r.cost / MAX * 100).toFixed(2)}%"></div></div>
     <div class="v">${fmt(r.cost)}</div>

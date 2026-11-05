@@ -1,7 +1,7 @@
 # Catalogue des librairies et outils
 
 **Base de travail pour créer de nouvelles identités de chaîne.** Ce catalogue recense toutes les librairies et tous les outils
-envisageables pour rendre des shorts par code, et dit pour chacun s'il a déjà servi dans les 18 identités (39 shorts), où, et
+envisageables pour rendre des shorts par code, et dit pour chacun s'il a déjà servi dans les 20 identités (43 shorts), où, et
 sinon pourquoi. On itère à partir de cette liste : une nouvelle identité part d'abord des cases « Non » pour trouver une
 signature que personne n'a encore, ou recombine des cases « Oui » déjà maîtrisées (fiches dans `out/library-cards/<lib>.json`).
 
@@ -9,7 +9,9 @@ signature que personne n'a encore, ou recombine des cases « Oui » déjà maît
 (`out/shared`, dont `out/shared/papier-moteur` des 4 identités papier), les outils (`out/tools`, dont le nouvel outil
 `out/tools/catalogue_scan.py`), la démo (`out/demo`, `out/showcase`), les rapports (`out/report`) et les skills de
 [killerwolf/skills](https://github.com/killerwolf/skills). Le rescan se fait avec `out/tools/catalogue_scan.py --check` (nouvel outil,
-stdlib seule), qui confronte le code à la colonne « Déjà utilisée ? ».
+stdlib seule), qui confronte le code à la colonne « Déjà utilisée ? ». Mis à jour une seconde fois le 2026-11-05 (≈ 01:15 UTC) pour le
+**lot 2** de la fabrique d'identités (`carte-meteo`, `trait-continu`, 4 shorts) : shapely, opensimplex, topojson-client et world-atlas
+passent à **Oui**, Atkinson Hyperlegible est ajoutée et Fredoka est désormais utilisée ; rescan des 43 shorts.
 
 ## Légende
 
@@ -47,7 +49,7 @@ stdlib seule), qui confronte le code à la colonne « Déjà utilisée ? ».
 | 2D canvas | Rough.js | 📦 | **Oui** | tableau-craie « comment une graine devient un arbre » |
 | 2D canvas | Matter.js | 📦 | **Oui** | pixel-arcade « quelle bille gagne la course », pré-simulé en Node |
 | 2D canvas | canvas-sketch | 📦 | Non | |
-| 2D canvas | Canvas2D brut | ✅ | **Oui** | topo-relief, aquarelle-conte, tableau-craie, gazette-1900, overlays de la démo |
+| 2D canvas | Canvas2D brut | ✅ | **Oui** | topo-relief, aquarelle-conte, tableau-craie, gazette-1900, carte-meteo (tout le dessin : carte en `Path2D`, vent, front, texte), overlays de la démo |
 | 2D canvas | GLSL fragment shaders | ✅ | **Oui** | neon-lab via twgl, cosmos-doc et topo-relief via ShaderMaterial |
 | 2D canvas | Node.js, pré-simulation | ✅ | **Oui** | pixel-arcade : la course Matter.js est simulée en Node puis rejouée dans Chromium, à cause de l'écart `Math.atan2` |
 | Animation | GSAP (cœur) | 📦 | **Oui** | la plus utilisée : 8 identités, 16 shorts (swiss-data, gazette-1900, brut-meme, tableau-craie, riso-zine, pastel-diorama, atlas-grave, cosmos-doc) |
@@ -57,15 +59,16 @@ stdlib seule), qui confronte le code à la colonne « Déjà utilisée ? ».
 | Animation | Popmotion / Tween.js | 📦 | Non | |
 | Animation | mo.js | 📦 | Non | |
 | Animation | Web Animations API / CSS keyframes | ✅ | Non | aucun `@keyframes` : tout est piloté image par image par `window.renderAt(t)` et les easings de `svi.js` |
-| SVG / data / typo | D3.js | 📦 | **Oui** | swiss-data (2 shorts), atlas-grave (2), topo-relief (2), surtout d3-geo |
-| SVG / data / typo | topojson-client | 📦 | Non | installé dans `package.json` mais jamais importé dans un short |
+| SVG / data / typo | D3.js | 📦 | **Oui** | swiss-data (2 shorts), atlas-grave (2), topo-relief (2), carte-meteo (2 : d3-geo conique conforme, d3-contour pour les isobares), surtout d3-geo |
+| SVG / data / typo | topojson-client | 📦 | **Oui** | carte-meteo (2 shorts) : `topojson.feature` et `topojson.mesh` (côtes / frontières) sur world-atlas, bundle UMD sous `render.mjs` |
+| SVG / data / typo | world-atlas (données Natural Earth) | 📦 | **Oui** | carte-meteo (2 shorts) : `countries-50m.json`, version exacte 2.0.2 épinglée dans `package.json`, paquet ISC, données domaine public, jamais chargé par le réseau au rendu. Admis par la **règle des données factuelles** (`out/report/decisions.md`, `AGENTS.md` « Factual data ») : géométries, mesures et tables sous licence libre, version exacte, source et licence notées ; images, icônes, textures et sons restent exclus |
 | SVG / data / typo | flubber | 📦 | **Oui** | bauhaus-kinetic (2 shorts), morphing de formes |
 | SVG / data / typo | KUTE.js | 📦 | Non | |
 | SVG / data / typo | Vivus | 📦 | Non | |
 | SVG / data / typo | SVG.js / Snap.svg | 📦 | Non | |
 | SVG / data / typo | opentype.js | 📦 | Non | |
 | SVG / data / typo | Splitting.js | 📦 | Non | |
-| SVG / data / typo | @fontsource | 📦 | **Oui** | 23 polices en npm, injectées par `S.loadFonts` de `svi.js` dans toutes les scènes HTML ; 21 sont référencées, Fredoka et Major Mono Display sont installées mais jamais référencées |
+| SVG / data / typo | @fontsource | 📦 | **Oui** | 24 polices en npm, injectées par `S.loadFonts` de `svi.js` dans toutes les scènes HTML ; Atkinson Hyperlegible ajoutée par carte-meteo (5.3.0, version exacte), Fredoka désormais utilisée par trait-continu (lue en `.woff2` par Pillow via `textpng.font_path`) ; seule Major Mono Display reste installée sans être référencée |
 | SVG / data / typo | Polices embarquées (.ttf/.woff2 hors @fontsource) | ✅ | **Oui** | identités papier (papier-decoupe, atelier-papier, carnet-archives, cabinet-curiosites) via `out/shared/papier-moteur` : Abril Fatface, Courier Prime, Dela Gothic One, DM Mono, Kalam, Special Elite (et DM Serif Display, en doublon avec @fontsource) dans `out/shared/papier-moteur/assets/fonts`, chargées par `ImageFont.truetype` de `papier.py` selon `themes/*.json`. Hors embarqué : la vitrine `out/showcase/page.tpl.html` charge Bricolage Grotesque (avec Hanken Grotesk et JetBrains Mono) depuis Google Fonts, par le réseau, sans fichier dans le dépôt |
 | SVG / data / typo | fontTools | ✅ | **Oui** | conversion woff → ttf pour que Matplotlib lise les polices @fontsource, neon-lab « effet papillon » |
 | SVG / data / typo | Mermaid CLI | ✅ | Non | |
@@ -81,20 +84,21 @@ stdlib seule), qui confronte le code à la colonne « Déjà utilisée ? ».
 | Python | Matplotlib (Agg) | ✅ | **Oui** | neon-lab « effet papillon » : `buffer_rgba` → ffmpeg rawvideo |
 | Python | matplotlib.animation | ✅ | Non | pas de FuncAnimation, rendu image par image à la main |
 | Python | Pillow | ✅ | **Oui** | `textpng.py`, overlays tableau-craie, liquid-chrome, neon-lab ; identités papier (papier-decoupe, atelier-papier, carnet-archives, cabinet-curiosites) via `out/shared/papier-moteur` : tout le rendu image par image (`papier.py`, `elements.py`, `episode.py`) |
-| Python | pycairo | ✅ | **Oui** | atlas-grave : textures gravure et papier précalculées en PNG |
-| Python | skia-python | 📦 | Non | |
+| Python | pycairo | ✅ | **Oui** | atlas-grave : textures gravure et papier précalculées en PNG ; trait-continu (2 shorts) : plaque, règles, trait et repères, image par image |
+| Python | skia-python | 📦 | Non | essayé par trait-continu (2026-11-05) : la 144.1 s'installe mais son import échoue (`libEGL.so.1`) ; pycairo fait le même travail |
 | Python | OpenCV | ✅ | **Oui** | passes de post-prod : grain gazette-1900, bloom neon-lab (3 shorts), trames riso-zine (2), fluide liquid-chrome, plus le test de reconnaissance aveugle ; identités papier (papier-decoupe, atelier-papier, carnet-archives, cabinet-curiosites) via `out/shared/papier-moteur` : texture et bords du papier (`papier.py`) |
 | Python | Blender (bpy) | ⚠️ | Non | non tenté : Cycles ≈ 25 à 30 s par image sur CPU |
 | Python | Taichi | 📦 | **Oui** | liquid-chrome « quatre peintures », fluide MPM 24 k particules |
 | Python | PyVista / VTK, pyrender, ModernGL, VisPy | ⚠️ | Non | rendu hors écran à configurer |
 | Python | Plotly + Kaleido | 📦 | Non | |
-| Python | trimesh / shapely / opensimplex | 📦 | Non | |
-| Audio | numpy / scipy synthèse | ✅ | **Oui** | `sound.py` : musique et bruitages des 31 shorts ; `tts.py` : mixage avec ducking ; identités papier (papier-decoupe, atelier-papier, carnet-archives, cabinet-curiosites) via `out/shared/papier-moteur` : calcul des images et mixage voix + musique + bruitages fournis en fichiers (`son.py`, `assets/audio`), sans scipy |
+| Python | trimesh | 📦 | Non | |
+| Python | shapely / opensimplex | 📦 | **Oui** | trait-continu (2 shorts) : shapely 2.2.0 construit le chemin unique (segmentize, escalier, linemerge, nearest_points, substring) ; opensimplex 0.4.5.1 donne le grain de la plaque et du trait, calculé une fois et mis en cache. Versions épinglées (`uv pip install shapely==2.2.0 opensimplex==0.4.5.1`) |
+| Audio | numpy / scipy synthèse | ✅ | **Oui** | `sound.py` : musique et bruitages des 31 shorts de la campagne et des 4 du lot 2 ; `tts.py` : mixage avec ducking ; identités papier (papier-decoupe, atelier-papier, carnet-archives, cabinet-curiosites) via `out/shared/papier-moteur` : calcul des images et mixage voix + musique + bruitages fournis en fichiers (`son.py`, `assets/audio`), sans scipy |
 | Audio | Tone.js | 📦 | Non | |
 | Audio | librosa | 📦 | Non | |
 | Audio | pydub | 📦 | Non | |
 | Audio | ElevenLabs | 🔌 | Non | voix off = Fish Audio ; ElevenLabs n'apparaît que dans studio-mate, pour le studio privé |
-| Audio | Fish Audio, connecteur MCP | 🔌 | **Oui** | voix « Arnold », modèle s2.1-pro : les 31 voix off et la démo, une ligne par appel, mixées par `tts.py --engine files` (les 8 shorts papier n'utilisent pas Fish Audio) |
+| Audio | Fish Audio, connecteur MCP | 🔌 | **Oui** | voix « Arnold », modèle s2.1-pro : les 31 voix off de la campagne et la démo, une ligne par appel, mixées par `tts.py --engine files` (les 8 shorts papier n'utilisent pas Fish Audio) ; lot 2 : 1 ligne générée sur 20 (escargot, `voice_lines/00.mp3`, non mixée), crédits du plan gratuit épuisés, les 4 shorts restent sans voix |
 | Audio | Gemini TTS, google-genai | 📦 | **Oui** | skill gemini-voices, voix alternatives de la démo, et 3 shorts au début avant l'abandon pour quota gratuit ; les 8 shorts des identités papier déclarent la voix Gemini « Sulafat » (gemini-3.8-flash-tts) dans `narration.json` : voix réellement mixée, les `voice_lines/*.mp3` sont présents et intégrés à `short.mp4` par `son.py` du moteur papier (pas de `voice_report.json`, pas de `tts.py`), mêmes fichiers pour les 4 identités, réutilisés depuis le studio Un Jour Une Histoire et non régénérés dans le dépôt |
 | Audio | Freesound API | ⚠️ | **Oui** | `out/tools/freesound.py` et skill sound-design ; demande `FREESOUND_API_KEY` |
 | Audio | OpenGameArt, sons CC0 | ✅ | **Oui** | bruitages de la démo et bibliothèque livrée avec le skill sound-design |
@@ -107,16 +111,18 @@ stdlib seule), qui confronte le code à la colonne « Déjà utilisée ? ».
 | Services | Canva | 🔌 | Non | |
 | Services | Notion, connecteur MCP | 🔌 | **Oui** | skill studio-mate : pilotage des studios, idées à valider, retours de relecture ; pas de rendu |
 
-**Bilan** : 36 lignes « Oui » sur 83 (recompté le 2026-11-05 ; l'ancien total « 85 » comptait 3 lignes de trop, le tableau en avait 82,
-plus la ligne des polices embarquées ajoutée), dont 20 librairies de scène. Les identités papier n'ajoutent aucune librairie de
-scène : elles recombinent Pillow, OpenCV, numpy et ffmpeg. Des modules maison complètent le tout et ne sont pas des
+**Bilan** : **39 lignes « Oui » sur 85** (recompté le 2026-11-05 après le lot 2 ; avant : 36 sur 83 ; la ligne rsvg-convert, « Non »
+dans les identités, n'est pas comptée), dont 23 lignes de librairies de scène. Le lot 2 ajoute 3 lignes « Oui » (topojson-client,
+world-atlas, shapely / opensimplex) et 2 lignes au tableau (world-atlas ; « trimesh / shapely / opensimplex » scindée en « trimesh »,
+Non, et « shapely / opensimplex », Oui) ; il élargit aussi D3.js, pycairo et @fontsource. Les identités papier n'ajoutent aucune
+librairie de scène : elles recombinent Pillow, OpenCV, numpy et ffmpeg. Des modules maison complètent le tout et ne sont pas des
 librairies : `out/tools/lib/svi.js` (helpers partagés des scènes : format, zones sûres, PRNG, bruit, easings, chargement des
 polices, contrat `renderAt`), `out/tools/textpng.py` (overlays de texte en PNG) et le moteur `out/shared/papier-moteur/pipeline`
 (`chaine.py`, `papier.py`, `elements.py`, `episode.py`, `son.py` : rendu Python image par image sans navigateur, des 4 identités papier).
 
 ## Comment s'en servir pour une nouvelle identité
 
-1. **Chercher la signature dans les « Non »** : une librairie jamais utilisée donne plus facilement un rendu que les 18 identités
+1. **Chercher la signature dans les « Non »** : une librairie jamais utilisée donne plus facilement un rendu que les 20 identités
    n'ont pas (voir `curation.confusableWith` dans `out/identities/index.json`). Vérifier d'abord son statut et son coût de rendu
    sur CPU ; une ligne ⚠️ ou un moteur 3D lourd peut coûter plus que les ≈ 60 s / 100 images de three.js avec bloom.
 2. **Recombiner des « Oui »** quand le budget est serré : les fiches `out/library-cards/<lib>.json` donnent les pièges déjà payés

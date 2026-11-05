@@ -19,11 +19,20 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / 'out'
 
-ORDER = ['swiss-data', 'gazette-1900', 'pixel-arcade', 'brut-meme', 'bauhaus-kinetic', 'tableau-craie', 'riso-zine',
-         'pastel-diorama', 'topo-relief', 'atlas-grave', 'aquarelle-conte', 'neon-lab', 'cosmos-doc', 'liquid-chrome',
+# Classement de durabilité (out/report/comparison.md §5). Le lot 2 (2026-11-05, skill fabrique-identites) est classé
+# parmi les autres : carte-meteo 5ᵉ, trait-continu 9ᵉ (justification dans comparison.md §5 et decisions.md).
+ORDER = ['swiss-data', 'gazette-1900', 'pixel-arcade', 'brut-meme', 'carte-meteo', 'bauhaus-kinetic', 'tableau-craie', 'riso-zine',
+         'trait-continu', 'pastel-diorama', 'topo-relief', 'atlas-grave', 'aquarelle-conte', 'neon-lab', 'cosmos-doc', 'liquid-chrome',
          # ajoutées le 2026-11-04 (hors campagne de classement) : le papier découpé du gabarit StudioGabarit et ses 3 déclinaisons
          'papier-decoupe', 'atelier-papier', 'carnet-archives', 'cabinet-curiosites']
-ADDED = {'papier-decoupe', 'atelier-papier', 'carnet-archives', 'cabinet-curiosites'}
+PAPIER = {'papier-decoupe', 'atelier-papier', 'carnet-archives', 'cabinet-curiosites'}   # non classées, moteur papier partagé
+LOT2 = {'trait-continu', 'carte-meteo'}                                                  # lot 2, classées, voix non enregistrée
+ADDED = PAPIER | LOT2
+# Lot 2 : voix prévue, non enregistrée (crédits Fish Audio épuisés : 1 ligne sur 20, voir out/report/notes/voix-lot2.md)
+VOICE_PLANNED_LOT2 = {'provider': 'Fish Audio', 'name': 'Arnold', 'reference_id': 'd704cf8f1216490cbfbed89955f0e938', 'model': 's2.1-pro',
+                      'language': 'fr', 'recorded': False,
+                      'note': 'planned voice, not recorded: Fish Audio free-plan credits ran out (1 line of 20 generated); '
+                              'short.mp4 is music + SFX only, narration.json is ready; see out/report/notes/voix-lot2.md'}
 VOICE_ADDED = {'provider': 'Gemini', 'name': 'Sulafat', 'model': 'gemini-3.8-flash-tts', 'language': 'fr'}
 PAPIER_MODULE = 'out/shared/papier-moteur/'
 REHAB = {'brut-meme', 'riso-zine', 'topo-relief', 'cosmos-doc'}
@@ -75,6 +84,23 @@ CURATION = {
         signature=['chrome / iridescent liquid matter in one continuous macro shot', 'Syne 800 titles with a pastel-gradient keyword', 'slow motion, no cuts', 'prefer the warm graphite/pearl background to stay distinct from neon-lab and cosmos-doc']),
 }
 CURATION.update({
+    'trait-continu': dict(audience=['kids'], confusableWith=['tableau-craie'],
+        promiseEn='One single line that moves on two axes and is never lifted draws the idea in front of you; then the plate advances and we start again.',
+        signature=['full-bleed orange ground with a sharp-cornered grey plate',
+                   'one continuous graphite stair-stepped line at constant speed, never lifted',
+                   'two rulers with sliding cursors and a carriage at the pen tip',
+                   'plate-advance transition in steps',
+                   'never cream or white on the orange; Fredoka only']),
+    'carte-meteo': dict(audience=['adults', 'teens'], confusableWith=['swiss-data'],
+        promiseEn='A clear weather map where isobars breathe, wind runs in dark trails, temperature pills pop, and a weather front sweeps the screen diagonally to move on.',
+        signature=['pale sky-blue sea and tender green land with coastline and breathing isobars',
+                   'dark wind trails when wind is the subject (proven by the mistral short only)',
+                   'temperature pills on white cartouches, Atkinson Hyperlegible + Space Grotesk titles',
+                   'diagonal cold-front (blue triangles) / warm-front sweep as the only transition',
+                   'map always visible, no tables or bars',
+                   'text only on white cartouches']),
+})
+CURATION.update({
     'papier-decoupe': dict(audience=['kids', 'teens', 'adults'], confusableWith=['atelier-papier'],
         promiseEn='Every idea is a cut-out paper piece that pops onto a green cutting mat in stop-motion: a craft table where things get explained with scissors.',
         signature=['green graduated cutting mat', 'Dela Gothic One titles on alternately tilted paper strips', 'pieces pop in 4 steps at 12 fps with drop shadow and scissor-cut edges', 'burned-in Kalam captions on a paper strip']),
@@ -92,6 +118,7 @@ SHARED = {  # modules identiques (md5) dans les shorts de l'identité — vérif
     'swiss-data': ['grille.js'], 'gazette-1900': ['gazette.js', 'post.py'], 'bauhaus-kinetic': ['bk.js'], 'aquarelle-conte': ['aq.js'],
     'atlas-grave': ['atlas.js', 'textures.py'], 'neon-lab': ['field.glsl.js', 'neon_grade.py'], 'brut-meme': ['brut.js'],
     'cosmos-doc': ['cosmos.js'], 'riso-zine': ['riso.js'], 'topo-relief': ['topo.js'],
+    'trait-continu': ['traceur.py'], 'carte-meteo': ['meteo.js'],
 }
 
 
@@ -184,6 +211,12 @@ COST_NOTE = {
     'liquid-chrome': 'Taichi short includes simulation + OpenCV shading; three.js/Babylon shorts are browser only',
     'tableau-craie': 'Manim short 19 s/100; the Rough.js short is 309 s/100 because of a full-frame SVG filter (avoidable)',
 }
+COST_NOTE_LOT2 = {
+    'trait-continu': 'Python render (shapely path + pycairo + Pillow text, rawvideo pipe to ffmpeg); opensimplex fields computed once (3.8 s) and cached, '
+                     'not included; v2 renders after the review measured with both shorts rendering in parallel (load about 3.3); a v1 control render at low load took 2.8 s/100 frames (identical md5)',
+    'carte-meteo': 'browser render (canvas 2D, render.mjs), world-atlas decode + projection once (0.3 s) included; mistral measured with the other lot 2 studio running on 4 cores '
+                   '(load 1–3.6), heat-record short re-rendered after the review (no wind trails); an empty canvas page costs 13.2 s/100 frames (screenshot capture alone)',
+}
 
 
 def md5(p):
@@ -198,7 +231,7 @@ def main():
         base = OUT / 'identities' / s
         t = json.load(open(base / 'tokens.json'))
         md = (base / 'identity.md').read_text()
-        promise = md.split('## Promesse', 1)[1].split('\n', 1)[1].strip().split('\n')[0].strip('« »"')
+        promise = md.split('## Promesse', 1)[1].split('\n', 1)[1].strip().split('\n')[0].strip('« »"').replace('**', '')
         shorts, costs = [], []
         for d in sorted(glob.glob(str(OUT / 'shorts' / f'{s}__*'))):
             n = os.path.basename(d)
@@ -223,12 +256,14 @@ def main():
             'status': 'added' if s in ADDED else ('rehabilitated' if s in REHAB else 'selected'),  # rehabilitated = set aside in Phase 1 to avoid topic overlap, produced later; same evidence level
             'promiseFr': promise, 'promiseEn': cur['promiseEn'],
             'familiesProven': sorted({x['family'] for x in shorts}),
-            'libraries': [re.sub(r'\s+\d+(\.\d+)*$', '', l) for l in (t.get('libraries') or [])],
+            'libraries': [re.sub(r'\s+v?\d+(\.\d+)+', '', re.sub(r'\s+\d+(\.\d+)*$', '', l)).strip() for l in (t.get('libraries') or [])],
             'renderCostNote': ('Python cut-paper engine (Pillow/OpenCV, 4 parallel slices) including voice mix and mastering; measured alone on 4 cores'
-                               if s in ADDED else COST_NOTE.get(s, 'browser render only (renderTimeSec)') + '; measured with up to 10 renders sharing 4 cores: expect ~2–3x faster on a dedicated machine'),
-            'renderCostSecPer100Frames': {'min': min(costs), 'max': max(costs), 'measuredUnderLoad': s not in ADDED} if costs else None,
-            'sharedModule': ([PAPIER_MODULE] if s in ADDED else shared) or None,
-            'voiceUsed': VOICE_ADDED if s in ADDED else VOICE,
+                               if s in PAPIER else COST_NOTE_LOT2[s] if s in LOT2 else
+                               COST_NOTE.get(s, 'browser render only (renderTimeSec)') + '; measured with up to 10 renders sharing 4 cores: expect ~2–3x faster on a dedicated machine'),
+            'renderCostSecPer100Frames': {'min': min(costs), 'max': max(costs), 'measuredUnderLoad': s not in PAPIER} if costs else None,
+            'sharedModule': ([PAPIER_MODULE] if s in PAPIER else shared) or None,
+            'voiceUsed': VOICE_ADDED if s in PAPIER else (None if s in LOT2 else VOICE),
+            **({'voicePlanned': VOICE_PLANNED_LOT2} if s in LOT2 else {}),
             'paths': {'identityMd': f'out/identities/{s}/identity.md', 'tokens': f'out/identities/{s}/tokens.json',
                       'recipes': sorted(f'out/identities/{s}/recipes/{os.path.basename(x)}' for x in glob.glob(str(base / 'recipes' / '*.md'))),
                       'poster': f'out/identities/{s}/poster.jpg', 'contactSheet': f'out/identities/{s}/contact-sheet.jpg',
@@ -252,13 +287,15 @@ def main():
                         '(seconds, pixels on a 1080x1920 canvas, @fontsource slugs); the original tokens.json is authoritative for '
                         'everything else. curation.* is orchestrator judgment. See AGENTS.md.'),
         'generatedBy': 'out/tools/build_index.py',
-        'fieldNotes': {'status': 'selected = kept in Phase 1; rehabilitated = set aside in Phase 1 only to avoid topic overlap with a neighbour, then produced on request with the same rules and evidence level; added = added after the campaign (cut-paper family from the StudioGabarit template, rendered by the shared Python engine out/shared/papier-moteur/), appended after the ranked 14 and not part of the ranking or the blind recognition tests',
+        'fieldNotes': {'status': 'selected = kept in Phase 1; rehabilitated = set aside in Phase 1 only to avoid topic overlap with a neighbour, then produced on request with the same rules and evidence level; added = added after the campaign: (a) the cut-paper family from the StudioGabarit template (papier-decoupe, atelier-papier, carnet-archives, cabinet-curiosites), rendered by the shared Python engine out/shared/papier-moteur/, appended after the ranked identities and not part of the ranking or the blind visual judge; (b) lot 2 of the identity factory (trait-continu, carte-meteo, 2026-11-05: scouting + adversarial challenge + studio + review), ranked with the others, blind visual judge on 8 identities (lot 2 + 6 neighbours, 8/8 pure groups, out/report/notes/revue-2026-11-05.md), voice-over planned but not recorded (see voicePlanned)',
+                       'voiceUsed': 'voice actually mixed into short.mp4; null when the voice-over is not recorded yet (lot 2: see voicePlanned and shorts[].voiced)',
                        'coreTokens.motion.staggerSec': "the identity's default stagger as written in its tokens.json; meaning varies (per-item stagger for most, spacing between beats/captions for atlas-grave 1.5 and liquid-chrome 1.55, title-to-body delay for neon-lab 0.8)",
                        'coreTokens.motion.durationSec.slow': 'longest standard duration; for gazette-1900 it is one page (6 beats at 128 bpm)',
                        'coreTokens.color.contrastOnBg': 'WCAG contrast ratio against bg, computed; muted/accent colours are often decorative (e.g. gazette-1900 muted = engraving fill, 1.07:1) and must not carry text',
                        'renderCostSecPer100Frames': 'see renderCostNote: what is included differs per identity'},
         'rankingCriteria': 'durability/industrialisability: measured render cost 25%, templatability 25%, editorial breadth 20%, recognisability 15%, production risk 15% (out/report/comparison.md §5)',
         'recognition': {'blindJudge14': (recog.get('blindJudge14') or {}).get('pureGroups'), 'blindJudgeGroups': 14,
+                        'blindJudgeLot2': (recog.get('blindJudgeLot2') or {}).get('pureGroups'), 'blindJudgeLot2Groups': (recog.get('blindJudgeLot2') or {}).get('groups'),
                         'measuredTop1': f"{sum(1 for r in recog.get('rows', []) if r.get('sameIdentity'))}/{len(recog.get('rows', []))}"},
         'identities': ids,
     }

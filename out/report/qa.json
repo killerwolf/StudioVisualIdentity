@@ -28,6 +28,36 @@
   }
  },
  {
+  "short": "atelier-papier__explicatif__d-ou-vient-le-mot-sandwich",
+  "ok": true,
+  "errors": [],
+  "warnings": [],
+  "info": {
+   "duration": 12.3,
+   "width": 1080,
+   "height": 1920,
+   "fps": "30/1",
+   "codec": "h264",
+   "pix": "yuv420p"
+  }
+ },
+ {
+  "short": "atelier-papier__histoire__la-fourchette-a-fait-scandale",
+  "ok": true,
+  "errors": [],
+  "warnings": [
+   "ligne 4 : 9 mots en 2.46 s (> 3,2 mots/s)"
+  ],
+  "info": {
+   "duration": 19.7,
+   "width": 1080,
+   "height": 1920,
+   "fps": "30/1",
+   "codec": "h264",
+   "pix": "yuv420p"
+  }
+ },
+ {
   "short": "atlas-grave__geographie__plus-longs-fleuves-du-monde",
   "ok": true,
   "errors": [],
@@ -104,6 +134,102 @@
   "ok": true,
   "errors": [],
   "warnings": [],
+  "info": {
+   "duration": 16.0,
+   "width": 1080,
+   "height": 1920,
+   "fps": "30/1",
+   "codec": "h264",
+   "pix": "yuv420p"
+  }
+ },
+ {
+  "short": "cabinet-curiosites__explicatif__d-ou-vient-le-mot-sandwich",
+  "ok": true,
+  "errors": [],
+  "warnings": [
+   "image figée ≥3 s à ['3.23333']"
+  ],
+  "info": {
+   "duration": 12.3,
+   "width": 1080,
+   "height": 1920,
+   "fps": "30/1",
+   "codec": "h264",
+   "pix": "yuv420p"
+  }
+ },
+ {
+  "short": "cabinet-curiosites__histoire__la-fourchette-a-fait-scandale",
+  "ok": true,
+  "errors": [],
+  "warnings": [
+   "ligne 4 : 9 mots en 2.46 s (> 3,2 mots/s)"
+  ],
+  "info": {
+   "duration": 19.7,
+   "width": 1080,
+   "height": 1920,
+   "fps": "30/1",
+   "codec": "h264",
+   "pix": "yuv420p"
+  }
+ },
+ {
+  "short": "carnet-archives__explicatif__d-ou-vient-le-mot-sandwich",
+  "ok": true,
+  "errors": [],
+  "warnings": [
+   "image figée ≥3 s à ['3.23333']"
+  ],
+  "info": {
+   "duration": 12.3,
+   "width": 1080,
+   "height": 1920,
+   "fps": "30/1",
+   "codec": "h264",
+   "pix": "yuv420p"
+  }
+ },
+ {
+  "short": "carnet-archives__histoire__la-fourchette-a-fait-scandale",
+  "ok": true,
+  "errors": [],
+  "warnings": [
+   "ligne 4 : 9 mots en 2.46 s (> 3,2 mots/s)"
+  ],
+  "info": {
+   "duration": 19.7,
+   "width": 1080,
+   "height": 1920,
+   "fps": "30/1",
+   "codec": "h264",
+   "pix": "yuv420p"
+  }
+ },
+ {
+  "short": "carte-meteo__evenements__28-juin-2019-46-degres-record-de-chaleur",
+  "ok": true,
+  "errors": [],
+  "warnings": [
+   "voix off absente (narration.json a des lignes mais short.json.sound.voice est faux)"
+  ],
+  "info": {
+   "duration": 15.0,
+   "width": 1080,
+   "height": 1920,
+   "fps": "30/1",
+   "codec": "h264",
+   "pix": "yuv420p"
+  }
+ },
+ {
+  "short": "carte-meteo__geographie__le-mistral-pourquoi-il-souffle-si-fort",
+  "ok": true,
+  "errors": [],
+  "warnings": [
+   "voix off absente (narration.json a des lignes mais short.json.sound.voice est faux)"
+  ],
   "info": {
    "duration": 16.0,
    "width": 1080,
@@ -248,6 +374,36 @@
   "warnings": [],
   "info": {
    "duration": 16.0,
+   "width": 1080,
+   "height": 1920,
+   "fps": "30/1",
+   "codec": "h264",
+   "pix": "yuv420p"
+  }
+ },
+ {
+  "short": "papier-decoupe__explicatif__d-ou-vient-le-mot-sandwich",
+  "ok": true,
+  "errors": [],
+  "warnings": [],
+  "info": {
+   "duration": 12.3,
+   "width": 1080,
+   "height": 1920,
+   "fps": "30/1",
+   "codec": "h264",
+   "pix": "yuv420p"
+  }
+ },
+ {
+  "short": "papier-decoupe__histoire__la-fourchette-a-fait-scandale",
+  "ok": true,
+  "errors": [],
+  "warnings": [
+   "ligne 4 : 9 mots en 2.46 s (> 3,2 mots/s)"
+  ],
+  "info": {
+   "duration": 19.7,
    "width": 1080,
    "height": 1920,
    "fps": "30/1",
@@ -438,6 +594,39 @@
   "warnings": [],
   "info": {
    "duration": 15.0,
+   "width": 1080,
+   "height": 1920,
+   "fps": "30/1",
+   "codec": "h264",
+   "pix": "yuv420p"
+  }
+ },
+ {
+  "short": "trait-continu__enfants__dessine-un-escargot-d-un-seul-trait",
+  "ok": true,
+  "errors": [],
+  "warnings": [
+   "image figée ≥3 s à ['12']",
+   "voix off absente (narration.json a des lignes mais short.json.sound.voice est faux)"
+  ],
+  "info": {
+   "duration": 15.5,
+   "width": 1080,
+   "height": 1920,
+   "fps": "30/1",
+   "codec": "h264",
+   "pix": "yuv420p"
+  }
+ },
+ {
+  "short": "trait-continu__geographie__l-italie-a-la-forme-d-une-botte",
+  "ok": true,
+  "errors": [],
+  "warnings": [
+   "voix off absente (narration.json a des lignes mais short.json.sound.voice est faux)"
+  ],
+  "info": {
+   "duration": 16.0,
    "width": 1080,
    "height": 1920,
    "fps": "30/1",

@@ -1,6 +1,8 @@
 # Brief studio — Phase 2 & 3 (un sous-agent = une identité)
 
 > **Document historique** : brief exact donné aux sous-agents studios pendant la campagne (2026-11-03). Il reste valable pour les règles de production, les schémas et le harnais, mais certains états sont dépassés : la voix off est désormais générée avec Fish Audio « Arnold » (pas Gemini), et les chemins sont relatifs à la racine du dépôt. Pour partir de ce travail, lire d'abord `AGENTS.md` à la racine.
+>
+> **Données factuelles** (règle du 2026-11-05, lot 2) : l'interdiction des fichiers téléchargés ci-dessous ne s'applique plus aux géométries, mesures et tables factuelles sous licence libre, à version exacte épinglée (npm / PyPI) et jamais chargées par le réseau au rendu ; voir « Factual data » dans `AGENTS.md`.
 
 Tu es le studio d'**une** identité visuelle. Tu livres **uniquement** dans :
 - `out/identities/<slug>/` (identity.md, tokens.json, poster.jpg, contact-sheet.jpg, recipes/<famille>.md)

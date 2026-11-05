@@ -1,0 +1,39 @@
+{
+ "name": "world-atlas",
+ "role": "données factuelles (géométries Natural Earth, domaine public)",
+ "bestFor": [
+  "vraies côtes et frontières de pays (countries-50m.json, 756 Ko) pour des cartes plates vues du dessus",
+  "cartes régionales jusqu'à ≈ ×2,6 de zoom autour de la France (côte 50 m encore propre, testé)",
+  "remplacer les côtes tracées à la main (défaut accepté d'atlas-grave : grossières au-delà de ×2,5)"
+ ],
+ "avoidFor": [
+  "zoom local fort (> ×3) : passer à countries-10m.json (3,7 Mo, présent dans 2.0.2) en le notant",
+  "fonds de carte stylisés ou en relief (ce n'est que de la géométrie)",
+  "projeter le monde entier à chaque image"
+ ],
+ "renderCostPer100Frames": [
+  "≈ 0 par image (chargement + décodage + découpe + projection : 308 ms une fois, mesuré) ; coût total de la scène : 18,1 s (mesuré, mistral : 480 images en 87,0 s) et 18,7 s (mesuré, record de chaleur sans traînées de vent : 450 images en 84,1 s), 1080×1920, machine partagée avec 1 autre studio ; référence page canvas vide 13,2 s/100 à vide [carte-meteo]"
+ ],
+ "gotchas": [
+  "world-atlas v2 n'a plus de world/110m.json (v1) : fichiers countries-10m/50m/110m.json et land-*.json ; objets `countries` et `land`",
+  "contrairement à ce qu'indiquait le challenge, countries-10m.json existe bien dans 2.0.2",
+  "le MultiPolygon « France » inclut Guyane, Réunion, Mayotte, Martinique, Guadeloupe : sans filtrage, fitExtent rétrécit la métropole à quelques pixels",
+  "filtrer la découpe par d3.geoBounds en écartant les bbox qui traversent l'antiméridien (x0 > x1)",
+  "données factuelles admises par la règle de l'orchestrateur (domaine public, version exacte, npm) ; noter source et licence dans identity.md"
+ ],
+ "snippetPath": [
+  "shorts/carte-meteo__geographie__le-mistral-pourquoi-il-souffle-si-fort/src/meteo.js"
+ ],
+ "pairsWellWith": [
+  "topojson-client",
+  "D3.js (d3-geo, d3-contour)"
+ ],
+ "usedBy": [
+  "carte-meteo"
+ ],
+ "roleAsDeclaredByStudios": [
+  "data"
+ ],
+ "version": "2.0.2 (npm, version exacte épinglée dans package.json, sans ^)",
+ "license": "paquet ISC (Mike Bostock) ; données Natural Earth, domaine public. Version exacte épinglée dans package.json (\"world-atlas\": \"2.0.2\"), installée par npm i, jamais chargée par le réseau au rendu (servie en local par render.mjs sous /node_modules/world-atlas/)"
+}

@@ -3,7 +3,8 @@
 ## What this repository is
 
 An **exploratory study of visual and cinematic identities for vertical short videos** (TikTok, Reels, Shorts; 1080×1920, 30 fps, 12–19 s).
-It contains **18 identities** (the 14 of the original campaign + the cut-paper family added on 2026-11-04, see below), each documented as a design system and **proven by 2–3 real shorts rendered by code** (39 shorts in total),
+It contains **20 identities** (the 14 of the original campaign, the cut-paper family added on 2026-11-04 and the 2 identities of
+lot 2 of the identity factory added on 2026-11-05, see below), each documented as a design system and **proven by 2–3 real shorts rendered by code** (43 shorts in total),
 plus the open-source rendering toolkit that made them.
 
 **It is a menu with evidence, not a finished brand.** You are expected to read it and then **define your own identity**:
@@ -14,7 +15,7 @@ Most prose is in **French** (identity.md, recipes, reports, tool docstrings). JS
 
 ## Where this repository fits
 
-- **Choosing a visual identity** is what this repository is for: 14 proven styles, their design systems and their evidence.
+- **Choosing a visual identity** is what this repository is for: 20 proven styles, their design systems and their evidence.
 - **Running a production channel** needs more than a style: writing, validation, voice, review, publishing and scheduling. Two ways:
   - you already have a studio template (for the owner of this repository, the private **StudioGabarit**, which runs on the Mac and is piloted from Notion): use this repository at its *design system* phase to pick 2–3 candidate styles, then port the chosen signature into that template's own render engine;
   - you don't: `bootstrap_studio.py` below gives a lightweight studio (identity + scene templates + render toolkit) to prototype a style and produce episodes by hand.
@@ -62,7 +63,26 @@ variants from the Un Jour Une Histoire studio, so they can be found and reused l
   and the stills. No `tts.py` step. `bootstrap_studio.py` copies the engine into a studio made from one of them.
 - Proof shorts (2 per identity, same text, only the theme changes): `<id>__histoire__la-fourchette-a-fait-scandale`,
   `<id>__explicatif__d-ou-vient-le-mot-sandwich`. Voice: Gemini « Sulafat », reused from the Un Jour Une Histoire studio.
-- Not part of the ranking, the blind recognition tests or `out/report/`; they are appended after rank 14 in `index.json`.
+- Not part of the ranking or the blind visual judge; they are appended after rank 16 in `index.json` (ranks 17–20). They are in the
+  measured recognition test since 2026-11-05 (each short's nearest neighbour is its sibling).
+
+## Lot 2 of the identity factory (added 2026-11-05, status `added`, ranked)
+
+Made with the `fabrique-identites` skill (`.claude/skills/fabrique-identites/`): scouting from `out/library-cards/catalogue.md`,
+adversarial challenge, one studio per identity, integration, review (`out/report/decisions.md` § « Lot 2 »,
+`out/report/notes/directions-2026-11-05.md`, `challenge-2026-11-05.md`).
+
+| Identity | Look | Libraries | Rank |
+|---|---|---|---|
+| `carte-meteo` | light weather map: pale sky-blue sea, tender green land, isobars, dark wind trails, temperature pills, a diagonal weather front as the only transition | D3.js, topojson-client, world-atlas 2.0.2 (Natural Earth) | 5 |
+| `trait-continu` | one graphite stair-stepped line never lifted, on a grey plate over a full-bleed orange ground, two rulers with cursors, plate advance in steps | shapely, opensimplex, pycairo, Pillow (Python, no browser) | 9 |
+
+- **No voice-over yet**: the voice is planned (Fish Audio « Arnold ») but **not recorded** — the Fish Audio free plan had 35 credits
+  (1 line of 20 generated). `short.mp4` is music + SFX; `narration.json` is ready; `short.json.sound.voice` is `false`. How to resume:
+  `out/report/notes/voix-lot2.md`.
+- Evidence: a blind visual judge on 8 identities (lot 2 + 6 neighbours, 32 images) made 8/8 pure groups; in the measured test each
+  identity's two shorts are each other's nearest neighbour. Render cost measured with the two studios sharing 4 cores (load 1–5.5,
+  `measuredUnderLoad: true`). Since the review, carte-meteo's heat-record short has no wind trails: wind is shown only when it is the subject.
 
 ## Read in this order (≈ 10 minutes)
 
@@ -88,22 +108,25 @@ it does **not** depend on content family. For a given family, start from the ide
 
 | Family | Proven by |
 |---|---|
-| `explicatif` (explainer / science) | bauhaus-kinetic (5), tableau-craie (6), neon-lab (12), cosmos-doc (13); cut-paper family (added) |
-| `histoire` (history) | gazette-1900 (2), topo-relief (9), atlas-grave (10), aquarelle-conte (11); cut-paper family (added) |
-| `geographie` (geography) | swiss-data (1), riso-zine (7), topo-relief (9), atlas-grave (10) |
-| `evenements` (on this day / countdowns) | swiss-data (1), gazette-1900 (2), brut-meme (4), riso-zine (7), cosmos-doc (13) |
-| `engagement` (quiz / vote / bet) | pixel-arcade (3), brut-meme (4), bauhaus-kinetic (5), pastel-diorama (8), liquid-chrome (14) |
-| `enfants` (kids) | tableau-craie (6), pastel-diorama (8), aquarelle-conte (11) |
-| `abstrait` (satisfying / loops) | pixel-arcade (3), neon-lab (12), liquid-chrome (14) |
+| `explicatif` (explainer / science) | bauhaus-kinetic (6), tableau-craie (7), neon-lab (14), cosmos-doc (15); cut-paper family (added) |
+| `histoire` (history) | gazette-1900 (2), topo-relief (11), atlas-grave (12), aquarelle-conte (13); cut-paper family (added) |
+| `geographie` (geography) | swiss-data (1), carte-meteo (5), riso-zine (8), trait-continu (9), topo-relief (11), atlas-grave (12) |
+| `evenements` (on this day / countdowns) | swiss-data (1), gazette-1900 (2), brut-meme (4), carte-meteo (5), riso-zine (8), cosmos-doc (15) |
+| `engagement` (quiz / vote / bet) | pixel-arcade (3), brut-meme (4), bauhaus-kinetic (6), pastel-diorama (10), liquid-chrome (16) |
+| `enfants` (kids) | tableau-craie (7), trait-continu (9), pastel-diorama (10), aquarelle-conte (13) |
+| `abstrait` (satisfying / loops) | pixel-arcade (3), neon-lab (14), liquid-chrome (16) |
 
 **Episode effort** (how much code a new topic needs): *data-driven* — swiss-data (new dataset in the same 4-screen grammar), brut-meme
-(new words/numbers), pixel-arcade (new seed / new rules); *new scene per topic* — most others (neon-lab, cosmos-doc, topo-relief,
-tableau-craie, atlas-grave, aquarelle-conte, pastel-diorama, gazette-1900 engravings). Tokens are documentation: scene code hard-codes
+(new words/numbers), pixel-arcade (new seed / new rules), carte-meteo (mostly: the real map comes from world-atlas; a new topic =
+camera framings, pressure centres, a schematic wind field in `precompute.js` and the pills, in the shared `meteo.js`); *new scene per
+topic* — most others (neon-lab, cosmos-doc, topo-relief, tableau-craie, atlas-grave, aquarelle-conte, pastel-diorama, gazette-1900
+engravings, trait-continu: one hand-designed single-line path per topic in the shared `traceur.py`, contours typed by hand). Tokens are documentation: scene code hard-codes
 the values, it does not read `tokens.json`.
 
 ## Adapting to an audience (orchestrator judgment, not measured)
 
-All proof shorts use the same French male storyteller voice and ≈ 2.6 words/s; no short was made specifically for teens.
+The 31 campaign shorts use the same French male storyteller voice and ≈ 2.6 words/s (cut-paper: Gemini Sulafat; lot 2: written for
+Arnold, not recorded; trait-continu is written at 2.2 words/s for kids); no short was made specifically for teens.
 Suggested starting deltas, to validate with your own tests:
 
 | Audience | Beat length | Voice pace | On-screen words per beat | Voice casting | Hook / CTA |
@@ -125,7 +148,7 @@ Suggested starting deltas, to validate with your own tests:
      and *tooling*. Mixing two signatures produces a generic look.
    - *Adapt*: change audience-dependent values (pace, text size, voice, colour temperature — see the table above) but keep the signature.
    - `status` in the index: `selected` = kept in Phase 1; `rehabilitated` = set aside in Phase 1 only to avoid topic overlap, then produced
-     with the same rules — same evidence level.
+     with the same rules — same evidence level; `added` = added after the campaign (cut-paper family, unranked; lot 2, ranked, no voice yet).
 4. **Avoid confusion with neighbours**: check `curation.confusableWith` (e.g. dark identities neon-lab / cosmos-doc / liquid-chrome,
    or the cream flat styles swiss-data / bauhaus-kinetic). If your channel will sit next to one of them, push your palette or type further apart.
 5. **Write your design system in the same format**: an `identity.md` with the same 16 sections, and a `tokens.json` whose core follows
@@ -142,12 +165,20 @@ Suggested starting deltas, to validate with your own tests:
 
 - **Canvas and safe areas**: 1080×1920, 30 fps, H.264 yuv420p. Keep anything important out of the top 220 px, bottom 320 px and right
   120 px (TikTok UI); left margin 60–72 px. Body text ≥ 54 px, titles ≥ 90 px, AA contrast. Hook visible within 1 s.
-- **Voice-over actually used** for all 31 shorts: Fish Audio "Arnold" (`d704cf8f1216490cbfbed89955f0e938`, model `s2.1-pro`, French male storyteller),
+- **Voice-over, state at 43 shorts**: 31 campaign shorts voiced with Fish Audio "Arnold" (below); the 8 cut-paper shorts declare and
+  mix the Gemini voice "Sulafat" (mp3 reused from another studio, mixed by the cut-paper engine, not `tts.py`); the **4 lot 2 shorts
+  have no voice-over** (planned Arnold, not recorded: Fish Audio credits ran out, see `out/report/notes/voix-lot2.md`).
+- **Voice-over actually used** for the 31 campaign shorts: Fish Audio "Arnold" (`d704cf8f1216490cbfbed89955f0e938`, model `s2.1-pro`, French male storyteller),
   generated **through the Fish Audio MCP connector**, one call per narration line, saved as `voice_lines/NN.mp3`, then mixed with music
   ducking by `out/tools/tts.py --engine files`. The direct REST engine (`--engine fish`, needs `FISH_API_KEY`, default model
   `s2.1-pro-free`) was **not tested against the real API**. Send only the line text: any style prefix is read aloud. Narration pace ≈ 2.6 words/s; lines must
   not overlap. Gemini voice names that still appear in identity.md / narration.json (`voiceGeminiSuggestion`) are historical casting suggestions
   (Gemini was dropped because of free-tier quotas). For another language, cast a new voice; Arnold is French only.
+- **Factual data** (rule of 2026-11-05, `out/report/decisions.md`): factual geometries, measurements and tables are allowed when their
+  licence is public domain, CC0, CC-BY or permissive, when they are distributed by npm or PyPI at an **exact pinned version** (no `^`,
+  `==` for pip), **never loaded from the network at render time**, and when their source and licence are written in the identity's
+  `identity.md` and in a library card. Images, icons, textures, sounds and any graphic work remain excluded: the visible style is
+  generated by code. First use: `world-atlas` 2.0.2 (Natural Earth, public domain; ISC package) for carte-meteo.
 - **Captions**: no identity defines burned-in subtitles synced to the voice. Many viewers watch muted; if you need captions, define them
   yourself (inside the safe area, above the bottom 320 px, timings from `narration.json` lines).
 - **Photosensitivity (all identities)**: at most 3 flashes per second, no full-frame flash, large luminance swaps ≥ 1.6 s apart
@@ -167,19 +198,22 @@ Suggested starting deltas, to validate with your own tests:
 
 | Path | What it is |
 |---|---|
-| `out/identities/index.json` | machine index of the 18 identities (start here) — generated by `out/tools/build_index.py` |
+| `out/identities/index.json` | machine index of the 20 identities (start here) — generated by `out/tools/build_index.py` (ranking and curation are in that script) |
 | `out/identities/core-tokens.schema.json` | JSON schema of the normalised `coreTokens` |
 | `out/identities/<id>/` | design system: `identity.md`, `tokens.json` (original, richer, not normalised), `recipes/`, `poster.jpg`, `contact-sheet.jpg` |
 | `out/shorts/<id>__<family>__<topic>/` | proof short: `short.mp4` (voiced), `short_novo.mp4` (no voice), `short.json`, `narration.json`, `voice_lines/`, `stills/`, `src/` |
+| `out/shared/papier-moteur/` | the cut-paper engine (Python) shared by the 4 cut-paper identities |
 | `out/library-cards/catalogue.md` | catalogue of every library and tool considered (3D, 2D, animation, SVG/data, video frameworks, Python, audio, encoding, services): status, used or not, where — the base to iterate on for new identities |
 | `out/library-cards/<lib>.json` | per-library notes merged from the studios: best/avoid, measured costs (under load), gotchas, code paths. Verbose; `_drafts/` holds the raw per-studio drafts |
 | `out/report/` | campaign report (French): `README.md`, `comparison.md`, `facts.md`, `failures.md`, `decisions.md`, JSON data (`campaign.json`, `matrix.json`, `recognition.json`, `qa.json`, `selection.json`), Phase 1 `posters/` |
 | `out/report/notes/`, `out/report/history/` | studio logs and past session prompts — provenance only, do not follow |
-| `out/tools/` | toolkit: `bootstrap_studio.py` (creates a studio project, see above), `render.mjs` (HTML scene → mp4/stills), `lib/svi.js` (scene helpers), `sound.py`, `textpng.py`, `assemble.py`, `check.py`, `tts.py`, `recognition.py`, `aggregate.py`, `build_index.py`, `templates/`; `STUDIO_BRIEF.md` is the historical brief given to the studios |
-| `out/showcase/` | source of the visual showcase page (`build.py` regenerates it) |
+| `out/tools/` | toolkit: `bootstrap_studio.py` (creates a studio project, see above), `render.mjs` (HTML scene → mp4/stills), `lib/svi.js` (scene helpers), `sound.py`, `textpng.py`, `assemble.py`, `check.py`, `tts.py`, `recognition.py`, `aggregate.py`, `build_index.py`, `catalogue_scan.py` (rescans the code against `catalogue.md`), `templates/`; `STUDIO_BRIEF.md` is the historical brief given to the studios |
+| `out/showcase/` | source of the visual showcase page (`build.py` regenerates it; `--videos-for <id>` re-encodes one identity's previews) |
+| `.claude/skills/fabrique-identites/` | the identity-factory skill: orchestrates scouting, adversarial challenge, studios, integration and review of new identities |
 
 ## Set-up (only if you render)
 
 From the repository root: `npm i` (libraries + @fontsource fonts from `package.json`); `uv venv --python 3.11 .venv`, then install
-numpy, scipy, pillow, opencv-python-headless, pycairo, matplotlib, taichi, and Manim without manimpango (see `out/report/facts.md`);
+numpy, scipy, pillow, opencv-python-headless, pycairo, matplotlib, taichi, shapely==2.2.0, opensimplex==0.4.5.1, and Manim without
+manimpango (see `out/report/facts.md`); `package.json` pins `world-atlas` 2.0.2 exactly and includes `@fontsource/atkinson-hyperlegible`;
 Playwright + Chromium and ffmpeg must be available. `node_modules/` and `.venv/` are not versioned.

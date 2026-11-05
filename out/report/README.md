@@ -2,9 +2,11 @@
 
 > Les chemins de ce document sont relatifs au dossier `out/` (ex. `identities/swiss-data/` = `out/identities/swiss-data/`). Pour un agent qui veut **définir sa propre identité** à partir de ce travail : lire d'abord `AGENTS.md` (racine) et charger `out/identities/index.json`.
 
-**But** : 14 identités visuelles (10 retenues en Phase 1, plus les 4 écartées puis réhabilitées à la demande) et cinématiques distinctes pour des chaînes de shorts verticaux (TikTok / Reels / Shorts), chacune **prouvée par 2 ou 3 vidéos réelles** rendues par code avec des librairies open-source, puis documentée en design system exploitable par un agent de production.
+**But** : des identités visuelles et cinématiques distinctes — **20 aujourd'hui** : les 14 de la campagne (10 retenues en Phase 1, plus les 4 écartées puis réhabilitées à la demande), les 4 identités papier de StudioGabarit (2026-11-04, hors classement) et les 2 du **lot 2** de la fabrique d'identités (2026-11-05 : `carte-meteo`, `trait-continu`) — pour des chaînes de shorts verticaux (TikTok / Reels / Shorts), chacune **prouvée par 2 ou 3 vidéos réelles** rendues par code avec des librairies open-source, puis documentée en design system exploitable par un agent de production.
 
-**Bilan** : **14 identités** · **31 shorts** (1080×1920, 30 fps, H.264, 12–18,75 s, son généré) · QA automatique **31/31 OK** · 7 familles couvertes ≥ 3 fois · **8/8 librairies niveau A + 11/11 niveau B** · reconnaissance à l'aveugle **14/14 groupes purs, 56/56 images** (juge visuel indépendant) et **29/31** (mesure couleur, plus proche voisin) · premier tour 1 h 46 (2026-11-03 20:27 -> 22:13 UTC), 3ᵉ shorts 22:22 -> 22:37, identités réhabilitées 2026-11-04 00:24 -> 00:57, sur **4 cœurs** · voix off Fish Audio « Arnold » **31/31** (Gemini abandonné, voir « Voix off Fish Audio »).
+**Bilan à 20 identités (2026-11-05)** : **20 identités** · **43 shorts** · QA automatique **43/43 OK** (4 avertissements « voix off absente » attendus pour le lot 2) · reconnaissance mesurée **40/43** (plus proche voisin ; les 4 shorts du lot 2 et les 8 shorts papier reconnus, les 3 échecs sont les 3 shorts liquid-chrome) · voix off : **31 shorts Fish Audio « Arnold »**, **8 shorts papier Gemini « Sulafat »** (mp3 réutilisés d'un autre studio), **4 shorts du lot 2 sans voix** (voix prévue Arnold, non enregistrée : crédits Fish Audio épuisés, 1 ligne générée sur 20, `notes/voix-lot2.md`) · juge visuel aveugle du lot 2 : **8/8 groupes purs** (trait-continu, carte-meteo et 6 voisines, 32 images ; `notes/revue-2026-11-05.md`).
+
+**Bilan de la campagne (14 identités)** : **14 identités** · **31 shorts** (1080×1920, 30 fps, H.264, 12–18,75 s, son généré) · QA automatique **31/31 OK** · 7 familles couvertes ≥ 3 fois · **8/8 librairies niveau A + 11/11 niveau B** · reconnaissance à l'aveugle **14/14 groupes purs, 56/56 images** (juge visuel indépendant) et **29/31** (mesure couleur, plus proche voisin) · premier tour 1 h 46 (2026-11-03 20:27 -> 22:13 UTC), 3ᵉ shorts 22:22 -> 22:37, identités réhabilitées 2026-11-04 00:24 -> 00:57, sur **4 cœurs** · voix off Fish Audio « Arnold » **31/31** (Gemini abandonné, voir « Voix off Fish Audio »).
 
 Toutes les affirmations de ce dossier sont mesurées : temps (`facts.md`, `short.json.renderTimeSec`), QA (`qa.json`), reconnaissance (`recognition.json`).
 
@@ -26,12 +28,19 @@ Toutes les affirmations de ce dossier sont mesurées : temps (`facts.md`, `short
 | `neon-lab` | Labo Néon | abstrait, explicatif ×2 | three.js, twgl.js, OpenCV, Matplotlib | `identities/neon-lab/` | `shorts/neon-lab__abstrait__champ-de-force-lucioles` (boucle parfaite), `shorts/neon-lab__explicatif__lune-meme-face`, `shorts/neon-lab__explicatif__effet-papillon-double-pendule` (Matplotlib) |
 | `cosmos-doc` | Cosmos Doc *(réh.)* | explicatif, evenements | three.js, GSAP | `identities/cosmos-doc/` | `shorts/cosmos-doc__explicatif__pourquoi-venus-plus-chaude-que-mercure`, `shorts/cosmos-doc__evenements__voyager-1-a-un-jour-lumiere` |
 | `liquid-chrome` | Chrome Liquide | abstrait ×2, engagement | Taichi, three.js, OpenCV, Babylon.js | `identities/liquid-chrome/` | `shorts/liquid-chrome__abstrait__quatre-peintures-mpm`, `shorts/liquid-chrome__engagement__quelle-couleur-remplit-le-verre`, `shorts/liquid-chrome__abstrait__pendule-de-newton-chrome` (Babylon.js, boucle parfaite) |
+| `carte-meteo` | Carte Météo *(lot 2, rang 5)* | geographie, evenements | D3.js, topojson-client, world-atlas | `identities/carte-meteo/` | `shorts/carte-meteo__geographie__le-mistral-pourquoi-il-souffle-si-fort`, `shorts/carte-meteo__evenements__28-juin-2019-46-degres-record-de-chaleur` (sans voix) |
+| `trait-continu` | Trait continu *(lot 2, rang 9)* | enfants, geographie | shapely, opensimplex, pycairo, Pillow | `identities/trait-continu/` | `shorts/trait-continu__enfants__dessine-un-escargot-d-un-seul-trait`, `shorts/trait-continu__geographie__l-italie-a-la-forme-d-une-botte` (sans voix) |
+| `papier-decoupe`, `atelier-papier`, `carnet-archives`, `cabinet-curiosites` | famille papier découpé *(ajoutées, hors classement)* | explicatif, histoire | moteur papier `shared/papier-moteur/` (Pillow, OpenCV, numpy) | `identities/<id>/` | `shorts/<id>__explicatif__d-ou-vient-le-mot-sandwich`, `shorts/<id>__histoire__la-fourchette-a-fait-scandale` (voix Gemini Sulafat) |
 
-L'ordre du tableau est le classement de durabilité/industrialisation (argumenté dans `comparison.md` §5). Index machine des identités : **`identities/index.json`** (voir `AGENTS.md`) ; index des shorts : `report/campaign.json` (31 shorts avec durée, temps de rendu, libs, mécanique d'engagement) et `report/matrix.json` (identité × famille × libs).
+Les 14 premières lignes suivent le classement de la campagne ; le classement à 20 (lot 2 inséré : carte-meteo 5ᵉ, trait-continu 9ᵉ ; famille papier 17–20, hors critères) est dans `comparison.md` §5 et `identities/index.json` (`rank`). Index machine des identités : **`identities/index.json`** (voir `AGENTS.md`) ; index des shorts : `report/campaign.json` (43 shorts avec durée, temps de rendu, libs, mécanique d'engagement) et `report/matrix.json` (identité × famille × libs), régénérés par `tools/aggregate.py`.
+
+### Lot 2 — fabrique d'identités (2026-11-05)
+
+Produit par le skill `fabrique-identites` (`.claude/skills/fabrique-identites/`) : repérage de 4 directions à partir du catalogue (`library-cards/catalogue.md`), challenge adversarial, 2 studios en parallèle, intégration, revue. Retenues : **carte-meteo** (carte météo claire, vraie géométrie Natural Earth via `world-atlas` 2.0.2, front qui balaie l'écran) et **trait-continu** (un trait graphite jamais levé sur une plaque, shapely + opensimplex + pycairo). Décisions et règle sur les données factuelles : `decisions.md` § « Lot 2 ». Journaux : `notes/carte-meteo.md`, `notes/trait-continu.md`, `notes/voix-lot2.md`. **Voix off non enregistrée** pour les 4 shorts : les `short.mp4` sont musique + bruitages ; `narration.json` est prêt pour Arnold.
 
 ## Recommandation
 
-Pour une chaîne durable : **1. swiss-data** (data / actu : le moins cher, 13,7–20,5 s/100 frames, < 1 Mo/short, épisode = jeu de données), **2. gazette-1900** (histoire / « ce jour-là » : identité la plus mémorable, calendrier infini), **3. pixel-arcade** (engagement : pari + photo-finish, variété infinie par graine pré-simulée). Trois publics, trois mécaniques, aucune confusion visuelle entre elles. Les 4 identités d'abord écartées (cosmos-doc, brut-meme, riso-zine, topo-relief) ont été produites ensuite : chacune est reconnue comme distincte de sa voisine (test mesuré) ; brut-meme se classe 4ᵉ.
+Le trio ne change pas avec le lot 2 ; carte-meteo (rang 5) et trait-continu (rang 9) s'insèrent dans le classement, voir `comparison.md` §5. Pour une chaîne durable : **1. swiss-data** (data / actu : le moins cher, 13,7–20,5 s/100 frames, < 1 Mo/short, épisode = jeu de données), **2. gazette-1900** (histoire / « ce jour-là » : identité la plus mémorable, calendrier infini), **3. pixel-arcade** (engagement : pari + photo-finish, variété infinie par graine pré-simulée). Trois publics, trois mécaniques, aucune confusion visuelle entre elles. Les 4 identités d'abord écartées (cosmos-doc, brut-meme, riso-zine, topo-relief) ont été produites ensuite : chacune est reconnue comme distincte de sa voisine (test mesuré) ; brut-meme se classe 4ᵉ.
 
 ## Comment réutiliser (pour un agent de production)
 
@@ -63,7 +72,9 @@ Mise en place (une fois, depuis la racine du dépôt) : `npm i` (libs + polices 
 
 ### Voix off Fish Audio (générée)
 
-**État : voix off générée et mixée pour les 31 shorts sur 31** avec la voix Fish Audio « Arnold » (`d704cf8f1216490cbfbed89955f0e938`, modèle `s2.1-pro`, conteur masculin FR) via le connecteur Fish Audio (une ligne = un appel : 135 lignes pour les 23 premiers shorts, puis 45 lignes / 1 711 crédits pour les 8 shorts des identités réhabilitées). Chaque `short.mp4` est la version avec voix ; l'original muet+musique est gardé en `short_novo.mp4`. Rendu mesuré mais **pas écouté** par l'assistant (le choix de la voix a été fait par l'utilisateur sur échantillons).
+**État à 43 shorts** : 31 shorts voisés Fish Audio « Arnold » (ci-dessous) ; 8 shorts papier voisés Gemini « Sulafat » (mp3 réutilisés du studio Un Jour Une Histoire, mixés par le moteur papier, pas par `tts.py`) ; **4 shorts du lot 2 sans voix** : voix prévue Arnold, non enregistrée, le plan gratuit Fish Audio n'avait que 35 crédits (1 ligne générée sur 20, `voice_lines/00.mp3` de l'escargot, non mixée) ; reprise documentée dans `notes/voix-lot2.md` (284 crédits manquants, puis `tts.py <short> --engine files --replace`, puis aperçus de la vitrine : `showcase/build.py --videos-for <identité>`).
+
+**État de la campagne : voix off générée et mixée pour les 31 shorts sur 31** avec la voix Fish Audio « Arnold » (`d704cf8f1216490cbfbed89955f0e938`, modèle `s2.1-pro`, conteur masculin FR) via le connecteur Fish Audio (une ligne = un appel : 135 lignes pour les 23 premiers shorts, puis 45 lignes / 1 711 crédits pour les 8 shorts des identités réhabilitées). Chaque `short.mp4` est la version avec voix ; l'original muet+musique est gardé en `short_novo.mp4`. Rendu mesuré mais **pas écouté** par l'assistant (le choix de la voix a été fait par l'utilisateur sur échantillons).
 
 ```
 .venv/bin/python out/tools/tts.py --all --engine files --voice "<titre voix>" --replace   # lignes déjà synthétisées dans <short>/voice_lines/NN.mp3
@@ -78,7 +89,7 @@ Mise en place (une fois, depuis la racine du dépôt) : `npm i` (libs + polices 
 | Fichier | Contenu |
 |---|---|
 | `README.md` | ce document |
-| `comparison.md` | tableau comparatif, table des 31 shorts, matrice identité × famille × librairie, tests de reconnaissance, classement argumenté |
+| `comparison.md` | tableau comparatif, table des 43 shorts, matrice identité × famille × librairie, tests de reconnaissance, classement argumenté à 20 |
 | `directions-contact-sheet.jpg` | les 14 directions explorées (Phase 1) ; posters et sources dans `posters/` |
 | `directions.json` / `selection.json` | fiches des 14 directions ; sélection de 10, rejets justifiés, couverture |
 | `facts.md` | faits techniques vérifiés, versions, nproc, coûts de rendu mesurés, pièges nouveaux |
@@ -89,7 +100,7 @@ Mise en place (une fois, depuis la racine du dépôt) : `npm i` (libs + polices 
 
 ## Ce qui n'a pas marché (résumé — détail dans `failures.md`)
 
-- **Voix off** : générée pour les 31 shorts avec Fish Audio (voix « Arnold ») ; voir « Voix off Fish Audio » ci-dessus et `failures.md` (1 débordement résiduel, 1 pic à 0 dB après encodage AAC).
+- **Voix off** : générée pour les 31 shorts de la campagne avec Fish Audio (voix « Arnold ») ; voir « Voix off Fish Audio » ci-dessus et `failures.md` (1 débordement résiduel, 1 pic à 0 dB après encodage AAC). **Lot 2 : non enregistrée** (crédits Fish Audio épuisés après 1 ligne sur 20).
 - **CPU sur-souscrit** : 10 studios sur 4 cœurs (load 16–22) ; tous les temps de rendu sont ×2–3 au-dessus d'une machine calme.
 - **2 rendus complets jetés** (aquarelle-conte : bande non peinte ; liquid-chrome : verre réfractif à ~5 s/frame), 1 segment re-rendu (tableau-craie : bug de raster SwiftShader sous filtre SVG).
 - **Déterminisme Node ≠ navigateur** pour Matter.js (`Math.atan2` au dernier bit) : corrigé par géométrie précalculée.

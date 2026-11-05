@@ -33,6 +33,42 @@
    "video": "shorts/aquarelle-conte__histoire__phare-d-alexandrie/short.mp4"
   },
   {
+   "dir": "shorts/atelier-papier__explicatif__d-ou-vient-le-mot-sandwich",
+   "identity": "atelier-papier",
+   "family": "explicatif",
+   "title": "D'où vient le mot sandwich ?",
+   "duration": 12.33,
+   "renderTimeSec": 14,
+   "libraries": [
+    "Pillow",
+    "OpenCV",
+    "NumPy",
+    "ffmpeg"
+   ],
+   "loopable": false,
+   "mechanic": "révélation",
+   "narrationLines": 2,
+   "video": "shorts/atelier-papier__explicatif__d-ou-vient-le-mot-sandwich/short.mp4"
+  },
+  {
+   "dir": "shorts/atelier-papier__histoire__la-fourchette-a-fait-scandale",
+   "identity": "atelier-papier",
+   "family": "histoire",
+   "title": "La fourchette a fait scandale",
+   "duration": 19.71,
+   "renderTimeSec": 22,
+   "libraries": [
+    "Pillow",
+    "OpenCV",
+    "NumPy",
+    "ffmpeg"
+   ],
+   "loopable": false,
+   "mechanic": "vote",
+   "narrationLines": 5,
+   "video": "shorts/atelier-papier__histoire__la-fourchette-a-fait-scandale/short.mp4"
+  },
+  {
    "dir": "shorts/atlas-grave__geographie__plus-longs-fleuves-du-monde",
    "identity": "atlas-grave",
    "family": "geographie",
@@ -131,6 +167,112 @@
    "mechanic": "compte à rebours / chiffres live + question directe",
    "narrationLines": 6,
    "video": "shorts/brut-meme__evenements__pendant-ces-15-secondes-dans-le-monde/short.mp4"
+  },
+  {
+   "dir": "shorts/cabinet-curiosites__explicatif__d-ou-vient-le-mot-sandwich",
+   "identity": "cabinet-curiosites",
+   "family": "explicatif",
+   "title": "D'où vient le mot sandwich ?",
+   "duration": 12.33,
+   "renderTimeSec": 14,
+   "libraries": [
+    "Pillow",
+    "OpenCV",
+    "NumPy",
+    "ffmpeg"
+   ],
+   "loopable": false,
+   "mechanic": "révélation",
+   "narrationLines": 2,
+   "video": "shorts/cabinet-curiosites__explicatif__d-ou-vient-le-mot-sandwich/short.mp4"
+  },
+  {
+   "dir": "shorts/cabinet-curiosites__histoire__la-fourchette-a-fait-scandale",
+   "identity": "cabinet-curiosites",
+   "family": "histoire",
+   "title": "La fourchette a fait scandale",
+   "duration": 19.71,
+   "renderTimeSec": 22,
+   "libraries": [
+    "Pillow",
+    "OpenCV",
+    "NumPy",
+    "ffmpeg"
+   ],
+   "loopable": false,
+   "mechanic": "vote",
+   "narrationLines": 5,
+   "video": "shorts/cabinet-curiosites__histoire__la-fourchette-a-fait-scandale/short.mp4"
+  },
+  {
+   "dir": "shorts/carnet-archives__explicatif__d-ou-vient-le-mot-sandwich",
+   "identity": "carnet-archives",
+   "family": "explicatif",
+   "title": "D'où vient le mot sandwich ?",
+   "duration": 12.33,
+   "renderTimeSec": 14,
+   "libraries": [
+    "Pillow",
+    "OpenCV",
+    "NumPy",
+    "ffmpeg"
+   ],
+   "loopable": false,
+   "mechanic": "révélation",
+   "narrationLines": 2,
+   "video": "shorts/carnet-archives__explicatif__d-ou-vient-le-mot-sandwich/short.mp4"
+  },
+  {
+   "dir": "shorts/carnet-archives__histoire__la-fourchette-a-fait-scandale",
+   "identity": "carnet-archives",
+   "family": "histoire",
+   "title": "La fourchette a fait scandale",
+   "duration": 19.71,
+   "renderTimeSec": 23,
+   "libraries": [
+    "Pillow",
+    "OpenCV",
+    "NumPy",
+    "ffmpeg"
+   ],
+   "loopable": false,
+   "mechanic": "vote",
+   "narrationLines": 5,
+   "video": "shorts/carnet-archives__histoire__la-fourchette-a-fait-scandale/short.mp4"
+  },
+  {
+   "dir": "shorts/carte-meteo__evenements__28-juin-2019-46-degres-record-de-chaleur",
+   "identity": "carte-meteo",
+   "family": "evenements",
+   "title": "28 juin 2019 : 46 °C, record de chaleur en France",
+   "duration": 15.0,
+   "renderTimeSec": 84.1,
+   "libraries": [
+    "D3.js",
+    "topojson-client",
+    "world-atlas"
+   ],
+   "loopable": false,
+   "mechanic": "question",
+   "narrationLines": 4,
+   "video": "shorts/carte-meteo__evenements__28-juin-2019-46-degres-record-de-chaleur/short.mp4"
+  },
+  {
+   "dir": "shorts/carte-meteo__geographie__le-mistral-pourquoi-il-souffle-si-fort",
+   "identity": "carte-meteo",
+   "family": "geographie",
+   "title": "Le mistral : pourquoi il souffle si fort",
+   "duration": 16.0,
+   "renderTimeSec": 87,
+   "libraries": [
+    "D3.js",
+    "topojson-client",
+    "world-atlas"
+   ],
+   "loopable": false,
+   "mechanic": "question",
+   "narrationLines": 4,
+   "video": "shorts/carte-meteo__geographie__le-mistral-pourquoi-il-souffle-si-fort/short.mp4"
   },
   {
    "dir": "shorts/cosmos-doc__evenements__voyager-1-a-un-jour-lumiere",
@@ -289,6 +431,42 @@
    "mechanic": "question",
    "narrationLines": 4,
    "video": "shorts/neon-lab__explicatif__lune-meme-face/short.mp4"
+  },
+  {
+   "dir": "shorts/papier-decoupe__explicatif__d-ou-vient-le-mot-sandwich",
+   "identity": "papier-decoupe",
+   "family": "explicatif",
+   "title": "D'où vient le mot sandwich ?",
+   "duration": 12.33,
+   "renderTimeSec": 14,
+   "libraries": [
+    "Pillow",
+    "OpenCV",
+    "NumPy",
+    "ffmpeg"
+   ],
+   "loopable": false,
+   "mechanic": "révélation",
+   "narrationLines": 2,
+   "video": "shorts/papier-decoupe__explicatif__d-ou-vient-le-mot-sandwich/short.mp4"
+  },
+  {
+   "dir": "shorts/papier-decoupe__histoire__la-fourchette-a-fait-scandale",
+   "identity": "papier-decoupe",
+   "family": "histoire",
+   "title": "La fourchette a fait scandale",
+   "duration": 19.71,
+   "renderTimeSec": 21,
+   "libraries": [
+    "Pillow",
+    "OpenCV",
+    "NumPy",
+    "ffmpeg"
+   ],
+   "loopable": false,
+   "mechanic": "vote",
+   "narrationLines": 5,
+   "video": "shorts/papier-decoupe__histoire__la-fourchette-a-fait-scandale/short.mp4"
   },
   {
    "dir": "shorts/pastel-diorama__enfants__d-ou-vient-la-pluie",
@@ -497,6 +675,46 @@
    "mechanic": "vote",
    "narrationLines": 5,
    "video": "shorts/topo-relief__histoire__hannibal-traverse-les-alpes/short.mp4"
+  },
+  {
+   "dir": "shorts/trait-continu__enfants__dessine-un-escargot-d-un-seul-trait",
+   "identity": "trait-continu",
+   "family": "enfants",
+   "title": "Dessine un escargot d'un seul trait",
+   "duration": 15.5,
+   "renderTimeSec": 22.8,
+   "libraries": [
+    "shapely",
+    "opensimplex",
+    "pycairo",
+    "Pillow",
+    "numpy",
+    "ffmpeg"
+   ],
+   "loopable": false,
+   "mechanic": "question",
+   "narrationLines": 5,
+   "video": "shorts/trait-continu__enfants__dessine-un-escargot-d-un-seul-trait/short.mp4"
+  },
+  {
+   "dir": "shorts/trait-continu__geographie__l-italie-a-la-forme-d-une-botte",
+   "identity": "trait-continu",
+   "family": "geographie",
+   "title": "L'Italie a la forme d'une botte",
+   "duration": 16.0,
+   "renderTimeSec": 23.4,
+   "libraries": [
+    "shapely",
+    "opensimplex",
+    "pycairo",
+    "Pillow",
+    "numpy",
+    "ffmpeg"
+   ],
+   "loopable": false,
+   "mechanic": "question / reconnaissance de forme",
+   "narrationLines": 5,
+   "video": "shorts/trait-continu__geographie__l-italie-a-la-forme-d-une-botte/short.mp4"
   }
  ]
 }

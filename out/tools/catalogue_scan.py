@@ -111,6 +111,7 @@ LIBS = [
      ['d3', 'd3-']),
     ('topojson-client', r'topojson', NM + r"topojson|" + FROM + r"topojson|\btopojson\.(?:feature|mesh)\(", 0,
      ['topojson-client', 'topojson']),
+    ('world-atlas', r'world-atlas', NM + r"world-atlas/|" + FROM + r"world-atlas", 0, ['world-atlas']),
     ('flubber', r'flubber', NM + r"flubber/|\bflubber\.(?:interpolate|toCircle|fromCircle|separate|combine)", 0,
      ['flubber']),
     ('KUTE.js', r'KUTE', r"kute(?:\.min)?\.js|\bKUTE\.", 0, ['kute.js']),
@@ -186,7 +187,7 @@ JS_PKG_RX = re.compile(r"/node_modules/((?:@[\w.-]+/)?[\w.-]+)|(?:\bfrom\s*|\bim
 PY_IMPORT_RX = re.compile(r"^\s*(?:from\s+([A-Za-z_]\w*)[\w.]*\s+import|import\s+([A-Za-z_]\w*(?:\s*,\s*"
                           r"[A-Za-z_]\w*)*))", re.M)
 FONT_REF_RX = re.compile(r"@fontsource/([a-z0-9-]+)|\bpkg\s*[:=]\s*['\"]([a-z0-9-]+)['\"]|\bfont\s*=\s*['\"]"
-                         r"([a-z0-9-]+)['\"]|--font\s+([a-z0-9-]+)")
+                         r"([a-z0-9-]+)['\"]|--font\s+([a-z0-9-]+)|\bfont_path\(\s*['\"]([a-z0-9-]+)['\"]")
 GFONT_RX = re.compile(r"fonts\.googleapis\.com/css2?\?family=([A-Za-z0-9+]+)")
 
 

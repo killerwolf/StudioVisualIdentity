@@ -25,14 +25,24 @@ CANON.update({'three': 'three.js', 'matter': 'Matter.js', 'matterjs': 'Matter.js
               'pixi': 'PixiJS', 'pixijs': 'PixiJS', 'babylon': 'Babylon.js', 'paper': 'Paper.js', 'paperjs': 'Paper.js', 'anime': 'anime.js',
               'animejs': 'anime.js', 'rough': 'Rough.js', 'roughjs': 'Rough.js', 'twgl': 'twgl.js', 'twgljs': 'twgl.js', 'opencv': 'OpenCV',
               'cv2': 'OpenCV', 'opencvpython': 'OpenCV', 'matplotlib': 'Matplotlib', 'gsap': 'GSAP', 'manim': 'Manim', 'taichi': 'Taichi',
-              'zdog': 'Zdog', 'flubber': 'flubber', 'pycairo': 'pycairo', 'cairo': 'pycairo'})
+              'zdog': 'Zdog', 'flubber': 'flubber', 'pycairo': 'pycairo', 'cairo': 'pycairo',
+              # lot 2 (2026-11-05) : librairies hors niveaux A/B
+              'shapely': 'shapely', 'opensimplex': 'opensimplex', 'topojsonclient': 'topojson-client', 'topojson': 'topojson-client',
+              'worldatlas': 'world-atlas'})
+# versions utilisées (épinglées : pip `==` ou package.json sans `^`), recopiées dans la carte (champ `version`)
+PINNED = {'shapely': '2.2.0 (PyPI, uv pip install shapely==2.2.0)', 'opensimplex': '0.4.5.1 (PyPI, uv pip install opensimplex==0.4.5.1)',
+          'world-atlas': '2.0.2 (npm, version exacte épinglée dans package.json, sans ^)',
+          'topojson-client': '3.1.0 (npm ; package.json "^3.1.0", version installée et utilisée par carte-meteo)'}
 
 
 ROLES = {'three.js': '3D', 'A-Frame': '3D', 'Zdog': '3D', 'Babylon.js': '3D', 'Matter.js': 'physique', 'Taichi': 'fluides',
          'p5.js': 'creative coding (raster 2D)', 'Paper.js': 'vectoriel 2D', 'Rough.js': 'vectoriel 2D (trait main levée)',
          'flubber': 'morphing vectoriel', 'GSAP': 'typo / timeline', 'anime.js': 'timeline / stagger', 'D3.js': 'data',
          'Manim': 'science', 'OpenCV': 'post-traitement', 'pycairo': 'textures procédurales (raster)', 'twgl.js': 'shaders GLSL',
-         'PixiJS': 'particules 2D', 'Matplotlib': 'data / science'}
+         'PixiJS': 'particules 2D', 'Matplotlib': 'data / science',
+         'shapely': 'géométrie 2D (construction de chemin)', 'opensimplex': 'bruit procédural (matière)',
+         'topojson-client': 'données géographiques (décodage TopoJSON)',
+         'world-atlas': 'données factuelles (géométries Natural Earth, domaine public)'}
 
 
 def canon(name):
@@ -87,6 +97,15 @@ def merge_cards():
         roles = dedup([j.get('role', '') for _, j in items])
         card['role'] = ROLES.get(lib, ' | '.join(roles))
         card['roleAsDeclaredByStudios'] = roles
+        # champs optionnels, seulement s'ils existent (les cartes du premier tour n'en ont pas)
+        versions = dedup([j['version'] for _, j in items if j.get('version')] + ([PINNED[lib]] if lib in PINNED else []))
+        if lib in PINNED:
+            versions = [PINNED[lib]] + [v for v in versions if v != PINNED[lib] and not v.startswith(PINNED[lib].split(' ')[0])]
+        if versions:
+            card['version'] = versions[0] if len(versions) == 1 else versions
+        lic = dedup([j['license'] for _, j in items if j.get('license')])
+        if lic:
+            card['license'] = lic[0] if len(lic) == 1 else lic
         f = OUT / 'library-cards' / f'{slugify(lib)}.json'
         json.dump(card, open(f, 'w'), ensure_ascii=False, indent=1)
         written.append(f.name)
