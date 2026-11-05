@@ -1,0 +1,72 @@
+{
+ "identity": "carte-meteo",
+ "family": "evenements",
+ "title": "28 juin 2019 : 46 °C, record de chaleur en France",
+ "hook": "Dès la frame 0 : la France sur sa carte, bandeau rouge « 28 juin 2019 · Record de chaleur en France » qui pope en 0,35 s, pastille « ? °C » dont l'anneau hésite entre orange et rouge, reliée à Vérargues",
+ "duration": 15.0,
+ "libraries": [
+  "D3.js",
+  "topojson-client",
+  "world-atlas"
+ ],
+ "seed": 28,
+ "renderTimeSec": 84.6,
+ "structure": [
+  {
+   "t": 0,
+   "beat": "hook : France entière, flux de sud, A (Europe centrale) / D (péninsule Ibérique), pastille « ? »"
+  },
+  {
+   "t": 3.6,
+   "beat": "passage du front chaud (demi-cercles rouges, 0,9 s) -> zoom ×2,4 Gard / Hérault"
+  },
+  {
+   "t": 4.07,
+   "beat": "pastille orange de l'ancien record : compteur -> 44,1 °C (août 2003, Gard)"
+  },
+  {
+   "t": 8.6,
+   "beat": "passage du front chaud -> zoom ×2,6, l'ancien record pâlit"
+  },
+  {
+   "t": 9.5,
+   "beat": "pastille Vérargues : 44,1 -> 46,0 °C, l'anneau passe de l'orange au rouge"
+  },
+  {
+   "t": 11.3,
+   "beat": "46,0 °C : pastille pleine rouge + anneau d'onde"
+  },
+  {
+   "t": 12.6,
+   "beat": "passage du front chaud -> retour France entière, les deux pastilles côte à côte"
+  },
+  {
+   "t": 13.5,
+   "beat": "chute : « +1,9 °C par rapport à 2003 », tenue jusqu'à 15 s"
+  }
+ ],
+ "engagement": {
+  "mechanic": "question",
+  "cta": "Et vous, quelle est la plus forte chaleur que vous ayez vécue ? En commentaire."
+ },
+ "loopable": false,
+ "sound": {
+  "type": "generated",
+  "voice": false,
+  "music": "pad (sound.py, sol pentatonique majeur, 100 bpm)",
+  "sfx": "whoosh à chaque passage de front, pop par pastille, ticks des compteurs, impact + chime à 46,0, swell final"
+ },
+ "qualityChecks": {
+  "stillsReviewed": true,
+  "textMinPx": 54,
+  "safeAreaOk": true,
+  "finalFramesChecked": [
+   0.4,
+   6.5,
+   11.6,
+   14.5
+  ]
+ },
+ "notes": "Faits (Météo-France) : 46,0 °C à Vérargues (Hérault) le 28 juin 2019, record national absolu de température ; ancien record 44,1 °C à Conqueyrac (Gard) le 12 août 2003 ; écart 1,9 °C. Aucun « J-N ». Positions des communes approchées (Vérargues 43,72 N 4,07 E ; Conqueyrac 43,96 N 3,93 E). Le compteur 44,1 -> 46,0 est un effet de révélation, pas une série horaire. Flux de sud et champ de pression SCHÉMATIQUES (precompute.js, graine 28 : 783 lignes de courant, 1,5 Mo), pas l'analyse du 28/06/2019. Carte : world-atlas 2.0.2 countries-50m (Natural Earth, domaine public) décodée par topojson-client 3.1.0 (DROM retirés), projection geoConicConformal une fois, fond de carte mis en cache par plan fixe. Rendu complet 450 images en 84.6 s = 18.8 s/100 images (machine partagée avec le studio trait-continu). Texte ≥ 54 px, titres 108 px (« L'ancien record » auto-ajusté) ; contenu entre y = 246 et y = 1560, x ≤ 960. Corrigé avant rendu sur les stills : voile de chaleur radial (orange sur vert = olive « sale », mer beige) remplacé par des anneaux rouges plats autour de la pastille record. GSAP non utilisé.",
+ "reproduce": "node out/shorts/carte-meteo__evenements__28-juin-2019-46-degres-record-de-chaleur/src/precompute.js && node out/tools/render.mjs out/shorts/carte-meteo__evenements__28-juin-2019-46-degres-record-de-chaleur/src/index.html --out /tmp/svi/carte-meteo__evenements__28-juin-2019-46-degres-record-de-chaleur/video.mp4 --duration 15 && .venv/bin/python out/tools/sound.py out/shorts/carte-meteo__evenements__28-juin-2019-46-degres-record-de-chaleur/src/sound.json /tmp/svi/carte-meteo__evenements__28-juin-2019-46-degres-record-de-chaleur/music.wav && .venv/bin/python out/tools/assemble.py mux --video /tmp/svi/carte-meteo__evenements__28-juin-2019-46-degres-record-de-chaleur/video.mp4 --music /tmp/svi/carte-meteo__evenements__28-juin-2019-46-degres-record-de-chaleur/music.wav --out out/shorts/carte-meteo__evenements__28-juin-2019-46-degres-record-de-chaleur/short.mp4"
+}

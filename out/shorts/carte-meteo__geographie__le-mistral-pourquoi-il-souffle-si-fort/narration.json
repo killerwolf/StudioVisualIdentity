@@ -1,0 +1,29 @@
+{
+ "language": "fr",
+ "style": "documentaire clair et posé, ton de bulletin météo sans imitation de présentateur ; adultes d'abord, ados ensuite",
+ "voice": "Arnold (Fish Audio)",
+ "voiceNote": "voix prévue, non enregistrée par ce studio : Fish Audio « Arnold » (d704cf8f1216490cbfbed89955f0e938, s2.1-pro), une ligne par appel -> voice_lines/NN.mp3, puis tts.py --engine files",
+ "pace": "≈ 2,5 mots/s (texte) ; « cent kilomètres-heure » allonge la ligne 3",
+ "lines": [
+  {
+   "t": 0.3,
+   "maxDuration": 2.9,
+   "text": "Le mistral : pourquoi souffle-t-il si fort ?"
+  },
+  {
+   "t": 3.6,
+   "maxDuration": 4.5,
+   "text": "Venu du nord, il est coincé entre Alpes et Massif central."
+  },
+  {
+   "t": 8.6,
+   "maxDuration": 4.3,
+   "text": "Dans ce couloir, il accélère : rafales à plus de cent kilomètres-heure."
+  },
+  {
+   "t": 13.1,
+   "maxDuration": 2.6,
+   "text": "Il chasse les nuages : ciel bleu !"
+  }
+ ]
+}

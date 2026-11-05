@@ -1,0 +1,94 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8">
+<!-- carte-meteo · geographie · « Le mistral : pourquoi il souffle si fort » (16 s).
+     Carte : world-atlas 2.0.2 (Natural Earth, domaine public) décodée par topojson-client 3.1.0, projetée une fois par d3-geo.
+     Isobares : d3.contours par image. Vent : lignes de courant précalculées (src/precompute.js -> wind.json, graine 11), rejouées.
+     Faits : vent de nord à nord-ouest, canalisé entre les Alpes et le Massif central, accéléré dans le couloir rhodanien ;
+     rafales pouvant dépasser 100 km/h ; air sec qui dégage le ciel. Champ de vent et de pression SCHÉMATIQUES (pas une analyse datée). -->
+<script src="/node_modules/d3/dist/d3.min.js"></script>
+<script src="/node_modules/topojson-client/dist/topojson-client.min.js"></script>
+<style>html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:#CFE6F5}canvas{position:absolute;inset:0}</style>
+</head><body><canvas id="c" width="1080" height="1920"></canvas>
+<script type="module">
+import * as S from '/out/tools/lib/svi.js';
+import * as M from './meteo.js';
+const DUR = 16;
+const FR = [3.4, 8.3, 12.6];                 // départs des 3 passages de front (froid), 0,9 s chacun
+const ctx = document.getElementById('c').getContext('2d');
+let geo, W, P, B, cams;
+
+async function ready() {
+  await S.loadFonts(M.FONTS);
+  geo = await M.loadGeo();
+  W = M.prepareWind(geo, await (await fetch('./wind.json')).json());
+  B = (lon, lat) => geo.P(lon, lat);
+  const [hx, hy] = B(-5.5, 47.2), [lx, ly] = B(9.6, 43.6);
+  P = M.pressureField([{ x: hx, y: hy, a: 18, s: 430 }, { x: lx, y: ly, a: -17, s: 340 }], S.noise3);
+  cams = [
+    M.cam(1, 540, 1000),                       // S0 : la France entière
+    M.cam(2.1, ...B(4.85, 44.85), 540, 1000),  // S1 : le couloir rhodanien
+    M.cam(2.3, ...B(4.95, 44.05), 520, 1010),  // S2 : couloir + golfe du Lion
+    M.cam(1.7, ...B(5.6, 44.1), 540, 1000),    // S3 : la Provence
+  ];
+}
+const sc = (c, lon, lat) => M.toScreen(c, B(lon, lat));
+// temps d'apparition d'un élément : au passage du front sur sa position (+ délai), « derrière le front, la carte a changé »
+const popAt = (i, x, y, d = 0.08) => i === 0 ? 0 : M.frontPassTime(x, y, FR[i - 1]) + d;
+
+function drawState(i, t) {
+  const c = cams[i];
+  M.drawMap(ctx, geo, c);
+  M.drawIsobars(ctx, c, P, t);
+  if (i === 3) {                               // nuages chassés vers le sud-est, puis le soleil
+    const clouds = [[5.2, 44.4, 1.15, 0], [6.3, 44.0, 1.0, 0.15], [4.5, 43.85, 0.9, 0.3], [5.8, 43.55, 0.8, 0.1]];
+    const go = M.seg(t, 13.3, 15.2, M.E.p2in);
+    for (const [lon, lat, s, dl] of clouds) {
+      const [x, y] = sc(c, lon, lat), g = M.clamp(go - dl * 0.2);
+      M.cloud(ctx, x + 620 * g, y + 330 * g, s * 1.1, 1 - M.seg(g, 0.55, 1));
+    }
+  }
+  M.drawWind(ctx, c, W, t, { speed: i === 2 ? 1.5 : 1, density: i === 0 ? 0.42 : 0.6 });
+  if (i === 0) {
+    const [ax, ay] = sc(c, -4.4, 46.9), [dx, dy] = sc(c, 8.7, 43.9);
+    M.pressureMark(ctx, Math.max(130, ax), ay, 'A', M.seg(t, 0.25, 0.6));
+    M.pressureMark(ctx, Math.min(880, dx), dy, 'D', M.seg(t, 0.4, 0.75));
+    M.titleBand(ctx, { title: 'Le mistral', sub: 'Pourquoi souffle-t-il si fort ?', accent: M.C.cold, u: M.seg(t, 0.05, 0.4) });
+  }
+  if (i === 1) {
+    const al = [[6.55, 45.55, 1.0], [6.95, 44.75, 0.85], [6.2, 44.25, 0.7]], mc = [[2.9, 45.5, 0.9], [3.4, 44.85, 0.75], [2.6, 44.9, 0.65]];
+    for (const [lon, lat, s] of [...al, ...mc]) { const [x, y] = sc(c, lon, lat); M.mountains(ctx, x, y, s, M.seg(t, popAt(1, x, y), popAt(1, x, y) + 0.35, M.E.backOut(1.4))); }
+    const [ax, ay] = sc(c, 6.6, 46.15), [mx, my] = sc(c, 2.95, 44.3);
+    M.label(ctx, ax, ay, 'Alpes', { place: 'c', dot: false, u: M.seg(t, popAt(1, ax, ay, 0.25), popAt(1, ax, ay, 0.25) + 0.35) });
+    M.label(ctx, mx, my, 'Massif central', { place: 'c', dot: false, u: M.seg(t, popAt(1, mx, my, 0.3), popAt(1, mx, my, 0.3) + 0.35) });
+    M.titleBand(ctx, { title: 'Le couloir', sub: 'du Rhône', accent: M.C.cold });
+  }
+  if (i === 2) {
+    const [lyx, lyy] = sc(c, 4.835, 45.764), [mx, my] = sc(c, 5.37, 43.296), [gx, gy] = sc(c, 4.7, 43.75);
+    M.label(ctx, lyx, lyy, 'Lyon', { place: 'r', u: M.seg(t, popAt(2, lyx, lyy), popAt(2, lyx, lyy) + 0.35) });
+    M.label(ctx, mx, my, 'Marseille', { place: 'r', u: M.seg(t, popAt(2, mx, my), popAt(2, mx, my) + 0.35) });
+    const px = 300, py = 1290, p0 = 9.55;
+    M.leader(ctx, gx, gy, px, py, M.seg(t, p0 - 0.2, p0 + 0.1));
+    const v = Math.round(100 * M.seg(t, p0 + 0.15, p0 + 1.05, M.E.p2out));
+    const done = t >= p0 + 1.05;
+    M.pastille(ctx, px, py, { r: 128, text: done ? '100+' : String(v), unit: 'km/h', ring: done ? M.C.warm : M.C.cold, u: M.seg(t, p0, p0 + 0.35), max: 96 });
+    M.label(ctx, px, py + 128, 'rafales', { place: 'b', dot: false, u: M.seg(t, p0 + 0.3, p0 + 0.65) });
+    M.titleBand(ctx, { title: 'Ça accélère', sub: 'dans le couloir', accent: M.C.cold });
+  }
+  if (i === 3) {
+    const [sx, sy] = sc(c, 6.15, 44.1);
+    const su = M.seg(t, 13.9, 14.3);
+    M.sun(ctx, sx, sy, 78, su, (t - 13.9) * 0.15);
+    M.titleBand(ctx, { title: 'Ciel bleu', sub: 'Le mistral chasse les nuages', accent: M.C.cold });
+  }
+}
+
+function renderAt(t) {
+  let k = 0; while (k < FR.length && t >= FR[k]) k++;      // k = index du dernier front lancé
+  const inFront = k > 0 && t < FR[k - 1] + M.FRONT.dur;
+  if (!inFront) { drawState(k, t); return; }
+  const s = M.frontS(t, FR[k - 1]);
+  drawState(k - 1, t);
+  ctx.save(); M.clipBehind(ctx, s); drawState(k, t); ctx.restore();
+  M.drawFront(ctx, s, 'cold');
+}
+S.installContract({ renderAt, ready: ready(), duration: DUR });
+</script></body></html>

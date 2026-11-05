@@ -1,0 +1,26 @@
+{
+  "name": "topojson-client 3.1.0",
+  "role": "data",
+  "bestFor": [
+    "décoder une topologie TopoJSON (world-atlas, Natural Earth) en GeoJSON : topojson.feature(topo, topo.objects.countries)",
+    "tracer côtes et frontières sans doublons : topojson.mesh(topo, obj, (a,b) => a === b) pour les côtes, a !== b pour les frontières (impossible proprement avec le seul GeoJSON)",
+    "décodage unique dans window.ready (≈ 300 ms avec filtrage et projection), puis Path2D réutilisés"
+  ],
+  "avoidFor": [
+    "décoder à chaque image",
+    "géométries non topologiques (GeoJSON déjà prêt : d3-geo suffit)",
+    "le style : la librairie ne dessine rien, c'est un décodeur de 2 fonctions utiles (feature, mesh)"
+  ],
+  "renderCostPer100Frames": "≈ 0 par image (décodage unique 308 ms dans window.ready, mesuré) ; coût total de la scène : 18,1 s (mesuré, mistral : 480 images en 87,0 s) et 18,8 s (mesuré, record de chaleur : 450 images en 84,6 s), 1080×1920, machine partagée avec 1 autre studio ; référence page canvas vide 13,2 s/100 à vide",
+  "gotchas": [
+    "le bundle UMD /node_modules/topojson-client/dist/topojson-client.min.js marche sous render.mjs (global `topojson`) ; l'ESM src/index.js marche en Node (import par chemin)",
+    "topojson.mesh avec un filtre sur les ids (keep.has(a.id)) pour ne garder que les côtes de la découpe",
+    "la France de world-atlas est un MultiPolygon de 10 polygones avec les DROM : filtrer par d3.geoCentroid avant fitExtent",
+    "projeter une seule fois en Path2D et déplacer la caméra par ctx.setTransform (largeurs de trait divisées par k)"
+  ],
+  "snippetPath": "shorts/carte-meteo__geographie__le-mistral-pourquoi-il-souffle-si-fort/src/meteo.js",
+  "pairsWellWith": [
+    "world-atlas",
+    "D3.js (d3-geo)"
+  ]
+}

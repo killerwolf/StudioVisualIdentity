@@ -1,0 +1,108 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8">
+<!-- carte-meteo · evenements · « 28 juin 2019 : 46 °C, record de chaleur » (15 s).
+     Faits : 46,0 °C à Vérargues (Hérault) le 28 juin 2019, record national absolu de température en France ; ancien record
+     44,1 °C à Conqueyrac (Gard) le 12 août 2003 ; écart 1,9 °C. Positions des communes approchées (≈ 1 km).
+     Carte : world-atlas 2.0.2 (Natural Earth, domaine public) via topojson-client 3.1.0, d3-geo, d3.contours.
+     Vent (flux de sud) et pression SCHÉMATIQUES : src/precompute.js -> wind.json (graine 28). Ce n'est pas l'analyse du jour. -->
+<script src="/node_modules/d3/dist/d3.min.js"></script>
+<script src="/node_modules/topojson-client/dist/topojson-client.min.js"></script>
+<style>html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:#CFE6F5}canvas{position:absolute;inset:0}</style>
+</head><body><canvas id="c" width="1080" height="1920"></canvas>
+<script type="module">
+import * as S from '/out/tools/lib/svi.js';
+import * as M from './meteo.js';
+const DUR = 15;
+const FR = [3.6, 8.6, 12.6];                 // 3 passages de front CHAUD (demi-cercles rouges), 0,9 s chacun
+const CONQ = [3.93, 43.96], VERA = [4.07, 43.72];
+const ctx = document.getElementById('c').getContext('2d');
+let geo, W, P, B, cams;
+
+async function ready() {
+  await S.loadFonts(M.FONTS);
+  geo = await M.loadGeo();
+  W = M.prepareWind(geo, await (await fetch('./wind.json')).json());
+  B = (lon, lat) => geo.P(lon, lat);
+  const [hx, hy] = B(11, 50.5), [lx, ly] = B(-4, 40.5);
+  P = M.pressureField([{ x: hx, y: hy, a: 15, s: 470 }, { x: lx, y: ly, a: -12, s: 420 }], S.noise3);
+  cams = [
+    M.cam(1, 540, 1000),                       // S0 : la France entière
+    M.cam(2.4, ...B(4.0, 43.85), 540, 1000),   // S1 : Gard / Hérault (2003)
+    M.cam(2.6, ...B(4.05, 43.8), 540, 1000),   // S2 : Vérargues (2019)
+    M.cam(1, 540, 1000),                       // S3 : retour France entière
+  ];
+}
+const sc = (c, p) => M.toScreen(c, B(p[0], p[1]));
+const popAt = (i, x, y, d = 0.08) => i === 0 ? 0 : M.frontPassTime(x, y, FR[i - 1]) + d;
+const fr1 = v => v.toFixed(1).replace('.', ',');
+
+function halo(x, y, u, pulse = -1) {        // anneaux rouges plats autour de la pastille record (aucun dégradé, aucun filtre)
+  if (u <= 0) return;
+  ctx.save(); ctx.strokeStyle = M.C.warm; ctx.lineWidth = 7;
+  for (const [r, a] of [[158, 0.55], [190, 0.3]]) { ctx.globalAlpha = a * u; ctx.beginPath(); ctx.arc(x, y, r, 0, 7); ctx.stroke(); }
+  if (pulse >= 0 && pulse < 1) { ctx.globalAlpha = 0.7 * (1 - pulse); ctx.lineWidth = 10; ctx.beginPath(); ctx.arc(x, y, 135 + 170 * pulse, 0, 7); ctx.stroke(); }
+  ctx.restore();
+}
+function drawState(i, t) {
+  const c = cams[i];
+  M.drawMap(ctx, geo, c);
+  M.drawIsobars(ctx, c, P, t);
+  M.drawWind(ctx, c, W, t, { density: i === 0 || i === 3 ? 0.42 : 0.5, slow: 2, fast: 6, trail: 20 });
+  if (i === 0) {
+    const [ax, ay] = sc(c, [7.4, 49.6]), [dx, dy] = sc(c, [-2.4, 42.7]);
+    M.pressureMark(ctx, Math.min(880, ax), ay, 'A', M.seg(t, 0.3, 0.65));
+    M.pressureMark(ctx, Math.max(130, dx), dy, 'D', M.seg(t, 0.45, 0.8));
+    const [vx, vy] = sc(c, VERA), px = 760, py = 1060;
+    M.leader(ctx, vx, vy, px, py, M.seg(t, 0.15, 0.4));
+    const ring = S.mix(M.C.heat, M.C.warm, 0.5 + 0.5 * Math.sin(t * 4.2));          // l'anneau hésite entre orange et rouge
+    M.pastille(ctx, px, py, { r: 112, text: '?', unit: '°C', ring, u: M.seg(t, 0.2, 0.55) });
+    dot(vx, vy, M.seg(t, 0.1, 0.3));
+    M.titleBand(ctx, { title: '28 juin 2019', sub: 'Record de chaleur en France', accent: M.C.warm, u: M.seg(t, 0.03, 0.38) });
+  }
+  if (i === 1) {
+    const [qx, qy] = sc(c, CONQ), px = 310, py = 720, t0 = popAt(1, px, py);
+    M.leader(ctx, qx, qy, px, py, M.seg(t, popAt(1, qx, qy), popAt(1, qx, qy) + 0.3));
+    dot(qx, qy, M.seg(t, popAt(1, qx, qy), popAt(1, qx, qy) + 0.2));
+    M.pastille(ctx, px, py, { r: 120, text: fr1(44.1 * M.seg(t, t0 + 0.1, t0 + 0.7, M.E.p2out) + 0.0001), unit: '°C', ring: M.C.heat, u: M.seg(t, t0, t0 + 0.35) });
+    M.titleBand(ctx, { title: "L'ancien record", sub: 'Août 2003, dans le Gard', accent: M.C.warm });
+  }
+  if (i === 2) {
+    const [qx, qy] = sc(c, CONQ), [vx, vy] = sc(c, VERA);
+    ctx.save(); ctx.globalAlpha = 0.55;
+    M.leader(ctx, qx, qy, 300, 700); M.pastille(ctx, 300, 700, { r: 112, text: '44,1', unit: '2003', ring: M.C.heat, max: 80 });
+    ctx.restore();
+    const px = 720, py = 1290, t0 = 9.5;
+    halo(px, py, M.seg(t, t0 + 1.8, t0 + 2.1), M.seg(t, t0 + 1.8, t0 + 2.6));
+    M.leader(ctx, vx, vy, px, py, M.seg(t, t0 - 0.25, t0 + 0.05));
+    dot(vx, vy, 1);
+    const v = 44.1 + 1.9 * M.seg(t, t0 + 0.4, t0 + 1.8, M.E.p2out);
+    const done = t >= t0 + 1.8;
+    M.pastille(ctx, px, py, { r: 128, text: fr1(v), unit: '°C', ring: S.mix(M.C.heat, M.C.warm, M.seg(t, t0 + 0.4, t0 + 1.8)), fill: done, u: M.seg(t, t0, t0 + 0.35), max: 96 });
+    M.titleBand(ctx, { title: 'Nouveau record', sub: 'Vérargues (Hérault)', accent: M.C.warm });
+  }
+  if (i === 3) {
+    const [qx, qy] = sc(c, CONQ), [vx, vy] = sc(c, VERA);
+    halo(720, 1290, 1);
+    M.leader(ctx, qx, qy, 250, 1150); M.pastille(ctx, 250, 1150, { r: 112, text: '44,1', unit: '2003', ring: M.C.heat, max: 80 });
+    M.leader(ctx, vx, vy, 720, 1290); dot(qx, qy, 1); dot(vx, vy, 1);
+    M.pastille(ctx, 720, 1290, { r: 128, text: '46,0', unit: '°C', ring: M.C.warm, fill: true, max: 96 });
+    M.label(ctx, 720, 1290 + 128, '2019', { place: 'b', dot: false });
+    M.titleBand(ctx, { title: '+1,9 °C', sub: 'par rapport à 2003', accent: M.C.warm });
+  }
+}
+function dot(x, y, u) {
+  if (u <= 0) return;
+  ctx.save(); ctx.fillStyle = M.C.white; ctx.beginPath(); ctx.arc(x, y, 16 * u, 0, 7); ctx.fill();
+  ctx.fillStyle = M.C.text; ctx.beginPath(); ctx.arc(x, y, 10 * u, 0, 7); ctx.fill(); ctx.restore();
+}
+
+function renderAt(t) {
+  let k = 0; while (k < FR.length && t >= FR[k]) k++;
+  const inFront = k > 0 && t < FR[k - 1] + M.FRONT.dur;
+  if (!inFront) { drawState(k, t); return; }
+  const s = M.frontS(t, FR[k - 1]);
+  drawState(k - 1, t);
+  ctx.save(); M.clipBehind(ctx, s); drawState(k, t); ctx.restore();
+  M.drawFront(ctx, s, 'warm');
+}
+S.installContract({ renderAt, ready: ready(), duration: DUR });
+</script></body></html>

@@ -1,0 +1,61 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8">
+<!-- carte-meteo · still de preuve de l'identité (pas un short) : France world-atlas + topojson-client, trait de côte,
+     isobares, 3 pastilles de température (valeurs factices de démonstration, non publiées), front froid en cours de passage.
+     Rendu : node out/tools/render.mjs out/shorts/carte-meteo__geographie__le-mistral-pourquoi-il-souffle-si-fort/src/probe.html --stills 1.4 --stills-dir /tmp/svi/carte-meteo-probe -->
+<script src="/node_modules/d3/dist/d3.min.js"></script>
+<script src="/node_modules/topojson-client/dist/topojson-client.min.js"></script>
+<style>html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:#CFE6F5}canvas{position:absolute;inset:0}</style>
+</head><body><canvas id="c" width="1080" height="1920"></canvas>
+<script type="module">
+import * as S from '/out/tools/lib/svi.js';
+import * as M from './meteo.js';
+const ctx = document.getElementById('c').getContext('2d');
+let geo, W, P, camA, camB;
+async function ready() {
+  await S.loadFonts(M.FONTS);
+  geo = await M.loadGeo();
+  const wind = await (await fetch('./wind.json')).json();
+  W = M.prepareWind(geo, wind);
+  const b = (lon, lat) => geo.P(lon, lat);
+  const [hx, hy] = b(-5.5, 47.2), [lx, ly] = b(9.6, 43.6);
+  P = M.pressureField([{ x: hx, y: hy, a: 18, s: 420 }, { x: lx, y: ly, a: -16, s: 330 }], S.noise3);
+  camA = M.cam(1, 540, 1000);
+  const [rx, ry] = b(4.85, 44.7); camB = M.cam(2.1, rx, ry, 540, 980);
+  console.log('geo', JSON.stringify(geo.info));
+}
+function state(cm, t, which) {
+  M.drawMap(ctx, geo, cm);
+  M.drawIsobars(ctx, cm, P, t);
+  M.drawWind(ctx, cm, W, t);
+  const s = p => M.toScreen(cm, geo.P(...p));
+  if (which === 0) {
+    const [ax, ay] = s([-4.6, 47.0]); M.pressureMark(ctx, Math.max(130, ax), ay, 'A');
+    const [dx, dy] = s([8.6, 43.9]); M.pressureMark(ctx, Math.min(890, dx), dy, 'D');
+    M.titleBand(ctx, { title: 'Carte Météo', sub: 'still de preuve', accent: M.C.cold });
+    const cities = [['Paris', [2.35, 48.86], '24°'], ['Lyon', [4.83, 45.76], '27°'], ['Marseille', [5.37, 43.3], '31°']];
+    for (const [n, p, v] of cities) { const [x, y] = s(p); M.pastille(ctx, x, y - 120, { r: 92, text: v, ring: M.C.heat }); M.label(ctx, x, y, n, { place: 'b', dot: false }); }
+  } else {
+    M.titleBand(ctx, { title: 'Le mistral', sub: 'derrière le front', accent: M.C.cold });
+  }
+}
+const PROF = /prof=1/.test(location.search);
+function renderAt(t) {
+  const q0 = performance.now();
+  renderAt0(t);
+  if (PROF) { const tm = {}; const cm = M.drift(camA, 0);
+    let a = performance.now(); M.drawMap(ctx, geo, cm); tm.map = performance.now() - a;
+    a = performance.now(); M.drawIsobars(ctx, cm, P, t); tm.iso = performance.now() - a;
+    a = performance.now(); M.drawWind(ctx, cm, W, t); tm.wind = performance.now() - a;
+    renderAt0(t);
+    console.log('frame', t.toFixed(2), (performance.now() - q0).toFixed(1), JSON.stringify(Object.fromEntries(Object.entries(tm).map(([k, v]) => [k, +v.toFixed(1)])))); }
+}
+function renderAt0(t) {
+  const t0 = 0.8;
+  const s = M.frontS(t, t0);
+  const cA = camA, cB = camB;
+  state(cA, t, 0);
+  ctx.save(); M.clipBehind(ctx, s); state(cB, t, 1); ctx.restore();
+  if (t > t0 && t < t0 + M.FRONT.dur) M.drawFront(ctx, s, 'cold');
+}
+S.installContract({ renderAt, ready: ready(), duration: 3 });
+</script></body></html>

@@ -1,0 +1,205 @@
+{
+ "duration": 16.0,
+ "seed": 11,
+ "bpm": 96,
+ "key": "C",
+ "scale": "lydian",
+ "music": {
+  "preset": "pad",
+  "gain": 0.45,
+  "octave": 3,
+  "density": 0.5,
+  "loop": false
+ },
+ "events": [
+  {
+   "t": 0.0,
+   "type": "whoosh",
+   "gain": 0.35,
+   "dur": 1.4
+  },
+  {
+   "t": 0.08,
+   "type": "pop",
+   "note": "A5",
+   "gain": 0.35
+  },
+  {
+   "t": 0.3,
+   "type": "pop",
+   "note": "C6",
+   "gain": 0.4
+  },
+  {
+   "t": 0.45,
+   "type": "pop",
+   "note": "E6",
+   "gain": 0.4
+  },
+  {
+   "t": 3.4,
+   "type": "whoosh",
+   "gain": 0.8,
+   "dur": 0.9
+  },
+  {
+   "t": 3.75,
+   "type": "pop",
+   "note": "C5",
+   "gain": 0.28
+  },
+  {
+   "t": 3.85,
+   "type": "pop",
+   "note": "E5",
+   "gain": 0.28
+  },
+  {
+   "t": 3.95,
+   "type": "pop",
+   "note": "G5",
+   "gain": 0.28
+  },
+  {
+   "t": 4.05,
+   "type": "pop",
+   "note": "C6",
+   "gain": 0.28
+  },
+  {
+   "t": 4.15,
+   "type": "pop",
+   "note": "E6",
+   "gain": 0.28
+  },
+  {
+   "t": 4.25,
+   "type": "pop",
+   "note": "G6",
+   "gain": 0.28
+  },
+  {
+   "t": 4.3,
+   "type": "blip",
+   "note": "G5",
+   "gain": 0.35
+  },
+  {
+   "t": 4.45,
+   "type": "blip",
+   "note": "C6",
+   "gain": 0.35
+  },
+  {
+   "t": 8.3,
+   "type": "whoosh",
+   "gain": 0.8,
+   "dur": 0.9
+  },
+  {
+   "t": 8.75,
+   "type": "pop",
+   "note": "E5",
+   "gain": 0.35
+  },
+  {
+   "t": 9.05,
+   "type": "pop",
+   "note": "G5",
+   "gain": 0.35
+  },
+  {
+   "t": 9.55,
+   "type": "pop",
+   "note": "C6",
+   "gain": 0.55
+  },
+  {
+   "t": 9.72,
+   "type": "tick",
+   "gain": 0.4
+  },
+  {
+   "t": 9.82,
+   "type": "tick",
+   "gain": 0.4
+  },
+  {
+   "t": 9.9,
+   "type": "blip",
+   "note": "G6",
+   "gain": 0.3
+  },
+  {
+   "t": 9.92,
+   "type": "tick",
+   "gain": 0.4
+  },
+  {
+   "t": 10.02,
+   "type": "tick",
+   "gain": 0.4
+  },
+  {
+   "t": 10.12,
+   "type": "tick",
+   "gain": 0.4
+  },
+  {
+   "t": 10.22,
+   "type": "tick",
+   "gain": 0.4
+  },
+  {
+   "t": 10.32,
+   "type": "tick",
+   "gain": 0.4
+  },
+  {
+   "t": 10.42,
+   "type": "tick",
+   "gain": 0.4
+  },
+  {
+   "t": 10.52,
+   "type": "tick",
+   "gain": 0.4
+  },
+  {
+   "t": 10.6,
+   "type": "impact",
+   "gain": 0.55
+  },
+  {
+   "t": 10.6,
+   "type": "chime",
+   "note": "E6",
+   "gain": 0.35
+  },
+  {
+   "t": 12.6,
+   "type": "whoosh",
+   "gain": 0.8,
+   "dur": 0.9
+  },
+  {
+   "t": 13.3,
+   "type": "whoosh",
+   "gain": 0.4,
+   "dur": 1.6
+  },
+  {
+   "t": 13.9,
+   "type": "chime",
+   "note": "C6",
+   "gain": 0.45
+  },
+  {
+   "t": 13.9,
+   "type": "swell",
+   "note": "C4",
+   "gain": 0.35,
+   "dur": 2.1
+  }
+ ]
+}

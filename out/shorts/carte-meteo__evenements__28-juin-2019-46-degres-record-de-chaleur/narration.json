@@ -1,0 +1,29 @@
+{
+ "language": "fr",
+ "style": "documentaire clair et posé, ton de bulletin météo sans imitation de présentateur ; adultes d'abord, ados ensuite",
+ "voice": "Arnold (Fish Audio)",
+ "voiceNote": "voix prévue, non enregistrée par ce studio : Fish Audio « Arnold » (d704cf8f1216490cbfbed89955f0e938, s2.1-pro), une ligne par appel -> voice_lines/NN.mp3, puis tts.py --engine files",
+ "pace": "≈ 2,1 mots/s écrits, ≈ 2,8 mots/s parlés (dates et nombres lus en toutes lettres : « vingt-huit juin deux mille dix-neuf », « quarante-quatre virgule un »)",
+ "lines": [
+  {
+   "t": 0.3,
+   "maxDuration": 4.25,
+   "text": "Le 28 juin 2019, la France bat son record de chaleur."
+  },
+  {
+   "t": 4.6,
+   "maxDuration": 3.9,
+   "text": "L'ancien record : 44,1 degrés, en août 2003."
+  },
+  {
+   "t": 8.8,
+   "maxDuration": 3.7,
+   "text": "Ce jour-là, Vérargues, dans l'Hérault, atteint 46 degrés."
+  },
+  {
+   "t": 12.7,
+   "maxDuration": 2.2,
+   "text": "Record absolu pour la France."
+  }
+ ]
+}

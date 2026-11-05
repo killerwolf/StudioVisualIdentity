@@ -1,0 +1,27 @@
+{
+  "name": "D3.js 7.9.2",
+  "role": "data",
+  "bestFor": [
+    "d3.geoConicConformal().parallels([44,49]).rotate([-2.5,0]).fitExtent(box, France).clipExtent(...) : projection conforme centrée France, calée une fois",
+    "d3.geoPath(proj) -> chaîne SVG -> new Path2D(...) : dessin canvas rapide, caméra par setTransform",
+    "d3.contours sur une grille écran 116×200 (pas 10 px, débordant de 40 px) : isobares recalculées à chaque image pour qu'elles respirent",
+    "d3.geoCentroid / d3.geoBounds pour filtrer polygones et pays"
+  ],
+  "avoidFor": [
+    "d3.transition (horloge réelle, non seekable)",
+    "contours sur une grille qui s'arrête au bord du cadre : les anneaux suivent le bord et dessinent un cadre parasite",
+    "SVG plein cadre filtré (309 s/100 ailleurs) : ici tout est en canvas 2D"
+  ],
+  "renderCostPer100Frames": "18,1 s (mesuré, mistral : 480 images en 87,0 s) et 18,8 s (mesuré, record de chaleur : 450 images en 84,6 s), 1080×1920, machine partagée avec 1 autre studio ; référence page canvas vide 13,2 s/100 à vide ; JS par image : isobares 10–25 ms (23 200 échantillons noise3 + contours), vent ≈ 1 ms, carte 0,1 ms (blit du cache)",
+  "gotchas": [
+    "contours : lisser par courbes quadratiques entre milieux de segments, sinon l'escalier de la grille se voit",
+    "fond de carte : le re-rastériser à chaque image (caméra qui dérive) coûtait 20,5 s/100 à vide ; plan fixe + cache canvas par caméra = 17,6",
+    "d3 chargé en <script> classique (global d3) puis utilisé dans des modules ES ; en Node, importer /node_modules/d3/dist/d3.mjs",
+    "vent : ne pas intégrer dans le navigateur (SEQUENTIAL) ; lignes de courant précalculées en Node, position fermée en t"
+  ],
+  "snippetPath": "shorts/carte-meteo__geographie__le-mistral-pourquoi-il-souffle-si-fort/src",
+  "pairsWellWith": [
+    "topojson-client",
+    "world-atlas"
+  ]
+}
