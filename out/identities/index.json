@@ -1,10 +1,30 @@
 {
- "schemaVersion": "1.0",
- "description": "Machine index of the 20 visual identities for 9:16 shorts. Use it to shortlist identities, then read each identity's identity.md (16 sections, French) and tokens.json. coreTokens is a normalised subset (seconds, pixels on a 1080x1920 canvas, @fontsource slugs); the original tokens.json is authoritative for everything else. curation.* is orchestrator judgment. See AGENTS.md.",
+ "schemaVersion": "1.1",
+ "description": "Machine index of the 17 visual identities for 9:16 shorts (20 declinations: 3 of them are derivations of a root identity, see variantOf). Use it to shortlist identities, then read each identity's identity.md (16 sections, French) and tokens.json. coreTokens is a normalised subset (seconds, pixels on a 1080x1920 canvas, @fontsource slugs); the original tokens.json is authoritative for everything else. curation.* is orchestrator judgment. See AGENTS.md.",
  "generatedBy": "out/tools/build_index.py",
+ "counts": {
+  "identities": 17,
+  "derivations": 3,
+  "declinations": 20,
+  "shorts": 43
+ },
+ "families": [
+  {
+   "root": "papier-decoupe",
+   "name": "Papier découpé",
+   "variants": [
+    "atelier-papier",
+    "carnet-archives",
+    "cabinet-curiosites"
+   ],
+   "sharedEngine": "out/shared/papier-moteur/",
+   "axis": "Même moteur papier-moteur, même pop stop-motion à 12 i/s, mêmes bandes de papier inclinées, mêmes sous-titres sur bande ; seuls changent le fond (tapis vert, tapis bleu nuit, kraft, bleu nuit uni), la palette et les polices."
+  }
+ ],
  "fieldNotes": {
-  "status": "selected = kept in Phase 1; rehabilitated = set aside in Phase 1 only to avoid topic overlap with a neighbour, then produced on request with the same rules and evidence level; added = added after the campaign: (a) the cut-paper family from the StudioGabarit template (papier-decoupe, atelier-papier, carnet-archives, cabinet-curiosites), rendered by the shared Python engine out/shared/papier-moteur/, appended after the ranked identities and not part of the ranking or the blind visual judge; (b) lot 2 of the identity factory (trait-continu, carte-meteo, 2026-11-05: scouting + adversarial challenge + studio + review), ranked with the others, blind visual judge on 8 identities (lot 2 + 6 neighbours, 8/8 pure groups, out/report/notes/revue-2026-11-05.md), voice-over planned but not recorded (see voicePlanned)",
-  "voiceUsed": "voice actually mixed into short.mp4; null when the voice-over is not recorded yet (lot 2: see voicePlanned and shorts[].voiced)",
+  "variantOf": "id of the root identity when this entry is a derivation (same engine, only ground / palette / fonts change), else null. A root lists its derivations in variants and what is shared / what varies in variantAxis. Derivations stay ranked, right after their root; counts.identities counts roots only, counts.declinations counts every entry. curation.deliberateSiblings = derivations of the same root, deliberately close and therefore not listed in confusableWith. A new identity that reuses an existing engine and only changes ground / palette / fonts must be registered as a derivation, not as a new identity",
+  "status": "selected = kept in Phase 1; rehabilitated = set aside in Phase 1 only to avoid topic overlap with a neighbour, then produced on request with the same rules and evidence level; added = added after the campaign: (a) the cut-paper identity from the StudioGabarit template, papier-decoupe, and its 3 derivations (atelier-papier, carnet-archives, cabinet-curiosites), rendered by the shared Python engine out/shared/papier-moteur/, appended after the ranked identities and not part of the ranking or the blind visual judge; (b) lot 2 of the identity factory (trait-continu, carte-meteo, 2026-11-05: scouting + adversarial challenge + studio + review), ranked with the others, blind visual judge on 8 identities (lot 2 + 6 neighbours, 8/8 pure groups, out/report/notes/revue-2026-11-05.md), voice-over Gemini Sulafat like the cut-paper family (owner decision: Fish Audio credits ran out before Arnold could be recorded)",
+  "voiceUsed": "voice actually mixed into short.mp4 (Fish Audio Arnold for the 31 campaign shorts, Gemini Sulafat for the 8 cut-paper and 4 lot 2 shorts; see shorts[].voiced)",
   "coreTokens.motion.staggerSec": "the identity's default stagger as written in its tokens.json; meaning varies (per-item stagger for most, spacing between beats/captions for atlas-grave 1.5 and liquid-chrome 1.55, title-to-body delay for neon-lab 0.8)",
   "coreTokens.motion.durationSec.slow": "longest standard duration; for gazette-1900 it is one page (6 beats at 128 bpm)",
   "coreTokens.color.contrastOnBg": "WCAG contrast ratio against bg, computed; muted/accent colours are often decorative (e.g. gazette-1900 muted = engraving fill, 1.07:1) and must not carry text",
@@ -23,6 +43,7 @@
    "id": "swiss-data",
    "name": "Grille Suisse",
    "rank": 1,
+   "variantOf": null,
    "status": "selected",
    "promiseFr": "Un chiffre qui claque par écran, posé sur une grille 12 colonnes visible, révélé par des volets rouges nets : on comprend une donnée en 4 secondes.",
    "promiseEn": "One number per screen that lands hard, on a visible 12-column grid, revealed by clean red wipes: a fact understood in 4 seconds.",
@@ -222,6 +243,7 @@
    "id": "gazette-1900",
    "name": "Gazette 1900",
    "rank": 2,
+   "variantOf": null,
    "status": "selected",
    "promiseFr": "Chaque grand moment arrive comme une une de journal qui tourbillonne, se pose sur la pile et se fait tamponner : l'histoire racontée à la vitesse d'un crieur de rue, avec le grain d'une actualité filmée.",
    "promiseEn": "Every big moment arrives as an invented newspaper front page that spins in, lands and gets stamped, with newsreel grain.",
@@ -421,6 +443,7 @@
    "id": "pixel-arcade",
    "name": "Arcade Pixel",
    "rank": 3,
+   "variantOf": null,
    "status": "selected",
    "promiseFr": "Une vraie simulation physique, déterministe, filmée comme une partie d'arcade : on parie, on suit, on voit le score tomber.",
    "promiseEn": "A real deterministic physics simulation filmed like an arcade game: you bet, you follow, you see the score drop.",
@@ -626,6 +649,7 @@
    "id": "brut-meme",
    "name": "Brut Mème",
    "rank": 4,
+   "variantOf": null,
    "status": "rehabilitated",
    "promiseFr": "Un fait ou un défi par coupe, en lettres géantes qui claquent sur le beat : impossible de scroller sans lire.",
    "promiseEn": "Brutalist meme energy: one word or number slams on the beat, black and hazard yellow, giant condensed type.",
@@ -829,6 +853,7 @@
    "id": "carte-meteo",
    "name": "Carte Météo",
    "rank": 5,
+   "variantOf": null,
    "status": "added",
    "promiseFr": "Une carte météo claire, mer bleu ciel pâle et terres vert tendre, où les isobares respirent, où le vent file en traînées sombres, où les pastilles de température « popent », et où un front à triangles bleus ou à demi-cercles rouges balaie l'écran en diagonale pour passer au plan suivant.",
    "promiseEn": "A clear weather map where isobars breathe, wind runs in dark trails, temperature pills pop, and a weather front sweeps the screen diagonally to move on.",
@@ -850,15 +875,12 @@
    "sharedModule": [
     "out/shorts/carte-meteo__evenements__28-juin-2019-46-degres-record-de-chaleur/src/meteo.js"
    ],
-   "voiceUsed": null,
-   "voicePlanned": {
-    "provider": "Fish Audio",
-    "name": "Arnold",
-    "reference_id": "d704cf8f1216490cbfbed89955f0e938",
-    "model": "s2.1-pro",
+   "voiceUsed": {
+    "provider": "Gemini",
+    "name": "Sulafat",
+    "model": "gemini-3.8-flash-tts",
     "language": "fr",
-    "recorded": false,
-    "note": "planned voice, not recorded: Fish Audio free-plan credits ran out (1 line of 20 generated); short.mp4 is music + SFX only, narration.json is ready; see out/report/notes/voix-lot2.md"
+    "note": "owner decision 2026-11-05: Sulafat instead of the planned Fish Audio Arnold (Fish Audio credits ran out); one Gemini call per short, split into voice_lines/NN.mp3, mixed by out/tools/tts.py --engine files"
    },
    "paths": {
     "identityMd": "out/identities/carte-meteo/identity.md",
@@ -884,7 +906,7 @@
      ],
      "renderCostSecPer100Frames": 18.7,
      "loopable": false,
-     "voiced": false,
+     "voiced": true,
      "recognitionNearestShort": "carte-meteo__geographie__le-mistral-pourquoi-il-souffle-si-fort",
      "recognitionSameIdentity": true
     },
@@ -900,7 +922,7 @@
      ],
      "renderCostSecPer100Frames": 18.1,
      "loopable": false,
-     "voiced": false,
+     "voiced": true,
      "recognitionNearestShort": "carte-meteo__evenements__28-juin-2019-46-degres-record-de-chaleur",
      "recognitionSameIdentity": true
     }
@@ -1029,6 +1051,7 @@
    "id": "bauhaus-kinetic",
    "name": "Bauhaus Cinétique",
    "rank": 6,
+   "variantOf": null,
    "status": "selected",
    "promiseFr": "Des formes primaires qui s'emboîtent sur une grille stricte pour expliquer ou défier en 15 secondes : chaque idée devient un puzzle géométrique qui se résout sous nos yeux.",
    "promiseEn": "Primary shapes snapping together on a strict grid: every idea becomes a geometric puzzle solved in 15 seconds.",
@@ -1227,6 +1250,7 @@
    "id": "tableau-craie",
    "name": "Tableau Craie",
    "rank": 7,
+   "variantOf": null,
    "status": "selected",
    "promiseFr": "Un prof bienveillant t'explique le monde en le dessinant à la craie : une idée = un schéma qui s'écrit, puis un coup de chiffon.",
    "promiseEn": "A kind teacher explains the world by drawing it in chalk: one idea = one diagram that draws itself, then a wipe of the cloth.",
@@ -1414,6 +1438,7 @@
    "id": "riso-zine",
    "name": "Zine Riso",
    "rank": 8,
+   "variantOf": null,
    "status": "rehabilitated",
    "promiseFr": "Un chiffre fort, une forme découpée, une annotation au marqueur : la géo et l'agenda racontés comme un fanzine imprimé à la main, en trois encres qui débordent.",
    "promiseEn": "An indie risograph fanzine: overprinted spot inks, misregistration and marker notes, animated on twos.",
@@ -1607,6 +1632,7 @@
    "id": "trait-continu",
    "name": "Trait continu",
    "rank": 9,
+   "variantOf": null,
    "status": "added",
    "promiseFr": "Un seul trait, qui avance sur deux axes sans jamais se lever, dessine l'idée devant toi ; puis la plaque avance et on recommence.",
    "promiseEn": "One single line that moves on two axes and is never lifted draws the idea in front of you; then the plate advances and we start again.",
@@ -1631,15 +1657,12 @@
    "sharedModule": [
     "out/shorts/trait-continu__enfants__dessine-un-escargot-d-un-seul-trait/src/traceur.py"
    ],
-   "voiceUsed": null,
-   "voicePlanned": {
-    "provider": "Fish Audio",
-    "name": "Arnold",
-    "reference_id": "d704cf8f1216490cbfbed89955f0e938",
-    "model": "s2.1-pro",
+   "voiceUsed": {
+    "provider": "Gemini",
+    "name": "Sulafat",
+    "model": "gemini-3.8-flash-tts",
     "language": "fr",
-    "recorded": false,
-    "note": "planned voice, not recorded: Fish Audio free-plan credits ran out (1 line of 20 generated); short.mp4 is music + SFX only, narration.json is ready; see out/report/notes/voix-lot2.md"
+    "note": "owner decision 2026-11-05: Sulafat instead of the planned Fish Audio Arnold (Fish Audio credits ran out); one Gemini call per short, split into voice_lines/NN.mp3, mixed by out/tools/tts.py --engine files"
    },
    "paths": {
     "identityMd": "out/identities/trait-continu/identity.md",
@@ -1668,7 +1691,7 @@
      ],
      "renderCostSecPer100Frames": 4.9,
      "loopable": false,
-     "voiced": false,
+     "voiced": true,
      "recognitionNearestShort": "trait-continu__geographie__l-italie-a-la-forme-d-une-botte",
      "recognitionSameIdentity": true
     },
@@ -1687,7 +1710,7 @@
      ],
      "renderCostSecPer100Frames": 4.9,
      "loopable": false,
-     "voiced": false,
+     "voiced": true,
      "recognitionNearestShort": "trait-continu__enfants__dessine-un-escargot-d-un-seul-trait",
      "recognitionSameIdentity": true
     }
@@ -1814,6 +1837,7 @@
    "id": "pastel-diorama",
    "name": "Diorama Pastel",
    "rank": 10,
+   "variantOf": null,
    "status": "selected",
    "promiseFr": "Expliquer ou faire jouer les 6–10 ans dans un monde de jouets doux et rassurants où chaque idée « saute » en place avec un rebond, sans jamais faire peur ni brusquer.",
    "promiseEn": "Explain or play with 6–10 year-olds in a soft toy world where every idea bounces into place, never scary or abrupt.",
@@ -2006,6 +2030,7 @@
    "id": "topo-relief",
    "name": "Relief Topo",
    "rank": 11,
+   "variantOf": null,
    "status": "rehabilitated",
    "promiseFr": "Chaque sujet devient un terrain qu'on survole : le relief s'extrude sous nos yeux, les courbes de niveau s'allument en montant et un altimètre en chiffres mono dit exactement où l'on est.",
    "promiseEn": "A 3D topographic expedition: terrain extrudes, contour lines light up, drone fly-overs and an altitude readout.",
@@ -2204,6 +2229,7 @@
    "id": "atlas-grave",
    "name": "Atlas Gravé",
    "rank": 12,
+   "variantOf": null,
    "status": "selected",
    "promiseFr": "Un savoir géographique ou historique s'imprime sous vos yeux, à l'encre, sur une carte gravée qui bouge à peine, et finit sur une question ouverte.",
    "promiseEn": "Geographic or historical knowledge printed in ink before your eyes on an engraved map that barely moves, ending on an open question.",
@@ -2406,6 +2432,7 @@
    "id": "aquarelle-conte",
    "name": "Aquarelle Conte",
    "rank": 13,
+   "variantOf": null,
    "status": "selected",
    "promiseFr": "Chaque short est une page d'album : un paysage peint à l'eau qui respire, un petit personnage ou un monument en vecteur aquarellé, et une phrase courte posée sur du papier crème, racontée par une conteuse.",
    "promiseEn": "Each short is a picture-book page: a breathing watercolour landscape, a small vector character or monument, one short sentence, told by a storyteller.",
@@ -2606,6 +2633,7 @@
    "id": "neon-lab",
    "name": "Labo Néon",
    "rank": 14,
+   "variantOf": null,
    "status": "selected",
    "promiseFr": "Une nuit de laboratoire où la science se voit en lumière : un phénomène réel (attracteur, orbite, rotation) mis en scène comme une visualisation de musée, précise et émerveillée.",
    "promiseEn": "A night in the lab where science is seen as light: a real phenomenon staged like a museum visualisation, precise and full of wonder.",
@@ -2817,6 +2845,7 @@
    "id": "cosmos-doc",
    "name": "Cosmos Doc",
    "rank": 15,
+   "variantOf": null,
    "status": "rehabilitated",
    "promiseFr": "Chaque short est un plan de cinéma sur un vrai objet du ciel — lumière d'étoile chaude, noir absolu, travelling lent — où un seul chiffre en capitales Bebas Neue suffit à donner le vertige.",
    "promiseEn": "Cinematic space documentary: warm starlight, vertiginous scale, silence and gravity.",
@@ -3011,6 +3040,7 @@
    "id": "liquid-chrome",
    "name": "Chrome Liquide",
    "rank": 16,
+   "variantOf": null,
    "status": "selected",
    "promiseFr": "Une matière liquide, chromée et hypnotique qu'on regarde couler jusqu'au bout : chaque short est un plan-séquence de satisfaction où la physique fait le spectacle.",
    "promiseEn": "Hypnotic liquid chrome matter watched until the end: each short is one continuous satisfying shot where physics is the show.",
@@ -3220,6 +3250,29 @@
    "id": "papier-decoupe",
    "name": "Papier découpé",
    "rank": 17,
+   "variantOf": null,
+   "variants": [
+    "atelier-papier",
+    "carnet-archives",
+    "cabinet-curiosites"
+   ],
+   "variantAxis": {
+    "sharedEngine": "out/shared/papier-moteur/",
+    "shared": [
+     "shared engine out/shared/papier-moteur/ (Python, Pillow/OpenCV)",
+     "stop-motion pop at 12 fps in 4 steps with drop shadow",
+     "tilted paper strips for titles",
+     "burned-in captions on a paper strip",
+     "same motion, transitions, safe areas and voice (Gemini Sulafat)"
+    ],
+    "varies": [
+     "ground (green cutting mat / midnight-blue mat / kraft / plain vignetted midnight blue)",
+     "palette and paper colours",
+     "fonts (Dela Gothic One + Kalam / Abril Fatface + Special Elite / DM Serif Display)",
+     "theme file out/shared/papier-moteur/themes/<id>.json"
+    ],
+    "axisFr": "Même moteur papier-moteur, même pop stop-motion à 12 i/s, mêmes bandes de papier inclinées, mêmes sous-titres sur bande ; seuls changent le fond (tapis vert, tapis bleu nuit, kraft, bleu nuit uni), la palette et les polices."
+   },
    "status": "added",
    "promiseFr": "Chaque idée est une pièce de papier découpée qui saute sur un tapis de découpe vert, en stop-motion : un plateau d'atelier où l'on explique avec des ciseaux.",
    "promiseEn": "Every idea is a cut-out paper piece that pops onto a green cutting mat in stop-motion: a craft table where things get explained with scissors.",
@@ -3407,8 +3460,11 @@
      "pieces pop in 4 steps at 12 fps with drop shadow and scissor-cut edges",
      "burned-in Kalam captions on a paper strip"
     ],
-    "confusableWith": [
-     "atelier-papier"
+    "confusableWith": [],
+    "deliberateSiblings": [
+     "atelier-papier",
+     "cabinet-curiosites",
+     "carnet-archives"
     ]
    }
   },
@@ -3416,6 +3472,7 @@
    "id": "atelier-papier",
    "name": "Atelier papier",
    "rank": 18,
+   "variantOf": "papier-decoupe",
    "status": "added",
    "promiseFr": "Le papier découpé du gabarit, en plus chaud : un tapis de découpe bleu nuit, du crème, du corail et de la moutarde pour une chaîne de culture générale grand public.",
    "promiseEn": "The template cut-paper look, warmer: a midnight-blue cutting mat with cream, coral and mustard paper.",
@@ -3602,7 +3659,10 @@
      "stop-motion pop at 12 fps",
      "Kalam captions on cream strips"
     ],
-    "confusableWith": [
+    "confusableWith": [],
+    "deliberateSiblings": [
+     "cabinet-curiosites",
+     "carnet-archives",
      "papier-decoupe"
     ]
    }
@@ -3611,6 +3671,7 @@
    "id": "carnet-archives",
    "name": "Carnet d'archives",
    "rank": 19,
+   "variantOf": "papier-decoupe",
    "status": "added",
    "promiseFr": "On ouvre un dossier d'archives : vieux papiers crème posés sur du kraft, encre sépia, tampons rouges et sous-titres à la machine à écrire.",
    "promiseEn": "Opening an archive file: cream papers on kraft, sepia ink, red rubber stamps and typewriter captions.",
@@ -3799,6 +3860,11 @@
     ],
     "confusableWith": [
      "gazette-1900"
+    ],
+    "deliberateSiblings": [
+     "atelier-papier",
+     "cabinet-curiosites",
+     "papier-decoupe"
     ]
    }
   },
@@ -3806,6 +3872,7 @@
    "id": "cabinet-curiosites",
    "name": "Cabinet de curiosités",
    "rank": 20,
+   "variantOf": "papier-decoupe",
    "status": "added",
    "promiseFr": "Chaque objet devient une pièce de collection : fond bleu nuit, étiquettes de musée crème et or, lettres à empattements.",
    "promiseEn": "Every object becomes a collection piece: midnight-blue ground, cream and gold museum labels, serif lettering.",
@@ -3994,6 +4061,11 @@
     ],
     "confusableWith": [
      "cosmos-doc"
+    ],
+    "deliberateSiblings": [
+     "atelier-papier",
+     "carnet-archives",
+     "papier-decoupe"
     ]
    }
   }

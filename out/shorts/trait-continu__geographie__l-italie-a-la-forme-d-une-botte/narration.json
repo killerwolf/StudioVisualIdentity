@@ -1,14 +1,42 @@
 {
  "language": "fr",
  "style": "conteur doux et enjoué pour enfants de 6-10 ans, 2,0-2,3 mots/s ; chaque ligne démarre quand le traceur s'arrête sur un repère bleu",
- "voice": "Arnold (Fish Audio)",
+ "voice": "Sulafat (Gemini)",
+ "voiceUsed": {
+  "provider": "Gemini",
+  "name": "Sulafat",
+  "model": "gemini-3.8-flash-tts",
+  "date": "2026-11-05",
+  "note": "un seul appel pour tout le short (lignes séparées par <long pause>), découpé en voice_lines/NN.mp3 dans l'ordre des lignes (bornes : horodatage des mots par faster-whisper + silences) ; style « conteuse chaleureuse et douce pour enfants de six à dix ans, débit lent et posé » (annotation, non lue) ; pauses internes des lignes trop longues ramenées à 0,25 s ; mixé par out/tools/tts.py --engine files --replace ; décision du propriétaire : Sulafat au lieu d'Arnold (crédits Fish Audio épuisés)"
+ },
+ "voicePlannedHistory": "Arnold (Fish Audio), non enregistrée faute de crédits : voir out/report/notes/voix-lot2.md",
  "wordsPerSecondTarget": 2.2,
  "totalWords": 30,
  "lines": [
-  {"t": 0.2, "maxDuration": 4.15, "text": "C'est vrai que l'Italie a la forme d'une botte ?"},
-  {"t": 4.6, "maxDuration": 2.8, "text": "Suis le trait : voici la jambe."},
-  {"t": 7.9, "maxDuration": 2.3, "text": "Ici, le talon : les Pouilles."},
-  {"t": 10.3, "maxDuration": 2.3, "text": "Là, la pointe : la Calabre."},
-  {"t": 12.75, "maxDuration": 2.4, "text": "Et la Sicile ? Le ballon !"}
+  {
+   "t": 0.2,
+   "maxDuration": 4.15,
+   "text": "C'est vrai que l'Italie a la forme d'une botte ?"
+  },
+  {
+   "t": 4.6,
+   "maxDuration": 2.8,
+   "text": "Suis le trait : voici la jambe."
+  },
+  {
+   "t": 7.9,
+   "maxDuration": 2.3,
+   "text": "Ici, le talon : les Pouilles."
+  },
+  {
+   "t": 10.3,
+   "maxDuration": 2.3,
+   "text": "Là, la pointe : la Calabre."
+  },
+  {
+   "t": 12.75,
+   "maxDuration": 2.4,
+   "text": "Et la Sicile ? Le ballon !"
+  }
  ]
 }

@@ -68,7 +68,7 @@ indépendant ; attendre la notification de fin, ne pas interroger en boucle.
 7. **Intégration** (1 agent) : `aggregate.py` (fusion des cartes), `build_index.py`, `check.py --all`, `recognition.py`
    (sur copie si on veut garder l'ancien rapport), mise à jour de `comparison.md`, `README.md`, `AGENTS.md` (nombres
    d'identités et de shorts, tableau par famille), `catalogue.md` (lignes passées à « Oui » avec « Où »), et la **vitrine** :
-   ajouter les nouvelles identités à `ORDER` dans `out/showcase/build.py` (et à `REHAB` si besoin), mettre à jour les
+   ajouter les nouvelles identités à `ORDER` dans `out/tools/build_index.py` (et à `REHAB` si besoin), mettre à jour les
    chiffres fixes de `page.tpl.html` (en-tête, « N° x / N », tests de reconnaissance, limites, voix), régénérer
    `out/showcase/build/` avec `.venv/bin/python out/showcase/build.py` et vérifier `index.html` dans un navigateur
    (Playwright) : toutes les identités, tous les shorts, aperçus et posters présents.
@@ -83,6 +83,10 @@ indépendant ; attendre la notification de fin, ne pas interroger en boucle.
    `out/showcase/build/index.html`, `root` = `out/showcase/build`, `files` = tous les `v/*.mp4` et `p/*.jpg`, ≤ 64 Mo et
    ≤ 255 fichiers par publication, en plusieurs publications sinon) et vérifier la page publiée. La vitrine fait partie
    du livrable : une identité absente de la page n'est pas livrée.
+   Piège connu de l'environnement cloud : si `git push` échoue avec « missing necessary objects » en n'envoyant aucun objet
+   (`Total 0`), c'est la négociation de push injectée dans la configuration (`push.negotiate=true`) qui croit à tort que le
+   serveur a déjà les objets ; pousser avec `git -c push.negotiate=false push`. Un refus « fatal error in commit_refs » vient
+   de GitHub lui-même : attendre et retenter.
 
 ## Enrichir le catalogue
 
@@ -95,6 +99,7 @@ ajoute les nouvelles (catégorie, statut, Oui/Non, Où) et met à jour le bilan 
 ## Règles qui ne se discutent pas
 
 - Pas de scène, de rendu, de design system ni de relecture écrits par l'orchestrateur : un sous-agent Opus 5.5 à chaque fois.
+- Une nouvelle identité qui réutilise un moteur existant et ne change que le fond, la palette et les polices s'enregistre comme **dérivation** (`variantOf` dans `build_index.py`, `FAMILIES`) de son identité racine, pas comme une nouvelle identité (cf. Papier découpé et ses 3 dérivations).
 - Une nouvelle identité garde **une** signature (type, palette, transition signature) distincte de toutes les voisines ;
   si le challenge ou la revue la juge confusable, on change la direction, pas la présentation.
 - Pas d'asset téléchargé, pas de personnage, logo ni œuvre existants, faits exacts dans les explicatifs, photosensibilité

@@ -1,5 +1,7 @@
 # Atelier papier
 
+> **Dérivation de [Papier découpé](../papier-decoupe/identity.md)** (`variantOf: "papier-decoupe"`). Même moteur `out/shared/papier-moteur/`, même pop stop-motion, mêmes bandes inclinées et mêmes sous-titres sur bande ; ce qui change : le fond (tapis de découpe **bleu nuit** au lieu de vert), la palette (crème, corail, moutarde) ; les polices (Dela Gothic One, Kalam) sont celles de l'identité racine. Voir aussi les deux autres dérivations : [Carnet d'archives](../carnet-archives/identity.md), [Cabinet de curiosités](../cabinet-curiosites/identity.md).
+
 ## Nom
 Atelier papier (`atelier-papier`) — déclinaison A de la phase 1 du studio Un Jour Une Histoire (2026-11-03), thème out/shared/papier-moteur/themes/atelier-papier.json.
 

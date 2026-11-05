@@ -1,17 +1,19 @@
 # Catalogue des librairies et outils
 
 **Base de travail pour créer de nouvelles identités de chaîne.** Ce catalogue recense toutes les librairies et tous les outils
-envisageables pour rendre des shorts par code, et dit pour chacun s'il a déjà servi dans les 20 identités (43 shorts), où, et
+envisageables pour rendre des shorts par code, et dit pour chacun s'il a déjà servi dans les 17 identités (20 déclinaisons, 43 shorts), où, et
 sinon pourquoi. On itère à partir de cette liste : une nouvelle identité part d'abord des cases « Non » pour trouver une
 signature que personne n'a encore, ou recombine des cases « Oui » déjà maîtrisées (fiches dans `out/library-cards/<lib>.json`).
 
 Établi le 2026-11-04, mis à jour le 2026-11-05 en scannant le code source des 39 shorts (`out/shorts/*/src`), le moteur partagé
-(`out/shared`, dont `out/shared/papier-moteur` des 4 identités papier), les outils (`out/tools`, dont le nouvel outil
+(`out/shared`, dont `out/shared/papier-moteur` de Papier découpé et de ses 3 dérivations), les outils (`out/tools`, dont le nouvel outil
 `out/tools/catalogue_scan.py`), la démo (`out/demo`, `out/showcase`), les rapports (`out/report`) et les skills de
 [killerwolf/skills](https://github.com/killerwolf/skills). Le rescan se fait avec `out/tools/catalogue_scan.py --check` (nouvel outil,
 stdlib seule), qui confronte le code à la colonne « Déjà utilisée ? ». Mis à jour une seconde fois le 2026-11-05 (≈ 01:15 UTC) pour le
 **lot 2** de la fabrique d'identités (`carte-meteo`, `trait-continu`, 4 shorts) : shapely, opensimplex, topojson-client et world-atlas
 passent à **Oui**, Atkinson Hyperlegible est ajoutée et Fredoka est désormais utilisée ; rescan des 43 shorts.
+
+**Comptage** : 17 identités, dont « Papier découpé » avec 3 dérivations (`atelier-papier`, `carnet-archives`, `cabinet-curiosites`, même moteur `out/shared/papier-moteur/`) : 20 déclinaisons, 43 shorts. Les lignes ci-dessous citent les quatre slugs papier car ce sont les noms de dossiers.
 
 ## Légende
 
@@ -98,8 +100,8 @@ passent à **Oui**, Atkinson Hyperlegible est ajoutée et Fredoka est désormais
 | Audio | librosa | 📦 | Non | |
 | Audio | pydub | 📦 | Non | |
 | Audio | ElevenLabs | 🔌 | Non | voix off = Fish Audio ; ElevenLabs n'apparaît que dans studio-mate, pour le studio privé |
-| Audio | Fish Audio, connecteur MCP | 🔌 | **Oui** | voix « Arnold », modèle s2.1-pro : les 31 voix off de la campagne et la démo, une ligne par appel, mixées par `tts.py --engine files` (les 8 shorts papier n'utilisent pas Fish Audio) ; lot 2 : 1 ligne générée sur 20 (escargot, `voice_lines/00.mp3`, non mixée), crédits du plan gratuit épuisés, les 4 shorts restent sans voix |
-| Audio | Gemini TTS, google-genai | 📦 | **Oui** | skill gemini-voices, voix alternatives de la démo, et 3 shorts au début avant l'abandon pour quota gratuit ; les 8 shorts des identités papier déclarent la voix Gemini « Sulafat » (gemini-3.8-flash-tts) dans `narration.json` : voix réellement mixée, les `voice_lines/*.mp3` sont présents et intégrés à `short.mp4` par `son.py` du moteur papier (pas de `voice_report.json`, pas de `tts.py`), mêmes fichiers pour les 4 identités, réutilisés depuis le studio Un Jour Une Histoire et non régénérés dans le dépôt |
+| Audio | Fish Audio, connecteur MCP | 🔌 | **Oui** | voix « Arnold », modèle s2.1-pro : les 31 voix off de la campagne et la démo, une ligne par appel, mixées par `tts.py --engine files` (les 8 shorts papier n'utilisent pas Fish Audio) ; soit **31 shorts** ; lot 2 : 1 ligne générée sur 20 avant la fin des crédits du plan gratuit, remplacée par Gemini « Sulafat » (non utilisée) |
+| Audio | Gemini TTS, google-genai | 📦 | **Oui** | skill gemini-voices, voix alternatives de la démo, et 3 shorts au début avant l'abandon pour quota gratuit ; **12 shorts voisés Gemini « Sulafat »** (gemini-3.8-flash-tts) : les 4 shorts du lot 2 (trait-continu, carte-meteo ; 1 appel par short via le skill gemini-voices, découpé en `voice_lines/NN.mp3`, mixé par `tts.py --engine files`) et les 8 shorts des identités papier, qui déclarent la voix dans `narration.json` : voix réellement mixée, les `voice_lines/*.mp3` sont présents et intégrés à `short.mp4` par `son.py` du moteur papier (pas de `voice_report.json`, pas de `tts.py`), mêmes fichiers pour les 4 identités, réutilisés depuis le studio Un Jour Une Histoire et non régénérés dans le dépôt |
 | Audio | Freesound API | ⚠️ | **Oui** | `out/tools/freesound.py` et skill sound-design ; demande `FREESOUND_API_KEY` |
 | Audio | OpenGameArt, sons CC0 | ✅ | **Oui** | bruitages de la démo et bibliothèque livrée avec le skill sound-design |
 | Encodage | ffmpeg | ✅ | **Oui** | partout : `render.mjs`, `assemble.py`, démo, GIF d'aperçu par palettegen, skill sound-design ; identités papier (papier-decoupe, atelier-papier, carnet-archives, cabinet-curiosites) via `out/shared/papier-moteur` : pipe rawvideo par tranches, concat, loudnorm et silencedetect (`episode.py`, `son.py`) |
@@ -122,7 +124,7 @@ polices, contrat `renderAt`), `out/tools/textpng.py` (overlays de texte en PNG) 
 
 ## Comment s'en servir pour une nouvelle identité
 
-1. **Chercher la signature dans les « Non »** : une librairie jamais utilisée donne plus facilement un rendu que les 20 identités
+1. **Chercher la signature dans les « Non »** : une librairie jamais utilisée donne plus facilement un rendu que les 17 identités
    n'ont pas (voir `curation.confusableWith` dans `out/identities/index.json`). Vérifier d'abord son statut et son coût de rendu
    sur CPU ; une ligne ⚠️ ou un moteur 3D lourd peut coûter plus que les ≈ 60 s / 100 images de three.js avec bloom.
 2. **Recombiner des « Oui »** quand le budget est serré : les fiches `out/library-cards/<lib>.json` donnent les pièges déjà payés

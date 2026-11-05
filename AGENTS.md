@@ -3,7 +3,7 @@
 ## What this repository is
 
 An **exploratory study of visual and cinematic identities for vertical short videos** (TikTok, Reels, Shorts; 1080×1920, 30 fps, 12–19 s).
-It contains **20 identities** (the 14 of the original campaign, the cut-paper family added on 2026-11-04 and the 2 identities of
+It contains **17 identities, 20 declinations** (the 14 of the original campaign, the cut-paper identity « Papier découpé » with its 3 derivations added on 2026-11-04 and the 2 identities of
 lot 2 of the identity factory added on 2026-11-05, see below), each documented as a design system and **proven by 2–3 real shorts rendered by code** (43 shorts in total),
 plus the open-source rendering toolkit that made them.
 
@@ -15,7 +15,7 @@ Most prose is in **French** (identity.md, recipes, reports, tool docstrings). JS
 
 ## Where this repository fits
 
-- **Choosing a visual identity** is what this repository is for: 20 proven styles, their design systems and their evidence.
+- **Choosing a visual identity** is what this repository is for: 17 proven styles (20 declinations), their design systems and their evidence.
 - **Running a production channel** needs more than a style: writing, validation, voice, review, publishing and scheduling. Two ways:
   - you already have a studio template (for the owner of this repository, the private **StudioGabarit**, which runs on the Mac and is piloted from Notion): use this repository at its *design system* phase to pick 2–3 candidate styles, then port the chosen signature into that template's own render engine;
   - you don't: `bootstrap_studio.py` below gives a lightweight studio (identity + scene templates + render toolkit) to prototype a style and produce episodes by hand.
@@ -45,14 +45,16 @@ python3 out/tools/bootstrap_studio.py ../my-studio --channel-id my-channel --nam
 - Tested end to end (2026-11-04): a studio bootstrapped from bauhaus-kinetic (+ neon-lab for `abstrait`) rendered a 14 s episode in
   42 s on an idle 4-core machine (10 s / 100 frames), mixed its voice-over and passed `check.py`.
 
-## The cut-paper family (added 2026-11-04, status `added`)
+## The cut-paper identity and its 3 derivations (added 2026-11-04, status `added`)
+
+**One identity, three derivations** (decision 2026-11-05): `papier-decoupe` is the root; `atelier-papier`, `carnet-archives` and `cabinet-curiosites` are its derivations (`variantOf: "papier-decoupe"` in `index.json`). They run on the same engine and only change ground, palette and fonts. Directories, ids and slugs are unchanged. A new identity that reuses an existing engine and only changes ground/palette/fonts must be registered as a derivation, not as a new identity. Counting: 17 identities, 20 declinations, 43 shorts.
 
 The cut-paper design system of the **StudioGabarit** template (channels AI Reboot, P'tits Savants, Motion de Culture) and its three
 variants from the Un Jour Une Histoire studio, so they can be found and reused like the others:
 
 | Identity | Look | Theme file |
 |---|---|---|
-| `papier-decoupe` | the template's original: green graduated cutting mat, Dela Gothic One strips, Kalam captions | none (engine defaults) |
+| `papier-decoupe` (root) | the template's original: green graduated cutting mat, Dela Gothic One strips, Kalam captions | none (engine defaults) |
 | `atelier-papier` | same, warmer: midnight-blue mat, cream / coral / mustard paper | `themes/atelier-papier.json` |
 | `carnet-archives` | archive file: kraft ground, Abril Fatface, typewriter captions (Special Elite), sepia + stamp red | `themes/carnet-archives.json` |
 | `cabinet-curiosites` | museum cabinet: plain midnight ground, DM Serif Display, cream / teal / burgundy / gold | `themes/cabinet-curiosites.json` |
@@ -77,9 +79,11 @@ adversarial challenge, one studio per identity, integration, review (`out/report
 | `carte-meteo` | light weather map: pale sky-blue sea, tender green land, isobars, dark wind trails, temperature pills, a diagonal weather front as the only transition | D3.js, topojson-client, world-atlas 2.0.2 (Natural Earth) | 5 |
 | `trait-continu` | one graphite stair-stepped line never lifted, on a grey plate over a full-bleed orange ground, two rulers with cursors, plate advance in steps | shapely, opensimplex, pycairo, Pillow (Python, no browser) | 9 |
 
-- **No voice-over yet**: the voice is planned (Fish Audio « Arnold ») but **not recorded** — the Fish Audio free plan had 35 credits
-  (1 line of 20 generated). `short.mp4` is music + SFX; `narration.json` is ready; `short.json.sound.voice` is `false`. How to resume:
-  `out/report/notes/voix-lot2.md`.
+- **Voice-over: Gemini « Sulafat »** (owner decision, 2026-11-05), the cut-paper voice. Fish Audio « Arnold » was planned, but the
+  free plan's credits covered 1 line of 20. One Gemini call per short (`gemini-3.8-flash-tts`, lines joined by `<long pause>`, style
+  sent as an annotation so it is not read aloud), split into `voice_lines/NN.mp3` in `narration.json` order, mixed by
+  `tts.py --engine files --replace` (`short_novo.mp4` = music + SFX). The silence-only split of the gemini-voices skill cut inside a line
+  (« Il grandit : ») — the split used word timestamps (faster-whisper) + silences. Log: `out/report/notes/voix-lot2.md`.
 - Evidence: a blind visual judge on 8 identities (lot 2 + 6 neighbours, 32 images) made 8/8 pure groups; in the measured test each
   identity's two shorts are each other's nearest neighbour. Render cost measured with the two studios sharing 4 cores (load 1–5.5,
   `measuredUnderLoad: true`). Since the review, carte-meteo's heat-record short has no wind trails: wind is shown only when it is the subject.
@@ -125,8 +129,8 @@ the values, it does not read `tokens.json`.
 
 ## Adapting to an audience (orchestrator judgment, not measured)
 
-The 31 campaign shorts use the same French male storyteller voice and ≈ 2.6 words/s (cut-paper: Gemini Sulafat; lot 2: written for
-Arnold, not recorded; trait-continu is written at 2.2 words/s for kids); no short was made specifically for teens.
+The 31 campaign shorts use the same French male storyteller voice and ≈ 2.6 words/s (cut-paper and lot 2: Gemini Sulafat, a warm
+female voice; trait-continu is written at 2.2 words/s for kids and measured at ≈ 2.3 words/s once voiced); no short was made specifically for teens.
 Suggested starting deltas, to validate with your own tests:
 
 | Audience | Beat length | Voice pace | On-screen words per beat | Voice casting | Hook / CTA |
@@ -148,7 +152,7 @@ Suggested starting deltas, to validate with your own tests:
      and *tooling*. Mixing two signatures produces a generic look.
    - *Adapt*: change audience-dependent values (pace, text size, voice, colour temperature — see the table above) but keep the signature.
    - `status` in the index: `selected` = kept in Phase 1; `rehabilitated` = set aside in Phase 1 only to avoid topic overlap, then produced
-     with the same rules — same evidence level; `added` = added after the campaign (cut-paper family, unranked; lot 2, ranked, no voice yet).
+     with the same rules — same evidence level; `added` = added after the campaign (cut-paper family, unranked; lot 2, ranked, voiced with Gemini Sulafat).
 4. **Avoid confusion with neighbours**: check `curation.confusableWith` (e.g. dark identities neon-lab / cosmos-doc / liquid-chrome,
    or the cream flat styles swiss-data / bauhaus-kinetic). If your channel will sit next to one of them, push your palette or type further apart.
 5. **Write your design system in the same format**: an `identity.md` with the same 16 sections, and a `tokens.json` whose core follows
@@ -167,13 +171,17 @@ Suggested starting deltas, to validate with your own tests:
   120 px (TikTok UI); left margin 60–72 px. Body text ≥ 54 px, titles ≥ 90 px, AA contrast. Hook visible within 1 s.
 - **Voice-over, state at 43 shorts**: 31 campaign shorts voiced with Fish Audio "Arnold" (below); the 8 cut-paper shorts declare and
   mix the Gemini voice "Sulafat" (mp3 reused from another studio, mixed by the cut-paper engine, not `tts.py`); the **4 lot 2 shorts
-  have no voice-over** (planned Arnold, not recorded: Fish Audio credits ran out, see `out/report/notes/voix-lot2.md`).
+  use Sulafat too** (owner decision: Fish Audio credits ran out before Arnold could be recorded): 4 Gemini calls in all, one per short,
+  split into `voice_lines/NN.mp3`, mixed by `tts.py --engine files` (see `out/report/notes/voix-lot2.md`). `tts.py --engine files`
+  labels the lines `fish-connector` in `voice_report.json` and `short.json.sound.voiceEngine`: fix the label when the audio comes from
+  another engine (done for lot 2).
 - **Voice-over actually used** for the 31 campaign shorts: Fish Audio "Arnold" (`d704cf8f1216490cbfbed89955f0e938`, model `s2.1-pro`, French male storyteller),
   generated **through the Fish Audio MCP connector**, one call per narration line, saved as `voice_lines/NN.mp3`, then mixed with music
   ducking by `out/tools/tts.py --engine files`. The direct REST engine (`--engine fish`, needs `FISH_API_KEY`, default model
   `s2.1-pro-free`) was **not tested against the real API**. Send only the line text: any style prefix is read aloud. Narration pace ≈ 2.6 words/s; lines must
   not overlap. Gemini voice names that still appear in identity.md / narration.json (`voiceGeminiSuggestion`) are historical casting suggestions
-  (Gemini was dropped because of free-tier quotas). For another language, cast a new voice; Arnold is French only.
+  (Gemini was dropped for the campaign because of free-tier quotas, ~10 requests/day; one call per short instead of one per line made
+  it workable for lot 2). For another language, cast a new voice; Arnold is French only.
 - **Factual data** (rule of 2026-11-05, `out/report/decisions.md`): factual geometries, measurements and tables are allowed when their
   licence is public domain, CC0, CC-BY or permissive, when they are distributed by npm or PyPI at an **exact pinned version** (no `^`,
   `==` for pip), **never loaded from the network at render time**, and when their source and licence are written in the identity's
@@ -198,11 +206,11 @@ Suggested starting deltas, to validate with your own tests:
 
 | Path | What it is |
 |---|---|
-| `out/identities/index.json` | machine index of the 20 identities (start here) — generated by `out/tools/build_index.py` (ranking and curation are in that script) |
+| `out/identities/index.json` | machine index of the 17 identities / 20 declinations (start here; `variantOf` links the 3 derivations to `papier-decoupe`) — generated by `out/tools/build_index.py` (ranking and curation are in that script) |
 | `out/identities/core-tokens.schema.json` | JSON schema of the normalised `coreTokens` |
 | `out/identities/<id>/` | design system: `identity.md`, `tokens.json` (original, richer, not normalised), `recipes/`, `poster.jpg`, `contact-sheet.jpg` |
 | `out/shorts/<id>__<family>__<topic>/` | proof short: `short.mp4` (voiced), `short_novo.mp4` (no voice), `short.json`, `narration.json`, `voice_lines/`, `stills/`, `src/` |
-| `out/shared/papier-moteur/` | the cut-paper engine (Python) shared by the 4 cut-paper identities |
+| `out/shared/papier-moteur/` | the cut-paper engine (Python) shared by the cut-paper identity and its 3 derivations |
 | `out/library-cards/catalogue.md` | catalogue of every library and tool considered (3D, 2D, animation, SVG/data, video frameworks, Python, audio, encoding, services): status, used or not, where — the base to iterate on for new identities |
 | `out/library-cards/<lib>.json` | per-library notes merged from the studios: best/avoid, measured costs (under load), gotchas, code paths. Verbose; `_drafts/` holds the raw per-studio drafts |
 | `out/report/` | campaign report (French): `README.md`, `comparison.md`, `facts.md`, `failures.md`, `decisions.md`, JSON data (`campaign.json`, `matrix.json`, `recognition.json`, `qa.json`, `selection.json`), Phase 1 `posters/` |

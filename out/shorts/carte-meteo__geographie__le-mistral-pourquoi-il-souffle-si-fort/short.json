@@ -52,9 +52,13 @@
  "loopable": false,
  "sound": {
   "type": "generated",
-  "voice": false,
+  "voice": true,
   "music": "pad (sound.py, do lydien, 96 bpm)",
-  "sfx": "whoosh à chaque passage de front, pop par pastille/pictogramme, tick du compteur, impact + chime à « 100+ », swell + chime au soleil"
+  "sfx": "whoosh à chaque passage de front, pop par pastille/pictogramme, tick du compteur, impact + chime à « 100+ », swell + chime au soleil",
+  "voiceEngine": "gemini",
+  "voiceName": "Gemini – Sulafat",
+  "voiceProvider": "files",
+  "voiceUsed": "Gemini Sulafat (gemini-3.8-flash-tts), 1 appel par short découpé en voice_lines/, mixé par tts.py --engine files (2026-11-05)"
  },
  "qualityChecks": {
   "stillsReviewed": true,

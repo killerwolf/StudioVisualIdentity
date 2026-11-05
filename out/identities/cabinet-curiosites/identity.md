@@ -1,5 +1,7 @@
 # Cabinet de curiosités
 
+> **Dérivation de [Papier découpé](../papier-decoupe/identity.md)** (`variantOf: "papier-decoupe"`). Même moteur `out/shared/papier-moteur/`, même pop stop-motion, mêmes bandes inclinées et mêmes sous-titres sur bande ; ce qui change : le fond (**bleu nuit uni** avec vignettage), la palette (crème, vert canard, bordeaux, or) et les polices (DM Serif Display partout). Voir aussi les deux autres dérivations : [Atelier papier](../atelier-papier/identity.md), [Carnet d'archives](../carnet-archives/identity.md).
+
 ## Nom
 Cabinet de curiosités (`cabinet-curiosites`) — déclinaison C de la phase 1 du studio Un Jour Une Histoire (2026-11-03) ; thème themes/cabinet-curiosites.json.
 

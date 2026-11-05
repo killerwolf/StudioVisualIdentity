@@ -26,13 +26,28 @@ ORDER = ['swiss-data', 'gazette-1900', 'pixel-arcade', 'brut-meme', 'carte-meteo
          # ajoutées le 2026-11-04 (hors campagne de classement) : le papier découpé du gabarit StudioGabarit et ses 3 déclinaisons
          'papier-decoupe', 'atelier-papier', 'carnet-archives', 'cabinet-curiosites']
 PAPIER = {'papier-decoupe', 'atelier-papier', 'carnet-archives', 'cabinet-curiosites'}   # non classées, moteur papier partagé
-LOT2 = {'trait-continu', 'carte-meteo'}                                                  # lot 2, classées, voix non enregistrée
+LOT2 = {'trait-continu', 'carte-meteo'}                                                  # lot 2, classées, voix Gemini Sulafat
 ADDED = PAPIER | LOT2
-# Lot 2 : voix prévue, non enregistrée (crédits Fish Audio épuisés : 1 ligne sur 20, voir out/report/notes/voix-lot2.md)
-VOICE_PLANNED_LOT2 = {'provider': 'Fish Audio', 'name': 'Arnold', 'reference_id': 'd704cf8f1216490cbfbed89955f0e938', 'model': 's2.1-pro',
-                      'language': 'fr', 'recorded': False,
-                      'note': 'planned voice, not recorded: Fish Audio free-plan credits ran out (1 line of 20 generated); '
-                              'short.mp4 is music + SFX only, narration.json is ready; see out/report/notes/voix-lot2.md'}
+# Une seule identité « Papier découpé » et trois dérivations (décision du 2026-11-05) : même moteur out/shared/papier-moteur/, même
+# pop stop-motion, mêmes bandes inclinées, mêmes sous-titres sur bande ; seuls le fond, la palette et les polices changent.
+# Les ids, dossiers et slugs ne changent pas (StudioGabarit les consomme). variantOf = id de la racine, null pour toute autre identité.
+FAMILIES = {
+    'papier-decoupe': dict(
+        variants=['atelier-papier', 'carnet-archives', 'cabinet-curiosites'],
+        sharedEngine='out/shared/papier-moteur/',
+        shared=['shared engine out/shared/papier-moteur/ (Python, Pillow/OpenCV)', 'stop-motion pop at 12 fps in 4 steps with drop shadow',
+                'tilted paper strips for titles', 'burned-in captions on a paper strip', 'same motion, transitions, safe areas and voice (Gemini Sulafat)'],
+        varies=['ground (green cutting mat / midnight-blue mat / kraft / plain vignetted midnight blue)', 'palette and paper colours',
+                'fonts (Dela Gothic One + Kalam / Abril Fatface + Special Elite / DM Serif Display)', 'theme file out/shared/papier-moteur/themes/<id>.json'],
+        axisFr='Même moteur papier-moteur, même pop stop-motion à 12 i/s, mêmes bandes de papier inclinées, mêmes sous-titres sur bande ; '
+               'seuls changent le fond (tapis vert, tapis bleu nuit, kraft, bleu nuit uni), la palette et les polices.'),
+}
+VARIANT_OF = {v: root for root, f in FAMILIES.items() for v in f['variants']}
+# Lot 2 : Arnold prévu, crédits Fish Audio épuisés (1 ligne sur 20) ; décision du propriétaire (2026-11-05) : Gemini Sulafat,
+# comme les identités papier (1 appel par short, découpé en voice_lines/, mixé par tts.py --engine files ; out/report/notes/voix-lot2.md)
+VOICE_LOT2 = {'provider': 'Gemini', 'name': 'Sulafat', 'model': 'gemini-3.8-flash-tts', 'language': 'fr',
+              'note': 'owner decision 2026-11-05: Sulafat instead of the planned Fish Audio Arnold (Fish Audio credits ran out); '
+                      'one Gemini call per short, split into voice_lines/NN.mp3, mixed by out/tools/tts.py --engine files'}
 VOICE_ADDED = {'provider': 'Gemini', 'name': 'Sulafat', 'model': 'gemini-3.8-flash-tts', 'language': 'fr'}
 PAPIER_MODULE = 'out/shared/papier-moteur/'
 REHAB = {'brut-meme', 'riso-zine', 'topo-relief', 'cosmos-doc'}
@@ -251,8 +266,12 @@ def main():
             if len(files) >= 2 and len({md5(x) for x in files}) == 1:
                 shared.append(f'out/shorts/{os.path.basename(os.path.dirname(os.path.dirname(files[0])))}/src/{f}')
         cur = CURATION[s]
+        fam = FAMILIES.get(s)
         ids.append({
             'id': s, 'name': t.get('name'), 'rank': rank,
+            'variantOf': VARIANT_OF.get(s),
+            **({'variants': fam['variants'], 'variantAxis': {'sharedEngine': fam['sharedEngine'], 'shared': fam['shared'],
+                                                             'varies': fam['varies'], 'axisFr': fam['axisFr']}} if fam else {}),
             'status': 'added' if s in ADDED else ('rehabilitated' if s in REHAB else 'selected'),  # rehabilitated = set aside in Phase 1 to avoid topic overlap, produced later; same evidence level
             'promiseFr': promise, 'promiseEn': cur['promiseEn'],
             'familiesProven': sorted({x['family'] for x in shorts}),
@@ -262,8 +281,7 @@ def main():
                                COST_NOTE.get(s, 'browser render only (renderTimeSec)') + '; measured with up to 10 renders sharing 4 cores: expect ~2–3x faster on a dedicated machine'),
             'renderCostSecPer100Frames': {'min': min(costs), 'max': max(costs), 'measuredUnderLoad': s not in PAPIER} if costs else None,
             'sharedModule': ([PAPIER_MODULE] if s in PAPIER else shared) or None,
-            'voiceUsed': VOICE_ADDED if s in PAPIER else (None if s in LOT2 else VOICE),
-            **({'voicePlanned': VOICE_PLANNED_LOT2} if s in LOT2 else {}),
+            'voiceUsed': VOICE_ADDED if s in PAPIER else (VOICE_LOT2 if s in LOT2 else VOICE),
             'paths': {'identityMd': f'out/identities/{s}/identity.md', 'tokens': f'out/identities/{s}/tokens.json',
                       'recipes': sorted(f'out/identities/{s}/recipes/{os.path.basename(x)}' for x in glob.glob(str(base / 'recipes' / '*.md'))),
                       'poster': f'out/identities/{s}/poster.jpg', 'contactSheet': f'out/identities/{s}/contact-sheet.jpg',
@@ -278,17 +296,29 @@ def main():
     for a, bs in list(conf.items()):
         for b in bs:
             conf.setdefault(b, set()).add(a)
+    # les dérivations d'une même racine sont des sœurs voulues, pas un défaut de confusion : on les sort de confusableWith
+    family_of = lambda x: VARIANT_OF.get(x, x if x in FAMILIES else None)
     for i in ids:
-        i['curation']['confusableWith'] = sorted(conf[i['id']])
+        sibs = sorted(x['id'] for x in ids if x['id'] != i['id'] and family_of(x['id']) and family_of(x['id']) == family_of(i['id']))
+        i['curation']['confusableWith'] = sorted(c for c in conf[i['id']] if c not in sibs)
+        if sibs:
+            i['curation']['deliberateSiblings'] = sibs
+    n_var = len(VARIANT_OF)
+    n_roots = len(ids) - n_var
+    n_shorts = sum(len(i['shorts']) for i in ids)
     index = {
-        'schemaVersion': '1.0',
-        'description': (f'Machine index of the {len(ids)} visual identities for 9:16 shorts. Use it to shortlist identities, then read each '
+        'schemaVersion': '1.1',
+        'description': (f'Machine index of the {n_roots} visual identities for 9:16 shorts ({len(ids)} declinations: {n_var} of them are derivations of a root identity, see variantOf). Use it to shortlist identities, then read each '
                         "identity's identity.md (16 sections, French) and tokens.json. coreTokens is a normalised subset "
                         '(seconds, pixels on a 1080x1920 canvas, @fontsource slugs); the original tokens.json is authoritative for '
                         'everything else. curation.* is orchestrator judgment. See AGENTS.md.'),
         'generatedBy': 'out/tools/build_index.py',
-        'fieldNotes': {'status': 'selected = kept in Phase 1; rehabilitated = set aside in Phase 1 only to avoid topic overlap with a neighbour, then produced on request with the same rules and evidence level; added = added after the campaign: (a) the cut-paper family from the StudioGabarit template (papier-decoupe, atelier-papier, carnet-archives, cabinet-curiosites), rendered by the shared Python engine out/shared/papier-moteur/, appended after the ranked identities and not part of the ranking or the blind visual judge; (b) lot 2 of the identity factory (trait-continu, carte-meteo, 2026-11-05: scouting + adversarial challenge + studio + review), ranked with the others, blind visual judge on 8 identities (lot 2 + 6 neighbours, 8/8 pure groups, out/report/notes/revue-2026-11-05.md), voice-over planned but not recorded (see voicePlanned)',
-                       'voiceUsed': 'voice actually mixed into short.mp4; null when the voice-over is not recorded yet (lot 2: see voicePlanned and shorts[].voiced)',
+        'counts': {'identities': n_roots, 'derivations': n_var, 'declinations': len(ids), 'shorts': n_shorts},
+        'families': [{'root': r, 'name': next(i['name'] for i in ids if i['id'] == r), 'variants': f['variants'],
+                      'sharedEngine': f['sharedEngine'], 'axis': f['axisFr']} for r, f in FAMILIES.items()],
+        'fieldNotes': {'variantOf': 'id of the root identity when this entry is a derivation (same engine, only ground / palette / fonts change), else null. A root lists its derivations in variants and what is shared / what varies in variantAxis. Derivations stay ranked, right after their root; counts.identities counts roots only, counts.declinations counts every entry. curation.deliberateSiblings = derivations of the same root, deliberately close and therefore not listed in confusableWith. A new identity that reuses an existing engine and only changes ground / palette / fonts must be registered as a derivation, not as a new identity',
+                       'status': 'selected = kept in Phase 1; rehabilitated = set aside in Phase 1 only to avoid topic overlap with a neighbour, then produced on request with the same rules and evidence level; added = added after the campaign: (a) the cut-paper identity from the StudioGabarit template, papier-decoupe, and its 3 derivations (atelier-papier, carnet-archives, cabinet-curiosites), rendered by the shared Python engine out/shared/papier-moteur/, appended after the ranked identities and not part of the ranking or the blind visual judge; (b) lot 2 of the identity factory (trait-continu, carte-meteo, 2026-11-05: scouting + adversarial challenge + studio + review), ranked with the others, blind visual judge on 8 identities (lot 2 + 6 neighbours, 8/8 pure groups, out/report/notes/revue-2026-11-05.md), voice-over Gemini Sulafat like the cut-paper family (owner decision: Fish Audio credits ran out before Arnold could be recorded)',
+                       'voiceUsed': 'voice actually mixed into short.mp4 (Fish Audio Arnold for the 31 campaign shorts, Gemini Sulafat for the 8 cut-paper and 4 lot 2 shorts; see shorts[].voiced)',
                        'coreTokens.motion.staggerSec': "the identity's default stagger as written in its tokens.json; meaning varies (per-item stagger for most, spacing between beats/captions for atlas-grave 1.5 and liquid-chrome 1.55, title-to-body delay for neon-lab 0.8)",
                        'coreTokens.motion.durationSec.slow': 'longest standard duration; for gazette-1900 it is one page (6 beats at 128 bpm)',
                        'coreTokens.color.contrastOnBg': 'WCAG contrast ratio against bg, computed; muted/accent colours are often decorative (e.g. gazette-1900 muted = engraving fill, 1.07:1) and must not carry text',
