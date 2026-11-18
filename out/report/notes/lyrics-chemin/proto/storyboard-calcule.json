@@ -1,0 +1,653 @@
+{
+ "poses": [
+  {
+   "line": "titre",
+   "txt": "MONDAY'S",
+   "x": 434,
+   "y": 935,
+   "s": 3.94,
+   "th": 0,
+   "arr": 0,
+   "dur": 0,
+   "kind": "cut",
+   "tSing": 0,
+   "tEnd": 1.553,
+   "pre": [
+    false
+   ],
+   "dirx": 1,
+   "diry": 0,
+   "w": 208.16996704101564,
+   "leave": 1.2329999999999999
+  },
+  {
+   "line": "titre",
+   "txt": "DRAFT",
+   "x": 622,
+   "y": 935,
+   "s": 4.63,
+   "th": 0,
+   "arr": 1.4929999999999999,
+   "dur": 0.26,
+   "kind": "glide",
+   "tSing": 1.553,
+   "tEnd": 2.62,
+   "pre": [
+    false
+   ],
+   "dirx": 1,
+   "diry": 0,
+   "w": 136.24197692871095,
+   "leave": 2.621650485436893
+  },
+  {
+   "line": "voileG",
+   "txt": "I FOLD MY DAY",
+   "x": 341,
+   "y": 587,
+   "s": 4.14,
+   "th": -57,
+   "arr": 3.01,
+   "dur": 0.3883495145631068,
+   "kind": "whip",
+   "tSing": 3.2,
+   "tEnd": 5.049,
+   "pre": [
+    false,
+    true
+   ],
+   "dirx": 0.4542560829293311,
+   "diry": -0.8908711529293676,
+   "w": 197.97429276069124,
+   "leave": 4.8158
+  },
+  {
+   "line": "voileG",
+   "txt": "IN DRAFT MODE",
+   "x": 438,
+   "y": 397,
+   "s": 3.84,
+   "th": -57,
+   "arr": 5.049,
+   "dur": 0.23320000000000007,
+   "kind": "glide",
+   "tSing": 5.049,
+   "tEnd": 5.86,
+   "pre": [
+    true
+   ],
+   "dirx": 0.4542560829293311,
+   "diry": -0.8908711529293676,
+   "w": 213.60176296486287,
+   "leave": 6.023300970873787
+  },
+  {
+   "line": "voileD",
+   "txt": "I DRAW LINES BUT NOT",
+   "x": 597,
+   "y": 431,
+   "s": 2.89,
+   "th": 57,
+   "arr": 6.8,
+   "dur": 0.7766990291262136,
+   "kind": "pivot",
+   "tSing": 7.184,
+   "tEnd": 8.26,
+   "pre": [
+    true,
+    false,
+    true
+   ],
+   "dirx": 0.4542560829293311,
+   "diry": 0.8908711529293676,
+   "w": 288.0359362792969,
+   "leave": 8.14
+  },
+  {
+   "line": "voileD",
+   "txt": "FOR SHOW",
+   "x": 695,
+   "y": 624,
+   "s": 6.11,
+   "th": 57,
+   "arr": 8.26,
+   "dur": 0.12,
+   "kind": "glide",
+   "tSing": 8.26,
+   "tEnd": 9.14,
+   "pre": [
+    false
+   ],
+   "dirx": 0.4542560829293311,
+   "diry": 0.8908711529293676,
+   "w": 131.39998901367193,
+   "leave": 9.31747572815534
+  },
+  {
+   "line": "pontD",
+   "txt": "I'VE BEEN UP SINCE",
+   "x": 664,
+   "y": 743,
+   "s": 3.17,
+   "th": -16.9,
+   "arr": 9.9,
+   "dur": 0.5825242718446602,
+   "kind": "pivot",
+   "tSing": 10.291,
+   "tEnd": 11.068,
+   "pre": [
+    true,
+    true
+   ],
+   "dirx": 0.9468287622833589,
+   "diry": -0.3217379289312384,
+   "w": 259.07828731784446,
+   "leave": 10.948
+  },
+  {
+   "line": "pontD",
+   "txt": "5 A.M.",
+   "x": 832,
+   "y": 686,
+   "s": 5.78,
+   "th": -16.9,
+   "arr": 11.068,
+   "dur": 0.12,
+   "kind": "glide",
+   "tSing": 11.068,
+   "tEnd": 12.2,
+   "pre": [
+    false
+   ],
+   "dirx": 0.9468287622833589,
+   "diry": -0.3217379289312384,
+   "w": 80.45083415670047,
+   "leave": 12.431650485436894
+  },
+  {
+   "line": "coqueG",
+   "txt": "PRINTER DOWN",
+   "x": 139,
+   "y": 776,
+   "s": 3.65,
+   "th": 59.4,
+   "arr": 12.82,
+   "dur": 0.3883495145631068,
+   "kind": "whip",
+   "tSing": 13.01,
+   "tEnd": 14.175,
+   "pre": [
+    false
+   ],
+   "dirx": 0.41575976026779426,
+   "diry": 0.9094744755858002,
+   "w": 224.44759449414897,
+   "leave": 13.875
+  },
+  {
+   "line": "coqueG",
+   "txt": "CUZ NO INK",
+   "x": 224,
+   "y": 961,
+   "s": 4.97,
+   "th": 59.4,
+   "arr": 14.115,
+   "dur": 0.24,
+   "kind": "glide",
+   "tSing": 14.175,
+   "tEnd": 15.48,
+   "pre": [
+    false
+   ],
+   "dirx": 0.41575976026779426,
+   "diry": 0.9094744755858002,
+   "w": 165.05696847979334,
+   "leave": 15.727475728155339
+  },
+  {
+   "line": "quille",
+   "txt": "DRAFT MODE'S",
+   "x": 441,
+   "y": 1036,
+   "s": 4.49,
+   "th": 0,
+   "arr": 16.31,
+   "dur": 0.5825242718446602,
+   "kind": "pivot",
+   "tSing": 16.699,
+   "tEnd": 17.087,
+   "pre": [
+    true
+   ],
+   "dirx": 1,
+   "diry": 0,
+   "w": 182.48396484375002,
+   "leave": 16.9318
+  },
+  {
+   "line": "quille",
+   "txt": "MY SPARE KEYS",
+   "x": 639,
+   "y": 1036,
+   "s": 4.14,
+   "th": 0,
+   "arr": 17.087,
+   "dur": 0.15520000000000067,
+   "kind": "glide",
+   "tSing": 17.087,
+   "tEnd": 18.58,
+   "pre": [
+    false
+   ],
+   "dirx": 1,
+   "diry": 0,
+   "w": 198.17996704101563,
+   "leave": 18.65514563106796
+  },
+  {
+   "line": "coqueD",
+   "txt": "MAKE ANOTHER",
+   "x": 813,
+   "y": 928,
+   "s": 3.44,
+   "th": -59.4,
+   "arr": 19.16,
+   "dur": 0.5048543689320388,
+   "kind": "pivot",
+   "tSing": 19.36,
+   "tEnd": 20.44,
+   "pre": [
+    false
+   ],
+   "dirx": 0.41575976026779426,
+   "diry": -0.9094744755858002,
+   "w": 238.20511761921108,
+   "leave": 20.140000000000004
+  },
+  {
+   "line": "coqueD",
+   "txt": "NOTE.TXT",
+   "x": 897,
+   "y": 743,
+   "s": 5.06,
+   "th": -59.4,
+   "arr": 20.380000000000003,
+   "dur": 0.24,
+   "kind": "glide",
+   "tSing": 20.44,
+   "tEnd": 21.26,
+   "pre": [
+    false
+   ],
+   "dirx": 0.41575976026779426,
+   "diry": -0.9094744755858002,
+   "w": 150.90958862077838,
+   "leave": 22.131650485436893
+  },
+  {
+   "line": "fanion",
+   "txt": "AND YET",
+   "x": 593,
+   "y": 246,
+   "s": 5,
+   "th": 0,
+   "arr": 22.52,
+   "dur": 0.3883495145631068,
+   "kind": "whip",
+   "tSing": 22.88,
+   "tEnd": 23.52,
+   "pre": [
+    false
+   ],
+   "dirx": 1,
+   "diry": 0,
+   "w": 133.93597717285155,
+   "leave": 23.686601941747572
+  },
+  {
+   "line": "fanion",
+   "txt": "(recul : la pointe de la voile apparaît)",
+   "x": 536,
+   "y": 474,
+   "s": 2.3,
+   "th": -3,
+   "arr": 25.24,
+   "dur": 1.5533980582524272,
+   "kind": "ease",
+   "tSing": null,
+   "w": 0,
+   "dirx": 1,
+   "diry": 0,
+   "leave": 25.401650485436893
+  },
+  {
+   "line": "pontG",
+   "txt": "WRONG FOLD",
+   "x": 309,
+   "y": 739,
+   "s": 2.34,
+   "th": 16.9,
+   "arr": 25.79,
+   "dur": 0.3883495145631068,
+   "kind": "whip",
+   "tSing": 25.98,
+   "tEnd": 27.2,
+   "pre": [
+    false,
+    false
+   ],
+   "dirx": 0.9468287622833589,
+   "diry": 0.3217379289312384,
+   "w": 351.1367509558438,
+   "leave": 27.200000000000003
+  },
+  {
+   "line": "vague1",
+   "txt": "SUCH A LOT OF WRONG",
+   "x": 255,
+   "y": 1103,
+   "s": 3,
+   "th": -3.2,
+   "arr": 27.42,
+   "dur": 0.22,
+   "kind": "whip",
+   "tSing": 27.62,
+   "tEnd": 28.58,
+   "pre": [
+    true,
+    true
+   ],
+   "dirx": 0.9980957837718741,
+   "diry": -0.06168311289816831,
+   "w": 336.5599609375,
+   "leave": 28.387999999999998
+  },
+  {
+   "line": "vague1",
+   "txt": "FOLDS",
+   "x": 475,
+   "y": 1111,
+   "s": 5.5,
+   "th": -10.5,
+   "arr": 28.58,
+   "dur": 0.19199999999999875,
+   "kind": "glide",
+   "tSing": 28.58,
+   "tEnd": 29.2,
+   "pre": [
+    false
+   ],
+   "dirx": 0.9793583860950291,
+   "diry": -0.2021315205140947,
+   "w": 89.5999816894531,
+   "leave": 29.515
+  },
+  {
+   "line": "final",
+   "txt": "(image d’ensemble)",
+   "x": 512,
+   "y": 860,
+   "s": 1,
+   "th": 0,
+   "arr": 31.068,
+   "dur": 1.5530000000000008,
+   "kind": "zoomout",
+   "tSing": null,
+   "w": 0,
+   "dirx": 0,
+   "diry": 0,
+   "final": true,
+   "leave": 32.62
+  }
+ ],
+ "lines": [
+  {
+   "id": "titre",
+   "em": 54,
+   "track": 2.7,
+   "len": 420,
+   "units": [
+    {
+     "txt": "MONDAY'S",
+     "t": 0,
+     "end": 1.553,
+     "per": 1.55,
+     "pre": false
+    },
+    {
+     "txt": "DRAFT",
+     "t": 1.553,
+     "end": 2.62,
+     "per": 1.07,
+     "pre": false
+    }
+   ]
+  },
+  {
+   "id": "voileG",
+   "em": 39.6,
+   "track": 0,
+   "len": 453,
+   "units": [
+    {
+     "txt": "I FOLD",
+     "t": 3.2,
+     "end": 4.466,
+     "per": 0.63,
+     "pre": false
+    },
+    {
+     "txt": "MY DAY",
+     "t": 4.466,
+     "end": 5.049,
+     "per": 0.29,
+     "pre": true
+    },
+    {
+     "txt": "IN DRAFT MODE",
+     "t": 5.049,
+     "end": 5.86,
+     "per": 0.27,
+     "pre": true
+    }
+   ]
+  },
+  {
+   "id": "voileD",
+   "em": 36,
+   "track": 0,
+   "len": 453,
+   "units": [
+    {
+     "txt": "I DRAW",
+     "t": 7.184,
+     "end": 7.573,
+     "per": 0.19,
+     "pre": true
+    },
+    {
+     "txt": "LINES",
+     "t": 7.573,
+     "end": 7.961,
+     "per": 0.39,
+     "pre": false
+    },
+    {
+     "txt": "BUT NOT",
+     "t": 7.961,
+     "end": 8.26,
+     "per": 0.15,
+     "pre": true
+    },
+    {
+     "txt": "FOR SHOW",
+     "t": 8.26,
+     "end": 9.14,
+     "per": 0.44,
+     "pre": false
+    }
+   ]
+  },
+  {
+   "id": "pontD",
+   "em": 38,
+   "track": 0,
+   "len": 435,
+   "units": [
+    {
+     "txt": "I'VE BEEN",
+     "t": 10.291,
+     "end": 10.78,
+     "per": 0.24,
+     "pre": true
+    },
+    {
+     "txt": "UP SINCE",
+     "t": 10.78,
+     "end": 11.068,
+     "per": 0.14,
+     "pre": true
+    },
+    {
+     "txt": "5 A.M.",
+     "t": 11.068,
+     "end": 12.2,
+     "per": 0.57,
+     "pre": false
+    }
+   ]
+  },
+  {
+   "id": "coqueG",
+   "em": 41.5,
+   "track": 0,
+   "len": 462,
+   "units": [
+    {
+     "txt": "PRINTER DOWN",
+     "t": 13.01,
+     "end": 14.175,
+     "per": 0.58,
+     "pre": false
+    },
+    {
+     "txt": "CUZ NO INK",
+     "t": 14.175,
+     "end": 15.48,
+     "per": 0.43,
+     "pre": false
+    }
+   ]
+  },
+  {
+   "id": "quille",
+   "em": 36,
+   "track": 0,
+   "len": 440,
+   "units": [
+    {
+     "txt": "DRAFT MODE'S",
+     "t": 16.699,
+     "end": 17.087,
+     "per": 0.19,
+     "pre": true
+    },
+    {
+     "txt": "MY SPARE KEYS",
+     "t": 17.087,
+     "end": 18.58,
+     "per": 0.5,
+     "pre": false
+    }
+   ]
+  },
+  {
+   "id": "coqueD",
+   "em": 43.5,
+   "track": 0,
+   "len": 462,
+   "units": [
+    {
+     "txt": "MAKE ANOTHER",
+     "t": 19.36,
+     "end": 20.44,
+     "per": 0.54,
+     "pre": false
+    },
+    {
+     "txt": "NOTE.TXT",
+     "t": 20.44,
+     "end": 21.26,
+     "per": 0.82,
+     "pre": false
+    }
+   ]
+  },
+  {
+   "id": "fanion",
+   "em": 44,
+   "track": 0,
+   "len": 234,
+   "units": [
+    {
+     "txt": "AND YET",
+     "t": 22.88,
+     "end": 23.52,
+     "per": 0.32,
+     "pre": false
+    }
+   ]
+  },
+  {
+   "id": "pontG",
+   "em": 60,
+   "track": 8.3,
+   "len": 435,
+   "units": [
+    {
+     "txt": "WRONG",
+     "t": 25.98,
+     "end": 26.64,
+     "per": 0.66,
+     "pre": false
+    },
+    {
+     "txt": "FOLD",
+     "t": 26.64,
+     "end": 27.2,
+     "per": 0.56,
+     "pre": false
+    }
+   ]
+  },
+  {
+   "id": "vague1",
+   "em": 40,
+   "track": 0,
+   "len": 582,
+   "units": [
+    {
+     "txt": "SUCH A LOT",
+     "t": 27.62,
+     "end": 28.1,
+     "per": 0.16,
+     "pre": true
+    },
+    {
+     "txt": "OF WRONG",
+     "t": 28.1,
+     "end": 28.58,
+     "per": 0.24,
+     "pre": true
+    },
+    {
+     "txt": "FOLDS",
+     "t": 28.58,
+     "end": 29.2,
+     "per": 0.62,
+     "pre": false
+    }
+   ]
+  }
+ ]
+}

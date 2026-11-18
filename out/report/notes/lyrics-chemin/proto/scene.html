@@ -1,0 +1,341 @@
+<!doctype html>
+<!-- Prototype « lyrics-chemin » : maquette de direction artistique, PAS le moteur final.
+     Canvas 2D + caméra (translation, rotation, échelle). Paroles de remplissage inventées, calées sur les temps réels.
+     Rendu : SVI_CHROME=... node out/tools/render.mjs out/report/notes/lyrics-chemin/proto/scene.html --stills 0.9,4.8 --stills-dir ...
+     ?guides=1 : zones sûres. window.STORYBOARD : poses caméra calculées (lu par dump.mjs). -->
+<html lang="en"><head><meta charset="utf-8">
+<style>html,body{margin:0;background:#000}canvas{display:block}</style></head>
+<body><canvas id="c" width="1080" height="1920"></canvas>
+<script type="module">
+import * as S from '/out/tools/lib/svi.js';
+const W = 1080, H = 1920, BEAT = 60 / 154.5;
+const cv = document.getElementById('c'), ctx = cv.getContext('2d');
+const buf = document.createElement('canvas'); buf.width = W; buf.height = H; const bctx = buf.getContext('2d');
+
+// ---------- jetons ----------
+const COL = { paper: '#1B4C92', paperHi: '#2460AE', paperLo: '#133A74', ink: '#F3F0E4', wet: '#FFD84A', red: '#FF7D5C',
+  floor: '#CFC8BA', floorLo: '#B9B1A2' };
+const FONT = "'Barlow Condensed'", MONO = "'JetBrains Mono'";
+const ANCHOR = { x: 512, y: 860 };          // centre de lecture à l'écran (dans la zone sûre)
+const SHEET = { x: 36, y: 96, w: 1008, h: 1704 };
+const LIVE_MIN = 0.30;                       // s par mot : en dessous, le mot est pré-posé au crayon
+
+// ---------- géométrie du dessin (repère monde = repère de l'image finale) ----------
+const P = { L: [98, 634], R: [922, 634], C: [510, 774], TL: [304, 704], TR: [716, 704], A: [510, 300], BL: [290, 1054], BR: [730, 1054] };
+function straight(a, b) {
+  const dx = b[0] - a[0], dy = b[1] - a[1], len = Math.hypot(dx, dy), ang = Math.atan2(dy, dx);
+  return { len, at: d => ({ x: a[0] + dx * d / len, y: a[1] + dy * d / len, a: ang }) };
+}
+function wave(x0, x1, y, amp, wl, ph = 0) {
+  const N = 400, xs = [], ds = [0]; let px = x0, py = y + amp * Math.sin(ph), d = 0;
+  for (let i = 0; i <= N; i++) { const x = x0 + (x1 - x0) * i / N, yy = y + amp * Math.sin(ph + (x - x0) / wl * 2 * Math.PI);
+    if (i) { d += Math.hypot(x - px, yy - py); ds.push(d); } xs.push(x); px = x; py = yy; }
+  return { len: d, at: dd => { let i = 0; while (i < N - 1 && ds[i + 1] < dd) i++; const k = S.clamp((dd - ds[i]) / (ds[i + 1] - ds[i] || 1));
+    const x = xs[i] + (xs[i + 1] - xs[i]) * k, yy = y + amp * Math.sin(ph + (x - x0) / wl * 2 * Math.PI);
+    return { x, y: yy, a: Math.atan(amp * 2 * Math.PI / wl * Math.cos(ph + (x - x0) / wl * 2 * Math.PI)) }; } };
+}
+
+// ---------- paroles de remplissage (inventées), temps réels du morceau test ----------
+// u : [texte, début, fin]. cad : cadrages = groupes d'unités montrés ensemble. arr/dur/kind : transition d'arrivée sur le 1er cadrage.
+const LINES = [
+  { id: 'titre', path: straight([300, 962], [720, 962]), m: [0, 0], em: [40, 54], maxPx: 250, track: 0.05, center: true, noLine: true,
+    u: [["MONDAY'S", 0, 1.553], ['DRAFT', 1.553, 2.62]], cad: [[0], [1]], arr: 0, dur: 0, kind: 'cut', glide: [0.26] },
+  { id: 'voileG', path: straight(P.TL, P.A), m: [22, 12],
+    u: [['I FOLD', 3.2, 4.466], ['MY DAY', 4.466, 5.049], ['IN DRAFT MODE', 5.049, 5.86]], cad: [[0, 1], [2]], arr: 3.01, dur: BEAT, kind: 'whip' },
+  { id: 'voileD', path: straight(P.A, P.TR), m: [12, 22],
+    u: [['I DRAW', 7.184, 7.573], ['LINES', 7.573, 7.961], ['BUT NOT', 7.961, 8.26], ['FOR SHOW', 8.26, 9.14]], cad: [[0, 1, 2], [3]], minPx: 104, arr: 6.80, dur: 2 * BEAT, kind: 'pivot' },
+  { id: 'pontD', path: straight(P.C, P.R), m: [26, 62], below: true,
+    u: [["I'VE BEEN", 10.291, 10.78], ['UP SINCE', 10.78, 11.068], ['5 A.M.', 11.068, 12.2]], cad: [[0, 1], [2]], arr: 9.90, dur: 1.5 * BEAT, kind: 'pivot' },
+  { id: 'coqueG', path: straight(P.L, P.BL), m: [34, 30], below: true,
+    u: [['PRINTER DOWN', 13.01, 14.175], ['CUZ NO INK', 14.175, 15.48]], cad: [[0], [1]], arr: 12.82, dur: BEAT, kind: 'whip' },
+  { id: 'quille', path: straight(P.BL, P.BR), m: [60, 60],
+    u: [["DRAFT MODE'S", 16.699, 17.087], ['MY SPARE KEYS', 17.087, 18.58]], cad: [[0], [1]], arr: 16.31, dur: 1.5 * BEAT, kind: 'pivot' },
+  { id: 'coqueD', path: straight(P.BR, P.R), m: [30, 34], below: true,
+    u: [['MAKE ANOTHER', 19.36, 20.44], ['NOTE.TXT', 20.44, 21.26]], cad: [[0], [1]], arr: 19.16, dur: 1.3 * BEAT, kind: 'pivot' },
+  { id: 'fanion', path: straight([526, 268], [760, 268]), m: [0, 0], em: [44, 44], noLine: true, noFit: true,
+    u: [['AND YET', 22.88, 23.52]], cad: [[0]], arr: 22.52, dur: BEAT, kind: 'whip' },
+  { id: 'pontG', path: straight(P.L, P.C), m: [58, 26], below: true, em: [36, 60],
+    u: [['WRONG', 25.98, 26.64], ['FOLD', 26.64, 27.2]], cad: [[0, 1]], arr: 25.79, dur: BEAT, kind: 'whip' },
+  { id: 'vague1', path: wave(84, 660, 1132, 9, 270, 0.4), m: [6, 6], em: [40, 40], gapW: 0.1, noFit: true,
+    u: [['SUCH A LOT', 27.62, 28.10], ['OF WRONG', 28.10, 28.58], ['FOLDS', 28.58, 29.2]], cad: [[0, 1], [2]], arr: 27.42, dur: 0.22, kind: 'whip' },
+];
+const SEA = [   // le refrain final, écrit en grand pendant le zoom arrière ; lisible à l'échelle 1
+  { path: wave(96, 950, 1262, 8, 380, 1.2), em: 88, off: 0, u: ['WE SAIL,', 29.20, 29.90] },
+  { path: wave(96, 950, 1262, 8, 380, 1.2), em: 88, off: 1, u: ['WE SAIL,', 29.90, 30.70] },
+  { path: wave(70, 950, 1384, 8, 380, 3.0), em: 78, off: 0, u: ['AND WE SAIL,', 30.70, 31.54] },
+  { path: wave(70, 950, 1384, 8, 380, 3.0), em: 78, off: 1, u: ['AND WE SAIL,', 31.54, 32.12] },
+  { path: wave(210, 950, 1502, 8, 380, 5.0), em: 88, off: 0, u: ['AND WE SAIL,', 32.12, 32.9] },
+];
+const T_OUT0 = 29.515, T_OUT1 = 31.068, DURATION = 32.62;
+
+// ---------- mise en page du texte sur les chemins ----------
+function wOf(str, weight = 700) { ctx.font = `${weight} 100px ${FONT}`; return ctx.measureText(str).width / 100; }
+function layout() {
+  for (const L of LINES) {
+    const full = L.u.map(u => u[0]).join(' '), n = full.length;
+    const usable = L.path.len - L.m[0] - L.m[1], wn = wOf(full), [e0, e1] = L.em || [36, 54];
+    let em = S.clamp(usable / (wn + (L.track || 0) * (n - 1)), e0, e1), tr = (L.track || 0) * em;
+    if (!L.noFit && !L.track) tr = S.clamp((usable - em * wn) / (n - 1), 0, 0.15 * em);
+    const total = em * wn + tr * (n - 1);
+    const d0 = L.m[0] + (L.center ? (usable - total) / 2 : 0);
+    L.emW = em; L.tr = tr; L.words = []; L.units = [];
+    let ci = 0;
+    L.u.forEach((u, ui) => {
+      const first = L.words.length;
+      let wi = L.words.length; for (const wd of u[0].split(' ')) { L.words.push({ txt: wd, ui, d0: d0 + em * wOf(full.slice(0, ci)) + tr * ci + (L.gapW || 0) * em * (wi++), w: em * wOf(wd) + tr * (wd.length - 1) }); ci += wd.length + 1; }
+      const a = L.words[first], b = L.words.at(-1), nw = L.words.length - first, per = (u[2] - u[1]) / nw;
+      L.units.push({ txt: u[0], t: u[1], end: u[2], d0: a.d0, d1: b.d0 + b.w, w0: first, w1: L.words.length, per, pre: per < LIVE_MIN });
+    });
+    L.textEnd = L.units.at(-1).d1; L.tEnd = L.units.at(-1).end;
+  }
+  for (const s of SEA) {
+    const em = s.em, txt = s.u[0]; let d0 = 0, ci = 0;
+    if (s.off) d0 = SEA[SEA.indexOf(s) - 1].d1 + em * 0.42;
+    s.words = txt.split(' ').map((wd, k) => { const o = { txt: wd, d0: d0 + em * wOf(txt.slice(0, ci), 800) + k * em * 0.1, w: em * wOf(wd, 800) }; ci += wd.length + 1; return o; });
+    s.d0 = s.words[0].d0; s.d1 = s.words.at(-1).d0 + s.words.at(-1).w;
+  }
+}
+
+// ---------- caméra ----------
+const rad = d => d * Math.PI / 180;
+let POSES = [];
+function buildCamera() {
+  POSES = [];
+  for (const L of LINES) {
+    L.cad.forEach((g, gi) => {
+      const a = L.units[g[0]], b = L.units[g.at(-1)], dc = (a.d0 + b.d1) / 2, p = L.path.at(dc), w = b.d1 - a.d0;
+      const lift = L.below ? -L.emW * 0.52 : L.emW * 0.50, nx = Math.sin(p.a), ny = -Math.cos(p.a);
+      const s = S.clamp(820 / w, (L.minPx || 120) / L.emW, (L.maxPx || 220) / L.emW);
+      const th = p.a - S.clamp(p.a * 0.1, rad(-6), rad(6));
+      const first = gi === 0;
+      // priorités : 1) ne pas quitter le mot chanté avant 60 % de sa durée ; 2) arriver au plus tard sur l'attaque ; 3) avance pour le pré-posé
+      let arr = L.arr, dur = L.dur;
+      if (!first) {
+        const prevU = L.units[g[0] - 1], leaveMin = prevU.t + 0.6 * (prevU.end - prevU.t), lead = a.pre ? BEAT / 2 : 0.06;
+        dur = L.glide ? L.glide[gi - 1] : S.clamp((prevU.end - prevU.t) * 0.4, 0.16, 0.24);
+        arr = Math.min(a.t, Math.max(a.t - lead, leaveMin + dur)); dur = Math.max(0.12, Math.min(dur, arr - leaveMin));
+      }
+      POSES.push({ line: L.id, txt: g.map(i => L.units[i].txt).join(' '), x: p.x + nx * lift, y: p.y + ny * lift, s, th, arr, dur,
+        kind: first ? L.kind : 'glide', tSing: a.t, tEnd: b.end, pre: g.map(i => L.units[i].pre), dirx: Math.cos(p.a), diry: Math.sin(p.a), w });
+    });
+  }
+  // respiration au fanion : léger recul qui laisse deviner le sommet de la voile
+  POSES.splice(POSES.findIndex(p => p.line === 'pontG'), 0,
+    { line: 'fanion', txt: '(recul : la pointe de la voile apparaît)', x: 536, y: 474, s: 2.3, th: rad(-3), arr: 25.24, dur: 4 * BEAT, kind: 'ease', tSing: null, w: 0, dirx: 1, diry: 0 });
+  POSES.push({ line: 'final', txt: '(image d’ensemble)', x: ANCHOR.x, y: ANCHOR.y, s: 1, th: 0, arr: T_OUT1, dur: T_OUT1 - T_OUT0, kind: 'zoomout', tSing: null, w: 0, dirx: 0, diry: 0, final: true });
+  POSES.forEach((p, i) => { p.leave = i + 1 < POSES.length ? POSES[i + 1].arr - POSES[i + 1].dur : DURATION; });
+}
+function hold(i, t) {   // pose i avec sa dérive lente (la caméra accompagne la pointe du tracé)
+  const p = POSES[i], k = S.clamp((t - p.arr) / Math.max(0.01, p.leave - p.arr));
+  if (p.final) { const e = 1 - Math.pow(1 - S.clamp((t - p.arr) / (DURATION - p.arr)), 2); return { x: p.x, y: p.y, s: p.s * (1 - 0.045 * e), th: 0 }; }
+  const pan = (k - 0.5) * 0.08 * p.w;
+  return { x: p.x + p.dirx * pan, y: p.y + p.diry * pan, s: p.s * (1 + 0.03 * k), th: p.th };
+}
+const EASE = { whip: S.cubicBezier(0.7, 0, 0.2, 1), pivot: S.cubicBezier(0.6, 0, 0.25, 1), glide: S.cubicBezier(0.3, 0, 0.15, 1),
+  ease: S.cubicBezier(0.45, 0, 0.55, 1), zoomout: S.cubicBezier(0.5, 0, 0.12, 1), cut: x => 1 };
+function camAt(t) {
+  let i = 0; while (i + 1 < POSES.length && t >= POSES[i + 1].arr) i++;
+  const nx = POSES[i + 1];
+  if (!nx || t < nx.arr - nx.dur) return hold(i, Math.max(t, POSES[i].arr));
+  const a = hold(i, nx.arr - nx.dur), b = hold(i + 1, nx.arr), u = (t - (nx.arr - nx.dur)) / nx.dur, e = EASE[nx.kind](u);
+  let dth = b.th - a.th; while (dth > Math.PI) dth -= 2 * Math.PI; while (dth < -Math.PI) dth += 2 * Math.PI;
+  const bump = nx.kind === 'whip' ? 1 - 0.28 * Math.sin(Math.PI * u) : nx.kind === 'pivot' ? 1 - 0.20 * Math.sin(Math.PI * u) : 1;
+  // zoom arrière : la position rejoint le centre plus vite que l'échelle (on « décolle » d'abord)
+  const ep = nx.kind === 'zoomout' ? S.cubicBezier(0.3, 0, 0.1, 1)(u) : e;
+  return { x: S.lerp(a.x, b.x, ep), y: S.lerp(a.y, b.y, ep), s: Math.exp(S.lerp(Math.log(a.s), Math.log(b.s), e)) * bump, th: a.th + dth * e };
+}
+
+// ---------- textures ----------
+function noiseTile(n, seed, fn) { const c = document.createElement('canvas'); c.width = c.height = n; const x = c.getContext('2d'), im = x.createImageData(n, n), r = S.rng(seed);
+  for (let j = 0; j < n; j++) for (let i = 0; i < n; i++) { const [v, a] = fn(i, j, r); const o = (j * n + i) * 4; im.data[o] = im.data[o + 1] = im.data[o + 2] = v; im.data[o + 3] = a; }
+  x.putImageData(im, 0, 0); return c; }
+let PAT = {};
+function textures() {
+  const per = (i, j, f, n) => { // bruit périodique grossier
+    const x = i / n * f, y = j / n * f, xi = Math.floor(x), yi = Math.floor(y), fx = x - xi, fy = y - yi, h = (a, b) => { const q = Math.sin(((a % f) + f) % f * 127.1 + ((b % f) + f) % f * 311.7) * 43758.5453; return q - Math.floor(q); };
+    const sx = fx * fx * (3 - 2 * fx), sy = fy * fy * (3 - 2 * fy);
+    return S.lerp(S.lerp(h(xi, yi), h(xi + 1, yi), sx), S.lerp(h(xi, yi + 1), h(xi + 1, yi + 1), sx), sy); };
+  PAT.blotch = noiseTile(256, 3, (i, j) => { const v = per(i, j, 5, 256) * 0.6 + per(i, j, 11, 256) * 0.4; return v > 0.5 ? [255, (v - 0.5) * 2 * 26] : [0, (0.5 - v) * 2 * 34]; });
+  PAT.fibre = noiseTile(256, 7, (i, j, r) => { const v = r(); return v > 0.5 ? [255, (v - 0.5) * 30] : [0, (0.5 - v) * 36]; });
+  PAT.speck = noiseTile(256, 11, (i, j, r) => { const v = r(), b = per(i, j, 9, 256); return v > 0.93 ? [60, 70] : v < 0.08 ? [255, 60] : [b > 0.5 ? 255 : 0, Math.abs(b - 0.5) * 30]; });
+  PAT.grain = noiseTile(256, 19, (i, j, r) => { const v = r(); return [v > 0.5 ? 255 : 0, Math.abs(v - 0.5) * 22]; });
+}
+
+// ---------- dessin du monde ----------
+function inkColor(t, u) {   // encre fraîche (jaune) -> sèche (ivoire)
+  const k = S.clamp((t - (u.end + 0.10)) / 0.35); return S.mix ? S.mix(COL.wet, COL.ink, k) : (k < 0.5 ? COL.wet : COL.ink);
+}
+function drawWord(c, L, wd, fill, alpha = 1, f = 1, weight = 700, gap = 0.16) {   // mot rigide posé sur le chemin, révélé de gauche à droite (f)
+  if (f <= 0 || alpha <= 0) return;
+  const p = L.path.at(wd.d0 + wd.w / 2), em = L.emW, by = L.below ? em * 0.88 : -gap * em;
+  c.save(); c.translate(p.x, p.y); c.rotate(p.a); c.globalAlpha = alpha; c.fillStyle = fill;
+  if (f < 1) { c.beginPath(); c.rect(-wd.w / 2 - 3, by - em * 1.1, (wd.w + 6) * f, em * 1.5); c.clip(); }
+  c.font = `${weight} ${em}px ${FONT}`; c.letterSpacing = (L.tr || 0) + 'px'; c.textAlign = 'left'; c.textBaseline = 'alphabetic'; c.fillText(wd.txt, -wd.w / 2, by); c.restore();
+}
+function strokePath(c, path, d0, d1, lw, col, dash) {
+  if (d1 <= d0) return; c.beginPath(); const n = Math.max(2, Math.ceil((d1 - d0) / 6));
+  for (let i = 0; i <= n; i++) { const p = path.at(d0 + (d1 - d0) * i / n); i ? c.lineTo(p.x, p.y) : c.moveTo(p.x, p.y); }
+  c.lineWidth = lw; c.strokeStyle = col; c.lineCap = 'round'; c.lineJoin = 'round'; if (dash) c.setLineDash(dash); c.stroke(); c.setLineDash([]);
+}
+function tipOf(L, t) {   // position de la pointe (encre) le long de la ligne, ou null si rien n'est encore écrit
+  let d = null, writing = false;
+  for (const u of L.units) {
+    if (u.pre) { if (t >= u.t) d = u.d1; continue; }
+    const wd = Math.min(0.5 * (u.end - u.t), 0.28), f = S.clamp((t - (u.t - 0.08)) / wd);
+    if (f > 0) { d = u.d0 + (u.d1 - u.d0) * f; writing = f < 1; }
+  }
+  return d === null ? null : { d, writing };
+}
+function shadowed(c, cam, fn, blur = 14, ox = 9, oy = 13, a = 0.38) {
+  c.save(); c.shadowColor = `rgba(4,14,40,${a})`; c.shadowBlur = blur * cam.s;
+  const co = Math.cos(-cam.th), si = Math.sin(-cam.th);   // l'ombre suit la lumière du monde, pas l'écran
+  c.shadowOffsetX = (ox * co - oy * si) * cam.s; c.shadowOffsetY = (ox * si + oy * co) * cam.s; fn(); c.restore();
+}
+function rr(c, x, y, w, h, r) { c.beginPath(); c.roundRect(x, y, w, h, r); }
+
+function drawObjects(c, cam, t) {
+  // ruban de masquage aux quatre coins de la feuille
+  [[SHEET.x, SHEET.y, -45], [SHEET.x + SHEET.w, SHEET.y, 45], [SHEET.x, SHEET.y + SHEET.h, 45], [SHEET.x + SHEET.w, SHEET.y + SHEET.h, -45]].forEach(([tx, ty, r]) => {
+    c.save(); c.translate(tx, ty); c.rotate(rad(r)); shadowed(c, cam, () => { c.fillStyle = '#E9DFC3'; c.fillRect(-62, -17, 124, 34); }, 5, 3, 4, 0.3); c.fillStyle = 'rgba(233,223,195,0.93)'; c.fillRect(-62, -17, 124, 34); c.restore(); });
+  // tasse vue de dessus (début de journée)
+  c.save(); c.translate(262, 452);
+  c.strokeStyle = 'rgba(10,26,60,0.20)'; c.lineWidth = 5; c.beginPath(); c.arc(-88, 118, 50, 0.3, 5.6); c.stroke();   // auréole de café
+  shadowed(c, cam, () => { c.fillStyle = '#EDE8DC'; c.beginPath(); c.arc(0, 0, 56, 0, 7); c.fill(); rr(c, -78, -11, 30, 22, 9); c.fill(); }, 18, 12, 17, 0.42);
+  c.fillStyle = '#EDE8DC'; c.beginPath(); c.arc(0, 0, 56, 0, 7); c.fill();
+  c.fillStyle = '#D9D3C4'; c.beginPath(); c.arc(0, 0, 49, 0, 7); c.fill();
+  const g = c.createRadialGradient(-10, -12, 4, 0, 0, 46); g.addColorStop(0, '#5A3A22'); g.addColorStop(1, '#2E1B0E');
+  c.fillStyle = g; c.beginPath(); c.arc(0, 0, 45, 0, 7); c.fill();
+  c.strokeStyle = 'rgba(255,255,255,0.20)'; c.lineWidth = 3; c.beginPath(); c.arc(0, 0, 37, 3.5, 4.5); c.stroke(); c.restore();
+  // crayon (écrire des lignes)
+  c.save(); c.translate(741, 476); c.rotate(rad(68));
+  const pencil = () => { c.beginPath(); c.moveTo(-118, -8); c.lineTo(84, -8); c.lineTo(118, 0); c.lineTo(84, 8); c.lineTo(-118, 8); c.closePath(); c.fill(); };
+  shadowed(c, cam, () => { c.fillStyle = '#F2C230'; pencil(); }, 9, 6, 9, 0.45);
+  c.fillStyle = '#F2C230'; c.fillRect(-98, -8, 182, 16); c.fillStyle = '#D9A51C'; c.fillRect(-98, 2.5, 182, 5.5); c.fillStyle = '#FFDD6B'; c.fillRect(-98, -8, 182, 4);
+  c.fillStyle = '#E8D3B0'; c.beginPath(); c.moveTo(84, -8); c.lineTo(118, 0); c.lineTo(84, 8); c.closePath(); c.fill();
+  c.fillStyle = '#2B2B2B'; c.beginPath(); c.moveTo(106, -2.8); c.lineTo(118, 0); c.lineTo(106, 2.8); c.closePath(); c.fill();
+  c.fillStyle = '#B9BEC6'; c.fillRect(-106, -8, 10, 16); c.fillStyle = '#F08C7A'; rr(c, -120, -8, 15, 16, 4); c.fill(); c.restore();
+  // clé (les clés)
+  c.save(); c.translate(706, 1104); c.rotate(rad(-20));
+  const key = () => { c.beginPath(); c.arc(-34, 0, 21, 0, 7); c.rect(-16, -5, 76, 10); c.rect(34, 4, 8, 12); c.rect(48, 4, 9, 9); c.fill('nonzero'); };
+  shadowed(c, cam, () => { c.fillStyle = '#C9A24A'; key(); }, 7, 5, 7, 0.5);
+  c.fillStyle = '#C9A24A'; key(); c.fillStyle = '#E3C273'; c.fillRect(-14, -5, 72, 3.5);
+  c.globalCompositeOperation = 'source-over'; c.fillStyle = COL.paper; c.beginPath(); c.arc(-40, 0, 8, 0, 7); c.fill(); c.restore();
+  // note collée (un fichier de plus) — sans mot : trois traits
+  c.save(); c.translate(968, 838); c.rotate(rad(7));
+  shadowed(c, cam, () => { c.fillStyle = '#F4E6A6'; c.fillRect(-56, -56, 112, 112); }, 12, 7, 11, 0.4);
+  const ng = c.createLinearGradient(-56, -56, 56, 56); ng.addColorStop(0, '#F8ECB4'); ng.addColorStop(1, '#E9D88F'); c.fillStyle = ng; c.fillRect(-56, -56, 112, 112);
+  c.strokeStyle = 'rgba(40,50,80,0.55)'; c.lineWidth = 4; c.lineCap = 'round';
+  [[-38, -22, 30], [-38, 0, 38], [-38, 22, 12]].forEach(([x, y, w]) => { c.beginPath(); c.moveTo(x, y); c.lineTo(x + w + 30, y - 2); c.stroke(); });
+  c.fillStyle = 'rgba(235,228,205,0.82)'; c.save(); c.translate(0, -56); c.rotate(rad(-4)); c.fillRect(-30, -11, 60, 22); c.restore(); c.restore();
+}
+function drawFloor(c, cam) {
+  c.save(); c.setTransform(1, 0, 0, 1, 0, 0); c.fillStyle = COL.floor; c.fillRect(0, 0, W, H); c.restore();
+  const p = c.createPattern(PAT.speck, 'repeat'); c.save(); c.fillStyle = p; c.scale(1.5, 1.5); c.fillRect(-2000, -2000, 5000, 5000); c.restore();
+}
+function drawSheet(c, cam, t) {
+  const { x, y, w, h } = SHEET;
+  shadowed(c, cam, () => { c.fillStyle = COL.paper; c.fillRect(x, y, w, h); }, 26, 12, 18, 0.45);
+  const g = c.createLinearGradient(x, y, x + w, y + h); g.addColorStop(0, COL.paperHi); g.addColorStop(0.55, COL.paper); g.addColorStop(1, COL.paperLo);
+  c.fillStyle = g; c.fillRect(x, y, w, h);
+  c.save(); c.beginPath(); c.rect(x, y, w, h); c.clip();
+  c.save(); c.scale(4, 4); c.fillStyle = c.createPattern(PAT.blotch, 'repeat'); c.fillRect(0, 0, 300, 480); c.restore();
+  c.save(); c.scale(0.75, 0.75); c.fillStyle = c.createPattern(PAT.fibre, 'repeat'); c.fillRect(0, 0, 1500, 2500); c.restore();
+  // quadrillage du plan
+  const aMin = 0.035 + 0.035 * S.clamp((cam.s - 1) / 2), lw = 1 / cam.s;
+  c.lineWidth = Math.max(lw, 0.5); c.strokeStyle = `rgba(255,255,255,${aMin})`; c.beginPath();
+  for (let gx = 40; gx < x + w; gx += 20) if (gx % 100) { c.moveTo(gx, y); c.lineTo(gx, y + h); }
+  for (let gy = 100; gy < y + h; gy += 20) if (gy % 100) { c.moveTo(x, gy); c.lineTo(x + w, gy); } c.stroke();
+  c.lineWidth = Math.max(1.4 / cam.s, 0.8); c.strokeStyle = 'rgba(255,255,255,0.10)'; c.beginPath();
+  for (let gx = 100; gx < x + w; gx += 100) { c.moveTo(gx, y); c.lineTo(gx, y + h); }
+  for (let gy = 100; gy < y + h; gy += 100) { c.moveTo(x, gy); c.lineTo(x + w, gy); } c.stroke();
+  // plis de la feuille (elle a été dépliée et posée à plat)
+  const crease = (x0, y0, x1, y1) => { const vert = x0 === x1, gg = vert ? c.createLinearGradient(x0 - 14, 0, x0 + 14, 0) : c.createLinearGradient(0, y0 - 14, 0, y0 + 14);
+    gg.addColorStop(0, 'rgba(255,255,255,0)'); gg.addColorStop(0.47, 'rgba(255,255,255,0.075)'); gg.addColorStop(0.5, 'rgba(255,255,255,0.16)'); gg.addColorStop(0.53, 'rgba(0,10,40,0.16)'); gg.addColorStop(1, 'rgba(0,10,40,0)');
+    c.fillStyle = gg; vert ? c.fillRect(x0 - 14, y0, 28, y1 - y0) : c.fillRect(x0, y0 - 14, x1 - x0, 28); };
+  crease(540, y, 540, y + h); [1, 2, 3].forEach(k => crease(x, y + h * k / 4, x + w, y + h * k / 4));
+  // cadre et repères
+  c.strokeStyle = 'rgba(243,240,228,0.42)'; c.lineWidth = 2; c.strokeRect(x + 22, y + 22, w - 44, h - 44);
+  c.fillStyle = 'rgba(243,240,228,0.55)'; c.font = `400 15px ${MONO}`; c.textAlign = 'left'; c.textBaseline = 'alphabetic'; c.fillText('PL. 01 — 1:1', x + 36, y + 52);
+  c.restore();
+}
+function drawBoat(c, cam, t) {
+  const lwLine = 3.2;
+  // mât en pointillé (pli) : se trace quand la caméra passe par C
+  const mast = straight(P.C, [510, 214]); const km = S.seg(t, 9.32, 9.9, S.ease.inOutCubic);
+  strokePath(c, mast, 0, mast.len * km, 2.2, 'rgba(243,240,228,0.7)', [9, 9]);
+  const dryA = S.lerp(1, 0.6, S.clamp((cam.s - 1.2) / 1.5));   // l'encre sèche s'efface un peu en gros plan : le mot chanté domine
+  for (const L of LINES) {
+    const tip = tipOf(L, t), endK = S.seg(t, L.tEnd + 0.05, L.tEnd + 0.4, S.ease.outCubic);
+    if (!L.noLine && tip) {   // le trait du chemin avance avec la pointe, puis finit l'arête
+      const d1 = S.lerp(Math.min(L.path.len, tip.d + 0.3 * L.emW), L.path.len, endK);
+      c.globalAlpha = S.lerp(1, 0.75, S.clamp((cam.s - 1.2) / 1.5)); strokePath(c, L.path, 0, d1, lwLine, COL.ink); c.globalAlpha = 1;
+    }
+    for (const u of L.units) {
+      const words = L.words.slice(u.w0, u.w1), dry = t > u.end + 0.45 ? dryA : 1;
+      const frac = (wd, d) => S.clamp((d - wd.d0) / wd.w);
+      if (u.pre) {
+        const pose = POSES.find(p => p.line === L.id && p.tSing !== null && p.tSing <= u.t && u.t < p.tEnd + 1e-6) || POSES.find(p => p.line === L.id);
+        const tG = Math.max(pose.arr - 0.04, u.t - BEAT), kg = S.clamp((t - tG) / 0.15);
+        if (t >= u.t) words.forEach(wd => drawWord(c, L, wd, inkColor(t, u), dry));
+        else words.forEach(wd => drawWord(c, L, wd, COL.ink, 0.5, frac(wd, u.d0 + (u.d1 - u.d0) * kg)));   // pré-posé au crayon
+      } else {
+        const wdur = Math.min(0.5 * (u.end - u.t), 0.28), f = S.clamp((t - (u.t - 0.08)) / wdur);
+        words.forEach(wd => drawWord(c, L, wd, inkColor(t, u), dry, frac(wd, u.d0 + (u.d1 - u.d0) * f)));
+      }
+    }
+    if (tip && tip.writing) { const p = L.path.at(tip.d); c.save(); c.shadowColor = COL.wet; c.shadowBlur = 16 * cam.s; c.fillStyle = COL.wet; c.beginPath(); c.arc(p.x, p.y, L.emW * 0.11, 0, 7); c.fill(); c.restore(); }
+  }
+  // fanion au crayon rouge autour de « AND YET »
+  const F = LINES.find(l => l.id === 'fanion'), fw = F.textEnd + 44, kf = S.seg(t, 22.6, 23.3, S.ease.inOutCubic);
+  if (kf > 0) { const pts = [[510, 222], [510 + fw, 222], [510 + fw - 26, 254], [510 + fw, 286], [510, 286]];
+    const seg = pts.map((p, i) => straight(p, pts[(i + 1) % 5])), tot = seg.reduce((a, s2) => a + s2.len, 0); let rem = tot * kf;
+    for (const s2 of seg) { strokePath(c, s2, 0, Math.min(s2.len, rem), 3, COL.red); rem -= s2.len; if (rem <= 0) break; } }
+  // boucle de correction rouge autour de « WRONG FOLD »
+  const G = LINES.find(l => l.id === 'pontG'), kc = S.seg(t, 26.75, 27.2, S.ease.inOutCubic);
+  if (kc > 0) { const mid = G.path.at((G.units[0].d0 + G.units[1].d1) / 2), rw = (G.units[1].d1 - G.units[0].d0) / 2 + 14, rh = G.emW * 0.58;
+    c.save(); c.translate(mid.x - Math.sin(mid.a) * G.emW * 0.52, mid.y + Math.cos(mid.a) * G.emW * 0.52); c.rotate(mid.a - 0.03);
+    c.beginPath(); c.ellipse(0, 0, rw, rh, 0, -2.6, -2.6 + kc * 6.6); c.strokeStyle = COL.red; c.lineWidth = 3; c.lineCap = 'round'; c.stroke(); c.restore(); }
+  // croix rouge près de « DOWN »
+  const kx = S.seg(t, 13.7, 14.0); if (kx > 0) { c.strokeStyle = COL.red; c.lineWidth = 3.2; c.lineCap = 'round'; c.beginPath(); c.moveTo(118, 930); c.lineTo(118 + 26 * Math.min(1, kx * 2), 930 + 26 * Math.min(1, kx * 2));
+    if (kx > 0.5) { c.moveTo(144, 930); c.lineTo(144 - 26 * (kx * 2 - 1), 930 + 26 * (kx * 2 - 1)); } c.stroke(); }
+  // la mer : le refrain, en grand
+  for (const s of SEA) {
+    const [txt, t0, t1] = s.u, wdur = Math.min(0.5 * (t1 - t0), 0.3), f = S.clamp((t - (t0 - 0.08)) / wdur), d = s.d0 + (s.d1 - s.d0) * f;
+    s.words.forEach(wd => drawWord(c, { path: s.path, emW: s.em }, wd, inkColor(t, { end: t1 }), 1, S.clamp((d - wd.d0) / wd.w), 800, 0));
+  }
+  // deux filets d'eau sous la coque, tracés pendant le zoom arrière
+  const kw = S.seg(t, 29.2, 30.6, S.ease.inOutCubic);
+  if (kw > 0) { const w2 = wave(770, 950, 1132, 9, 270, 0.4 + (770 - 84) / 270 * 2 * Math.PI); strokePath(c, w2, 0, w2.len * kw, 3.2, COL.ink);
+    [[1596, 120, 900, 0.8], [1662, 200, 960, 2.6], [1726, 90, 760, 4.4]].forEach(([y, x0, x1, ph], i) => { const w3 = wave(x0, x1, y, 10, 300, ph), k3 = S.seg(t, 30.2 + i * 0.35, 31.6 + i * 0.35, S.ease.inOutCubic); c.globalAlpha = 0.55; strokePath(c, w3, 0, w3.len * k3, 2.6, COL.ink); c.globalAlpha = 1; }); }
+}
+function renderScene(c, t) {
+  const cam = camAt(t);
+  c.setTransform(1, 0, 0, 1, 0, 0); c.globalAlpha = 1;
+  c.translate(ANCHOR.x, ANCHOR.y); c.rotate(-cam.th); c.scale(cam.s, cam.s); c.translate(-cam.x, -cam.y);
+  drawFloor(c, cam); drawSheet(c, cam, t); drawBoat(c, cam, t); drawObjects(c, cam, t);
+  // finition écran : vignette douce + grain
+  c.setTransform(1, 0, 0, 1, 0, 0);
+  const v = c.createRadialGradient(W / 2, H * 0.47, H * 0.28, W / 2, H * 0.5, H * 0.74); v.addColorStop(0, 'rgba(3,10,30,0)'); v.addColorStop(1, 'rgba(3,10,30,0.34)');
+  c.fillStyle = v; c.fillRect(0, 0, W, H);
+  c.fillStyle = c.createPattern(PAT.grain, 'repeat'); c.fillRect(0, 0, W, H);
+}
+function renderAt(t) {
+  t = Math.min(t, DURATION);
+  // flou de mouvement : sous-images moyennées quand la caméra file
+  const a = camAt(t - 1 / 60), b = camAt(t), sp = Math.hypot(b.x - a.x, b.y - a.y) * b.s + Math.abs(b.th - a.th) * 700 + Math.abs(Math.log(b.s / a.s)) * 500;
+  const n = sp < 8 ? 1 : Math.min(48, Math.ceil(sp / 4));
+  if (n === 1) { renderScene(ctx, t); }
+  else { for (let i = 0; i < n; i++) { renderScene(bctx, t - (1 / 60) * (i / n)); ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalAlpha = 1 / (i + 1); ctx.drawImage(buf, 0, 0); } ctx.globalAlpha = 1; }
+}
+
+window.DURATION = DURATION;
+window.ready = (async () => {
+  await S.loadFonts([{ family: 'Barlow Condensed', weight: 700, pkg: 'barlow-condensed' }, { family: 'Barlow Condensed', weight: 800, pkg: 'barlow-condensed' },
+    { family: 'JetBrains Mono', weight: 400, pkg: 'jetbrains-mono' }]);
+  textures(); layout(); buildCamera();
+  window.STORYBOARD = { poses: POSES.map(p => ({ ...p, th: +(p.th * 180 / Math.PI).toFixed(1), x: Math.round(p.x), y: Math.round(p.y), s: +p.s.toFixed(2) })),
+    lines: LINES.map(L => ({ id: L.id, em: +L.emW.toFixed(1), track: +L.tr.toFixed(1), len: Math.round(L.path.len), units: L.units.map(u => ({ txt: u.txt, t: u.t, end: u.end, per: +u.per.toFixed(2), pre: u.pre })) })) };
+  S.guides();
+})();
+window.renderAt = t => { renderAt(t); };
+</script></body></html>
