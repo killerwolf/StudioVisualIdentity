@@ -680,3 +680,5 @@ Taille : atoll 6,6 Mo (8,9), Machu Picchu 13,2 Mo (13,8).
   « phare d'Alexandrie » (0,690, avant 0,722) ; bloc `blindJudgeSurvol` conservé (jugé sur des images de la passe de
   détail) ; `build_index.py` : coût 63,9–214,4, rang 10 conservé ; `catalogue_scan.py --check` sans écart ; vitrine
   régénérée en local avec `--videos-for survol-pixel`, **non republiée**.
+
+- **Rejugement de Fable (18/11)** : retouches 1 réussie à Machu Picchu / partielle à l'atoll, 2 partielle, 3 réussie, 4 cadrage réussi / mouvement raté, 5 partielle, 6 réussie (sauf ciel de Machu Picchu en vue haute). Les 3 écarts du studio sont gardés (contremarches éclaircies, murs sortis du pain de sucre avec granite à 100 × K, cap_colors). Fable recommande d'arrêter là : ce qui reste (atoll presque immobile, mer à moitié vide, pas de terre verte) tient au sujet et à la règle « pas d'archipel ». Rapports : `fable-retouches-2026-11-18.md`, `fable-rejugement-2026-11-18.md`.
