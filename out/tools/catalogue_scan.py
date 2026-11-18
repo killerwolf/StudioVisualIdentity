@@ -144,6 +144,7 @@ LIBS = [
     ('OpenCV', r'OpenCV', r"^\s*(?:from|import)\s+cv2\b", M, ['cv2']),
     ('Blender bpy', r'Blender', r"^\s*(?:from|import)\s+bpy\b|\bblender\s+-b\b", M, ['bpy']),
     ('Taichi', r'Taichi', r"^\s*(?:from|import)\s+taichi\b", M, ['taichi']),
+    ('pyobjc Metal', r'pyobjc', r"^\s*(?:from|import)\s+Metal\b", M, ['Metal']),
     ('PyVista', r'PyVista', r"^\s*(?:from|import)\s+pyvista\b", M, ['pyvista']),
     ('VTK', r'VTK', r"^\s*(?:from|import)\s+vtk\b", M, ['vtk']),
     ('pyrender', r'pyrender', r"^\s*(?:from|import)\s+pyrender\b", M, ['pyrender']),

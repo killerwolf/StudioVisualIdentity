@@ -2,7 +2,7 @@
  "identity": "survol-pixel",
  "family": "histoire",
  "title": "Machu Picchu : pourquoi une cité en escaliers ?",
- "hook": "Dès 0,12 s : « MACHU PICCHU » (Jersey 20) et « POURQUOI / DES ESCALIERS ? » (Jersey 15) sur une rasante 9° : la montagne au sud, la cité en terrasses sur l'ensellement, le pain de sucre au nord, nuages bas et rivière ; « reconstitution stylisée » en bas",
+ "hook": "Dès 0,12 s : « MACHU PICCHU » (Jersey 15) sur une approche à 29° en perspective qui vire (roulis −11°) : la cité en terrasses sur l'ensellement, crêtes andines jusqu'à l'horizon, rivière ; « POURQUOI / DES ESCALIERS ? » à 3,4 s",
  "duration": 18.8,
  "libraries": [
   "numpy",
@@ -13,34 +13,42 @@
   "ffmpeg"
  ],
  "seed": 1911,
- "renderTimeSec": 356.0,
- "renderSecPer100Frames": 63.1,
- "renderCostNote": "passe de détail du 18/11 (moteur : arbres en grappes, murs appareillés, micro-détail, nuages en coton ; terrasses plus fines) : 356,0 s pour 564 images = 63,1 s/100 images, en parallèle du rendu de l'atoll ; charge 1 min 2,7 au départ, 3,4 à la fin (relevés /20 s : 2,7–8,9, moyenne 4,4). Banc 60 images avant rendu : 57,3 s/100 (charge 3,0). Rendu précédent (après revue) : 333,6 s (59,1/100, charge 2,9–29)",
+ "renderTimeSec": 1501.9,
+ "renderSecPer100Frames": 266.29,
+ "renderCostNote": "passe A+B+C du 18/11 (moteur : 4 rayons par pixel et vote, carte de couleurs 4× plus fine sur la fenêtre du site, brume en 6 paliers, ombre portée du relief, marche à pas sûrs sur cartes de maxima ; monde de 1 536 unités) : 1 501,9 s pour 564 images = 266,29 s/100 images, sur CPU, en parallèle du rendu de l'atoll sur 4 cœurs ; charge 1 min 6,26 au départ, 10,40 à la fin ; construction du monde 39,3 s (incluse). Plafond de coût levé par le propriétaire pour B. Rendus précédents : passe de détail 356,0 s (63,1/100, charge 2,7–8,9), après revue 333,6 s (59,1/100)",
  "measuredUnderLoad": true,
  "structure": [
   {
    "t": 0,
-   "beat": "hook : rasante 9° qui avance vers la cité ; nom + question ; reconstitution stylisée"
+   "beat": "hook : approche à 29° qui vire vers la cité (roulis −11°), crêtes andines jusqu'à l'horizon ; « MACHU PICCHU » (Jersey 15), puis épingle « À 2 430 m » (1,5–3,4 s)"
   },
   {
-   "t": 4.9,
-   "beat": "la remontée 11° → 64° (0,6 s, whoosh)"
+   "t": 3.4,
+   "beat": "« POURQUOI / DES ESCALIERS ? » ; virage qui se rapproche (33°, whoosh 4,95 s)"
   },
   {
-   "t": 5.5,
-   "beat": "plongeante (cap −22° → −12°, rotation ralentie) : plan de la cité (toits de chaume, place), jupe de terrasses, rivière en fer à cheval ; plaque inversée « XVe SIÈCLE » ; « LES INCAS BÂTISSENT / DES TERRASSES » ; épingle « À 2 430 m »"
+   "t": 5.6,
+   "beat": "plaque inversée « XVe SIÈCLE » (pop), puis « LES INCAS BÂTISSENT / DES TERRASSES » (7,05–8,9 s) : la cité et ses terrasses à 38°, cap qui tourne de −46° à −96°, roulis 9–11°"
   },
   {
-   "t": 9.3,
-   "beat": "le piqué 60° → 19° (0,6 s, whoosh) vers une entaille dans trois terrasses"
+   "t": 8.0,
+   "beat": "le piqué ralenti (2,0 s, 36° → 20°, whoosh 8,75 s) vers une entaille dans trois terrasses (décision du propriétaire du 18/11)"
   },
   {
-   "t": 9.9,
-   "beat": "coupe : « LA PLUIE FILE, / LA PENTE TIENT » ; épingles terre / gravier / pierres une à une (pop) ; la pluie en pixels bleus traverse les couches et sort au pied du remblai ; lama et son ombre"
+   "t": 10.0,
+   "beat": "coupe : épingles « pierres », « gravier », « terre » dans l'ordre de la voix (pop 10,0 / 10,74 / 11,48 s) ; la pluie en pixels bleus traverse les couches et sort au pied du remblai ; lama et son ombre"
   },
   {
-   "t": 14.6,
-   "beat": "la remontée puis survol qui s'éloigne ; « RÉVÉLÉE AU MONDE / EN 1911 » (chime) ; la cité dans la brume dorée"
+   "t": 12.0,
+   "beat": "« LA PLUIE FILE, / LA PENTE TIENT »"
+  },
+  {
+   "t": 13.4,
+   "beat": "la remontée ralentie (2,2 s, 19° → 30°, whoosh 14,55 s, décision du propriétaire du 18/11)"
+  },
+  {
+   "t": 15.1,
+   "beat": "« RÉVÉLÉE AU MONDE / EN 1911 » (chime) ; survol qui s'éloigne en virant (roulis −13°), « reconstitution stylisée » de 16,9 à 18,8 s"
   }
  ],
  "engagement": {
@@ -55,13 +63,13 @@
   "voiceUsed": "Gemini Sulafat (gemini-3.8-flash-tts, API v1beta), 1 appel par short découpé en voice_lines/, mixé par tts.py --engine files (2026-11-18)",
   "sfx": [
    "swell 0,12 s",
-   "whoosh 4,85 s",
-   "pop 5,5 s",
-   "whoosh 9,25 s (piqué)",
+   "whoosh 4,95 s (virage)",
+   "pop 5,6 s",
+   "whoosh 8,75 s (piqué)",
    "swell 9,9 s",
-   "pop 10,3 / 10,9 / 11,5 s (épingles)",
-   "whoosh 14,55 s",
-   "chime 15,2 s"
+   "pop 10,0 / 10,74 / 11,48 s (épingles)",
+   "whoosh 14,55 s (remontée)",
+   "chime 15,1 s"
   ],
   "voiceEngine": "gemini",
   "voiceName": "Gemini – Sulafat",
@@ -71,39 +79,44 @@
   "GRANITE": "#9C968C",
   "GRANITE_SH": "#5F5A55",
   "THATCH": "#C9A35A",
-  "EARTH": "#8A5A3A"
+  "EARTH": "#8A5A3A",
+  "SNOW": "#EEF3F4"
  },
  "qualityChecks": {
   "stillsReviewed": true,
   "textMinPx": 74.7,
-  "textMinPxNote": "Jersey 10 corps 74,7 px (reconstitution stylisée) ; récit Jersey 15 108 px",
+  "textMinPxNote": "Jersey 10 corps 74,7 px (reconstitution stylisée) ; nom, question, dates, récit et épingles en Jersey 15 (108 px) depuis la passe A+B+C ; un seul cartouche à la fois",
   "safeAreaOk": true,
   "safeAreaNote": "assertion du moteur sur chaque cartouche",
   "maxWordsOnScreenPerShot": 6,
   "narrationWordsSpoken": 38,
   "wordsPerSecond": "2,27–2,58 (mots prononcés)",
-  "pitchLe60Share": 0.787,
-  "colorsPerFrame": "natif : 17–22 indices exacts par image (médiane 20), sans cartouches ; fichier décodé : 20–26 entrées de palette (blocs 4×4, ΔRGB ≤ 25) ; avant la passe de détail 13–21 natif",
-  "dive": "src/dive/ (90/70/50/30/15°, même moteur, 17–19 couleurs)",
-  "clouds": "3–7 nuages dans le cadre (compte exact du moteur, médiane 5) ; 14 nuages bas à une seule altitude, jamais traversés ; avant : 0–3",
+  "pitchLe60Share": 1.0,
+  "colorsPerFrame": "stills (avec cartouches, natif) : 19–26 indices par image après la passe A+B+C ; palette déclarée 40 couleurs (35 de noyau + 5 biome) ; passe de détail : 17–22 natif sans cartouches",
+  "dive": "src/dive/ (90/70/50/30/15°, même moteur, 17–24 couleurs ; régénéré après la passe A+B+C)",
+  "clouds": "40 nuages bas (dont 26 lointains) à une seule altitude sous la cité, jamais traversés (passe A+B+C) ; compte dans le cadre non refait (passe de détail : 3–7)",
   "photosensitivity": {
-   "maxLumaChange10Frames": 0.109,
-   "maxLumaStepFrame": 0.025,
-   "lumaMax": 0.567,
-   "lumaMean": 0.524,
+   "maxLumaChange10Frames": 0.0372,
+   "maxLumaStepFrame": 0.0284,
+   "lumaMax": 0.515,
+   "lumaMean": 0.484,
    "rainPixels": "gouttes 1×3 / 2×2 px natifs",
    "cloudCrossing": false
   },
   "llamaScale": "plafonné à 1:1 (d1/profondeur 1,34–1,69 : jamais agrandi, C4)",
-  "cameraPreflightMinClearance": 51.0,
-  "fileMB": 8.3,
-  "reconstitutionLabel": "« reconstitution stylisée » à l'écran pendant tout le short",
-  "moireBand5_4to9s": "pixels qui changent par image dans la bande x 100–550, y 1180–1380, 5,5–9,0 s, fichier final : 1,13 % après la passe de détail (même méthode sur le fichier d'avant : 1,50 % ; revue : 1,59 %). Rotation du plan ramenée de 10° à 6° en 3,8 s ; moucheture réservée aux cellules ≥ 2 px (sinon +0,9 point)",
+  "cameraPreflightMinClearance": 41.6,
+  "fileMB": 13.8,
+  "reconstitutionLabel": "« reconstitution stylisée » à l'écran à la fin seulement (16,9–18,8 s), décision du propriétaire du 18/11 (choix 36) ; avant : pendant tout le short",
+  "moireBand5_4to9s": "mesure de la passe de détail, caduque depuis la passe A+B+C (caméra et monde refaits) : voir temporalAliasing",
   "recognitionCopy": "recognition.py sur copie après revue : 1er voisin = son frère (atoll, 0,6635) : réussite",
-  "temporalAliasing": "pixels A-B-A (aller-retour sur 3 images) sur tout le fichier : 0,55 % → 1,40 % (source 4,0 %) ; pics aux piqués / remontées (3,7–5,5 %, comme avant) ; 1,4–3,2 % dans le plan final (forêt dense qui défile)",
+  "temporalAliasing": "pixels A-B-A (aller-retour sur 3 images, fichier décodé, 1 px par gros pixel, seuil 24 ; source 4,0 % par la même méthode) : 3,56 % sur tout le short (passe de détail 1,40 %) ; piqué 8,0–10,0 s 7,30 % (max 8,8) ; remontée 13,4–15,6 s 5,42 % (max 7,1) ; survol 6,5–7,5 s 6,71 % ; plan final 16,5–17,5 s 3,40 %. Natif (méthode du prototype, sans cartouches ; prototype 13,3 % à 9,4 s et 10,1 % à 14,5 s) : piqué 10,9 / 9,9 / 7,8 % à 8,4 / 9,0 / 9,4 s ; remontée 7,0 / 7,1 / 6,1 % à 14,0 / 14,5 / 15,0 s",
   "sourceCompareAfter": "out/report/notes/console-retro-source/comparaison-avant-apres.jpg",
   "detailPass": "out/report/notes/survol-pixel-detail.md : diffCells natif 0,146 → 0,330 (source 0,221), grandes plages > 5 % 59 → 35 % (source 50 %)",
-  "treesDrawn": "2 965–5 884 boules d'arbres ≥ 1,25 px par image (compte du moteur, 1 image / 0,5 s)"
+  "treesDrawn": "2 965–5 884 boules d'arbres ≥ 1,25 px par image (compte du moteur, 1 image / 0,5 s) (passe de détail ; non recompté après A+B+C)",
+  "camera": "tangage 19–38° (médiane 29°, 72 % du temps dans 25–40°, coupe à 19–20°), roulis jusqu'à 13° (≥ 5° pendant 59 % du temps) ; caméra PCHIP ; piqué 8,0 → 10,0 s et remontée 13,4 → 15,6 s ralentis (passe A+B+C)",
+  "loudness": "−13,8 LUFS intégrés, crête −1,5 dBFS, LRA 3,9 LU (ffmpeg ebur128 sur short.mp4 final)",
+  "sourceCompareFinal": "out/report/notes/console-retro-source/final-abc.jpg",
+  "abcPass": "out/report/notes/survol-pixel.md § « Passe A+B+C » (phases 1 et 2)"
  },
  "facts": [
   {
@@ -123,6 +136,6 @@
    "source": "UNESCO WHC 274 ; récits de l'expédition de Yale 1911"
   }
  ],
- "notes": "Reconstitution stylisée : la disposition générale (deux sommets, ensellement, rivière en boucle) est évoquée, aucune géométrie réelle n'est prétendue ; aucun nombre de terrasses, aucune affirmation sur les séismes ni sur les Espagnols (C19). La couche « sable et gravier » de Wright est fondue dans « gravier » pour tenir en trois mots. Lama et cité dessinés en code (originaux).",
+ "notes": "Reconstitution stylisée : la disposition générale (deux sommets, ensellement, rivière en boucle) est évoquée, aucune géométrie réelle n'est prétendue ; aucun nombre de terrasses, aucune affirmation sur les séismes ni sur les Espagnols (C19). La couche « sable et gravier » de Wright est fondue dans « gravier » pour tenir en trois mots. Lama et cité dessinés en code (originaux). Passe A+B+C : monde de 1 536 unités (crêtes et vallées andines jusqu'à l'horizon, seconde rivière lointaine, sommets enneigés possibles), fenêtre fine de 512 unités ; rendu par src/survol.py (4 rayons par pixel et vote majoritaire, marche à pas sûrs sur cartes de maxima 128/32/8/2 puis 8 bissections). Rendu livré sur CPU ; la marche sur GPU (src/survol_gpu.py, SURVOL_GPU=1) est facultative et expérimentale (parité au bit non garantie, voir src/README.md).",
  "reproduce": "export SURVOL_CACHE=/private/tmp/survol-pixel/survol-pixel__histoire__machu-picchu-pourquoi-une-cite-en-escaliers && SVI_SLOTS=4 out/tools/slot.sh .venv/bin/python out/shorts/survol-pixel__histoire__machu-picchu-pourquoi-une-cite-en-escaliers/src/video.py --out $SURVOL_CACHE/video.mp4 && .venv/bin/python out/tools/sound.py out/shorts/survol-pixel__histoire__machu-picchu-pourquoi-une-cite-en-escaliers/src/sound.json $SURVOL_CACHE/music.wav && .venv/bin/python out/tools/assemble.py mux --video $SURVOL_CACHE/video.mp4 --music $SURVOL_CACHE/music.wav --out out/shorts/survol-pixel__histoire__machu-picchu-pourquoi-une-cite-en-escaliers/short.mp4 && cp out/shorts/survol-pixel__histoire__machu-picchu-pourquoi-une-cite-en-escaliers/short.mp4 out/shorts/survol-pixel__histoire__machu-picchu-pourquoi-une-cite-en-escaliers/short_novo.mp4 && .venv/bin/python out/tools/tts.py out/shorts/survol-pixel__histoire__machu-picchu-pourquoi-une-cite-en-escaliers --engine files --replace  # voice_lines/ : 1 appel Gemini gemini-3.8-flash-tts Sulafat (API v1beta) découpé, voir out/report/notes/voix-survol-pixel.md"
 }

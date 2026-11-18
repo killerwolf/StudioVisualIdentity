@@ -3,16 +3,17 @@
  "role": "3D raster (lancer de rayon en Python pur)",
  "bestFor": [
   "moteur 3D pixel art image par image sans navigateur : caméra sténopé, rayons par pixel (270×480), intersection rayon–plan en forme close (« Mode 7 » à tout tangage)",
-  "lancer de rayon sur carte de hauteurs en terrasses : marche à pas fixes dans la boîte englobante du relief, par paquets de 12 pas avec retrait des rayons arrivés, puis 6 bissections",
+  "lancer de rayon sur carte de hauteurs en terrasses : marche à pas sûrs sur des cartes de maxima par blocs (128, 32, 8, 2, dilatées d'un bloc), sinon pas géométriques, puis 8 bissections (passe A+B+C du 18/11 ; avant : pas fixes par paquets de 12 + 6 bissections)",
   "palette indexée : images en indices uint8, tables indice -> indice pour ombres et brume, conversion RGB par palette[idx] puis np.repeat ×4",
-  "cartes réduites par vote majoritaire (mip sans moyenne) contre le scintillement du lointain"
+  "cartes réduites par vote majoritaire (mip sans moyenne) contre le scintillement du lointain",
+  "4 rayons par pixel et vote majoritaire 2×2 sur l'indice de palette (vote4) : anticrénelage sans sortir de la palette indexée"
  ],
  "avoidFor": [
-  "relief étendu vu en rasante avec beaucoup de pas : le coût suit le nombre de pas × pixels dans la boîte (128 pas ≈ 57–59 s/100 images sous charge)",
+  "relief étendu vu en rasante avec 4 rayons par pixel : 107–266 s/100 images sous charge sur des mondes de 1 080–1 536 unités (passe A+B+C) ; une transition rapide fait scintiller les marches de 1 px au loin",
   "géométrie fine (< 1 cellule) : la marche à pas fixes peut la manquer ; la bissection ne rattrape que le premier croisement"
  ],
  "renderCostPer100Frames": [
-  "21,9 s (atoll, monde 360², 96 pas, charge 4,6–7,3) ; 28,6 s (même short en parallèle, charge 5–14) ; 58,8 s (Machu Picchu, monde 640², 128 pas, charge 5–16) — rendus complets mesurés [survol-pixel]"
+  "107,18 s (atoll, monde 1 080, 4 rayons/pixel, charge 4,4–6,0) ; 266,29 s (Machu Picchu, monde 1 536, charge 6,3–10,4) — rendus complets sur CPU après la passe A+B+C du 18/11, en parallèle ; avant : 19,6 / 63,1 (passe de détail), 21,9 / 58,8 (premiers rendus) [survol-pixel]"
  ],
  "gotchas": [
   "un rayon qui entre dans la boîte par le côté sous z = 0 doit garder l'eau touchée avant (sinon faux flanc) : n'activer que tmin < t_plan",

@@ -1860,10 +1860,10 @@
     "@fontsource/jersey-20",
     "ffmpeg"
    ],
-   "renderCostNote": "Python render (numpy ray casting at 270x480 + Pillow text, no browser), full engine run timed with `time`, opensimplex fields cached and not included; renders after the detail pass (2026-11-18: sub-cell micro-detail, ball clouds, tree clusters, coursed walls), both in parallel on 4 cores shared with other sessions (1-min load 2.7–8.9): atoll 19.6 (360² world; 15.6 after the review, earlier runs 21.9 and 28.6), Machu Picchu 63.1 (640² world, 128 steps; 59.1 after the review, earlier run 58.8); cost grows with terrain extent x march steps and now slightly exceeds the 60 s/100 frames target for the largest world",
+   "renderCostNote": "Python render on CPU (numpy ray casting at 270x480, 4 rays per pixel with a majority vote + Pillow text, no browser), full engine run timed, world build included (19.8 s / 39.3 s), opensimplex fields cached and not included; renders after the A+B+C pass (2026-11-18: worlds 3x / 2.4x larger, fine colour map around the subject, 6-step haze, relief shadow, safe-step march on block max maps), both in parallel on 4 cores (1-min load 4.4–10.4): atoll 107.18 (1080-unit world), Machu Picchu 266.29 (1536-unit world); the owner lifted the cost cap for this pass, so it is now 1.8–4.4x the 60 s/100 frames target of the challenge (detail pass: 19.6 and 63.1). Optional GPU ray march (SURVOL_GPU=1, taichi 1.7.2 on Metal) halves the frame time but is not bit-exact; delivered renders are CPU",
    "renderCostSecPer100Frames": {
-    "min": 19.6,
-    "max": 63.1,
+    "min": 107.2,
+    "max": 266.3,
     "measuredUnderLoad": true
    },
    "sharedModule": [
@@ -1903,7 +1903,7 @@
       "Jersey (@fontsource 5.3.0)",
       "ffmpeg"
      ],
-     "renderCostSecPer100Frames": 19.6,
+     "renderCostSecPer100Frames": 107.2,
      "loopable": false,
      "voiced": true,
      "recognitionNearestShort": "aquarelle-conte__histoire__phare-d-alexandrie",
@@ -1922,7 +1922,7 @@
       "Jersey (@fontsource 5.3.0)",
       "ffmpeg"
      ],
-     "renderCostSecPer100Frames": 63.1,
+     "renderCostSecPer100Frames": 266.3,
      "loopable": false,
      "voiced": true,
      "recognitionNearestShort": "survol-pixel__explicatif__comment-nait-un-atoll",
@@ -2002,14 +2002,14 @@
      {
       "name": "le piqué",
       "ffmpegXfade": "none",
-      "durationSec": 0.6,
-      "use": "plongée → rasante, souffle whoosh ; signature"
+      "durationSec": 2.0,
+      "use": "vers la coupe ou le détail, souffle whoosh ; signature ; 0,6 s avant la passe A+B+C, ralenti à 2,0 s (décision du propriétaire, 18/11)"
      },
      {
       "name": "la remontée",
       "ffmpegXfade": "none",
-      "durationSec": 0.6,
-      "use": "rasante → plongée pour conclure"
+      "durationSec": 2.2,
+      "use": "pour conclure ou changer d'échelle ; 0,6 s avant la passe A+B+C, ralentie à 2,2 s"
      },
      {
       "name": "la coupe qui s'ouvre",
@@ -2046,8 +2046,8 @@
     "signatureToPreserve": [
      "3D depth is the rule: perspective ground (Mode 7 style) at any pitch, terraced heightfield with lit / shaded risers, cast shadows, layered depth and a camera that keeps moving forward (one single camera per short)",
      "form, not content: a pixel-art look for explainers, kids, history and narrated shorts, not a video-game or flight theme (no score, no game element; HUD and cockpit optional and absent from the proofs)",
-     "indexed palette with quantised haze and shade tables, rendered at 270x480 and scaled x4 nearest-neighbour",
-     "Jersey 20 hook / dates, Jersey 15 narrative cartouches on cream with ink border, Jersey 10 mentions only; never text on the map or sky",
+     "indexed palette with quantised shade tables and a 6-step haze towards a very pale blue (#DCEEF5), rendered at 270x480 and scaled x4 nearest-neighbour",
+     "Jersey 15 cartouches on cream with ink border (hook, dates, narrative; one at a time since the A+B+C pass; Jersey 20 reserved), Jersey 10 mentions only; never text on the map or sky",
      "cut-away section of the ground (ink base, coloured walls) as the on-ground diagram",
      "dive / climb-back camera move in true perspective as the signature transition",
      "no phosphor plate (pixel-arcade) and no \"ALT ... M\" readout (topo-relief)"

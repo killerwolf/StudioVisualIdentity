@@ -5,21 +5,27 @@ survol.py — moteur de l'identité « Survol pixel ». Copie identique dans cha
 Principe : un petit monde en pixel art 16 bits survolé par UNE caméra sténopé (cible, distance, cap, tangage, roulis)
 pour tout le short. Rendu à 270×480 en indices de palette, agrandi ×4 au plus proche voisin (1080×1920).
 
-- Sol et relief : lancer de rayon par pixel sur une carte de hauteurs EN TERRASSES (valeurs constantes par cellule),
-  marche à pas fixes dans la boîte englobante du relief + 6 bissections. Hors de la boîte : intersection rayon–plan
-  z = 0 en forme close (le « Mode 7 » généralisé, valable de 0° à 90° de tangage). Le même moteur sert tout le short :
-  le piqué 70° → 15° ne change jamais de technique (C1).
-- Contremarches (flancs) : un impact sur une paroi (rayon nettement sous le dessus de la cellule touchée) prend la
-  couleur de flanc du matériau, claire si la paroi regarde la lumière (nord-ouest), sombre sinon (C2).
+- Sol et relief : lancer de rayon sur une carte de hauteurs EN TERRASSES (valeurs constantes par cellule). Passe A+B+C :
+  4 rayons par pixel (2×2) puis VOTE MAJORITAIRE sur l'indice de palette (jamais de moyenne de couleurs : on reste en
+  pixel art indexé). Marche en deux temps : saut des zones vides sur une carte des maxima par blocs, puis pas
+  géométriques (proportionnels à la distance) + 8 bissections. Hors de la boîte : plan z = 0 en forme close (le
+  « Mode 7 » généralisé, valable de 0° à 90° de tangage). Le même moteur sert tout le short (C1).
+- Contremarches (flancs) : un impact sur une paroi prend la couleur de flanc du matériau, claire si la paroi regarde la
+  lumière (nord-ouest), sombre sinon (C2). Plus de règle « mur lointain = couleur du dessus » : un mur reste un mur.
 - Coupe : une région « coupée » de la carte (dessus = socle à z = −D) montre sur ses parois la coupe du terrain,
-  colorée par une fonction de la scène (basalte / calcaire / eau, ou pierres / gravier / terre).
-- Lointain : carte de couleurs réduite par vote majoritaire (mip 1/2, 1/4, 1/8, jamais de moyenne : on reste dans la
-  palette) choisie selon l'empreinte du pixel au sol (C3). Brume quantifiée par bandes de distance (tables d'indices).
-- Ciel en paliers plats selon l'élévation du rayon (s'incline avec le roulis).
-- Nuages : piles de disques horizontaux dessinés au pixel près à la taille projetée (jamais agrandis), moitié basse
-  hachurée une ligne sur deux, ombre plate au sol décalée selon l'altitude (une seule altitude de nuages).
-- Objets : panneaux (« billboards ») dessinés en code, réduits au plus proche voisin, jamais agrandis au-delà de 1:1
-  (C4), ombre = silhouette projetée au sol, décalage proportionnel à la hauteur.
+  colorée par une fonction de la scène.
+- Couleurs : carte de couleurs FINE (k = 4 cases par cellule de hauteur) sur la fenêtre du sujet, carte grossière
+  ailleurs ; réductions par vote majoritaire (jamais de moyenne). Le niveau de réduction suit l'empreinte du
+  sous-rayon au sol, avec un décalage fixe dans le monde par cellule (hachage) : la transition entre deux niveaux est
+  semée dans le monde au lieu d'être une ligne qui balaie l'écran. Plus de biais de pente.
+- Ombrage du relief : carte d'ombre portée calculée une fois par monde (table d'ombre sur les dessus).
+- Brume : 5–6 paliers (tables d'indices par matière), seuils proportionnels à une distance de référence lissée
+  (fournie par la scène), frontière crénelée fixée dans le monde (hachage par cellule). Le dernier palier est la
+  couleur du bas du ciel (HAZE, bleu très pâle) : pas de couture à l'horizon.
+- Ciel en ~6 paliers doux selon l'élévation du rayon (s'incline avec le roulis).
+- Nuages : piles de disques dessinés au pixel près à la taille projetée (jamais agrandis) ; ombres au sol par un
+  masque monde tramé une fois par image.
+- Objets : panneaux dessinés en code, réduits au plus proche voisin, jamais agrandis au-delà de 1:1 (C4).
 - Texte : Jersey 10/15/20 (@fontsource 5.3.0) rendu par PIL sans anticrénelage (fontmode "1") à la résolution native,
   sur coordonnées entières, dans des cartouches crème à cadre encre et ombre plate ; largeur ≤ 214 px natifs vérifiée
   par assertion (C5–C9). Jamais de texte dans la carte projetée.
@@ -44,9 +50,15 @@ CORE = {
     'OCEAN': '#1E5AA8', 'OCEAN_MID': '#2C74BE', 'SHALLOW': '#3FA0D0', 'LAGOON': '#7CCBEB', 'FOAM': '#E6FAFF',
     'SH_WATER': '#143F7E', 'GRASS_L': '#93D94E', 'GRASS_M': '#5DB534', 'GRASS_D': '#2F7A2A', 'FOREST': '#174A22',
     'CLOUD': '#FBFDFE', 'HATCH': '#AFBBC6', 'SKY_HI': '#6FB4E3', 'SKY_MID': '#96CBEB', 'SKY_LO': '#BFE2F1',
-    'HAZE': '#EFE2BF', 'CREAM': '#FBF3D5', 'INK': '#14213D', 'WATER_FAR': '#5B9DCD', 'LAND_FAR': '#92B9A4',
+    'HAZE': '#DCEEF5', 'CREAM': '#FBF3D5', 'INK': '#14213D', 'WATER_FAR': '#5B9DCD', 'LAND_FAR': '#92B9A4',
     'RED': '#B5341A', 'GOLD': '#FFC94A', 'MUTED': '#5A5F73', 'CLOUD_RIM': '#CFE3F2',
+    # passe A : paliers de ciel et rampes de brume (bleu très pâle, jamais crème)
+    'SKY_2': '#AAD6EF', 'SKY_4': '#83C0E8', 'SKY_1': '#CCE7F3',
+    'HZ_G1': '#3E8A3E', 'HZ_G2': '#5E9C6C', 'HZ_G3': '#86B59C', 'HZ_G4': '#B3D3CF',
+    'HZ_W1': '#4688C6', 'HZ_W2': '#7AAFD9', 'HZ_W3': '#A8CDE6',
+    'HZ_R1': '#9AA3A4',
 }
+HAZE_STEPS = 6
 
 
 def hex2rgb(h):
@@ -55,7 +67,8 @@ def hex2rgb(h):
 
 
 class Palette:
-    """Table de palette indexée : noyau fixe + couleurs « biome » de l'épisode."""
+    """Table de palette indexée : noyau fixe + couleurs « biome » de l'épisode.
+    haze[k] (k = 1..HAZE_STEPS) : table d'indices du palier de brume k ; haze[0] = identité."""
 
     def __init__(self, extra):
         self.names = list(CORE) + list(extra)
@@ -64,9 +77,8 @@ class Palette:
         self.rgb = np.array([hex2rgb(self.hex[n]) for n in self.names], np.uint8)
         n = len(self.names)
         self.shadow = np.arange(n, dtype=np.uint8)   # ombre portée : indice -> indice plus sombre
-        self.haze1 = np.arange(n, dtype=np.uint8)    # brume 1 (lointain)
-        self.haze2 = np.arange(n, dtype=np.uint8)    # brume 2 (bande d'horizon)
-        self.speckle = np.arange(n, dtype=np.uint8)  # micro-détail : moucheture sous la cellule (identité = aucune)
+        self.haze = np.tile(np.arange(n, dtype=np.uint8), (HAZE_STEPS + 1, 1))
+        self.speckle = np.arange(n, dtype=np.uint8)
 
     def __getitem__(self, k):
         return self.idx[k]
@@ -74,6 +86,18 @@ class Palette:
     def set_lut(self, lut, mapping):
         for a, b in mapping.items():
             getattr(self, lut)[self.idx[a]] = self.idx[b]
+
+    def set_haze(self, families, default=None):
+        """families : {nom de couleur: [palier1, …, palier5]} (noms) ; le dernier palier est HAZE.
+        default : rampe pour les couleurs non listées (ciel, nuages, texte exclus)."""
+        for n in self.names:
+            ramp = families.get(n, default if n not in ('CLOUD', 'HATCH', 'CREAM', 'INK', 'CLOUD_RIM', 'GOLD', 'RED')
+                                else None)
+            if ramp is None:
+                continue
+            assert len(ramp) == HAZE_STEPS, (n, ramp)
+            for k, m in enumerate(ramp, 1):
+                self.haze[k][self.idx[n]] = self.idx[m]
 
 
 # ---------------------------------------------------------------- easing
@@ -108,13 +132,23 @@ CAM_KEYS = ('tx', 'ty', 'tz', 'dist', 'yaw', 'pitch', 'roll')
 class CameraPath:
     """Une seule caméra pour tout le short : clés (t, {tx,ty,tz,dist,yaw,pitch,roll}, easing du segment qui y mène).
     Position = cible − avant × distance. yaw en degrés (0 = regarde vers +y, le nord), pitch en degrés sous l'horizon
-    (90 = verticale), roll en degrés."""
+    (90 = verticale), roll en degrés.
+    smooth=True : interpolation cubique monotone (PCHIP, C1, sans dépassement) entre les clés, pour un vol sans
+    à-coups ni rebond sous le relief (l'easing est alors ignoré)."""
 
-    def __init__(self, keys):
+    def __init__(self, keys, smooth=False):
         self.keys = keys
+        self.smooth = smooth
 
     def at(self, t):
         ks = self.keys
+        if self.smooth:
+            if not hasattr(self, '_pchip'):
+                from scipy.interpolate import PchipInterpolator
+                ts = np.array([k[0] for k in ks])
+                self._pchip = {c: PchipInterpolator(ts, [k[1][c] for k in ks]) for c in CAM_KEYS}
+            tt = min(max(t, ks[0][0]), ks[-1][0])
+            return {c: float(self._pchip[c](tt)) for c in CAM_KEYS}
         if t <= ks[0][0]:
             return dict(ks[0][1])
         for (t0, a, _), (t1, b, e) in zip(ks, ks[1:]):
@@ -137,6 +171,7 @@ class Cam:
         self.F = focal
         self.cx, self.cy = NW / 2, NH / 2
         self.pitch = p['pitch']
+        self.dist = p['dist']
 
     def project(self, P):
         """point(s) monde -> (sx, sy, profondeur). P : (..., 3)."""
@@ -147,19 +182,22 @@ class Cam:
         zc_safe = np.where(zc > 1e-6, zc, 1e-6)
         return self.cx + self.F * xc / zc_safe, self.cy - self.F * yc / zc_safe, zc
 
-    def rays(self):
-        i = (np.arange(NW, dtype=np.float32) + 0.5 - self.cx) / self.F
-        j = (np.arange(NH, dtype=np.float32) + 0.5 - self.cy) / self.F
+    def rays(self, ss=1):
+        """Sous-rayons ss×ss par pixel (centres des sous-cases) : (NH*ss, NW*ss, 3), composante le long de f = 1."""
+        i = (np.arange(NW * ss, dtype=np.float32) + 0.5) / ss
+        j = (np.arange(NH * ss, dtype=np.float32) + 0.5) / ss
+        i = (i - self.cx) / self.F
+        j = (j - self.cy) / self.F
         I, J = np.meshgrid(i, j)
         d = (self.f[None, None, :] + I[..., None] * self.r[None, None, :] - J[..., None] * self.u[None, None, :])
-        return d.astype(np.float32)   # (NH, NW, 3), composante le long de f = 1 -> t = profondeur
+        return d.astype(np.float32)
 
 
 # ---------------------------------------------------------------- monde
 def mode_down(c):
     """Réduction ×2 par vote majoritaire (indices, pas de moyenne). Égalité -> coin haut gauche."""
-    G = c.shape[0] // 2 * 2
-    a, b, cc, d = c[0:G:2, 0:G:2], c[0:G:2, 1:G:2], c[1:G:2, 0:G:2], c[1:G:2, 1:G:2]
+    G0, G1 = c.shape[0] // 2 * 2, c.shape[1] // 2 * 2
+    a, b, cc, d = c[0:G0:2, 0:G1:2], c[0:G0:2, 1:G1:2], c[1:G0:2, 0:G1:2], c[1:G0:2, 1:G1:2]
     na = (a == b).astype(np.int8) + (a == cc) + (a == d)
     nb = (b == a).astype(np.int8) + (b == cc) + (b == d)
     nc = (cc == a).astype(np.int8) + (cc == b) + (cc == d)
@@ -173,36 +211,87 @@ def mode_down(c):
     return out
 
 
-class World:
-    """Carte de hauteurs en terrasses (dessus constant par cellule, 1 cellule = 1 unité monde) et carte de couleurs.
-    top : hauteur du dessus (eau = 0, socle de coupe = -depth) ; col : indice de couleur du dessus ;
-    flank_lit / flank_dark : indice de flanc par cellule ; cut : masque de coupe ; section(x, y, z, cut_side) -> indices."""
+def vote4(a, b, c, d):
+    """Vote majoritaire entre 4 tableaux d'indices ; égalité -> le premier (a) s'il est à égalité, sinon b, c."""
+    na = (a == b).astype(np.int8) + (a == c) + (a == d)
+    nb = (b == a).astype(np.int8) + (b == c) + (b == d)
+    nc = (c == a).astype(np.int8) + (c == b) + (c == d)
+    nd = (d == a).astype(np.int8) + (d == b) + (d == c)
+    which = np.zeros(a.shape, np.int8)
+    best = na.copy()
+    for k, n in ((1, nb), (2, nc), (3, nd)):
+        m = n > best
+        which[m] = k
+        best[m] = n[m]
+    return which
 
-    def __init__(self, top, col, flank_lit, flank_dark, cut=None, section=None, outside=0, zmin=-1.0, levels=3,
-                 outside_tile=None, cut_top0=None, coursed=None):
+
+def relief_shade(top, sun, reach=48, slope=0.55):
+    """Ombre portée du relief (calculée une fois) : une cellule est à l'ombre si une cellule vers la lumière, à k pas,
+    dépasse sa hauteur de plus de k × slope × |pas|. sun : décalage d'ombre au sol par unité d'altitude (vers l'ombre)."""
+    L = -np.array(sun, np.float32)
+    L /= np.linalg.norm(L)
+    tp = np.maximum(top, 0).astype(np.float32)
+    best = np.full(tp.shape, -1e9, np.float32)
+    for k in range(1, reach + 1):
+        dx, dy = int(round(L[0] * k)), int(round(L[1] * k))
+        sh = np.roll(tp, (-dy, -dx), (0, 1))
+        best = np.maximum(best, sh - k * slope)
+    return best > tp + 0.5
+
+
+class World:
+    """Carte de hauteurs en terrasses (dessus constant par cellule, 1 cellule = 1 unité monde) et cartes de couleurs.
+    top : hauteur du dessus (eau = 0, socle de coupe = -depth) ; col : indice de couleur du dessus (1 case / cellule) ;
+    fine : (x0, y0, k, carte) carte de couleurs k fois plus fine sur la fenêtre [x0, x0 + N/k) × [y0, y0 + N/k) ;
+    flank_lit / flank_dark : indice de flanc par cellule ; cut : masque de coupe ; section(...) -> indices ;
+    shade : masque d'ombre portée du relief (table d'ombre sur les dessus)."""
+
+    def __init__(self, top, col, flank_lit, flank_dark, cut=None, section=None, outside=0, zmin=-1.0, levels=4,
+                 outside_tile=None, cut_top0=None, coursed=None, fine=None, shade=None):
         self.G = top.shape[0]
-        self.coursed = coursed        # masque des parois appareillées (assises + joints décalés), None = aucune
+        self.coursed = coursed
         self.top = top.astype(np.float32)
         self.col = [col.astype(np.uint8)]
+        if fine is not None:
+            fx0, fy0, k, fc = fine
+            self.fk = k
+            self.fx0, self.fy0 = int(fx0), int(fy0)
+            self.fine = [fc.astype(np.uint8)]
+            lk = int(round(math.log2(k)))
+            for _ in range(lk):
+                self.fine.append(mode_down(self.fine[-1]))
+            # la carte grossière reprend, dans la fenêtre, la réduction de la carte fine : pas de saut à la frontière
+            n = self.fine[-1].shape[0]
+            self.col[0][self.fy0:self.fy0 + n, self.fx0:self.fx0 + n] = self.fine[-1]
+            self.fn = n
+        else:
+            self.fine = None
+            self.fk = 1
         for _ in range(levels):
             self.col.append(mode_down(self.col[-1]))
         self.flank_lit = flank_lit.astype(np.uint8)
         self.flank_dark = flank_dark.astype(np.uint8)
         self.cut = cut if cut is not None else np.zeros_like(top, bool)
         self.section = section
-        self.cut_top0 = cut_top0      # dessus d'origine de la région coupée : la coupe n'est vue que du dedans
-        # flancs raides vus par la tranche : biais de niveau de mip selon la pente locale (anti-moiré, C3 étendu)
-        tp = np.maximum(self.top, 0)
-        grad = np.zeros_like(tp)
-        for sh in ((1, 0), (-1, 0), (0, 1), (0, -1)):
-            grad = np.maximum(grad, np.abs(np.roll(tp, sh, (0, 1)) - tp))
-        self.steep = np.clip(1.6 * np.log2(1.0 + grad), 0, 3).astype(np.float32)
+        self.cut_top0 = cut_top0
+        self.shade = shade
         self.outside = outside
         self.tile = None
         if outside_tile is not None:
             self.tile = [outside_tile.astype(np.uint8)]
-            for _ in range(levels):
+            for _ in range(levels + 2):
+                if self.tile[-1].shape[0] < 2:
+                    break
                 self.tile.append(mode_down(self.tile[-1]))
+        # cartes des maxima par blocs (128, 32, 8, 2), dilatées d'un bloc : pas sûrs au-dessus du relief
+        from scipy.ndimage import maximum_filter
+        for B in (128, 32, 8, 2):
+            nb = -(-self.G // B)
+            pad = np.full((nb * B, nb * B), -1e9, np.float32)
+            pad[:self.G, :self.G] = self.top
+            bm = pad.reshape(nb, B, nb, B).max((1, 3))
+            setattr(self, f'bmax{B}', maximum_filter(bm, size=3, mode='nearest').astype(np.float32))
         nz = (np.abs(self.top) > 1e-4)
         if cut is not None and cut.any():
             from scipy.ndimage import binary_dilation
@@ -215,7 +304,7 @@ class World:
             self.bbox = None
 
 
-# ---------------------------------------------------------------- rendu du sol
+# ---------------------------------------------------------------- bruit et hachage (fixes dans le monde)
 def hash01(ix, iy, k=0):
     """Bruit blanc fixe dans le monde : entiers -> [0, 1) (hachage entier, déterministe, sans état)."""
     h = (np.asarray(ix, np.int64) * 73856093) ^ (np.asarray(iy, np.int64) * 19349663) ^ (np.asarray(k, np.int64) * 83492791)
@@ -225,66 +314,123 @@ def hash01(ix, iy, k=0):
 
 
 def ragged(shape, seed, amp=1.0):
-    """Décalage fixe par cellule dans [-amp/2, amp/2) : rend crénelés les seuils d'un champ continu (bandes de
-    hauts-fonds, plages, lisières) avec quelques cellules isolées, comme la source."""
+    """Décalage fixe par cellule dans [-amp/2, amp/2) : rend crénelés les seuils d'un champ continu."""
     return ((np.random.default_rng(seed).random(shape) - 0.5) * amp).astype(np.float32)
 
 
+def vnoise(xx, yy, scale, seed, octaves=1):
+    """Bruit de valeur lissé (hachage du réseau + interpolation smoothstep), rapide, fixe dans le monde : [-1, 1]."""
+    acc = np.zeros(np.broadcast(xx, yy).shape, np.float32)
+    amp, tot = 1.0, 0.0
+    for o in range(octaves):
+        s = scale / (2 ** o)
+        x, y = xx / s, yy / s
+        x0, y0 = np.floor(x), np.floor(y)
+        fx, fy = x - x0, y - y0
+        fx, fy = fx * fx * (3 - 2 * fx), fy * fy * (3 - 2 * fy)
+        x0i, y0i = x0.astype(np.int64), y0.astype(np.int64)
+        k = seed * 7 + o
+        a = hash01(x0i, y0i, k)
+        b = hash01(x0i + 1, y0i, k)
+        c = hash01(x0i, y0i + 1, k)
+        d = hash01(x0i + 1, y0i + 1, k)
+        v = a + (b - a) * fx + (c - a) * fy + (a - b - c + d) * fx * fy
+        acc += amp * (v * 2 - 1)
+        tot += amp
+        amp *= 0.5
+    return acc / tot
+
+
+def disk_mask(disks, x0, y0, nx, ny, cell=1.0):
+    """Masque monde (ny, nx) des disques (x, y, r), tramé au pas `cell` : ombres des nuages, une fois par image."""
+    m = np.zeros((ny, nx), bool)
+    for (sx, sy, R) in disks:
+        i0, i1 = int((sx - R - x0) / cell), int((sx + R - x0) / cell) + 1
+        j0, j1 = int((sy - R - y0) / cell), int((sy + R - y0) / cell) + 1
+        i0c, i1c, j0c, j1c = max(i0, 0), min(i1, nx), max(j0, 0), min(j1, ny)
+        if i1c <= i0c or j1c <= j0c:
+            continue
+        jj, ii = np.mgrid[j0c:j1c, i0c:i1c]
+        px = x0 + (ii + 0.5) * cell
+        py = y0 + (jj + 0.5) * cell
+        m[j0c:j1c, i0c:i1c] |= (px - sx) ** 2 + (py - sy) ** 2 < R * R
+    return (m, x0, y0, cell)
+
+
+# ---------------------------------------------------------------- rendu du sol
 class Renderer:
-    def __init__(self, pal, focal=416.0, sun=(0.30, -0.62), sky=None, haze_d=(None, None), steps=96, mip_bias=0.0,
-                 micro=0.12, jitter=0.42, course=0.0):
+    def __init__(self, pal, focal=416.0, sun=(0.30, -0.62), sky=None, haze_k=(1.2, 1.6, 2.1, 2.7, 3.4, 4.3), steps=None,
+                 mip_bias=0.0, course=0.0, ss=2, step_c=0.006, step_min=0.3, haze_jit=0.10, wall_speck=0.0, haze_cell=8.0):
         self.pal = pal
-        self.micro = micro            # probabilité de moucheture par sous-cellule (texels agrandis seulement)
-        self.jitter = jitter          # amplitude (en cellules) du décalage de lecture : bords crénelés sous la cellule
+        self.wall_speck = wall_speck  # part de moucheture des contremarches (table pal.speckle), 0 = aucune
         self.course = course          # hauteur d'assise des parois appareillées (unités monde), 0 = pas d'appareil
         self.focal = focal
         self.sun = np.array(sun, np.float32)                  # décalage d'ombre au sol par unité d'altitude
         Ll = np.array([-sun[0], -sun[1]], np.float32)         # direction horizontale vers la lumière
         self.light_h = Ll / np.linalg.norm(Ll)
-        self.sky = sky or [(0.8, 'HAZE'), (4.5, 'SKY_LO'), (11.0, 'SKY_MID'), (90.0, 'SKY_HI')]
-        self.haze_d = haze_d
-        self.steps = steps
+        # ciel : 6 paliers doux selon l'élévation (degrés) ; le palier du bas = HAZE = dernier palier de brume
+        self.sky = sky or [(0.7, 'HAZE'), (2.2, 'SKY_1'), (4.5, 'SKY_LO'), (8.0, 'SKY_2'), (13.0, 'SKY_MID'),
+                           (20.0, 'SKY_4'), (90.0, 'SKY_HI')]
+        self.haze_k = haze_k          # seuils de brume en multiples de la distance de référence (lissée)
+        self.haze_jit = haze_jit      # crénelage de la frontière (part du seuil), fixe dans le monde
+        self.haze_cell = haze_cell    # taille (unités) des cases du crénelage : ≥ 1 px au loin, sinon il scintille
         self.mip_bias = mip_bias
+        self.ss = ss
+        self.step_c = step_c
+        self.step_min = step_min
 
-    # -- lancer de rayon dans la boîte du relief
+    # -- lancer de rayon dans la boîte du relief : pas adaptatifs conservatifs (cartes des maxima par blocs de 128, 32,
+    # 8 et 2, dilatées d'un bloc : au-dessus du maximum, on avance d'un pas sûr), sinon pas géométriques ; puis bissections
     def _march(self, w, o, d, tin, tout):
         top, G = w.top, w.G
         n = len(tin)
         hit_t = np.full(n, np.inf, np.float32)
         lo_t = np.zeros(n, np.float32)
-        steps = self.steps
-        step = (tout - tin) / steps
-        active = np.arange(n)
-        chunk = 12
-        k0 = 0
-        prev_t = tin.copy()
-        while k0 <= steps and len(active):
-            ks = np.arange(k0, min(k0 + chunk, steps + 1), dtype=np.float32)
-            T = tin[active, None] + step[active, None] * ks[None, :]
-            px = o[0] + T * d[active, 0, None]
-            py = o[1] + T * d[active, 1, None]
-            pz = o[2] + T * d[active, 2, None]
-            xi = np.clip(px.astype(np.int32), 0, G - 1)
-            yi = np.clip(py.astype(np.int32), 0, G - 1)
-            inside = pz < top[yi, xi]
-            anyin = inside.any(1)
-            first = inside.argmax(1)
-            sel = np.nonzero(anyin)[0]
-            if len(sel):
-                ids = active[sel]
-                fk = first[sel]
-                hit_t[ids] = T[sel, fk]
-                prevT = np.where(fk > 0, T[sel, np.maximum(fk - 1, 0)], prev_t[ids])
-                lo_t[ids] = np.where((fk == 0) & (k0 == 0), tin[ids], prevT)
-            keep = ~anyin
-            prev_t[active[keep]] = T[keep, -1]
-            active = active[keep]
-            k0 += chunk
+        c = np.float32(self.step_c)
+        a = np.float32(self.step_min / self.step_c)
+        dxy = np.sqrt(d[:, 0] ** 2 + d[:, 1] ** 2) + 1e-6
+        ndz = np.maximum(-d[:, 2], 1e-6)
+        t = tin.astype(np.float32).copy()
+        prev = t.copy()
+        act = np.arange(n)
+        maps = [(getattr(w, f'bmax{B}'), B) for B in (128, 32, 8, 2)]
+        it = 0
+        while len(act) and it < 2000:
+            it += 1
+            ta = t[act]
+            da = d[act]
+            px = o[0] + ta * da[:, 0]
+            py = o[1] + ta * da[:, 1]
+            pz = o[2] + ta * da[:, 2]
+            xi = px.astype(np.int32)
+            yi = py.astype(np.int32)
+            np.clip(xi, 0, G - 1, out=xi)
+            np.clip(yi, 0, G - 1, out=yi)
+            under = pz < top[yi, xi]
+            if under.any():
+                ids = act[under]
+                hit_t[ids] = ta[under]
+                lo_t[ids] = prev[ids]
+            keep = ~under
+            act = act[keep]
+            ta, px, py, pz, xi, yi = ta[keep], px[keep], py[keep], pz[keep], xi[keep], yi[keep]
+            # pas sûr : tant que le rayon reste au-dessus du maximum du voisinage (bloc dilaté), sur ≤ B en plan
+            dt = c * (ta + a)
+            for m, B in maps:
+                bm = m[yi // B, xi // B]
+                safe = np.minimum(B / dxy[act], (pz - bm) / ndz[act])
+                dt = np.where(pz > bm, np.maximum(dt, safe), dt)
+            prev[act] = ta
+            to_a = tout[act]
+            tn = np.minimum(ta + dt, to_a)          # le dernier échantillon est pris exactement à la sortie de la boîte
+            t[act] = tn
+            alive = ta < to_a
+            act = act[alive]
         found = np.isfinite(hit_t)
         ids = np.nonzero(found)[0]
         lo, hi = lo_t[ids], hit_t[ids]
         dd = d[ids]
-        for _ in range(6):
+        for _ in range(8):
             mid = (lo + hi) * 0.5
             px = o[0] + mid * dd[:, 0]
             py = o[1] + mid * dd[:, 1]
@@ -298,24 +444,59 @@ class Renderer:
         lo_t[ids] = lo
         return hit_t, lo_t
 
-    def ground(self, w, cam, t_anim, shadow_disks=(), foam_phase=0):
+    def _colour(self, w, hx, hy, xi, yi, ingrid, fp):
+        """Couleur du dessus par carte fine / grossière ; niveau de réduction selon l'empreinte, décalé par cellule."""
+        k = w.fk
+        lk = int(round(math.log2(k)))
+        dith = hash01(np.floor(hx).astype(np.int64), np.floor(hy).astype(np.int64), 5) - 0.5
+        Lf = np.floor(np.log2(np.maximum(fp * k, 1e-6)) + self.mip_bias + dith).astype(np.int32)
+        Lf = np.clip(Lf, 0, lk + len(w.col) - 1)
+        out = np.full(len(hx), w.outside, np.uint8)
+        done = np.zeros(len(hx), bool)
+        if w.fine is not None:
+            fx = hx - w.fx0
+            fy = hy - w.fy0
+            inw = ingrid & (fx >= 0) & (fy >= 0) & (fx < w.fn) & (fy < w.fn)
+            for L in range(lk):
+                m = inw & (Lf == L)
+                if m.any():
+                    c = w.fine[L]
+                    s = k / (1 << L)
+                    out[m] = c[np.clip((fy[m] * s).astype(np.int64), 0, c.shape[0] - 1),
+                               np.clip((fx[m] * s).astype(np.int64), 0, c.shape[1] - 1)]
+                    done |= m
+        Lc = np.maximum(Lf - lk, 0)
+        for L in range(len(w.col)):
+            m = ingrid & ~done & (Lc == L)
+            if m.any():
+                c = w.col[L]
+                out[m] = c[np.clip(yi[m] >> L, 0, c.shape[0] - 1), np.clip(xi[m] >> L, 0, c.shape[1] - 1)]
+        if w.tile is not None:
+            for L in range(len(w.tile)):
+                m = ~ingrid & ((Lc == L) if L < len(w.tile) - 1 else (Lc >= L))
+                if m.any():
+                    c = w.tile[L]
+                    out[m] = c[np.floor(hy[m] / (1 << L)).astype(np.int64) % c.shape[0],
+                               np.floor(hx[m] / (1 << L)).astype(np.int64) % c.shape[1]]
+        return out
+
+    def ground(self, w, cam, t_anim, shadow=None, haze_ref=None, shadow_disks=None):
         pal = self.pal
         cxi, cyi = int(cam.pos[0]), int(cam.pos[1])
         if 0 <= cxi < w.G and 0 <= cyi < w.G:
             assert cam.pos[2] > w.top[cyi, cxi] + 1.0, f'caméra sous le relief ({cam.pos.round(1)})'
-        d = cam.rays().reshape(-1, 3)
+        ss = self.ss
+        SH, SW = NH * ss, NW * ss
+        d = cam.rays(ss).reshape(-1, 3)
         o = cam.pos.astype(np.float32)
         n = d.shape[0]
         idx = np.zeros(n, np.uint8)
         depth = np.full(n, np.inf, np.float32)
         dz = d[:, 2]
-        # plan z = 0 (forme close)
         with np.errstate(divide='ignore', invalid='ignore'):
             tp = np.where(dz < -1e-6, (0.0 - o[2]) / dz, np.inf).astype(np.float32)
         t_hit = tp.copy()
-        kind = np.zeros(n, np.int8)                # 0 = dessus, 1 = paroi
         lo_hit = np.zeros(n, np.float32)
-        # boîte du relief
         if w.bbox is not None:
             x0, x1, y0, y1, z0, z1 = w.bbox
             with np.errstate(divide='ignore', invalid='ignore'):
@@ -334,14 +515,13 @@ class Renderer:
                     tmin = np.maximum(tmin, lo_)
                     tmax = np.minimum(tmax, hi_)
             tmin = np.maximum(tmin, 0.01)
-            act = np.nonzero((tmax > tmin) & (tmin < tp))[0]   # l'eau hors boîte, touchée avant, reste prioritaire
+            act = np.nonzero((tmax > tmin) & (tmin < tp))[0]
             if len(act):
                 ht, lt = self._march(w, o, d[act], tmin[act].astype(np.float32), tmax[act].astype(np.float32))
                 ok = np.isfinite(ht)
                 a2 = act[ok]
                 t_hit[a2] = ht[ok]
                 lo_hit[a2] = lt[ok]
-                # rayons qui traversent la boîte sans toucher : ils ne doivent pas reprendre le plan z=0 dans la boîte
                 miss = act[~ok]
                 if len(miss):
                     px = o[0] + tp[miss] * d[miss, 0]
@@ -361,56 +541,15 @@ class Renderer:
         yi = np.clip(hy.astype(np.int32), 0, G - 1)
         topv = w.top[yi, xi]
         is_wall = ingrid & (topv - hz > 0.12)
-        # empreinte du pixel au sol -> niveau de mip (vote majoritaire)
+        # empreinte du sous-rayon au sol
         dn = np.linalg.norm(dd, axis=1)
         inc = np.abs(dd[:, 2]) / dn
-        fp = th * dn / cam.F * np.sqrt(1.0 / np.maximum(inc, 0.08))
-        lg = np.log2(np.maximum(fp, 1e-6))
-        # le biais de pente ne joue qu'au loin (pixel ≥ 1/2 cellule) : la vue rapprochée reste nette
-        bias = np.where(lg > -1.5, w.steep[yi, xi], 0.0)
-        lvl = np.clip(np.floor(lg + self.mip_bias + bias), 0, len(w.col) - 1).astype(np.int32)
-        cidx = np.full(len(hi_ids), w.outside, np.uint8)
-        for L in range(len(w.col)):
-            m = (lvl == L) & ingrid
-            if m.any():
-                c = w.col[L]
-                cidx[m] = c[np.clip(yi[m] >> L, 0, c.shape[0] - 1), np.clip(xi[m] >> L, 0, c.shape[1] - 1)]
-        if w.tile is not None:
-            for L in range(len(w.tile)):
-                m = (lvl == L) & ~ingrid
-                if m.any():
-                    c = w.tile[L]
-                    cidx[m] = c[np.floor(hy[m] / (1 << L)).astype(np.int64) % c.shape[0],
-                                np.floor(hx[m] / (1 << L)).astype(np.int64) % c.shape[1]]
-        # micro-détail sous la cellule (texels agrandis, niveau 0 seulement) : la lecture de la carte est décalée par
-        # un bruit fixe dans le monde, sur une sous-grille de 2^m cases par cellule choisie pour qu'une sous-case fasse
-        # ≈ 1–2 pixels natifs ; les frontières de couleur deviennent des escaliers irréguliers au lieu de grands carrés,
-        # et une moucheture (table pal.speckle) sème des touffes. Indices de palette seulement : rien n'est moyenné.
-        if self.micro > 0 or self.jitter > 0:
-            mm = (lvl == 0) & ingrid & ~is_wall
-            if mm.any():
-                mi = np.nonzero(mm)[0]
-                m = np.clip(np.floor(-np.log2(np.maximum(fp[mi], 1e-3))), 0, 3).astype(np.int64)
-                n_sub = (1 << m).astype(np.float32)
-                sx_ = np.floor(hx[mi] * n_sub).astype(np.int64)
-                sy_ = np.floor(hy[mi] * n_sub).astype(np.int64)
-                h1 = hash01(sx_, sy_, m)
-                h2 = hash01(sx_ + 7919, sy_ - 104729, m)
-                if self.jitter > 0:
-                    sub = m >= 1
-                    jx = np.where(sub, (h1 - 0.5) * 2 * self.jitter, 0.0)
-                    jy = np.where(sub, (h2 - 0.5) * 2 * self.jitter, 0.0)
-                    xj = np.clip((hx[mi] + jx).astype(np.int32), 0, G - 1)
-                    yj = np.clip((hy[mi] + jy).astype(np.int32), 0, G - 1)
-                    same = np.abs(w.top[yj, xj] - topv[mi]) < 0.05      # même dessus : on ne lit pas une autre marche
-                    if w.cut is not None:
-                        same &= w.cut[yj, xj] == w.cut[yi[mi], xi[mi]]
-                    cidx[mi] = np.where(same, w.col[0][yj, xj], cidx[mi])
-                if self.micro > 0:
-                    h3 = hash01(sx_ - 31337, sy_ + 4242, m)
-                    # seulement quand une cellule couvre ≥ 2 pixels : à 1 pixel par cellule, la moucheture crénèle
-                    # (mesuré : +0,9 point de pixels qui changent par image sur les flancs de Machu Picchu)
-                    cidx[mi] = np.where((h3 < self.micro) & (m >= 1), pal.speckle[cidx[mi]], cidx[mi])
+        fp = th * dn / (cam.F * ss) * np.sqrt(1.0 / np.maximum(inc, 0.08))
+        cidx = self._colour(w, hx, hy, xi, yi, ingrid, fp)
+        # ombre portée du relief (dessus seulement)
+        if w.shade is not None:
+            sh_r = ingrid & ~is_wall & w.shade[yi, xi]
+            cidx = np.where(sh_r, pal.shadow[cidx], cidx)
         # parois
         if is_wall.any():
             wi = np.nonzero(is_wall)[0]
@@ -423,20 +562,23 @@ class Renderer:
             ny = (yp - yi[wi]).astype(np.float32)
             lit = (nx * self.light_h[0] + ny * self.light_h[1]) > 0
             wc = np.where(lit, w.flank_lit[yi[wi], xi[wi]], w.flank_dark[yi[wi], xi[wi]])
-            # au loin (mip ≥ 1), la contremarche prend la couleur réduite du dessus : plus d'alternance dessus/flanc
-            far = lvl[wi] >= 1
+            if self.wall_speck > 0:
+                # matière des contremarches (feuillage, roche) : moucheture fixe dans le monde, cases de 0,5 unité
+                alg0 = np.where(np.abs(nx) > 0, hy[wi], hx[wi])
+                hs = hash01(np.floor(alg0 * 2).astype(np.int64), np.floor(hz[wi] * 2).astype(np.int64), 29)
+                wc = np.where(hs < self.wall_speck, pal.speckle[wc], wc)
             if self.course > 0 and w.coursed is not None:
-                # appareil de pierre : une assise sombre toutes les `course` unités, joints verticaux décalés d'une
-                # demi-pierre d'une assise à l'autre ; seulement si l'assise fait ≥ 3 pixels natifs (pas de moiré)
-                cw = w.coursed[yi[wi], xi[wi]] & (fp[wi] * 3.0 < self.course)
+                # appareil de pierre : assises et joints de largeur fixe dans le monde ; il s'efface avec la distance
+                # paroi par paroi (seuil tiré par cellule) au lieu de disparaître d'un coup à une distance donnée
+                hcell = hash01(xi[wi], yi[wi], 17)
+                cw = w.coursed[yi[wi], xi[wi]] & (fp[wi] * (2.0 + 2.0 * hcell) < self.course)
                 if cw.any():
                     hzw = hz[wi]
                     alg = np.where(np.abs(nx) > 0, hy[wi], hx[wi])
                     row = np.floor(hzw / self.course)
-                    bed = (hzw / self.course - row) < np.maximum(0.2, fp[wi] / self.course)
-                    joint = ((alg / (1.8 * self.course) + 0.5 * (row % 2)) % 1.0) < np.maximum(0.1, fp[wi] / (1.8 * self.course))
+                    bed = (hzw / self.course - row) < 0.22
+                    joint = ((alg / (1.8 * self.course) + 0.5 * (row % 2)) % 1.0) < 0.12
                     wc = np.where(cw & (bed | joint), pal.shadow[wc], wc)
-            wc = np.where(far, cidx[wi], wc)
             if w.section is not None:
                 from_cut = w.cut[yp, xp] & ~w.cut[yi[wi], xi[wi]]
                 if w.cut_top0 is not None:
@@ -447,18 +589,24 @@ class Renderer:
                     along = np.where(np.abs(nx[s]) > 0, hy[wi][s], hx[wi][s])
                     wc[s] = w.section(hx[wi][s], hy[wi][s], hz[wi][s], xi[wi][s], yi[wi][s], along, t_anim)
             cidx[wi] = wc
-        # ombres (nuages et objets) : disques au sol
-        sh = np.zeros(len(hi_ids), bool)
-        for (sx, sy, R) in shadow_disks:
-            sh |= (hx - sx) ** 2 + (hy - sy) ** 2 < R * R
-        cidx = np.where(sh & ~is_wall, pal.shadow[cidx], cidx)
-        # brume quantifiée par bandes de distance horizontale
-        hd = th * np.sqrt(dd[:, 0] ** 2 + dd[:, 1] ** 2)
-        h1, h2 = self.haze_d
-        if h1 is not None:
-            cidx = np.where(hd > h1, pal.haze1[cidx], cidx)
-        if h2 is not None:
-            cidx = np.where(hd > h2, pal.haze2[cidx], cidx)
+        # ombres des nuages : masque monde tramé (une fois par image)
+        if shadow is not None:
+            m, sx0, sy0, cell = shadow
+            ix = np.floor((hx - sx0) / cell).astype(np.int64)
+            iy = np.floor((hy - sy0) / cell).astype(np.int64)
+            okm = (ix >= 0) & (iy >= 0) & (ix < m.shape[1]) & (iy < m.shape[0])
+            shm = np.zeros(len(hx), bool)
+            shm[okm] = m[iy[okm], ix[okm]]
+            cidx = np.where(shm & ~is_wall, pal.shadow[cidx], cidx)
+        # brume : paliers par tables, seuils proportionnels à la distance de référence, frontière crénelée fixe
+        if haze_ref is not None and self.haze_k:
+            hd = th * np.sqrt(dd[:, 0] ** 2 + dd[:, 1] ** 2)
+            jit = 1.0 + self.haze_jit * (hash01(np.floor(hx / self.haze_cell).astype(np.int64), np.floor(hy / self.haze_cell).astype(np.int64), 9) - 0.5) * 2
+            hdj = hd * jit
+            step = np.zeros(len(hx), np.int32)
+            for kk in self.haze_k:
+                step += hdj > kk * haze_ref
+            cidx = pal.haze[np.minimum(step, HAZE_STEPS), cidx]
         idx[hi_ids] = cidx
         depth[hi_ids] = th
         # ciel en paliers selon l'élévation du rayon
@@ -470,9 +618,56 @@ class Renderer:
             for lim, name in reversed(self.sky):
                 sc[el < lim] = pal[name]
             idx[sky_ids] = sc
-        hitinfo = {'ids': hi_ids, 'x': hx, 'y': hy, 'z': hz}
-        return idx.reshape(NH, NW), depth.reshape(NH, NW), hitinfo
+        # vote majoritaire 2×2 sur l'indice de palette (pas de moyenne)
+        HX = np.full(n, np.nan, np.float32)
+        HY = np.full(n, np.nan, np.float32)
+        HZ = np.full(n, np.nan, np.float32)
+        HX[hi_ids] = hx
+        HY[hi_ids] = hy
+        HZ[hi_ids] = hz
+        if ss == 2:
+            def q4(a):
+                a = a.reshape(NH, 2, NW, 2)
+                return a[:, 0, :, 0], a[:, 0, :, 1], a[:, 1, :, 0], a[:, 1, :, 1]
+            I4 = q4(idx)
+            which = vote4(*I4)
+            pick = lambda arr: np.choose(which, q4(arr))
+            out_idx = np.choose(which, I4).astype(np.uint8)
+            out_depth = pick(depth)
+            hinfo = {'x': pick(HX), 'y': pick(HY), 'z': pick(HZ)}
+        else:
+            out_idx = idx.reshape(NH, NW)
+            out_depth = depth.reshape(NH, NW)
+            hinfo = {'x': HX.reshape(NH, NW), 'y': HY.reshape(NH, NW), 'z': HZ.reshape(NH, NW)}
+        return out_idx, out_depth, hinfo
 
+
+# -- marche des rayons sur GPU, FACULTATIVE : SURVOL_GPU=1 (survol_gpu.py, taichi==1.7.2, Metal). Le CPU reste le défaut
+# et le secours : import sous garde, et retour au CPU au premier échec d'un appel GPU. Expérimental : parité à 1–2 ulp
+# près sur 0–0,2 % des rayons (0 pixel d'écart mesuré sur 6 images), pas au bit près ; voir survol_gpu.py.
+GPU = None
+if os.environ.get('SURVOL_GPU') == '1':
+    try:
+        sys.path.insert(0, str(Path(__file__).resolve().parent))
+        import survol_gpu as GPU
+        _cpu_march = Renderer._march
+
+        def _gpu_march(self, w, o, d, tin, tout):
+            global GPU
+            if GPU is not None:
+                try:
+                    return GPU.march(self, w, o, d, tin, tout)
+                except Exception as e:
+                    print(f'survol : échec GPU ({e}), suite du rendu sur CPU', file=sys.stderr)
+                    GPU = None
+            return _cpu_march(self, w, o, d, tin, tout)
+
+        Renderer._march = _gpu_march
+        print(f'survol : marche des rayons sur GPU (taichi Metal, '
+              f'{GPU.device_name() or "périphérique Metal par défaut"})', file=sys.stderr)
+    except Exception as e:
+        GPU = None
+        print(f'survol : SURVOL_GPU=1 mais GPU indisponible ({type(e).__name__}: {e}), rendu sur CPU', file=sys.stderr)
 
 # ---------------------------------------------------------------- nuages
 class Cloud:
@@ -606,7 +801,7 @@ def tree_stamp(rp):
 
 
 def draw_trees(idx, depth, cam, pal, trees, sun, colors=('FOREST', 'GRASS_D', 'GRASS_M', 'GRASS_L'), lift=1.0,
-               max_r=7, shadows=True):
+               max_r=7, shadows=True, haze=None):
     """Boules de feuillage au rayon projeté (pixel près, plafonnées à max_r : jamais d'agrandissement d'un dessin),
     ombre portée plate au sol décalée selon la hauteur (table d'ombre), reflet haut-gauche, ombre propre bas-droite.
     colors : (ombre propre, feuillage, reflet, éclat)."""
@@ -618,7 +813,21 @@ def draw_trees(idx, depth, cam, pal, trees, sun, colors=('FOREST', 'GRASS_D', 'G
     rp = cam.F * trees[:, 3] / np.maximum(zc, 1e-3)
     # seuil 1,25 px : en dessous, la carte de couleurs (forêt sombre) suffit ; les boules de 1 px qui apparaissent et
     # disparaissent d'une image à l'autre faisaient grésiller les rasantes (allers-retours A-B-A mesurés ×3).
-    vis = (zc > 1) & (rp >= 1.25) & (sx > -10) & (sx < NW + 10) & (sy > -10) & (sy < NH + 10)
+    # seuil tiré par arbre dans [1,0 ; 1,8] px (hachage fixe) : les arbres n'apparaissent pas tous à la même distance ;
+    # sous le seuil, la carte de couleurs fine porte déjà les houppiers (même teinte), rien ne bascule.
+    thr = 1.0 + 0.8 * hash01(np.arange(len(trees)), 3, 23)
+    vis = (zc > 1) & (rp >= thr) & (sx > -10) & (sx < NW + 10) & (sy > -10) & (sy < NH + 10)
+    hstep = np.zeros(len(trees), np.int32)
+    if haze is not None:
+        # même brume que le sol (seuils × distance de référence, crénelage fixe par arbre) ; au-delà du 2e palier,
+        # la carte de couleurs suffit
+        ref, ks, jit = haze[:3]
+        cell = haze[3] if len(haze) > 3 else 8.0
+        hd = np.hypot(trees[:, 0] - cam.pos[0], trees[:, 1] - cam.pos[1])
+        hd = hd * (1.0 + jit * (hash01(np.floor(trees[:, 0] / cell).astype(np.int64), np.floor(trees[:, 1] / cell).astype(np.int64), 9) - 0.5) * 2)
+        for kk in ks:
+            hstep += hd > kk * ref
+        vis &= hstep < 3
     if not vis.any():
         return
     ids = np.nonzero(vis)[0]
@@ -658,7 +867,7 @@ def draw_trees(idx, depth, cam, pal, trees, sun, colors=('FOREST', 'GRASS_D', 'G
         s_ = st[ya - y0:yb - y0, xa - x0:xb - x0]
         dsub = depth[ya:yb, xa:xb]
         mm = (s_ > 0) & (dsub > zc[ti] - 2.5 * trees[ti, 3])
-        idx[ya:yb, xa:xb][mm] = lut[s_[mm]]
+        idx[ya:yb, xa:xb][mm] = pal.haze[hstep[ti]][lut[s_[mm]]] if hstep[ti] else lut[s_[mm]]
         dsub[mm] = np.minimum(dsub[mm], zc[ti])
 
 

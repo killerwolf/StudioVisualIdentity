@@ -13,7 +13,7 @@ Les faits hérités de la mission (§4) sont repris en fin de fichier ; les nôt
 | ffmpeg | 6.1.1 (libx264) |
 | Python | 3.11 via `uv venv --python 3.11 .venv` (le système est en 3.13) |
 | Libs JS | three 0.187.0, matter-js 0.20.0, **p5 2.3.4**, gsap 3.15.0, d3 7.9.2, aframe 1.8.0, pixi.js 8.22.0, babylonjs 9.33.2, zdog 1.1.3, paper 0.17.0, **animejs 4.5.0**, flubber 0.4.2, roughjs 4.6.6, twgl.js 7.0.0 |
-| Libs Python | manim 0.22.1, taichi 1.7.4, numpy 2.4.6, scipy 1.17.1, opencv 5.0.0 (headless), pycairo 1.29.2, matplotlib 3.11.2, Pillow 13.0.0, google-genai 2.34.0 |
+| Libs Python | manim 0.22.1, taichi 1.7.4 (campagne, Linux ; **sur macOS Intel : `taichi==1.7.2`**, 1.7.3 et 1.7.4 n'ont pas de roue x86_64), numpy 2.4.6, scipy 1.17.1, opencv 5.0.0 (headless), pycairo 1.29.2, matplotlib 3.11.2, Pillow 13.0.0, google-genai 2.34.0 |
 
 ## Faits nouveaux (vérifiés ici)
 
@@ -28,6 +28,7 @@ Les faits hérités de la mission (§4) sont repris en fin de fichier ; les nôt
 - **Poids des livrables** : crf 14 sur particules+bloom = 9,3 Mo/3 s ; ré-encodage livrable crf 20 + maxrate 8M = 3,8 Mo/3 s (plafond ≈ 15 Mo pour 15 s).
 - **Niveau sonore** : `sound.py` normalise à crête −1 dBFS et RMS ≤ −18 dBFS ; après mux AAC le mix mesure **−21,1 dB moyen / −0,8 dB crête** (volumedetect).
 - **Slots CPU** : `render.mjs` réserve un slot parmi `nproc` (verrous `mkdir` atomiques dans `/tmp/svi-slots`) ; plusieurs agents peuvent lancer des rendus sans dépasser 4 rendus simultanés. Pour les rendus Python lourds, utiliser `out/tools/slot.sh <commande>`. Sur macOS (pas de `nproc`), `slot.sh` se replie sur `sysctl -n hw.ncpu` depuis le 2026-11-18 (avant, il bouclait sans fin) ; `render.mjs` lit `os.cpus().length`, qui marche partout. Les deux comptent les cœurs logiques (8 sur le Mac Intel i7 4 cœurs) : passer `SVI_SLOTS=4` pour un slot par cœur physique.
+- **Taichi sur Metal : la division float32 n'est pas IEEE, la parité au bit avec numpy n'est pas garantie** (survol-pixel, 2026-11-18, macOS Intel, `taichi==1.7.2`, AMD Radeon Pro 560 = périphérique Metal par défaut ; l'Intel HD 630 est la carte basse consommation). Mesuré : la division Metal n'est pas arrondie au plus proche, **29 % des quotients diffèrent de numpy**, jusqu'à 2,5 ulp. Correctif `div_rn` (reste exact par le produit de Dekker, candidats voisins) : **exact sur 16 millions de cas** quand on le teste seul. Le compilateur Metal fusionne aussi produit + addition en fma : passer chaque produit par un `bit_cast` XOR un zéro reçu à l'exécution (un aller-retour `bit_cast` simple est replié). Malgré cela, dans le gros noyau compilé il reste **1 ulp d'écart sur `(pz − bm) / ndz`** (la barrière anti-fma n'y change rien) ; les quotients B/dxy sont donc calculés par numpy et envoyés. Résultat sur 6 images de l'atoll : **0 pixel d'écart sur l'indice de palette**, mais 0 à 0,2 % des rayons diffèrent de 1–2 ulp sur la distance d'impact. Conséquence : un rendu GPU peut différer d'un pixel ailleurs ; les rendus livrés restent sur CPU, le module `survol_gpu.py` est facultatif (`SURVOL_GPU=1`) et expérimental. Gain : marche 0,2–0,5 s → ~0,1 s, image 1,5–1,9 s → 0,7–0,8 s.
 
 ## Faits hérités de la mission (§4) — appliqués d'emblée
 

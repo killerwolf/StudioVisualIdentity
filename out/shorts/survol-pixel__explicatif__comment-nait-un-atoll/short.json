@@ -2,7 +2,7 @@
  "identity": "survol-pixel",
  "family": "explicatif",
  "title": "Comment naît un atoll ?",
- "hook": "Dès 0,15 s : « UN ANNEAU / EN PLEINE MER ? » (Jersey 20, 136 px) sur un anneau de corail vu en plongeante 70° en perspective ; la caméra tourne déjà, une frégate traverse avec son ombre",
+ "hook": "Dès 0,15 s : « UN ANNEAU / EN PLEINE MER ? » (Jersey 15, 108 px) sur l'anneau de corail vu à 40° en perspective ; la caméra approche au-dessus de la mer en virant (roulis −9°), d'autres atolls au loin ; une frégate traverse avec son ombre",
  "duration": 18.6,
  "libraries": [
   "numpy",
@@ -13,50 +13,46 @@
   "ffmpeg"
  ],
  "seed": 1842,
- "renderTimeSec": 109.2,
- "renderSecPer100Frames": 19.6,
- "renderCostNote": "passe de détail du 18/11 (moteur : nuages en coton, arbres, micro-détail, bandes crénelées) : 109,2 s pour 558 images = 19,6 s/100 images, en parallèle du rendu Machu Picchu ; charge 1 min 2,7 au départ, 3,8 à la fin (relevés /20 s : 2,7–8,9, moyenne 4,4). Banc 60 images avant rendu : 16,9 s/100 (charge 2,2). Rendu précédent (après revue) : 87,0 s (15,6/100, charge 2,9–3,9)",
+ "renderTimeSec": 598.1,
+ "renderSecPer100Frames": 107.18,
+ "renderCostNote": "passe A+B+C du 18/11 (moteur : 4 rayons par pixel et vote, carte de couleurs 4× plus fine sur la fenêtre du sujet, brume en 6 paliers, ombre portée du relief, marche à pas sûrs sur cartes de maxima ; monde de 1 080 unités) : 598,1 s pour 558 images = 107,18 s/100 images, sur CPU, en parallèle du rendu Machu Picchu sur 4 cœurs ; charge 1 min 5,98 au départ, 4,42 à la fin ; construction du monde 19,8 s (incluse). Plafond de coût levé par le propriétaire pour B. Rendus précédents : passe de détail 109,2 s (19,6/100, charge 2,7–8,9), après revue 87,0 s (15,6/100)",
  "measuredUnderLoad": true,
  "structure": [
   {
    "t": 0,
-   "beat": "hook : l'anneau (atoll) en plongeante 70° avec lagon à pâtés coralliens et hauts-fonds crénelés, question en Jersey 20, frégate et ombre ; nuages en coton et leurs ombres autour de l'anneau (jamais dessus) ; la caméra avance (distance 385 → 330)"
+   "beat": "hook : l'anneau (atoll) vu à 40° en perspective, la caméra approche au-dessus de la mer en virant ; autres atolls, monts sous-marins et bancs jusqu'à l'horizon ; « UN ANNEAU / EN PLEINE MER ? » (Jersey 15) ; frégate et son ombre"
   },
   {
-   "t": 2.9,
-   "beat": "retour en arrière (1 s, riser) : le volcan remonte marche par marche ; « il y a des millions / d'années » (Jersey 15)"
+   "t": 2.8,
+   "beat": "retour en arrière (1 s, riser) : le volcan remonte marche par marche ; la caméra descend de 37° à 27° (whoosh 3,15 s)"
   },
   {
-   "t": 3.2,
-   "beat": "le piqué 68° → 16° (0,6 s, whoosh)"
-  },
-  {
-   "t": 3.35,
-   "beat": "étape 1 : « 1. UN VOLCAN / BORDÉ DE CORAIL » (récif frangeant) ; « marches : convention de dessin »"
+   "t": 3.5,
+   "beat": "étape 1 : « 1. UN VOLCAN / BORDÉ DE CORAIL » (récif frangeant)"
   },
   {
    "t": 4.0,
-   "beat": "la coupe s'ouvre (0,8 s, thud) : une tranchée de 200 × 50 cellules au sud descend jusqu'au socle de roche hachurée (−40) ; paroi de face : basalte à joints, eau lagon hachurée, tireté épais du niveau de la mer ; épingle « basalte »"
+   "beat": "la coupe s'ouvre (0,8 s, thud) : une tranchée au sud descend jusqu'au socle (dalles de roche) ; paroi de face : basalte à joints, eau hachurée, tireté du niveau de la mer ; épingle « basalte » (5,0–6,3 s), puis « marches : convention de dessin » (Jersey 10, 6,3–7,6 s)"
   },
   {
-   "t": 7.5,
-   "beat": "étape 2 : « 2. IL S'ENFONCE, / LE CORAIL MONTE » + « pendant des millions / d'années » : le volcan s'enfonce (3,6 s), le récif reste à la surface, lagon ; épingles « calcaire », « lagon »"
+   "t": 7.6,
+   "beat": "étape 2 : « 2. IL S'ENFONCE, / LE CORAIL MONTE » (pop) : plan de coupe lent à 25° qui glisse le long de la tranchée ; le volcan s'enfonce (3,6 s), le récif reste à la surface, lagon ; épingle « calcaire » (9,2–11,2 s)"
   },
   {
-   "t": 11.3,
-   "beat": "la remontée vers une vue à 30–32° qui regarde la paroi de face (cap tourné de 40°)"
+   "t": 10.95,
+   "beat": "virage le long de la coupe (whoosh), fin de l'enfoncement (11,2–12,6 s)"
   },
   {
-   "t": 12.2,
-   "beat": "étape 3 : « 3. UN VOLCAN / SOUS L'ANNEAU » : le triangle de basalte sous le calcaire et l'anneau ; épingles « basalte », « calcaire », « niveau de la mer » tenues jusqu'à la fin"
+   "t": 11.8,
+   "beat": "étape 3 : « 3. UN VOLCAN / SOUS L'ANNEAU » (pop) : le volcan enfoui sous le calcaire et l'anneau ; puis « niveau de la mer » seul (13,4–15,0 s)"
   },
   {
    "t": 14.9,
-   "beat": "descente en rasante 17–15° (whoosh) : ciel en paliers, brume dorée, horizon (3,7 s)"
+   "beat": "remontée 26° → 35–38° (whoosh) et départ au-dessus de l'anneau vers les autres atolls"
   },
   {
    "t": 15.0,
-   "beat": "plaque inversée « DARWIN, 1842 » (chime) + « basalte trouvé / dessous en 1952 » (Jersey 15)"
+   "beat": "plaque inversée « DARWIN, 1842 » (chime) puis « basalte trouvé / dessous en 1952 » (16,8–18,6 s)"
   }
  ],
  "engagement": {
@@ -72,12 +68,12 @@
   "sfx": [
    "swell 0,15 s",
    "riser 2,8 s",
-   "whoosh 3,15 s (piqué)",
+   "whoosh 3,15 s (descente)",
    "swell 3,9 s",
    "thud 4,0 s (coupe)",
-   "pop 7,5 et 12,2 s",
-   "whoosh 11,35 s (remontée)",
-   "whoosh 14,9 s (rasante finale)",
+   "pop 7,6 et 11,8 s",
+   "whoosh 10,95 s (virage le long de la coupe)",
+   "whoosh 14,9 s (remontée)",
    "chime 15,0 s"
   ],
   "voiceEngine": "gemini",
@@ -94,32 +90,37 @@
  "qualityChecks": {
   "stillsReviewed": true,
   "textMinPx": 74.7,
-  "textMinPxNote": "Jersey 10 seulement pour « marches : convention de dessin » (corps 74,7 px) ; toute information en Jersey 15 (108 px)",
+  "textMinPxNote": "Jersey 10 seulement pour « marches : convention de dessin » (corps 74,7 px) ; accroche, étapes, date et épingles en Jersey 15 (108 px) depuis la passe A+B+C ; un seul cartouche à la fois",
   "safeAreaOk": true,
   "safeAreaNote": "assertion du moteur sur chaque cartouche (boîte + liseré + ombre dans [16, 240] × [55, 400] natifs)",
   "maxWordsOnScreenPerShot": 6,
   "narrationWordsSpoken": 40,
   "wordsPerSecond": "2,33–2,58 (mots prononcés)",
-  "pitchLe60Share": 0.819,
-  "colorsPerFrame": "natif : 16–24 indices exacts par image (médiane 19), sans cartouches, 1 image / 0,33 s ; fichier décodé : 22–28 entrées de palette (blocs 4×4, ΔRGB ≤ 25) ; avant la passe de détail 13–21 natif",
-  "dive": "src/dive/ (90/70/50/30/15°, même moteur, 19–24 couleurs)",
-  "clouds": "3–11 nuages dans le cadre (centre projeté, compte exact du moteur ; médiane 8 en plongeante, 7 en rasante), 24 nuages à l'altitude 90, hors de l'anneau, jamais traversés ; avant : 0–1 (C15, voir notes)",
+  "pitchLe60Share": 1.0,
+  "colorsPerFrame": "stills (avec cartouches, natif) : 23–30 indices par image après la passe A+B+C ; palette déclarée 40 couleurs (35 de noyau + 5 biome) ; passe de détail : 16–24 natif sans cartouches",
+  "dive": "src/dive/ (90/70/50/30/15°, même moteur, 19–30 couleurs ; régénéré après la passe A+B+C)",
+  "clouds": "70 nuages en coton à l'altitude 90 dans tout le monde jusqu'à l'horizon, hors de l'anneau, jamais traversés (passe A+B+C, C15 rouverte par le propriétaire) ; compte dans le cadre non refait (passe de détail : 3–11)",
   "photosensitivity": {
-   "maxLumaChange10Frames": 0.127,
-   "maxLumaStepFrame": 0.045,
-   "lumaMax": 0.554,
-   "lumaMean": 0.506,
+   "maxLumaChange10Frames": 0.043,
+   "maxLumaStepFrame": 0.0323,
+   "lumaMax": 0.512,
+   "lumaMean": 0.472,
    "foamFlickerHz": 2,
    "wingFlapHz": 3,
    "cloudCrossing": false
   },
-  "cameraPreflightMinClearance": 49.4,
-  "fileMB": 4.4,
+  "cameraPreflightMinClearance": 85.8,
+  "fileMB": 8.9,
   "sourceCompare": "out/report/notes/console-retro-source/comparaison.jpg",
   "grazingFinalShotSec": 3.7,
   "recognitionCopy": "recognition.py sur copie (scratchpad) après revue : 1er voisin aquarelle-conte « phare d'Alexandrie » (0,6208), frère à 0,6635 : échec maintenu, documenté",
   "sourceCompareAfter": "out/report/notes/console-retro-source/comparaison-avant-apres.jpg",
-  "detailPass": "out/report/notes/survol-pixel-detail.md : diffCells natif 0,111 → 0,153 (source 0,221), grandes plages > 5 % de l'écran 85 → 80 % (source 50 %), pixels A-B-A 0,23 → 0,38 % (source 4,0 %)"
+  "detailPass": "out/report/notes/survol-pixel-detail.md : diffCells natif 0,111 → 0,153 (source 0,221), grandes plages > 5 % de l'écran 85 → 80 % (source 50 %), pixels A-B-A 0,23 → 0,38 % (source 4,0 %)",
+  "camera": "tangage 25–40° (médiane 26,5°, 100 % du temps dans 25–40°), roulis jusqu'à 12° (≥ 5° pendant 56 % du temps) ; caméra PCHIP (passe A+B+C)",
+  "loudness": "−16,0 LUFS intégrés, crête −1,7 dBFS, LRA 5,3 LU (ffmpeg ebur128 sur short.mp4 final)",
+  "temporalAliasing": "pixels A-B-A (aller-retour sur 3 images, fichier décodé, 1 px par gros pixel, seuil 24 ; source 4,0 % par la même méthode) : 1,06 % sur tout le short (passe de détail 0,38 %) ; descente 3,2–4,0 s 2,58 % ; remontée 13,9–14,6 s 1,61 % ; plan final 16,5–17,5 s 1,93 %. Natif (méthode du prototype, sans cartouches) : 4,18 % à 3,5 s, 3,25 % à 14,2 s",
+  "sourceCompareFinal": "out/report/notes/console-retro-source/final-abc.jpg",
+  "abcPass": "out/report/notes/survol-pixel.md § « Passe A+B+C » (phases 1 et 2)"
  },
  "facts": [
   {
@@ -135,6 +136,6 @@
    "source": "manuels de géologie marine ; simplification assumée : les variations du niveau de la mer ne sont pas montrées"
   }
  ],
- "notes": "Monde inventé, un seul sujet centré (pas d'archipel) pour ne pas reprendre la composition de la source (C15). Passe de détail du 18/11 : le plafond « ≤ 4 nuages » de C15 est levé (24 nuages, 3–11 dans le cadre) sur la consigne de la passe (« nuages en piles hachurées avec ombres décalées », pour répondre au propriétaire : « la source est beaucoup plus détaillée ») ; contrôle C15 refait (planche comparaison-avant-apres.jpg) : aucune image confondable avec la source (un seul anneau centré, pas d'archipel, pas d'avion, cartouches) ; décision à confirmer, le retour à 4 nuages tient à _clouds() dans video.py. Le relief en marches est une convention de dessin, dit à l'écran (C18). Nuance connue (Ladd lui-même) : les forages prouvent l'affaissement, mais toutes les îles ne passent pas forcément par les trois stades ; la voix reste au niveau du modèle de Darwin. Rendu : moteur src/survol.py (lancer de rayon par pixel, 96 pas + 6 bissections), monde 360×360, coupe 100×100 jusqu'au socle −72.",
+ "notes": "Monde inventé de 1 080 unités (passe A+B+C) : l'atoll du sujet au centre, autour d'autres atolls (anneaux de sable et de corail), monts sous-marins, bancs et houle, jamais d'île verte ni d'archipel copié de la source (C15 rouverte par le propriétaire le 18/11 : d'autres atolls au loin, plus de 4 nuages à l'écran par moments). Cartouches retirés par décision du propriétaire (18/11, choix 34) : « il y a des millions / d'années », « pendant des millions / d'années », l'épingle « lagon » et les épingles finales « basalte » / « calcaire ». Le relief en marches est une convention de dessin, dit à l'écran (C18). Nuance connue (Ladd lui-même) : les forages prouvent l'affaissement, mais toutes les îles ne passent pas forcément par les trois stades ; la voix reste au niveau du modèle de Darwin. Rendu : moteur src/survol.py (4 rayons par pixel et vote majoritaire, marche à pas sûrs sur cartes de maxima 128/32/8/2 puis 8 bissections), fenêtre fine de 320 unités, tranchée de coupe de 60 de profondeur, socle en dalles de 2 unités. Rendu livré sur CPU ; la marche sur GPU (src/survol_gpu.py, SURVOL_GPU=1) est facultative et expérimentale (parité au bit non garantie, voir src/README.md).",
  "reproduce": "export SURVOL_CACHE=/private/tmp/survol-pixel/survol-pixel__explicatif__comment-nait-un-atoll && SVI_SLOTS=4 out/tools/slot.sh .venv/bin/python out/shorts/survol-pixel__explicatif__comment-nait-un-atoll/src/video.py --out $SURVOL_CACHE/video.mp4 && .venv/bin/python out/tools/sound.py out/shorts/survol-pixel__explicatif__comment-nait-un-atoll/src/sound.json $SURVOL_CACHE/music.wav && .venv/bin/python out/tools/assemble.py mux --video $SURVOL_CACHE/video.mp4 --music $SURVOL_CACHE/music.wav --out out/shorts/survol-pixel__explicatif__comment-nait-un-atoll/short.mp4 && cp out/shorts/survol-pixel__explicatif__comment-nait-un-atoll/short.mp4 out/shorts/survol-pixel__explicatif__comment-nait-un-atoll/short_novo.mp4 && .venv/bin/python out/tools/tts.py out/shorts/survol-pixel__explicatif__comment-nait-un-atoll --engine files --replace  # voice_lines/ : 1 appel Gemini gemini-3.8-flash-tts Sulafat (API v1beta) découpé, voir out/report/notes/voix-survol-pixel.md"
 }

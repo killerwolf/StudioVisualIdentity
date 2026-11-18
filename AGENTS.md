@@ -98,7 +98,7 @@ review (`out/report/decisions.md` § « Survol pixel », `out/report/notes/direc
 
 | Identity | Look | Libraries | Rank |
 |---|---|---|---|
-| `survol-pixel` | a small 16-bit pixel-art world (indexed palette, 270×480 scaled ×4) that one camera flies over, dives into and skims to the horizon; terraced relief with lit / shaded risers, cast shadows, a cut-away section of the ground as the diagram, Jersey 20 / 15 / 10 cartouches | numpy, Pillow, opensimplex, scipy, @fontsource Jersey 5.3.0 (Python, no browser) | 10 |
+| `survol-pixel` | a small 16-bit pixel-art world (indexed palette, 270×480 scaled ×4) that one camera flies over, dives into and skims to the horizon; terraced relief with lit / shaded risers, cast shadows, a cut-away section of the ground as the diagram, Jersey 15 / 10 cartouches, one at a time (Jersey 20 reserved) | numpy, Pillow, opensimplex, scipy, @fontsource Jersey 5.3.0 (Python, no browser) | 10 |
 
 - **Owner rules** (signature, keep them): (1) **3D depth** is the rule — perspective ground (Mode 7 style) at any pitch, terraces,
   cast shadows, layered depth, a camera that moves forward; (2) **form, not content** — a pixel-art look for explainers, kids, history
@@ -108,19 +108,37 @@ review (`out/report/decisions.md` § « Survol pixel », `out/report/notes/direc
 - Engine: pure Python `survol.py` (identical md5 in both shorts' `src/`), `video.py` per short; opensimplex fields cached in
   `$SURVOL_CACHE` (outside the repository). A new topic = a new terrain / heightfield, a camera path, sprites with shadows and the cut-away.
 - **Detail pass (2026-11-18)**: sub-cell micro-detail, coursed walls, ball-heap clouds, tree clusters with cast shadows; both shorts
-  re-rendered (`out/report/notes/survol-pixel-detail.md`). The challenge's « ≤ 4 clouds » cap (C15) is lifted (3–11 clouds in frame),
-  pending owner validation.
+  re-rendered (`out/report/notes/survol-pixel-detail.md`). The challenge's « ≤ 4 clouds » cap (C15) is lifted (3–11 clouds in frame);
+  the owner reopened C15 in the A+B+C pass (other atolls far away, more clouds, but no green archipelago copied from the source).
+- **A+B+C pass (2026-11-18)**, owner request: (A) a world filled to the horizon (atoll 1,080 units with other atolls, seamounts, banks;
+  Machu Picchu 1,536 units of Andean ridges) and a new haze in 6 steps with a world-fixed jagged border towards a very pale blue
+  `HAZE #DCEEF5`, sky in 7 steps (11 core colours added, 35 in all); (B) 4 rays per pixel with a majority vote on the palette index,
+  a 4× finer colour map around the subject, slope bias and « far wall = top colour » rule removed, relief cast shadow, safe-step ray
+  march on block max maps (128/32/8/2) + 8 bisections; (C) a PCHIP camera that flies, banks and rolls (5–13°), one Jersey 15 cartouche
+  at a time; Machu Picchu's dive (8.0 → 10.0 s) and climb-back (13.4 → 15.6 s) slowed down (owner decision). Owner decisions 34 and 36:
+  atoll cartouches « il y a des millions / d'années », « pendant des millions / d'années », the « lagon » pin and the final « basalte » /
+  « calcaire » pins removed; « reconstitution stylisée » only at the end (16.9–18.8 s); haze tables relaxed to 6 steps. Full CPU renders
+  (both in parallel on 4 cores): **atoll 107.18 s/100 frames (598.1 s), Machu Picchu 266.29 (1,501.9 s)**, 1-min load 4.4–10.4; the
+  owner lifted the cost cap for B. Flicker is the main remaining risk: A-B-A pixels on the decoded files 3.56 % over Machu Picchu
+  (1.40 % before), 7.3 % in its dive and 5.4 % in its climb-back (source 4.0 %); atoll 1.06 %. Voice remixed on the new timings without
+  any new call. Before / after board: `out/report/notes/console-retro-source/final-abc.jpg`; log `out/report/notes/survol-pixel.md`
+  § « Passe A+B+C ».
+- **Optional GPU ray march** (`src/survol_gpu.py`, same file in both shorts): `SURVOL_GPU=1`, `taichi==1.7.2`, Metal (AMD Radeon Pro 560,
+  the default Metal device); only the ray march moves to the GPU, frame 1.5–1.9 s → 0.7–0.8 s. Not bit-exact (Metal division is not
+  correctly rounded; 0 px palette-index difference on 6 frames but 0–0.2 % of rays off by 1–2 ulp, see `out/report/facts.md`), so the
+  delivered renders are CPU and the module stays experimental; CPU remains the default and the fallback.
 - **Voice-over: Gemini « Sulafat »** (owner decision, 2026-11-18), the lot 2 recipe: one `gemini-3.8-flash-tts` call per short, split
   into `voice_lines/NN.mp3` by word timestamps, mixed by `tts.py --engine files --replace` (`short_novo.mp4` = music + SFX). The call
-  needs API **v1beta** (see `out/report/facts.md`). Atoll 18.6 s at −15.9 LUFS, Machu Picchu 18.8 s at −13.7 LUFS. Log:
+  needs API **v1beta** (see `out/report/facts.md`). Atoll 18.6 s at −16.0 LUFS (peak −1.7 dBFS), Machu Picchu 18.8 s at −13.8 LUFS (peak −1.5 dBFS), after the A+B+C remix (−15.9 / −13.7 before). Log:
   `out/report/notes/voix-survol-pixel.md`.
 - Evidence: 2 proof shorts (`explicatif` atoll, `histoire` Machu Picchu), QA ok (0 warnings). **Blind visual judge**
   (during the review, fresh agent, 24 anonymised frames, survol-pixel + pixel-arcade, carte-meteo, topo-relief, pastel-diorama,
-  trait-continu): **6/6 pure groups, 24/24** (`recognition.json` → `blindJudgeSurvol`). Measured recognition (after the detail pass and
-  the voice mix, 41/45 overall, unchanged): Machu Picchu's nearest neighbour is its sibling (0.655); the **atoll still fails** (nearest
-  aquarelle-conte « phare d'Alexandrie » at 0.615, sibling 4th at 0.655: blue ocean against green mountain); colour + edges miss its
-  signature, which is geometric (perspective, terraces, pixel grid). Render cost 19.6–63.1 s/100 frames under load (renders after the
-  detail pass, 1-min load 2.7–8.9, `measuredUnderLoad: true`; 15.6–59.1 before it).
+  trait-continu): **6/6 pure groups, 24/24** (`recognition.json` → `blindJudgeSurvol`; frames from the detail pass, it does not cover the
+  A+B+C pass). Measured recognition (after the A+B+C pass, 41/45 overall, unchanged): Machu Picchu's nearest neighbour is its sibling
+  (0.754); the **atoll still fails** (nearest aquarelle-conte « phare d'Alexandrie » at 0.722, sibling 3rd at 0.754: blue ocean against
+  green mountain); carte-meteo moved closer (2nd neighbour of Machu Picchu at 0.785); colour + edges miss its signature, which is
+  geometric (perspective, terraces, pixel grid). Render cost 107.18–266.29 s/100 frames on CPU under load (A+B+C renders, 1-min load
+  4.4–10.4, `measuredUnderLoad: true`; 19.6–63.1 after the detail pass, 15.6–59.1 before it).
 
 ## Read in this order (≈ 10 minutes)
 
@@ -260,7 +278,8 @@ Suggested starting deltas, to validate with your own tests:
 ## Set-up (only if you render)
 
 From the repository root: `npm i` (libraries + @fontsource fonts from `package.json`); `uv venv --python 3.11 .venv`, then install
-numpy, scipy, pillow, opencv-python-headless, pycairo, matplotlib, taichi, shapely==2.2.0, opensimplex==0.4.5.1, and Manim without
+numpy, scipy, pillow, opencv-python-headless, pycairo, matplotlib, taichi (`taichi==1.7.2` on macOS Intel: newer releases have no
+x86_64 wheel; also used by survol-pixel's optional GPU ray march, `SURVOL_GPU=1`), shapely==2.2.0, opensimplex==0.4.5.1, and Manim without
 manimpango (see `out/report/facts.md`); `package.json` pins `world-atlas` 2.0.2 exactly and includes `@fontsource/atkinson-hyperlegible`
 and `@fontsource/jersey-10` / `jersey-15` / `jersey-20` 5.3.0 exactly (survol-pixel; fontTools for its grid test);
 Playwright + Chromium and ffmpeg must be available (survol-pixel and trait-continu need no browser). `out/tools/slot.sh` falls back to

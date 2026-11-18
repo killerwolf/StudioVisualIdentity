@@ -128,8 +128,8 @@ CURATION.update({
                    'cast shadows, layered depth and a camera that keeps moving forward (one single camera per short)',
                    'form, not content: a pixel-art look for explainers, kids, history and narrated shorts, not a video-game or flight '
                    'theme (no score, no game element; HUD and cockpit optional and absent from the proofs)',
-                   'indexed palette with quantised haze and shade tables, rendered at 270x480 and scaled x4 nearest-neighbour',
-                   'Jersey 20 hook / dates, Jersey 15 narrative cartouches on cream with ink border, Jersey 10 mentions only; never text on the map or sky',
+                   'indexed palette with quantised shade tables and a 6-step haze towards a very pale blue (#DCEEF5), rendered at 270x480 and scaled x4 nearest-neighbour',
+                   'Jersey 15 cartouches on cream with ink border (hook, dates, narrative; one at a time since the A+B+C pass; Jersey 20 reserved), Jersey 10 mentions only; never text on the map or sky',
                    'cut-away section of the ground (ink base, coloured walls) as the on-ground diagram',
                    'dive / climb-back camera move in true perspective as the signature transition',
                    'no phosphor plate (pixel-arcade) and no "ALT ... M" readout (topo-relief)']),
@@ -250,10 +250,12 @@ COST_NOTE_LOT2 = {
                      'not included; v2 renders after the review measured with both shorts rendering in parallel (load about 3.3); a v1 control render at low load took 2.8 s/100 frames (identical md5)',
     'carte-meteo': 'browser render (canvas 2D, render.mjs), world-atlas decode + projection once (0.3 s) included; mistral measured with the other lot 2 studio running on 4 cores '
                    '(load 1–3.6), heat-record short re-rendered after the review (no wind trails); an empty canvas page costs 13.2 s/100 frames (screenshot capture alone)',
-    'survol-pixel': 'Python render (numpy ray casting at 270x480 + Pillow text, no browser), full engine run timed with `time`, opensimplex fields cached and not included; '
-                    'renders after the detail pass (2026-11-18: sub-cell micro-detail, ball clouds, tree clusters, coursed walls), both in parallel on 4 cores shared with other sessions '
-                    '(1-min load 2.7–8.9): atoll 19.6 (360² world; 15.6 after the review, earlier runs 21.9 and 28.6), Machu Picchu 63.1 (640² world, 128 steps; 59.1 after the review, '
-                    'earlier run 58.8); cost grows with terrain extent x march steps and now slightly exceeds the 60 s/100 frames target for the largest world',
+    'survol-pixel': 'Python render on CPU (numpy ray casting at 270x480, 4 rays per pixel with a majority vote + Pillow text, no browser), full engine run timed, '
+                    'world build included (19.8 s / 39.3 s), opensimplex fields cached and not included; renders after the A+B+C pass (2026-11-18: worlds 3x / 2.4x larger, '
+                    'fine colour map around the subject, 6-step haze, relief shadow, safe-step march on block max maps), both in parallel on 4 cores '
+                    '(1-min load 4.4–10.4): atoll 107.18 (1080-unit world), Machu Picchu 266.29 (1536-unit world); the owner lifted the cost cap for this pass, '
+                    'so it is now 1.8–4.4x the 60 s/100 frames target of the challenge (detail pass: 19.6 and 63.1). Optional GPU ray march (SURVOL_GPU=1, '
+                    'taichi 1.7.2 on Metal) halves the frame time but is not bit-exact; delivered renders are CPU',
 }
 
 
