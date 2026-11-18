@@ -20,14 +20,16 @@ ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / 'out'
 
 # Classement de durabilité (out/report/comparison.md §5). Le lot 2 (2026-11-05, skill fabrique-identites) est classé
-# parmi les autres : carte-meteo 5ᵉ, trait-continu 9ᵉ (justification dans comparison.md §5 et decisions.md).
+# parmi les autres : carte-meteo 5ᵉ, trait-continu 9ᵉ (justification dans comparison.md §5 et decisions.md). Survol pixel (2026-11-18,
+# même skill, d'après une vidéo source) est classée 10ᵉ, sous trait-continu et au-dessus de pastel-diorama (comparison.md §5).
 ORDER = ['swiss-data', 'gazette-1900', 'pixel-arcade', 'brut-meme', 'carte-meteo', 'bauhaus-kinetic', 'tableau-craie', 'riso-zine',
-         'trait-continu', 'pastel-diorama', 'topo-relief', 'atlas-grave', 'aquarelle-conte', 'neon-lab', 'cosmos-doc', 'liquid-chrome',
+         'trait-continu', 'survol-pixel', 'pastel-diorama', 'topo-relief', 'atlas-grave', 'aquarelle-conte', 'neon-lab', 'cosmos-doc', 'liquid-chrome',
          # ajoutées le 2026-11-04 (hors campagne de classement) : le papier découpé du gabarit StudioGabarit et ses 3 déclinaisons
          'papier-decoupe', 'atelier-papier', 'carnet-archives', 'cabinet-curiosites']
 PAPIER = {'papier-decoupe', 'atelier-papier', 'carnet-archives', 'cabinet-curiosites'}   # non classées, moteur papier partagé
 LOT2 = {'trait-continu', 'carte-meteo'}                                                  # lot 2, classées, voix Gemini Sulafat
-ADDED = PAPIER | LOT2
+SURVOL = {'survol-pixel'}                                                              # 2026-11-18, classée, sans voix (décision en attente)
+ADDED = PAPIER | LOT2 | SURVOL
 # Une seule identité « Papier découpé » et trois dérivations (décision du 2026-11-05) : même moteur out/shared/papier-moteur/, même
 # pop stop-motion, mêmes bandes inclinées, mêmes sous-titres sur bande ; seuls le fond, la palette et les polices changent.
 # Les ids, dossiers et slugs ne changent pas (StudioGabarit les consomme). variantOf = id de la racine, null pour toute autre identité.
@@ -116,6 +118,20 @@ CURATION.update({
                    'text only on white cartouches']),
 })
 CURATION.update({
+    'survol-pixel': dict(audience=['kids', 'teens', 'adults'], confusableWith=['pixel-arcade', 'topo-relief'],
+        promiseEn='Each topic becomes a small 16-bit pixel-art world that one camera flies over, dives into and skims to the horizon: '
+                  'the depth of a 90s console game put at the service of a narrated story.',
+        signature=['3D depth is the rule: perspective ground (Mode 7 style) at any pitch, terraced heightfield with lit / shaded risers, '
+                   'cast shadows, layered depth and a camera that keeps moving forward (one single camera per short)',
+                   'form, not content: a pixel-art look for explainers, kids, history and narrated shorts, not a video-game or flight '
+                   'theme (no score, no game element; HUD and cockpit optional and absent from the proofs)',
+                   'indexed palette with quantised haze and shade tables, rendered at 270x480 and scaled x4 nearest-neighbour',
+                   'Jersey 20 hook / dates, Jersey 15 narrative cartouches on cream with ink border, Jersey 10 mentions only; never text on the map or sky',
+                   'cut-away section of the ground (ink base, coloured walls) as the on-ground diagram',
+                   'dive / climb-back camera move in true perspective as the signature transition',
+                   'no phosphor plate (pixel-arcade) and no "ALT ... M" readout (topo-relief)']),
+})
+CURATION.update({
     'papier-decoupe': dict(audience=['kids', 'teens', 'adults'], confusableWith=['atelier-papier'],
         promiseEn='Every idea is a cut-out paper piece that pops onto a green cutting mat in stop-motion: a craft table where things get explained with scissors.',
         signature=['green graduated cutting mat', 'Dela Gothic One titles on alternately tilted paper strips', 'pieces pop in 4 steps at 12 fps with drop shadow and scissor-cut edges', 'burned-in Kalam captions on a paper strip']),
@@ -133,7 +149,7 @@ SHARED = {  # modules identiques (md5) dans les shorts de l'identité — vérif
     'swiss-data': ['grille.js'], 'gazette-1900': ['gazette.js', 'post.py'], 'bauhaus-kinetic': ['bk.js'], 'aquarelle-conte': ['aq.js'],
     'atlas-grave': ['atlas.js', 'textures.py'], 'neon-lab': ['field.glsl.js', 'neon_grade.py'], 'brut-meme': ['brut.js'],
     'cosmos-doc': ['cosmos.js'], 'riso-zine': ['riso.js'], 'topo-relief': ['topo.js'],
-    'trait-continu': ['traceur.py'], 'carte-meteo': ['meteo.js'],
+    'trait-continu': ['traceur.py'], 'carte-meteo': ['meteo.js'], 'survol-pixel': ['survol.py'],
 }
 
 
@@ -231,6 +247,9 @@ COST_NOTE_LOT2 = {
                      'not included; v2 renders after the review measured with both shorts rendering in parallel (load about 3.3); a v1 control render at low load took 2.8 s/100 frames (identical md5)',
     'carte-meteo': 'browser render (canvas 2D, render.mjs), world-atlas decode + projection once (0.3 s) included; mistral measured with the other lot 2 studio running on 4 cores '
                    '(load 1–3.6), heat-record short re-rendered after the review (no wind trails); an empty canvas page costs 13.2 s/100 frames (screenshot capture alone)',
+    'survol-pixel': 'Python render (numpy ray casting at 270x480 + Pillow text, no browser), full engine run timed with `time`, opensimplex fields cached and not included; '
+                    'measured on 4 cores shared with other sessions (1-min load 4.4–16): atoll 21.9 (360² world, 96 steps; 28.6 on a first run in parallel), '
+                    'Machu Picchu 58.8 (640² world, 128 steps); cost grows with terrain extent x march steps, keep it <= 60 s/100 frames',
 }
 
 
@@ -246,7 +265,8 @@ def main():
         base = OUT / 'identities' / s
         t = json.load(open(base / 'tokens.json'))
         md = (base / 'identity.md').read_text()
-        promise = md.split('## Promesse', 1)[1].split('\n', 1)[1].strip().split('\n')[0].strip('« »"').replace('**', '')
+        # promesse = premier paragraphe de la section (une promesse peut tenir sur plusieurs lignes, ex. survol-pixel)
+        promise = ' '.join(md.split('## Promesse', 1)[1].split('\n', 1)[1].strip().split('\n\n')[0].split('\n')).strip('« »"').replace('**', '')
         shorts, costs = [], []
         for d in sorted(glob.glob(str(OUT / 'shorts' / f'{s}__*'))):
             n = os.path.basename(d)
@@ -277,11 +297,13 @@ def main():
             'familiesProven': sorted({x['family'] for x in shorts}),
             'libraries': [re.sub(r'\s+v?\d+(\.\d+)+', '', re.sub(r'\s+\d+(\.\d+)*$', '', l)).strip() for l in (t.get('libraries') or [])],
             'renderCostNote': ('Python cut-paper engine (Pillow/OpenCV, 4 parallel slices) including voice mix and mastering; measured alone on 4 cores'
-                               if s in PAPIER else COST_NOTE_LOT2[s] if s in LOT2 else
+                               if s in PAPIER else COST_NOTE_LOT2[s] if s in LOT2 | SURVOL else
                                COST_NOTE.get(s, 'browser render only (renderTimeSec)') + '; measured with up to 10 renders sharing 4 cores: expect ~2–3x faster on a dedicated machine'),
             'renderCostSecPer100Frames': {'min': min(costs), 'max': max(costs), 'measuredUnderLoad': s not in PAPIER} if costs else None,
             'sharedModule': ([PAPIER_MODULE] if s in PAPIER else shared) or None,
-            'voiceUsed': VOICE_ADDED if s in PAPIER else (VOICE_LOT2 if s in LOT2 else VOICE),
+            # survol-pixel : aucune voix enregistrée (pas de clé Gemini, crédits Fish Audio épuisés ; décision du propriétaire en attente)
+            'voiceUsed': None if s in SURVOL else VOICE_ADDED if s in PAPIER else (VOICE_LOT2 if s in LOT2 else VOICE),
+            **({'voicePlanned': 'voix non enregistrée: owner decision pending (Gemini Sulafat proposed); narration.json is ready'} if s in SURVOL else {}),
             'paths': {'identityMd': f'out/identities/{s}/identity.md', 'tokens': f'out/identities/{s}/tokens.json',
                       'recipes': sorted(f'out/identities/{s}/recipes/{os.path.basename(x)}' for x in glob.glob(str(base / 'recipes' / '*.md'))),
                       'poster': f'out/identities/{s}/poster.jpg', 'contactSheet': f'out/identities/{s}/contact-sheet.jpg',
@@ -317,8 +339,8 @@ def main():
         'families': [{'root': r, 'name': next(i['name'] for i in ids if i['id'] == r), 'variants': f['variants'],
                       'sharedEngine': f['sharedEngine'], 'axis': f['axisFr']} for r, f in FAMILIES.items()],
         'fieldNotes': {'variantOf': 'id of the root identity when this entry is a derivation (same engine, only ground / palette / fonts change), else null. A root lists its derivations in variants and what is shared / what varies in variantAxis. Derivations stay ranked, right after their root; counts.identities counts roots only, counts.declinations counts every entry. curation.deliberateSiblings = derivations of the same root, deliberately close and therefore not listed in confusableWith. A new identity that reuses an existing engine and only changes ground / palette / fonts must be registered as a derivation, not as a new identity',
-                       'status': 'selected = kept in Phase 1; rehabilitated = set aside in Phase 1 only to avoid topic overlap with a neighbour, then produced on request with the same rules and evidence level; added = added after the campaign: (a) the cut-paper identity from the StudioGabarit template, papier-decoupe, and its 3 derivations (atelier-papier, carnet-archives, cabinet-curiosites), rendered by the shared Python engine out/shared/papier-moteur/, appended after the ranked identities and not part of the ranking or the blind visual judge; (b) lot 2 of the identity factory (trait-continu, carte-meteo, 2026-11-05: scouting + adversarial challenge + studio + review), ranked with the others, blind visual judge on 8 identities (lot 2 + 6 neighbours, 8/8 pure groups, out/report/notes/revue-2026-11-05.md), voice-over Gemini Sulafat like the cut-paper family (owner decision: Fish Audio credits ran out before Arnold could be recorded)',
-                       'voiceUsed': 'voice actually mixed into short.mp4 (Fish Audio Arnold for the 31 campaign shorts, Gemini Sulafat for the 8 cut-paper and 4 lot 2 shorts; see shorts[].voiced)',
+                       'status': 'selected = kept in Phase 1; rehabilitated = set aside in Phase 1 only to avoid topic overlap with a neighbour, then produced on request with the same rules and evidence level; added = added after the campaign: (a) the cut-paper identity from the StudioGabarit template, papier-decoupe, and its 3 derivations (atelier-papier, carnet-archives, cabinet-curiosites), rendered by the shared Python engine out/shared/papier-moteur/, appended after the ranked identities and not part of the ranking or the blind visual judge; (b) lot 2 of the identity factory (trait-continu, carte-meteo, 2026-11-05: scouting + adversarial challenge + studio + review), ranked with the others, blind visual judge on 8 identities (lot 2 + 6 neighbours, 8/8 pure groups, out/report/notes/revue-2026-11-05.md), voice-over Gemini Sulafat like the cut-paper family (owner decision: Fish Audio credits ran out before Arnold could be recorded); (c) survol-pixel (2026-11-18, same skill, style taken from a source pixel-art flight video), ranked with the others, no voice-over yet (voiceUsed null), no blind visual judge yet',
+                       'voiceUsed': 'voice actually mixed into short.mp4 (Fish Audio Arnold for the 31 campaign shorts, Gemini Sulafat for the 8 cut-paper and 4 lot 2 shorts; null for survol-pixel, whose 2 shorts have music and SFX only, voicePlanned says why; see shorts[].voiced)',
                        'coreTokens.motion.staggerSec': "the identity's default stagger as written in its tokens.json; meaning varies (per-item stagger for most, spacing between beats/captions for atlas-grave 1.5 and liquid-chrome 1.55, title-to-body delay for neon-lab 0.8)",
                        'coreTokens.motion.durationSec.slow': 'longest standard duration; for gazette-1900 it is one page (6 beats at 128 bpm)',
                        'coreTokens.color.contrastOnBg': 'WCAG contrast ratio against bg, computed; muted/accent colours are often decorative (e.g. gazette-1900 muted = engraving fill, 1.07:1) and must not carry text',

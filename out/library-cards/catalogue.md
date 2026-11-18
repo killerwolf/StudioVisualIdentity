@@ -1,7 +1,7 @@
 # Catalogue des librairies et outils
 
 **Base de travail pour créer de nouvelles identités de chaîne.** Ce catalogue recense toutes les librairies et tous les outils
-envisageables pour rendre des shorts par code, et dit pour chacun s'il a déjà servi dans les 17 identités (20 déclinaisons, 43 shorts), où, et
+envisageables pour rendre des shorts par code, et dit pour chacun s'il a déjà servi dans les 18 identités (21 déclinaisons, 45 shorts), où, et
 sinon pourquoi. On itère à partir de cette liste : une nouvelle identité part d'abord des cases « Non » pour trouver une
 signature que personne n'a encore, ou recombine des cases « Oui » déjà maîtrisées (fiches dans `out/library-cards/<lib>.json`).
 
@@ -11,9 +11,13 @@ signature que personne n'a encore, ou recombine des cases « Oui » déjà maît
 [killerwolf/skills](https://github.com/killerwolf/skills). Le rescan se fait avec `out/tools/catalogue_scan.py --check` (nouvel outil,
 stdlib seule), qui confronte le code à la colonne « Déjà utilisée ? ». Mis à jour une seconde fois le 2026-11-05 (≈ 01:15 UTC) pour le
 **lot 2** de la fabrique d'identités (`carte-meteo`, `trait-continu`, 4 shorts) : shapely, opensimplex, topojson-client et world-atlas
-passent à **Oui**, Atkinson Hyperlegible est ajoutée et Fredoka est désormais utilisée ; rescan des 43 shorts.
+passent à **Oui**, Atkinson Hyperlegible est ajoutée et Fredoka est désormais utilisée ; rescan des 43 shorts. Mis à jour le
+2026-11-18 pour **Survol pixel** (`survol-pixel`, 2 shorts, moteur Python sans navigateur) : nouvelle ligne « NumPy, rendu 3D
+raster » (Oui), Jersey 10 / 15 / 20 ajoutées à @fontsource (5.3.0, version exacte), « Où » élargi pour Pillow, opensimplex,
+numpy / scipy, fontTools et ffmpeg ; `catalogue_scan.py` reconnaît désormais les chemins de police construits en f-string sur une
+boucle de tailles ; rescan des 45 shorts.
 
-**Comptage** : 17 identités, dont « Papier découpé » avec 3 dérivations (`atelier-papier`, `carnet-archives`, `cabinet-curiosites`, même moteur `out/shared/papier-moteur/`) : 20 déclinaisons, 43 shorts. Les lignes ci-dessous citent les quatre slugs papier car ce sont les noms de dossiers.
+**Comptage** : 18 identités, dont « Papier découpé » avec 3 dérivations (`atelier-papier`, `carnet-archives`, `cabinet-curiosites`, même moteur `out/shared/papier-moteur/`) : 21 déclinaisons, 45 shorts. Les lignes ci-dessous citent les quatre slugs papier car ce sont les noms de dossiers.
 
 ## Légende
 
@@ -70,9 +74,9 @@ passent à **Oui**, Atkinson Hyperlegible est ajoutée et Fredoka est désormais
 | SVG / data / typo | SVG.js / Snap.svg | 📦 | Non | |
 | SVG / data / typo | opentype.js | 📦 | Non | |
 | SVG / data / typo | Splitting.js | 📦 | Non | |
-| SVG / data / typo | @fontsource | 📦 | **Oui** | 24 polices en npm, injectées par `S.loadFonts` de `svi.js` dans toutes les scènes HTML ; Atkinson Hyperlegible ajoutée par carte-meteo (5.3.0, version exacte), Fredoka désormais utilisée par trait-continu (lue en `.woff2` par Pillow via `textpng.font_path`) ; seule Major Mono Display reste installée sans être référencée |
+| SVG / data / typo | @fontsource | 📦 | **Oui** | 27 polices en npm, injectées par `S.loadFonts` de `svi.js` dans toutes les scènes HTML ; Atkinson Hyperlegible ajoutée par carte-meteo (5.3.0, version exacte), Fredoka désormais utilisée par trait-continu (lue en `.woff2` par Pillow via `textpng.font_path`) ; **Jersey 10 / 15 / 20** ajoutées par survol-pixel (5.3.0, version exacte, sous-ensemble latin ; police pixel à grille exacte lue en `.woff2` par Pillow `fontmode "1"` dans `survol.py`, Jersey 20 accroche, 15 récit, 10 mentions) ; seule Major Mono Display reste installée sans être référencée |
 | SVG / data / typo | Polices embarquées (.ttf/.woff2 hors @fontsource) | ✅ | **Oui** | identités papier (papier-decoupe, atelier-papier, carnet-archives, cabinet-curiosites) via `out/shared/papier-moteur` : Abril Fatface, Courier Prime, Dela Gothic One, DM Mono, Kalam, Special Elite (et DM Serif Display, en doublon avec @fontsource) dans `out/shared/papier-moteur/assets/fonts`, chargées par `ImageFont.truetype` de `papier.py` selon `themes/*.json`. Hors embarqué : la vitrine `out/showcase/page.tpl.html` charge Bricolage Grotesque (avec Hanken Grotesk et JetBrains Mono) depuis Google Fonts, par le réseau, sans fichier dans le dépôt |
-| SVG / data / typo | fontTools | ✅ | **Oui** | conversion woff → ttf pour que Matplotlib lise les polices @fontsource, neon-lab « effet papillon » |
+| SVG / data / typo | fontTools | ✅ | **Oui** | conversion woff → ttf pour que Matplotlib lise les polices @fontsource, neon-lab « effet papillon » ; survol-pixel : `test_jersey_grid.py` (`AreaPen` sur les `.woff` Jersey, test de la grille pixel, hors rendu) |
 | SVG / data / typo | Mermaid CLI | ✅ | Non | |
 | SVG / data / typo | rsvg-convert | ✅ | Non dans les identités ; **Oui** dans killerwolf/skills, devto-post | aucune identité ni outil du dépôt ne l'appelle ; seul `skills/devto-post/scripts/make-cover.py` (couverture d'article) l'utilise |
 | SVG / data / typo | ImageMagick | ✅ | Non | |
@@ -85,7 +89,7 @@ passent à **Oui**, Atkinson Hyperlegible est ajoutée et Fredoka est désormais
 | Python | MoviePy | 📦 | Non | |
 | Python | Matplotlib (Agg) | ✅ | **Oui** | neon-lab « effet papillon » : `buffer_rgba` → ffmpeg rawvideo |
 | Python | matplotlib.animation | ✅ | Non | pas de FuncAnimation, rendu image par image à la main |
-| Python | Pillow | ✅ | **Oui** | `textpng.py`, overlays tableau-craie, liquid-chrome, neon-lab ; identités papier (papier-decoupe, atelier-papier, carnet-archives, cabinet-curiosites) via `out/shared/papier-moteur` : tout le rendu image par image (`papier.py`, `elements.py`, `episode.py`) |
+| Python | Pillow | ✅ | **Oui** | `textpng.py`, overlays tableau-craie, liquid-chrome, neon-lab ; identités papier (papier-decoupe, atelier-papier, carnet-archives, cabinet-curiosites) via `out/shared/papier-moteur` : tout le rendu image par image (`papier.py`, `elements.py`, `episode.py`) ; survol-pixel (2 shorts) : texte pixel Jersey sans anticrénelage (`fontmode "1"`) à 270×480, cartouches et épingles, assertion de largeur par `getlength` (`survol.py`) |
 | Python | pycairo | ✅ | **Oui** | atlas-grave : textures gravure et papier précalculées en PNG ; trait-continu (2 shorts) : plaque, règles, trait et repères, image par image |
 | Python | skia-python | 📦 | Non | essayé par trait-continu (2026-11-05) : la 144.1 s'installe mais son import échoue (`libEGL.so.1`) ; pycairo fait le même travail |
 | Python | OpenCV | ✅ | **Oui** | passes de post-prod : grain gazette-1900, bloom neon-lab (3 shorts), trames riso-zine (2), fluide liquid-chrome, plus le test de reconnaissance aveugle ; identités papier (papier-decoupe, atelier-papier, carnet-archives, cabinet-curiosites) via `out/shared/papier-moteur` : texture et bords du papier (`papier.py`) |
@@ -94,8 +98,9 @@ passent à **Oui**, Atkinson Hyperlegible est ajoutée et Fredoka est désormais
 | Python | PyVista / VTK, pyrender, ModernGL, VisPy | ⚠️ | Non | rendu hors écran à configurer |
 | Python | Plotly + Kaleido | 📦 | Non | |
 | Python | trimesh | 📦 | Non | |
-| Python | shapely / opensimplex | 📦 | **Oui** | trait-continu (2 shorts) : shapely 2.2.0 construit le chemin unique (segmentize, escalier, linemerge, nearest_points, substring) ; opensimplex 0.4.5.1 donne le grain de la plaque et du trait, calculé une fois et mis en cache. Versions épinglées (`uv pip install shapely==2.2.0 opensimplex==0.4.5.1`) |
-| Audio | numpy / scipy synthèse | ✅ | **Oui** | `sound.py` : musique et bruitages des 31 shorts de la campagne et des 4 du lot 2 ; `tts.py` : mixage avec ducking ; identités papier (papier-decoupe, atelier-papier, carnet-archives, cabinet-curiosites) via `out/shared/papier-moteur` : calcul des images et mixage voix + musique + bruitages fournis en fichiers (`son.py`, `assets/audio`), sans scipy |
+| Python | NumPy, rendu 3D raster (lancer de rayon) | ✅ | **Oui** | survol-pixel (2 shorts) : tout le moteur `survol.py` sans navigateur, caméra sténopé unique, sol plat par intersection rayon–plan (type Mode 7), relief en terrasses par lancer de rayon par pixel à 270×480 puis ×4, palette indexée et tables d'ombre / brume ; scipy `binary_dilation` pour la boîte englobante de la coupe. 21,9–58,8 s / 100 images sous charge |
+| Python | shapely / opensimplex | 📦 | **Oui** | trait-continu (2 shorts) : shapely 2.2.0 construit le chemin unique (segmentize, escalier, linemerge, nearest_points, substring) ; opensimplex 0.4.5.1 donne le grain de la plaque et du trait, calculé une fois et mis en cache. Versions épinglées (`uv pip install shapely==2.2.0 opensimplex==0.4.5.1`) ; survol-pixel (2 shorts) : opensimplex seul, côtes, forêts et crêtes du monde-maquette, champs calculés une fois et mis en cache (`$SURVOL_CACHE`) |
+| Audio | numpy / scipy synthèse | ✅ | **Oui** | `sound.py` : musique et bruitages des 31 shorts de la campagne, des 4 du lot 2 et des 2 de survol-pixel ; `tts.py` : mixage avec ducking ; identités papier (papier-decoupe, atelier-papier, carnet-archives, cabinet-curiosites) via `out/shared/papier-moteur` : calcul des images et mixage voix + musique + bruitages fournis en fichiers (`son.py`, `assets/audio`), sans scipy |
 | Audio | Tone.js | 📦 | Non | |
 | Audio | librosa | 📦 | Non | |
 | Audio | pydub | 📦 | Non | |
@@ -104,7 +109,7 @@ passent à **Oui**, Atkinson Hyperlegible est ajoutée et Fredoka est désormais
 | Audio | Gemini TTS, google-genai | 📦 | **Oui** | skill gemini-voices, voix alternatives de la démo, et 3 shorts au début avant l'abandon pour quota gratuit ; **12 shorts voisés Gemini « Sulafat »** (gemini-3.8-flash-tts) : les 4 shorts du lot 2 (trait-continu, carte-meteo ; 1 appel par short via le skill gemini-voices, découpé en `voice_lines/NN.mp3`, mixé par `tts.py --engine files`) et les 8 shorts des identités papier, qui déclarent la voix dans `narration.json` : voix réellement mixée, les `voice_lines/*.mp3` sont présents et intégrés à `short.mp4` par `son.py` du moteur papier (pas de `voice_report.json`, pas de `tts.py`), mêmes fichiers pour les 4 identités, réutilisés depuis le studio Un Jour Une Histoire et non régénérés dans le dépôt |
 | Audio | Freesound API | ⚠️ | **Oui** | `out/tools/freesound.py` et skill sound-design ; demande `FREESOUND_API_KEY` |
 | Audio | OpenGameArt, sons CC0 | ✅ | **Oui** | bruitages de la démo et bibliothèque livrée avec le skill sound-design |
-| Encodage | ffmpeg | ✅ | **Oui** | partout : `render.mjs`, `assemble.py`, démo, GIF d'aperçu par palettegen, skill sound-design ; identités papier (papier-decoupe, atelier-papier, carnet-archives, cabinet-curiosites) via `out/shared/papier-moteur` : pipe rawvideo par tranches, concat, loudnorm et silencedetect (`episode.py`, `son.py`) |
+| Encodage | ffmpeg | ✅ | **Oui** | partout : `render.mjs`, `assemble.py`, démo, GIF d'aperçu par palettegen, skill sound-design ; identités papier (papier-decoupe, atelier-papier, carnet-archives, cabinet-curiosites) via `out/shared/papier-moteur` : pipe rawvideo par tranches, concat, loudnorm et silencedetect (`episode.py`, `son.py`) ; survol-pixel : pipe rawvideo depuis `video.py`, puis `assemble.py mux` |
 | Encodage | ffprobe | ✅ | **Oui** | mesures de durée, niveaux et débit dans `check.py` et `assemble.py` ; identités papier (papier-decoupe, atelier-papier, carnet-archives, cabinet-curiosites) via `out/shared/papier-moteur` : durée des répliques (`episode.py`) |
 | Encodage | Playwright + Chromium | ✅ | **Oui** | `render.mjs` capture chaque image ; c'est le poste de coût principal, ≈ 0,3 s par image |
 | Encodage | WebCodecs | ✅ | Non | |
@@ -113,8 +118,8 @@ passent à **Oui**, Atkinson Hyperlegible est ajoutée et Fredoka est désormais
 | Services | Canva | 🔌 | Non | |
 | Services | Notion, connecteur MCP | 🔌 | **Oui** | skill studio-mate : pilotage des studios, idées à valider, retours de relecture ; pas de rendu |
 
-**Bilan** : **39 lignes « Oui » sur 85** (recompté le 2026-11-05 après le lot 2 ; avant : 36 sur 83 ; la ligne rsvg-convert, « Non »
-dans les identités, n'est pas comptée), dont 23 lignes de librairies de scène. Le lot 2 ajoute 3 lignes « Oui » (topojson-client,
+**Bilan** : **40 lignes « Oui » sur 86** (recompté le 2026-11-18 après survol-pixel, qui ajoute la ligne « NumPy, rendu 3D raster » ;
+le 2026-11-05 après le lot 2 : 39 sur 85 ; avant : 36 sur 83 ; la ligne rsvg-convert, « Non » dans les identités, n'est pas comptée), dont 24 lignes de librairies de scène. Le lot 2 ajoute 3 lignes « Oui » (topojson-client,
 world-atlas, shapely / opensimplex) et 2 lignes au tableau (world-atlas ; « trimesh / shapely / opensimplex » scindée en « trimesh »,
 Non, et « shapely / opensimplex », Oui) ; il élargit aussi D3.js, pycairo et @fontsource. Les identités papier n'ajoutent aucune
 librairie de scène : elles recombinent Pillow, OpenCV, numpy et ffmpeg. Des modules maison complètent le tout et ne sont pas des
@@ -124,7 +129,7 @@ polices, contrat `renderAt`), `out/tools/textpng.py` (overlays de texte en PNG) 
 
 ## Comment s'en servir pour une nouvelle identité
 
-1. **Chercher la signature dans les « Non »** : une librairie jamais utilisée donne plus facilement un rendu que les 17 identités
+1. **Chercher la signature dans les « Non »** : une librairie jamais utilisée donne plus facilement un rendu que les 18 identités
    n'ont pas (voir `curation.confusableWith` dans `out/identities/index.json`). Vérifier d'abord son statut et son coût de rendu
    sur CPU ; une ligne ⚠️ ou un moteur 3D lourd peut coûter plus que les ≈ 60 s / 100 images de three.js avec bloom.
 2. **Recombiner des « Oui »** quand le budget est serré : les fiches `out/library-cards/<lib>.json` donnent les pièges déjà payés

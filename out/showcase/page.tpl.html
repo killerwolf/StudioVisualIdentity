@@ -183,24 +183,24 @@ footer.colophon { margin-top: var(--s7); padding-top: var(--s4); border-top: 1px
   <section class="hero">
     <div>
       <p class="eyebrow">Recherche exploratoire · shorts verticaux 1080×1920 · 30 fps</p>
-      <h1>Dix-sept identités visuelles, <em>43 shorts</em> rendus par code</h1>
-      <p class="lede">Chaque identité est un design system lisible par un agent (tokens, mouvement, caméra, recettes par famille) et elle est prouvée par des vidéos réelles, rendues avec des librairies open-source sur 4 cœurs CPU. Les 14 identités de la campagne, l'identité papier de StudioGabarit (Papier découpé, avec ses 3 dérivations : même moteur, seuls le fond, la palette et les polices changent) et les 2 du lot 2 de la fabrique d'identités (Carte Météo, Trait continu) : 17 identités, 20 déclinaisons.</p>
+      <h1>Dix-huit identités visuelles, <em>45 shorts</em> rendus par code</h1>
+      <p class="lede">Chaque identité est un design system lisible par un agent (tokens, mouvement, caméra, recettes par famille) et elle est prouvée par des vidéos réelles, rendues avec des librairies open-source sur 4 cœurs CPU. Les 14 identités de la campagne, l'identité papier de StudioGabarit (Papier découpé, avec ses 3 dérivations : même moteur, seuls le fond, la palette et les polices changent) les 2 du lot 2 de la fabrique d'identités (Carte Météo, Trait continu) et Survol pixel, un petit monde en pixel art 16 bits survolé en vraie profondeur 3D, d'après une vidéo source (pas encore de voix off) : 18 identités, 21 déclinaisons.</p>
       <div class="reco">
         <span class="eyebrow">Recommandées pour une chaîne durable</span>
         <ol id="reco"></ol>
       </div>
     </div>
     <div class="ledger" aria-label="Chiffres de la campagne">
-      <div><span>Identités</span><b id="m-ids">17</b></div>
-      <div><span>Déclinaisons</span><b id="m-decl">20</b></div>
+      <div><span>Identités</span><b id="m-ids">18</b></div>
+      <div><span>Déclinaisons</span><b id="m-decl">21</b></div>
       <div><span>Dérivations de Papier découpé</span><b id="m-deriv">3</b></div>
-      <div><span>Shorts livrés</span><b id="m-shorts">43</b></div>
-      <div><span>Contrôle qualité</span><b id="m-qa">43 / 43</b></div>
+      <div><span>Shorts livrés</span><b id="m-shorts">45</b></div>
+      <div><span>Contrôle qualité</span><b id="m-qa">45 / 45</b></div>
       <div><span>Familles couvertes</span><b>7 / 7</b></div>
-      <div><span>Librairies A + B (+ lot 2)</span><b>8 + 11 (+4)</b></div>
-      <div><span>Plus proche voisin</span><b id="m-recog">40 / 43</b></div>
+      <div><span>Librairies A + B (+ ajouts)</span><b title="lot 2 : shapely, opensimplex, topojson-client, world-atlas ; Survol pixel : NumPy (moteur 3D), scipy, Jersey">8 + 11 (+7)</b></div>
+      <div><span>Plus proche voisin</span><b id="m-recog">40 / 45</b></div>
       <div><span>Production</span><b>4 cœurs</b></div>
-      <div><span>Voix off</span><b title="31 Arnold (Fish Audio) + 12 Sulafat (Gemini : 8 papier + 4 lot 2)">31 Arnold + 12 Sulafat</b></div>
+      <div><span>Voix off</span><b title="31 Arnold (Fish Audio) + 12 Sulafat (Gemini : 8 papier + 4 lot 2) + 2 sans voix (Survol pixel, décision en attente)">31 Arnold + 12 Sulafat + 2 sans voix</b></div>
     </div>
   </section>
 
@@ -215,18 +215,18 @@ footer.colophon { margin-top: var(--s7); padding-top: var(--s4); border-top: 1px
     <header>
       <p class="eyebrow">Coût de rendu mesuré</p>
       <h2>Secondes de calcul pour 100 images</h2>
-      <p>Mesuré pendant la campagne : jusqu'à 10 studios rendaient en même temps sur 4 cœurs (charge 15–23), donc la plupart des shorts sont environ 2 à 3 fois plus lents que sur une machine calme. Les trois 3ᵉ shorts ont été rendus avec seulement 3 studios actifs. Les shorts papier (moteur Python, voix comprise) ont été rendus seuls, ceux du lot 2 à deux studios en parallèle (charge 1–5,5).</p>
+      <p>Mesuré pendant la campagne : jusqu'à 10 studios rendaient en même temps sur 4 cœurs (charge 15–23), donc la plupart des shorts sont environ 2 à 3 fois plus lents que sur une machine calme. Les trois 3ᵉ shorts ont été rendus avec seulement 3 studios actifs. Les shorts papier (moteur Python, voix comprise) ont été rendus seuls, ceux du lot 2 à deux studios en parallèle (charge 1–5,5), ceux de Survol pixel (moteur Python sans navigateur) sur un Mac 4 cœurs partagé avec d'autres sessions (charge 4–16).</p>
     </header>
     <div class="bars" id="bars"></div>
     <div class="axis" aria-hidden="true"><span></span><div><span>0</span><span>80</span><span>160</span><span>240</span><span>320</span></div><span></span></div>
-    <div class="legend"><span><i style="background:var(--ink)"></i>CPU saturé (premier tour et identités réhabilitées)</span><span><i style="background:var(--safelight)"></i>3ᵉ short, CPU peu chargé</span><span><i style="background:var(--ok)"></i>identités ajoutées (papier, lot 2), CPU peu chargé</span><span>pastille = couleur de fond de l'identité</span></div>
+    <div class="legend"><span><i style="background:var(--ink)"></i>CPU saturé (premier tour et identités réhabilitées)</span><span><i style="background:var(--safelight)"></i>3ᵉ short, CPU peu chargé</span><span><i style="background:var(--ok)"></i>identités ajoutées : papier et lot 2, CPU peu chargé ; Survol pixel, charge 4–16</span><span>pastille = couleur de fond de l'identité</span></div>
   </section>
 
   <section class="section" id="matrice">
     <header>
       <p class="eyebrow">Couverture</p>
       <h2>Identité × famille × librairie</h2>
-      <p>Chaque famille de contenu est prouvée par au moins trois identités ; les 8 librairies du niveau A et les 11 du niveau B apparaissent toutes dans au moins un short livré. Le lot 2 ajoute shapely, opensimplex, topojson-client et world-atlas (côtes Natural Earth, domaine public, version épinglée).</p>
+      <p>Chaque famille de contenu est prouvée par au moins trois identités ; les 8 librairies du niveau A et les 11 du niveau B apparaissent toutes dans au moins un short livré. Le lot 2 ajoute shapely, opensimplex, topojson-client et world-atlas (côtes Natural Earth, domaine public, version épinglée) ; Survol pixel ajoute NumPy comme moteur 3D (lancer de rayon sans navigateur), scipy et les polices Jersey.</p>
     </header>
     <div class="tablebox"><table id="matrix"></table></div>
   </section>
@@ -240,12 +240,12 @@ footer.colophon { margin-top: var(--s7); padding-top: var(--s4); border-top: 1px
       <div class="result">
         <p class="eyebrow">Juge visuel indépendant, 14 identités · 2026-11-04</p>
         <div class="big">14<small> / 14 groupes purs</small></div>
-        <p>Résultat historique de la campagne : un agent sans contexte a reçu 56 images anonymisées (2 shorts par identité, 2 images par short, clé cachée) avec la consigne de former 14 groupes de 4 par style. Les 56 images ont été bien classées, y compris les quatre identités réhabilitées face à leurs voisines. Les plus difficiles à séparer : Grille Suisse et Bauhaus (fonds crème), et les cinq styles sur fond sombre. Le lot 2 a eu son propre juge le 2026-11-05 : 8 groupes purs sur 8 (Carte Météo, Trait continu et 6 voisines, 32 images) ; l'identité papier et ses dérivations n'ont pas de juge visuel.</p>
+        <p>Résultat historique de la campagne : un agent sans contexte a reçu 56 images anonymisées (2 shorts par identité, 2 images par short, clé cachée) avec la consigne de former 14 groupes de 4 par style. Les 56 images ont été bien classées, y compris les quatre identités réhabilitées face à leurs voisines. Les plus difficiles à séparer : Grille Suisse et Bauhaus (fonds crème), et les cinq styles sur fond sombre. Le lot 2 a eu son propre juge le 2026-11-05 : 8 groupes purs sur 8 (Carte Météo, Trait continu et 6 voisines, 32 images) ; l'identité papier et ses dérivations, et Survol pixel, n'ont pas de juge visuel.</p>
       </div>
       <div class="result">
         <p class="eyebrow">Signature couleur et contours mesurée</p>
         <div class="big"><span id="r-hits">40</span><small> / <span id="r-total">43</span> plus proches voisins</small></div>
-        <p id="r-text">Histogramme couleur Lab et densité de contours sur 8 images par short, relancé sur les 43 shorts.</p>
+        <p id="r-text">Histogramme couleur Lab et densité de contours sur 8 images par short, relancé sur les 45 shorts.</p>
       </div>
     </div>
   </section>
@@ -254,7 +254,7 @@ footer.colophon { margin-top: var(--s7); padding-top: var(--s4); border-top: 1px
     <header>
       <p class="eyebrow">Phase 1</p>
       <h2>Les 14 directions explorées</h2>
-      <p>Un poster 1080×1920 par direction, puis une sélection de 10. Les 4 directions d'abord écartées (Cosmos Doc, Brut Mème, Zine Riso, Relief Topo) pour éviter des doublons de sujet ont ensuite été produites à part entière, avec la consigne de se distinguer de leur voisine. Les tests à l'aveugle confirment qu'elles sont bien distinctes. Ensuite est venue l'identité papier du gabarit StudioGabarit (Papier découpé et ses 3 dérivations, 2026-11-04 ; regroupées en une seule identité le 2026-11-05), puis le lot 2 de la fabrique d'identités (2026-11-05) : 4 directions repérées dans le catalogue des librairies, un challenge adversarial, 2 retenues (Carte Météo, Trait continu).</p>
+      <p>Un poster 1080×1920 par direction, puis une sélection de 10. Les 4 directions d'abord écartées (Cosmos Doc, Brut Mème, Zine Riso, Relief Topo) pour éviter des doublons de sujet ont ensuite été produites à part entière, avec la consigne de se distinguer de leur voisine. Les tests à l'aveugle confirment qu'elles sont bien distinctes. Ensuite est venue l'identité papier du gabarit StudioGabarit (Papier découpé et ses 3 dérivations, 2026-11-04 ; regroupées en une seule identité le 2026-11-05), puis le lot 2 de la fabrique d'identités (2026-11-05) : 4 directions repérées dans le catalogue des librairies, un challenge adversarial, 2 retenues (Carte Météo, Trait continu). Enfin Survol pixel (2026-11-18), partie non du catalogue mais d'une vidéo source (un simulateur de vol en pixel art 16 bits de @creativedash) : on copie la forme, pas le fond, et la profondeur 3D est une règle de signature ; challenge adversarial, 20 corrections obligatoires.</p>
     </header>
     <div class="sheet"><img src="p/directions.jpg" alt="Planche des 14 posters de directions : Labo Néon, Diorama Pastel, Atlas Gravé, Tableau Craie, Grille Suisse, Arcade Pixel, Chrome Liquide, Gazette 1900, Cosmos Doc, Bauhaus Cinétique, Zine Riso, Relief Topo, Brut Mème, Aquarelle Conte" loading="lazy" width="1600" height="871"></div>
   </section>
@@ -271,12 +271,14 @@ footer.colophon { margin-top: var(--s7); padding-top: var(--s4); border-top: 1px
       <li><b>Physique Node ≠ navigateur</b><span>Math.atan2 diffère au dernier bit entre Node 22 et Chromium : la course de billes divergeait à l'image 102. Corrigé par une géométrie précalculée.</span></li>
       <li><b>Manim sans texte</b><span>Pas de Pango ni de LaTeX dans l'environnement : les titres des shorts Manim sont des calques PNG.</span></li>
       <li><b>Voix off lot 2 : Sulafat au lieu d'Arnold</b><span>Arnold était prévu, mais le plan gratuit Fish Audio n'a permis qu'une ligne sur 20. Les 4 shorts de Carte Météo et Trait continu sont voisés avec Gemini « Sulafat », la voix des identités papier : un appel par short, découpé en une ligne par fichier, puis mixé sous la musique. Voix mesurées, pas écoutées par l'assistant.</span></li>
+      <li><b>Survol pixel sans voix</b><span>Pas de clé Gemini sur le Mac et plus de crédits Fish Audio : les 2 shorts de Survol pixel sont livrés avec musique, bruitages et texte à l'écran ; la narration est prête, la voix attend la décision du propriétaire.</span></li>
+      <li><b>Survol pixel mal reconnu par la mesure couleur</b><span>Ses deux shorts (atoll bleu, Machu Picchu vert) n'ont pas la même palette : leur plus proche voisin est Aquarelle Conte ou Papier découpé, la sœur arrive 2ᵉ. Sa signature est géométrique (perspective, terrasses, grille de pixels) ; un juge visuel reste à faire.</span></li>
       <li><b>Blender et Remotion non tentés</b><span>Niveau optionnel ; Blender Cycles coûte 25–30 s par image, incompatible avec 4 cœurs déjà saturés.</span></li>
     </ul>
   </section>
 
   <footer class="colophon">
-    <span>Dépôt killerwolf/StudioVisualIdentity · branche main · point d'entrée out/report/README.md · 17 identités (20 déclinaisons), 43 shorts, mis à jour le 2026-11-05</span>
+    <span>Dépôt killerwolf/StudioVisualIdentity · branche main · point d'entrée out/report/README.md · 18 identités (21 déclinaisons), 45 shorts, mis à jour le 2026-11-18</span>
     <span class="mono">Aperçus 540×960 ; fichiers livrés en 1080×1920</span>
   </footer>
 </div>
@@ -297,10 +299,14 @@ setText("m-qa", `${META.qaOk} / ${META.qaTotal}`); setText("m-recog", `${META.re
 setText("r-hits", META.recogHits); setText("r-total", META.recogTotal);
 {
   const nm = d => { const id = d.split("__")[0]; const x = DATA.find(e => e.id === id); return x ? x.name : id; };
-  const addedIds = new Set(DATA.filter(d => d.added).map(d => d.id));
-  const addedOk = !META.recogFails.some(f => addedIds.has(f.short.split("__")[0]));
+  const failIds = new Set(META.recogFails.map(f => f.short.split("__")[0]));
+  const addedOkNames = DATA.filter(d => d.added && !failIds.has(d.id) && !d.variantOf).map(d => d.name);
   const fails = META.recogFails.map(f => `${nm(f.short)} → ${nm(f.nearest)} (${fmt(f.distance.toFixed(2))})`).join(" ; ");
-  setText("r-text", `Histogramme couleur Lab et densité de contours sur 8 images par short, relancé sur les ${META.recogTotal} shorts des ${META.declinations} déclinaisons. Distance moyenne entre shorts d'une même identité ${fmt(META.recogIntra.toFixed(2))} contre ${fmt(META.recogInter.toFixed(2))} entre identités. ${addedOk ? "Les shorts des identités ajoutées (papier, lot 2) sont tous reconnus. " : ""}Les ${META.recogFails.length} erreurs : ${fails} — des fonds sombres que la couleur seule ne sépare pas.`);
+  // pourquoi une identité échoue (texte fixe, à revoir quand recognition.json change)
+  const WHY = { "liquid-chrome": "Chrome Liquide : des fonds sombres que la couleur seule ne sépare pas",
+                "survol-pixel": "Survol pixel : deux biomes aux palettes opposées (océan bleu, montagne verte), la sœur arrive 2ᵉ ; sa signature est géométrique" };
+  const why = [...failIds].map(id => WHY[id]).filter(Boolean).join(" ; ");
+  setText("r-text", `Histogramme couleur Lab et densité de contours sur 8 images par short, relancé sur les ${META.recogTotal} shorts des ${META.declinations} déclinaisons. Distance moyenne entre shorts d'une même identité ${fmt(META.recogIntra.toFixed(2))} contre ${fmt(META.recogInter.toFixed(2))} entre identités. ${addedOkNames.length ? `Identités ajoutées reconnues : ${addedOkNames.join(", ")}${DATA.some(d => d.variantOf) ? " (et ses dérivations)" : ""}. ` : ""}Les ${META.recogFails.length} erreurs : ${fails}${why ? ` — ${why}.` : "."}`);
 }
 
 // recommandations

@@ -41,7 +41,9 @@ le sujet. Références de genre seulement : diorama de musée, bloc-diagramme de
    calculée à **270×480** en indices de palette puis agrandie **×4 au plus proche voisin** (1080×1920). Aucun pixel plus
    gros ou plus petit que 4×4 : les objets ne sont jamais agrandis au-delà de 1:1 (C4), le texte est rendu à la grille
    native sans anticrénelage. Pas de tramage global, **pas d'effet d'écran** (ni scanlines, ni CRT, ni grain, ni
-   aberration, ni flou, ni vignettage). Mesuré : 13–23 couleurs par image (≤ 20 en vue plongeante, ≤ 32 en vue rasante).
+   aberration, ni flou, ni vignettage). Mesuré sur les images natives (indices exacts, une image toutes les 0,5 s) : 15–17 couleurs en plongeante, 14–23 en
+   rasante ; sur les fichiers décodés (blocs 4×4, tolérance ΔRGB 25, revue) 18–28 entrées de palette par image, toutes
+   dans la palette déclarée et ≤ 32.
 2. **La profondeur 3D est obligatoire (règle du propriétaire).** Jamais de rendu 2D plat. Chaque image montre **au moins
    deux indices de profondeur, dont un géométrique** (C2) parmi :
    - **sol en perspective** fuyant vers un **horizon** (« Mode 7 » généralisé : intersection rayon–plan par pixel) ;
@@ -55,7 +57,7 @@ le sujet. Références de genre seulement : diorama de musée, bloc-diagramme de
    perspective (tangage ≤ 60°) : 82 % (atoll) et 79 % (Machu Picchu) des images dans les deux preuves.
 3. **La caméra vole, sans coupe ni fondu.** Une seule caméra pour tout le short (cible, distance, cap, tangage, roulis).
    On passe de la plongée à la rasante par **le piqué** (tangage 70° → 15° en 0,6 s) et inversement par **la remontée**.
-4. **Le monde se coupe comme une maquette.** Un quart d'île, une entaille dans des terrasses : la coupe montre l'intérieur
+4. **Le monde se coupe comme une maquette.** Une tranchée à travers une île, une entaille dans des terrasses : la coupe montre l'intérieur
    (basalte, calcaire, eau ; pierres, gravier, terre). C'est l'outil didactique de l'identité.
 5. **Le texte vit dans des cartouches crème** (Jersey, encre marine, cadre 1 px, coin coupé, liseré crème extérieur,
    ombre plate (2, 2)), jamais posé sur la carte ni dans la perspective. Étiquettes au sol = cartouche à l'écran relié à
@@ -132,7 +134,7 @@ entières : la grille est exacte (test `src/test_jersey_grid.py` : 99/99 glyphes
 |---|---|---|---|---|---|
 | Accroche, mot géant, date | Jersey 20 | 34 px/em | 136 px | 80 px | « UN ANNEAU / EN PLEINE MER ? », « MACHU PICCHU », « DARWIN, 1842 » |
 | Récit, étiquettes | Jersey 15 | 27 px/em | 108 px | 60 px | un cartouche par plan, ≤ 6 mots, ≤ 2 lignes ; épingles « terre », « basalte » |
-| Mentions secondaires | Jersey 10 | 18,667 px/em | 74,7 px | 40 px | « reconstitution stylisée », « marches : convention de dessin », source ; jamais le récit |
+| Mentions secondaires | Jersey 10 | 18,667 px/em | 74,7 px | 40 px | seulement « reconstitution stylisée » et « marches : convention de dessin » ; toute information (durées, faits datés) passe en Jersey 15 sur 2 lignes |
 
 - **≤ 214 px natifs par ligne** (≈ 30 / 20 / 15 caractères en Jersey 10 / 15 / 20), **≤ 2 lignes** : le moteur fait échouer le
   rendu sinon (assertion), comme pour une boîte hors zone sûre.
@@ -148,7 +150,7 @@ entières : la grille est exacte (test `src/test_jersey_grid.py` : 99/99 glyphes
   océan) ; moutons d'écume semés (≈ 1 pour 150 cellules) qui alternent entre deux phases à **2 Hz** ; ressac épars.
 - **Contremarches** : le flanc d'une marche prend la couleur de flanc du matériau (pierre : granit clair / granit ombre ;
   herbe : vert sombre / forêt), selon qu'il regarde la lumière nord-ouest ou non.
-- **Coupes** : une région du monde descend « comme un ascenseur » jusqu'à un socle encre ; ses parois montrent la
+- **Coupes** : une région du monde descend « comme un ascenseur » jusqu'à un socle de roche hachurée (jamais l'encre, couleur du texte) ; ses parois montrent la
   coupe colorée par une fonction de la scène (strates à joints, gravier moucheté, tireté du niveau de la mer).
 - **Nuages** : piles de 3–5 disques horizontaux projetés (ellipses aplaties en rasante, ronds en plongée), dessinés à la
   taille projetée au pixel près, moitié basse hachurée une ligne sur deux, liseré bas. **≤ 4 à l'écran.**
@@ -181,9 +183,10 @@ entières : la grille est exacte (test `src/test_jersey_grid.py` : 99/99 glyphes
 - **Le piqué** (signature) : tangage 70° → 15°, distance et cible qui glissent, `inOutSine`, **0,6 s**, souffle (`whoosh`).
   Pour passer de « comprendre » à « sentir ». Série de preuve 90/70/50/30/15° dans `src/dive/` de chaque short : aucun
   relief qui apparaît ou disparaît.
-- **La remontée** : l'inverse (15° → 44–64°), 0,6 s, `whoosh` ; pour conclure ou changer d'échelle.
+- **La remontée** : l'inverse (15° → 30–64°), 0,6–0,8 s, `whoosh` ; pour conclure ou changer d'échelle. Une coupe se
+  regarde **de face** (cap perpendiculaire à la paroi), jamais par l'arête.
 - **Le temps qui passe** : la caméra reste en vol pendant que le monde change par marches (retour en arrière 1 s,
-  transformation 3,6 s), avec une mention Jersey 10 (« il y a des millions d'années », « pendant des millions d'années »).
+  transformation 3,6 s), avec une mention Jersey 15 sur 2 lignes (« il y a des millions / d'années », « pendant des millions / d'années »).
 - **La coupe qui s'ouvre** : une région descend jusqu'au socle en 0,8 s (`thud` discret).
 - **Interdits** : traversée de nuage (non utilisée : risque de luminance, C13), mosaïque, fondu, coupe.
 
@@ -206,7 +209,7 @@ Cartouches centrés sur x = 128 (milieu de la bande sûre) ; récit en haut (y =
 ## Librairies recommandées et pourquoi
 - **numpy 2.4.6** : tout le moteur — lancer de rayon par pixel (marche à pas fixes dans la boîte du relief + 6 bissections,
   par paquets de 12 pas avec retrait des rayons arrivés), intersection rayon–plan, cartes réduites par vote majoritaire,
-  tables d'indices. Coût mesuré : **21,9–58,8 s / 100 images** sous charge (voir les `short.json`).
+  tables d'indices. Coût mesuré : **15,6–59,1 s / 100 images** sous charge (voir les `short.json`).
 - **Pillow 13.0.0** : texte Jersey sans anticrénelage (`fontmode "1"`, lit les `.woff2`), stills JPEG.
 - **opensimplex 0.4.5.1** : bruits du monde (côte irrégulière, forêts, crêtes), calculés une fois et mis en cache.
 - **scipy** (`binary_dilation`) : boîte englobante autour des coupes.
@@ -225,7 +228,7 @@ Cartouches centrés sur x = 128 (milieu de la bande sûre) ; récit en haut (y =
 
 ## Shorts de preuve (chemins)
 - `out/shorts/survol-pixel__explicatif__comment-nait-un-atoll/` — « Comment naît un atoll ? » (18,6 s) : volcan en
-  terrasses → récif frangeant → récif-barrière et lagon → atoll, niveau de la mer fixe, quart d'île coupé qui montre le
+  terrasses → récif frangeant → récif-barrière et lagon → atoll, niveau de la mer fixe, tranchée coupée vue de face qui montre le
   volcan enfoui sous l'anneau ; frégate et son ombre.
 - `out/shorts/survol-pixel__histoire__machu-picchu-pourquoi-une-cite-en-escaliers/` — « Machu Picchu : pourquoi une cité
   en escaliers ? » (18,8 s, reconstitution stylisée) : cité sur l'ensellement, terrasses à murs de pierre, entaille qui
@@ -243,15 +246,23 @@ Cartouches centrés sur x = 128 (milieu de la bande sûre) ; récit en haut (y =
 
 ## Risques et limites
 - **Lisibilité** : Jersey 10 (capitale 40 px) réservée aux mentions ; tester une image réduite à 360 px de large.
+- **Flancs raides vus par la tranche** : sans correctif, les contremarches et les dessus alternent d'un pixel à l'autre et
+  grésillent (6–9 % des pixels changent par image). Le moteur relève le niveau de carte réduite selon la pente locale et
+  colore les contremarches lointaines avec la carte réduite (1,3–1,6 % mesurés). Contrepartie : les flancs moyens-lointains
+  deviennent plus « en blocs » (visible sur l'accroche de Machu Picchu). Éviter aussi les rotations de cap rapides en
+  plongeante.
+- **Coupe** : la regarder de face (cap perpendiculaire à la paroi), garder les épingles pendant toute la tenue, socle en
+  roche hachurée assez haut pour rester < 5 % de l'image ; vue par l'arête, elle se lit comme un « trou noir ».
 - **Gros texels près de la caméra** : en rasante très proche, une cellule du monde fait jusqu'à 7 px natifs (blocs). C'est
   le prix du « Mode 7 » ; garder la caméra à ≥ 60 unités d'une coupe, ou affiner la grille du monde (Machu Picchu : ×1,8).
-- **Coût** : le lancer de rayon par pixel coûte 21,9–58,8 s / 100 images sous charge ; un relief très étendu en rasante
+- **Coût** : le lancer de rayon par pixel coûte 15,6–59,1 s / 100 images sous charge ; un relief très étendu en rasante
   approche le budget de 60 s (augmenter `steps` coûte en proportion). Repli prévu : volumes en « sprite stacking ».
 - **Relief en marches = convention de dessin** : les terrasses d'un volcan ne sont pas un fait ; le dire à l'écran
   (Jersey 10) quand le public est jeune.
 - **Confusions possibles** : pixel-arcade (même grille ×4 : on s'en sépare par le plein jour, la perspective, les
   ombres, Jersey et les cartouches crème), carte-meteo (mer bleue vue de haut : notre océan est profond et saturé,
-  luminance ≈ 0,10 contre 0,77, et la rasante occupe > 50 % du temps), topo-relief (survol de relief : courbes sombres,
+  luminance moyenne d'image Y mesurée 0,35–0,53 pour l'atoll et 0,41–0,57 pour Machu Picchu contre 0,77, et la rasante
+  occupe > 50 % du temps), topo-relief (survol de relief : courbes sombres,
   plein jour, aucune lecture d'altitude). Ressemblance avec *Pilotwings* (Mode 7 sur île) : aucun élément de jeu.
 - **Photosensibilité** : aucune image pleine en blanc, écume à 2 Hz, battement d'ailes à 3 Hz, pas de traversée de nuage ;
   variation de luminance moyenne mesurée sur les fichiers finaux (voir `short.json.qualityChecks`).

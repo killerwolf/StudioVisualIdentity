@@ -189,6 +189,8 @@ PY_IMPORT_RX = re.compile(r"^\s*(?:from\s+([A-Za-z_]\w*)[\w.]*\s+import|import\s
 FONT_REF_RX = re.compile(r"@fontsource/([a-z0-9-]+)|\bpkg\s*[:=]\s*['\"]([a-z0-9-]+)['\"]|\bfont\s*=\s*['\"]"
                          r"([a-z0-9-]+)['\"]|--font\s+([a-z0-9-]+)|\bfont_path\(\s*['\"]([a-z0-9-]+)['\"]")
 GFONT_RX = re.compile(r"fonts\.googleapis\.com/css2?\?family=([A-Za-z0-9+]+)")
+# chemin de police construit en f-string sur une boucle de tailles (survol-pixel : f'jersey-{n}' … for n in (10, 15, 20))
+FONT_LOOP_RX = re.compile(r"f['\"]([a-z0-9-]+-)\{(\w+)\}[^'\"]*['\"][^\n]*?\bfor\s+\2\s+in\s+[\(\[]([\d,\s]+)[\)\]]")
 
 
 def norm(s):
@@ -285,6 +287,9 @@ def scan(root, skills=None):
                 font_refs[slug].add(rel)
                 if groups[0]:
                     fs_explicit.add(slug)
+        for pre, _, sizes in FONT_LOOP_RX.findall(s):
+            for n in re.findall(r'\d+', sizes):
+                font_refs[pre + n].add(rel)
         for fam in GFONT_RX.findall(s):
             gfonts[fam.replace('+', ' ')].add(rel)
     stdlib = set(getattr(sys, 'stdlib_module_names', ())) | {'__future__'}

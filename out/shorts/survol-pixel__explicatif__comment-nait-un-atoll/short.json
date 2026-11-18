@@ -13,9 +13,9 @@
   "ffmpeg"
  ],
  "seed": 1842,
- "renderTimeSec": 122.3,
- "renderSecPer100Frames": 21.9,
- "renderCostNote": "rendu complet mesuré (time + JSON du moteur) : 122,3 s pour 558 images = 21,9 s/100 images, seul parmi mes rendus mais avec d'autres sessions actives ; charge 1 min 6,9 au départ, 4,4 à la fin (relevés /20 s : 4,6–7,3). Premier rendu (texte final différent) : 159,7 s = 28,6 s/100 en parallèle du rendu Machu Picchu, charge 5,2–14,5. Banc préalable 27,5 s/100 à charge 4,5",
+ "renderTimeSec": 87.0,
+ "renderSecPer100Frames": 15.6,
+ "renderCostNote": "rendu complet après revue (time + JSON du moteur) : 87,0 s pour 558 images = 15,6 s/100 images, en parallèle du rendu Machu Picchu et d'autres sessions ; charge 1 min 2,9 au départ, 4,3 à la fin (relevés /20 s : 2,9–3,9). Rendus précédents : 122,3 s (21,9/100, charge 4,6–7,3) et 159,7 s (28,6/100, charge 5–14)",
  "measuredUnderLoad": true,
  "structure": [
   {
@@ -24,7 +24,7 @@
   },
   {
    "t": 2.9,
-   "beat": "retour en arrière (1 s, riser) : le volcan remonte marche par marche ; « il y a des millions d'années »"
+   "beat": "retour en arrière (1 s, riser) : le volcan remonte marche par marche ; « il y a des millions / d'années » (Jersey 15)"
   },
   {
    "t": 3.2,
@@ -32,27 +32,31 @@
   },
   {
    "t": 3.35,
-   "beat": "étape 1 : « 1. UN VOLCAN / BORDÉ DE CORAIL » (récif frangeant)"
+   "beat": "étape 1 : « 1. UN VOLCAN / BORDÉ DE CORAIL » (récif frangeant) ; « marches : convention de dessin »"
   },
   {
    "t": 4.0,
-   "beat": "la coupe s'ouvre (0,8 s, thud) : un quart d'île descend jusqu'au socle ; basalte, eau, tireté fixe du niveau de la mer ; épingle « basalte »"
+   "beat": "la coupe s'ouvre (0,8 s, thud) : une tranchée de 200 × 50 cellules au sud descend jusqu'au socle de roche hachurée (−40) ; paroi de face : basalte à joints, eau lagon hachurée, tireté épais du niveau de la mer ; épingle « basalte »"
   },
   {
    "t": 7.5,
-   "beat": "étape 2 : « 2. IL S'ENFONCE, / LE CORAIL MONTE » : le volcan s'enfonce (3,6 s), le récif reste à la surface, le lagon s'ouvre (récif-barrière) ; épingles « calcaire », « lagon »"
+   "beat": "étape 2 : « 2. IL S'ENFONCE, / LE CORAIL MONTE » + « pendant des millions / d'années » : le volcan s'enfonce (3,6 s), le récif reste à la surface, lagon ; épingles « calcaire », « lagon »"
   },
   {
-   "t": 11.4,
-   "beat": "la remontée 15° → 44° (0,6 s) ; l'île centrale disparaît sous la mer"
+   "t": 11.3,
+   "beat": "la remontée vers une vue à 30–32° qui regarde la paroi de face (cap tourné de 40°)"
   },
   {
    "t": 12.2,
-   "beat": "étape 3 : « 3. UN VOLCAN / SOUS L'ANNEAU » : atoll, motu à palmiers, la coupe montre le volcan enfoui sous le calcaire"
+   "beat": "étape 3 : « 3. UN VOLCAN / SOUS L'ANNEAU » : le triangle de basalte sous le calcaire et l'anneau ; épingles « basalte », « calcaire », « niveau de la mer » tenues jusqu'à la fin"
+  },
+  {
+   "t": 14.9,
+   "beat": "descente en rasante 17–15° (whoosh) : ciel en paliers, brume dorée, horizon (3,7 s)"
   },
   {
    "t": 15.0,
-   "beat": "plaque inversée « DARWIN, 1842 » (chime) + « basalte trouvé dessous en 1952 » ; tenue 3,6 s"
+   "beat": "plaque inversée « DARWIN, 1842 » (chime) + « basalte trouvé / dessous en 1952 » (Jersey 15)"
   }
  ],
  "engagement": {
@@ -74,6 +78,7 @@
    "thud 4,0 s (coupe)",
    "pop 7,5 et 12,2 s",
    "whoosh 11,35 s (remontée)",
+   "whoosh 14,9 s (rasante finale)",
    "chime 15,0 s"
   ]
  },
@@ -87,27 +92,30 @@
  "qualityChecks": {
   "stillsReviewed": true,
   "textMinPx": 74.7,
-  "textMinPxNote": "Jersey 10 (mentions) corps 74,7 px, capitale 40 px ; récit Jersey 15 corps 108 px",
+  "textMinPxNote": "Jersey 10 seulement pour « marches : convention de dessin » (corps 74,7 px) ; toute information en Jersey 15 (108 px)",
   "safeAreaOk": true,
   "safeAreaNote": "assertion du moteur sur chaque cartouche (boîte + liseré + ombre dans [16, 240] × [55, 400] natifs)",
   "maxWordsOnScreenPerShot": 6,
   "narrationWordsSpoken": 40,
   "wordsPerSecond": "2,33–2,58 (mots prononcés)",
   "pitchLe60Share": 0.819,
-  "colorsPerFrame": "13–23 (natif)",
+  "colorsPerFrame": "natif : 15–17 en plongeante, 14–23 en rasante (indices exacts, 1 image / 0,5 s)",
   "dive": "src/dive/ (90/70/50/30/15°, même moteur, 15–20 couleurs)",
   "clouds": "≤ 3 à l'écran",
   "photosensitivity": {
-   "maxLumaChange10Frames": 0.126,
+   "maxLumaChange10Frames": 0.157,
    "maxLumaStepFrame": 0.05,
-   "lumaMax": 0.516,
+   "lumaMax": 0.544,
+   "lumaMean": 0.493,
    "foamFlickerHz": 2,
    "wingFlapHz": 3,
    "cloudCrossing": false
   },
   "cameraPreflightMinClearance": 63.2,
-  "fileMB": 3.4,
-  "sourceCompare": "out/report/notes/console-retro-source/comparaison.jpg"
+  "fileMB": 3.2,
+  "sourceCompare": "out/report/notes/console-retro-source/comparaison.jpg",
+  "grazingFinalShotSec": 3.7,
+  "recognitionCopy": "recognition.py sur copie (scratchpad) après revue : 1er voisin aquarelle-conte « phare d'Alexandrie » (0,6208), frère à 0,6635 : échec maintenu, documenté"
  },
  "facts": [
   {

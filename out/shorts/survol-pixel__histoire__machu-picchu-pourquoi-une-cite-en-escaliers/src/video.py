@@ -194,7 +194,7 @@ cam_path = S.CameraPath([
     (0.0, dict(tx=C0, ty=C0 + 4 * K, tz=CITY_Z, dist=520, yaw=-42, pitch=9, roll=0), 'linear'),
     (4.9, dict(tx=C0, ty=C0 + 4 * K, tz=CITY_Z, dist=430, yaw=-32, pitch=11, roll=-2), 'linear'),
     (5.5, dict(tx=C0 + 6 * K, ty=C0 - 6 * K, tz=CITY_Z - 10 * K, dist=330, yaw=-22, pitch=64, roll=0), 'inOutSine'),
-    (9.3, dict(tx=C0 + 8 * K, ty=C0 - 8 * K, tz=CITY_Z - 10 * K, dist=300, yaw=0, pitch=60, roll=0), 'linear'),
+    (9.3, dict(tx=C0 + 7 * K, ty=C0 - 7 * K, tz=CITY_Z - 10 * K, dist=310, yaw=-12, pitch=62, roll=0), 'linear'),
     (9.9, dict(tx=(CUT_X0 + CUT_X1) / 2, ty=CUT_Y1, tz=0, dist=70, yaw=-36, pitch=19, roll=0), 'inOutSine'),
     (14.6, dict(tx=(CUT_X0 + CUT_X1) / 2 - 3, ty=CUT_Y1, tz=0, dist=60, yaw=-26, pitch=17, roll=0), 'linear'),
     (15.2, dict(tx=C0 + 4 * K, ty=C0, tz=CITY_Z, dist=300, yaw=-30, pitch=20, roll=0), 'inOutSine'),

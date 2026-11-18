@@ -1,10 +1,10 @@
 {
  "method": "Lab 8x8x8 Bhattacharyya + edge-histogram chi2, 8 frames/short, nearest neighbour",
- "shorts": 43,
- "top1Accuracy": 0.93,
- "meanIntra": 0.2149,
- "meanInter": 0.8586,
- "ratioIntraOverInter": 0.25,
+ "shorts": 45,
+ "top1Accuracy": 0.889,
+ "meanIntra": 0.2316,
+ "meanInter": 0.8575,
+ "ratioIntraOverInter": 0.27,
  "rows": [
   {
    "short": "aquarelle-conte__enfants__ou-vont-les-etoiles-le-jour",
@@ -94,13 +94,13 @@
    "short": "carte-meteo__evenements__28-juin-2019-46-degres-record-de-chaleur",
    "nearest": "carte-meteo__geographie__le-mistral-pourquoi-il-souffle-si-fort",
    "sameIdentity": true,
-   "distance": 0.1699
+   "distance": 0.1697
   },
   {
    "short": "carte-meteo__geographie__le-mistral-pourquoi-il-souffle-si-fort",
    "nearest": "carte-meteo__evenements__28-juin-2019-46-degres-record-de-chaleur",
    "sameIdentity": true,
-   "distance": 0.1699
+   "distance": 0.1697
   },
   {
    "short": "cosmos-doc__evenements__voyager-1-a-un-jour-lumiere",
@@ -215,6 +215,18 @@
    "nearest": "riso-zine__evenements__geminides-j-39",
    "sameIdentity": true,
    "distance": 0.2091
+  },
+  {
+   "short": "survol-pixel__explicatif__comment-nait-un-atoll",
+   "nearest": "aquarelle-conte__histoire__phare-d-alexandrie",
+   "sameIdentity": false,
+   "distance": 0.6545
+  },
+  {
+   "short": "survol-pixel__histoire__machu-picchu-pourquoi-une-cite-en-escaliers",
+   "nearest": "papier-decoupe__histoire__la-fourchette-a-fait-scandale",
+   "sameIdentity": false,
+   "distance": 0.6269
   },
   {
    "short": "swiss-data__evenements__j-272-eclipse-2-aout-2027",

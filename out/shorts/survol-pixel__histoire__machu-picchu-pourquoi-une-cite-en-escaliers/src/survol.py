@@ -189,6 +189,12 @@ class World:
         self.cut = cut if cut is not None else np.zeros_like(top, bool)
         self.section = section
         self.cut_top0 = cut_top0      # dessus d'origine de la région coupée : la coupe n'est vue que du dedans
+        # flancs raides vus par la tranche : biais de niveau de mip selon la pente locale (anti-moiré, C3 étendu)
+        tp = np.maximum(self.top, 0)
+        grad = np.zeros_like(tp)
+        for sh in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+            grad = np.maximum(grad, np.abs(np.roll(tp, sh, (0, 1)) - tp))
+        self.steep = np.clip(1.6 * np.log2(1.0 + grad), 0, 3).astype(np.float32)
         self.outside = outside
         self.tile = None
         if outside_tile is not None:
@@ -339,7 +345,10 @@ class Renderer:
         dn = np.linalg.norm(dd, axis=1)
         inc = np.abs(dd[:, 2]) / dn
         fp = th * dn / cam.F * np.sqrt(1.0 / np.maximum(inc, 0.08))
-        lvl = np.clip(np.floor(np.log2(np.maximum(fp, 1e-6)) + self.mip_bias), 0, len(w.col) - 1).astype(np.int32)
+        lg = np.log2(np.maximum(fp, 1e-6))
+        # le biais de pente ne joue qu'au loin (pixel ≥ 1/2 cellule) : la vue rapprochée reste nette
+        bias = np.where(lg > -1.5, w.steep[yi, xi], 0.0)
+        lvl = np.clip(np.floor(lg + self.mip_bias + bias), 0, len(w.col) - 1).astype(np.int32)
         cidx = np.full(len(hi_ids), w.outside, np.uint8)
         for L in range(len(w.col)):
             m = (lvl == L) & ingrid
@@ -365,6 +374,9 @@ class Renderer:
             ny = (yp - yi[wi]).astype(np.float32)
             lit = (nx * self.light_h[0] + ny * self.light_h[1]) > 0
             wc = np.where(lit, w.flank_lit[yi[wi], xi[wi]], w.flank_dark[yi[wi], xi[wi]])
+            # au loin (mip ≥ 1), la contremarche prend la couleur réduite du dessus : plus d'alternance dessus/flanc
+            far = lvl[wi] >= 1
+            wc = np.where(far, cidx[wi], wc)
             if w.section is not None:
                 from_cut = w.cut[yp, xp] & ~w.cut[yi[wi], xi[wi]]
                 if w.cut_top0 is not None:

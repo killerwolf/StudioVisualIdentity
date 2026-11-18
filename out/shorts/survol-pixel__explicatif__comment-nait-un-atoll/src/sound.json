@@ -58,6 +58,12 @@
    "note": "D6"
   },
   {
+   "t": 14.9,
+   "type": "whoosh",
+   "gain": 0.45,
+   "dur": 0.7
+  },
+  {
    "t": 15.0,
    "type": "chime",
    "gain": 0.4,

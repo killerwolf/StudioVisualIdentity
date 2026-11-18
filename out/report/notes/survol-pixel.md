@@ -59,7 +59,7 @@ Les deux premiers rendus ont tourné en parallèle (`SVI_SLOTS=4 out/tools/slot.
   flanc de terrasse, coupe, ou frégate / lama dont l'ombre encode la hauteur).
 - **C3** carte de couleurs réduite par vote majoritaire (3 niveaux, sans moyenne), niveau choisi par l'empreinte anisotrope du
   pixel au sol ; brume quantifiée par tables d'indices. Limite connue : dans la série de preuve à 90–70°, le flanc très raide de
-  la montagne de Machu Picchu montre un petit moiré de contremarches vues par la tranche (absent des images du short).
+  la montagne de Machu Picchu montre un petit moiré de contremarches vues par la tranche (**erreur relevée par la revue** : il était aussi présent dans le short, 5,5–9,0 s ; corrigé, voir « Corrections après revue »).
 - **C4** panneaux (frégate, palmiers, lama) réduits au plus proche voisin et **plafonnés à 1:1** (assertion dans
   `scale_nearest`) ; lama mesuré à d1/profondeur 1,34–1,69 → dessiné à 1:1 ; nuages dessinés à leur taille projetée (jamais agrandis).
 - **C5** Jersey 20 (34) accroche et dates, Jersey 15 (27) récit et étiquettes, Jersey 10 (56/3) mentions seulement ; ≤ 2 lignes
@@ -128,3 +128,38 @@ règle des 54 px comme **taille de police** (74,7 px) ; ses capitales font 40 px
 - `out/tools/aggregate.py` (CANON, ROLES, PINNED) ne connaît pas numpy, Pillow, scipy ni Jersey : à ajouter pour fusionner les brouillons.
 - `out/tools/slot.sh` (et peut-être `render.mjs`, à vérifier) dimensionne ses slots avec `nproc`, absent sur macOS : `SVI_SLOTS=4`.
 - Non fait : voix (décision en attente), sujet facultatif « dune », traversée de nuage (supprimée, C13 b), reconnaissance / juge aveugle (revue).
+
+## Corrections après revue (`revue-2026-11-18-survol-pixel.md`, un seul tour)
+
+Un rendu complet de plus par short (moteur `survol.py` modifié, toujours identique dans les deux `src/`).
+
+1. **Coupe de l'atoll (« losange marine »)** — corrigé. Le quart sud-est est remplacé par une **tranchée** (bande sud de
+   200 × 50 cellules) dont la paroi passe par le centre du volcan ; le plan final tourne le cap de −50° à −10°/+5° pour la
+   voir **de face** ; socle remonté de −72 à −40 et peint en roche hachurée (`#8A8178` / basalte une rangée sur trois) au lieu
+   de l'encre ; basalte à joints verticaux ; eau des parois en lagon hachuré ; tireté du niveau de la mer épaissi (2,3 unités,
+   écume) ; épingles « basalte », « calcaire », « niveau de la mer » tenues de 12,4 s à la fin. Lecture à 13,5 s et 17,0 s :
+   triangle sombre du volcan sous le calcaire et l'anneau.
+2. **Moiré de Machu Picchu (5,5–9,0 s)** — corrigé. Dans le moteur : biais de niveau de carte réduite selon la pente locale
+   (1,6·log2(1+Δh), seulement au loin) et contremarches lointaines colorées par la carte réduite ; rotation de caméra du plan
+   ralentie (cap −22° → −12° au lieu de 0°). Pixels qui changent par image dans la bande x 100–550, y 1180–1380 : natif 8,8 %
+   → 1,3–1,5 % ; fichier final 1,59 % en moyenne (revue : 6,5 %). Contrepartie : flancs moyens-lointains plus « en blocs ».
+3. **Reconnaissance** — en partie. L'atoll finit par **3,7 s de rasante** (15–17°, ciel en paliers, brume dorée, horizon) qui
+   tient dans les 18,6 s et la narration. `recognition.py` relancé **sur une copie** (scratchpad, `out/report` non touché) :
+   top-1 41/45 ; Machu Picchu → son frère (0,6635) : **réussi** ; atoll → aquarelle-conte « phare d'Alexandrie » (0,6208),
+   frère à 0,6635 : **échec maintenu** (dominante bleue de l'océan contre dominante verte de la montagne ; aucune voisine de la
+   direction dans le top). À documenter dans `comparison.md` par l'intégration.
+4. **Mentions en Jersey 10** — corrigé : « il y a des millions / d'années », « pendant des millions / d'années », « basalte
+   trouvé / dessous en 1952 » en Jersey 15 sur 2 lignes. Jersey 10 ne garde que « reconstitution stylisée » et « marches :
+   convention de dessin ».
+5. **Chiffres d'`identity.md`** — corrigés : luminance moyenne d'image Y 0,35–0,53 (atoll) et 0,41–0,57 (Machu Picchu) contre
+   0,77 pour carte-meteo ; couleurs natives (indices exacts) 15–17 en plongeante, 14–23 en rasante, et 18–28 sur fichiers
+   décodés (mesure de la revue). Erreur du journal sur le moiré corrigée (C3).
+- Mineur : la voix de Machu Picchu dit maintenant « la pluie file », comme le cartouche.
+
+| | Atoll | Machu Picchu |
+|---|---|---|
+| Rendu complet après revue | **87,0 s → 15,6 s/100** | **333,6 s → 59,1 s/100** |
+| Charge 1 min (relevés /20 s) | 2,9–3,9 | 2,9–29,0 (fin à 23,4) |
+| `check.py` | ok (avertissement voix seul) | idem |
+| Poids | 3,2 Mo | 4,0 Mo |
+| Luminance : max ; variation max sur 1/3 s | 0,544 ; 0,157 | 0,575 ; 0,118 |

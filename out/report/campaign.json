@@ -581,6 +581,46 @@
    "video": "shorts/riso-zine__geographie__5-plus-grands-deserts/short.mp4"
   },
   {
+   "dir": "shorts/survol-pixel__explicatif__comment-nait-un-atoll",
+   "identity": "survol-pixel",
+   "family": "explicatif",
+   "title": "Comment naît un atoll ?",
+   "duration": 18.6,
+   "renderTimeSec": 122.3,
+   "libraries": [
+    "NumPy",
+    "Pillow",
+    "opensimplex",
+    "scipy",
+    "Jersey",
+    "ffmpeg"
+   ],
+   "loopable": false,
+   "mechanic": "question / suspense",
+   "narrationLines": 5,
+   "video": "shorts/survol-pixel__explicatif__comment-nait-un-atoll/short.mp4"
+  },
+  {
+   "dir": "shorts/survol-pixel__histoire__machu-picchu-pourquoi-une-cite-en-escaliers",
+   "identity": "survol-pixel",
+   "family": "histoire",
+   "title": "Machu Picchu : pourquoi une cité en escaliers ?",
+   "duration": 18.8,
+   "renderTimeSec": 331.6,
+   "libraries": [
+    "NumPy",
+    "Pillow",
+    "opensimplex",
+    "scipy",
+    "Jersey",
+    "ffmpeg"
+   ],
+   "loopable": false,
+   "mechanic": "question",
+   "narrationLines": 4,
+   "video": "shorts/survol-pixel__histoire__machu-picchu-pourquoi-une-cite-en-escaliers/short.mp4"
+  },
+  {
    "dir": "shorts/swiss-data__evenements__j-272-eclipse-2-aout-2027",
    "identity": "swiss-data",
    "family": "evenements",
@@ -688,7 +728,7 @@
     "opensimplex",
     "pycairo",
     "Pillow",
-    "numpy",
+    "NumPy",
     "ffmpeg"
    ],
    "loopable": false,
@@ -708,7 +748,7 @@
     "opensimplex",
     "pycairo",
     "Pillow",
-    "numpy",
+    "NumPy",
     "ffmpeg"
    ],
    "loopable": false,

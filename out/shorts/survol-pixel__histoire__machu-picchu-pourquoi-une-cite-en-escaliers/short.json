@@ -13,9 +13,9 @@
   "ffmpeg"
  ],
  "seed": 1911,
- "renderTimeSec": 331.6,
- "renderSecPer100Frames": 58.8,
- "renderCostNote": "rendu complet mesuré : 331,6 s pour 564 images = 58,8 s/100 images (≤ 60, budget C1), en parallèle du rendu de l'atoll puis seul, avec d'autres sessions ; charge 1 min 13,6 au départ, 6,2 à la fin (relevés : 5,2–16,1) ; banc préalable 56,9 s/100 à charge 4,5 ; monde 640×640 (échelle ×1,8), 128 pas",
+ "renderTimeSec": 333.6,
+ "renderSecPer100Frames": 59.1,
+ "renderCostNote": "rendu complet après revue : 333,6 s pour 564 images = 59,1 s/100 images (≤ 60), en parallèle du rendu de l'atoll puis avec d'autres sessions ; charge 1 min 2,9 au départ, 23,4 à la fin (relevés /20 s : 2,9–29,0). Rendu précédent : 331,6 s (58,8/100, charge 5,2–16,1)",
  "measuredUnderLoad": true,
  "structure": [
   {
@@ -28,7 +28,7 @@
   },
   {
    "t": 5.5,
-   "beat": "plongeante : plan de la cité (toits de chaume, place), jupe de terrasses, rivière en fer à cheval ; plaque inversée « XVe SIÈCLE » ; « LES INCAS BÂTISSENT / DES TERRASSES » ; épingle « À 2 430 m »"
+   "beat": "plongeante (cap −22° → −12°, rotation ralentie) : plan de la cité (toits de chaume, place), jupe de terrasses, rivière en fer à cheval ; plaque inversée « XVe SIÈCLE » ; « LES INCAS BÂTISSENT / DES TERRASSES » ; épingle « À 2 430 m »"
   },
   {
    "t": 9.3,
@@ -80,21 +80,24 @@
   "maxWordsOnScreenPerShot": 6,
   "narrationWordsSpoken": 38,
   "wordsPerSecond": "2,27–2,58 (mots prononcés)",
-  "pitchLe60Share": 0.793,
-  "colorsPerFrame": "14–21 (natif)",
+  "pitchLe60Share": 0.787,
+  "colorsPerFrame": "natif : 16–17 en plongeante, 18–22 en rasante",
   "dive": "src/dive/ (90/70/50/30/15°, même moteur, 14–17 couleurs)",
   "clouds": "3",
   "photosensitivity": {
-   "maxLumaChange10Frames": 0.114,
-   "maxLumaStepFrame": 0.03,
-   "lumaMax": 0.551,
-   "rainPixels": "gouttes 1×3 / 2×2 px natifs, pas de scintillement",
+   "maxLumaChange10Frames": 0.118,
+   "maxLumaStepFrame": 0.024,
+   "lumaMax": 0.575,
+   "lumaMean": 0.535,
+   "rainPixels": "gouttes 1×3 / 2×2 px natifs",
    "cloudCrossing": false
   },
   "llamaScale": "plafonné à 1:1 (d1/profondeur 1,34–1,69 : jamais agrandi, C4)",
   "cameraPreflightMinClearance": 56.2,
-  "fileMB": 4.5,
-  "reconstitutionLabel": "« reconstitution stylisée » à l'écran pendant tout le short"
+  "fileMB": 4.0,
+  "reconstitutionLabel": "« reconstitution stylisée » à l'écran pendant tout le short",
+  "moireBand5_4to9s": "pixels qui changent par image dans la bande x 100–550, y 1180–1380 : 1,59 % en moyenne sur le fichier final (revue : 6,5 %) ; natif 1,3–1,5 % (8,8 % avant correctif)",
+  "recognitionCopy": "recognition.py sur copie après revue : 1er voisin = son frère (atoll, 0,6635) : réussite"
  },
  "facts": [
   {

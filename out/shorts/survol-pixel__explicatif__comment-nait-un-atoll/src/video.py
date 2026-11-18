@@ -4,7 +4,7 @@
 
 Monde inventé (un seul sujet centré, pas d'archipel) : un volcan en terrasses entouré d'un récif. Le niveau de la mer
 reste fixe ; le volcan s'enfonce (paramètre s), le récif garde son anneau à la surface et s'épaissit de calcaire.
-Trois étapes : récif frangeant (s = 0), récif-barrière avec lagon (s ≈ 0,6), atoll (s = 1). Un quart du monde est
+Trois étapes : récif frangeant (s = 0), récif-barrière avec lagon (s ≈ 0,6), atoll (s = 1). Une bande sud du monde est
 « coupé » comme une maquette : la coupe montre le basalte du volcan, le calcaire corallien et l'eau, et à la fin le
 volcan enfoui sous l'anneau (forages d'Enewetak, 1952). Une frégate (personnage original) vole avec son ombre.
 
@@ -27,7 +27,7 @@ DUR = 18.6
 G = 360
 C0 = G / 2
 P_PEAK, DEPTH, DH = 44.0, 30.0, 3.5
-PIT, CUTW = 72.0, 100          # profondeur du socle de la coupe, taille du quart coupé
+PIT, CUTW, CUT_D = 40.0, 100, 50   # socle, demi-largeur et profondeur de la tranchée coupée (bande sud)
 
 BIOME = {'SAND': '#EBDFA0', 'ROCK': '#8A8178', 'CORAL': '#E58A7A', 'BASALT': '#4E4A4C', 'LIMESTONE': '#E3D3A8'}
 pal = S.Palette(BIOME)
@@ -67,7 +67,7 @@ def fields():
     forest = n2 > 0.18
     motu = (n1 > 0.05) & (np.abs(np.sin(4 * th + 1.3)) > 0.35)
     _F.update(r=r, th=th, r0=r0, B0=B0, band=band, forest=forest, motu=motu, n1=n1, n2=n2,
-              cut=(xx > C0) & (yy < C0) & (xx < C0 + CUTW) & (yy > C0 - CUTW))
+              cut=(xx > C0 - CUTW) & (xx < C0 + CUTW) & (yy < C0) & (yy > C0 - CUT_D))
     rng = np.random.default_rng(SEED)
     _F['surf'] = rng.random((G, G)) < 0.45
     _F['tiles'] = [S.foam_tile(pal, 64, SEED + 3, 'OCEAN', phase=k) for k in (0, 1)]
@@ -135,20 +135,22 @@ def build_world(s, u_cut, t):
     fd[L >= 9] = pal['BASALT']
     fl[(L == 0) | motu] = pal['ROCK']
     fd[(L == 0) | motu] = pal['ROCK']
-    # coupe (maquette) : le quart sud-est descend comme un ascenseur jusqu'au socle
+    # coupe (maquette) : la bande sud descend comme un ascenseur jusqu'au socle
     cut = f['cut'] if u_cut > 0 else None
     top_before = top.copy()
     if cut is not None:
         drop = u_cut * (P_PEAK + PIT + 2)
         top = np.where(cut, np.maximum(top - drop, -PIT), top)
         if u_cut >= 1:
-            col = np.where(cut, pal['INK'], col)
+            # socle de la maquette : roche hachurée (une rangée sombre sur trois), jamais l'encre du texte
+            yy_ = np.arange(G)[:, None] % 3 == 0
+            col = np.where(cut, np.where(yy_, pal['BASALT'], pal['ROCK']), col)
 
     def section(hx, hy, hz, xi, yi, along, tt):
         b = Bs[yi, xi]
         h = Hc[yi, xi]
-        out = np.full(len(hz), pal['OCEAN_MID'], np.uint8)
-        out[hz > -0.9] = pal['LAGOON']                     # niveau de la mer : liseré clair fixe
+        out = np.full(len(hz), pal['LAGOON'], np.uint8)    # tranche d'eau : lagon hachuré une ligne sur deux
+        out[(np.floor(hz / 1.2) % 2) == 0] = pal['SHALLOW']
         lim = hz < h
         out[lim] = pal['LIMESTONE']
         # strates du calcaire : un trait tous les 5 unités
@@ -156,9 +158,10 @@ def build_world(s, u_cut, t):
         out[strata & (np.abs(hz - np.round(hz / 5) * 5) < 0.6)] = pal['SAND']
         bas = hz < b
         out[bas] = pal['BASALT']
+        out[bas & ((along % 7.0) < 0.8)] = pal['ROCK']      # joints verticaux du basalte (lecture « roche »)
         out[(hz >= 0) & (hz < top[yi, xi] + 0.01) & (h > 0)] = pal['BASALT']
         # niveau de la mer : tireté clair fixe sur toute la coupe (le repère du mécanisme)
-        out[(hz > -1.1) & (hz <= 0.0) & ((np.floor(along / 2.0) % 2) == 0)] = pal['FOAM']
+        out[(hz > -2.3) & (hz <= 0.0) & ((np.floor(along / 3.0) % 2) == 0)] = pal['FOAM']
         return out
 
     return S.World(top, col, fl, fd, cut=cut, section=section, outside=pal['OCEAN'], zmin=-PIT - 0.5,
@@ -211,9 +214,11 @@ cam_path = S.CameraPath([
     (3.2, dict(tx=C0, ty=C0, tz=0, dist=345, yaw=-34, pitch=68, roll=0), 'linear'),
     (3.8, dict(tx=C0 + 2, ty=C0 - 4, tz=8, dist=250, yaw=-45, pitch=16, roll=0), 'inOutSine'),   # le piqué
     (7.4, dict(tx=C0 - 2, ty=C0 + 2, tz=8, dist=228, yaw=-36, pitch=14, roll=-3), 'inOutSine'),
-    (11.4, dict(tx=C0, ty=C0, tz=4, dist=236, yaw=-52, pitch=15, roll=2), 'inOutSine'),
-    (12.0, dict(tx=C0, ty=C0 + 6, tz=0, dist=290, yaw=-48, pitch=44, roll=0), 'inOutSine'),      # la remontée
-    (18.6, dict(tx=C0, ty=C0 + 6, tz=0, dist=280, yaw=-38, pitch=48, roll=0), 'linear'),
+    (11.3, dict(tx=C0, ty=C0, tz=4, dist=236, yaw=-50, pitch=15, roll=2), 'inOutSine'),
+    (12.1, dict(tx=C0 + 6, ty=C0 + 4, tz=-8, dist=250, yaw=-10, pitch=32, roll=0), 'inOutSine'),  # la remontée
+    (14.9, dict(tx=C0 + 4, ty=C0 + 4, tz=-8, dist=245, yaw=-4, pitch=30, roll=0), 'linear'),
+    (15.5, dict(tx=C0 + 2, ty=C0 + 10, tz=-4, dist=212, yaw=0, pitch=17, roll=0), 'inOutSine'),   # rasante finale
+    (18.6, dict(tx=C0, ty=C0 + 12, tz=-4, dist=222, yaw=5, pitch=15, roll=0), 'linear'),
 ])
 
 
@@ -241,18 +246,21 @@ R = S.Renderer(pal, focal=416.0, haze_d=(560.0, 1500.0))
 CARDS = [
     (0.15, 3.3, ['UN ANNEAU', 'EN PLEINE MER ?'], 20, S.CX_SAFE, 62, 'ct', {}),
     (3.35, 7.4, ['1. UN VOLCAN', 'BORDÉ DE CORAIL'], 15, S.CX_SAFE, 62, 'ct', {}),
-    (3.4, 4.6, ["il y a des millions d'années"], 10, S.CX_SAFE, 131, 'ct', {}),
+    (3.4, 4.6, ['il y a des millions', "d'années"], 15, S.CX_SAFE, 131, 'ct', {}),
     (4.6, 7.4, ['marches : convention de dessin'], 10, S.CX_SAFE, 131, 'ct', {}),
     (7.5, 11.5, ["2. IL S'ENFONCE,", 'LE CORAIL MONTE'], 15, S.CX_SAFE, 62, 'ct', {}),
-    (7.6, 11.5, ["pendant des millions d'années"], 10, S.CX_SAFE, 131, 'ct', {}),
+    (7.6, 11.5, ['pendant des millions', "d'années"], 15, S.CX_SAFE, 131, 'ct', {}),
     (12.2, 14.9, ['3. UN VOLCAN', "SOUS L'ANNEAU"], 15, S.CX_SAFE, 62, 'ct', {}),
     (15.0, 18.6, ['DARWIN, 1842'], 20, S.CX_SAFE, 62, 'ct', {'inverted': True, 'colors': 'GOLD'}),
-    (15.3, 18.6, ['basalte trouvé dessous en 1952'], 10, S.CX_SAFE, 112, 'ct', {}),
+    (15.3, 18.6, ['basalte trouvé', 'dessous en 1952'], 15, S.CX_SAFE, 112, 'ct', {}),
 ]
 PINS = [  # étiquettes au sol (C9) : (t0, t1, lignes, point monde, position du cartouche)
-    (5.0, 7.3, ['basalte'], lambda: (C0 + 1, C0 - 14, -12.0), (40, 330)),
-    (8.4, 11.3, ['calcaire'], lambda: (C0 + 1, C0 - 66, -9.0), (40, 330)),
-    (8.4, 11.3, ['lagon'], lambda: (C0 + 30, C0 + 30, 0.0), (160, 168)),
+    (5.0, 7.3, ['basalte'], lambda: (C0 + 10, C0 - 0.3, -10.0), (40, 330)),
+    (8.4, 11.3, ['calcaire'], lambda: (C0 + 62, C0 - 0.3, -6.0), (40, 330)),
+    (8.4, 11.3, ['lagon'], lambda: (C0 + 30, C0 + 30, 0.0), (160, 212)),
+    (12.4, 18.6, ['basalte'], lambda: (C0 - 4, C0 - 0.3, -16.0), (18, 250)),
+    (12.4, 18.6, ['calcaire'], lambda: (C0 + 45, C0 - 0.3, -14.0), (18, 294)),
+    (12.4, 18.6, ['niveau de la mer'], lambda: (C0 + 36, C0 - 0.3, -1.0), (18, 338)),
 ]
 
 
