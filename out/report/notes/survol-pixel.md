@@ -163,3 +163,51 @@ Un rendu complet de plus par short (moteur `survol.py` modifié, toujours identi
 | `check.py` | ok (avertissement voix seul) | idem |
 | Poids | 3,2 Mo | 4,0 Mo |
 | Luminance : max ; variation max sur 1/3 s | 0,544 ; 0,157 | 0,575 ; 0,118 |
+
+## Passe de détail (18/11)
+
+Demande du propriétaire après `console-retro-source/comparaison.jpg` : « la source est beaucoup plus détaillée ; la nôtre est
+moins jolie, plus carrée, moins bien définie ». Diagnostic chiffré complet et avant / après : `survol-pixel-detail.md`.
+Planche : `console-retro-source/comparaison-avant-apres.jpg` ; images d'avant : `console-retro-source/avant/`.
+
+- **Diagnostic** :
+  - la grille n'est pas en cause (4 px contre 3,94). Le test A/B à 360×640 ×3 est rejeté : bavure de chroma 4:2:0 sur 1,1–1,2 %
+    des pixels, ×1,6–1,9 de coût, et moins de détail par cellule ;
+  - l'agrandissement est net de bout en bout ;
+  - l'écart vient du monde :
+    - densité de détail divisée par deux (`diffCells` 0,11–0,15 contre 0,22) ;
+    - grands aplats (85 % de l'écran en plages > 5 % pour l'atoll) ;
+    - 2–3 petits nuages, pas d'arbres, une seule masse verte à Machu Picchu ;
+    - texels de 2–7 px à bords droits de près ;
+  - les cartouches couvrent 19–20 % de l'écran ;
+  - la caméra est quasi immobile (≈ 1 cellule/s contre 100–140).
+- **Moteur** (md5 `9d38995aa862a43b9885777fac65e41a`, identique dans les deux `src/`) :
+  - micro-détail sous la cellule (lecture décalée + moucheture, seulement si une cellule couvre ≥ 2 px) ;
+  - murs appareillés ;
+  - nuages en tas de boules (hachure, liseré `CLOUD_RIM`, ombres) ;
+  - arbres en grappes (boules au rayon projeté, ombre portée) ;
+  - `hash01` / `ragged`.
+- **Scènes** :
+  - atoll : hauts-fonds crénelés, pâtés coralliens, arbres sur le volcan, 24 nuages à l'altitude 90 jamais traversés,
+    caméra qui avance ;
+  - Machu Picchu : terrasses et relief plus fins, rebords clairs, toits à deux pans, forêt d'arbres, 14 nuages, plan en
+    plongeante moins tournant.
+  - Textes, narration, son, grille et polices inchangés ; test Jersey 99/99.
+- **Échecs en route** :
+  1. Un nuage à l'altitude 46 passait devant la coupe à 10,5 s → nuages au-dessus de la caméra des rasantes, filtre
+     anti-traversée calculé sur tout le trajet.
+  2. Bande de la revue à 2,82 % au premier rendu → moucheture interdite à 1 px par cellule (−0,9 point) et rotation du plan
+     ramenée à 6° → **1,13 %** (avant : 1,50 %).
+  3. Arbres qui grésillaient dans les rasantes (A-B-A ×3) → seuil de 1,25 px et suppression du test du pied ;
+     le reste est le défilement d'une forêt dense (1,40 % sur le short, source 4,0 %).
+- **Mesures** :
+  - atoll 109,2 s (19,6 s/100), Machu Picchu 356,0 s (63,1 s/100), en parallèle, charge 2,7–8,9 ;
+  - `check.py` ok sur les deux (avertissement voix seul) ;
+  - poids 4,4 et 8,3 Mo.
+  - `diffCells` natif : atoll 0,111 → 0,153, Machu Picchu 0,146 → 0,330 (source 0,221).
+- **À décider (propriétaire)** :
+  - le plafond « ≤ 4 nuages » de C15 est levé pour l'atoll ;
+  - réduire ou non l'accroche et les dates de Jersey 20 à Jersey 15 pour libérer de l'écran ;
+  - une caméra plus rapide (vie) contre le texte et le scintillement.
+- **Pour l'intégration** : `index.json` (coût 19,6–63,1 s/100) et la reconnaissance (`recognition.py` sur copie) sont à
+  repasser.

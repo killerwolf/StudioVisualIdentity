@@ -13,14 +13,14 @@
   "ffmpeg"
  ],
  "seed": 1842,
- "renderTimeSec": 87.0,
- "renderSecPer100Frames": 15.6,
- "renderCostNote": "rendu complet après revue (time + JSON du moteur) : 87,0 s pour 558 images = 15,6 s/100 images, en parallèle du rendu Machu Picchu et d'autres sessions ; charge 1 min 2,9 au départ, 4,3 à la fin (relevés /20 s : 2,9–3,9). Rendus précédents : 122,3 s (21,9/100, charge 4,6–7,3) et 159,7 s (28,6/100, charge 5–14)",
+ "renderTimeSec": 109.2,
+ "renderSecPer100Frames": 19.6,
+ "renderCostNote": "passe de détail du 18/11 (moteur : nuages en coton, arbres, micro-détail, bandes crénelées) : 109,2 s pour 558 images = 19,6 s/100 images, en parallèle du rendu Machu Picchu ; charge 1 min 2,7 au départ, 3,8 à la fin (relevés /20 s : 2,7–8,9, moyenne 4,4). Banc 60 images avant rendu : 16,9 s/100 (charge 2,2). Rendu précédent (après revue) : 87,0 s (15,6/100, charge 2,9–3,9)",
  "measuredUnderLoad": true,
  "structure": [
   {
    "t": 0,
-   "beat": "hook : l'anneau (atoll) en plongeante 70°, question en Jersey 20, frégate et ombre, ≤ 4 nuages"
+   "beat": "hook : l'anneau (atoll) en plongeante 70° avec lagon à pâtés coralliens et hauts-fonds crénelés, question en Jersey 20, frégate et ombre ; nuages en coton et leurs ombres autour de l'anneau (jamais dessus) ; la caméra avance (distance 385 → 330)"
   },
   {
    "t": 2.9,
@@ -99,23 +99,25 @@
   "narrationWordsSpoken": 40,
   "wordsPerSecond": "2,33–2,58 (mots prononcés)",
   "pitchLe60Share": 0.819,
-  "colorsPerFrame": "natif : 15–17 en plongeante, 14–23 en rasante (indices exacts, 1 image / 0,5 s)",
-  "dive": "src/dive/ (90/70/50/30/15°, même moteur, 15–20 couleurs)",
-  "clouds": "≤ 3 à l'écran",
+  "colorsPerFrame": "natif : 16–24 indices exacts par image (médiane 19), sans cartouches, 1 image / 0,33 s ; fichier décodé : 22–28 entrées de palette (blocs 4×4, ΔRGB ≤ 25) ; avant la passe de détail 13–21 natif",
+  "dive": "src/dive/ (90/70/50/30/15°, même moteur, 19–24 couleurs)",
+  "clouds": "3–11 nuages dans le cadre (centre projeté, compte exact du moteur ; médiane 8 en plongeante, 7 en rasante), 24 nuages à l'altitude 90, hors de l'anneau, jamais traversés ; avant : 0–1 (C15, voir notes)",
   "photosensitivity": {
-   "maxLumaChange10Frames": 0.157,
-   "maxLumaStepFrame": 0.05,
-   "lumaMax": 0.544,
-   "lumaMean": 0.493,
+   "maxLumaChange10Frames": 0.127,
+   "maxLumaStepFrame": 0.045,
+   "lumaMax": 0.554,
+   "lumaMean": 0.506,
    "foamFlickerHz": 2,
    "wingFlapHz": 3,
    "cloudCrossing": false
   },
-  "cameraPreflightMinClearance": 63.2,
-  "fileMB": 3.2,
+  "cameraPreflightMinClearance": 49.4,
+  "fileMB": 4.4,
   "sourceCompare": "out/report/notes/console-retro-source/comparaison.jpg",
   "grazingFinalShotSec": 3.7,
-  "recognitionCopy": "recognition.py sur copie (scratchpad) après revue : 1er voisin aquarelle-conte « phare d'Alexandrie » (0,6208), frère à 0,6635 : échec maintenu, documenté"
+  "recognitionCopy": "recognition.py sur copie (scratchpad) après revue : 1er voisin aquarelle-conte « phare d'Alexandrie » (0,6208), frère à 0,6635 : échec maintenu, documenté",
+  "sourceCompareAfter": "out/report/notes/console-retro-source/comparaison-avant-apres.jpg",
+  "detailPass": "out/report/notes/survol-pixel-detail.md : diffCells natif 0,111 → 0,153 (source 0,221), grandes plages > 5 % de l'écran 85 → 80 % (source 50 %), pixels A-B-A 0,23 → 0,38 % (source 4,0 %)"
  },
  "facts": [
   {
@@ -131,6 +133,6 @@
    "source": "manuels de géologie marine ; simplification assumée : les variations du niveau de la mer ne sont pas montrées"
   }
  ],
- "notes": "Monde inventé, un seul sujet centré (pas d'archipel, ≤ 3 nuages) pour ne pas reprendre la composition de la source (C15). Le relief en marches est une convention de dessin, dit à l'écran (C18). Nuance connue (Ladd lui-même) : les forages prouvent l'affaissement, mais toutes les îles ne passent pas forcément par les trois stades ; la voix reste au niveau du modèle de Darwin. Rendu : moteur src/survol.py (lancer de rayon par pixel, 96 pas + 6 bissections), monde 360×360, coupe 100×100 jusqu'au socle −72.",
+ "notes": "Monde inventé, un seul sujet centré (pas d'archipel) pour ne pas reprendre la composition de la source (C15). Passe de détail du 18/11 : le plafond « ≤ 4 nuages » de C15 est levé (24 nuages, 3–11 dans le cadre) sur la consigne de la passe (« nuages en piles hachurées avec ombres décalées », pour répondre au propriétaire : « la source est beaucoup plus détaillée ») ; contrôle C15 refait (planche comparaison-avant-apres.jpg) : aucune image confondable avec la source (un seul anneau centré, pas d'archipel, pas d'avion, cartouches) ; décision à confirmer, le retour à 4 nuages tient à _clouds() dans video.py. Le relief en marches est une convention de dessin, dit à l'écran (C18). Nuance connue (Ladd lui-même) : les forages prouvent l'affaissement, mais toutes les îles ne passent pas forcément par les trois stades ; la voix reste au niveau du modèle de Darwin. Rendu : moteur src/survol.py (lancer de rayon par pixel, 96 pas + 6 bissections), monde 360×360, coupe 100×100 jusqu'au socle −72.",
  "reproduce": "export SURVOL_CACHE=/private/tmp/survol-pixel/survol-pixel__explicatif__comment-nait-un-atoll && SVI_SLOTS=4 out/tools/slot.sh .venv/bin/python out/shorts/survol-pixel__explicatif__comment-nait-un-atoll/src/video.py --out $SURVOL_CACHE/video.mp4 && .venv/bin/python out/tools/sound.py out/shorts/survol-pixel__explicatif__comment-nait-un-atoll/src/sound.json $SURVOL_CACHE/music.wav && .venv/bin/python out/tools/assemble.py mux --video $SURVOL_CACHE/video.mp4 --music $SURVOL_CACHE/music.wav --out out/shorts/survol-pixel__explicatif__comment-nait-un-atoll/short.mp4 && cp out/shorts/survol-pixel__explicatif__comment-nait-un-atoll/short.mp4 out/shorts/survol-pixel__explicatif__comment-nait-un-atoll/short_novo.mp4"
 }

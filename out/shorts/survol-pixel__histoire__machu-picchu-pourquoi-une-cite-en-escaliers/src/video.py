@@ -27,7 +27,7 @@ DUR = 18.8
 K = 1.8                       # échelle du monde (unités par « mètre de maquette »)
 G = 640
 C0 = G / 2
-DH_NAT, DH_AG = 6.0 * K, 2.5 * K
+DH_NAT, DH_AG = 3.5 * K, 1.6 * K
 CITY_Z = 72.0 * K
 CUT_X0, CUT_X1 = C0 + 12 * K, C0 + 33 * K
 CUT_Y0, CUT_Y1 = C0 - 27 * K, C0 - 21 * K
@@ -43,6 +43,8 @@ pal.set_lut('shadow', {
     'HAZE': 'SKY_MID', 'LAND_FAR': 'GRASS_D', 'MUTED': 'INK', 'CREAM': 'HATCH', 'FOAM': 'SHALLOW'})
 pal.set_lut('haze1', {n: 'LAND_FAR' for n in ('GRASS_L', 'GRASS_M', 'GRASS_D', 'FOREST', 'GRANITE', 'GRANITE_SH',
                                               'THATCH', 'EARTH', 'OCEAN_MID', 'SHALLOW', 'FOAM')})
+pal.set_lut('speckle', {'GRASS_L': 'GRASS_M', 'GRASS_M': 'GRASS_L', 'GRASS_D': 'GRASS_M', 'FOREST': 'GRASS_D',
+                        'GRANITE': 'GRANITE_SH', 'GRANITE_SH': 'GRANITE', 'THATCH': 'EARTH', 'EARTH': 'THATCH'})
 pal.set_lut('haze2', {n: 'HAZE' for n in pal.names if n not in ('CLOUD', 'HATCH', 'CREAM', 'INK')})
 
 _W = {}
@@ -113,13 +115,22 @@ def world():
     col[city] = pal['GRANITE']
     col[plaza & city] = pal['GRASS_L']
     col[bld] = pal['THATCH']
+    # toits à deux pans : moitié est à l'ombre (faîtage nord-sud)
+    roof_sh = bld & (((xx - C0) % (6 * K)) > 3.6 * K)
+    col[roof_sh] = pal['EARTH']
     col[river] = pal['OCEAN_MID']
     col[river & (rng.random((G, G)) < 0.05)] = pal['FOAM']
     # pied des marches : trait sombre
     higher = np.zeros((G, G), bool)
     for sh in ((1, 0), (-1, 0), (0, 1), (0, -1)):
         higher |= np.roll(top, sh, (0, 1)) > top + 0.1
+    lower_n = np.zeros((G, G), bool)
+    for sh in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+        lower_n |= np.roll(top, sh, (0, 1)) < top - 0.1
     foot = higher & ~river & ~bld
+    # rebord éclairé du haut de chaque terrasse (deux lignes par marche : rebord clair, pied sombre)
+    lip = lower_n & ~higher & agz & ~river
+    col[lip] = pal['GRASS_L']
     col[foot & agz] = pal['GRASS_D']
     col[foot & ~agz & ~city & (top <= 100 * K)] = pal['FOREST']
     col[foot & (top > 100 * K)] = pal['GRANITE_SH']
@@ -152,8 +163,11 @@ def world():
         return out
 
     w = S.World(top, col, fl, fd, cut=cut, section=section, outside=pal['FOREST'], zmin=-1.0,
-                outside_tile=np.full((8, 8), pal['FOREST'], np.uint8), cut_top0=top0)
-    _W.update(w=w, top0=top0, agz=agz)
+                outside_tile=np.full((8, 8), pal['FOREST'], np.uint8), cut_top0=top0, coursed=stone & ~(top > 100 * K))
+    # forêt de nuage en grappes sur les pentes naturelles (pas sur les terrasses, la cité, la roche ni la rivière)
+    wild = ~agz & ~city & ~river & ~cut & (top > 6 * K) & (top < 100 * K) & (e > 2.3)
+    trees = S.scatter_trees(wild, top, SEED + 31, density=0.42, r=(1.0, 1.7), cluster=(n2 + 0.2) * 1.8)
+    _W.update(w=w, top0=top0, agz=agz, trees=trees)
     return w
 
 
@@ -183,10 +197,29 @@ LLAMA = ["...EE...................",
 llama = S.Billboard([S.sprite_from_ascii(LLAMA, {'E': 'EARTH', 'L': 'CREAM', 'K': 'INK', 'M': 'MUTED',
                                                  'R': 'RED', 'G': 'GOLD'}, pal)], d1=72)
 
-CLOUDS = [S.Cloud(C0 + 70 * K, C0 + 10 * K, 52 * K, 9 * K, 3, SEED + 1),
-          S.Cloud(C0 - 75 * K, C0 + 30 * K, 50 * K, 8 * K, 2, SEED + 2),
-          S.Cloud(C0 + 55 * K, C0 - 100 * K, 58 * K, 10 * K, 3, SEED + 3)]
 DRIFT = (1.2, 0.8)
+CLOUD_Z = 50 * K               # nuages bas, sous la cité (forêt de nuage), une seule altitude
+
+
+def _clouds():
+    """14 tas de coton à une seule altitude autour de la montagne, jamais traversés par la caméra (≥ 45 unités +
+    rayon sur tout le short) ; le premier tiers près de la vallée pour la plongée."""
+    rng = np.random.default_rng(SEED + 23)
+    ts = np.arange(0.0, DUR + 0.01, 0.2)
+    cams = np.array([S.Cam(cam_path.at(float(t)), 416.0).pos for t in ts])
+    out = []
+    tries = 0
+    while len(out) < 14 and tries < 5000:
+        tries += 1
+        x, y = C0 + rng.uniform(-150, 150) * K, C0 + rng.uniform(-150, 130) * K
+        R_ = float(rng.uniform(7.0, 11.0)) * K
+        if math.hypot(x - C0, y - C0) < 45 * K or any(math.hypot(x - c.x, y - c.y) < 30 * K for c in out):
+            continue
+        P = np.stack([x + DRIFT[0] * ts, y + DRIFT[1] * ts, np.full_like(ts, CLOUD_Z)], 1)
+        if np.linalg.norm(P - cams, axis=1).min() < 45 + R_:
+            continue
+        out.append(S.Cloud(x, y, CLOUD_Z, R_, int(rng.integers(2, 5)), SEED + 100 + len(out)))
+    return out
 
 CITY = (C0, C0 - 2 * K, CITY_Z)
 CUTC = ((CUT_X0 + CUT_X1) / 2, CUT_Y1, None)
@@ -194,12 +227,15 @@ cam_path = S.CameraPath([
     (0.0, dict(tx=C0, ty=C0 + 4 * K, tz=CITY_Z, dist=520, yaw=-42, pitch=9, roll=0), 'linear'),
     (4.9, dict(tx=C0, ty=C0 + 4 * K, tz=CITY_Z, dist=430, yaw=-32, pitch=11, roll=-2), 'linear'),
     (5.5, dict(tx=C0 + 6 * K, ty=C0 - 6 * K, tz=CITY_Z - 10 * K, dist=330, yaw=-22, pitch=64, roll=0), 'inOutSine'),
-    (9.3, dict(tx=C0 + 7 * K, ty=C0 - 7 * K, tz=CITY_Z - 10 * K, dist=310, yaw=-12, pitch=62, roll=0), 'linear'),
+    (9.3, dict(tx=C0 + 7 * K, ty=C0 - 7 * K, tz=CITY_Z - 10 * K, dist=312, yaw=-16, pitch=62, roll=0), 'linear'),
     (9.9, dict(tx=(CUT_X0 + CUT_X1) / 2, ty=CUT_Y1, tz=0, dist=70, yaw=-36, pitch=19, roll=0), 'inOutSine'),
     (14.6, dict(tx=(CUT_X0 + CUT_X1) / 2 - 3, ty=CUT_Y1, tz=0, dist=60, yaw=-26, pitch=17, roll=0), 'linear'),
     (15.2, dict(tx=C0 + 4 * K, ty=C0, tz=CITY_Z, dist=300, yaw=-30, pitch=20, roll=0), 'inOutSine'),
     (18.8, dict(tx=C0, ty=C0 + 6 * K, tz=CITY_Z, dist=430, yaw=-52, pitch=16, roll=0), 'linear'),
 ])
+
+
+CLOUDS = []                    # rempli par build(), une fois la caméra des plans de coupe posée sur la terrasse
 
 
 def cut_target_z():
@@ -208,7 +244,7 @@ def cut_target_z():
     return float(_W['top0'][yi, xi])
 
 
-R = S.Renderer(pal, focal=416.0, haze_d=(700.0, 1300.0), steps=128)
+R = S.Renderer(pal, focal=416.0, haze_d=(700.0, 1300.0), steps=128, course=0.9 * K)
 
 CARDS = [
     (0.12, 4.9, ['MACHU PICCHU'], 20, S.CX_SAFE, 62, 'ct', {}),
@@ -284,6 +320,7 @@ def frame_idx(t, cam_override=None):
     idx, depth, _ = R.ground(w, cam, t, shadows)
     lx, ly = (CUT_X0 + CUT_X1) / 2 + 6 * K, CUT_Y0 - 3.0 * K
     gz = float(_W['top0'][int(ly), int(lx)])
+    S.draw_trees(idx, depth, cam, pal, _W['trees'], R.sun)
     llama.draw(idx, depth, cam, pal, lx, ly, gz, gz, sun=R.sun, max_scale_log=LLAMA_SCALE)
     rain(idx, depth, cam, t)
     S.draw_clouds(idx, depth, cam, pal, CLOUDS, t, DRIFT)
@@ -306,6 +343,8 @@ def build():
     for k in cam_path.keys:
         if abs(k[1]['tx'] - (CUT_X0 + CUT_X1) / 2) < 6 and k[1]['tz'] == 0:
             k[1]['tz'] = zt - 1.5 * K
+    if not CLOUDS:
+        CLOUDS[:] = _clouds()
     return S.Short(pal, DUR, frame_idx, lambda t: (S.Cam(cam_path.at(t), R.focal), world()))
 
 

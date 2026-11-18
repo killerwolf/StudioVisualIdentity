@@ -9,7 +9,7 @@ Prérequis : `.venv` Python 3.11 avec numpy, scipy, Pillow ≥ 10 (lit les .woff
 `SURVOL_CACHE` reçoit le cache du bruit opensimplex (.npy, calculé une fois) et les fichiers intermédiaires ; jamais dans le dépôt.
 
 Fichiers :
-- `survol.py` : moteur de l'identité, **copie identique dans chaque short** (même md5) : caméra sténopé unique, lancer de rayon par pixel sur carte de hauteurs en terrasses, plan z = 0 en forme close, cartes réduites par vote majoritaire, brume et ombres par tables d'indices, nuages en piles de disques, panneaux jamais agrandis, cartouches Jersey avec assertions de largeur (≤ 214 px natifs) et de zone sûre, rendu rgb24 → x264.
+- `survol.py` : moteur de l'identité, **copie identique dans chaque short** (même md5) : caméra sténopé unique, lancer de rayon par pixel sur carte de hauteurs en terrasses, plan z = 0 en forme close, cartes réduites par vote majoritaire, brume et ombres par tables d'indices, nuages en tas de boules de coton (hachure, liseré bleuté, ombres), arbres en grappes (boules au rayon projeté, ombre portée), micro-détail sous la cellule (lecture décalée + moucheture, seulement quand une cellule couvre ≥ 2 px), murs appareillés, panneaux jamais agrandis, cartouches Jersey avec assertions de largeur (≤ 214 px natifs) et de zone sûre, rendu rgb24 → x264.
 - `video.py` : la scène (monde, caméra, cartouches, épingles, objets).
 - `sound.json` : musique `pad` lydian + souffles, swell, pop, chime (sound.py).
 - `test_jersey_grid.py` : test de grille des polices Jersey (C8), sortie non nulle en cas d'écart.

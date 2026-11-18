@@ -41,6 +41,8 @@ pal.set_lut('haze1', {
     'OCEAN': 'WATER_FAR', 'OCEAN_MID': 'WATER_FAR', 'SHALLOW': 'WATER_FAR', 'LAGOON': 'SKY_LO', 'FOAM': 'WATER_FAR',
     'SH_WATER': 'OCEAN_MID', 'GRASS_L': 'LAND_FAR', 'GRASS_M': 'LAND_FAR', 'GRASS_D': 'LAND_FAR', 'FOREST': 'LAND_FAR',
     'SAND': 'LAND_FAR', 'ROCK': 'LAND_FAR', 'CORAL': 'LAND_FAR'})
+pal.set_lut('speckle', {'GRASS_L': 'GRASS_M', 'GRASS_M': 'GRASS_L', 'GRASS_D': 'GRASS_M', 'SAND': 'LIMESTONE',
+                        'ROCK': 'BASALT', 'CORAL': 'SAND', 'LIMESTONE': 'SAND', 'FOREST': 'GRASS_D'})
 pal.set_lut('haze2', {n: 'HAZE' for n in pal.names if n not in ('CLOUD', 'HATCH', 'CREAM', 'INK')})
 
 # ------------------------------------------------------------------ champs fixes du monde
@@ -70,9 +72,20 @@ def fields():
               cut=(xx > C0 - CUTW) & (xx < C0 + CUTW) & (yy < C0) & (yy > C0 - CUT_D))
     rng = np.random.default_rng(SEED)
     _F['surf'] = rng.random((G, G)) < 0.45
+    _F['rag'] = S.ragged((G, G), SEED + 11, 1.0)                 # seuils crénelés (hauts-fonds, plage)
+    _F['shelf'] = 0.55 + 0.8 * (S.noise_field(G, 22.0, SEED + 13, CACHE, 2) + 1) / 2   # pente du front externe, irrégulière
+    _F['patch'] = S.noise_field(G, 7.0, SEED + 17, CACHE, 1)        # pâtés coralliens du lagon
+    tr = S.scatter_trees(np.ones((G, G), bool), np.zeros((G, G), np.float32), SEED + 19, density=0.55,
+                         r=(0.75, 1.25), cluster=(n2 + 0.05) * 2.2)
+    _F['trees'] = tr
     _F['tiles'] = [S.foam_tile(pal, 64, SEED + 3, 'OCEAN', phase=k) for k in (0, 1)]
     _F['tiles_mid'] = [S.foam_tile(pal, 64, SEED + 3, 'OCEAN_MID', phase=k) for k in (0, 1)]
     return _F
+
+
+def dep_amp(d):
+    """amplitude du crénelage selon la profondeur : fort sur les hauts-fonds, nul au large"""
+    return np.where(d < 18, 3.0, 0.0)
 
 
 def build_world(s, u_cut, t):
@@ -84,10 +97,13 @@ def build_world(s, u_cut, t):
     # s'abaisse lentement ; partout ailleurs le calcaire coiffe le basalte.
     crest = (band > -1.0) & (band < 6.0)
     lag_floor = -(0.6 + 7.0 * s)
-    outer = -0.3 - np.clip(band - 6.0, 0, None) * 1.7
+    outer = -0.3 - np.clip(band - 6.0, 0, None) * f['shelf']
     Hc = np.where(crest, -0.3, np.where(band >= 6.0, np.maximum(outer, -DEPTH), lag_floor))
     Hc = np.where(band < -1.0, np.maximum(Bs, lag_floor) if s > 0 else Bs, Hc)
     Hc = np.maximum(Hc, Bs)
+    # pâtés coralliens dans le lagon (seulement quand il existe) : têtes de corail sous 1 m d'eau
+    patch = (band < -3.0) & (f['patch'] > 0.45) & (Hc < -1.0) & (s > 0.25)
+    Hc = np.where(patch, -0.9, Hc)
     # motu (îlots de sable sur l'anneau) quand l'île centrale a disparu
     motu = crest & f['motu'] & (s > 0.55) & (band > 0.5) & (band < 4.5)
     Hc = np.where(motu, 0.6, Hc)
@@ -97,10 +113,11 @@ def build_world(s, u_cut, t):
     top = np.where(motu, 0.6, top)
     # couleurs du dessus
     col = np.full((G, G), pal['OCEAN'], np.uint8)
-    dep = -Hc
-    col[dep < 12] = pal['OCEAN_MID']
-    col[dep < 4] = pal['SHALLOW']
-    col[dep < 1.2] = pal['LAGOON']
+    dep = -Hc + f['rag'] * np.clip(dep_amp(-Hc), 0, 3.0)        # seuils crénelés, quelques cellules isolées
+    col[dep < 14] = pal['OCEAN_MID']
+    col[dep < 6] = pal['SHALLOW']
+    col[dep < 1.6] = pal['LAGOON']
+    col[patch & (f['rag'] > 0.3)] = pal['CORAL']
     reef_core = crest & (band > 0.0) & (band < 3.5) & ~land
     col[reef_core] = pal['CORAL']
     surf = (band > 5.2) & (band < 7.0) & f['surf'] & ~land
@@ -204,22 +221,47 @@ PALM = ["...G.G.G...",
 bird = S.Billboard([S.sprite_from_ascii(fr, {'K': 'INK', 'M': 'MUTED', 'R': 'RED'}, pal) for fr in FRIGATE], d1=330)
 palm = S.Billboard([S.sprite_from_ascii(PALM, {'G': 'GRASS_M', 'D': 'GRASS_D', 'T': 'ROCK'}, pal)], d1=170)
 
-CLOUDS = [S.Cloud(C0 - 40, C0 - 125, 46, 9, 3, SEED + 1), S.Cloud(C0 + 115, C0 + 40, 46, 8, 2, SEED + 2),
-          S.Cloud(C0 - 125, C0 - 70, 46, 9, 3, SEED + 4)]
-DRIFT = (1.6, 0.5)
+DRIFT = (2.6, 0.9)
+CLOUD_Z = 90.0
+
+
+def _clouds():
+    """24 tas de coton à une seule altitude (CLOUD_Z = 90 : au-dessus de la caméra des plans rasants, ombre décalée
+    de ≈ 60 cellules comme dans la source), répartis dans le champ du survol, hors de l'anneau (rayon ≥ 88) pour
+    ne jamais le masquer, jamais traversés par la caméra (≥ 45 unités + rayon sur tout le short). Plus hauts que la
+    caméra des plans rasants, ils restent dans le ciel et ne passent jamais devant la coupe ; tailles de la source (≈ 100–250 cellules en plongeante)."""
+    rng = np.random.default_rng(SEED + 23)
+    ts = np.arange(0.0, DUR + 0.01, 0.2)
+    cams = np.array([S.Cam(cam_path.at(float(t)), 416.0).pos for t in ts])
+    out = []
+    tries = 0
+    while len(out) < 24 and tries < 5000:
+        tries += 1
+        x, y = C0 + rng.uniform(-170, 150), C0 + rng.uniform(-300, 230)
+        R_ = float(rng.uniform(9.0, 13.0))
+        if math.hypot(x - C0, (y - C0) * 1.06) < 88 or any(math.hypot(x - c.x, y - c.y) < 34 for c in out):
+            continue
+        P = np.stack([x + DRIFT[0] * ts, y + DRIFT[1] * ts, np.full_like(ts, CLOUD_Z)], 1)
+        if np.linalg.norm(P - cams, axis=1).min() < 45 + R_:
+            continue
+        out.append(S.Cloud(x, y, CLOUD_Z, R_, int(rng.integers(2, 5)), SEED + 100 + len(out)))
+    return out
 
 # ------------------------------------------------------------------ caméra (une seule pour tout le short)
 cam_path = S.CameraPath([
-    (0.0, dict(tx=C0, ty=C0, tz=0, dist=360, yaw=-18, pitch=70, roll=0), 'linear'),
-    (3.2, dict(tx=C0, ty=C0, tz=0, dist=345, yaw=-34, pitch=68, roll=0), 'linear'),
+    (0.0, dict(tx=C0 - 4, ty=C0 - 8, tz=0, dist=385, yaw=-18, pitch=70, roll=0), 'linear'),
+    (3.2, dict(tx=C0 + 1, ty=C0 - 1, tz=0, dist=330, yaw=-32, pitch=68, roll=0), 'linear'),
     (3.8, dict(tx=C0 + 2, ty=C0 - 4, tz=8, dist=250, yaw=-45, pitch=16, roll=0), 'inOutSine'),   # le piqué
     (7.4, dict(tx=C0 - 2, ty=C0 + 2, tz=8, dist=228, yaw=-36, pitch=14, roll=-3), 'inOutSine'),
-    (11.3, dict(tx=C0, ty=C0, tz=4, dist=236, yaw=-50, pitch=15, roll=2), 'inOutSine'),
+    (11.3, dict(tx=C0, ty=C0, tz=4, dist=222, yaw=-50, pitch=15, roll=2), 'inOutSine'),
     (12.1, dict(tx=C0 + 6, ty=C0 + 4, tz=-8, dist=250, yaw=-10, pitch=32, roll=0), 'inOutSine'),  # la remontée
     (14.9, dict(tx=C0 + 4, ty=C0 + 4, tz=-8, dist=245, yaw=-4, pitch=30, roll=0), 'linear'),
     (15.5, dict(tx=C0 + 2, ty=C0 + 10, tz=-4, dist=212, yaw=0, pitch=17, roll=0), 'inOutSine'),   # rasante finale
-    (18.6, dict(tx=C0, ty=C0 + 12, tz=-4, dist=222, yaw=5, pitch=15, roll=0), 'linear'),
+    (18.6, dict(tx=C0, ty=C0 + 34, tz=-4, dist=206, yaw=5, pitch=15, roll=0), 'linear'),          # la caméra avance
 ])
+
+
+CLOUDS = _clouds()
 
 
 def sink(t):
@@ -272,6 +314,16 @@ def frame_idx(t, cam_override=None, s_override=None, u_override=None):
     cam = S.Cam(p, R.focal)
     shadows = S.cloud_shadow_disks(CLOUDS, R.sun, t, DRIFT)
     idx, depth, _ = R.ground(w, cam, t, shadows)
+    # arbres en grappes sur les terrasses vertes du volcan (pied posé sur le dessus de la cellule)
+    tr = fields()['trees']
+    txi = np.clip(tr[:, 0].astype(int), 0, G - 1)
+    tyi = np.clip(tr[:, 1].astype(int), 0, G - 1)
+    tz = w.top[tyi, txi]
+    on = (tz > 0.45 + DH * 0.9) & (tz < 0.45 + DH * 8.5) & ~(w.cut[tyi, txi])
+    if on.any():
+        T = tr[on].copy()
+        T[:, 2] = tz[on]
+        S.draw_trees(idx, depth, cam, pal, T, R.sun)
     # palmiers des motu (atoll)
     if s > 0.7:
         f = fields()

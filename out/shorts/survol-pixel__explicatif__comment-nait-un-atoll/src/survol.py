@@ -45,7 +45,7 @@ CORE = {
     'SH_WATER': '#143F7E', 'GRASS_L': '#93D94E', 'GRASS_M': '#5DB534', 'GRASS_D': '#2F7A2A', 'FOREST': '#174A22',
     'CLOUD': '#FBFDFE', 'HATCH': '#AFBBC6', 'SKY_HI': '#6FB4E3', 'SKY_MID': '#96CBEB', 'SKY_LO': '#BFE2F1',
     'HAZE': '#EFE2BF', 'CREAM': '#FBF3D5', 'INK': '#14213D', 'WATER_FAR': '#5B9DCD', 'LAND_FAR': '#92B9A4',
-    'RED': '#B5341A', 'GOLD': '#FFC94A', 'MUTED': '#5A5F73',
+    'RED': '#B5341A', 'GOLD': '#FFC94A', 'MUTED': '#5A5F73', 'CLOUD_RIM': '#CFE3F2',
 }
 
 
@@ -66,6 +66,7 @@ class Palette:
         self.shadow = np.arange(n, dtype=np.uint8)   # ombre portée : indice -> indice plus sombre
         self.haze1 = np.arange(n, dtype=np.uint8)    # brume 1 (lointain)
         self.haze2 = np.arange(n, dtype=np.uint8)    # brume 2 (bande d'horizon)
+        self.speckle = np.arange(n, dtype=np.uint8)  # micro-détail : moucheture sous la cellule (identité = aucune)
 
     def __getitem__(self, k):
         return self.idx[k]
@@ -178,8 +179,9 @@ class World:
     flank_lit / flank_dark : indice de flanc par cellule ; cut : masque de coupe ; section(x, y, z, cut_side) -> indices."""
 
     def __init__(self, top, col, flank_lit, flank_dark, cut=None, section=None, outside=0, zmin=-1.0, levels=3,
-                 outside_tile=None, cut_top0=None):
+                 outside_tile=None, cut_top0=None, coursed=None):
         self.G = top.shape[0]
+        self.coursed = coursed        # masque des parois appareillées (assises + joints décalés), None = aucune
         self.top = top.astype(np.float32)
         self.col = [col.astype(np.uint8)]
         for _ in range(levels):
@@ -214,9 +216,27 @@ class World:
 
 
 # ---------------------------------------------------------------- rendu du sol
+def hash01(ix, iy, k=0):
+    """Bruit blanc fixe dans le monde : entiers -> [0, 1) (hachage entier, déterministe, sans état)."""
+    h = (np.asarray(ix, np.int64) * 73856093) ^ (np.asarray(iy, np.int64) * 19349663) ^ (np.asarray(k, np.int64) * 83492791)
+    h = (h ^ (h >> 13)) * 1274126177
+    h = h ^ (h >> 16)
+    return ((h & 0xFFFF).astype(np.float32)) / 65536.0
+
+
+def ragged(shape, seed, amp=1.0):
+    """Décalage fixe par cellule dans [-amp/2, amp/2) : rend crénelés les seuils d'un champ continu (bandes de
+    hauts-fonds, plages, lisières) avec quelques cellules isolées, comme la source."""
+    return ((np.random.default_rng(seed).random(shape) - 0.5) * amp).astype(np.float32)
+
+
 class Renderer:
-    def __init__(self, pal, focal=416.0, sun=(0.30, -0.62), sky=None, haze_d=(None, None), steps=96, mip_bias=0.0):
+    def __init__(self, pal, focal=416.0, sun=(0.30, -0.62), sky=None, haze_d=(None, None), steps=96, mip_bias=0.0,
+                 micro=0.12, jitter=0.42, course=0.0):
         self.pal = pal
+        self.micro = micro            # probabilité de moucheture par sous-cellule (texels agrandis seulement)
+        self.jitter = jitter          # amplitude (en cellules) du décalage de lecture : bords crénelés sous la cellule
+        self.course = course          # hauteur d'assise des parois appareillées (unités monde), 0 = pas d'appareil
         self.focal = focal
         self.sun = np.array(sun, np.float32)                  # décalage d'ombre au sol par unité d'altitude
         Ll = np.array([-sun[0], -sun[1]], np.float32)         # direction horizontale vers la lumière
@@ -362,6 +382,35 @@ class Renderer:
                     c = w.tile[L]
                     cidx[m] = c[np.floor(hy[m] / (1 << L)).astype(np.int64) % c.shape[0],
                                 np.floor(hx[m] / (1 << L)).astype(np.int64) % c.shape[1]]
+        # micro-détail sous la cellule (texels agrandis, niveau 0 seulement) : la lecture de la carte est décalée par
+        # un bruit fixe dans le monde, sur une sous-grille de 2^m cases par cellule choisie pour qu'une sous-case fasse
+        # ≈ 1–2 pixels natifs ; les frontières de couleur deviennent des escaliers irréguliers au lieu de grands carrés,
+        # et une moucheture (table pal.speckle) sème des touffes. Indices de palette seulement : rien n'est moyenné.
+        if self.micro > 0 or self.jitter > 0:
+            mm = (lvl == 0) & ingrid & ~is_wall
+            if mm.any():
+                mi = np.nonzero(mm)[0]
+                m = np.clip(np.floor(-np.log2(np.maximum(fp[mi], 1e-3))), 0, 3).astype(np.int64)
+                n_sub = (1 << m).astype(np.float32)
+                sx_ = np.floor(hx[mi] * n_sub).astype(np.int64)
+                sy_ = np.floor(hy[mi] * n_sub).astype(np.int64)
+                h1 = hash01(sx_, sy_, m)
+                h2 = hash01(sx_ + 7919, sy_ - 104729, m)
+                if self.jitter > 0:
+                    sub = m >= 1
+                    jx = np.where(sub, (h1 - 0.5) * 2 * self.jitter, 0.0)
+                    jy = np.where(sub, (h2 - 0.5) * 2 * self.jitter, 0.0)
+                    xj = np.clip((hx[mi] + jx).astype(np.int32), 0, G - 1)
+                    yj = np.clip((hy[mi] + jy).astype(np.int32), 0, G - 1)
+                    same = np.abs(w.top[yj, xj] - topv[mi]) < 0.05      # même dessus : on ne lit pas une autre marche
+                    if w.cut is not None:
+                        same &= w.cut[yj, xj] == w.cut[yi[mi], xi[mi]]
+                    cidx[mi] = np.where(same, w.col[0][yj, xj], cidx[mi])
+                if self.micro > 0:
+                    h3 = hash01(sx_ - 31337, sy_ + 4242, m)
+                    # seulement quand une cellule couvre ≥ 2 pixels : à 1 pixel par cellule, la moucheture crénèle
+                    # (mesuré : +0,9 point de pixels qui changent par image sur les flancs de Machu Picchu)
+                    cidx[mi] = np.where((h3 < self.micro) & (m >= 1), pal.speckle[cidx[mi]], cidx[mi])
         # parois
         if is_wall.any():
             wi = np.nonzero(is_wall)[0]
@@ -376,6 +425,17 @@ class Renderer:
             wc = np.where(lit, w.flank_lit[yi[wi], xi[wi]], w.flank_dark[yi[wi], xi[wi]])
             # au loin (mip ≥ 1), la contremarche prend la couleur réduite du dessus : plus d'alternance dessus/flanc
             far = lvl[wi] >= 1
+            if self.course > 0 and w.coursed is not None:
+                # appareil de pierre : une assise sombre toutes les `course` unités, joints verticaux décalés d'une
+                # demi-pierre d'une assise à l'autre ; seulement si l'assise fait ≥ 3 pixels natifs (pas de moiré)
+                cw = w.coursed[yi[wi], xi[wi]] & (fp[wi] * 3.0 < self.course)
+                if cw.any():
+                    hzw = hz[wi]
+                    alg = np.where(np.abs(nx) > 0, hy[wi], hx[wi])
+                    row = np.floor(hzw / self.course)
+                    bed = (hzw / self.course - row) < np.maximum(0.2, fp[wi] / self.course)
+                    joint = ((alg / (1.8 * self.course) + 0.5 * (row % 2)) % 1.0) < np.maximum(0.1, fp[wi] / (1.8 * self.course))
+                    wc = np.where(cw & (bed | joint), pal.shadow[wc], wc)
             wc = np.where(far, cidx[wi], wc)
             if w.section is not None:
                 from_cut = w.cut[yp, xp] & ~w.cut[yi[wi], xi[wi]]
@@ -416,27 +476,36 @@ class Renderer:
 
 # ---------------------------------------------------------------- nuages
 class Cloud:
+    """Nuage = tas de boules (« coton ») : une couronne de 3–5 boules à l'altitude z, 1–3 boules empilées au-dessus,
+    parfois une boule sommitale. disks : (dx, dy, dz, rayon) en unités monde. lobes règle la taille du tas."""
+
     def __init__(self, x, y, z, R, lobes=3, seed=0):
         rng = np.random.default_rng(seed)
         self.x, self.y, self.z, self.R = x, y, z, R
-        # pile de disques : (dx, dy, dz, rayon)
         self.disks = []
-        for k in range(lobes):
-            f = 1.0 - 0.22 * k
-            self.disks.append((float(rng.uniform(-0.25, 0.25) * R), float(rng.uniform(-0.25, 0.25) * R),
-                               k * 0.42 * R, R * f))
-        # lobes latéraux
-        for k in range(2):
+        nb = int(rng.integers(3, 6)) + max(0, lobes - 3)
+        a0 = rng.uniform(0, 2 * math.pi)
+        for k in range(nb):
+            a = a0 + 2 * math.pi * k / nb + rng.uniform(-0.3, 0.3)
+            d = R * rng.uniform(0.35, 0.65)
+            self.disks.append((math.cos(a) * d, math.sin(a) * d, 0.0, R * rng.uniform(0.42, 0.62)))
+        for k in range(int(rng.integers(1, 3)) + (1 if lobes >= 3 else 0)):
             a = rng.uniform(0, 2 * math.pi)
-            self.disks.append((math.cos(a) * 0.7 * R, math.sin(a) * 0.7 * R, 0.15 * R, 0.6 * R))
+            d = R * rng.uniform(0.0, 0.3)
+            self.disks.append((math.cos(a) * d, math.sin(a) * d, R * rng.uniform(0.38, 0.55), R * rng.uniform(0.45, 0.6)))
+        if lobes >= 3 and rng.random() < 0.6:
+            self.disks.append((rng.uniform(-0.15, 0.15) * R, rng.uniform(-0.15, 0.15) * R, R * 0.8, R * 0.38))
 
     def at(self, t, drift=(0.0, 0.0)):
         return self.x + drift[0] * t, self.y + drift[1] * t
 
 
 def draw_clouds(idx, depth, cam, pal, clouds, t, drift=(0.0, 0.0)):
-    """Disques horizontaux projetés (ellipses), dessinés à la taille projetée au pixel près : jamais agrandis."""
-    CL, HA = pal['CLOUD'], pal['HATCH']
+    """Chaque boule = disque écran au rayon projeté (dessiné au pixel près, jamais agrandi), légèrement aplati en
+    rasante ; haut blanc, moitié basse hachurée une ligne sur deux, liseré bleuté au bas, reflet sommital.
+    Ordre du peintre (loin -> près, bas -> haut) et test de profondeur contre le sol."""
+    CL, HA, RIM = pal['CLOUD'], pal['HATCH'], pal['CLOUD_RIM']
+    flat = 0.62 + 0.38 * math.sin(math.radians(max(cam.pitch, 0.0)))
     items = []
     for c in clouds:
         cx, cy = c.at(t, drift)
@@ -445,55 +514,152 @@ def draw_clouds(idx, depth, cam, pal, clouds, t, drift=(0.0, 0.0)):
             sx, sy, zc = cam.project(P)
             if zc < 1:
                 continue
-            items.append((float(zc), P, r))
-    # du plus lointain au plus proche ; à profondeur égale, le disque le plus haut en dernier
-    items.sort(key=lambda it: (-it[0], it[1][2]))
-    jj, ii = np.mgrid[0:NH, 0:NW]
-    for zc, P, r in items:
-        # ellipse projetée : on échantillonne le disque par son contour
-        ang = np.linspace(0, 2 * math.pi, 24, endpoint=False)
-        ring = np.stack([P[0] + r * np.cos(ang), P[1] + r * np.sin(ang), np.full_like(ang, P[2])], 1)
-        sx, sy, z = cam.project(ring)
-        if (z < 1).any():
+            items.append((float(zc), float(sx), float(sy), r, dz))
+    items.sort(key=lambda it: (-round(it[0] / 4), it[4]))
+    for zc, sx, sy, r, dz in items:
+        rp = cam.F * r / zc
+        if rp < 0.6:
             continue
-        x0, x1 = int(math.floor(sx.min())), int(math.ceil(sx.max()))
-        y0, y1 = int(math.floor(sy.min())), int(math.ceil(sy.max()))
+        ax, ay = max(rp, 0.6), max(rp * flat, 0.6)
+        x0, x1 = int(math.floor(sx - ax)), int(math.ceil(sx + ax))
+        y0, y1 = int(math.floor(sy - ay)), int(math.ceil(sy + ay))
         if x1 < 0 or y1 < 0 or x0 >= NW or y0 >= NH:
             continue
         x0c, x1c, y0c, y1c = max(x0, 0), min(x1, NW - 1), max(y0, 0), min(y1, NH - 1)
         if x1c < x0c or y1c < y0c:
             continue
-        cxs, cys, _ = cam.project(P)
-        ax = max((x1 - x0) / 2, 0.5)
-        ay = max((y1 - y0) / 2, 0.5)
-        sub_i = ii[y0c:y1c + 1, x0c:x1c + 1] + 0.5
-        sub_j = jj[y0c:y1c + 1, x0c:x1c + 1] + 0.5
-        m = ((sub_i - (x0 + x1) / 2) / ax) ** 2 + ((sub_j - (y0 + y1) / 2) / ay) ** 2 <= 1.0
+        jj, ii = np.mgrid[y0c:y1c + 1, x0c:x1c + 1]
+        u = (ii + 0.5 - sx) / ax
+        v = (jj + 0.5 - sy) / ay
+        m = u * u + v * v <= 1.0
         dsub = depth[y0c:y1c + 1, x0c:x1c + 1]
         m &= dsub > zc
         if not m.any():
             continue
-        lower = sub_j > (y0 + y1) / 2 + ay * 0.05
-        hatch = lower & ((jj[y0c:y1c + 1, x0c:x1c + 1] % 2) == 0)
-        # liseré bas (rangée la plus basse de l'ellipse)
         sub = idx[y0c:y1c + 1, x0c:x1c + 1]
-        sub[m] = CL
-        sub[m & hatch] = HA
-        edge = m & ~np.roll(m, -1, axis=0)
-        sub[edge & lower] = HA
+        col = np.full(m.shape, CL, np.uint8)
+        lower = (v > 0.12 - 0.25 * u) & (ay >= 2)
+        col[lower & (jj % 2 == 0)] = HA
+        rim = m & ~np.roll(m, -1, axis=0)
+        rim[-1, :] = m[-1, :]
+        col[rim & (v > 0.3)] = RIM
+        sub[m] = col[m]
         dsub[m] = zc
 
 
 def cloud_shadow_disks(clouds, sun, t, drift=(0.0, 0.0), ground_z=0.0):
+    """Ombre plate au sol : les boules de la couronne, décalées selon l'altitude (une seule altitude de nuages)."""
     out = []
     for c in clouds:
         cx, cy = c.at(t, drift)
         h = c.z - ground_z
         for (dx, dy, dz, r) in c.disks:
-            if dz > 0.01 and r < 0.75 * c.R:
+            if dz > 0.01:
                 continue
-            out.append((cx + dx + sun[0] * h, cy + dy + sun[1] * h, r * 0.95))
+            out.append((cx + dx + sun[0] * h, cy + dy + sun[1] * h, r * 1.05))
     return out
+
+
+# ---------------------------------------------------------------- arbres en grappes
+def scatter_trees(mask, ground, seed, density=0.5, r=(0.9, 1.6), cluster=None, jitter=0.45):
+    """Arbres semés sur les cellules de `mask` (proba `density` par cellule, modulée par `cluster` dans [0, 1]) :
+    renvoie (N, 4) = x, y, z du pied, rayon (unités monde). Fixe, calculé une fois."""
+    rng = np.random.default_rng(seed)
+    p = np.full(mask.shape, density, np.float32)
+    if cluster is not None:
+        p = p * np.clip(cluster, 0, 1)
+    keep = mask & (rng.random(mask.shape) < p)
+    ys, xs = np.nonzero(keep)
+    n = len(xs)
+    x = xs + 0.5 + rng.uniform(-jitter, jitter, n)
+    y = ys + 0.5 + rng.uniform(-jitter, jitter, n)
+    z = ground[ys, xs]
+    rr = rng.uniform(r[0], r[1], n)
+    return np.stack([x, y, z, rr], 1).astype(np.float32)
+
+
+_STAMPS = {}
+
+
+def tree_stamp(rp):
+    """Boule d'arbre de rayon rp pixels : 0 = vide, 1 = ombre propre, 2 = feuillage, 3 = reflet, 4 = éclat."""
+    if rp in _STAMPS:
+        return _STAMPS[rp]
+    n = 2 * rp + 1
+    j, i = np.mgrid[0:n, 0:n] - rp
+    u, v = i / max(rp, 1), j / max(rp, 1)
+    rad = u * u + v * v
+    st = np.zeros((n, n), np.uint8)
+    inside = (i * i + j * j) <= rp * rp + rp * 0.8
+    st[inside] = 2
+    st[inside & (u + v > 0.75)] = 1
+    st[inside & ((u + 0.4) ** 2 + (v + 0.45) ** 2 < 0.28)] = 3
+    if rp >= 3:
+        st[inside & ((u + 0.45) ** 2 + (v + 0.5) ** 2 < 0.05)] = 4
+    if rp == 1:
+        st[:] = 0
+        st[1, 1] = 2
+        st[0, 1] = st[1, 0] = 3
+        st[1, 2] = st[2, 1] = 1
+    _STAMPS[rp] = st
+    return st
+
+
+def draw_trees(idx, depth, cam, pal, trees, sun, colors=('FOREST', 'GRASS_D', 'GRASS_M', 'GRASS_L'), lift=1.0,
+               max_r=7, shadows=True):
+    """Boules de feuillage au rayon projeté (pixel près, plafonnées à max_r : jamais d'agrandissement d'un dessin),
+    ombre portée plate au sol décalée selon la hauteur (table d'ombre), reflet haut-gauche, ombre propre bas-droite.
+    colors : (ombre propre, feuillage, reflet, éclat)."""
+    if trees is None or not len(trees):
+        return
+    sh_c, base_c, hi_c, sp_c = (pal[c] for c in colors)
+    C = np.stack([trees[:, 0], trees[:, 1], trees[:, 2] + trees[:, 3] * lift], 1)
+    sx, sy, zc = cam.project(C)
+    rp = cam.F * trees[:, 3] / np.maximum(zc, 1e-3)
+    # seuil 1,25 px : en dessous, la carte de couleurs (forêt sombre) suffit ; les boules de 1 px qui apparaissent et
+    # disparaissent d'une image à l'autre faisaient grésiller les rasantes (allers-retours A-B-A mesurés ×3).
+    vis = (zc > 1) & (rp >= 1.25) & (sx > -10) & (sx < NW + 10) & (sy > -10) & (sy < NH + 10)
+    if not vis.any():
+        return
+    ids = np.nonzero(vis)[0]
+    # pas de test sur le seul pixel du pied (il bascule sur les arêtes des marches) : l'occultation se fait pixel par
+    # pixel ci-dessous, avec une profondeur constante par arbre.
+    order = ids[np.argsort(-zc[ids])]
+    # ombres d'abord (sur le sol seulement)
+    hgt = trees[order, 3] * (1.0 + lift)
+    G_ = np.stack([trees[order, 0] + sun[0] * hgt, trees[order, 1] + sun[1] * hgt, trees[order, 2]], 1)
+    gx, gy, gz = cam.project(G_)
+    flat = max(0.35, math.sin(math.radians(max(cam.pitch, 0.0))))
+    for k, ti in enumerate(order if shadows else ()):
+        r_ = int(min(max_r, round(rp[ti])))
+        if r_ < 1 or gz[k] < 1:
+            continue
+        x0, y0 = int(round(gx[k])) - r_, int(round(gy[k] - r_ * flat))
+        hh = max(1, int(round((2 * r_ + 1) * flat)))
+        m = tree_stamp(r_)[np.minimum((np.arange(hh) / flat).astype(int), 2 * r_)] > 0
+        h, w_ = m.shape
+        xa, ya, xb, yb = max(x0, 0), max(y0, 0), min(x0 + w_, NW), min(y0 + h, NH)
+        if xb <= xa or yb <= ya:
+            continue
+        mm = m[ya - y0:yb - y0, xa - x0:xb - x0] & (np.abs(depth[ya:yb, xa:xb] - gz[k]) < 6.0 + 0.05 * gz[k])
+        sub = idx[ya:yb, xa:xb]
+        sub[mm] = pal.shadow[sub[mm]]
+    lut = np.array([0, sh_c, base_c, hi_c, sp_c], np.uint8)
+    for ti in order:
+        r_ = int(min(max_r, round(rp[ti])))
+        if r_ < 1:
+            continue
+        st = tree_stamp(r_)
+        x0, y0 = int(round(sx[ti])) - r_, int(round(sy[ti])) - r_
+        h, w_ = st.shape
+        xa, ya, xb, yb = max(x0, 0), max(y0, 0), min(x0 + w_, NW), min(y0 + h, NH)
+        if xb <= xa or yb <= ya:
+            continue
+        s_ = st[ya - y0:yb - y0, xa - x0:xb - x0]
+        dsub = depth[ya:yb, xa:xb]
+        mm = (s_ > 0) & (dsub > zc[ti] - 2.5 * trees[ti, 3])
+        idx[ya:yb, xa:xb][mm] = lut[s_[mm]]
+        dsub[mm] = np.minimum(dsub[mm], zc[ti])
 
 
 # ---------------------------------------------------------------- panneaux (objets dessinés en code)

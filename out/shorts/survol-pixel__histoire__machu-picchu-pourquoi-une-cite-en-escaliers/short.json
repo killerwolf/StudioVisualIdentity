@@ -13,9 +13,9 @@
   "ffmpeg"
  ],
  "seed": 1911,
- "renderTimeSec": 333.6,
- "renderSecPer100Frames": 59.1,
- "renderCostNote": "rendu complet après revue : 333,6 s pour 564 images = 59,1 s/100 images (≤ 60), en parallèle du rendu de l'atoll puis avec d'autres sessions ; charge 1 min 2,9 au départ, 23,4 à la fin (relevés /20 s : 2,9–29,0). Rendu précédent : 331,6 s (58,8/100, charge 5,2–16,1)",
+ "renderTimeSec": 356.0,
+ "renderSecPer100Frames": 63.1,
+ "renderCostNote": "passe de détail du 18/11 (moteur : arbres en grappes, murs appareillés, micro-détail, nuages en coton ; terrasses plus fines) : 356,0 s pour 564 images = 63,1 s/100 images, en parallèle du rendu de l'atoll ; charge 1 min 2,7 au départ, 3,4 à la fin (relevés /20 s : 2,7–8,9, moyenne 4,4). Banc 60 images avant rendu : 57,3 s/100 (charge 3,0). Rendu précédent (après revue) : 333,6 s (59,1/100, charge 2,9–29)",
  "measuredUnderLoad": true,
  "structure": [
   {
@@ -81,23 +81,27 @@
   "narrationWordsSpoken": 38,
   "wordsPerSecond": "2,27–2,58 (mots prononcés)",
   "pitchLe60Share": 0.787,
-  "colorsPerFrame": "natif : 16–17 en plongeante, 18–22 en rasante",
-  "dive": "src/dive/ (90/70/50/30/15°, même moteur, 14–17 couleurs)",
-  "clouds": "3",
+  "colorsPerFrame": "natif : 17–22 indices exacts par image (médiane 20), sans cartouches ; fichier décodé : 20–26 entrées de palette (blocs 4×4, ΔRGB ≤ 25) ; avant la passe de détail 13–21 natif",
+  "dive": "src/dive/ (90/70/50/30/15°, même moteur, 17–19 couleurs)",
+  "clouds": "3–7 nuages dans le cadre (compte exact du moteur, médiane 5) ; 14 nuages bas à une seule altitude, jamais traversés ; avant : 0–3",
   "photosensitivity": {
-   "maxLumaChange10Frames": 0.118,
-   "maxLumaStepFrame": 0.024,
-   "lumaMax": 0.575,
-   "lumaMean": 0.535,
+   "maxLumaChange10Frames": 0.109,
+   "maxLumaStepFrame": 0.025,
+   "lumaMax": 0.567,
+   "lumaMean": 0.524,
    "rainPixels": "gouttes 1×3 / 2×2 px natifs",
    "cloudCrossing": false
   },
   "llamaScale": "plafonné à 1:1 (d1/profondeur 1,34–1,69 : jamais agrandi, C4)",
-  "cameraPreflightMinClearance": 56.2,
-  "fileMB": 4.0,
+  "cameraPreflightMinClearance": 51.0,
+  "fileMB": 8.3,
   "reconstitutionLabel": "« reconstitution stylisée » à l'écran pendant tout le short",
-  "moireBand5_4to9s": "pixels qui changent par image dans la bande x 100–550, y 1180–1380 : 1,59 % en moyenne sur le fichier final (revue : 6,5 %) ; natif 1,3–1,5 % (8,8 % avant correctif)",
-  "recognitionCopy": "recognition.py sur copie après revue : 1er voisin = son frère (atoll, 0,6635) : réussite"
+  "moireBand5_4to9s": "pixels qui changent par image dans la bande x 100–550, y 1180–1380, 5,5–9,0 s, fichier final : 1,13 % après la passe de détail (même méthode sur le fichier d'avant : 1,50 % ; revue : 1,59 %). Rotation du plan ramenée de 10° à 6° en 3,8 s ; moucheture réservée aux cellules ≥ 2 px (sinon +0,9 point)",
+  "recognitionCopy": "recognition.py sur copie après revue : 1er voisin = son frère (atoll, 0,6635) : réussite",
+  "temporalAliasing": "pixels A-B-A (aller-retour sur 3 images) sur tout le fichier : 0,55 % → 1,40 % (source 4,0 %) ; pics aux piqués / remontées (3,7–5,5 %, comme avant) ; 1,4–3,2 % dans le plan final (forêt dense qui défile)",
+  "sourceCompareAfter": "out/report/notes/console-retro-source/comparaison-avant-apres.jpg",
+  "detailPass": "out/report/notes/survol-pixel-detail.md : diffCells natif 0,146 → 0,330 (source 0,221), grandes plages > 5 % 59 → 35 % (source 50 %)",
+  "treesDrawn": "2 965–5 884 boules d'arbres ≥ 1,25 px par image (compte du moteur, 1 image / 0,5 s)"
  },
  "facts": [
   {

@@ -41,9 +41,9 @@ le sujet. Références de genre seulement : diorama de musée, bloc-diagramme de
    calculée à **270×480** en indices de palette puis agrandie **×4 au plus proche voisin** (1080×1920). Aucun pixel plus
    gros ou plus petit que 4×4 : les objets ne sont jamais agrandis au-delà de 1:1 (C4), le texte est rendu à la grille
    native sans anticrénelage. Pas de tramage global, **pas d'effet d'écran** (ni scanlines, ni CRT, ni grain, ni
-   aberration, ni flou, ni vignettage). Mesuré sur les images natives (indices exacts, une image toutes les 0,5 s) : 15–17 couleurs en plongeante, 14–23 en
-   rasante ; sur les fichiers décodés (blocs 4×4, tolérance ΔRGB 25, revue) 18–28 entrées de palette par image, toutes
-   dans la palette déclarée et ≤ 32.
+   aberration, ni flou, ni vignettage). Mesuré sur les images natives (indices exacts, sans cartouches, une image toutes les 0,33 s ; passe de détail du 18/11) :
+   16–24 couleurs par image (atoll) et 17–22 (Machu Picchu), contre 13–21 avant ; sur les fichiers décodés (blocs 4×4,
+   tolérance ΔRGB 25) 20–28 entrées de palette par image, ≤ 0,35 % de blocs hors palette, palette déclarée de 28–29 couleurs ≤ 32.
 2. **La profondeur 3D est obligatoire (règle du propriétaire).** Jamais de rendu 2D plat. Chaque image montre **au moins
    deux indices de profondeur, dont un géométrique** (C2) parmi :
    - **sol en perspective** fuyant vers un **horizon** (« Mode 7 » généralisé : intersection rayon–plan par pixel) ;
@@ -93,9 +93,9 @@ Quand le sujet n'a pas de lieu, on lui **fabrique un monde-maquette** :
    dates. *Piqué* : entrée sur la route au début, remontée finale qui montre toute la frise d'un coup.
 
 ## Palette (rôles : fond, surface, accent 1-3, texte, danger/succès)
-Palette **indexée** : un noyau fixe de 23 couleurs (dérivé des mesures k-means de la source, puis déplacé : océan plus
+Palette **indexée** : un noyau fixe de 24 couleurs (dérivé des mesures k-means de la source, puis déplacé : océan plus
 profond, brume dorée, crème et encre, rouge et or) + **3 à 5 couleurs « biome »** déclarées par épisode. Les ombres, la
-brume et la brume d'horizon sont des **tables d'indices → indices** (jamais de mélange continu hors palette).
+brume, la brume d'horizon et la moucheture (micro-détail) sont des **tables d'indices → indices** (jamais de mélange continu hors palette).
 
 | Rôle | Hex | Usage | Contraste |
 |---|---|---|---|
@@ -109,7 +109,7 @@ brume et la brume d'horizon sont des **tables d'indices → indices** (jamais de
 | Écume | `#E6FAFF` | moutons (traits de 2–3 cellules), ressac, tireté du niveau de la mer | décoratif |
 | Ombre sur l'eau | `#143F7E` | ombres portées (table d'ombre) | décoratif |
 | Herbes ×3 / forêt | `#93D94E` `#5DB534` `#2F7A2A` / `#174A22` | marches alternées, trait de niveau, flancs | décoratif |
-| Nuage / hachure | `#FBFDFE` / `#AFBBC6` | lobes, moitié basse hachurée une ligne sur deux | décoratif |
+| Nuage / hachure / liseré | `#FBFDFE` / `#AFBBC6` / `#CFE3F2` | boules de coton, moitié basse hachurée une ligne sur deux, liseré bleuté au bas (ajouté le 18/11) | décoratif |
 | Ciel haut / milieu / bas | `#6FB4E3` `#96CBEB` `#BFE2F1` | paliers plats selon l'élévation du rayon | décoratif |
 | Brume dorée | `#EFE2BF` | bande d'horizon (ciel < 0,8° et sol lointain) | décoratif |
 | Lointains | `#5B9DCD` / `#92B9A4` | eau / terre au-delà de la 1re distance de brume | décoratif |
@@ -144,16 +144,31 @@ entières : la grille est exacte (test `src/test_jersey_grid.py` : 99/99 glyphes
 
 ## Formes & matières
 - **Le monde** : carte de hauteurs en **terrasses** (dessus constant par cellule) + carte de couleurs. Marches de 3,5 (atoll)
-  ou 2,5 et 6 unités (Machu Picchu) ; marches alternées de deux verts, trait sombre au pied de chaque marche, sommets de
-  roche, forêts en taches (bruit opensimplex calculé une fois).
-- **L'eau** : plan z = 0 ; couleur selon la profondeur du fond en 4 anneaux en escalier (lagon, haut-fond, océan moyen,
-  océan) ; moutons d'écume semés (≈ 1 pour 150 cellules) qui alternent entre deux phases à **2 Hz** ; ressac épars.
+  ou 2,9 (terrasses agricoles) et 6,3 unités (relief naturel) à Machu Picchu (affinées le 18/11 : 4,5 et 10,8 avant) ;
+  marches alternées de deux verts, **rebord clair en haut et trait sombre au pied** de chaque terrasse, sommets de roche,
+  toits à deux pans (moitié à l'ombre), forêts en taches (bruit opensimplex calculé une fois).
+- **Micro-détail sous la cellule** (18/11) : quand une cellule couvre ≥ 2 pixels natifs, le moteur lit la carte de couleurs
+  avec un petit décalage fixe dans le monde (bords en escaliers irréguliers au lieu de grands carrés) et sème une
+  **moucheture** (12 % des sous-cases, table `speckle` : touffes d'herbe, grains de granit, chaume). Jamais à 1 pixel par
+  cellule (crénelage mesuré). Indices seulement, rien n'est moyenné.
+- **Arbres en grappes** (18/11) : boules de feuillage au rayon projeté (≤ 7 px, jamais agrandies), reflet haut-gauche,
+  ombre propre bas-droite, **ombre portée plate** décalée selon la hauteur ; semées par grappes (bruit) sur les pentes
+  naturelles, les terrasses du volcan, jamais sur les terrasses agricoles, la cité ou les coupes.
+- **Murs appareillés** (18/11) : contremarches de pierre en assises (0,9 × échelle), joints décalés d'une demi-pierre,
+  seulement quand l'assise fait ≥ 3 pixels natifs.
+- **L'eau** : plan z = 0 ; couleur selon la profondeur du fond en 4 bandes **crénelées** (seuils décalés d'un bruit fixe par
+  cellule, quelques cellules isolées, front externe de pente irrégulière : bandes de 2 à 10 cellules) ; pâtés coralliens dans
+  le lagon ; moutons d'écume semés (≈ 1 pour 150 cellules) qui alternent entre deux phases à **2 Hz** ; ressac épars.
 - **Contremarches** : le flanc d'une marche prend la couleur de flanc du matériau (pierre : granit clair / granit ombre ;
   herbe : vert sombre / forêt), selon qu'il regarde la lumière nord-ouest ou non.
 - **Coupes** : une région du monde descend « comme un ascenseur » jusqu'à un socle de roche hachurée (jamais l'encre, couleur du texte) ; ses parois montrent la
   coupe colorée par une fonction de la scène (strates à joints, gravier moucheté, tireté du niveau de la mer).
-- **Nuages** : piles de 3–5 disques horizontaux projetés (ellipses aplaties en rasante, ronds en plongée), dessinés à la
-  taille projetée au pixel près, moitié basse hachurée une ligne sur deux, liseré bas. **≤ 4 à l'écran.**
+- **Nuages** (refaits le 18/11) : **tas de boules de coton** (couronne de 3–5 boules, 1–3 boules empilées au-dessus, parfois
+  une boule sommitale), chaque boule dessinée au rayon projeté au pixel près, un peu aplatie en rasante, haut blanc, moitié
+  basse hachurée une ligne sur deux, liseré bleuté au bas ; **ombres plates** des boules de la couronne, décalées selon
+  l'altitude. **3 à 11 dans le cadre** pour l'atoll (médiane 8 en plongeante ; source ≈ 13), 3 à 7 à Machu Picchu (avant : 0 à 3), à une seule altitude choisie **au-dessus de la caméra des
+  plans rasants** (ils restent dans le ciel et ne passent jamais devant la coupe), et placés pour que la caméra ne les
+  traverse jamais (contrôle sur tout le short).
 - **Objets** : panneaux ASCII (frégate 31×10 en 2 images d'ailes, palmier 11×10, lama 24×22), jamais agrandis, avec ombre.
 - **Cartouches** : rectangle crème, cadre encre 1 px, coin coupé d'un pixel, liseré crème extérieur 1 px, ombre plate (2, 2)
   par la table d'ombre (la même règle que les nuages). Plaque inversée : fond encre, cadre crème, texte or.
@@ -209,7 +224,7 @@ Cartouches centrés sur x = 128 (milieu de la bande sûre) ; récit en haut (y =
 ## Librairies recommandées et pourquoi
 - **numpy 2.4.6** : tout le moteur — lancer de rayon par pixel (marche à pas fixes dans la boîte du relief + 6 bissections,
   par paquets de 12 pas avec retrait des rayons arrivés), intersection rayon–plan, cartes réduites par vote majoritaire,
-  tables d'indices. Coût mesuré : **15,6–59,1 s / 100 images** sous charge (voir les `short.json`).
+  tables d'indices. Coût mesuré : **19,6–63,1 s / 100 images** sous charge (passe de détail du 18/11 ; 15,6–59,1 avant) (voir les `short.json`).
 - **Pillow 13.0.0** : texte Jersey sans anticrénelage (`fontmode "1"`, lit les `.woff2`), stills JPEG.
 - **opensimplex 0.4.5.1** : bruits du monde (côte irrégulière, forêts, crêtes), calculés une fois et mis en cache.
 - **scipy** (`binary_dilation`) : boîte englobante autour des coupes.
@@ -253,15 +268,20 @@ Cartouches centrés sur x = 128 (milieu de la bande sûre) ; récit en haut (y =
   plongeante.
 - **Coupe** : la regarder de face (cap perpendiculaire à la paroi), garder les épingles pendant toute la tenue, socle en
   roche hachurée assez haut pour rester < 5 % de l'image ; vue par l'arête, elle se lit comme un « trou noir ».
-- **Gros texels près de la caméra** : en rasante très proche, une cellule du monde fait jusqu'à 7 px natifs (blocs). C'est
-  le prix du « Mode 7 » ; garder la caméra à ≥ 60 unités d'une coupe, ou affiner la grille du monde (Machu Picchu : ×1,8).
-- **Coût** : le lancer de rayon par pixel coûte 15,6–59,1 s / 100 images sous charge ; un relief très étendu en rasante
+- **Gros texels près de la caméra** : en rasante très proche, une cellule du monde fait jusqu'à 7 px natifs. Depuis le
+  18/11, le micro-détail casse les grands carrés de couleur (bords en escalier, moucheture), mais la **géométrie** reste en
+  cellules : les bords de terrasse vus de près gardent un escalier régulier. Garder la caméra à ≥ 60 unités d'une coupe,
+  ou affiner la grille du monde (Machu Picchu : ×1,8).
+- **Densité contre scintillement** : plus de détail = plus de pixels qui changent quand la caméra tourne. Mesuré sur les
+  flancs de Machu Picchu : moucheture à 1 pixel par cellule +0,9 point (d'où la règle « ≥ 2 pixels ») ; rotation du plan en
+  plongeante ramenée à 6° en 3,8 s. Re-mesurer la bande de la revue après tout changement de détail ou de caméra.
+- **Coût** : le lancer de rayon par pixel coûte 19,6–63,1 s / 100 images sous charge (arbres, nuages et micro-détail : +4 s/100 environ) ; un relief très étendu en rasante
   approche le budget de 60 s (augmenter `steps` coûte en proportion). Repli prévu : volumes en « sprite stacking ».
 - **Relief en marches = convention de dessin** : les terrasses d'un volcan ne sont pas un fait ; le dire à l'écran
   (Jersey 10) quand le public est jeune.
 - **Confusions possibles** : pixel-arcade (même grille ×4 : on s'en sépare par le plein jour, la perspective, les
   ombres, Jersey et les cartouches crème), carte-meteo (mer bleue vue de haut : notre océan est profond et saturé,
-  luminance moyenne d'image Y mesurée 0,35–0,53 pour l'atoll et 0,41–0,57 pour Machu Picchu contre 0,77, et la rasante
+  luminance moyenne d'image Y mesurée 0,39–0,55 pour l'atoll et 0,43–0,57 pour Machu Picchu (après la passe de détail) contre 0,77, et la rasante
   occupe > 50 % du temps), topo-relief (survol de relief : courbes sombres,
   plein jour, aucune lecture d'altitude). Ressemblance avec *Pilotwings* (Mode 7 sur île) : aucun élément de jeu.
 - **Photosensibilité** : aucune image pleine en blanc, écume à 2 Hz, battement d'ailes à 3 Hz, pas de traversée de nuage ;
