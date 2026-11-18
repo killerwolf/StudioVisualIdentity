@@ -18,12 +18,17 @@
  *   --alpha : calque transparent (la page ne doit pas peindre de fond) -> PNG par frame -> .mov qtrle (RGBA) pour overlay ffmpeg
  *
  * SORTIE : écrit d'abord <out>.part.mp4, puis renomme. Imprime un JSON {frames, seconds, secPer100Frames}.
+ * NAVIGATEUR : Chromium de Playwright par défaut ; SVI_CHROME=<chemin d'un Chrome installé> le remplace (utile avec playwright-core seul).
  * SLOTS CPU : chaque rendu réserve un slot parmi nproc (verrous dans /tmp/svi-slots) — plusieurs agents
  *   peuvent lancer des rendus sans jamais dépasser le nombre de cœurs. --no-slot pour désactiver.
  */
 import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
-const { chromium } = require('playwright'); // résolu via NODE_PATH (Playwright préinstallé) ou node_modules
+// résolu via NODE_PATH (Playwright préinstallé) ou node_modules ; à défaut playwright-core (sans navigateur fourni :
+// donner alors le navigateur par SVI_CHROME, ex. SVI_CHROME="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome")
+let playwright;
+try { playwright = require('playwright'); } catch { playwright = require('playwright-core'); }
+const { chromium } = playwright;
 import http from 'node:http';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -123,7 +128,9 @@ async function main() {
   const flags = gl === 'swiftshader'
     ? ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist', '--disable-accelerated-2d-canvas']
     : ['--ignore-gpu-blocklist', '--disable-accelerated-2d-canvas'];
-  const browser = await chromium.launch({ args: [...flags, '--autoplay-policy=no-user-gesture-required', '--disable-web-security'] });
+  const launchOpts = { args: [...flags, '--autoplay-policy=no-user-gesture-required', '--disable-web-security'] };
+  if (process.env.SVI_CHROME) launchOpts.executablePath = process.env.SVI_CHROME;   // navigateur installé (facultatif)
+  const browser = await chromium.launch(launchOpts);
   const page = await browser.newPage({ viewport: { width: W, height: H }, deviceScaleFactor: 1 });
   const logs = [];
   page.on('console', m => { const s = `[page:${m.type()}] ${m.text()}`; logs.push(s); if (m.type() === 'error' || args.verbose) console.error(s); });

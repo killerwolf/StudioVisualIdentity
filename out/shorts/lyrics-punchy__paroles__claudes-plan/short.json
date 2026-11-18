@@ -1,0 +1,75 @@
+{
+ "identity": "lyrics-punchy",
+ "family": "paroles",
+ "title": "Claude's Plan — 19,5 premières secondes (paroles de remplissage en anglais)",
+ "hook": "Dès l'image 0 : « LYRICS » plein colonne (Anybody 900, axe wdth ajusté à 876 px) déjà en coup, couleur d'accent #E6FF4F sur le camaïeu nuit ; compteur de temps actif ; « PUNCHY » sur le premier temps de la 2e mesure",
+ "duration": 19.5,
+ "libraries": [
+  "@fontsource-variable/anybody 5.3.0",
+  "DOM + SVG (render.mjs, Chrome 157 par playwright-core 1.65.1)",
+  "difflib",
+  "ffmpeg"
+ ],
+ "seed": null,
+ "renderTimeSec": 116.9,
+ "renderNote": "render.mjs, 585 images, 20,0 s / 100 images, charge moyenne 4,5 à 15 (autres sessions actives) ; un 1er rendu (paroles de remplissage françaises, abandonnées) avait pris 177,9 s sous charge 24–33 en parallèle d'un 2e rendu ; la capture d'écran domine",
+ "measuredUnderLoad": true,
+ "data": "src/lyrics.remplissage.json (REMPLISSAGE : nos mots, en anglais comme le morceau, calés sur les horaires du morceau test) ; les vraies paroles et l'audio restent hors dépôt",
+ "tempo": {
+  "bpm": 154.5,
+  "t0": 0.0,
+  "source": "relevé AR-16, non redétecté"
+ },
+ "structure": [
+  {
+   "t": 0,
+   "beat": "plan 1 (nuit) : passage sans voix, titre en 2 rangs, un coup par mesure (LYRICS 0,0 s, PUNCHY 1,55 s)"
+  },
+  {
+   "t": 3.107,
+   "beat": "chute-de-pile vers lagon (sur le temps 8) ; ligne 1 en 3 rangs à partir de 3,2 s ; carton plan-mode à 5,05 s (coup), cases cochées sur les temps 1 et 2"
+  },
+  {
+   "t": 7.184,
+   "beat": "empilement de la ligne 1 ; ligne 2 en 2 rangs ; carton lignes décalé d'un temps (7,96 s au lieu de 7,57 s), 5 barres tapées une par croche"
+  },
+  {
+   "t": 10.291,
+   "beat": "empilement ; ligne 3, « 2.0 » en une unité ; carton version à 11,07 s, remonté et réduit à 421 px pour ne pas couvrir la 2e ligne du mur, tampon RELEASE en coup sur le 2e temps"
+  },
+  {
+   "t": 12.816,
+   "beat": "chute-de-pile vers braise (9,7 s après la précédente) ; ligne 4 ; carton serveur-panne à 14,18 s (sur « MCP »), la diode passe au rouge sur le temps suivant"
+  },
+  {
+   "t": 16.699,
+   "beat": "empilement ; ligne 5 ; carton cles-api à 17,09 s, tenu jusqu'à la fin"
+  },
+  {
+   "t": 19.5,
+   "beat": "image de fin : mur d'une ligne en braise, ligne 5 vive, carton cles-api ; pas de noir, pas de fondu"
+  }
+ ],
+ "engagement": {
+  "mechanic": "lecture de la chanson au rythme (son TikTok)",
+  "cta": null
+ },
+ "loopable": false,
+ "sound": {
+  "type": "none",
+  "voice": false,
+  "music": "aucune dans le fichier : la chanson vient de la bibliothèque TikTok à la publication",
+  "silentTrack": true
+ },
+ "qualityChecks": {
+  "stillsReviewed": true,
+  "textMinPx": 56,
+  "safeAreaOk": true,
+  "audit": "out/tools/lyrics_audit.mjs, 585 images sur 585 : 0 texte hors de x 64–940 / y 220–1 560 au repos, 31 images de dépassement transitoire (entrées claque / coup, 3 à 5 images chacune, le mot arrive trop large et se resserre), tailles mini 120 px (ligne en cours) et 56 px (mur), 4 unités vives au plus, 2 lignes de mur au plus, aucun carton sur une ligne du mur encore lisible",
+  "lyricsRules": "lyrics_align.py --valider : unités ≥ 0,25 s, ≤ 6 unités et ≤ 3 rangs, écarts entre cartons 2,91 / 3,11 / 3,11 / 2,91 s, visuels 49 % du temps, un accent 2 par mesure au plus",
+  "maxWordsOnScreen": 6
+ },
+ "notes": "Vidéo de preuve de l'identité Lyrics punchy (concept, chaîne et storyboard : out/report/notes/lyrics-punchy/). Les horaires du storyboard (estimés à ±0,3 s) sont remplacés par ceux de la transcription : changements de section à 3,107 s et 12,816 s (sur un temps, avant le premier mot) au lieu de 3,9 et 13,3 s.",
+ "reproduce": "voir src/README.md",
+ "language": "en"
+}

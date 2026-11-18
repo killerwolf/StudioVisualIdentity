@@ -1,0 +1,21 @@
+{
+ "_doc": "Bibliothèque de déclencheurs de Lyrics punchy (concept.md § 8). match = mots ou expressions en minuscules sans accent ; les expressions de plusieurs mots sont cherchées avant les mots seuls et forment une seule unité d'affichage. dessin = fonction de dessins.js ; si elle manque, le moteur dessine un carton vide avec le mot (dessinManquant). Ajouter un déclencheur = une entrée ici + une fonction dans dessins.js.",
+ "triggers": [
+  { "id": "plan-mode", "match": ["plan mode"], "type": "carton", "dessin": "planMode", "temps": 4, "priorite": 2, "note": "pastille PLAN MODE + liste de 3 lignes, 2 cases se cochent sur 2 temps" },
+  { "id": "lignes", "match": ["lines", "lignes"], "type": "carton", "dessin": "lignes", "temps": 4, "priorite": 1, "note": "5 barres de texte tapées une par croche, sans couleur de syntaxe" },
+  { "id": "version", "match": ["2.0", "version"], "type": "carton", "dessin": "version", "temps": 4, "priorite": 2, "note": "étiquette v2.0 tamponnée (coup)" },
+  { "id": "serveur-panne", "match": ["server down", "mcp", "panne"], "type": "carton", "dessin": "serveurPanne", "temps": 4, "priorite": 2, "note": "baie de 3 tiroirs, la diode passe au rouge sur le temps suivant, 503, croix" },
+  { "id": "cles-api", "match": ["api keys", "api key", "cles", "cle"], "type": "carton", "dessin": "clesApi", "temps": 4, "priorite": 3, "note": "une clé et une chaîne masquée sk-••••" },
+  { "id": "fichier-md", "match": [".md", "markdown"], "type": "carton", "dessin": "fichierMd", "temps": 4, "priorite": 2, "note": "à dessiner (version longue)" },
+  { "id": "mauvais-changement", "match": ["bad change", "revert"], "type": "carton", "dessin": "mauvaisChangement", "temps": 4, "priorite": 2, "note": "à dessiner (version longue)" },
+  { "id": "ship", "match": ["ship it", "ship", "livre"], "type": "carton", "dessin": "ship", "temps": 4, "priorite": 2, "note": "à dessiner (version longue)" },
+  { "id": "sang", "match": ["sang", "blood"], "type": "eclat", "dessin": "sang", "temps": 2, "priorite": 3, "note": "type eclat : non implémenté dans le moteur v1" },
+  { "id": "feu", "match": ["feu", "flamme", "fire"], "type": "eclat", "dessin": "feu", "temps": 2, "priorite": 3, "note": "type eclat : non implémenté dans le moteur v1" },
+  { "id": "france", "match": ["france"], "type": "fond", "dessin": "france", "temps": 4, "priorite": 3, "note": "type fond + mode plaque : non implémenté dans le moteur v1" },
+  { "id": "tour-eiffel", "match": ["tour eiffel"], "type": "carton", "dessin": "tourEiffel", "temps": 4, "priorite": 2, "note": "silhouette de jour, à dessiner" },
+  { "id": "coeur", "match": ["coeur", "love", "heart"], "type": "carton", "dessin": "coeur", "temps": 4, "priorite": 1, "note": "à dessiner" },
+  { "id": "argent", "match": ["argent", "thune", "money", "cash"], "type": "carton", "dessin": "argent", "temps": 4, "priorite": 1, "note": "à dessiner" },
+  { "id": "nuit", "match": ["nuit", "lune", "night"], "type": "carton", "dessin": "nuit", "temps": 4, "priorite": 1, "note": "à dessiner" },
+  { "id": "telephone", "match": ["telephone", "phone"], "type": "carton", "dessin": "telephone", "temps": 4, "priorite": 1, "note": "à dessiner" }
+ ]
+}

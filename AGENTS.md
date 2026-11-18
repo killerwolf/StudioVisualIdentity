@@ -88,6 +88,16 @@ adversarial challenge, one studio per identity, integration, review (`out/report
   identity's two shorts are each other's nearest neighbour. Render cost measured with the two studios sharing 4 cores (load 1–5.5,
   `measuredUnderLoad: true`). Since the review, carte-meteo's heat-record short has no wind trails: wind is shown only when it is the subject.
 
+## Lyrics punchy (added 2026-11-19, status `added`, unranked)
+
+`lyrics-punchy` opens the content family **`paroles`**: a muted vertical lyric video (the song is added in the app at publication) where every
+row is justified to the 876 px column by the width axis of the variable font Anybody, past lines stack into a wall in tints of the
+background, and a tilted card illustrates one word per line. Lyrics are always shown in the song's language, never translated (Arabic:
+Noto Sans Arabic, right to left, specified but not yet coded). Engine: `out/shared/lyrics-moteur/` (a new episode = a new `lyrics.json`);
+tools: `out/tools/lyrics_align.py` (lyrics + word timestamps -> `lyrics.json`, readability rules) and `out/tools/lyrics_audit.mjs`
+(frame-by-frame safe-area check). Real lyrics and audio never enter this repository: the proof short uses English filler words.
+`render.mjs` also runs with `playwright-core` and an installed Chrome given by `SVI_CHROME`.
+
 ## Read in this order (≈ 10 minutes)
 
 1. **`out/identities/index.json`** — one entry per identity, ranked. For each: English promise, proven content families, libraries,
@@ -119,6 +129,7 @@ it does **not** depend on content family. For a given family, start from the ide
 | `engagement` (quiz / vote / bet) | pixel-arcade (3), brut-meme (4), bauhaus-kinetic (6), pastel-diorama (10), liquid-chrome (16) |
 | `enfants` (kids) | tableau-craie (7), trait-continu (9), pastel-diorama (10), aquarelle-conte (13) |
 | `abstrait` (satisfying / loops) | pixel-arcade (3), neon-lab (14), liquid-chrome (16) |
+| `paroles` (lyric video, muted) | lyrics-punchy (added 2026-11-19, unranked) |
 
 **Episode effort** (how much code a new topic needs): *data-driven* — swiss-data (new dataset in the same 4-screen grammar), brut-meme
 (new words/numbers), pixel-arcade (new seed / new rules), carte-meteo (mostly: the real map comes from world-atlas; a new topic =

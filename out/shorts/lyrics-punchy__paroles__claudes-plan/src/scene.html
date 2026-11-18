@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Lyrics punchy — scène</title>
+<!-- Anybody variable (SIL OFL 1.1), axes wdth 50–150 et wght 100–900 : fichier « standard » de @fontsource-variable/anybody 5.3.0 -->
+<link rel="stylesheet" href="/node_modules/@fontsource-variable/anybody/standard.css">
+<style>
+  html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: #2A1160; }
+  #stage { position: relative; width: 1080px; height: 1920px; overflow: hidden; }
+  .bg { position: absolute; inset: 0; }
+  .t { position: absolute; }
+  .t span { position: absolute; left: 0; white-space: nowrap; font-family: 'Anybody Variable'; line-height: 1; letter-spacing: 0; }
+  .dot { position: absolute; width: 26px; height: 26px; border-radius: 50%; }
+  .carton { position: absolute; }
+  .carton svg { display: block; }
+</style>
+</head>
+<body>
+<div id="stage"></div>
+<script type="module">
+  // ?data=<chemin relatif à cette page> : un lyrics.json (par défaut le jeu de REMPLISSAGE du dépôt) ; ?debug : zones sûres
+  import { start } from '/out/shared/lyrics-moteur/lyrics.js';
+  const q = new URLSearchParams(location.search);
+  start({ data: q.get('data') || 'lyrics.remplissage.json', debug: q.has('debug') });
+</script>
+</body>
+</html>

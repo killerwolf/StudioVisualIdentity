@@ -1,0 +1,258 @@
+{
+ "titre": "FILLER (our own words, not the song's lyrics)",
+ "artiste": "",
+ "langue": "en",
+ "bpm": 154.5,
+ "t0": 0.0,
+ "tempsParMesure": 4,
+ "duree": 19.5,
+ "sections": [
+  {
+   "id": "intro",
+   "debut": 0.0,
+   "fin": 3.107,
+   "camaieu": "nuit"
+  },
+  {
+   "id": "couplet",
+   "debut": 3.107,
+   "fin": 12.816,
+   "camaieu": "lagon"
+  },
+  {
+   "id": "tension",
+   "debut": 12.816,
+   "fin": 19.5,
+   "camaieu": "braise"
+  }
+ ],
+ "lignes": [
+  {
+   "section": "intro",
+   "debut": 0.0,
+   "fin": 3.107,
+   "unites": [
+    {
+     "texte": "LYRICS",
+     "t": 0.0,
+     "fin": 1.553,
+     "accent": 2,
+     "rang": 0,
+     "source": "main"
+    },
+    {
+     "texte": "PUNCHY",
+     "t": 1.553,
+     "fin": 3.107,
+     "accent": 2,
+     "rang": 1,
+     "source": "main"
+    }
+   ]
+  },
+  {
+   "section": "couplet",
+   "debut": 3.2,
+   "fin": 7.184,
+   "unites": [
+    {
+     "texte": "SUNRISE",
+     "t": 3.2,
+     "fin": 4.466,
+     "accent": 0,
+     "source": "main",
+     "rang": 0
+    },
+    {
+     "texte": "COFFEE",
+     "t": 4.466,
+     "fin": 5.049,
+     "accent": 0,
+     "source": "main",
+     "rang": 1
+    },
+    {
+     "texte": "IN PLAN MODE",
+     "t": 5.049,
+     "fin": 5.86,
+     "accent": 2,
+     "source": "main",
+     "rang": 2,
+     "declencheur": {
+      "id": "plan-mode",
+      "type": "carton",
+      "dessin": "planMode",
+      "debut": 5.049,
+      "fin": 6.99,
+      "temps": 4
+     }
+    }
+   ]
+  },
+  {
+   "section": "couplet",
+   "debut": 7.184,
+   "fin": 10.291,
+   "unites": [
+    {
+     "texte": "TYPING",
+     "t": 7.184,
+     "fin": 7.573,
+     "accent": 0,
+     "source": "main",
+     "rang": 0
+    },
+    {
+     "texte": "LINES",
+     "t": 7.573,
+     "fin": 7.961,
+     "accent": 2,
+     "source": "main",
+     "rang": 0,
+     "declencheur": {
+      "id": "lignes",
+      "type": "carton",
+      "dessin": "lignes",
+      "debut": 7.961,
+      "fin": 9.709,
+      "temps": 4,
+      "source": "main"
+     }
+    },
+    {
+     "texte": "BUT NO",
+     "t": 7.961,
+     "fin": 8.26,
+     "accent": 0,
+     "source": "main",
+     "rang": 1
+    },
+    {
+     "texte": "CODE",
+     "t": 8.26,
+     "fin": 9.14,
+     "accent": 0,
+     "source": "main",
+     "rang": 1
+    }
+   ]
+  },
+  {
+   "section": "couplet",
+   "debut": 10.291,
+   "fin": 13.01,
+   "unites": [
+    {
+     "texte": "STILL",
+     "t": 10.291,
+     "fin": 10.78,
+     "accent": 0,
+     "source": "main",
+     "rang": 0
+    },
+    {
+     "texte": "AROUND SINCE",
+     "t": 10.78,
+     "fin": 11.068,
+     "accent": 0,
+     "source": "main",
+     "rang": 1
+    },
+    {
+     "texte": "2.0",
+     "t": 11.068,
+     "fin": 12.2,
+     "accent": 2,
+     "source": "main",
+     "rang": 2,
+     "declencheur": {
+      "id": "version",
+      "type": "carton",
+      "dessin": "version",
+      "debut": 11.068,
+      "fin": 12.816,
+      "temps": 4
+     }
+    }
+   ]
+  },
+  {
+   "section": "tension",
+   "debut": 13.01,
+   "fin": 16.699,
+   "unites": [
+    {
+     "texte": "THE SERVER",
+     "t": 13.01,
+     "fin": 13.786,
+     "accent": 0,
+     "source": "main",
+     "rang": 0
+    },
+    {
+     "texte": "CRASHED",
+     "t": 13.786,
+     "fin": 14.175,
+     "accent": 0,
+     "source": "main",
+     "rang": 1
+    },
+    {
+     "texte": "ON MCP",
+     "t": 14.175,
+     "fin": 15.48,
+     "accent": 2,
+     "source": "main",
+     "rang": 2,
+     "declencheur": {
+      "id": "serveur-panne",
+      "type": "carton",
+      "dessin": "serveurPanne",
+      "debut": 14.175,
+      "fin": 15.922,
+      "temps": 4
+     }
+    }
+   ]
+  },
+  {
+   "section": "tension",
+   "debut": 16.699,
+   "fin": 19.5,
+   "unites": [
+    {
+     "texte": "AND ALL",
+     "t": 16.699,
+     "fin": 17.087,
+     "accent": 1,
+     "source": "main",
+     "rang": 0
+    },
+    {
+     "texte": "THE API KEYS",
+     "t": 17.087,
+     "fin": 17.6,
+     "accent": 2,
+     "source": "main",
+     "rang": 1,
+     "declencheur": {
+      "id": "cles-api",
+      "type": "carton",
+      "dessin": "clesApi",
+      "debut": 17.087,
+      "fin": 19.5,
+      "temps": 4
+     }
+    },
+    {
+     "texte": "LEAKED",
+     "t": 17.6,
+     "fin": 18.58,
+     "accent": 0,
+     "source": "main",
+     "rang": 2
+    }
+   ]
+  }
+ ]
+}
