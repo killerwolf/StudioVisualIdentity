@@ -13,9 +13,9 @@
 | Besoin | État |
 |---|---|
 | `.venv` du worktree `-lyrics` | absent ; celui du worktree principal a numpy, scipy, pillow, opencv, pycairo, pas d'outil audio |
-| faster-whisper | fonctionne par `uv run --with faster-whisper --with "av<16"` (rien d'installé globalement) ; modèles `small` et `small.en` déjà en cache ; le brouillon `transcription-mots.json` du morceau test existe déjà |
+| faster-whisper | fonctionne par `uv run --with faster-whisper --with "av<16"` (rien d'installé globalement) ; modèles `small` et `small.en` déjà en cache ; essai sur une phrase de synthèse : 13 mots horodatés en 10 s ; le brouillon `transcription-mots.json` du morceau test existe déjà |
 | librosa | **ne s'installe pas** : sa dépendance `llvmlite` 0.50 échoue à la compilation sur ce Mac (Intel, Python 3.11). Ne pas insister. |
-| Détection du tempo | scipy seul suffit (flux spectral, autocorrélation, puis recherche de phase) : environ 30 lignes. Non validé sur le vrai morceau ; inutile pour le test, le tempo est déjà mesuré. |
+| Détection du tempo | scipy seul (flux spectral, autocorrélation, puis recherche de phase), environ 30 lignes. Essai sur un métronome à 154,5 BPM : il trouve **77,2**, la moitié (erreur d'octave classique), phase juste à 20 ms près. Il faut donc borner la recherche (ex. 100–200 BPM) ou faire confirmer le tempo à l'oreille. Non essayé sur le vrai morceau ; inutile pour le test, le tempo est déjà mesuré. |
 | node | pas dans le `PATH` ; présent dans `~/.nvm/versions/node/v22.23.3/bin` (à ajouter au `PATH` de la commande) |
 | `node_modules`, Playwright | absents du worktree `-lyrics` : `npm i` à faire, comme le dit `AGENTS.md` |
 | Police | `@fontsource-variable/anybody` 5.3.0 existe sur npm |
