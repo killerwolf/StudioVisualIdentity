@@ -1,9 +1,14 @@
 {
  "language": "fr",
  "style": "conteur documentaire chaleureux, ≤ 2,6 mots/s (nombres comptés en mots prononcés) ; silence pendant les piqués",
- "voice": "Sulafat (Gemini) proposée",
- "voiceUsed": null,
- "voicePlanned": "à décider par le propriétaire (Gemini « Sulafat » comme le lot 2, ou Fish Audio « Arnold ») ; non enregistrée : aucune clé Gemini sur ce Mac, crédits Fish Audio épuisés",
+ "voice": "Sulafat (Gemini)",
+ "voiceUsed": {
+  "provider": "Gemini",
+  "name": "Sulafat",
+  "model": "gemini-3.8-flash-tts",
+  "date": "2026-11-18",
+  "note": "un seul appel pour tout le short (lignes séparées par <long pause>, nombres envoyés en toutes lettres), appel via une copie locale du script du skill gemini-voices forcée en api_version v1beta (le script d'origine, en v1, renvoie 404) ; découpé en voice_lines/NN.mp3 (bornes : horodatage des mots par faster-whisper small + silences) ; style « voix documentaire claire et posée, conteuse curieuse, débit régulier » (annotation, non lue) ; pauses internes > 0,25 s ramenées à 0,25 s ; mixé par out/tools/tts.py --engine files --replace ; décision du propriétaire du 18/11/2026"
+ },
  "wordsPerSecondTarget": 2.4,
  "totalWordsSpoken": 38,
  "lines": [

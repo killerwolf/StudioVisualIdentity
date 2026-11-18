@@ -514,9 +514,7 @@
   "short": "survol-pixel__explicatif__comment-nait-un-atoll",
   "ok": true,
   "errors": [],
-  "warnings": [
-   "voix off absente (narration.json a des lignes mais short.json.sound.voice est faux)"
-  ],
+  "warnings": [],
   "info": {
    "duration": 18.6,
    "width": 1080,
@@ -530,9 +528,7 @@
   "short": "survol-pixel__histoire__machu-picchu-pourquoi-une-cite-en-escaliers",
   "ok": true,
   "errors": [],
-  "warnings": [
-   "voix off absente (narration.json a des lignes mais short.json.sound.voice est faux)"
-  ],
+  "warnings": [],
   "info": {
    "duration": 18.8,
    "width": 1080,

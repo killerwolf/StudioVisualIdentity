@@ -50,10 +50,9 @@
  "loopable": false,
  "sound": {
   "type": "generated",
-  "voice": false,
+  "voice": true,
   "music": "pad, lydian, 84 bpm, gain 0.5 (un seul preset, sound.py)",
-  "voiceUsed": null,
-  "voicePlanned": "à décider par le propriétaire (Gemini Sulafat proposée) ; narration.json prête",
+  "voiceUsed": "Gemini Sulafat (gemini-3.8-flash-tts, API v1beta), 1 appel par short découpé en voice_lines/, mixé par tts.py --engine files (2026-11-18)",
   "sfx": [
    "swell 0,12 s",
    "whoosh 4,85 s",
@@ -63,7 +62,10 @@
    "pop 10,3 / 10,9 / 11,5 s (épingles)",
    "whoosh 14,55 s",
    "chime 15,2 s"
-  ]
+  ],
+  "voiceEngine": "gemini",
+  "voiceName": "Gemini – Sulafat",
+  "voiceProvider": "files"
  },
  "biome": {
   "GRANITE": "#9C968C",
@@ -122,5 +124,5 @@
   }
  ],
  "notes": "Reconstitution stylisée : la disposition générale (deux sommets, ensellement, rivière en boucle) est évoquée, aucune géométrie réelle n'est prétendue ; aucun nombre de terrasses, aucune affirmation sur les séismes ni sur les Espagnols (C19). La couche « sable et gravier » de Wright est fondue dans « gravier » pour tenir en trois mots. Lama et cité dessinés en code (originaux).",
- "reproduce": "export SURVOL_CACHE=/private/tmp/survol-pixel/survol-pixel__histoire__machu-picchu-pourquoi-une-cite-en-escaliers && SVI_SLOTS=4 out/tools/slot.sh .venv/bin/python out/shorts/survol-pixel__histoire__machu-picchu-pourquoi-une-cite-en-escaliers/src/video.py --out $SURVOL_CACHE/video.mp4 && .venv/bin/python out/tools/sound.py out/shorts/survol-pixel__histoire__machu-picchu-pourquoi-une-cite-en-escaliers/src/sound.json $SURVOL_CACHE/music.wav && .venv/bin/python out/tools/assemble.py mux --video $SURVOL_CACHE/video.mp4 --music $SURVOL_CACHE/music.wav --out out/shorts/survol-pixel__histoire__machu-picchu-pourquoi-une-cite-en-escaliers/short.mp4 && cp out/shorts/survol-pixel__histoire__machu-picchu-pourquoi-une-cite-en-escaliers/short.mp4 out/shorts/survol-pixel__histoire__machu-picchu-pourquoi-une-cite-en-escaliers/short_novo.mp4"
+ "reproduce": "export SURVOL_CACHE=/private/tmp/survol-pixel/survol-pixel__histoire__machu-picchu-pourquoi-une-cite-en-escaliers && SVI_SLOTS=4 out/tools/slot.sh .venv/bin/python out/shorts/survol-pixel__histoire__machu-picchu-pourquoi-une-cite-en-escaliers/src/video.py --out $SURVOL_CACHE/video.mp4 && .venv/bin/python out/tools/sound.py out/shorts/survol-pixel__histoire__machu-picchu-pourquoi-une-cite-en-escaliers/src/sound.json $SURVOL_CACHE/music.wav && .venv/bin/python out/tools/assemble.py mux --video $SURVOL_CACHE/video.mp4 --music $SURVOL_CACHE/music.wav --out out/shorts/survol-pixel__histoire__machu-picchu-pourquoi-une-cite-en-escaliers/short.mp4 && cp out/shorts/survol-pixel__histoire__machu-picchu-pourquoi-une-cite-en-escaliers/short.mp4 out/shorts/survol-pixel__histoire__machu-picchu-pourquoi-une-cite-en-escaliers/short_novo.mp4 && .venv/bin/python out/tools/tts.py out/shorts/survol-pixel__histoire__machu-picchu-pourquoi-une-cite-en-escaliers --engine files --replace  # voice_lines/ : 1 appel Gemini gemini-3.8-flash-tts Sulafat (API v1beta) découpé, voir out/report/notes/voix-survol-pixel.md"
 }

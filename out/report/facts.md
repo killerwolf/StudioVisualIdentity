@@ -110,6 +110,7 @@ Conditions : 10 studios en parallèle sur 4 cœurs ; load average mesuré **16�
 - Débordements après ×1,35 : swiss-data 0 ; pixel-arcade 0 ; liquid-chrome 2 (ligne 2 : 2,27 s pour 2,0 ; ligne 5 : 1,03 s pour 0,9 ; texte non réécrit).
 - Niveaux (moyenne / pic du short final) : swiss-data −17,5 / −1,3 dB ; pixel-arcade −20,6 / −1,7 dB ; liquid-chrome −18,1 / −1,6 dB. Réglages inchangés : musique −20 dB + sidechain, voix normalisée à 0,89. Durées identiques à la vidéo d'origine ; `check.py --all` : 23/23 OK.
 - Le rendu de swiss-data (test) n'est pas conservé : à refaire avec le reste. Voix non écoutée, seulement mesurée.
+- **API v1 contre v1beta (vérifié le 2026-11-18, voix de survol-pixel)** : le script `gemini_voix.py` du skill gemini-voices (google-genai, API `interactions`) appelle la version **v1** de l'API. En v1, `gemini-3.8-flash-tts` renvoie **404** (« Model … not found … set the API version to 'v1beta' »), `models.list` n'y montre aucun modèle `*-tts`, et le champ `speech_config` est refusé en **400** (« only available in v1beta »). Correctif : créer le client avec `http_options={"api_version": "v1beta", ...}` (les autres options inchangées), appliqué dans une copie locale du script ; le skill n'a pas été modifié. Le même script avait réussi pour le lot 2 le 2026-11-05 : le changement vient de l'API ou du SDK. Détail : `notes/voix-survol-pixel.md`.
 
 ## Voix off Fish Audio (connecteur) — mesures réelles
 

@@ -66,10 +66,9 @@
  "loopable": false,
  "sound": {
   "type": "generated",
-  "voice": false,
+  "voice": true,
   "music": "pad, lydian, 84 bpm, gain 0.5 (un seul preset, sound.py)",
-  "voiceUsed": null,
-  "voicePlanned": "à décider par le propriétaire (Gemini Sulafat proposée) ; narration.json prête",
+  "voiceUsed": "Gemini Sulafat (gemini-3.8-flash-tts, API v1beta), 1 appel par short découpé en voice_lines/, mixé par tts.py --engine files (2026-11-18)",
   "sfx": [
    "swell 0,15 s",
    "riser 2,8 s",
@@ -80,7 +79,10 @@
    "whoosh 11,35 s (remontée)",
    "whoosh 14,9 s (rasante finale)",
    "chime 15,0 s"
-  ]
+  ],
+  "voiceEngine": "gemini",
+  "voiceName": "Gemini – Sulafat",
+  "voiceProvider": "files"
  },
  "biome": {
   "SAND": "#EBDFA0",
@@ -134,5 +136,5 @@
   }
  ],
  "notes": "Monde inventé, un seul sujet centré (pas d'archipel) pour ne pas reprendre la composition de la source (C15). Passe de détail du 18/11 : le plafond « ≤ 4 nuages » de C15 est levé (24 nuages, 3–11 dans le cadre) sur la consigne de la passe (« nuages en piles hachurées avec ombres décalées », pour répondre au propriétaire : « la source est beaucoup plus détaillée ») ; contrôle C15 refait (planche comparaison-avant-apres.jpg) : aucune image confondable avec la source (un seul anneau centré, pas d'archipel, pas d'avion, cartouches) ; décision à confirmer, le retour à 4 nuages tient à _clouds() dans video.py. Le relief en marches est une convention de dessin, dit à l'écran (C18). Nuance connue (Ladd lui-même) : les forages prouvent l'affaissement, mais toutes les îles ne passent pas forcément par les trois stades ; la voix reste au niveau du modèle de Darwin. Rendu : moteur src/survol.py (lancer de rayon par pixel, 96 pas + 6 bissections), monde 360×360, coupe 100×100 jusqu'au socle −72.",
- "reproduce": "export SURVOL_CACHE=/private/tmp/survol-pixel/survol-pixel__explicatif__comment-nait-un-atoll && SVI_SLOTS=4 out/tools/slot.sh .venv/bin/python out/shorts/survol-pixel__explicatif__comment-nait-un-atoll/src/video.py --out $SURVOL_CACHE/video.mp4 && .venv/bin/python out/tools/sound.py out/shorts/survol-pixel__explicatif__comment-nait-un-atoll/src/sound.json $SURVOL_CACHE/music.wav && .venv/bin/python out/tools/assemble.py mux --video $SURVOL_CACHE/video.mp4 --music $SURVOL_CACHE/music.wav --out out/shorts/survol-pixel__explicatif__comment-nait-un-atoll/short.mp4 && cp out/shorts/survol-pixel__explicatif__comment-nait-un-atoll/short.mp4 out/shorts/survol-pixel__explicatif__comment-nait-un-atoll/short_novo.mp4"
+ "reproduce": "export SURVOL_CACHE=/private/tmp/survol-pixel/survol-pixel__explicatif__comment-nait-un-atoll && SVI_SLOTS=4 out/tools/slot.sh .venv/bin/python out/shorts/survol-pixel__explicatif__comment-nait-un-atoll/src/video.py --out $SURVOL_CACHE/video.mp4 && .venv/bin/python out/tools/sound.py out/shorts/survol-pixel__explicatif__comment-nait-un-atoll/src/sound.json $SURVOL_CACHE/music.wav && .venv/bin/python out/tools/assemble.py mux --video $SURVOL_CACHE/video.mp4 --music $SURVOL_CACHE/music.wav --out out/shorts/survol-pixel__explicatif__comment-nait-un-atoll/short.mp4 && cp out/shorts/survol-pixel__explicatif__comment-nait-un-atoll/short.mp4 out/shorts/survol-pixel__explicatif__comment-nait-un-atoll/short_novo.mp4 && .venv/bin/python out/tools/tts.py out/shorts/survol-pixel__explicatif__comment-nait-un-atoll --engine files --replace  # voice_lines/ : 1 appel Gemini gemini-3.8-flash-tts Sulafat (API v1beta) découpé, voir out/report/notes/voix-survol-pixel.md"
 }

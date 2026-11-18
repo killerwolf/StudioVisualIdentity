@@ -184,7 +184,7 @@ footer.colophon { margin-top: var(--s7); padding-top: var(--s4); border-top: 1px
     <div>
       <p class="eyebrow">Recherche exploratoire · shorts verticaux 1080×1920 · 30 fps</p>
       <h1>Dix-huit identités visuelles, <em>45 shorts</em> rendus par code</h1>
-      <p class="lede">Chaque identité est un design system lisible par un agent (tokens, mouvement, caméra, recettes par famille) et elle est prouvée par des vidéos réelles, rendues avec des librairies open-source sur 4 cœurs CPU. Les 14 identités de la campagne, l'identité papier de StudioGabarit (Papier découpé, avec ses 3 dérivations : même moteur, seuls le fond, la palette et les polices changent) les 2 du lot 2 de la fabrique d'identités (Carte Météo, Trait continu) et Survol pixel, un petit monde en pixel art 16 bits survolé en vraie profondeur 3D, d'après une vidéo source (pas encore de voix off) : 18 identités, 21 déclinaisons.</p>
+      <p class="lede">Chaque identité est un design system lisible par un agent (tokens, mouvement, caméra, recettes par famille) et elle est prouvée par des vidéos réelles, rendues avec des librairies open-source sur 4 cœurs CPU. Les 14 identités de la campagne, l'identité papier de StudioGabarit (Papier découpé, avec ses 3 dérivations : même moteur, seuls le fond, la palette et les polices changent) les 2 du lot 2 de la fabrique d'identités (Carte Météo, Trait continu) et Survol pixel, un petit monde en pixel art 16 bits survolé en vraie profondeur 3D, d'après une vidéo source : 18 identités, 21 déclinaisons.</p>
       <div class="reco">
         <span class="eyebrow">Recommandées pour une chaîne durable</span>
         <ol id="reco"></ol>
@@ -200,7 +200,7 @@ footer.colophon { margin-top: var(--s7); padding-top: var(--s4); border-top: 1px
       <div><span>Librairies A + B (+ ajouts)</span><b title="lot 2 : shapely, opensimplex, topojson-client, world-atlas ; Survol pixel : NumPy (moteur 3D), scipy, Jersey">8 + 11 (+7)</b></div>
       <div><span>Plus proche voisin</span><b id="m-recog">41 / 45</b></div>
       <div><span>Production</span><b>4 cœurs</b></div>
-      <div><span>Voix off</span><b title="31 Arnold (Fish Audio) + 12 Sulafat (Gemini : 8 papier + 4 lot 2) + 2 sans voix (Survol pixel, décision en attente)">31 Arnold + 12 Sulafat + 2 sans voix</b></div>
+      <div><span>Voix off</span><b title="31 Arnold (Fish Audio) + 14 Sulafat (Gemini : 8 papier + 4 lot 2 + 2 Survol pixel)">31 Arnold + 14 Sulafat</b></div>
     </div>
   </section>
 
@@ -244,7 +244,7 @@ footer.colophon { margin-top: var(--s7); padding-top: var(--s4); border-top: 1px
       </div>
       <div class="result">
         <p class="eyebrow">Signature couleur et contours mesurée</p>
-        <div class="big"><span id="r-hits">41</span><small> / <span id="r-total">43</span> plus proches voisins</small></div>
+        <div class="big"><span id="r-hits">41</span><small> / <span id="r-total">45</span> plus proches voisins</small></div>
         <p id="r-text">Histogramme couleur Lab et densité de contours sur 8 images par short, relancé sur les 45 shorts.</p>
       </div>
     </div>
@@ -271,7 +271,7 @@ footer.colophon { margin-top: var(--s7); padding-top: var(--s4); border-top: 1px
       <li><b>Physique Node ≠ navigateur</b><span>Math.atan2 diffère au dernier bit entre Node 22 et Chromium : la course de billes divergeait à l'image 102. Corrigé par une géométrie précalculée.</span></li>
       <li><b>Manim sans texte</b><span>Pas de Pango ni de LaTeX dans l'environnement : les titres des shorts Manim sont des calques PNG.</span></li>
       <li><b>Voix off lot 2 : Sulafat au lieu d'Arnold</b><span>Arnold était prévu, mais le plan gratuit Fish Audio n'a permis qu'une ligne sur 20. Les 4 shorts de Carte Météo et Trait continu sont voisés avec Gemini « Sulafat », la voix des identités papier : un appel par short, découpé en une ligne par fichier, puis mixé sous la musique. Voix mesurées, pas écoutées par l'assistant.</span></li>
-      <li><b>Survol pixel sans voix</b><span>Pas de clé Gemini sur le Mac et plus de crédits Fish Audio : les 2 shorts de Survol pixel sont livrés avec musique, bruitages et texte à l'écran ; la narration est prête, la voix attend la décision du propriétaire.</span></li>
+      <li><b>Voix off Survol pixel : Gemini en v1beta</b><span>Les 2 shorts de Survol pixel sont voisés avec Gemini « Sulafat », comme le lot 2 (un appel par short). Le script du skill appelait la version v1 de l'API, où le modèle de voix n'existe pas (erreur 404) : l'appel est passé en v1beta, dans une copie locale. Voix mesurées, pas écoutées par l'assistant.</span></li>
       <li><b>Survol pixel à moitié reconnu par la mesure couleur</b><span>Ses deux shorts (atoll bleu, Machu Picchu vert) n'ont pas la même palette : Machu Picchu retrouve l'atoll, mais l'atoll est plus proche d'Aquarelle Conte, sa sœur n'arrive que 4ᵉ. Sa signature est géométrique (perspective, terrasses, grille de pixels) : le juge visuel aveugle, lui, l'a isolée sans faute (6/6).</span></li>
       <li><b>Blender et Remotion non tentés</b><span>Niveau optionnel ; Blender Cycles coûte 25–30 s par image, incompatible avec 4 cœurs déjà saturés.</span></li>
     </ul>

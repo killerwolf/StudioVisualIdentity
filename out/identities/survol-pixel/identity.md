@@ -251,9 +251,11 @@ Cartouches centrés sur x = 128 (milieu de la bande sûre) ; récit en haut (y =
 - Comparaison avec la source : `out/report/notes/console-retro-source/comparaison.jpg`.
 
 ## Place de la voix off (où elle parlera, débit conseillé, ce que le visuel laisse libre)
-- **Voix non enregistrée** (décision du propriétaire en attente : Gemini « Sulafat » comme le lot 2, ou Fish Audio
-  « Arnold »). `narration.json` donne les lignes calées ; les shorts sont livrés avec musique et bruitages seulement, et
-  le texte à l'écran porte l'histoire sans le son.
+- **Voix : Gemini « Sulafat »** (décision du propriétaire du 18/11, comme le lot 2) : un appel `gemini-3.8-flash-tts` par
+  short en **API v1beta** (la v1 renvoie 404 pour ce modèle), lignes de `narration.json` jointes par `<long pause>`, nombres
+  en toutes lettres, style en annotation ; découpe en `voice_lines/NN.mp3` par horodatage des mots, mixage
+  `tts.py --engine files --replace` (`short_novo.mp4` garde musique et bruitages). Atoll −15,9 LUFS, Machu Picchu
+  −13,7 LUFS. Journal : `out/report/notes/voix-survol-pixel.md`. Le texte à l'écran porte toujours l'histoire sans le son.
 - Une phrase par vue, **≤ 2,6 mots/s en mots prononcés** (« 1842 » = 4–5 mots ; 2,2–2,6 mesurés) ; **silence pendant les
   piqués et les remontées** (le souffle porte la transition). Enfants : 2,0–2,3 mots/s, vues de 4 s.
 - La première phrase reprend les mots-clés de l'accroche à l'écran (C20).

@@ -28,7 +28,7 @@ ORDER = ['swiss-data', 'gazette-1900', 'pixel-arcade', 'brut-meme', 'carte-meteo
          'papier-decoupe', 'atelier-papier', 'carnet-archives', 'cabinet-curiosites']
 PAPIER = {'papier-decoupe', 'atelier-papier', 'carnet-archives', 'cabinet-curiosites'}   # non classées, moteur papier partagé
 LOT2 = {'trait-continu', 'carte-meteo'}                                                  # lot 2, classées, voix Gemini Sulafat
-SURVOL = {'survol-pixel'}                                                              # 2026-11-18, classée, sans voix (décision en attente)
+SURVOL = {'survol-pixel'}                                                              # 2026-11-18, classée, voix Gemini Sulafat (API v1beta)
 ADDED = PAPIER | LOT2 | SURVOL
 # Une seule identité « Papier découpé » et trois dérivations (décision du 2026-11-05) : même moteur out/shared/papier-moteur/, même
 # pop stop-motion, mêmes bandes inclinées, mêmes sous-titres sur bande ; seuls le fond, la palette et les polices changent.
@@ -51,6 +51,9 @@ VOICE_LOT2 = {'provider': 'Gemini', 'name': 'Sulafat', 'model': 'gemini-3.8-flas
               'note': 'owner decision 2026-11-05: Sulafat instead of the planned Fish Audio Arnold (Fish Audio credits ran out); '
                       'one Gemini call per short, split into voice_lines/NN.mp3, mixed by out/tools/tts.py --engine files'}
 VOICE_ADDED = {'provider': 'Gemini', 'name': 'Sulafat', 'model': 'gemini-3.8-flash-tts', 'language': 'fr'}
+VOICE_SURVOL = {'provider': 'Gemini', 'name': 'Sulafat', 'model': 'gemini-3.8-flash-tts', 'language': 'fr',
+                'note': 'owner decision 2026-11-18: one Gemini call per short (API v1beta: the v1 endpoint returns 404 for the TTS model), '
+                        'split into voice_lines/NN.mp3 by word timestamps, mixed by out/tools/tts.py --engine files; log out/report/notes/voix-survol-pixel.md'}
 PAPIER_MODULE = 'out/shared/papier-moteur/'
 REHAB = {'brut-meme', 'riso-zine', 'topo-relief', 'cosmos-doc'}
 VOICE = {'provider': 'Fish Audio', 'name': 'Arnold', 'reference_id': 'd704cf8f1216490cbfbed89955f0e938', 'model': 's2.1-pro', 'language': 'fr'}
@@ -248,8 +251,9 @@ COST_NOTE_LOT2 = {
     'carte-meteo': 'browser render (canvas 2D, render.mjs), world-atlas decode + projection once (0.3 s) included; mistral measured with the other lot 2 studio running on 4 cores '
                    '(load 1–3.6), heat-record short re-rendered after the review (no wind trails); an empty canvas page costs 13.2 s/100 frames (screenshot capture alone)',
     'survol-pixel': 'Python render (numpy ray casting at 270x480 + Pillow text, no browser), full engine run timed with `time`, opensimplex fields cached and not included; '
-                    'renders after the review, both in parallel on 4 cores shared with other sessions: atoll 15.6 (360² world, load 2.9–3.9; earlier runs 21.9 and 28.6), '
-                    'Machu Picchu 59.1 (640² world, 128 steps, load 2.9–29; earlier run 58.8); cost grows with terrain extent x march steps, keep it <= 60 s/100 frames',
+                    'renders after the detail pass (2026-11-18: sub-cell micro-detail, ball clouds, tree clusters, coursed walls), both in parallel on 4 cores shared with other sessions '
+                    '(1-min load 2.7–8.9): atoll 19.6 (360² world; 15.6 after the review, earlier runs 21.9 and 28.6), Machu Picchu 63.1 (640² world, 128 steps; 59.1 after the review, '
+                    'earlier run 58.8); cost grows with terrain extent x march steps and now slightly exceeds the 60 s/100 frames target for the largest world',
 }
 
 
@@ -301,9 +305,7 @@ def main():
                                COST_NOTE.get(s, 'browser render only (renderTimeSec)') + '; measured with up to 10 renders sharing 4 cores: expect ~2–3x faster on a dedicated machine'),
             'renderCostSecPer100Frames': {'min': min(costs), 'max': max(costs), 'measuredUnderLoad': s not in PAPIER} if costs else None,
             'sharedModule': ([PAPIER_MODULE] if s in PAPIER else shared) or None,
-            # survol-pixel : aucune voix enregistrée (pas de clé Gemini, crédits Fish Audio épuisés ; décision du propriétaire en attente)
-            'voiceUsed': None if s in SURVOL else VOICE_ADDED if s in PAPIER else (VOICE_LOT2 if s in LOT2 else VOICE),
-            **({'voicePlanned': 'voix non enregistrée: owner decision pending (Gemini Sulafat proposed); narration.json is ready'} if s in SURVOL else {}),
+            'voiceUsed': VOICE_SURVOL if s in SURVOL else VOICE_ADDED if s in PAPIER else (VOICE_LOT2 if s in LOT2 else VOICE),
             'paths': {'identityMd': f'out/identities/{s}/identity.md', 'tokens': f'out/identities/{s}/tokens.json',
                       'recipes': sorted(f'out/identities/{s}/recipes/{os.path.basename(x)}' for x in glob.glob(str(base / 'recipes' / '*.md'))),
                       'poster': f'out/identities/{s}/poster.jpg', 'contactSheet': f'out/identities/{s}/contact-sheet.jpg',
@@ -339,8 +341,8 @@ def main():
         'families': [{'root': r, 'name': next(i['name'] for i in ids if i['id'] == r), 'variants': f['variants'],
                       'sharedEngine': f['sharedEngine'], 'axis': f['axisFr']} for r, f in FAMILIES.items()],
         'fieldNotes': {'variantOf': 'id of the root identity when this entry is a derivation (same engine, only ground / palette / fonts change), else null. A root lists its derivations in variants and what is shared / what varies in variantAxis. Derivations stay ranked, right after their root; counts.identities counts roots only, counts.declinations counts every entry. curation.deliberateSiblings = derivations of the same root, deliberately close and therefore not listed in confusableWith. A new identity that reuses an existing engine and only changes ground / palette / fonts must be registered as a derivation, not as a new identity',
-                       'status': 'selected = kept in Phase 1; rehabilitated = set aside in Phase 1 only to avoid topic overlap with a neighbour, then produced on request with the same rules and evidence level; added = added after the campaign: (a) the cut-paper identity from the StudioGabarit template, papier-decoupe, and its 3 derivations (atelier-papier, carnet-archives, cabinet-curiosites), rendered by the shared Python engine out/shared/papier-moteur/, appended after the ranked identities and not part of the ranking or the blind visual judge; (b) lot 2 of the identity factory (trait-continu, carte-meteo, 2026-11-05: scouting + adversarial challenge + studio + review), ranked with the others, blind visual judge on 8 identities (lot 2 + 6 neighbours, 8/8 pure groups, out/report/notes/revue-2026-11-05.md), voice-over Gemini Sulafat like the cut-paper family (owner decision: Fish Audio credits ran out before Arnold could be recorded); (c) survol-pixel (2026-11-18, same skill, style taken from a source pixel-art flight video), ranked with the others, no voice-over yet (voiceUsed null), blind visual judge on 6 identities during its review (survol-pixel + pixel-arcade, carte-meteo, topo-relief, pastel-diorama, trait-continu; 6/6 pure groups, 24/24 images, recognition.json blindJudgeSurvol)',
-                       'voiceUsed': 'voice actually mixed into short.mp4 (Fish Audio Arnold for the 31 campaign shorts, Gemini Sulafat for the 8 cut-paper and 4 lot 2 shorts; null for survol-pixel, whose 2 shorts have music and SFX only, voicePlanned says why; see shorts[].voiced)',
+                       'status': 'selected = kept in Phase 1; rehabilitated = set aside in Phase 1 only to avoid topic overlap with a neighbour, then produced on request with the same rules and evidence level; added = added after the campaign: (a) the cut-paper identity from the StudioGabarit template, papier-decoupe, and its 3 derivations (atelier-papier, carnet-archives, cabinet-curiosites), rendered by the shared Python engine out/shared/papier-moteur/, appended after the ranked identities and not part of the ranking or the blind visual judge; (b) lot 2 of the identity factory (trait-continu, carte-meteo, 2026-11-05: scouting + adversarial challenge + studio + review), ranked with the others, blind visual judge on 8 identities (lot 2 + 6 neighbours, 8/8 pure groups, out/report/notes/revue-2026-11-05.md), voice-over Gemini Sulafat like the cut-paper family (owner decision: Fish Audio credits ran out before Arnold could be recorded); (c) survol-pixel (2026-11-18, same skill, style taken from a source pixel-art flight video), ranked with the others, voice-over Gemini Sulafat (owner decision 2026-11-18, API v1beta), blind visual judge on 6 identities during its review (survol-pixel + pixel-arcade, carte-meteo, topo-relief, pastel-diorama, trait-continu; 6/6 pure groups, 24/24 images, recognition.json blindJudgeSurvol)',
+                       'voiceUsed': 'voice actually mixed into short.mp4 (Fish Audio Arnold for the 31 campaign shorts, Gemini Sulafat for the 8 cut-paper, 4 lot 2 and 2 survol-pixel shorts, i.e. 31 Arnold + 14 Sulafat; see shorts[].voiced)',
                        'coreTokens.motion.staggerSec': "the identity's default stagger as written in its tokens.json; meaning varies (per-item stagger for most, spacing between beats/captions for atlas-grave 1.5 and liquid-chrome 1.55, title-to-body delay for neon-lab 0.8)",
                        'coreTokens.motion.durationSec.slow': 'longest standard duration; for gazette-1900 it is one page (6 beats at 128 bpm)',
                        'coreTokens.color.contrastOnBg': 'WCAG contrast ratio against bg, computed; muted/accent colours are often decorative (e.g. gazette-1900 muted = engraving fill, 1.07:1) and must not carry text',

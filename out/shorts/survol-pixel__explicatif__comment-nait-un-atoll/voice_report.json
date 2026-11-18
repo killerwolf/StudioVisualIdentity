@@ -1,0 +1,37 @@
+[
+ {
+  "t": 0.2,
+  "sec": 3.11,
+  "max": 3.1,
+  "over": false,
+  "model": "gemini-3.8-flash-tts"
+ },
+ {
+  "t": 3.5,
+  "sec": 2.69,
+  "max": 3.0,
+  "over": false,
+  "model": "gemini-3.8-flash-tts"
+ },
+ {
+  "t": 7.6,
+  "sec": 3.6,
+  "max": 3.6,
+  "over": false,
+  "model": "gemini-3.8-flash-tts"
+ },
+ {
+  "t": 11.8,
+  "sec": 2.46,
+  "max": 3.0,
+  "over": false,
+  "model": "gemini-3.8-flash-tts"
+ },
+ {
+  "t": 15.0,
+  "sec": 2.55,
+  "max": 3.5,
+  "over": false,
+  "model": "gemini-3.8-flash-tts"
+ }
+]

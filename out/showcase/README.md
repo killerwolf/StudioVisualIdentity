@@ -2,7 +2,7 @@
 
 Page publiée : https://claude.ai/artifact/VJEgxZpSjAn3cGGb51c1nK (privée ; partage depuis son menu Share).
 
-Elle présente les 18 identités (21 déclinaisons : Papier découpé est affiché avec ses 3 dérivations regroupées sous « Dérivations ») dans l'ordre du classement de `out/identities/index.json` (statuts « réhabilitée » et « ajoutée »), avec leurs 45 shorts jouables (aperçus 540×960, voisés sauf les 2 de Survol pixel, affichés « voix non enregistrée »), un filtre par famille, la superposition des zones sûres TikTok, le coût de rendu mesuré par short, la matrice identité × famille × librairie, les tests de reconnaissance à l'aveugle et les limites constatées.
+Elle présente les 18 identités (21 déclinaisons : Papier découpé est affiché avec ses 3 dérivations regroupées sous « Dérivations ») dans l'ordre du classement de `out/identities/index.json` (statuts « réhabilitée » et « ajoutée »), avec leurs 45 shorts jouables (aperçus 540×960, tous voisés), un filtre par famille, la superposition des zones sûres TikTok, le coût de rendu mesuré par short, la matrice identité × famille × librairie, les tests de reconnaissance à l'aveugle et les limites constatées.
 
 | Fichier | Rôle |
 |---|---|
@@ -22,7 +22,7 @@ Ré-encoder tous les aperçus, par exemple après un remix de la voix off :
 .venv/bin/python out/showcase/build.py --force-videos
 ```
 
-Ré-encoder seulement les aperçus d'une identité (par exemple après un re-rendu de Survol pixel ou quand sa voix off sera mixée) :
+Ré-encoder seulement les aperçus d'une identité (par exemple après un re-rendu ou un remix de la voix off de Survol pixel) :
 
 ```bash
 .venv/bin/python out/showcase/build.py --videos-for survol-pixel

@@ -107,14 +107,20 @@ review (`out/report/decisions.md` § « Survol pixel », `out/report/notes/direc
   other fonts (Jersey, not Press Start 2P), other transition (the dive / climb-back, not a pixel mosaic), other sound (no chiptune blips).
 - Engine: pure Python `survol.py` (identical md5 in both shorts' `src/`), `video.py` per short; opensimplex fields cached in
   `$SURVOL_CACHE` (outside the repository). A new topic = a new terrain / heightfield, a camera path, sprites with shadows and the cut-away.
-- **No voice-over yet**: no Gemini key on this Mac and no Fish Audio credits; the 2 shorts have music + SFX and on-screen text only
-  (`voiceUsed: null`), `narration.json` is ready (Sulafat proposed), owner decision pending. `short_novo.mp4` = `short.mp4` for now.
-- Evidence: 2 proof shorts (`explicatif` atoll, `histoire` Machu Picchu), QA ok (one expected warning: no voice). **Blind visual judge**
+- **Detail pass (2026-11-18)**: sub-cell micro-detail, coursed walls, ball-heap clouds, tree clusters with cast shadows; both shorts
+  re-rendered (`out/report/notes/survol-pixel-detail.md`). The challenge's « ≤ 4 clouds » cap (C15) is lifted (3–11 clouds in frame),
+  pending owner validation.
+- **Voice-over: Gemini « Sulafat »** (owner decision, 2026-11-18), the lot 2 recipe: one `gemini-3.8-flash-tts` call per short, split
+  into `voice_lines/NN.mp3` by word timestamps, mixed by `tts.py --engine files --replace` (`short_novo.mp4` = music + SFX). The call
+  needs API **v1beta** (see `out/report/facts.md`). Atoll 18.6 s at −15.9 LUFS, Machu Picchu 18.8 s at −13.7 LUFS. Log:
+  `out/report/notes/voix-survol-pixel.md`.
+- Evidence: 2 proof shorts (`explicatif` atoll, `histoire` Machu Picchu), QA ok (0 warnings). **Blind visual judge**
   (during the review, fresh agent, 24 anonymised frames, survol-pixel + pixel-arcade, carte-meteo, topo-relief, pastel-diorama,
-  trait-continu): **6/6 pure groups, 24/24** (`recognition.json` → `blindJudgeSurvol`). Measured recognition (after the re-renders):
-  Machu Picchu's nearest neighbour is its sibling (0.664); the **atoll still fails** (nearest aquarelle-conte « phare d'Alexandrie » at
-  0.621, sibling 4th at 0.664: blue ocean against green mountain); colour + edges miss its signature, which is geometric (perspective,
-  terraces, pixel grid). Render cost 15.6–59.1 s/100 frames under load (renders after the review, 1-min load 2.9–29, `measuredUnderLoad: true`).
+  trait-continu): **6/6 pure groups, 24/24** (`recognition.json` → `blindJudgeSurvol`). Measured recognition (after the detail pass and
+  the voice mix, 41/45 overall, unchanged): Machu Picchu's nearest neighbour is its sibling (0.655); the **atoll still fails** (nearest
+  aquarelle-conte « phare d'Alexandrie » at 0.615, sibling 4th at 0.655: blue ocean against green mountain); colour + edges miss its
+  signature, which is geometric (perspective, terraces, pixel grid). Render cost 19.6–63.1 s/100 frames under load (renders after the
+  detail pass, 1-min load 2.7–8.9, `measuredUnderLoad: true`; 15.6–59.1 before it).
 
 ## Read in this order (≈ 10 minutes)
 
@@ -160,7 +166,7 @@ the values, it does not read `tokens.json`.
 
 ## Adapting to an audience (orchestrator judgment, not measured)
 
-The 31 campaign shorts use the same French male storyteller voice and ≈ 2.6 words/s (cut-paper and lot 2: Gemini Sulafat, a warm
+The 31 campaign shorts use the same French male storyteller voice and ≈ 2.6 words/s (cut-paper, lot 2 and survol-pixel: Gemini Sulafat, a warm
 female voice; trait-continu is written at 2.2 words/s for kids and measured at ≈ 2.3 words/s once voiced); no short was made specifically for teens.
 Suggested starting deltas, to validate with your own tests:
 
@@ -183,7 +189,7 @@ Suggested starting deltas, to validate with your own tests:
      and *tooling*. Mixing two signatures produces a generic look.
    - *Adapt*: change audience-dependent values (pace, text size, voice, colour temperature — see the table above) but keep the signature.
    - `status` in the index: `selected` = kept in Phase 1; `rehabilitated` = set aside in Phase 1 only to avoid topic overlap, then produced
-     with the same rules — same evidence level; `added` = added after the campaign (cut-paper family, unranked; lot 2, ranked, voiced with Gemini Sulafat; survol-pixel, ranked, no voice yet).
+     with the same rules — same evidence level; `added` = added after the campaign (cut-paper family, unranked; lot 2, ranked, voiced with Gemini Sulafat; survol-pixel, ranked, voiced with Gemini Sulafat).
 4. **Avoid confusion with neighbours**: check `curation.confusableWith` (e.g. dark identities neon-lab / cosmos-doc / liquid-chrome,
    or the cream flat styles swiss-data / bauhaus-kinetic). If your channel will sit next to one of them, push your palette or type further apart.
 5. **Write your design system in the same format**: an `identity.md` with the same 16 sections, and a `tokens.json` whose core follows
@@ -200,12 +206,13 @@ Suggested starting deltas, to validate with your own tests:
 
 - **Canvas and safe areas**: 1080×1920, 30 fps, H.264 yuv420p. Keep anything important out of the top 220 px, bottom 320 px and right
   120 px (TikTok UI); left margin 60–72 px. Body text ≥ 54 px, titles ≥ 90 px, AA contrast. Hook visible within 1 s.
-- **Voice-over, state at 45 shorts** (31 Arnold + 12 Sulafat + 2 without voice): 31 campaign shorts voiced with Fish Audio "Arnold" (below); the 8 cut-paper shorts declare and
+- **Voice-over, state at 45 shorts** (31 Arnold + 14 Sulafat): 31 campaign shorts voiced with Fish Audio "Arnold" (below); the 8 cut-paper shorts declare and
   mix the Gemini voice "Sulafat" (mp3 reused from another studio, mixed by the cut-paper engine, not `tts.py`); the **4 lot 2 shorts
   use Sulafat too** (owner decision: Fish Audio credits ran out before Arnold could be recorded): 4 Gemini calls in all, one per short,
   split into `voice_lines/NN.mp3`, mixed by `tts.py --engine files` (see `out/report/notes/voix-lot2.md`). `tts.py --engine files`
   labels the lines `fish-connector` in `voice_report.json` and `short.json.sound.voiceEngine`: fix the label when the audio comes from
-  another engine (done for lot 2). The **2 survol-pixel shorts have no voice yet** (music + SFX, `voiceUsed: null`, owner decision pending).
+  another engine (done for lot 2 and survol-pixel). The **2 survol-pixel shorts use Sulafat too** (owner decision 2026-11-18): 2 Gemini
+  calls through API v1beta, same split and mix (see `out/report/notes/voix-survol-pixel.md`).
 - **Voice-over actually used** for the 31 campaign shorts: Fish Audio "Arnold" (`d704cf8f1216490cbfbed89955f0e938`, model `s2.1-pro`, French male storyteller),
   generated **through the Fish Audio MCP connector**, one call per narration line, saved as `voice_lines/NN.mp3`, then mixed with music
   ducking by `out/tools/tts.py --engine files`. The direct REST engine (`--engine fish`, needs `FISH_API_KEY`, default model

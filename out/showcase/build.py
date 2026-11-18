@@ -20,8 +20,9 @@ SORTIE : out/showcase/build/   (non versionné, voir .gitignore)
   p/<short>.jpg       posters des vidéos (image à 2,2 s), p/directions.jpg (planche des 14 directions)
 
 VOIX : short.json.sound.voice faux -> « voix prévue : <nom>, non enregistrée », ou « voix non enregistrée » quand la voix
-  n'est pas encore décidée (survol-pixel : sound.voicePlanned « à décider par le propriétaire … ») ; narration.json.voiceUsed
-  (dict, ex. Gemini Sulafat des identités papier et du lot 2) ou narration.json.voice (texte) sinon.
+  n'est pas encore décidée (sound.voicePlanned « à décider par le propriétaire … » ; aucun short depuis la voix de survol-pixel,
+  2026-11-18) ; narration.json.voiceUsed (dict, ex. Gemini Sulafat des identités papier, du lot 2 et de survol-pixel) ou
+  narration.json.voice (texte) sinon.
 
 PUBLIER : outil Artifact, file_path = out/showcase/build/index.html, root = out/showcase/build,
   files = tous les chemins v/*.mp4 et p/*.jpg (une publication accepte ≤ 64 Mo, ≤ 15 Mo par fichier).
@@ -49,7 +50,7 @@ def voice_of(nr, sj):
     snd = sj.get('sound') or {}
     if not snd.get('voice'):
         planned = str(snd.get('voicePlanned') or nr.get('voice') or 'Arnold')
-        # voix pas encore décidée (survol-pixel : « à décider par le propriétaire (…) ») -> « voix non enregistrée »
+        # voix pas encore décidée (ex. « à décider par le propriétaire (…) ») -> « voix non enregistrée »
         if re.search(r'décid|decid|attente|pending', planned, re.I):
             return 'voix non enregistrée', False
         name = re.sub(r'\s*\(.*\)\s*$', '', planned).strip() or 'Arnold'
