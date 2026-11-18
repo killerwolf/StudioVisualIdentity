@@ -109,10 +109,12 @@ review (`out/report/decisions.md` § « Survol pixel », `out/report/notes/direc
   `$SURVOL_CACHE` (outside the repository). A new topic = a new terrain / heightfield, a camera path, sprites with shadows and the cut-away.
 - **No voice-over yet**: no Gemini key on this Mac and no Fish Audio credits; the 2 shorts have music + SFX and on-screen text only
   (`voiceUsed: null`), `narration.json` is ready (Sulafat proposed), owner decision pending. `short_novo.mp4` = `short.mp4` for now.
-- Evidence: 2 proof shorts (`explicatif` atoll, `histoire` Machu Picchu), QA ok (one expected warning: no voice). Measured recognition:
-  **neither short's nearest neighbour is its sibling** (the sibling is 2nd for both: the atoll's blue sea is nearer aquarelle-conte, Machu
-  Picchu's greens nearer papier-decoupe); colour + edges do not catch its signature, which is geometric (perspective, terraces, pixel grid).
-  No blind visual judge yet. Render cost 21.9–58.8 s/100 frames under load (1-min load 4.4–16, `measuredUnderLoad: true`).
+- Evidence: 2 proof shorts (`explicatif` atoll, `histoire` Machu Picchu), QA ok (one expected warning: no voice). **Blind visual judge**
+  (during the review, fresh agent, 24 anonymised frames, survol-pixel + pixel-arcade, carte-meteo, topo-relief, pastel-diorama,
+  trait-continu): **6/6 pure groups, 24/24** (`recognition.json` → `blindJudgeSurvol`). Measured recognition (after the re-renders):
+  Machu Picchu's nearest neighbour is its sibling (0.664); the **atoll still fails** (nearest aquarelle-conte « phare d'Alexandrie » at
+  0.621, sibling 4th at 0.664: blue ocean against green mountain); colour + edges miss its signature, which is geometric (perspective,
+  terraces, pixel grid). Render cost 15.6–59.1 s/100 frames under load (renders after the review, 1-min load 2.9–29, `measuredUnderLoad: true`).
 
 ## Read in this order (≈ 10 minutes)
 

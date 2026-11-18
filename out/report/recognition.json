@@ -1,9 +1,9 @@
 {
  "method": "Lab 8x8x8 Bhattacharyya + edge-histogram chi2, 8 frames/short, nearest neighbour",
  "shorts": 45,
- "top1Accuracy": 0.889,
- "meanIntra": 0.2316,
- "meanInter": 0.8575,
+ "top1Accuracy": 0.911,
+ "meanIntra": 0.2315,
+ "meanInter": 0.8583,
  "ratioIntraOverInter": 0.27,
  "rows": [
   {
@@ -220,13 +220,13 @@
    "short": "survol-pixel__explicatif__comment-nait-un-atoll",
    "nearest": "aquarelle-conte__histoire__phare-d-alexandrie",
    "sameIdentity": false,
-   "distance": 0.6545
+   "distance": 0.6208
   },
   {
    "short": "survol-pixel__histoire__machu-picchu-pourquoi-une-cite-en-escaliers",
-   "nearest": "papier-decoupe__histoire__la-fourchette-a-fait-scandale",
-   "sameIdentity": false,
-   "distance": 0.6269
+   "nearest": "survol-pixel__explicatif__comment-nait-un-atoll",
+   "sameIdentity": true,
+   "distance": 0.6635
   },
   {
    "short": "swiss-data__evenements__j-272-eclipse-2-aout-2027",
@@ -567,5 +567,13 @@
   "imagesCorrectlyGrouped": 32,
   "images": 32,
   "notes": "trait-continu lu comme « planche technique sur fond orange », pas comme un jouet ; carte-meteo lue comme une carte météo (genre bulletin) ; une hésitation déclarée : une image swiss-data entre swiss-data et bauhaus-kinetic, bien classée. Limites : titres français visibles, un seul juge, images fixes."
+ },
+ "blindJudgeSurvol": {
+  "method": "Juge agent indépendant (opus, neuf) lancé pendant la revue de survol-pixel (2026-11-18) : 24 images anonymisées (6 identités : survol-pixel, pixel-arcade, carte-meteo, topo-relief, pastel-diorama, trait-continu × 2 shorts × 2 images à 35 % et 75 % de la durée), ordre mélangé, clé hors de portée ; consigne : 6 groupes de 4 par style. Détail : out/report/notes/revue-2026-11-18-survol-pixel.md (§ R3)",
+  "pureGroups": 6,
+  "groups": 6,
+  "imagesCorrectlyGrouped": 24,
+  "images": 24,
+  "notes": "confiance haute partout ; seule hésitation : survol-pixel et pixel-arcade partagent une police pixel, séparés par « terrain 3D de jour, cartouches crème » contre « grille néon sombre ». Limites : titres français visibles, un seul juge, images fixes, images tirées des rendus d'avant les corrections de la revue."
  }
 }

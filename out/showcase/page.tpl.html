@@ -198,7 +198,7 @@ footer.colophon { margin-top: var(--s7); padding-top: var(--s4); border-top: 1px
       <div><span>Contrôle qualité</span><b id="m-qa">45 / 45</b></div>
       <div><span>Familles couvertes</span><b>7 / 7</b></div>
       <div><span>Librairies A + B (+ ajouts)</span><b title="lot 2 : shapely, opensimplex, topojson-client, world-atlas ; Survol pixel : NumPy (moteur 3D), scipy, Jersey">8 + 11 (+7)</b></div>
-      <div><span>Plus proche voisin</span><b id="m-recog">40 / 45</b></div>
+      <div><span>Plus proche voisin</span><b id="m-recog">41 / 45</b></div>
       <div><span>Production</span><b>4 cœurs</b></div>
       <div><span>Voix off</span><b title="31 Arnold (Fish Audio) + 12 Sulafat (Gemini : 8 papier + 4 lot 2) + 2 sans voix (Survol pixel, décision en attente)">31 Arnold + 12 Sulafat + 2 sans voix</b></div>
     </div>
@@ -215,11 +215,11 @@ footer.colophon { margin-top: var(--s7); padding-top: var(--s4); border-top: 1px
     <header>
       <p class="eyebrow">Coût de rendu mesuré</p>
       <h2>Secondes de calcul pour 100 images</h2>
-      <p>Mesuré pendant la campagne : jusqu'à 10 studios rendaient en même temps sur 4 cœurs (charge 15–23), donc la plupart des shorts sont environ 2 à 3 fois plus lents que sur une machine calme. Les trois 3ᵉ shorts ont été rendus avec seulement 3 studios actifs. Les shorts papier (moteur Python, voix comprise) ont été rendus seuls, ceux du lot 2 à deux studios en parallèle (charge 1–5,5), ceux de Survol pixel (moteur Python sans navigateur) sur un Mac 4 cœurs partagé avec d'autres sessions (charge 4–16).</p>
+      <p>Mesuré pendant la campagne : jusqu'à 10 studios rendaient en même temps sur 4 cœurs (charge 15–23), donc la plupart des shorts sont environ 2 à 3 fois plus lents que sur une machine calme. Les trois 3ᵉ shorts ont été rendus avec seulement 3 studios actifs. Les shorts papier (moteur Python, voix comprise) ont été rendus seuls, ceux du lot 2 à deux studios en parallèle (charge 1–5,5), ceux de Survol pixel (moteur Python sans navigateur) sur un Mac 4 cœurs partagé avec d'autres sessions (charge 3–29).</p>
     </header>
     <div class="bars" id="bars"></div>
     <div class="axis" aria-hidden="true"><span></span><div><span>0</span><span>80</span><span>160</span><span>240</span><span>320</span></div><span></span></div>
-    <div class="legend"><span><i style="background:var(--ink)"></i>CPU saturé (premier tour et identités réhabilitées)</span><span><i style="background:var(--safelight)"></i>3ᵉ short, CPU peu chargé</span><span><i style="background:var(--ok)"></i>identités ajoutées : papier et lot 2, CPU peu chargé ; Survol pixel, charge 4–16</span><span>pastille = couleur de fond de l'identité</span></div>
+    <div class="legend"><span><i style="background:var(--ink)"></i>CPU saturé (premier tour et identités réhabilitées)</span><span><i style="background:var(--safelight)"></i>3ᵉ short, CPU peu chargé</span><span><i style="background:var(--ok)"></i>identités ajoutées : papier et lot 2, CPU peu chargé ; Survol pixel, charge 3–29</span><span>pastille = couleur de fond de l'identité</span></div>
   </section>
 
   <section class="section" id="matrice">
@@ -240,11 +240,11 @@ footer.colophon { margin-top: var(--s7); padding-top: var(--s4); border-top: 1px
       <div class="result">
         <p class="eyebrow">Juge visuel indépendant, 14 identités · 2026-11-04</p>
         <div class="big">14<small> / 14 groupes purs</small></div>
-        <p>Résultat historique de la campagne : un agent sans contexte a reçu 56 images anonymisées (2 shorts par identité, 2 images par short, clé cachée) avec la consigne de former 14 groupes de 4 par style. Les 56 images ont été bien classées, y compris les quatre identités réhabilitées face à leurs voisines. Les plus difficiles à séparer : Grille Suisse et Bauhaus (fonds crème), et les cinq styles sur fond sombre. Le lot 2 a eu son propre juge le 2026-11-05 : 8 groupes purs sur 8 (Carte Météo, Trait continu et 6 voisines, 32 images) ; l'identité papier et ses dérivations, et Survol pixel, n'ont pas de juge visuel.</p>
+        <p>Résultat historique de la campagne : un agent sans contexte a reçu 56 images anonymisées (2 shorts par identité, 2 images par short, clé cachée) avec la consigne de former 14 groupes de 4 par style. Les 56 images ont été bien classées, y compris les quatre identités réhabilitées face à leurs voisines. Les plus difficiles à séparer : Grille Suisse et Bauhaus (fonds crème), et les cinq styles sur fond sombre. Le lot 2 a eu son propre juge le 2026-11-05 : 8 groupes purs sur 8 (Carte Météo, Trait continu et 6 voisines, 32 images) ; Survol pixel le sien le 2026-11-18 : 6 groupes purs sur 6 (Survol pixel et 5 voisines dont Arcade Pixel et Relief Topo, 24 images) ; l'identité papier et ses dérivations n'ont pas de juge visuel.</p>
       </div>
       <div class="result">
         <p class="eyebrow">Signature couleur et contours mesurée</p>
-        <div class="big"><span id="r-hits">40</span><small> / <span id="r-total">43</span> plus proches voisins</small></div>
+        <div class="big"><span id="r-hits">41</span><small> / <span id="r-total">43</span> plus proches voisins</small></div>
         <p id="r-text">Histogramme couleur Lab et densité de contours sur 8 images par short, relancé sur les 45 shorts.</p>
       </div>
     </div>
@@ -272,7 +272,7 @@ footer.colophon { margin-top: var(--s7); padding-top: var(--s4); border-top: 1px
       <li><b>Manim sans texte</b><span>Pas de Pango ni de LaTeX dans l'environnement : les titres des shorts Manim sont des calques PNG.</span></li>
       <li><b>Voix off lot 2 : Sulafat au lieu d'Arnold</b><span>Arnold était prévu, mais le plan gratuit Fish Audio n'a permis qu'une ligne sur 20. Les 4 shorts de Carte Météo et Trait continu sont voisés avec Gemini « Sulafat », la voix des identités papier : un appel par short, découpé en une ligne par fichier, puis mixé sous la musique. Voix mesurées, pas écoutées par l'assistant.</span></li>
       <li><b>Survol pixel sans voix</b><span>Pas de clé Gemini sur le Mac et plus de crédits Fish Audio : les 2 shorts de Survol pixel sont livrés avec musique, bruitages et texte à l'écran ; la narration est prête, la voix attend la décision du propriétaire.</span></li>
-      <li><b>Survol pixel mal reconnu par la mesure couleur</b><span>Ses deux shorts (atoll bleu, Machu Picchu vert) n'ont pas la même palette : leur plus proche voisin est Aquarelle Conte ou Papier découpé, la sœur arrive 2ᵉ. Sa signature est géométrique (perspective, terrasses, grille de pixels) ; un juge visuel reste à faire.</span></li>
+      <li><b>Survol pixel à moitié reconnu par la mesure couleur</b><span>Ses deux shorts (atoll bleu, Machu Picchu vert) n'ont pas la même palette : Machu Picchu retrouve l'atoll, mais l'atoll est plus proche d'Aquarelle Conte, sa sœur n'arrive que 4ᵉ. Sa signature est géométrique (perspective, terrasses, grille de pixels) : le juge visuel aveugle, lui, l'a isolée sans faute (6/6).</span></li>
       <li><b>Blender et Remotion non tentés</b><span>Niveau optionnel ; Blender Cycles coûte 25–30 s par image, incompatible avec 4 cœurs déjà saturés.</span></li>
     </ul>
   </section>
@@ -304,7 +304,7 @@ setText("r-hits", META.recogHits); setText("r-total", META.recogTotal);
   const fails = META.recogFails.map(f => `${nm(f.short)} → ${nm(f.nearest)} (${fmt(f.distance.toFixed(2))})`).join(" ; ");
   // pourquoi une identité échoue (texte fixe, à revoir quand recognition.json change)
   const WHY = { "liquid-chrome": "Chrome Liquide : des fonds sombres que la couleur seule ne sépare pas",
-                "survol-pixel": "Survol pixel : deux biomes aux palettes opposées (océan bleu, montagne verte), la sœur arrive 2ᵉ ; sa signature est géométrique" };
+                "survol-pixel": "Survol pixel (atoll) : deux biomes aux palettes opposées (océan bleu, montagne verte), la sœur arrive 4ᵉ ; sa signature est géométrique et le juge aveugle l'a isolée (6/6)" };
   const why = [...failIds].map(id => WHY[id]).filter(Boolean).join(" ; ");
   setText("r-text", `Histogramme couleur Lab et densité de contours sur 8 images par short, relancé sur les ${META.recogTotal} shorts des ${META.declinations} déclinaisons. Distance moyenne entre shorts d'une même identité ${fmt(META.recogIntra.toFixed(2))} contre ${fmt(META.recogInter.toFixed(2))} entre identités. ${addedOkNames.length ? `Identités ajoutées reconnues : ${addedOkNames.join(", ")}${DATA.some(d => d.variantOf) ? " (et ses dérivations)" : ""}. ` : ""}Les ${META.recogFails.length} erreurs : ${fails}${why ? ` — ${why}.` : "."}`);
 }

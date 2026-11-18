@@ -586,7 +586,7 @@
    "family": "explicatif",
    "title": "Comment naît un atoll ?",
    "duration": 18.6,
-   "renderTimeSec": 122.3,
+   "renderTimeSec": 87.0,
    "libraries": [
     "NumPy",
     "Pillow",
@@ -606,7 +606,7 @@
    "family": "histoire",
    "title": "Machu Picchu : pourquoi une cité en escaliers ?",
    "duration": 18.8,
-   "renderTimeSec": 331.6,
+   "renderTimeSec": 333.6,
    "libraries": [
     "NumPy",
     "Pillow",

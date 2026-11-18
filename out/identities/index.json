@@ -23,7 +23,7 @@
  ],
  "fieldNotes": {
   "variantOf": "id of the root identity when this entry is a derivation (same engine, only ground / palette / fonts change), else null. A root lists its derivations in variants and what is shared / what varies in variantAxis. Derivations stay ranked, right after their root; counts.identities counts roots only, counts.declinations counts every entry. curation.deliberateSiblings = derivations of the same root, deliberately close and therefore not listed in confusableWith. A new identity that reuses an existing engine and only changes ground / palette / fonts must be registered as a derivation, not as a new identity",
-  "status": "selected = kept in Phase 1; rehabilitated = set aside in Phase 1 only to avoid topic overlap with a neighbour, then produced on request with the same rules and evidence level; added = added after the campaign: (a) the cut-paper identity from the StudioGabarit template, papier-decoupe, and its 3 derivations (atelier-papier, carnet-archives, cabinet-curiosites), rendered by the shared Python engine out/shared/papier-moteur/, appended after the ranked identities and not part of the ranking or the blind visual judge; (b) lot 2 of the identity factory (trait-continu, carte-meteo, 2026-11-05: scouting + adversarial challenge + studio + review), ranked with the others, blind visual judge on 8 identities (lot 2 + 6 neighbours, 8/8 pure groups, out/report/notes/revue-2026-11-05.md), voice-over Gemini Sulafat like the cut-paper family (owner decision: Fish Audio credits ran out before Arnold could be recorded); (c) survol-pixel (2026-11-18, same skill, style taken from a source pixel-art flight video), ranked with the others, no voice-over yet (voiceUsed null), no blind visual judge yet",
+  "status": "selected = kept in Phase 1; rehabilitated = set aside in Phase 1 only to avoid topic overlap with a neighbour, then produced on request with the same rules and evidence level; added = added after the campaign: (a) the cut-paper identity from the StudioGabarit template, papier-decoupe, and its 3 derivations (atelier-papier, carnet-archives, cabinet-curiosites), rendered by the shared Python engine out/shared/papier-moteur/, appended after the ranked identities and not part of the ranking or the blind visual judge; (b) lot 2 of the identity factory (trait-continu, carte-meteo, 2026-11-05: scouting + adversarial challenge + studio + review), ranked with the others, blind visual judge on 8 identities (lot 2 + 6 neighbours, 8/8 pure groups, out/report/notes/revue-2026-11-05.md), voice-over Gemini Sulafat like the cut-paper family (owner decision: Fish Audio credits ran out before Arnold could be recorded); (c) survol-pixel (2026-11-18, same skill, style taken from a source pixel-art flight video), ranked with the others, no voice-over yet (voiceUsed null), blind visual judge on 6 identities during its review (survol-pixel + pixel-arcade, carte-meteo, topo-relief, pastel-diorama, trait-continu; 6/6 pure groups, 24/24 images, recognition.json blindJudgeSurvol)",
   "voiceUsed": "voice actually mixed into short.mp4 (Fish Audio Arnold for the 31 campaign shorts, Gemini Sulafat for the 8 cut-paper and 4 lot 2 shorts; null for survol-pixel, whose 2 shorts have music and SFX only, voicePlanned says why; see shorts[].voiced)",
   "coreTokens.motion.staggerSec": "the identity's default stagger as written in its tokens.json; meaning varies (per-item stagger for most, spacing between beats/captions for atlas-grave 1.5 and liquid-chrome 1.55, title-to-body delay for neon-lab 0.8)",
   "coreTokens.motion.durationSec.slow": "longest standard duration; for gazette-1900 it is one page (6 beats at 128 bpm)",
@@ -36,7 +36,9 @@
   "blindJudgeGroups": 14,
   "blindJudgeLot2": 8,
   "blindJudgeLot2Groups": 8,
-  "measuredTop1": "40/45"
+  "blindJudgeSurvol": 6,
+  "blindJudgeSurvolGroups": 6,
+  "measuredTop1": "41/45"
  },
  "identities": [
   {
@@ -1858,10 +1860,10 @@
     "@fontsource/jersey-20",
     "ffmpeg"
    ],
-   "renderCostNote": "Python render (numpy ray casting at 270x480 + Pillow text, no browser), full engine run timed with `time`, opensimplex fields cached and not included; measured on 4 cores shared with other sessions (1-min load 4.4–16): atoll 21.9 (360² world, 96 steps; 28.6 on a first run in parallel), Machu Picchu 58.8 (640² world, 128 steps); cost grows with terrain extent x march steps, keep it <= 60 s/100 frames",
+   "renderCostNote": "Python render (numpy ray casting at 270x480 + Pillow text, no browser), full engine run timed with `time`, opensimplex fields cached and not included; renders after the review, both in parallel on 4 cores shared with other sessions: atoll 15.6 (360² world, load 2.9–3.9; earlier runs 21.9 and 28.6), Machu Picchu 59.1 (640² world, 128 steps, load 2.9–29; earlier run 58.8); cost grows with terrain extent x march steps, keep it <= 60 s/100 frames",
    "renderCostSecPer100Frames": {
-    "min": 21.9,
-    "max": 58.8,
+    "min": 15.6,
+    "max": 59.1,
     "measuredUnderLoad": true
    },
    "sharedModule": [
@@ -1896,7 +1898,7 @@
       "Jersey (@fontsource 5.3.0)",
       "ffmpeg"
      ],
-     "renderCostSecPer100Frames": 21.9,
+     "renderCostSecPer100Frames": 15.6,
      "loopable": false,
      "voiced": false,
      "recognitionNearestShort": "aquarelle-conte__histoire__phare-d-alexandrie",
@@ -1915,11 +1917,11 @@
       "Jersey (@fontsource 5.3.0)",
       "ffmpeg"
      ],
-     "renderCostSecPer100Frames": 58.8,
+     "renderCostSecPer100Frames": 59.1,
      "loopable": false,
      "voiced": false,
-     "recognitionNearestShort": "papier-decoupe__histoire__la-fourchette-a-fait-scandale",
-     "recognitionSameIdentity": false
+     "recognitionNearestShort": "survol-pixel__explicatif__comment-nait-un-atoll",
+     "recognitionSameIdentity": true
     }
    ],
    "coreTokens": {
