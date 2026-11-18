@@ -542,3 +542,141 @@ Deux commentaires du code annoncent un résultat « au bit près » : la docstri
   - la republication de la vitrine.
 
 - **Moteur final** (après la phase 2 : module GPU branché sous garde, commentaires de parité corrigés) : `survol.py` md5 `77af51cf56252527124c1da4c960fc2d`, `survol_gpu.py` md5 `3fe2511babdb6770839da17583e2a2f2`, identiques dans les deux `src/`. Les commentaires ne changent pas le rendu CPU.
+
+## Retouche Fable (18/11)
+
+Passe de retouche dirigée par le directeur artistique « Fable » (décision 38 du propriétaire) : 6 retouches classées par
+impact sur la ressemblance de style, appliquées en une passe, puis les 2 shorts re-rendus sur CPU. Rapport et essais de
+Fable hors dépôt ; planche avant / après : `notes/console-retro-source/retouche-fable.jpg` (même mise en page que
+`final-abc.jpg`, AVANT = `short.mp4` du commit HEAD, APRÈS = nouveau `short.mp4`).
+
+Inchangés : moteur de profondeur (4 rayons, vote, carte fine, pas sûrs), brume en 6 paliers, cartouches et leurs temps,
+voix et `narration.json`, temps des clés de caméra, caméra de Machu Picchu, plans de coupe (à Machu Picchu, le fond du
+plan de coupe change : le pain de sucre y est un cône vert au lieu d'une tour grise), terrasses, cité, anneau.
+
+### Les retouches
+
+1. **Nuages** (les deux shorts) :
+   - `survol.py`, `draw_clouds` : la hachure une ligne sur deux (« store ») devient un **modelé tramé en damier** sur le
+     tiers bas droit, plus un croissant plein `HATCH` tout en bas. Seule modification du moteur, hors `Renderer._march` :
+     la parité GPU n'est pas à refaire. Nouveau md5 de `survol.py` : `fcd91b270940396784d5e986d9dcd57b`, identique dans
+     les 2 `src/` ; `survol_gpu.py` inchangé (`3fe2511babdb6770839da17583e2a2f2`).
+   - atoll : 100 nuages (70), rayon 11–20 (8–13), espacement 36 (40) ; exclusion de l'anneau et marge caméra gardées.
+   - Machu Picchu : 60 nuages (40), rayon 9–16 × K (7–11 × K), 36 lointains (26).
+   - Contrôle géométrique toutes les 0,1 s (`check_clouds.py`, hors dépôt) : l'anneau, la coupe et la cité ne sont
+     jamais cachés à plus de 5 % ; cartouches dessinés après les nuages. Nuages visibles (rayon ≥ 2 px) : médiane 17
+     (atoll) et 12 (Machu Picchu) par image ; au moins 6 sur 91 % et 99 % des images.
+2. **Écume de l'atoll** : traits de 4 unités le long de Y, ½ à 1 unité de large, `LAGOON` à tête `FOAM`, même hachage
+   dans la mer extérieure, la fenêtre fine et la tuile au-delà du monde (pas de couture vue à la frontière de la fenêtre
+   à 0,0 et 18,5 s).
+3. **Forêt de Machu Picchu** :
+   - nouvelle couleur de biome `FOREST_SH` `#0F3620` ; ombre `FOREST → FOREST_SH`, `FOREST_SH → INK` ; même rampe de
+     brume que `INK` ;
+   - variante C de Fable (`essai2.py`) : sol `GRASS_D`, clairières `GRASS_M` (seuil 0,40), sous-bois `FOREST` par grandes
+     plages (bruit d'échelle 14 < −0,35) ; arbres `density 0,5, r 0,9–2,2`, en bouquets ; la variante B (arbres sombres
+     sur sol moyen) n'est pas reprise ;
+   - plus loin que l'essai, comme Fable le demandait : `FOREST` réservé aux pieds de marche dans `nat` et dans la carte
+     grossière (clairières `GRASS_M` en plages). **Cela ne suffisait pas** : 17–21 % de pixels sombres en survol. La
+     mesure par couleur montre que le sombre venait des **contremarches ombrées** (`fd = FOREST`) du flanc boisé, vu de
+     face. **Écart au rapport, à valider par le propriétaire** : contremarches naturelles éclaircies d'un ton, éclairée
+     `GRASS_M` / ombrée `GRASS_D` (au lieu de `GRASS_D` / `FOREST`) ; les contremarches de pierre (terrasses, cité) ne
+     changent pas. Les leviers de Fable seuls donnaient 17–21,5 % de pixels sombres en survol (natif) ; avec ce levier,
+     7–15 % en natif et 12,7 % sur le fichier. Le risque nommé par Fable (terrasses moins détachées de la forêt) est en
+     partie pris : la face éclairée d'une contremarche de forêt a maintenant le ton `GRASS_M` de la bande basse des
+     terrasses ; sur la planche, les terrasses se détachent encore. Revenir en arrière : 2 valeurs dans `world()` et
+     ≈ 20 min de rendu de Machu Picchu.
+4. **Caméra de l'atoll** (clés 0,0 et 18,6 s seulement, aucun temps déplacé) : 0,0 s `ty C0−110, dist 300, pitch 33` ;
+   18,6 s `tx C0−6, ty C0+40, dist 310, pitch 30, roll −10`, lacet −22. Le plan final montre l'anneau entier, la coupe
+   et l'horizon ; pas de cadrage vu du nord. `--preflight` : marge 85,8 (inchangée).
+5. **Pain de sucre** : `gauss(…, 25 × K, 21 × K, 104 × K)`. Diagnostic : l'« aiguille grise » n'était pas le granite
+   du sommet mais les **murs de pierre des terrasses agricoles** (couronne `agz`, 1 ≤ e < 2,2) qui montaient sur le
+   flanc sud du pic. Correction : les cellules de la couronne où le relief naturel dépasse la jupe des terrasses de
+   2 × K, au nord (`peak`), redeviennent du relief naturel boisé (et reçoivent des arbres). Le seuil du granite n'a
+   **pas** été monté à 112 × K comme proposé : le sommet du pic fait 105 × K, le garder à 100 × K laisse une petite cime
+   de granite (2 marches) sur des flancs boisés. Le seuil est désormais une carte (`RZ`), uniforme. `--preflight` :
+   41,6 (inchangé).
+6. **Finitions** :
+   - rampe du ciel resserrée dans les 2 `video.py` : `(0,4 HAZE) (1,2 SKY_1) (2,4 SKY_LO) (4 SKY_2) (6,5 SKY_MID)
+     (10 SKY_4) (90 SKY_HI)` ;
+   - socle de la coupe de l'atoll : une dalle sombre sur douze (part 0,33 → 0,08) ;
+   - « treillis » au bord gauche de Machu Picchu (4,5 et 17,5 s) : **cause trouvée, non corrigée**. C'est la limite
+     entre la couronne des terrasses agricoles (marches de 2,9) et le flanc naturel (marches de 6,3) : de petits murs de
+     pierre de hauteurs variées, vus de profil, en zigzag. La corriger touche aux terrasses, hors du périmètre.
+   - **Ajout hors rapport, atoll** : garde-fou `cap_colors` (≤ 32 indices par image, critère du challenge). Avec la
+     rampe de ciel resserrée, `SKY_MID` apparaît dans la bande de ciel et 9,5–11 s et 13,5 s montaient à 33 indices. La
+     couleur la plus rare (1 à 10 pixels natifs de brume lointaine `HZ_G3` / `HZ_R1`) est fondue dans la couleur
+     présente la plus proche ; cartouches et nuages protégés ; sans effet sous 33. Machu Picchu reste à 19–29 indices.
+
+Son : aucun événement visible n'a changé de temps (nuages sans bruitage, clés de caméra aux mêmes temps) ; `sound.json`
+inchangé.
+
+### Rendus (CPU, sans `SURVOL_GPU`)
+
+| Short | Images | Durée | s/100 images | Charge 1 min | Monde |
+|---|---|---|---|---|---|
+| Atoll (livré, seul) | 558 | 356,6 s | **63,9** | 3,79 → 3,44 | 6,5 s |
+| Atoll (1er rendu, sans garde-fou, en parallèle) | 558 | 458,1 s | 82,1 | 3,79 → 5,02 | 15,1 s |
+| Machu Picchu (en parallèle du 1er rendu de l'atoll pendant ≈ 8 min) | 564 | 1 209,4 s | **214,43** | 3,77 → 2,88 | 28,6 s |
+
+Avant la retouche (passe A+B+C, les deux en parallèle, charge 4,4–10,4) : 107,18 et 266,29 s/100. Les rendus sont plus
+rapides surtout parce que la machine était moins chargée ; la retouche n'ajoute pas de coût mesurable.
+
+Chaîne : `sound.py`, `assemble.py mux`, copie vers `short_novo.mp4`, `tts.py --engine files --replace` (voix existante,
+aucun appel), libellés Gemini Sulafat remis dans `voice_report.json` et `short.json` (fichiers identiques au commit
+HEAD). `check.py` : ok, 0 avertissement, sur les 2 shorts.
+
+### Mesures après, contre les critères de Fable
+
+`measure2.py` de Fable sur les nouveaux `short.mp4` (30 i/s, 1 px par gros pixel) :
+
+| Mesure | Critère | Atoll avant → après | Machu Picchu avant → après |
+|---|---|---|---|
+| A-B-A, short entier | atoll ≤ 2,5 % | 0,87 → **0,57 %** | 2,00 → 2,10 % |
+| A-B-A, pire fenêtre | (source 3,4 %) | 1,78 → 1,38 % (bascule) | 4,29 → 4,49 % (piqué) |
+| Pixels qui changent par image | atoll ≥ 12 % à 0–2,9 et 15–18,6 s | 6,5 → 5,2 % ; accroche 6,5 → **7,0 %**, final 11,4 → **5,6 %** | 21,6 → 20,4 % |
+| Pixels sombres (lum. < 70) | ≤ 15 % en survol | 2,1 → 3,1 % | 21,8 → **12,0 %** ; survol 24,0 → **12,7 %**, piqué 28,1 → 15,1 % |
+| `INK` hors coupe (natif) | ≤ 3 % | — | 0,5–2,5 % (5,8 % au piqué, 8,1 % à la coupe : joints de pierre) |
+| Nuages `CLOUD+HATCH+CLOUD_RIM` (natif) | 3–8 % en médiane | 1,3–5,5 % (médiane ≈ 3,6) | 1,4–9,2 % (médiane ≈ 4,7) |
+| `SH_WATER` (natif, atoll) | 2–6 % | 0,6–2,6 % | — |
+| Nuages visibles, hors plan de coupe | ≥ 6 sur 80 % des images | **81 %** (91 % avec la coupe) | 99 % |
+| Couleurs par image (natif, cartouches) | ≤ 32 | 24–32 | 19–29 |
+| Écume à 1,5 s, moitié basse hors anneau | ≥ 80 % des taches ≥ 3 px, aucun pixel isolé | **53 %** ; 10 pixels isolés sur 55 taches | — |
+| Ciel | ≥ 3 paliers quand il dépasse 5 % | tenu (pas de 0,5 s) | tenu |
+| Plan final à 18,5 s | anneau entier ; horizon à 8–20 % | anneau entier ; horizon à 10,2 % | — |
+| Socle | ≤ 1 dalle sur 10 d'une autre teinte | 8,0 % | — |
+| Pain de sucre (0,6 / 17,5 s) | largeur à mi-hauteur ≥ 40 % de la hauteur visible ; granite ≤ 50 % | — | 69 / 72 % ; granite 14,8 % des cellules au-dessus de la cité (cime) |
+| Reconnaissance | voisin de Machu Picchu = l'atoll | — | l'atoll (0,764) |
+
+| Son | Atoll | Machu Picchu |
+|---|---|---|
+| Loudness intégrée ; crête ; LRA (ebur128) | −16,0 LUFS ; −1,7 dBFS ; 5,3 LU | −13,8 LUFS ; −1,5 dBFS ; 3,9 LU |
+
+Taille : atoll 6,6 Mo (8,9), Machu Picchu 13,2 Mo (13,8).
+
+**Écarts** :
+- **Mouvement de l'atoll non atteint** (≥ 12 % visé). L'accroche gagne peu (7,0 %), le plan final perd (5,6 % contre
+  11,4 %) : reculer à 310 unités pour avoir l'anneau entier ralentit le défilement à l'écran. Essai de lacet plus fort
+  sur les deux clés (mesure native, `motion.py` hors dépôt) : 7,3 → 9,1 % (lacet −55 / −50), 10,0 % (−70 / −62), sans
+  atteindre 12 %, au prix du cadrage choisi par Fable : non retenu. Atteindre 12 % demanderait de déplacer des temps de
+  clé ou d'accélérer la caméra, ce qui était exclu.
+- **Pixels sombres de Machu Picchu** : critère tenu en survol (12,7 %), à la limite au piqué (15,1 %), mais par un levier
+  hors rapport (contremarches naturelles éclaircies).
+- **Nuages** : la médiane native reste dans le bas de la fourchette à l'atoll (≈ 3,6 %), les nuages proches étant exclus
+  autour de l'anneau et de la trajectoire de la caméra ; ≥ 6 nuages visibles sur 81 % des images hors coupe (limite).
+- **Écume** : 53 % des taches du large font ≥ 3 px (80 % visés) : au loin, la réduction de carte rend les traits en
+  points (le risque prévu par Fable) ; de près, les traits sont nets.
+- **Scintillement de Machu Picchu** : stable (2,00 → 2,10 % sur tout le short, 4,29 → 4,49 % au piqué), toujours un peu
+  au-dessus de la source au piqué.
+
+### Intégration
+
+- Images régénérées : `stills/` (mêmes noms, mêmes instants), `src/dive/` (série et planche ; 19–31 et 18–27
+  couleurs), `poster.jpg` (atoll à 13,5 s), `contact-sheet.jpg` (9 stills).
+- Documentation : `identity.md` (nuages, écume, forêt, contremarches, socle, caméra, ciel, palette 41 à Machu Picchu),
+  `tokens.json` v1.2.0 (`FOREST_SH`, ciel, nuages, écume, forêt, socle, coût), les 2 `short.json` (coût, couleurs,
+  nuages, mesures, notes ; SFX et `reproduce` inchangés), les 2 `src/README.md`, `build_index.py` (note de coût).
+- Chaîne : `aggregate.py` ; `check.py --all` **45/45** ; `recognition.py` **41/45 inchangé** (intra 0,235, inter
+  0,864) : Machu Picchu reconnu, plus proche voisin l'atoll (0,764) ; l'atoll toujours plus proche d'aquarelle-conte
+  « phare d'Alexandrie » (0,690, avant 0,722) ; bloc `blindJudgeSurvol` conservé (jugé sur des images de la passe de
+  détail) ; `build_index.py` : coût 63,9–214,4, rang 10 conservé ; `catalogue_scan.py --check` sans écart ; vitrine
+  régénérée en local avec `--videos-for survol-pixel`, **non republiée**.

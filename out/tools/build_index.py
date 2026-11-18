@@ -251,10 +251,12 @@ COST_NOTE_LOT2 = {
     'carte-meteo': 'browser render (canvas 2D, render.mjs), world-atlas decode + projection once (0.3 s) included; mistral measured with the other lot 2 studio running on 4 cores '
                    '(load 1–3.6), heat-record short re-rendered after the review (no wind trails); an empty canvas page costs 13.2 s/100 frames (screenshot capture alone)',
     'survol-pixel': 'Python render on CPU (numpy ray casting at 270x480, 4 rays per pixel with a majority vote + Pillow text, no browser), full engine run timed, '
-                    'world build included (19.8 s / 39.3 s), opensimplex fields cached and not included; renders after the A+B+C pass (2026-11-18: worlds 3x / 2.4x larger, '
-                    'fine colour map around the subject, 6-step haze, relief shadow, safe-step march on block max maps), both in parallel on 4 cores '
-                    '(1-min load 4.4–10.4): atoll 107.18 (1080-unit world), Machu Picchu 266.29 (1536-unit world); the owner lifted the cost cap for this pass, '
-                    'so it is now 1.8–4.4x the 60 s/100 frames target of the challenge (detail pass: 19.6 and 63.1). Optional GPU ray march (SURVOL_GPU=1, '
+                    'world build included (6.5 s / 28.6 s), opensimplex fields cached and not included; renders after the A+B+C pass and the Fable retouch '
+                    '(2026-11-18: worlds 3x / 2.4x larger, fine colour map around the subject, 6-step haze, relief shadow, safe-step march on block max maps; '
+                    'retouch: more and bigger clouds, foam strokes, lighter forest, wider sugarloaf, tighter sky ramp): atoll 63.9 rendered alone '
+                    '(1-min load 3.4–3.8; 82.1 in a first run in parallel with Machu Picchu), Machu Picchu 214.4 (load 2.9–5.0, in parallel with the first atoll run '
+                    'for about 8 minutes); A+B+C pass before the retouch: 107.18 and 266.29 (both in parallel, load 4.4–10.4); the owner lifted the cost cap, '
+                    'so it is now 1.1–3.6x the 60 s/100 frames target of the challenge (detail pass: 19.6 and 63.1). Optional GPU ray march (SURVOL_GPU=1, '
                     'taichi 1.7.2 on Metal) halves the frame time but is not bit-exact; delivered renders are CPU',
 }
 

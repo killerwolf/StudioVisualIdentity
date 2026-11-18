@@ -13,9 +13,9 @@
   "ffmpeg"
  ],
  "seed": 1911,
- "renderTimeSec": 1501.9,
- "renderSecPer100Frames": 266.29,
- "renderCostNote": "passe A+B+C du 18/11 (moteur : 4 rayons par pixel et vote, carte de couleurs 4× plus fine sur la fenêtre du site, brume en 6 paliers, ombre portée du relief, marche à pas sûrs sur cartes de maxima ; monde de 1 536 unités) : 1 501,9 s pour 564 images = 266,29 s/100 images, sur CPU, en parallèle du rendu de l'atoll sur 4 cœurs ; charge 1 min 6,26 au départ, 10,40 à la fin ; construction du monde 39,3 s (incluse). Plafond de coût levé par le propriétaire pour B. Rendus précédents : passe de détail 356,0 s (63,1/100, charge 2,7–8,9), après revue 333,6 s (59,1/100)",
+ "renderTimeSec": 1209.4,
+ "renderSecPer100Frames": 214.43,
+ "renderCostNote": "retouche Fable du 18/11 (forêt claire, ombre FOREST_SH, contremarches naturelles éclaircies, pain de sucre élargi et boisé, nuages, rampe du ciel ; moteur inchangé hors draw_clouds) : 1 209,4 s pour 564 images = 214,43 s/100 images, sur CPU, en parallèle du premier rendu de l'atoll sur 4 cœurs pendant ses 8 premières minutes ; charge 1 min 3,77 au départ, 2,88 à la fin ; construction du monde 28,6 s (incluse). Rendus précédents : passe A+B+C 1 501,9 s (266,29/100, charge 6,26 → 10,40), passe de détail 356,0 s (63,1/100), après revue 333,6 s (59,1/100)",
  "measuredUnderLoad": true,
  "structure": [
   {
@@ -92,9 +92,9 @@
   "narrationWordsSpoken": 38,
   "wordsPerSecond": "2,27–2,58 (mots prononcés)",
   "pitchLe60Share": 1.0,
-  "colorsPerFrame": "stills (avec cartouches, natif) : 19–26 indices par image après la passe A+B+C ; palette déclarée 40 couleurs (35 de noyau + 5 biome) ; passe de détail : 17–22 natif sans cartouches",
-  "dive": "src/dive/ (90/70/50/30/15°, même moteur, 17–24 couleurs ; régénéré après la passe A+B+C)",
-  "clouds": "40 nuages bas (dont 26 lointains) à une seule altitude sous la cité, jamais traversés (passe A+B+C) ; compte dans le cadre non refait (passe de détail : 3–7)",
+  "colorsPerFrame": "stills (avec cartouches, natif) : 20–28 indices par image après la retouche Fable, 19–29 sur tout le short (pas de 0,4 s) ; palette déclarée 41 couleurs (35 de noyau + 6 biome, FOREST_SH ajoutée)",
+  "dive": "src/dive/ (90/70/50/30/15°, même moteur, 18–27 couleurs ; régénéré après la retouche Fable)",
+  "clouds": "60 nuages bas (rayon 9–16 × K, dont 36 lointains) à une seule altitude sous la cité, jamais traversés (retouche Fable ; passe A+B+C : 40) ; visibles : médiane 12 par image, ≥ 6 sur 99 % des images ; cité et coupe jamais cachées à plus de 5 % ; CLOUD/HATCH/CLOUD_RIM 1,4–9,2 % sur images natives",
   "photosensitivity": {
    "maxLumaChange10Frames": 0.0372,
    "maxLumaStepFrame": 0.0284,
@@ -105,18 +105,19 @@
   },
   "llamaScale": "plafonné à 1:1 (d1/profondeur 1,34–1,69 : jamais agrandi, C4)",
   "cameraPreflightMinClearance": 41.6,
-  "fileMB": 13.8,
+  "fileMB": 13.2,
   "reconstitutionLabel": "« reconstitution stylisée » à l'écran à la fin seulement (16,9–18,8 s), décision du propriétaire du 18/11 (choix 36) ; avant : pendant tout le short",
   "moireBand5_4to9s": "mesure de la passe de détail, caduque depuis la passe A+B+C (caméra et monde refaits) : voir temporalAliasing",
   "recognitionCopy": "recognition.py sur copie après revue : 1er voisin = son frère (atoll, 0,6635) : réussite",
-  "temporalAliasing": "pixels A-B-A (aller-retour sur 3 images, fichier décodé, 1 px par gros pixel, seuil 24 ; source 4,0 % par la même méthode) : 3,56 % sur tout le short (passe de détail 1,40 %) ; piqué 8,0–10,0 s 7,30 % (max 8,8) ; remontée 13,4–15,6 s 5,42 % (max 7,1) ; survol 6,5–7,5 s 6,71 % ; plan final 16,5–17,5 s 3,40 %. Natif (méthode du prototype, sans cartouches ; prototype 13,3 % à 9,4 s et 10,1 % à 14,5 s) : piqué 10,9 / 9,9 / 7,8 % à 8,4 / 9,0 / 9,4 s ; remontée 7,0 / 7,1 / 6,1 % à 14,0 / 14,5 / 15,0 s",
+  "temporalAliasing": "retouche Fable, measure2.py de Fable (fichier décodé, 1 px par gros pixel, seuil 24 ; source 2,4 %, pire fenêtre 3,4 %) : A-B-A 2,10 % sur tout le short (2,00 % avant) ; piqué 4,49 % (4,29 %), remontée 3,46 % (3,41 %), survol 2,90 % ; pixels sombres (luminance < 70) 12,0 % (21,8 % avant ; survol 12,7 %, piqué 15,1 %, source 3–6 %). Mesures A+B+C (autre méthode, source 4,0 %) : 3,56 % sur tout le short, piqué 7,30 %",
   "sourceCompareAfter": "out/report/notes/console-retro-source/comparaison-avant-apres.jpg",
   "detailPass": "out/report/notes/survol-pixel-detail.md : diffCells natif 0,146 → 0,330 (source 0,221), grandes plages > 5 % 59 → 35 % (source 50 %)",
   "treesDrawn": "2 965–5 884 boules d'arbres ≥ 1,25 px par image (compte du moteur, 1 image / 0,5 s) (passe de détail ; non recompté après A+B+C)",
   "camera": "tangage 19–38° (médiane 29°, 72 % du temps dans 25–40°, coupe à 19–20°), roulis jusqu'à 13° (≥ 5° pendant 59 % du temps) ; caméra PCHIP ; piqué 8,0 → 10,0 s et remontée 13,4 → 15,6 s ralentis (passe A+B+C)",
-  "loudness": "−13,8 LUFS intégrés, crête −1,5 dBFS, LRA 3,9 LU (ffmpeg ebur128 sur short.mp4 final)",
+  "loudness": "−13,8 LUFS intégrés, crête −1,5 dBFS, LRA 3,9 LU (ffmpeg ebur128 sur short.mp4 après la retouche Fable, inchangé)",
   "sourceCompareFinal": "out/report/notes/console-retro-source/final-abc.jpg",
-  "abcPass": "out/report/notes/survol-pixel.md § « Passe A+B+C » (phases 1 et 2)"
+  "abcPass": "out/report/notes/survol-pixel.md § « Passe A+B+C » (phases 1 et 2)",
+  "darkPixels": "12,0 % sur tout le short après la retouche Fable (21,8 % avant ; INK 0,5–2,5 % hors coupe sur images natives, 5,8–8,1 % au piqué et à la coupe : joints de pierre)"
  },
  "facts": [
   {
@@ -136,6 +137,6 @@
    "source": "UNESCO WHC 274 ; récits de l'expédition de Yale 1911"
   }
  ],
- "notes": "Reconstitution stylisée : la disposition générale (deux sommets, ensellement, rivière en boucle) est évoquée, aucune géométrie réelle n'est prétendue ; aucun nombre de terrasses, aucune affirmation sur les séismes ni sur les Espagnols (C19). La couche « sable et gravier » de Wright est fondue dans « gravier » pour tenir en trois mots. Lama et cité dessinés en code (originaux). Passe A+B+C : monde de 1 536 unités (crêtes et vallées andines jusqu'à l'horizon, seconde rivière lointaine, sommets enneigés possibles), fenêtre fine de 512 unités ; rendu par src/survol.py (4 rayons par pixel et vote majoritaire, marche à pas sûrs sur cartes de maxima 128/32/8/2 puis 8 bissections). Rendu livré sur CPU ; la marche sur GPU (src/survol_gpu.py, SURVOL_GPU=1) est facultative et expérimentale (parité au bit non garantie, voir src/README.md).",
+ "notes": "Reconstitution stylisée : la disposition générale (deux sommets, ensellement, rivière en boucle) est évoquée, aucune géométrie réelle n'est prétendue ; aucun nombre de terrasses, aucune affirmation sur les séismes ni sur les Espagnols (C19). La couche « sable et gravier » de Wright est fondue dans « gravier » pour tenir en trois mots. Lama et cité dessinés en code (originaux). Passe A+B+C : monde de 1 536 unités (crêtes et vallées andines jusqu'à l'horizon, seconde rivière lointaine, sommets enneigés possibles), fenêtre fine de 512 unités ; rendu par src/survol.py (4 rayons par pixel et vote majoritaire, marche à pas sûrs sur cartes de maxima 128/32/8/2 puis 8 bissections). Rendu livré sur CPU ; la marche sur GPU (src/survol_gpu.py, SURVOL_GPU=1) est facultative et expérimentale (parité au bit non garantie, voir src/README.md). Retouche Fable (18/11) : forêt en bouquets sur une terre claire (sol GRASS_D, clairières GRASS_M, FOREST aux pieds de marche et par grandes plages), ombre de la forêt en vert sombre FOREST_SH au lieu du bleu nuit, contremarches naturelles GRASS_M / GRASS_D ; pain de sucre élargi (gauss 25 × 21 × K, 104 × K) et sorti de la couronne des terrasses au-dessus de la cité, d'où des flancs boisés et une cime de granite ; nuages plus gros et plus nombreux, modelé tramé ; rampe du ciel resserrée. Caméra, cartouches, coupe, terrasses et cité inchangés ; le fond du plan de coupe change (le pain de sucre y est un cône vert, plus une tour grise).",
  "reproduce": "export SURVOL_CACHE=/private/tmp/survol-pixel/survol-pixel__histoire__machu-picchu-pourquoi-une-cite-en-escaliers && SVI_SLOTS=4 out/tools/slot.sh .venv/bin/python out/shorts/survol-pixel__histoire__machu-picchu-pourquoi-une-cite-en-escaliers/src/video.py --out $SURVOL_CACHE/video.mp4 && .venv/bin/python out/tools/sound.py out/shorts/survol-pixel__histoire__machu-picchu-pourquoi-une-cite-en-escaliers/src/sound.json $SURVOL_CACHE/music.wav && .venv/bin/python out/tools/assemble.py mux --video $SURVOL_CACHE/video.mp4 --music $SURVOL_CACHE/music.wav --out out/shorts/survol-pixel__histoire__machu-picchu-pourquoi-une-cite-en-escaliers/short.mp4 && cp out/shorts/survol-pixel__histoire__machu-picchu-pourquoi-une-cite-en-escaliers/short.mp4 out/shorts/survol-pixel__histoire__machu-picchu-pourquoi-une-cite-en-escaliers/short_novo.mp4 && .venv/bin/python out/tools/tts.py out/shorts/survol-pixel__histoire__machu-picchu-pourquoi-une-cite-en-escaliers --engine files --replace  # voice_lines/ : 1 appel Gemini gemini-3.8-flash-tts Sulafat (API v1beta) découpé, voir out/report/notes/voix-survol-pixel.md"
 }

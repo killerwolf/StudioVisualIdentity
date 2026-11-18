@@ -127,6 +127,10 @@ review (`out/report/decisions.md` § « Survol pixel », `out/report/notes/direc
   the default Metal device); only the ray march moves to the GPU, frame 1.5–1.9 s → 0.7–0.8 s. Not bit-exact (Metal division is not
   correctly rounded; 0 px palette-index difference on 6 frames but 0–0.2 % of rays off by 1–2 ulp, see `out/report/facts.md`), so the
   delivered renders are CPU and the module stays experimental; CPU remains the default and the fallback.
+- **Fable retouch (2026-11-18, owner decision 38)**: 6 art-director fixes in one pass, both shorts re-rendered on CPU with the same voice and timings:
+  bigger, more numerous clouds with a dithered underside (the only engine change, `draw_clouds`), foam strokes on the atoll sea, a light Machu Picchu forest
+  with a dark-green `FOREST_SH` shadow (no more navy), a wider forested sugarloaf, a wider final atoll shot, a tighter sky ramp. Cost 63.9–214.4 s/100 frames;
+  the atoll's on-screen motion is still below Fable's target (`out/report/notes/survol-pixel.md` § « Retouche Fable »).
 - **Voice-over: Gemini « Sulafat »** (owner decision, 2026-11-18), the lot 2 recipe: one `gemini-3.8-flash-tts` call per short, split
   into `voice_lines/NN.mp3` by word timestamps, mixed by `tts.py --engine files --replace` (`short_novo.mp4` = music + SFX). The call
   needs API **v1beta** (see `out/report/facts.md`). Atoll 18.6 s at −16.0 LUFS (peak −1.7 dBFS), Machu Picchu 18.8 s at −13.8 LUFS (peak −1.5 dBFS), after the A+B+C remix (−15.9 / −13.7 before). Log:

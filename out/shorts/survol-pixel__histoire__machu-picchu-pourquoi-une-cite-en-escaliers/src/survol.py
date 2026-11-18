@@ -697,7 +697,8 @@ class Cloud:
 
 def draw_clouds(idx, depth, cam, pal, clouds, t, drift=(0.0, 0.0)):
     """Chaque boule = disque écran au rayon projeté (dessiné au pixel près, jamais agrandi), légèrement aplati en
-    rasante ; haut blanc, moitié basse hachurée une ligne sur deux, liseré bleuté au bas, reflet sommital.
+    rasante ; haut blanc, modelé tramé en damier sur le tiers bas droit puis croissant plein HATCH tout en bas
+    (retouche Fable du 18/11 : la hachure une ligne sur deux se lisait comme un store), liseré bleuté au bas.
     Ordre du peintre (loin -> près, bas -> haut) et test de profondeur contre le sol."""
     CL, HA, RIM = pal['CLOUD'], pal['HATCH'], pal['CLOUD_RIM']
     flat = 0.62 + 0.38 * math.sin(math.radians(max(cam.pitch, 0.0)))
@@ -733,8 +734,9 @@ def draw_clouds(idx, depth, cam, pal, clouds, t, drift=(0.0, 0.0)):
             continue
         sub = idx[y0c:y1c + 1, x0c:x1c + 1]
         col = np.full(m.shape, CL, np.uint8)
-        lower = (v > 0.12 - 0.25 * u) & (ay >= 2)
-        col[lower & (jj % 2 == 0)] = HA
+        lower = (v > 0.38 - 0.45 * u) & (ay >= 2)
+        col[lower & ((ii + jj) % 2 == 0)] = HA
+        col[(v > 0.72 - 0.45 * u) & (ay >= 3)] = HA
         rim = m & ~np.roll(m, -1, axis=0)
         rim[-1, :] = m[-1, :]
         col[rim & (v > 0.3)] = RIM

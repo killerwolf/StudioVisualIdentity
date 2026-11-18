@@ -40,10 +40,11 @@ CUT_Y0, CUT_Y1 = C0 - 27 * K, C0 - 21 * K
 CUT_DEPTH = 6.0 * K
 L_EARTH, L_GRAVEL, L_STONES = 1.1 * K, 2.1 * K, 3.7 * K
 
-BIOME = {'GRANITE': '#9C968C', 'GRANITE_SH': '#5F5A55', 'THATCH': '#C9A35A', 'EARTH': '#8A5A3A', 'SNOW': '#EEF3F4'}
+BIOME = {'GRANITE': '#9C968C', 'GRANITE_SH': '#5F5A55', 'THATCH': '#C9A35A', 'EARTH': '#8A5A3A', 'SNOW': '#EEF3F4',
+         'FOREST_SH': '#0F3620'}   # ombre sur la forêt : vert sombre, plus de bleu nuit (retouche Fable du 18/11)
 pal = S.Palette(BIOME)
 pal.set_lut('shadow', {
-    'GRASS_L': 'GRASS_M', 'GRASS_M': 'GRASS_D', 'GRASS_D': 'FOREST', 'FOREST': 'INK', 'GRANITE': 'GRANITE_SH',
+    'GRASS_L': 'GRASS_M', 'GRASS_M': 'GRASS_D', 'GRASS_D': 'FOREST', 'FOREST': 'FOREST_SH', 'FOREST_SH': 'INK', 'GRANITE': 'GRANITE_SH',
     'GRANITE_SH': 'INK', 'THATCH': 'EARTH', 'EARTH': 'INK', 'OCEAN_MID': 'SH_WATER', 'SHALLOW': 'OCEAN_MID',
     'CLOUD': 'HATCH', 'HATCH': 'MUTED', 'SKY_LO': 'SKY_MID', 'SKY_MID': 'SKY_HI', 'SKY_HI': 'OCEAN_MID',
     'HAZE': 'SKY_MID', 'LAND_FAR': 'GRASS_D', 'MUTED': 'INK', 'CREAM': 'HATCH', 'FOAM': 'SHALLOW', 'SNOW': 'HATCH'})
@@ -54,6 +55,7 @@ pal.set_haze({
     'GRASS_D': ['HZ_G1', 'HZ_G2', 'HZ_G2', 'HZ_G3', 'HZ_G4', 'HAZE'],
     'FOREST': ['GRASS_D', 'HZ_G1', 'HZ_G2', 'HZ_G3', 'HZ_G4', 'HAZE'],
     'INK': ['FOREST', 'GRASS_D', 'HZ_G2', 'HZ_G3', 'HZ_G4', 'HAZE'],
+    'FOREST_SH': ['FOREST', 'GRASS_D', 'HZ_G2', 'HZ_G3', 'HZ_G4', 'HAZE'],
     'GRANITE': ['HZ_R1', 'HZ_R1', 'HZ_G3', 'HZ_G3', 'HZ_G4', 'HAZE'],
     'GRANITE_SH': ['MUTED', 'HZ_G2', 'HZ_G2', 'HZ_G3', 'HZ_G4', 'HAZE'],
     'THATCH': ['HZ_R1', 'HZ_R1', 'HZ_G3', 'HZ_G3', 'HZ_G4', 'HAZE'],
@@ -82,7 +84,7 @@ def site_height(xx, yy, n1, n2):
     """Relief continu (avant quantification) : massif, rivière en fer à cheval, crêtes andines jusqu'au bord du monde."""
     mass = np.maximum.reduce([
         gauss(xx, yy, C0, C0 - 70 * K, 40 * K, 34 * K, 125 * K),        # la montagne au sud
-        gauss(xx, yy, C0 + 4 * K, C0 + 60 * K, 15 * K, 15 * K, 108 * K),  # le pain de sucre au nord
+        gauss(xx, yy, C0 + 4 * K, C0 + 60 * K, 25 * K, 21 * K, 104 * K),  # le pain de sucre au nord (cône, retouche Fable)
         gauss(xx, yy, C0, C0 - 6 * K, 36 * K, 48 * K, 76 * K),          # la crête de l'ensellement
     ]) + 7 * K * n1
     rcx, rcy, rr = C0, C0 + 12 * K, 92 * K
@@ -124,7 +126,10 @@ def world():
     e = np.sqrt(((xx - C0) / (17 * K)) ** 2 + ((yy - (C0 - 2 * K)) / (27 * K)) ** 2)
     city = e < 1
     skirt = CITY_Z - (e - 1) * 10 * K
-    agz = (e >= 1) & (e < 2.2)
+    # le pain de sucre entre dans la couronne des terrasses : au-dessus de la cité, c'est la montagne (naturelle,
+    # boisée), pas des murs de terrasse ; c'étaient ces murs gris qui en faisaient une aiguille (retouche Fable)
+    peak = (e >= 1) & (e < 2.2) & (Hn > skirt + 2 * K) & (yy > C0 + 20 * K)
+    agz = (e >= 1) & (e < 2.2) & ~peak
     flank = CITY_Z - 12 * K - (e - 2.2) * 40 * K
     Hn = np.where(agz, np.maximum(skirt, Hn), np.where(e >= 2.2, np.maximum(flank, Hn), Hn))
     top = np.floor(Hn / DH_NAT) * DH_NAT
@@ -141,15 +146,18 @@ def world():
     top = np.where(bld, CITY_Z + 2.6 * K, top)
     top = np.where(river, 0.0, top).astype(np.float32)
     snow = top > 128 * K
+    # seuil de la roche nue (carte, réglable par endroit) : 100 (×K) partout. Le pain de sucre (sommet 105) n'a plus
+    # que sa cime en granite : ses flancs sont boisés depuis qu'ils ne sont plus des murs de terrasse (voir peak)
+    RZ = np.full((G, G), 100 * K, np.float32)
     # couleurs grossières (1 case par cellule) — hors fenêtre fine
-    col = np.full((G, G), pal['FOREST'], np.uint8)
+    col = np.full((G, G), pal['GRASS_D'], np.uint8)
     lvl_n = np.floor(top / DH_NAT).astype(int)
-    # forêt naturelle : deux verts en grandes plages (bruit), plus une bande par marche : les rayures d'une marche sur
-    # deux, à 1 px au loin, scintillaient (A-B-A ≈ 8 % au survol)
-    col[S.vnoise(xx, yy, 22.0, SEED + 91, 2) > -0.1] = pal['GRASS_D']
-    col[n2 > 0.25] = pal['FOREST']
+    # forêt naturelle : deux verts en grandes plages (bruit) ; pas de bande par marche : les rayures d'une marche sur
+    # deux, à 1 px au loin, scintillaient (A-B-A ≈ 8 % au survol). Retouche Fable : sol clair, FOREST réservé aux pieds
+    # de marche, clairières GRASS_M en plages
+    col[S.vnoise(xx, yy, 22.0, SEED + 91, 2) < -0.45] = pal['GRASS_M']
     col[(top < 10 * K)] = pal['GRASS_M']
-    col[(top > 100 * K)] = pal['GRANITE']
+    col[(top > RZ)] = pal['GRANITE']
     col[snow] = pal['SNOW']
     lvl_a = np.floor(top / DH_AG).astype(int)
     col[agz & (lvl_a % 2 == 0)] = pal['GRASS_L']
@@ -170,12 +178,14 @@ def world():
     lip = lower_n & ~higher & agz & ~river
     col[lip] = pal['GRASS_L']
     col[foot & agz] = pal['GRASS_D']
-    col[foot & ~agz & ~city & (top <= 100 * K)] = pal['FOREST']
-    col[foot & (top > 100 * K)] = pal['GRANITE_SH']
+    col[foot & ~agz & ~city & (top <= RZ)] = pal['FOREST']
+    col[foot & (top > RZ)] = pal['GRANITE_SH']
     col[foot & city & ~plaza] = pal['GRANITE_SH']
-    fl = np.full((G, G), pal['GRASS_D'], np.uint8)
-    fd = np.full((G, G), pal['FOREST'], np.uint8)
-    stone = agz | city | bld | (top > 100 * K)
+    # contremarches naturelles : éclairée GRASS_M, ombrée GRASS_D (un ton d'écart gardé ; GRASS_D / FOREST avant la
+    # retouche Fable : la forêt faisait 22 % de pixels sombres contre 3–6 % dans la source)
+    fl = np.full((G, G), pal['GRASS_M'], np.uint8)
+    fd = np.full((G, G), pal['GRASS_D'], np.uint8)
+    stone = agz | city | bld | (top > RZ)
     fl[stone] = pal['GRANITE']
     fd[stone] = pal['GRANITE_SH']
     fl[snow] = pal['GRANITE']
@@ -183,21 +193,21 @@ def world():
     top0 = top.copy()
     top = np.where(cut, top - CUT_DEPTH, top)
     col[cut] = pal['GRANITE_SH']
-    wild = ~agz & ~city & ~river & ~cut & (top > 6 * K) & (top < 100 * K) & (e > 2.3)
+    wild = ~agz & ~city & ~river & ~cut & (top > 6 * K) & (top < RZ) & ((e > 2.3) | peak)
     # ---- carte fine (FK cases par cellule) sur la fenêtre du site : textures organiques, houppiers semés
-    fine = fine_colours(top, top0, col, agz, city, plaza, bld, river, wild, cut)
+    fine = fine_colours(top, top0, col, agz, city, plaza, bld, river, wild, cut, RZ)
     shade = S.relief_shade(top, (0.30, -0.62), reach=60, slope=1.0 / math.hypot(0.30, 0.62))
     shade &= ~river & ~cut
     w = S.World(top, col, fl, fd, cut=cut, section=section_fn(top0), outside=pal['GRASS_D'], zmin=-1.0,
-                outside_tile=outside_tile(), cut_top0=top0, coursed=stone & ~(top > 100 * K),
+                outside_tile=outside_tile(), cut_top0=top0, coursed=stone & ~(top > RZ),
                 fine=(FX0, FX0, FK, fine), shade=shade)
     trees = S.scatter_trees(wild & (np.abs(xx - C0) < FW / 2 - 4) & (np.abs(yy - C0) < FW / 2 - 4), top, SEED + 31,
-                            density=0.42, r=(0.9, 1.8), cluster=(n2 + 0.2) * 1.8)
+                            density=0.5, r=(0.9, 2.2), cluster=(n2 - 0.02) * 3.2)
     _W.update(w=w, top0=top0, agz=agz, trees=trees)
     return w
 
 
-def fine_colours(top, top0, col, agz, city, plaza, bld, river, wild, cut):
+def fine_colours(top, top0, col, agz, city, plaza, bld, river, wild, cut, RZ):
     """Carte de couleurs FK fois plus fine sur la fenêtre [FX0, FX0 + FW)² : lignes de pied et de rebord fines,
     parcelles organiques sur les terrasses, houppiers semés (même teinte que les arbres dessinés), strates de roche."""
     sl = slice(FX0, FX0 + FW)
@@ -209,6 +219,7 @@ def fine_colours(top, top0, col, agz, city, plaza, bld, river, wild, cut):
     c = up(col)
     t = up(top)
     A, CI, PL, B, RV, WI, CU = (up(m) for m in (agz, city, plaza, bld, river, wild, cut))
+    rz = up(RZ)
     # pied (trait sombre) et rebord (trait clair) : seulement la bande de 2 cases fines contre la marche voisine
     hi = np.zeros((n, n), bool)
     lo = np.zeros((n, n), bool)
@@ -221,8 +232,9 @@ def fine_colours(top, top0, col, agz, city, plaza, bld, river, wild, cut):
     lvl_n = np.floor(t / DH_NAT).astype(int)
     nA = S.vnoise(X, Y, 3.0, SEED + 61, 2)
     nB = S.vnoise(X, Y, 1.2, SEED + 67, 1)
-    nat = ~A & ~CI & ~RV & ~CU & (t <= 100 * K)
-    base[nat] = np.where(S.vnoise(X[nat], Y[nat], 22.0, SEED + 91, 2) > -0.1, pal['GRASS_D'], pal['FOREST'])
+    nat = ~A & ~CI & ~RV & ~CU & (t <= rz)
+    # retouche Fable : hors forêt semée aussi, FOREST seulement aux pieds de marche (plus de plages sombres)
+    base[nat] = np.where(S.vnoise(X[nat], Y[nat], 22.0, SEED + 91, 2) < -0.45, pal['GRASS_M'], pal['GRASS_D'])
     base[nat & (t < 10 * K)] = pal['GRASS_M']
     # parcelles de culture sur les terrasses : deux verts en plages organiques, rangées le long de la marche
     terr = A & ~RV & ~CU
@@ -230,12 +242,13 @@ def fine_colours(top, top0, col, agz, city, plaza, bld, river, wild, cut):
     # forêt variée : houppiers semés (boules de 2–3 cases fines) en trois verts, clairière de-ci de-là
     fo = WI & (t > 6 * K)
     blob = (nB > 0.15)
-    base[fo] = pal['FOREST']
-    base[fo & blob] = pal['GRASS_D']
+    # retouche Fable : sol clair (GRASS_D), clairières GRASS_M plus fréquentes, sous-bois FOREST par grandes plages
+    base[fo] = pal['GRASS_D']
     base[fo & blob & (nA > 0.25)] = pal['GRASS_M']
-    base[fo & (S.vnoise(X, Y, 9.0, SEED + 71, 2) > 0.55)] = pal['GRASS_M']
+    base[fo & (S.vnoise(X, Y, 9.0, SEED + 71, 2) > 0.40)] = pal['GRASS_M']
+    base[fo & (S.vnoise(X, Y, 14.0, SEED + 73, 2) < -0.35)] = pal['FOREST']
     # roche : granite à strates sombres irrégulières
-    rk = (t > 100 * K) & ~CU
+    rk = (t > rz) & ~CU
     base[rk] = np.where(np.sin(t[rk] * 0.9 + 3 * nA[rk]) > 0.55, pal['GRANITE_SH'], pal['GRANITE'])
     base[rk & (t > 128 * K)] = pal['SNOW']
     # cité : dalles de granite moucheté, place verte, toits (repris de la carte grossière)
@@ -251,8 +264,8 @@ def fine_colours(top, top0, col, agz, city, plaza, bld, river, wild, cut):
     lip = lo & ~hi & A & ~RV
     base[lip] = pal['GRASS_L']
     base[foot & A] = pal['GRASS_D']
-    base[foot & ~A & ~CI & (t <= 100 * K)] = pal['FOREST']
-    base[foot & (t > 100 * K)] = pal['GRANITE_SH']
+    base[foot & ~A & ~CI & (t <= rz)] = pal['FOREST']
+    base[foot & (t > rz)] = pal['GRANITE_SH']
     base[foot & CI & ~PL] = pal['GRANITE_SH']
     base[CU] = pal['GRANITE_SH']
     return base
@@ -325,14 +338,14 @@ def _clouds():
     cams = np.array([S.Cam(cam_path.at(float(t)), 416.0).pos for t in ts])
     out = []
     tries = 0
-    while len(out) < 40 and tries < 8000:
+    while len(out) < 60 and tries < 12000:
         tries += 1
-        far = len(out) >= 14
+        far = len(out) >= 24
         span = 380 if far else 150
         x, y = C0 + rng.uniform(-span, span) * K, C0 + rng.uniform(-span, span * 0.9) * K
         if not (40 < x < G - 40 and 40 < y < G - 40):
             continue
-        R_ = float(rng.uniform(7.0, 11.0)) * K
+        R_ = float(rng.uniform(9.0, 16.0)) * K
         if math.hypot(x - C0, y - C0) < 45 * K or any(math.hypot(x - c.x, y - c.y) < 30 * K for c in out):
             continue
         P = np.stack([x + DRIFT[0] * ts, y + DRIFT[1] * ts, np.full_like(ts, CLOUD_Z)], 1)
@@ -368,7 +381,8 @@ def cut_target_z():
     return float(_W['top0'][yi, xi])
 
 
-R = S.Renderer(pal, focal=416.0, course=0.9 * K, wall_speck=0.3)
+R = S.Renderer(pal, focal=416.0, course=0.9 * K, wall_speck=0.3,
+               sky=[(0.4, 'HAZE'), (1.2, 'SKY_1'), (2.4, 'SKY_LO'), (4.0, 'SKY_2'), (6.5, 'SKY_MID'), (10.0, 'SKY_4'), (90.0, 'SKY_HI')])   # rampe du ciel resserrée (retouche Fable)
 
 # un seul cartouche à la fois, calé sur les lignes de narration.json (mots repérés par silencedetect) :
 # (t0, t1, lignes, taille, x, y, ancre, options)

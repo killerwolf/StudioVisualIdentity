@@ -117,8 +117,10 @@ def static():
         col[dep < 9] = pal['SHALLOW']
         col[dep < 2.6] = pal['LAGOON']
         col[reefc & (dep < 1.0)] = pal['CORAL']
-        foam = (S.hash01(xx.astype(np.int64), yy.astype(np.int64), 40 + ph) < 0.014) & (dep > 9)
-        col[foam] = pal['FOAM']
+        # écume : traits de 4 unités le long de Y (retouche Fable du 18/11), clair avec une tête blanche
+        foam = (S.hash01(xx.astype(np.int64), (yy // 4).astype(np.int64), 50 + ph) < 0.016) & (dep > 9)
+        col[foam] = pal['LAGOON']
+        col[foam & ((yy.astype(np.int64) % 4) == 0)] = pal['FOAM']
         col[land] = pal['SAND']
         cols.append(col)
     _F.update(top_out=top, col_out=cols, land_out=land)
@@ -164,8 +166,9 @@ def fine_fields(X, Y, rag_seed, foam):
                surf=S.hash01(np.floor(X * 2).astype(np.int64), np.floor(Y * 2).astype(np.int64), 21) < 0.45,
                tex=S.vnoise(X, Y, 2.5, SEED + 31, 2), Y=Y)
     if foam:
-        out['foam'] = [(S.hash01(np.floor(X * FK / 3).astype(np.int64), np.floor(Y * FK).astype(np.int64), 50 + ph) < 0.02)
-                       for ph in (0, 1)]
+        # mêmes traits que la mer extérieure (même hachage par unité et par 4 unités en Y), sur une demi-cellule de large
+        out['foam'] = [(S.hash01(np.floor(X).astype(np.int64), np.floor(Y / 4).astype(np.int64), 50 + ph) < 0.016)
+                       & ((np.floor(X * FK) % FK) < 2) for ph in (0, 1)]
     return out
 
 
@@ -224,7 +227,9 @@ def build_world(s, u_cut, t):
     band = ff['band']
     col[crest_f & (band > 0.0) & (band < 3.5) & ~landf] = pal['CORAL']
     col[(band > 5.2) & (band < 7.0) & ff['surf'] & ~landf] = pal['FOAM']
-    col[ff['foam'][ph] & (dep > 6) & ~landf] = pal['FOAM']
+    fm = ff['foam'][ph] & (dep > 6) & ~landf
+    col[fm] = pal['LAGOON']
+    col[fm & ((np.floor(ff['Y']).astype(np.int64) % 4) == 0)] = pal['FOAM']
     # terre : marches par la géométrie (L), textures fines
     tex = ff['tex']
     g = landf & (Lf >= 1)
@@ -251,10 +256,10 @@ def build_world(s, u_cut, t):
         drop = u_cut * (P_PEAK + PIT + 2)
         topc = np.where(cutc, np.maximum(topc - drop, -PIT), topc)
         if u_cut >= 1:
-            # socle de la maquette : dalles de 2 unités, une sur trois sombre (hachage fixe) ; les rayures d'une unité
-            # scintillaient en rasante (A-B-A 14 % sur la moitié basse de l'image à 17 s)
+            # socle de la maquette : dalles de 2 unités, une sur douze sombre (hachage fixe ; une sur trois avant la
+            # retouche Fable : damier « QR code ») ; les rayures d'une unité scintillaient en rasante (A-B-A 14 % à 17 s)
             fx_, fy_ = F['fxy']
-            dal = S.hash01((fx_ // (2 * FK)).astype(np.int64), (fy_ // (2 * FK)).astype(np.int64), 77) < 0.33
+            dal = S.hash01((fx_ // (2 * FK)).astype(np.int64), (fy_ // (2 * FK)).astype(np.int64), 77) < 0.08
             col = np.where(ff['cut'], np.where(dal, pal['BASALT'], pal['ROCK']), col)
     # --- assemblage dans le grand monde
     sl = slice(FX0, FX0 + FW)
@@ -308,7 +313,7 @@ def outside_tile():
     for ph in (0, 1):
         t = np.full((n, n), pal['OCEAN'], np.uint8)
         t[v > 0.25] = pal['OCEAN_MID']
-        t[S.hash01(xx.astype(np.int64), yy.astype(np.int64), 60 + ph) < 0.012] = pal['FOAM']
+        t[S.hash01(xx.astype(np.int64), (yy // 4).astype(np.int64), 60 + ph) < 0.016] = pal['LAGOON']
         out.append(t)
     return out
 
@@ -356,14 +361,14 @@ CLOUD_Z = 90.0
 # approche au-dessus de la mer vers l'anneau, virage et retour en arrière (le volcan revient), plan de coupe lent qui
 # glisse le long de la tranchée pendant l'enfoncement, puis départ au-dessus de l'anneau vers les autres atolls.
 cam_path = S.CameraPath([
-    (0.0, dict(tx=C0 + 22, ty=C0 - 40, tz=0, dist=245, yaw=-28, pitch=40, roll=-9), 'linear'),
+    (0.0, dict(tx=C0 + 22, ty=C0 - 110, tz=0, dist=300, yaw=-28, pitch=33, roll=-9), 'linear'),
     (2.9, dict(tx=C0 + 4, ty=C0 - 6, tz=0, dist=200, yaw=-18, pitch=37, roll=-4), 'linear'),
     (3.9, dict(tx=C0 + 6, ty=C0 - 10, tz=-6, dist=240, yaw=-12, pitch=27, roll=6), 'linear'),
     (7.6, dict(tx=C0 - 8, ty=C0 - 6, tz=-8, dist=226, yaw=-4, pitch=25, roll=4), 'linear'),
     (11.2, dict(tx=C0 + 10, ty=C0 - 6, tz=-8, dist=222, yaw=8, pitch=25, roll=-3), 'linear'),
     (13.4, dict(tx=C0 + 16, ty=C0 - 8, tz=-6, dist=226, yaw=12, pitch=26, roll=-5), 'linear'),
     (15.0, dict(tx=C0 + 10, ty=C0 + 14, tz=0, dist=230, yaw=2, pitch=35, roll=-9), 'linear'),
-    (18.6, dict(tx=C0 - 30, ty=C0 + 120, tz=0, dist=240, yaw=-22, pitch=38, roll=-12), 'linear'),
+    (18.6, dict(tx=C0 - 6, ty=C0 + 40, tz=0, dist=310, yaw=-22, pitch=30, roll=-10), 'linear'),
 ], smooth=True)
 
 
@@ -375,11 +380,11 @@ def _clouds():
     cams = np.array([S.Cam(cam_path.at(float(t)), 416.0).pos for t in ts])
     out = []
     tries = 0
-    while len(out) < 70 and tries < 9000:
+    while len(out) < 100 and tries < 14000:
         tries += 1
         x, y = C0 + rng.uniform(-520, 520), C0 + rng.uniform(-520, 520)
-        R_ = float(rng.uniform(8.0, 13.0))
-        if math.hypot(x - C0, (y - C0) * 1.06) < 88 or any(math.hypot(x - c.x, y - c.y) < 40 for c in out):
+        R_ = float(rng.uniform(11.0, 20.0))
+        if math.hypot(x - C0, (y - C0) * 1.06) < 88 or any(math.hypot(x - c.x, y - c.y) < 36 for c in out):
             continue
         P = np.stack([x + DRIFT[0] * ts, y + DRIFT[1] * ts, np.full_like(ts, CLOUD_Z)], 1)
         if np.linalg.norm(P - cams, axis=1).min() < 45 + R_:
@@ -409,7 +414,8 @@ def cut_open(t):
     return S.ease('inOutCubic', (t - 4.0) / 0.8)
 
 
-R = S.Renderer(pal, focal=416.0, wall_speck=0.25, haze_k=(1.6, 2.2, 2.9, 3.7, 4.7, 6.0))   # mer : brume plus lointaine
+R = S.Renderer(pal, focal=416.0, wall_speck=0.25, haze_k=(1.6, 2.2, 2.9, 3.7, 4.7, 6.0),
+               sky=[(0.4, 'HAZE'), (1.2, 'SKY_1'), (2.4, 'SKY_LO'), (4.0, 'SKY_2'), (6.5, 'SKY_MID'), (10.0, 'SKY_4'), (90.0, 'SKY_HI')])   # rampe du ciel resserrée (retouche Fable)   # mer : brume plus lointaine
 
 # un seul cartouche à la fois, calé sur narration.json (mots repérés par silencedetect) ; (t0, t1, lignes, taille, x, y,
 # ancre, options)
@@ -479,7 +485,31 @@ def frame_idx(t, cam_override=None, s_override=None, u_override=None, cards=True
                 gx, gy, gz = cam.project(np.array(P()))
                 if gz > 1:
                     S.pinned_card(idx, pal, lines, bx, by, gx, gy)
+    cap_colors(idx)
     return idx
+
+
+KEEP = ('CREAM', 'INK', 'GOLD', 'RED', 'MUTED', 'CLOUD', 'HATCH', 'CLOUD_RIM')
+
+
+def cap_colors(idx, n=32):
+    """Garde-fou « ≤ 32 couleurs par image » (challenge) : la rampe de ciel resserrée de la retouche Fable fait voir un
+    palier de plus (SKY_MID), et 9,5–11 s / 13,5 s montaient à 33 indices. On fond la couleur la plus rare (1 à 10
+    pixels natifs de brume lointaine, HZ_G3 / HZ_R1) dans la couleur présente la plus proche ; cartouches et nuages
+    protégés. Sans effet quand l'image a déjà ≤ n indices."""
+    c = np.bincount(idx.ravel(), minlength=len(pal.names))
+    used = np.nonzero(c)[0]
+    keep = {pal[k] for k in KEEP}
+    rgb = pal.rgb.astype(np.int32)
+    while len(used) > n:
+        cand = [u for u in used if u not in keep]
+        r = min(cand, key=lambda u: c[u])
+        others = used[used != r]
+        t = others[np.argmin(((rgb[others] - rgb[r]) ** 2).sum(1))]
+        idx[idx == r] = t
+        c[t] += c[r]
+        c[r] = 0
+        used = others
 
 
 def check(t):

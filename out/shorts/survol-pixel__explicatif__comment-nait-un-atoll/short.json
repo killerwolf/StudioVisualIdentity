@@ -13,9 +13,9 @@
   "ffmpeg"
  ],
  "seed": 1842,
- "renderTimeSec": 598.1,
- "renderSecPer100Frames": 107.18,
- "renderCostNote": "passe A+B+C du 18/11 (moteur : 4 rayons par pixel et vote, carte de couleurs 4× plus fine sur la fenêtre du sujet, brume en 6 paliers, ombre portée du relief, marche à pas sûrs sur cartes de maxima ; monde de 1 080 unités) : 598,1 s pour 558 images = 107,18 s/100 images, sur CPU, en parallèle du rendu Machu Picchu sur 4 cœurs ; charge 1 min 5,98 au départ, 4,42 à la fin ; construction du monde 19,8 s (incluse). Plafond de coût levé par le propriétaire pour B. Rendus précédents : passe de détail 109,2 s (19,6/100, charge 2,7–8,9), après revue 87,0 s (15,6/100)",
+ "renderTimeSec": 356.6,
+ "renderSecPer100Frames": 63.9,
+ "renderCostNote": "retouche Fable du 18/11 (6 retouches : nuages, écume en traits, caméra de l'accroche et du plan final, rampe du ciel, socle, garde-fou 32 couleurs ; moteur inchangé hors draw_clouds) : 356,6 s pour 558 images = 63,9 s/100 images, sur CPU, seul (second rendu, celui qui est livré) ; charge 1 min 3,79 au départ, 3,44 à la fin ; construction du monde 6,5 s (incluse). Premier rendu de la retouche, sans le garde-fou, en parallèle du rendu Machu Picchu : 458,1 s (82,1/100, charge 3,79 → 5,02). Rendus précédents : passe A+B+C 598,1 s (107,18/100, en parallèle, charge 5,98 → 4,42), passe de détail 109,2 s (19,6/100), après revue 87,0 s (15,6/100)",
  "measuredUnderLoad": true,
  "structure": [
   {
@@ -97,9 +97,9 @@
   "narrationWordsSpoken": 40,
   "wordsPerSecond": "2,33–2,58 (mots prononcés)",
   "pitchLe60Share": 1.0,
-  "colorsPerFrame": "stills (avec cartouches, natif) : 23–30 indices par image après la passe A+B+C ; palette déclarée 40 couleurs (35 de noyau + 5 biome) ; passe de détail : 16–24 natif sans cartouches",
-  "dive": "src/dive/ (90/70/50/30/15°, même moteur, 19–30 couleurs ; régénéré après la passe A+B+C)",
-  "clouds": "70 nuages en coton à l'altitude 90 dans tout le monde jusqu'à l'horizon, hors de l'anneau, jamais traversés (passe A+B+C, C15 rouverte par le propriétaire) ; compte dans le cadre non refait (passe de détail : 3–11)",
+  "colorsPerFrame": "stills (avec cartouches, natif) : 24–32 indices par image après la retouche Fable (garde-fou cap_colors : 9,5–11 s et 13,5 s montaient à 33 avec la rampe de ciel resserrée, la couleur la plus rare, 1 à 10 pixels de brume lointaine, est fondue dans la plus proche) ; passe A+B+C : 23–30 ; palette déclarée 40 couleurs (35 de noyau + 5 biome)",
+  "dive": "src/dive/ (90/70/50/30/15°, même moteur, 19–31 couleurs ; régénéré après la retouche Fable)",
+  "clouds": "100 nuages en coton (rayon 11–20) à l'altitude 90 dans tout le monde jusqu'à l'horizon, hors de l'anneau, jamais traversés (retouche Fable ; passe A+B+C : 70) ; visibles (rayon ≥ 2 px) : médiane 17 par image, ≥ 6 sur 91 % des images ; anneau et coupe jamais cachés à plus de 5 % (contrôle géométrique toutes les 0,1 s) ; nuages + ombres sur images natives : CLOUD/HATCH/CLOUD_RIM 1,3–5,5 %, SH_WATER 0,6–2,6 %",
   "photosensitivity": {
    "maxLumaChange10Frames": 0.043,
    "maxLumaStepFrame": 0.0323,
@@ -110,15 +110,15 @@
    "cloudCrossing": false
   },
   "cameraPreflightMinClearance": 85.8,
-  "fileMB": 8.9,
+  "fileMB": 6.6,
   "sourceCompare": "out/report/notes/console-retro-source/comparaison.jpg",
   "grazingFinalShotSec": 3.7,
   "recognitionCopy": "recognition.py sur copie (scratchpad) après revue : 1er voisin aquarelle-conte « phare d'Alexandrie » (0,6208), frère à 0,6635 : échec maintenu, documenté",
   "sourceCompareAfter": "out/report/notes/console-retro-source/comparaison-avant-apres.jpg",
   "detailPass": "out/report/notes/survol-pixel-detail.md : diffCells natif 0,111 → 0,153 (source 0,221), grandes plages > 5 % de l'écran 85 → 80 % (source 50 %), pixels A-B-A 0,23 → 0,38 % (source 4,0 %)",
   "camera": "tangage 25–40° (médiane 26,5°, 100 % du temps dans 25–40°), roulis jusqu'à 12° (≥ 5° pendant 56 % du temps) ; caméra PCHIP (passe A+B+C)",
-  "loudness": "−16,0 LUFS intégrés, crête −1,7 dBFS, LRA 5,3 LU (ffmpeg ebur128 sur short.mp4 final)",
-  "temporalAliasing": "pixels A-B-A (aller-retour sur 3 images, fichier décodé, 1 px par gros pixel, seuil 24 ; source 4,0 % par la même méthode) : 1,06 % sur tout le short (passe de détail 0,38 %) ; descente 3,2–4,0 s 2,58 % ; remontée 13,9–14,6 s 1,61 % ; plan final 16,5–17,5 s 1,93 %. Natif (méthode du prototype, sans cartouches) : 4,18 % à 3,5 s, 3,25 % à 14,2 s",
+  "loudness": "−16,0 LUFS intégrés, crête −1,7 dBFS, LRA 5,3 LU (ffmpeg ebur128 sur short.mp4 après la retouche Fable, inchangé)",
+  "temporalAliasing": "retouche Fable, measure2.py de Fable (fichier décodé, 1 px par gros pixel, seuil 24 ; source 2,4 %) : A-B-A 0,57 % sur tout le short (0,87 % avant), pire fenêtre 1,38 % (bascule) ; pixels qui changent par image 5,2 % (6,5 % avant ; accroche 7,0 %, plan final 5,6 %, contre ≥ 12 % visés). Mesures A+B+C (autre méthode, source 4,0 %) : 1,06 % sur tout le short",
   "sourceCompareFinal": "out/report/notes/console-retro-source/final-abc.jpg",
   "abcPass": "out/report/notes/survol-pixel.md § « Passe A+B+C » (phases 1 et 2)"
  },
@@ -136,6 +136,6 @@
    "source": "manuels de géologie marine ; simplification assumée : les variations du niveau de la mer ne sont pas montrées"
   }
  ],
- "notes": "Monde inventé de 1 080 unités (passe A+B+C) : l'atoll du sujet au centre, autour d'autres atolls (anneaux de sable et de corail), monts sous-marins, bancs et houle, jamais d'île verte ni d'archipel copié de la source (C15 rouverte par le propriétaire le 18/11 : d'autres atolls au loin, plus de 4 nuages à l'écran par moments). Cartouches retirés par décision du propriétaire (18/11, choix 34) : « il y a des millions / d'années », « pendant des millions / d'années », l'épingle « lagon » et les épingles finales « basalte » / « calcaire ». Le relief en marches est une convention de dessin, dit à l'écran (C18). Nuance connue (Ladd lui-même) : les forages prouvent l'affaissement, mais toutes les îles ne passent pas forcément par les trois stades ; la voix reste au niveau du modèle de Darwin. Rendu : moteur src/survol.py (4 rayons par pixel et vote majoritaire, marche à pas sûrs sur cartes de maxima 128/32/8/2 puis 8 bissections), fenêtre fine de 320 unités, tranchée de coupe de 60 de profondeur, socle en dalles de 2 unités. Rendu livré sur CPU ; la marche sur GPU (src/survol_gpu.py, SURVOL_GPU=1) est facultative et expérimentale (parité au bit non garantie, voir src/README.md).",
+ "notes": "Monde inventé de 1 080 unités (passe A+B+C) : l'atoll du sujet au centre, autour d'autres atolls (anneaux de sable et de corail), monts sous-marins, bancs et houle, jamais d'île verte ni d'archipel copié de la source (C15 rouverte par le propriétaire le 18/11 : d'autres atolls au loin, plus de 4 nuages à l'écran par moments). Cartouches retirés par décision du propriétaire (18/11, choix 34) : « il y a des millions / d'années », « pendant des millions / d'années », l'épingle « lagon » et les épingles finales « basalte » / « calcaire ». Le relief en marches est une convention de dessin, dit à l'écran (C18). Nuance connue (Ladd lui-même) : les forages prouvent l'affaissement, mais toutes les îles ne passent pas forcément par les trois stades ; la voix reste au niveau du modèle de Darwin. Rendu : moteur src/survol.py (4 rayons par pixel et vote majoritaire, marche à pas sûrs sur cartes de maxima 128/32/8/2 puis 8 bissections), fenêtre fine de 320 unités, tranchée de coupe de 60 de profondeur, socle en dalles de 2 unités. Rendu livré sur CPU ; la marche sur GPU (src/survol_gpu.py, SURVOL_GPU=1) est facultative et expérimentale (parité au bit non garantie, voir src/README.md). Retouche Fable (18/11) : nuages plus gros et plus nombreux, modelé tramé ; écume en traits de 4 unités le long de Y ; caméra : clé 0,0 s plus loin (ty C0−110, dist 300, tangage 33°), clé 18,6 s en recul (tx C0−6, ty C0+40, dist 310, tangage 30°, roulis −10°) pour l'anneau entier, la coupe et l'horizon ; rampe du ciel resserrée ; socle à une dalle sombre sur douze ; garde-fou ≤ 32 couleurs par image.",
  "reproduce": "export SURVOL_CACHE=/private/tmp/survol-pixel/survol-pixel__explicatif__comment-nait-un-atoll && SVI_SLOTS=4 out/tools/slot.sh .venv/bin/python out/shorts/survol-pixel__explicatif__comment-nait-un-atoll/src/video.py --out $SURVOL_CACHE/video.mp4 && .venv/bin/python out/tools/sound.py out/shorts/survol-pixel__explicatif__comment-nait-un-atoll/src/sound.json $SURVOL_CACHE/music.wav && .venv/bin/python out/tools/assemble.py mux --video $SURVOL_CACHE/video.mp4 --music $SURVOL_CACHE/music.wav --out out/shorts/survol-pixel__explicatif__comment-nait-un-atoll/short.mp4 && cp out/shorts/survol-pixel__explicatif__comment-nait-un-atoll/short.mp4 out/shorts/survol-pixel__explicatif__comment-nait-un-atoll/short_novo.mp4 && .venv/bin/python out/tools/tts.py out/shorts/survol-pixel__explicatif__comment-nait-un-atoll --engine files --replace  # voice_lines/ : 1 appel Gemini gemini-3.8-flash-tts Sulafat (API v1beta) découpé, voir out/report/notes/voix-survol-pixel.md"
 }

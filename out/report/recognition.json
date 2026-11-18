@@ -2,9 +2,9 @@
  "method": "Lab 8x8x8 Bhattacharyya + edge-histogram chi2, 8 frames/short, nearest neighbour",
  "shorts": 45,
  "top1Accuracy": 0.911,
- "meanIntra": 0.2349,
- "meanInter": 0.8656,
- "ratioIntraOverInter": 0.271,
+ "meanIntra": 0.2353,
+ "meanInter": 0.8644,
+ "ratioIntraOverInter": 0.272,
  "rows": [
   {
    "short": "aquarelle-conte__enfants__ou-vont-les-etoiles-le-jour",
@@ -220,13 +220,13 @@
    "short": "survol-pixel__explicatif__comment-nait-un-atoll",
    "nearest": "aquarelle-conte__histoire__phare-d-alexandrie",
    "sameIdentity": false,
-   "distance": 0.7217
+   "distance": 0.6895
   },
   {
    "short": "survol-pixel__histoire__machu-picchu-pourquoi-une-cite-en-escaliers",
    "nearest": "survol-pixel__explicatif__comment-nait-un-atoll",
    "sameIdentity": true,
-   "distance": 0.7544
+   "distance": 0.764
   },
   {
    "short": "swiss-data__evenements__j-272-eclipse-2-aout-2027",

@@ -49,7 +49,7 @@ le sujet. Références de genre seulement : diorama de musée, bloc-diagramme de
    moyenne : la palette reste exacte). Mesuré après la passe A+B+C sur les stills natifs (indices exacts, cartouches
    compris) : 23–30 couleurs par image (atoll) et 19–26 (Machu Picchu), toujours ≤ 32 (contrôle « Palette » de la revue du challenge) ; médiane 26 et 23 sur la
    frise du prototype (sans cartouches). La **palette déclarée** passe à **40 couleurs par épisode** (35 de noyau + 5 biome ;
-   28–29 avant) : la phrase « palette déclarée ≤ 32 » ne tient plus, seul le compte par image reste ≤ 32 (écart signalé au
+   28–29 avant ; **41 à Machu Picchu** depuis la retouche Fable, avec `FOREST_SH`) : la phrase « palette déclarée ≤ 32 » ne tient plus, seul le compte par image reste ≤ 32 (écart signalé au
    propriétaire).
 2. **La profondeur 3D est obligatoire (règle du propriétaire).** Jamais de rendu 2D plat. Chaque image montre **au moins
    deux indices de profondeur, dont un géométrique** (C2) parmi :
@@ -188,16 +188,26 @@ entières : la grille est exacte (test `src/test_jersey_grid.py` : 99/99 glyphes
   seulement quand l'assise fait ≥ 3 pixels natifs.
 - **L'eau** : plan z = 0 ; couleur selon la profondeur du fond en 4 bandes **crénelées** (seuils décalés d'un bruit fixe par
   cellule, quelques cellules isolées, front externe de pente irrégulière : bandes de 2 à 10 cellules) ; pâtés coralliens dans
-  le lagon ; moutons d'écume semés (≈ 1 pour 150 cellules) qui alternent entre deux phases à **2 Hz** ; ressac épars.
+  le lagon ; **traits d'écume** (retouche Fable du 18/11, au lieu de points blancs qui se lisaient comme de la neige) :
+  4 unités de long sur ½ à 1 de large, tous alignés sur l'axe Y du monde, bleu clair (`LAGOON`) à tête blanche (`FOAM`),
+  ≈ 1,6 % des cellules du large, même hachage dans la mer extérieure, la fenêtre fine et la mer au-delà du monde ; deux
+  phases qui alternent à **2 Hz** ; ressac épars.
 - **Contremarches** : le flanc d'une marche prend la couleur de flanc du matériau (pierre : granit clair / granit ombre ;
-  herbe : vert sombre / forêt), selon qu'il regarde la lumière nord-ouest ou non.
-- **Coupes** : une région du monde descend « comme un ascenseur » jusqu'à un socle de roche (en dalles de 2 unités depuis la passe A+B+C : les rayures d'une unité scintillaient en rasante ; jamais l'encre, couleur du texte) ; ses parois montrent la
+  herbe : vert sombre / forêt à l'atoll ; vert moyen / vert sombre à Machu Picchu depuis la retouche Fable, pour une forêt
+  claire), selon qu'il regarde la lumière nord-ouest ou non.
+- **Forêt** (retouche Fable, Machu Picchu) : **bouquets d'arbres sur une terre claire** (sol `GRASS_D`, clairières `GRASS_M`,
+  sous-bois `FOREST` seulement par grandes plages et aux pieds de marche) ; l'ombre sur la forêt est un vert sombre
+  `FOREST_SH` `#0F3620`, **jamais le bleu nuit `INK`** ; arbres semés en bouquets séparés par des vides.
+- **Coupes** : une région du monde descend « comme un ascenseur » jusqu'à un socle de roche (en dalles de 2 unités depuis la passe A+B+C : les rayures d'une unité scintillaient en rasante ; une dalle sombre sur douze depuis la retouche Fable, plus de damier ; jamais l'encre, couleur du texte) ; ses parois montrent la
   coupe colorée par une fonction de la scène (strates à joints, gravier moucheté, tireté du niveau de la mer).
 - **Nuages** (refaits le 18/11) : **tas de boules de coton** (couronne de 3–5 boules, 1–3 boules empilées au-dessus, parfois
-  une boule sommitale), chaque boule dessinée au rayon projeté au pixel près, un peu aplatie en rasante, haut blanc, moitié
-  basse hachurée une ligne sur deux, liseré bleuté au bas ; **ombres plates** des boules de la couronne, décalées selon
-  l'altitude. Passe A+B+C : **70 nuages** dans tout le monde de l'atoll, **40** (nuages bas) à Machu Picchu, plus de 4 à
-  l'écran par moments (C15 rouverte par le propriétaire le 18/11 ; passe de détail : 3 à 11 et 3 à 7 dans le cadre), à une seule altitude choisie **au-dessus de la caméra des
+  une boule sommitale), chaque boule dessinée au rayon projeté au pixel près, un peu aplatie en rasante, haut blanc,
+  **modelé tramé en damier sur le tiers bas droit puis croissant plein gris-bleu tout en bas** (retouche Fable : la hachure
+  une ligne sur deux se lisait comme un store), liseré bleuté au bas ; **ombres plates** des boules de la couronne,
+  décalées selon l'altitude. Retouche Fable : **100 nuages** plus gros (rayon 11–20) dans le monde de l'atoll, **60**
+  (rayon 9–16 × échelle) à Machu Picchu, 12–17 visibles par image en médiane ; contrôle géométrique : jamais plus de 5 %
+  de l'anneau, de la coupe ou de la cité cachés par un nuage (passe A+B+C : 70 et 40 nuages ; passe de détail : 3 à 11
+  et 3 à 7 dans le cadre) (C15 rouverte par le propriétaire le 18/11 ; passe de détail : 3 à 11 et 3 à 7 dans le cadre), à une seule altitude choisie **au-dessus de la caméra des
   plans rasants** (ils restent dans le ciel et ne passent jamais devant la coupe), et placés pour que la caméra ne les
   traverse jamais (contrôle sur tout le short).
 - **Objets** : panneaux ASCII (frégate 31×10 en 2 images d'ailes, palmier 11×10, lama 24×22), jamais agrandis, avec ombre.
@@ -221,8 +231,9 @@ entières : la grille est exacte (test `src/test_jersey_grid.py` : 99/99 glyphes
 ## Langage de caméra (cadrages, mouvements, focale, profondeur de champ)
 - **Une seule caméra sténopé** pour tout le short : cible (x, y, z), distance, cap, tangage, roulis ; focale 416 px natifs
   (champ vertical ≈ 60°, horizontal ≈ 36°).
-- **Cadrages** (passe A+B+C) : **vol** à 25–40° de tangage (comprendre la forme et sentir le lieu à la fois : horizon,
-  ciel en 7 paliers et brume en haut de l'image, sujet en perspective au centre) ; **plan de coupe** lent à 19–25°, regardé
+- **Cadrages** (passe A+B+C ; retouche Fable : l'accroche de l'atoll part de plus loin, 300 unités à 33°, et avance ; le
+  plan final recule à 310 unités à 30° pour montrer l'anneau entier, la coupe et l'horizon) : **vol** à 25–40° de tangage (comprendre la forme et sentir le lieu à la fois : horizon,
+  ciel en 7 paliers, resserrés vers l'horizon depuis la retouche Fable (0,4 / 1,2 / 2,4 / 4 / 6,5 / 10° puis le haut), et brume en haut de l'image, sujet en perspective au centre) ; **plan de coupe** lent à 19–25°, regardé
   de face (coupe d'une terrasse, tranchée de l'atoll). La plongeante 60–72° et la rasante 9–15° des preuves précédentes
   restent possibles (série `src/dive/`), mais ne sont plus utilisées dans les preuves.
 - Caméra toujours au-dessus du relief (contrôle `--preflight` sur toutes les images : marge minimale 85,8 unités pour
@@ -263,9 +274,9 @@ Cartouches centrés sur x = 128 (milieu de la bande sûre) ; récit en haut (y =
 ## Librairies recommandées et pourquoi
 - **numpy 2.4.6** : tout le moteur — lancer de 4 rayons par pixel (marche à **pas sûrs** sur des cartes de maxima par
   blocs de 128, 32, 8 et 2, sinon pas géométriques, puis 8 bissections), intersection rayon–plan, vote majoritaire 2×2
-  sur l'indice, cartes réduites, tables d'indices. Coût mesuré sur CPU après la passe A+B+C : **107,18 s / 100 images**
-  (atoll) et **266,29** (Machu Picchu), les deux rendus en parallèle sur 4 cœurs (charge 4,4–10,4) ; passe de détail
-  19,6–63,1. Le plafond de coût a été levé par le propriétaire pour B (voir les `short.json`).
+  sur l'indice, cartes réduites, tables d'indices. Coût mesuré sur CPU après la retouche Fable : **63,9 s / 100 images**
+  (atoll, seul, charge 3,4–3,8) et **214,43** (Machu Picchu, charge 2,9–5,0) ; passe A+B+C 107,18 et 266,29 (en
+  parallèle, charge 4,4–10,4) ; passe de détail 19,6–63,1. Le plafond de coût a été levé par le propriétaire pour B (voir les `short.json`).
 - **taichi 1.7.2** (facultatif, expérimental) : `src/survol_gpu.py` porte la seule marche des rayons sur GPU (Metal),
   activée par `SURVOL_GPU=1` ; image 1,5–1,9 s → 0,7–0,8 s. Pas identique au bit près (division Metal non IEEE, voir
   `out/report/facts.md`) : les rendus livrés sont sur CPU.
@@ -330,9 +341,10 @@ Cartouches centrés sur x = 128 (milieu de la bande sûre) ; récit en haut (y =
   passe de détail : moucheture à 1 pixel par cellule +0,9 point ; mesuré au prototype A+B+C (à 7 s, en coupant chaque
   élément) : réduction de carte et moucheture sans effet, arbres −0,9 point, vote 2×2 −0,15 point : c'est la géométrie
   (marches de 1 px au loin) qui scintille. Re-mesurer après tout changement de détail ou de caméra.
-- **Coût** : depuis la passe A+B+C, **107,18–266,29 s / 100 images** sur CPU sous charge (4 rayons par pixel, mondes 3× et
-  2,4× plus grands, carte fine ; passe de détail 19,6–63,1), soit 1,8–4,4 fois le plafond de 60 s/100 du challenge, levé
-  par le propriétaire pour B. Un short de 19 s prend 10 min (atoll) à 25 min (Machu Picchu) sur 4 cœurs partagés. Pistes :
+- **Coût** : après la retouche Fable, **63,9–214,4 s / 100 images** sur CPU (4 rayons par pixel, mondes 3× et
+  2,4× plus grands, carte fine ; passe A+B+C 107,18–266,29 sous une charge plus forte ; passe de détail 19,6–63,1), soit
+  1,1–3,6 fois le plafond de 60 s/100 du challenge, levé par le propriétaire pour B. Un short de 19 s prend 6 min (atoll)
+  à 20 min (Machu Picchu) sur 4 cœurs partagés. Pistes :
   recalculer le monde à 15 Hz pendant l'enfoncement de l'atoll, alléger `ground` ; la marche sur GPU (`SURVOL_GPU=1`)
   divise le temps par image par 2 environ mais n'est pas identique au bit près. Repli prévu : volumes en « sprite stacking ».
 - **Relief en marches = convention de dessin** : les terrasses d'un volcan ne sont pas un fait ; le dire à l'écran
