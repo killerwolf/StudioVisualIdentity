@@ -1,0 +1,67 @@
+{
+ "bpm": 84,
+ "key": "D",
+ "scale": "lydian",
+ "music": {
+  "preset": "pad",
+  "gain": 0.5,
+  "octave": 4,
+  "density": 0.5,
+  "loop": false
+ },
+ "seed": 1842,
+ "duration": 18.6,
+ "events": [
+  {
+   "t": 0.15,
+   "type": "swell",
+   "gain": 0.35
+  },
+  {
+   "t": 2.8,
+   "type": "riser",
+   "gain": 0.3,
+   "dur": 1.0
+  },
+  {
+   "t": 3.15,
+   "type": "whoosh",
+   "gain": 0.6,
+   "dur": 0.7
+  },
+  {
+   "t": 3.9,
+   "type": "swell",
+   "gain": 0.4
+  },
+  {
+   "t": 4.0,
+   "type": "thud",
+   "gain": 0.35
+  },
+  {
+   "t": 7.5,
+   "type": "pop",
+   "gain": 0.3,
+   "note": "A5"
+  },
+  {
+   "t": 11.35,
+   "type": "whoosh",
+   "gain": 0.55,
+   "dur": 0.7
+  },
+  {
+   "t": 12.2,
+   "type": "pop",
+   "gain": 0.3,
+   "note": "D6"
+  },
+  {
+   "t": 15.0,
+   "type": "chime",
+   "gain": 0.4,
+   "note": "A5"
+  }
+ ]
+}

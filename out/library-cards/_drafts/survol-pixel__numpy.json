@@ -1,0 +1,30 @@
+{
+ "name": "numpy",
+ "version": "2.4.6 (PyPI, .venv)",
+ "role": "3D (lancer de rayon raster en Python pur)",
+ "bestFor": [
+  "moteur 3D pixel art image par image sans navigateur : caméra sténopé, rayons par pixel (270×480), intersection rayon–plan en forme close (« Mode 7 » à tout tangage)",
+  "lancer de rayon sur carte de hauteurs en terrasses : marche à pas fixes dans la boîte englobante du relief, par paquets de 12 pas avec retrait des rayons arrivés, puis 6 bissections",
+  "palette indexée : images en indices uint8, tables indice -> indice pour ombres et brume, conversion RGB par palette[idx] puis np.repeat ×4",
+  "cartes réduites par vote majoritaire (mip sans moyenne) contre le scintillement du lointain"
+ ],
+ "avoidFor": [
+  "relief étendu vu en rasante avec beaucoup de pas : le coût suit le nombre de pas × pixels dans la boîte (128 pas ≈ 57–59 s/100 images sous charge)",
+  "géométrie fine (< 1 cellule) : la marche à pas fixes peut la manquer ; la bissection ne rattrape que le premier croisement"
+ ],
+ "renderCostPer100Frames": "21,9 s (atoll, monde 360², 96 pas, charge 4,6–7,3) ; 28,6 s (même short en parallèle, charge 5–14) ; 58,8 s (Machu Picchu, monde 640², 128 pas, charge 5–16) — rendus complets mesurés",
+ "gotchas": [
+  "un rayon qui entre dans la boîte par le côté sous z = 0 doit garder l'eau touchée avant (sinon faux flanc) : n'activer que tmin < t_plan",
+  "les rayons qui traversent la boîte sans rien toucher ne doivent pas reprendre le plan z = 0 à l'intérieur de la boîte",
+  "une paroi « de coupe » ne compte que si le point précédent était sous le dessus d'origine de la région coupée (sinon un rayon qui passe haut au-dessus de la coupe colore la montagne d'en face)",
+  "contrôler la caméra au-dessus du relief sur toutes les images avant le rendu (--preflight) : un plan rasant entre facilement dans une montagne",
+  "float32 partout pour les tableaux de rayons : 2× moins de mémoire, assez précis à 270×480"
+ ],
+ "snippetPath": "shorts/survol-pixel__explicatif__comment-nait-un-atoll/src/survol.py (Renderer.ground, Renderer._march, mode_down, Cam)",
+ "pairsWellWith": [
+  "Pillow",
+  "opensimplex",
+  "scipy",
+  "ffmpeg"
+ ]
+}

@@ -1,0 +1,37 @@
+{
+ "language": "fr",
+ "style": "conteur documentaire chaleureux, ≤ 2,6 mots/s (nombres comptés en mots prononcés) ; silence pendant les piqués",
+ "voice": "Sulafat (Gemini) proposée",
+ "voiceUsed": null,
+ "voicePlanned": "à décider par le propriétaire (Gemini « Sulafat » comme le lot 2, ou Fish Audio « Arnold ») ; non enregistrée : aucune clé Gemini sur ce Mac, crédits Fish Audio épuisés",
+ "wordsPerSecondTarget": 2.4,
+ "totalWordsSpoken": 38,
+ "lines": [
+  {
+   "t": 0.2,
+   "maxDuration": 4.65,
+   "text": "Machu Picchu, à 2 430 mètres : pourquoi des escaliers ?",
+   "spokenWords": 12,
+   "note": "« deux mille quatre cent trente »"
+  },
+  {
+   "t": 5.6,
+   "maxDuration": 3.5,
+   "text": "Au quinzième siècle, les Incas bâtissent des terrasses.",
+   "spokenWords": 8
+  },
+  {
+   "t": 10.0,
+   "maxDuration": 4.4,
+   "text": "Pierres, gravier, terre : la pluie s'écoule, la pente tient.",
+   "spokenWords": 10
+  },
+  {
+   "t": 15.1,
+   "maxDuration": 3.5,
+   "text": "Révélée au monde en 1911.",
+   "spokenWords": 8,
+   "note": "« mille neuf cent onze »"
+  }
+ ]
+}

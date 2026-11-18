@@ -1,0 +1,119 @@
+{
+ "identity": "survol-pixel",
+ "family": "histoire",
+ "title": "Machu Picchu : pourquoi une cité en escaliers ?",
+ "hook": "Dès 0,12 s : « MACHU PICCHU » (Jersey 20) et « POURQUOI / DES ESCALIERS ? » (Jersey 15) sur une rasante 9° : la montagne au sud, la cité en terrasses sur l'ensellement, le pain de sucre au nord, nuages bas et rivière ; « reconstitution stylisée » en bas",
+ "duration": 18.8,
+ "libraries": [
+  "numpy",
+  "Pillow",
+  "opensimplex",
+  "scipy",
+  "Jersey (@fontsource 5.3.0)",
+  "ffmpeg"
+ ],
+ "seed": 1911,
+ "renderTimeSec": 331.6,
+ "renderSecPer100Frames": 58.8,
+ "renderCostNote": "rendu complet mesuré : 331,6 s pour 564 images = 58,8 s/100 images (≤ 60, budget C1), en parallèle du rendu de l'atoll puis seul, avec d'autres sessions ; charge 1 min 13,6 au départ, 6,2 à la fin (relevés : 5,2–16,1) ; banc préalable 56,9 s/100 à charge 4,5 ; monde 640×640 (échelle ×1,8), 128 pas",
+ "measuredUnderLoad": true,
+ "structure": [
+  {
+   "t": 0,
+   "beat": "hook : rasante 9° qui avance vers la cité ; nom + question ; reconstitution stylisée"
+  },
+  {
+   "t": 4.9,
+   "beat": "la remontée 11° → 64° (0,6 s, whoosh)"
+  },
+  {
+   "t": 5.5,
+   "beat": "plongeante : plan de la cité (toits de chaume, place), jupe de terrasses, rivière en fer à cheval ; plaque inversée « XVe SIÈCLE » ; « LES INCAS BÂTISSENT / DES TERRASSES » ; épingle « À 2 430 m »"
+  },
+  {
+   "t": 9.3,
+   "beat": "le piqué 60° → 19° (0,6 s, whoosh) vers une entaille dans trois terrasses"
+  },
+  {
+   "t": 9.9,
+   "beat": "coupe : « LA PLUIE FILE, / LA PENTE TIENT » ; épingles terre / gravier / pierres une à une (pop) ; la pluie en pixels bleus traverse les couches et sort au pied du remblai ; lama et son ombre"
+  },
+  {
+   "t": 14.6,
+   "beat": "la remontée puis survol qui s'éloigne ; « RÉVÉLÉE AU MONDE / EN 1911 » (chime) ; la cité dans la brume dorée"
+  }
+ ],
+ "engagement": {
+  "mechanic": "question",
+  "cta": "la coupe répond à « pourquoi des escaliers ? »"
+ },
+ "loopable": false,
+ "sound": {
+  "type": "generated",
+  "voice": false,
+  "music": "pad, lydian, 84 bpm, gain 0.5 (un seul preset, sound.py)",
+  "voiceUsed": null,
+  "voicePlanned": "à décider par le propriétaire (Gemini Sulafat proposée) ; narration.json prête",
+  "sfx": [
+   "swell 0,12 s",
+   "whoosh 4,85 s",
+   "pop 5,5 s",
+   "whoosh 9,25 s (piqué)",
+   "swell 9,9 s",
+   "pop 10,3 / 10,9 / 11,5 s (épingles)",
+   "whoosh 14,55 s",
+   "chime 15,2 s"
+  ]
+ },
+ "biome": {
+  "GRANITE": "#9C968C",
+  "GRANITE_SH": "#5F5A55",
+  "THATCH": "#C9A35A",
+  "EARTH": "#8A5A3A"
+ },
+ "qualityChecks": {
+  "stillsReviewed": true,
+  "textMinPx": 74.7,
+  "textMinPxNote": "Jersey 10 corps 74,7 px (reconstitution stylisée) ; récit Jersey 15 108 px",
+  "safeAreaOk": true,
+  "safeAreaNote": "assertion du moteur sur chaque cartouche",
+  "maxWordsOnScreenPerShot": 6,
+  "narrationWordsSpoken": 38,
+  "wordsPerSecond": "2,27–2,58 (mots prononcés)",
+  "pitchLe60Share": 0.793,
+  "colorsPerFrame": "14–21 (natif)",
+  "dive": "src/dive/ (90/70/50/30/15°, même moteur, 14–17 couleurs)",
+  "clouds": "3",
+  "photosensitivity": {
+   "maxLumaChange10Frames": 0.114,
+   "maxLumaStepFrame": 0.03,
+   "lumaMax": 0.551,
+   "rainPixels": "gouttes 1×3 / 2×2 px natifs, pas de scintillement",
+   "cloudCrossing": false
+  },
+  "llamaScale": "plafonné à 1:1 (d1/profondeur 1,34–1,69 : jamais agrandi, C4)",
+  "cameraPreflightMinClearance": 56.2,
+  "fileMB": 4.5,
+  "reconstitutionLabel": "« reconstitution stylisée » à l'écran pendant tout le short"
+ },
+ "facts": [
+  {
+   "claim": "Altitude ≈ 2 430 m.",
+   "source": "Ministère de la Culture du Pérou, machupicchu.gob.pe (2 430 m) ; UNESCO, Historic Sanctuary of Machu Picchu, WHC 274 (inscrit en 1983)"
+  },
+  {
+   "claim": "XVe siècle, attribuée à l'Inca Pachacutec ; datations AMS : occupation d'environ 1420 à 1530.",
+   "source": "R. L. Burger et al., « New AMS dates for Machu Picchu: results and implications », Antiquity, 2021, doi:10.15184/aqy.2021.99"
+  },
+  {
+   "claim": "Terrasses = murs de soutènement remblayés : de bas en haut grosses pierres, gravier, (sable et gravier), terre ; drainage qui limite l'érosion et les glissements (la pente « tient », sans les supprimer : le site reste surveillé).",
+   "source": "K. R. Wright & A. Valencia Zegarra (avec R. M. Wright et G. McEwan), Machu Picchu: A Civil Engineering Marvel, ASCE Press, 2000 ; K. R. Wright et al., « Machu Picchu: Ancient Hydraulic Engineering », Journal of Hydraulic Engineering, 1997 (waterhistory.org)"
+  },
+  {
+   "claim": "Révélée au monde (internationalement) en 1911 par Hiram Bingham, guidé par des habitants de la région : on dit « révélée », pas « découverte ».",
+   "source": "UNESCO WHC 274 ; récits de l'expédition de Yale 1911"
+  }
+ ],
+ "notes": "Reconstitution stylisée : la disposition générale (deux sommets, ensellement, rivière en boucle) est évoquée, aucune géométrie réelle n'est prétendue ; aucun nombre de terrasses, aucune affirmation sur les séismes ni sur les Espagnols (C19). La couche « sable et gravier » de Wright est fondue dans « gravier » pour tenir en trois mots. Lama et cité dessinés en code (originaux).",
+ "reproduce": "export SURVOL_CACHE=/private/tmp/survol-pixel/survol-pixel__histoire__machu-picchu-pourquoi-une-cite-en-escaliers && SVI_SLOTS=4 out/tools/slot.sh .venv/bin/python out/shorts/survol-pixel__histoire__machu-picchu-pourquoi-une-cite-en-escaliers/src/video.py --out $SURVOL_CACHE/video.mp4 && .venv/bin/python out/tools/sound.py out/shorts/survol-pixel__histoire__machu-picchu-pourquoi-une-cite-en-escaliers/src/sound.json $SURVOL_CACHE/music.wav && .venv/bin/python out/tools/assemble.py mux --video $SURVOL_CACHE/video.mp4 --music $SURVOL_CACHE/music.wav --out out/shorts/survol-pixel__histoire__machu-picchu-pourquoi-une-cite-en-escaliers/short.mp4 && cp out/shorts/survol-pixel__histoire__machu-picchu-pourquoi-une-cite-en-escaliers/short.mp4 out/shorts/survol-pixel__histoire__machu-picchu-pourquoi-une-cite-en-escaliers/short_novo.mp4"
+}

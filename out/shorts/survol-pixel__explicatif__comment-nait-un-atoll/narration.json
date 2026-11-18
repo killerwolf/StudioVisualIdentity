@@ -1,0 +1,42 @@
+{
+ "language": "fr",
+ "style": "conteur clair et posé, pour 10 ans et plus, ≤ 2,6 mots/s (nombres comptés en mots prononcés) ; silence pendant les piqués",
+ "voice": "Sulafat (Gemini) proposée",
+ "voiceUsed": null,
+ "voicePlanned": "à décider par le propriétaire (Gemini « Sulafat » comme le lot 2, ou Fish Audio « Arnold ») ; non enregistrée : aucune clé Gemini sur ce Mac, crédits Fish Audio épuisés",
+ "wordsPerSecondTarget": 2.5,
+ "totalWordsSpoken": 40,
+ "lines": [
+  {
+   "t": 0.2,
+   "maxDuration": 3.1,
+   "text": "Un anneau en pleine mer ? D'où vient-il ?",
+   "spokenWords": 8
+  },
+  {
+   "t": 3.5,
+   "maxDuration": 3.0,
+   "text": "Au début, un volcan, bordé de corail.",
+   "spokenWords": 7
+  },
+  {
+   "t": 7.6,
+   "maxDuration": 3.6,
+   "text": "Le volcan s'enfonce ; le corail monte vers la lumière.",
+   "spokenWords": 9
+  },
+  {
+   "t": 11.8,
+   "maxDuration": 3.0,
+   "text": "Le volcan a sombré, l'anneau est resté.",
+   "spokenWords": 7
+  },
+  {
+   "t": 15.0,
+   "maxDuration": 3.5,
+   "text": "Darwin l'a expliqué en 1842.",
+   "spokenWords": 9,
+   "note": "« mille huit cent quarante-deux »"
+  }
+ ]
+}

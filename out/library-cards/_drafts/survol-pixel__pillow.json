@@ -1,0 +1,25 @@
+{
+ "name": "Pillow",
+ "version": "13.0.0 (PyPI, .venv)",
+ "role": "typo (texte pixel sans anticrénelage)",
+ "bestFor": [
+  "texte pixel exact : ImageDraw.fontmode = '1' à la résolution native, polices @fontsource .woff2 lues directement (FreeType avec brotli)",
+  "Jersey 10 à size = 56/3 (px/em non entier) : grille exacte sur origine entière (test 99/99 glyphes)",
+  "mesure des lignes (getlength) pour une assertion de largeur avant rendu"
+ ],
+ "avoidFor": [
+  "texte posé en perspective dans la carte (illisible : 1,6–2 lignes par motif près de l'horizon)",
+  "agrandir du texte rendu : redessiner à la taille native"
+ ],
+ "renderCostPer100Frames": "négligeable (< 1 s) : 2–4 cartouches par image",
+ "gotchas": [
+  "toujours des coordonnées entières, sinon un pixel peut se dédoubler",
+  "getbbox des capitales accentuées commence à y = 1 sous la ligne d'ascendante : prévoir 5 px natifs de marge haute",
+  "fontTools a besoin des .woff (brotli absent) ; PIL lit les .woff2"
+ ],
+ "snippetPath": "shorts/survol-pixel__explicatif__comment-nait-un-atoll/src/survol.py (Fonts, cartouche) ; src/test_jersey_grid.py",
+ "pairsWellWith": [
+  "numpy",
+  "fontTools"
+ ]
+}
