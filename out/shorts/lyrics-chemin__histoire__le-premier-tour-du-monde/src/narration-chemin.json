@@ -1,0 +1,301 @@
+{
+ "note": "Narration A1 « Le premier tour du monde » (déclinaison de lyrics-chemin, habillage portulan, dessin tour-du-monde). Temps mesurés sur la voix réelle (ElevenLabs, Justin Doré, eleven_multilingual_v2 ; mots horodatés par faster-whisper small, fr). La pointe ne saute jamais : entre deux textes elle trace le trajet muet (routeFin : la boucle se ferme).",
+ "titre": "LE PREMIER TOUR DU MONDE",
+ "langue": "fr",
+ "sens": "ltr",
+ "temps": 0.5,
+ "duree": 45.0,
+ "dessin": "tour-du-monde",
+ "habillage": "portulan",
+ "zoomArriere": [
+  39.9,
+  41.5
+ ],
+ "routeFin": 39.6,
+ "lignes": [
+  {
+   "arete": "depart",
+   "u": [
+    [
+     "20 SEPT.",
+     0.05,
+     1.14
+    ]
+   ],
+   "cad": [
+    [
+     0
+    ]
+   ],
+   "arr": 0,
+   "duree": 0,
+   "kind": "cut",
+   "maxPx": 190
+  },
+  {
+   "arete": "an",
+   "u": [
+    [
+     "1519",
+     1.2,
+     2.7
+    ]
+   ],
+   "cad": [
+    [
+     0
+    ]
+   ],
+   "arr": 1.15,
+   "duree": 0.2,
+   "kind": "glide",
+   "maxPx": 250,
+   "annotation": {
+    "type": "navires",
+    "n": 5,
+    "t": 3.1,
+    "d": 1.0
+   }
+  },
+  {
+   "arete": "magellan",
+   "u": [
+    [
+     "MAGELLAN",
+     7.0,
+     8.0
+    ]
+   ],
+   "cad": [
+    [
+     0
+    ]
+   ],
+   "arr": 6.9,
+   "duree": 0.8,
+   "kind": "pivot"
+  },
+  {
+   "arete": "detroit",
+   "u": [
+    [
+     "LE DÉTROIT",
+     16.62,
+     17.4
+    ]
+   ],
+   "cad": [
+    [
+     0
+    ]
+   ],
+   "arr": 16.4,
+   "duree": 0.8,
+   "kind": "ease"
+  },
+  {
+   "arete": "ocean",
+   "u": [
+    [
+     "UN OCÉAN",
+     20.6,
+     21.12
+    ],
+    [
+     "IMMENSE",
+     21.12,
+     21.7
+    ]
+   ],
+   "cad": [
+    [
+     0
+    ],
+    [
+     1
+    ]
+   ],
+   "arr": 20.4,
+   "duree": 0.6,
+   "kind": "pivot"
+  },
+  {
+   "arete": "tue",
+   "u": [
+    [
+     "MAGELLAN",
+     25.58,
+     25.94
+    ],
+    [
+     "EST TUÉ",
+     25.94,
+     26.7
+    ]
+   ],
+   "cad": [
+    [
+     0
+    ],
+    [
+     1
+    ]
+   ],
+   "arr": 25.2,
+   "duree": 0.8,
+   "kind": "ease",
+   "annotation": {
+    "type": "croix",
+    "t": 26.3,
+    "d": 0.3
+   }
+  },
+  {
+   "arete": "elcano",
+   "u": [
+    [
+     "ELCANO",
+     28.98,
+     29.6
+    ]
+   ],
+   "cad": [
+    [
+     0
+    ]
+   ],
+   "arr": 28.85,
+   "duree": 0.8,
+   "kind": "pivot"
+  },
+  {
+   "arete": "victoria",
+   "u": [
+    [
+     "LA VICTORIA",
+     31.34,
+     32.2
+    ]
+   ],
+   "cad": [
+    [
+     0
+    ]
+   ],
+   "arr": 31.2,
+   "duree": 0.7,
+   "kind": "pivot"
+  },
+  {
+   "arete": "retour",
+   "u": [
+    [
+     "6 SEPT.",
+     35.46,
+     36.38
+    ],
+    [
+     "1522",
+     36.38,
+     37.7
+    ]
+   ],
+   "cad": [
+    [
+     0,
+     1
+    ]
+   ],
+   "arr": 35.3,
+   "duree": 0.8,
+   "kind": "pivot"
+  },
+  {
+   "arete": "hommes",
+   "u": [
+    [
+     "18 HOMMES",
+     38.28,
+     39.3
+    ]
+   ],
+   "cad": [
+    [
+     0
+    ]
+   ],
+   "arr": 38.1,
+   "duree": 0.9,
+   "kind": "pivot"
+  }
+ ],
+ "final": {
+  "u": [
+   [
+    "LE PREMIER",
+    41.58,
+    42.04
+   ],
+   [
+    "TOUR DU MONDE",
+    42.04,
+    46.0
+   ]
+  ],
+  "rangs": [
+   [
+    0
+   ],
+   [
+    1
+   ]
+  ]
+ },
+ "respirations": [
+  {
+   "note": "Son pari : l'Atlantique et la ligne qui file",
+   "x": 380,
+   "y": 700,
+   "zoom": 2.3,
+   "angle": 82,
+   "arrivee": 9.6,
+   "duree": 1.2
+  },
+  {
+   "note": "Tout au sud de l'Amérique : l'entrée du détroit",
+   "x": 360,
+   "y": 764,
+   "zoom": 3.6,
+   "angle": 88,
+   "arrivee": 13.4,
+   "duree": 1.2
+  },
+  {
+   "note": "Plus de trois mois de mer : le Pacifique",
+   "x": 300,
+   "y": 1150,
+   "zoom": 2.6,
+   "angle": 20,
+   "arrivee": 23.2,
+   "duree": 1.0
+  },
+  {
+   "note": "C'est Juan Sebastián : Philippines, Moluques",
+   "x": 815,
+   "y": 1130,
+   "zoom": 2.4,
+   "angle": -50,
+   "arrivee": 27.6,
+   "duree": 0.8
+  },
+  {
+   "note": "par le cap de Bonne-Espérance",
+   "x": 613,
+   "y": 622,
+   "zoom": 3.0,
+   "angle": -122,
+   "arrivee": 33.3,
+   "duree": 0.9
+  }
+ ]
+}

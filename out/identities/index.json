@@ -6,7 +6,7 @@
   "identities": 19,
   "derivations": 3,
   "declinations": 22,
-  "shorts": 47
+  "shorts": 48
  },
  "families": [
   {
@@ -4255,7 +4255,8 @@
    "promiseEn": "A muted vertical lyric video shot from above: each word is written in yellow ink on a blue architect plan lying on the floor at the moment it is sung, the camera follows the pen tip in a single sequence shot, and a final zoom-out reveals that the lyrics were drawing a picture (a paper boat).",
    "familiesProven": [
     "paroles",
-    "explicatif"
+    "explicatif",
+    "histoire"
    ],
    "libraries": [
     "@fontsource/barlow-condensed",
@@ -4335,6 +4336,26 @@
       "faster-whisper small (horodatage des mots, hors dépôt)"
      ],
      "renderCostSecPer100Frames": 120.6,
+     "loopable": false,
+     "voiced": true,
+     "recognitionNearestShort": null,
+     "recognitionSameIdentity": null
+    },
+    {
+     "dir": "out/shorts/lyrics-chemin__histoire__le-premier-tour-du-monde",
+     "family": "histoire",
+     "declinaison": "A1 — habillage portulan, dessin tour-du-monde (short narré)",
+     "title": "Le premier tour du monde — la route de Magellan et Elcano écrite à l'encre sur une carte vue du pôle Sud, qui se referme en boucle",
+     "durationSec": 45.0,
+     "libraries": [
+      "@fontsource/cormorant-garamond 5.3.0",
+      "world-atlas 2.0.2 land-50m (Natural Earth, domaine public)",
+      "topojson-client",
+      "Canvas 2D (render.mjs, Chrome par playwright-core)",
+      "ffmpeg",
+      "faster-whisper small (horodatage des mots, hors dépôt)"
+     ],
+     "renderCostSecPer100Frames": 107.3,
      "loopable": false,
      "voiced": true,
      "recognitionNearestShort": null,

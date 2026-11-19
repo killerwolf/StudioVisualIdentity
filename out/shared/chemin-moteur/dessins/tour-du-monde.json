@@ -1,0 +1,547 @@
+{
+ "id": "tour-du-monde",
+ "note": "Route de l'expédition Magellan–Elcano (1519–1522) sur une carte vue du pôle Sud (projection azimutale équidistante : le tour du monde devient une boucle fermée). Déclinaison A1 de lyrics-chemin, habillage « portulan ». Repère monde = image finale. route = jalons (nom, longitude, latitude) posés à l'œil au large des côtes (tracé d'illustration, pas le journal de bord), lissés ; chaque arête est un tronçon de cette route (jalon de départ, décalage et longueur en px d'abscisse curviligne). Les longitudes au-delà de −180° continuent vers l'ouest pour que la route reste continue.",
+ "feuille": {
+  "x": 36,
+  "y": 96,
+  "w": 1008,
+  "h": 1704
+ },
+ "projection": {
+  "cx": 512,
+  "cy": 846,
+  "k": 4.6,
+  "l0": -6,
+  "rayon": 640,
+  "fondu": [
+   1290,
+   1385
+  ]
+ },
+ "route": [
+  [
+   "espagne",
+   -6.35,
+   36.78
+  ],
+  [
+   "g1",
+   -13,
+   31.5
+  ],
+  [
+   "canaries",
+   -19,
+   23
+  ],
+  [
+   "a1",
+   -22.5,
+   14.5
+  ],
+  [
+   "a2",
+   -26,
+   6
+  ],
+  [
+   "a3",
+   -29,
+   -1
+  ],
+  [
+   "bresil",
+   -32.5,
+   -8
+  ],
+  [
+   "rio",
+   -38.5,
+   -24
+  ],
+  [
+   "plata",
+   -51,
+   -37.5
+  ],
+  [
+   "julian",
+   -63,
+   -49.6
+  ],
+  [
+   "entree",
+   -67.6,
+   -52.4
+  ],
+  [
+   "sortie",
+   -75.6,
+   -52.6
+  ],
+  [
+   "chili",
+   -79.5,
+   -41
+  ],
+  [
+   "p1",
+   -86,
+   -30
+  ],
+  [
+   "p2",
+   -101,
+   -21
+  ],
+  [
+   "p3",
+   -130,
+   -14
+  ],
+  [
+   "p4",
+   -160,
+   -5
+  ],
+  [
+   "p5",
+   -182,
+   5
+  ],
+  [
+   "p6",
+   -201,
+   10.5
+  ],
+  [
+   "guam",
+   -215.25,
+   13.45
+  ],
+  [
+   "samar",
+   -233.6,
+   11.2
+  ],
+  [
+   "cebu",
+   -236.2,
+   10.2
+  ],
+  [
+   "palawan",
+   -241.5,
+   9.2
+  ],
+  [
+   "brunei",
+   -244.8,
+   5.4
+  ],
+  [
+   "sulu",
+   -239.5,
+   6.6
+  ],
+  [
+   "mindanao",
+   -234.5,
+   5.2
+  ],
+  [
+   "tidore",
+   -232.6,
+   0.7
+  ],
+  [
+   "banda",
+   -233,
+   -5
+  ],
+  [
+   "timor",
+   -235,
+   -9.8
+  ],
+  [
+   "i1",
+   -252,
+   -19
+  ],
+  [
+   "i2",
+   -275,
+   -35
+  ],
+  [
+   "i3",
+   -305,
+   -40.5
+  ],
+  [
+   "i4",
+   -328,
+   -39.5
+  ],
+  [
+   "cap",
+   -341.8,
+   -36.6
+  ],
+  [
+   "c1",
+   -348,
+   -28
+  ],
+  [
+   "c2",
+   -358,
+   -14
+  ],
+  [
+   "c3",
+   -370,
+   -2
+  ],
+  [
+   "c4",
+   -378,
+   7
+  ],
+  [
+   "verde",
+   -383.5,
+   15
+  ],
+  [
+   "n1",
+   -396,
+   27
+  ],
+  [
+   "acores",
+   -391,
+   38.2
+  ],
+  [
+   "n2",
+   -379,
+   40.3
+  ],
+  [
+   "retour",
+   -366.35,
+   36.78
+  ]
+ ],
+ "aretes": {
+  "depart": {
+   "chemin": {
+    "type": "troncon",
+    "depuis": "espagne",
+    "decalage": 50,
+    "longueur": 158
+   },
+   "m": [
+    0,
+    0
+   ],
+   "noLine": true,
+   "courbe": true,
+   "em": [
+    32,
+    44
+   ],
+   "below": true
+  },
+  "an": {
+   "chemin": {
+    "type": "troncon",
+    "depuis": "a1",
+    "decalage": 26,
+    "longueur": 100
+   },
+   "m": [
+    0,
+    0
+   ],
+   "noLine": true,
+   "courbe": true,
+   "em": [
+    34,
+    44
+   ],
+   "center": true,
+   "below": true
+  },
+  "magellan": {
+   "chemin": {
+    "type": "troncon",
+    "depuis": "bresil",
+    "decalage": 30,
+    "longueur": 200
+   },
+   "m": [
+    0,
+    0
+   ],
+   "noLine": true,
+   "courbe": true,
+   "em": [
+    32,
+    40
+   ],
+   "center": true
+  },
+  "detroit": {
+   "chemin": {
+    "type": "troncon",
+    "depuis": "sortie",
+    "decalage": 118,
+    "longueur": 210
+   },
+   "m": [
+    0,
+    0
+   ],
+   "noLine": true,
+   "courbe": true,
+   "em": [
+    34,
+    40
+   ],
+   "center": true,
+   "gapW": 0.6
+  },
+  "ocean": {
+   "chemin": {
+    "type": "troncon",
+    "depuis": "sortie",
+    "decalage": 346,
+    "longueur": 360
+   },
+   "m": [
+    0,
+    0
+   ],
+   "noLine": true,
+   "courbe": true,
+   "em": [
+    34,
+    40
+   ]
+  },
+  "tue": {
+   "chemin": {
+    "type": "troncon",
+    "depuis": "guam",
+    "decalage": -284,
+    "longueur": 348
+   },
+   "m": [
+    0,
+    0
+   ],
+   "noLine": true,
+   "courbe": true,
+   "em": [
+    34,
+    40
+   ],
+   "center": true
+  },
+  "elcano": {
+   "chemin": {
+    "type": "troncon",
+    "depuis": "timor",
+    "decalage": 46,
+    "longueur": 192
+   },
+   "m": [
+    0,
+    0
+   ],
+   "noLine": true,
+   "courbe": true,
+   "em": [
+    36,
+    44
+   ],
+   "center": true
+  },
+  "victoria": {
+   "chemin": {
+    "type": "troncon",
+    "depuis": "i2",
+    "decalage": 23,
+    "longueur": 252
+   },
+   "m": [
+    0,
+    0
+   ],
+   "noLine": true,
+   "courbe": true,
+   "em": [
+    34,
+    40
+   ],
+   "center": true
+  },
+  "retour": {
+   "chemin": {
+    "type": "troncon",
+    "depuis": "cap",
+    "decalage": 37,
+    "longueur": 206
+   },
+   "m": [
+    0,
+    0
+   ],
+   "noLine": true,
+   "courbe": true,
+   "em": [
+    34,
+    42
+   ],
+   "center": true
+  },
+  "hommes": {
+   "chemin": {
+    "type": "troncon",
+    "depuis": "acores",
+    "decalage": 30,
+    "longueur": 205
+   },
+   "m": [
+    0,
+    0
+   ],
+   "noLine": true,
+   "courbe": true,
+   "em": [
+    36,
+    46
+   ],
+   "center": true
+  }
+ },
+ "escales": [
+  "espagne",
+  "entree",
+  "guam",
+  "cebu",
+  "tidore",
+  "cap",
+  "verde"
+ ],
+ "noms": [
+  [
+   "OCÉAN PACIFIQUE",
+   -150,
+   -47,
+   20,
+   0,
+   8
+  ],
+  [
+   "OCÉAN INDIEN",
+   74,
+   -17,
+   19,
+   -8,
+   8
+  ],
+  [
+   "ATLANTIQUE",
+   -17,
+   -27,
+   17,
+   78,
+   6
+  ],
+  [
+   "AFRIQUE",
+   21,
+   6,
+   17,
+   0,
+   7
+  ],
+  [
+   "AMÉRIQUE",
+   -60,
+   -12,
+   16,
+   62,
+   6
+  ],
+  [
+   "Moluques",
+   135,
+   2.5,
+   15,
+   0,
+   1
+  ],
+  [
+   "Philippines",
+   129,
+   21.5,
+   15,
+   0,
+   1
+  ],
+  [
+   "Espagne",
+   -3.4,
+   40.6,
+   15,
+   0,
+   1
+  ],
+  [
+   "Bonne-Espérance",
+   30.5,
+   -31.2,
+   14,
+   0,
+   1
+  ]
+ ],
+ "rose": {
+  "x": 196,
+  "y": 1196
+ },
+ "final": {
+  "cx": 512,
+  "largeurMax": 800,
+  "emMax": 96,
+  "espace": 0.3,
+  "rangs": [
+   {
+    "y": 1452
+   },
+   {
+    "y": 1556
+   }
+  ]
+ },
+ "objets": {
+  "boussole": {
+   "x": 512,
+   "y": 846
+  },
+  "compas": {
+   "x": 966,
+   "y": 206,
+   "angle": 83
+  },
+  "sceau": {
+   "x": 912,
+   "y": 1668
+  }
+ }
+}

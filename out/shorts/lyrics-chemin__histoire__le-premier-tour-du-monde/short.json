@@ -1,0 +1,87 @@
+{
+ "identity": "lyrics-chemin",
+ "family": "histoire",
+ "declinaison": "A1 — habillage portulan, dessin tour-du-monde (short narré)",
+ "longForm": true,
+ "title": "Le premier tour du monde — la route de Magellan et Elcano écrite à l'encre sur une carte vue du pôle Sud, qui se referme en boucle",
+ "hook": "Image 0 : très gros plan, caméra tournée de 121°, « 20 SEPT. » s'écrit au vermillon au large du Maroc, pointe d'encre luisante ; la voix dit la date",
+ "duration": 45.0,
+ "libraries": [
+  "@fontsource/cormorant-garamond 5.3.0",
+  "world-atlas 2.0.2 land-50m (Natural Earth, domaine public)",
+  "topojson-client",
+  "Canvas 2D (render.mjs, Chrome par playwright-core)",
+  "ffmpeg",
+  "faster-whisper small (horodatage des mots, hors dépôt)"
+ ],
+ "seed": "textures à graine fixe (5, 9, 11, 77) ; carte rendue une fois en image (3 px par unité) ; aucun hasard dépendant du temps",
+ "renderTimeSec": 1448,
+ "renderNote": "render.mjs, 1 350 images, 107,3 s / 100 images, seul rendu sur la machine (autres sessions actives) ; carte rendue une fois en image. Voix posée par ffmpeg (loudnorm −16 LUFS), crf 24. check.py signale trois lignes au-dessus de 3,2 mots/s : c'est le débit réel de la voix (durées mesurées), pas une estimation.",
+ "measuredUnderLoad": true,
+ "data": "src/narration-chemin.json (temps mesurés sur la voix, cinq reculs muets) + out/shared/chemin-moteur/dessins/tour-du-monde.json + habillages/portulan.js",
+ "structure": [
+  {
+   "t": 0,
+   "beat": "20 SEPT. puis 1519 au vermillon, en très gros plan ; cinq navires bleus posés un à un"
+  },
+  {
+   "t": 6.1,
+   "beat": "virage vers l'Amérique du Sud : MAGELLAN"
+  },
+  {
+   "t": 8.4,
+   "beat": "reculs muets : la route descend l'Atlantique, puis entre dans le détroit"
+  },
+  {
+   "t": 15.6,
+   "beat": "LE DÉTROIT sur la côte du Chili ; virage : UN OCÉAN / IMMENSE dans le Pacifique vide ; recul « plus de trois mois de mer »"
+  },
+  {
+   "t": 24.4,
+   "beat": "MAGELLAN / EST TUÉ aux Philippines, croix bleue"
+  },
+  {
+   "t": 26.8,
+   "beat": "recul sur les Moluques, virage : ELCANO, LA VICTORIA dans l'océan Indien ; recul au cap de Bonne-Espérance"
+  },
+  {
+   "t": 34.5,
+   "beat": "6 SEPT. 1522 le long de l'Afrique ; virage de 117° : 18 HOMMES, la boucle se ferme sur l'Espagne"
+  },
+  {
+   "t": 39.9,
+   "beat": "zoom arrière : la boucle entière vue du pôle Sud ; rangs finaux LE PREMIER / TOUR DU MONDE, dernier rang encore vermillon"
+  }
+ ],
+ "engagement": {
+  "mechanic": "révélation finale : la phrase qu'on a suivie était la route, elle forme une boucle fermée",
+  "cta": null
+ },
+ "loopable": false,
+ "sound": {
+  "type": "voice",
+  "voice": true,
+  "music": "aucune (lit sonore facultatif non posé : aucun son libre de droits adapté dans le dépôt)",
+  "silentTrack": false
+ },
+ "qualityChecks": {
+  "stillsReviewed": true,
+  "textMinPx": 120,
+  "safeAreaOk": true,
+  "audit": "out/tools/chemin_audit.mjs, 1 351 images : aucune erreur (plancher 120 px) ; corps dans l'image finale : route 35–44 px, rangs finaux 95 px",
+  "maxWordsOnScreen": 3
+ },
+ "facts": {
+  "checked": "2026-11-19, recherche web rapide",
+  "notes": "départ de Sanlúcar de Barrameda le 20 septembre 1519, cinq navires (Trinidad, San Antonio, Concepción, Victoria, Santiago) ; Magellan tué aux Philippines (Mactan, 27 avril 1521) ; retour de la Victoria sous Elcano le 6 septembre 1522 à Sanlúcar avec 18 hommes (Séville le 8) ; équipage de départ 239 à 270 selon les sources (non cité) : texte de Fable confirmé, inchangé",
+  "sources": [
+   "https://origins.osu.edu/milestones/magellan-circumnavigation-earth",
+   "https://www.itsasmuseoa.eus/elkanofundazioa/en/the-feat-elkano/the-journey-elkano/",
+   "https://www.encyclopedia.com/science/encyclopedias-almanacs-transcripts-and-maps/first-maritime-circumnavigation-globe",
+   "https://artsandculture.google.com/story/vQWxOWN1pDjbJA"
+  ]
+ },
+ "notes": "Déclinaison A1 de lyrics-chemin (direction artistique de Fable : out/report/notes/lyrics-chemin/declinaisons/a1-tour-du-monde.md ; réalisation et écarts : declinaisons/realisation.md). longForm : check.py admet jusqu'à 60 s. Jalons de la route posés à l'œil (tracé d'illustration).",
+ "reproduce": "voir src/README.md",
+ "language": "fr"
+}

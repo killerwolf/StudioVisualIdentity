@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Lyrics chemin — Le premier tour du monde</title>
+<style>html,body{margin:0;background:#000}canvas{display:block}</style>
+</head>
+<body><canvas id="c" width="1080" height="1920"></canvas>
+<script type="module">
+  // ?data=<chemin relatif à cette page> : fichier de narration ; ?guides=1 : zones sûres
+  import { lancer } from '/out/shared/chemin-moteur/chemin.js';
+  window.ready = lancer({ data: 'narration-chemin.json' });
+</script>
+</body>
+</html>

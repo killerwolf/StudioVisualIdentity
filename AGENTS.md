@@ -4,7 +4,7 @@
 
 An **exploratory study of visual and cinematic identities for vertical short videos** (TikTok, Reels, Shorts; 1080×1920, 30 fps, 12–19 s).
 It contains **19 identities, 22 declinations** (the 14 of the original campaign, the cut-paper identity « Papier découpé » with its 3 derivations added on 2026-11-04 and the 2 identities of
-lot 2 of the identity factory added on 2026-11-05, and `lyrics-punchy` and `lyrics-chemin` added on 2026-11-19, see below), each documented as a design system and **proven by 2–3 real shorts rendered by code** (47 shorts in total),
+lot 2 of the identity factory added on 2026-11-05, and `lyrics-punchy` and `lyrics-chemin` added on 2026-11-19, see below), each documented as a design system and **proven by 2–3 real shorts rendered by code** (48 shorts in total),
 plus the open-source rendering toolkit that made them.
 
 **It is a menu with evidence, not a finished brand.** You are expected to read it and then **define your own identity**:
@@ -107,6 +107,12 @@ one-bar zoom-out on the chorus reveals that the lines were drawing a picture (a 
 (`chemin.js` + `dessins/<id>.json`; an episode = a lyrics file mapping lines to the drawing's edges); check without rendering:
 `out/tools/chemin_audit.mjs` (safe area, sizes, framing, camera speed, overlaps in the final picture). The proof short runs 32.6 s (to the
 first chorus): `check.py` accepts up to 60 s for the `paroles` family. Filler lyrics in the repository, real ones outside.
+Three declinations (2026-11-19, `out/report/notes/lyrics-chemin/declinaisons/`): the engine now takes a *skin* (`habillages/<id>.js`:
+`plan-bleu`, `editeur`, `ardoise`, `portulan`) and a drawing; B = the same song as a code editor with a container ship
+(`lyrics-chemin__paroles__claudes-plan-tech`), and two **narrated** French shorts whose text is the path — A2 a recipe written in chalk
+along a cake cut in four (`…__explicatif__le-quatre-quarts`), A1 Magellan–Elcano's route on a map seen from the South Pole, closing into a
+loop (`…__histoire__le-premier-tour-du-monde`); ElevenLabs voices, masters outside the repository. A short declaring `"longForm": true`
+may run up to 60 s in `check.py`.
 
 ## Read in this order (≈ 10 minutes)
 

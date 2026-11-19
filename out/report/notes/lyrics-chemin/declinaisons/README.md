@@ -1,6 +1,7 @@
 # Lyrics chemin — déclinaisons (2026-11-19)
 
-Statut : **propositions de direction artistique**, à réaliser par un agent ensuite. Rien n'est rendu en vidéo, aucune voix n'est générée.
+Statut : **réalisées le 2026-11-19** (journal et écarts : [`realisation.md`](realisation.md)) — shorts `lyrics-chemin__paroles__claudes-plan-tech`,
+`lyrics-chemin__explicatif__le-quatre-quarts`, `lyrics-chemin__histoire__le-premier-tour-du-monde`. Ce qui suit est la direction artistique d'origine.
 L'identité `lyrics-chemin` ne change pas : le texte s'écrit à plat sur une surface au moment où il est dit, la caméra vue de dessus suit
 la pointe en plan-séquence, un zoom arrière final révèle le dessin formé par le texte. Ce dossier ajoute :
 

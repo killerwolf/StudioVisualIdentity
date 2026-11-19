@@ -1,0 +1,71 @@
+{
+ "language": "fr",
+ "style": "narrateur de documentaire historique : grave, posé, fin de phrase qui descend",
+ "voice": "Justin Doré (ElevenLabs)",
+ "voiceUsed": {
+  "provider": "ElevenLabs",
+  "name": "Justin Doré - Documentary Narrator",
+  "voiceId": "3BZLNrQEzQVYs6kPOW4S",
+  "model": "eleven_multilingual_v2",
+  "date": "2026-11-19",
+  "credits": 601,
+  "note": "une seule génération pour tout le texte (601 caractères, nombres en toutes lettres : « Le vingt septembre mille cinq cent dix-neuf », « Le six septembre mille cinq cent vingt-deux, dix-huit hommes »), aucune reprise ; voix de la bibliothèque (fr-standard, homme, âge moyen, documentaire), choisie sur le profil de Fable ; fichier maître hors dépôt (~/git/StudioVisualIdentity-sources/lyrics-chemin-narres/a1-tour-du-monde.elevenlabs.mp3), mixé dans short.mp4 ; mots horodatés par faster-whisper small (fr) — boucle de transcription vers 30 s, temps repris de la seconde passe"
+ },
+ "lines": [
+  {
+   "t": 0.0,
+   "maxDuration": 5.32,
+   "text": "Le 20 septembre 1519, cinq navires quittent l'Espagne."
+  },
+  {
+   "t": 5.82,
+   "maxDuration": 2.3,
+   "text": "À leur tête, Fernand de Magellan."
+  },
+  {
+   "t": 8.6,
+   "maxDuration": 3.46,
+   "text": "Son pari : atteindre les îles aux épices par l'ouest."
+  },
+  {
+   "t": 12.68,
+   "maxDuration": 3.36,
+   "text": "Tout au sud de l'Amérique, il trouve enfin un passage :"
+  },
+  {
+   "t": 16.62,
+   "maxDuration": 2.26,
+   "text": "le détroit qui porte aujourd'hui son nom."
+  },
+  {
+   "t": 19.44,
+   "maxDuration": 2.22,
+   "text": "De l'autre côté, un océan immense."
+  },
+  {
+   "t": 22.28,
+   "maxDuration": 1.38,
+   "text": "Plus de trois mois de mer."
+  },
+  {
+   "t": 24.4,
+   "maxDuration": 2.66,
+   "text": "Aux Philippines, Magellan est tué au combat."
+  },
+  {
+   "t": 27.76,
+   "maxDuration": 6.8,
+   "text": "C'est Juan Sebastián Elcano qui ramène le dernier navire, la Victoria, par le cap de Bonne-Espérance."
+  },
+  {
+   "t": 35.06,
+   "maxDuration": 4.98,
+   "text": "Le 6 septembre 1522, dix-huit hommes rentrent au port."
+  },
+  {
+   "t": 40.66,
+   "maxDuration": 2.28,
+   "text": "Ils viennent de boucler le premier tour du monde."
+  }
+ ]
+}
