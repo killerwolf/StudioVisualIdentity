@@ -148,7 +148,7 @@
   "ok": true,
   "errors": [],
   "warnings": [
-   "image figée ≥3 s à ['3.23333']"
+   "image figée ≥3 s à ['3.233333']"
   ],
   "info": {
    "duration": 12.3,
@@ -180,7 +180,7 @@
   "ok": true,
   "errors": [],
   "warnings": [
-   "image figée ≥3 s à ['3.23333']"
+   "image figée ≥3 s à ['3.233333']"
   ],
   "info": {
    "duration": 12.3,
@@ -328,6 +328,34 @@
   "warnings": [],
   "info": {
    "duration": 15.0,
+   "width": 1080,
+   "height": 1920,
+   "fps": "30/1",
+   "codec": "h264",
+   "pix": "yuv420p"
+  }
+ },
+ {
+  "short": "lyrics-chemin__paroles__claudes-plan",
+  "ok": true,
+  "errors": [],
+  "warnings": [],
+  "info": {
+   "duration": 32.63,
+   "width": 1080,
+   "height": 1920,
+   "fps": "30/1",
+   "codec": "h264",
+   "pix": "yuv420p"
+  }
+ },
+ {
+  "short": "lyrics-punchy__paroles__claudes-plan",
+  "ok": true,
+  "errors": [],
+  "warnings": [],
+  "info": {
+   "duration": 19.5,
    "width": 1080,
    "height": 1920,
    "fps": "30/1",

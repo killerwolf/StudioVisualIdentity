@@ -1,12 +1,12 @@
 {
  "schemaVersion": "1.1",
- "description": "Machine index of the 18 visual identities for 9:16 shorts (21 declinations: 3 of them are derivations of a root identity, see variantOf). Use it to shortlist identities, then read each identity's identity.md (16 sections, French) and tokens.json. coreTokens is a normalised subset (seconds, pixels on a 1080x1920 canvas, @fontsource slugs); the original tokens.json is authoritative for everything else. curation.* is orchestrator judgment. See AGENTS.md.",
+ "description": "Machine index of the 19 visual identities for 9:16 shorts (22 declinations: 3 of them are derivations of a root identity, see variantOf). Use it to shortlist identities, then read each identity's identity.md (16 sections, French) and tokens.json. coreTokens is a normalised subset (seconds, pixels on a 1080x1920 canvas, @fontsource slugs); the original tokens.json is authoritative for everything else. curation.* is orchestrator judgment. See AGENTS.md.",
  "generatedBy": "out/tools/build_index.py",
  "counts": {
-  "identities": 18,
+  "identities": 19,
   "derivations": 3,
-  "declinations": 21,
-  "shorts": 44
+  "declinations": 22,
+  "shorts": 45
  },
  "families": [
   {
@@ -23,7 +23,7 @@
  ],
  "fieldNotes": {
   "variantOf": "id of the root identity when this entry is a derivation (same engine, only ground / palette / fonts change), else null. A root lists its derivations in variants and what is shared / what varies in variantAxis. Derivations stay ranked, right after their root; counts.identities counts roots only, counts.declinations counts every entry. curation.deliberateSiblings = derivations of the same root, deliberately close and therefore not listed in confusableWith. A new identity that reuses an existing engine and only changes ground / palette / fonts must be registered as a derivation, not as a new identity",
-  "status": "selected = kept in Phase 1; rehabilitated = set aside in Phase 1 only to avoid topic overlap with a neighbour, then produced on request with the same rules and evidence level; added = added after the campaign: (a) the cut-paper identity from the StudioGabarit template, papier-decoupe, and its 3 derivations (atelier-papier, carnet-archives, cabinet-curiosites), rendered by the shared Python engine out/shared/papier-moteur/, appended after the ranked identities and not part of the ranking or the blind visual judge; (b) lot 2 of the identity factory (trait-continu, carte-meteo, 2026-11-05: scouting + adversarial challenge + studio + review), ranked with the others, blind visual judge on 8 identities (lot 2 + 6 neighbours, 8/8 pure groups, out/report/notes/revue-2026-11-05.md), voice-over Gemini Sulafat like the cut-paper family (owner decision: Fish Audio credits ran out before Arnold could be recorded); (c) lyrics-punchy (2026-11-19), first identity of the new content family `paroles` (muted lyric video, no voice-over), unranked, appended last, one proof short rendered with filler lyrics (real lyrics and audio stay outside the repository)",
+  "status": "selected = kept in Phase 1; rehabilitated = set aside in Phase 1 only to avoid topic overlap with a neighbour, then produced on request with the same rules and evidence level; added = added after the campaign: (a) the cut-paper identity from the StudioGabarit template, papier-decoupe, and its 3 derivations (atelier-papier, carnet-archives, cabinet-curiosites), rendered by the shared Python engine out/shared/papier-moteur/, appended after the ranked identities and not part of the ranking or the blind visual judge; (b) lot 2 of the identity factory (trait-continu, carte-meteo, 2026-11-05: scouting + adversarial challenge + studio + review), ranked with the others, blind visual judge on 8 identities (lot 2 + 6 neighbours, 8/8 pure groups, out/report/notes/revue-2026-11-05.md), voice-over Gemini Sulafat like the cut-paper family (owner decision: Fish Audio credits ran out before Arnold could be recorded); (c) lyrics-punchy and lyrics-chemin (2026-11-19), the two identities of the new content family `paroles` (muted lyric video, no voice-over), unranked, appended last, one proof short each rendered with filler lyrics (real lyrics and audio stay outside the repository)",
   "voiceUsed": "voice actually mixed into short.mp4 (Fish Audio Arnold for the 31 campaign shorts, Gemini Sulafat for the 8 cut-paper and 4 lot 2 shorts; see shorts[].voiced)",
   "coreTokens.motion.staggerSec": "the identity's default stagger as written in its tokens.json; meaning varies (per-item stagger for most, spacing between beats/captions for atlas-grave 1.5 and liquid-chrome 1.55, title-to-body delay for neon-lab 0.8)",
   "coreTokens.motion.durationSec.slow": "longest standard duration; for gazette-1900 it is one page (6 beats at 128 bpm)",
@@ -2223,7 +2223,8 @@
      "ochre / terracotta / teal accents"
     ],
     "confusableWith": [
-     "atlas-grave"
+     "atlas-grave",
+     "lyrics-chemin"
     ]
    }
   },
@@ -2426,6 +2427,7 @@
      "wax seals, compass rose, slow pans"
     ],
     "confusableWith": [
+     "lyrics-chemin",
      "topo-relief"
     ]
    }
@@ -4240,6 +4242,194 @@
     ],
     "confusableWith": [
      "brut-meme"
+    ]
+   }
+  },
+  {
+   "id": "lyrics-chemin",
+   "name": "Lyrics chemin",
+   "rank": 22,
+   "variantOf": null,
+   "status": "added",
+   "promiseFr": "On suit la chanson du bout du crayon : chaque mot s'écrit en jaune à l'instant où il est chanté, la caméra file d'un trait à l'autre sur le plan, et à la fin on recule pour découvrir que les paroles dessinaient quelque chose.",
+   "promiseEn": "A muted vertical lyric video shot from above: each word is written in yellow ink on a blue architect plan lying on the floor at the moment it is sung, the camera follows the pen tip in a single sequence shot, and a final zoom-out reveals that the lyrics were drawing a picture (a paper boat).",
+   "familiesProven": [
+    "paroles"
+   ],
+   "libraries": [
+    "@fontsource/barlow-condensed",
+    "@fontsource/jetbrains-mono",
+    "Canvas 2D (render.mjs, Chrome 157 par playwright-core)",
+    "ffmpeg"
+   ],
+   "renderCostNote": "browser render (canvas 2D, render.mjs with Chrome 157 via playwright-core) including real motion blur (up to 64 sub-frames averaged in floats on camera moves, about a third of the frames); measured with other sessions running (see short.json renderNote)",
+   "renderCostSecPer100Frames": {
+    "min": 207.7,
+    "max": 207.7,
+    "measuredUnderLoad": true
+   },
+   "sharedModule": [
+    "out/shared/chemin-moteur/"
+   ],
+   "voiceUsed": {
+    "provider": null,
+    "name": null,
+    "note": "no voice-over: muted lyric video, the song itself is added from the app library at publication; short.mp4 carries a silent track for check.py"
+   },
+   "paths": {
+    "identityMd": "out/identities/lyrics-chemin/identity.md",
+    "tokens": "out/identities/lyrics-chemin/tokens.json",
+    "recipes": [
+     "out/identities/lyrics-chemin/recipes/paroles.md"
+    ],
+    "poster": "out/identities/lyrics-chemin/poster.jpg",
+    "contactSheet": "out/identities/lyrics-chemin/contact-sheet.jpg",
+    "phase1Poster": null
+   },
+   "shorts": [
+    {
+     "dir": "out/shorts/lyrics-chemin__paroles__claudes-plan",
+     "family": "paroles",
+     "title": "Claude's Plan — 32,6 premières secondes, jusqu'au refrain (paroles de remplissage en anglais : « Monday's draft »)",
+     "durationSec": 32.62,
+     "libraries": [
+      "@fontsource/barlow-condensed 5.3.0",
+      "@fontsource/jetbrains-mono",
+      "Canvas 2D (render.mjs, Chrome 157 par playwright-core 1.65.1)",
+      "ffmpeg"
+     ],
+     "renderCostSecPer100Frames": 207.7,
+     "loopable": false,
+     "voiced": false,
+     "recognitionNearestShort": null,
+     "recognitionSameIdentity": null
+    }
+   ],
+   "coreTokens": {
+    "color": {
+     "bg": "#1B4C92",
+     "surface": "#CFC8BA",
+     "text": "#F3F0E4",
+     "muted": "#9DB3D6",
+     "accent": [
+      "#FFD84A",
+      "#FF7D5C"
+     ],
+     "success": null,
+     "danger": null,
+     "contrastOnBg": {
+      "text": 7.37,
+      "muted": 3.95,
+      "accent1": 6.08,
+      "accent2": 3.34
+     },
+     "textSafeOnBg": "only colours with contrastOnBg >= 4.5 may be used for body text (>= 3 for titles >= 90 px bold); check identity.md palette roles"
+    },
+    "typography": {
+     "display": {
+      "family": "Barlow Condensed",
+      "fontsourceSlug": "barlow-condensed",
+      "weight": 700,
+      "sizePx": 120.0,
+      "sizeNote": "120–220 px à l'écran pour le mot chanté (titre 250 ; 104 en passage rapide ; 92 si tout le cadrage dépasse 4,5 mots/s)"
+     },
+     "title": {
+      "family": "Barlow Condensed",
+      "fontsourceSlug": "barlow-condensed",
+      "weight": 800,
+      "sizePx": null,
+      "sizeNote": "≤ 88 px à l'échelle 1, corps commun à tous les rangs, rang ≤ 850 px"
+     },
+     "body": {
+      "family": "Barlow Condensed",
+      "fontsourceSlug": "barlow-condensed",
+      "weight": 700,
+      "sizePx": 36.0,
+      "sizeNote": "36–60 px à l'échelle 1 (ajusté à l'arête)"
+     },
+     "caption": {
+      "family": "JetBrains Mono",
+      "fontsourceSlug": "jetbrains-mono",
+      "weight": 400,
+      "sizePx": 11.0,
+      "sizeNote": "11–15 px à l'échelle 1"
+     }
+    },
+    "motion": {
+     "durationSec": {
+      "fast": 0.12,
+      "base": 0.388,
+      "slow": 1.553
+     },
+     "staggerSec": 0.388,
+     "easingRaw": {
+      "enter": "écriture de gauche à droite en min(50 % de la durée du mot, 0,28 s), départ 0,08 s avant l'attaque ; pré-posé : un geste de 0,15 s, un temps avant",
+      "exit": "encre fraîche -> sèche en 0,35 s, 0,10 s après la fin du mot",
+      "emphasis": "pointe jaune lumineuse (0,11 em) qui écrit ; trait de l'arête 0,3 em devant la pointe, puis fini jusqu'au sommet en 0,35 s"
+     },
+     "hookDeadlineSec": 0.3,
+     "sourceUnits": "s"
+    },
+    "transitions": [
+     {
+      "name": "glisse",
+      "ffmpegXfade": null,
+      "durationSec": 0.2,
+      "use": "d'un cadrage au suivant sur la même ligne ; part après 60 % du mot en cours"
+     },
+     {
+      "name": "virage",
+      "ffmpegXfade": null,
+      "durationSec": 0.58,
+      "use": "la ligne suivante part du sommet où l'on est (1,3 à 3 temps ; 3 temps pour un virage en épingle > 90°)"
+     },
+     {
+      "name": "fouette",
+      "ffmpegXfade": null,
+      "durationSec": 0.388,
+      "use": "la ligne suivante est ailleurs sur le dessin (1 temps)"
+     },
+     {
+      "name": "respiration",
+      "ffmpegXfade": null,
+      "durationSec": 1.553,
+      "use": "long silence des paroles : recul qui laisse deviner le dessin sans le montrer"
+     },
+     {
+      "name": "zoom-arriere",
+      "ffmpegXfade": null,
+      "durationSec": 1.553,
+      "use": "une fois, au refrain final : révèle l'image entière"
+     }
+    ],
+    "safeAreaPx": {
+     "top": 220.0,
+     "bottom": 320.0,
+     "right": 120.0,
+     "left": 64.0
+    },
+    "canvas": {
+     "width": 1080,
+     "height": 1920,
+     "fps": 30
+    }
+   },
+   "curation": {
+    "by": "orchestrator judgment, not measured",
+    "audience": [
+     "teens",
+     "adults"
+    ],
+    "signatureToPreserve": [
+     "blueprint-blue folded sheet taped on a warm concrete floor, seen straight from above (no perspective)",
+     "one long take: the camera follows the writing tip with glides, beat-timed hairpin turns and one-beat whip pans with real motion blur",
+     "the sung word alone in fresh yellow ink, drying to ivory; fast passages pre-posed in pencil and inked on the syllable",
+     "Barlow Condensed capitals set rigidly along the strokes of a drawing; red-pencil cross, flag and correction loop",
+     "one-bar zoom-out on the chorus revealing the whole picture, chorus written large in the sea"
+    ],
+    "confusableWith": [
+     "atlas-grave",
+     "topo-relief"
     ]
    }
   }

@@ -1,0 +1,82 @@
+{
+ "identity": "lyrics-chemin",
+ "family": "paroles",
+ "title": "Claude's Plan — 32,6 premières secondes, jusqu'au refrain (paroles de remplissage en anglais : « Monday's draft »)",
+ "hook": "Image 0 : très gros plan sur le premier mot du titre en train de s'écrire en jaune (213 px), pointe lumineuse visible, cote d'architecte, croix de repère et ligne de construction sur le plan bleu",
+ "duration": 32.62,
+ "libraries": [
+  "@fontsource/barlow-condensed 5.3.0",
+  "@fontsource/jetbrains-mono",
+  "Canvas 2D (render.mjs, Chrome 157 par playwright-core 1.65.1)",
+  "ffmpeg"
+ ],
+ "seed": "textures à graine fixe (3, 7, 11, 19, 23) ; aucun hasard dépendant du temps",
+ "renderTimeSec": 2033.6,
+ "renderNote": "render.mjs, 979 images, 207,7 s / 100 images ; rendu en parallèle de la version aux vraies paroles (2 rendus simultanés, 8 cœurs) et d'autres sessions, charge moyenne de 5 au départ à des pointes au-dessus de 100 ; le flou de mouvement (jusqu'à 64 sous-images moyennées en flottants sur les images où la caméra bouge) domine. Repère : 10 premières secondes rendues seules en 414 s (138 s / 100 images, charge 4–8). Encodage final crf 30 (5,3 Mo).",
+ "measuredUnderLoad": true,
+ "data": "src/paroles.remplissage.json (REMPLISSAGE : nos mots, en anglais comme le morceau, calés sur les horaires du morceau test) + out/shared/chemin-moteur/dessins/bateau.json ; les vraies paroles et l'audio restent hors dépôt",
+ "tempo": {
+  "bpm": 154.5,
+  "t0": 0.0,
+  "source": "relevé AR-16, non redétecté"
+ },
+ "structure": [
+  {
+   "t": 0,
+   "beat": "titre sur le nom de la coque : MONDAY'S en très gros plan, glissé sur DRAFT au 1er temps de la mesure 2"
+  },
+  {
+   "t": 2.62,
+   "beat": "fouetté d'un temps vers la voile gauche (57°) ; ligne écrite en direct, puis pré-posée"
+  },
+  {
+   "t": 5.78,
+   "beat": "virage en épingle de 3 temps au sommet de la voile (114°) ; voile droite à 98–100 px (passage rapide pré-posé), gros plan FOR SHOW"
+  },
+  {
+   "t": 9.32,
+   "beat": "virage vers le pont droit, mât en pointillé ; gros plan 5 A.M."
+  },
+  {
+   "t": 12.43,
+   "beat": "fouetté vers le flanc gauche (la ligne descend), croix rouge ; virage vers la quille (clé) ; virage vers le flanc droit (note collée)"
+  },
+  {
+   "t": 22.13,
+   "beat": "fouetté vers le fanion, contour rouge ; respiration de 4 temps (recul à ×2,3 : le dessin se devine)"
+  },
+  {
+   "t": 25.4,
+   "beat": "fouetté vers le pont gauche, boucle de correction rouge ; fouetté vers la première vague"
+  },
+  {
+   "t": 29.515,
+   "beat": "zoom arrière d'une mesure (×5,5 -> ×1) pendant que le refrain s'écrit dans la mer"
+  },
+  {
+   "t": 31.068,
+   "beat": "image d'ensemble : le bateau en papier, la feuille scotchée au sol, recul lent à ×0,955 ; dernier mot jaune"
+  }
+ ],
+ "engagement": {
+  "mechanic": "lecture de la chanson au rythme (son de l'appli) et révélation finale du dessin",
+  "cta": null
+ },
+ "loopable": false,
+ "sound": {
+  "type": "none",
+  "voice": false,
+  "music": "aucune dans le fichier : la chanson vient de la bibliothèque de l'appli à la publication",
+  "silentTrack": true
+ },
+ "qualityChecks": {
+  "stillsReviewed": true,
+  "textMinPx": 93,
+  "safeAreaOk": true,
+  "audit": "out/tools/chemin_audit.mjs, 979 images : aucune erreur (mot chanté dans x 64–960 / y 220–1600 de l'attaque à 60 % de sa durée ; corps 93–257 px selon les planchers 120 / 104 / 92 ; cadrages ≥ 0,5 s ; départs après 60 % ; ≤ 40 px/s au repos ; aucun chevauchement dans l'image finale) ; pointes : virage en épingle 249°/s, fouettés 186–698°/s",
+  "maxWordsOnScreen": 5
+ },
+ "notes": "Vidéo de preuve de l'identité Lyrics chemin (concept de Fable : out/report/notes/lyrics-chemin/ ; journal de réalisation et écarts : realisation.md). Version aux vraies paroles rendue hors dépôt.",
+ "reproduce": "voir src/README.md",
+ "language": "en"
+}

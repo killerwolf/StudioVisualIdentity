@@ -6,7 +6,7 @@ USAGE
   python out/tools/check.py out/shorts/<dossier>         # un short
   python out/tools/check.py --all                        # tous les shorts -> out/report/qa.json
 
-Vérifie : short.mp4 lisible par ffprobe, 1080×1920, 30 fps, H.264 yuv420p, durée 10–20 s, piste audio présente,
+Vérifie : short.mp4 lisible par ffprobe, 1080×1920, 30 fps, H.264 yuv420p, durée 10–20 s (10–60 s pour la famille « paroles »), piste audio présente,
 absence de frames noires (blackdetect ≥ 0.25 s) et figées longues (freezedetect ≥ 3 s, avertissement seulement),
 présence de short.json / narration.json / stills (3–5) / src/. Imprime un JSON {ok, errors, warnings}.
 """
@@ -47,7 +47,9 @@ def check(d):
                 if v['codec_name'] != 'h264': err.append('codec ' + v['codec_name'])
                 if v['pix_fmt'] != 'yuv420p': err.append('pix_fmt ' + v['pix_fmt'])
             if not a: err.append('pas de piste audio')
-            if not (9.9 <= dur <= 20.1): err.append(f'durée {dur:.2f}s hors 10–20 s')
+            fam = (json.load(open(d / 'short.json')).get('family') if (d / 'short.json').exists() else None)
+            dmax = 60.1 if fam == 'paroles' else 20.1   # une vidéo de paroles suit un extrait de chanson (jusqu'à 60 s)
+            if not (9.9 <= dur <= dmax): err.append(f'durée {dur:.2f}s hors 10–{dmax:.0f} s')
             bd = subprocess.run(['ffmpeg', '-hide_banner', '-i', str(mp4), '-vf', 'blackdetect=d=0.25:pix_th=0.06', '-an', '-f', 'null', '-'],
                                 capture_output=True, text=True).stderr
             blacks = re.findall(r'black_start:([\d.]+) black_end:([\d.]+)', bd)

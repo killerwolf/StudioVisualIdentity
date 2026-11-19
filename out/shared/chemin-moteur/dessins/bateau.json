@@ -1,0 +1,31 @@
+{
+  "id": "bateau",
+  "note": "Bateau en papier vu de face (concept lyrics-chemin). Repère monde = image finale 1080×1920. Une arête = un trait du dessin sur lequel une ligne de paroles est posée. Réutilisable pour toute chanson dont les lignes tiennent sur ces arêtes ; les temps et cadrages sont dans le fichier de paroles.",
+  "feuille": { "x": 36, "y": 96, "w": 1008, "h": 1704 },
+  "points": { "L": [98, 634], "R": [922, 634], "C": [510, 774], "TL": [304, 704], "TR": [716, 704], "A": [510, 300], "BL": [290, 1054], "BR": [730, 1054] },
+  "aretes": {
+    "titre":  { "chemin": { "type": "droite", "a": [300, 962], "b": [720, 962] }, "m": [0, 0], "em": [40, 54], "track": 0.05, "center": true, "noLine": true, "guide": true },
+    "voileG": { "chemin": { "type": "droite", "a": "TL", "b": "A" }, "m": [22, 12] },
+    "voileD": { "chemin": { "type": "droite", "a": "A", "b": "TR" }, "m": [12, 22] },
+    "pontD":  { "chemin": { "type": "droite", "a": "C", "b": "R" }, "m": [26, 62], "below": true },
+    "coqueG": { "chemin": { "type": "droite", "a": "L", "b": "BL" }, "m": [34, 30], "below": true },
+    "quille": { "chemin": { "type": "droite", "a": "BL", "b": "BR" }, "m": [60, 60] },
+    "coqueD": { "chemin": { "type": "droite", "a": "BR", "b": "R" }, "m": [30, 34], "below": true },
+    "fanion": { "chemin": { "type": "droite", "a": [526, 268], "b": [760, 268] }, "m": [0, 0], "em": [44, 44], "noLine": true, "noFit": true },
+    "pontG":  { "chemin": { "type": "droite", "a": "L", "b": "C" }, "m": [58, 26], "below": true, "em": [36, 60] },
+    "vague1": { "chemin": { "type": "vague", "x0": 84, "x1": 660, "y": 1132, "amp": 9, "wl": 270, "ph": 0.4 }, "m": [6, 6], "em": [40, 40], "noFit": true, "gapW": 0.1 }
+  },
+  "mat": { "a": "C", "b": [510, 214], "pendant": "pontD" },
+  "mer": {
+    "cx": 512, "largeurMax": 850, "emMax": 88, "espace": 0.27,
+    "rangs": [ { "y": 1262, "amp": 4, "wl": 420, "ph": 1.2 }, { "y": 1384, "amp": 4, "wl": 420, "ph": 3.0 }, { "y": 1502, "amp": 4, "wl": 420, "ph": 5.0 } ],
+    "suiteVague1": { "x0": 770, "x1": 950 },
+    "filets": [ [1596, 120, 900, 0.8], [1662, 200, 960, 2.6], [1726, 90, 760, 4.4] ]
+  },
+  "objets": {
+    "tasse": { "x": 262, "y": 452 },
+    "crayon": { "x": 741, "y": 476, "angle": 68 },
+    "cle": { "x": 706, "y": 1104, "angle": -20 },
+    "note": { "x": 968, "y": 838, "angle": 7 }
+  }
+}

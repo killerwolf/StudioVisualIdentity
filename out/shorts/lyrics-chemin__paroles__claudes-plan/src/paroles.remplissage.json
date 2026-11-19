@@ -1,0 +1,31 @@
+{
+  "note": "REMPLISSAGE : paroles inventées (« Monday's draft », une chanson de bateau en papier), en anglais comme le morceau, calées sur les temps réels du morceau test (Claude's Plan, 154,5 BPM). Les vraies paroles et l'audio restent hors dépôt.",
+  "titre": "MONDAY'S DRAFT",
+  "langue": "en",
+  "sens": "ltr",
+  "bpm": 154.5,
+  "t0": 0,
+  "duree": 32.62,
+  "dessin": "bateau",
+  "zoomArriere": [29.515, 31.068],
+  "respiration": { "x": 536, "y": 474, "zoom": 2.3, "angle": -3, "arrivee": 25.24, "temps": 4 },
+  "lignes": [
+    { "arete": "titre",  "u": [["MONDAY'S", 0, 1.553], ["DRAFT", 1.553, 2.62]], "cad": [[0], [1]], "arr": 0, "temps": 0, "kind": "cut", "glide": [0.26], "maxPx": 250 },
+    { "arete": "voileG", "u": [["I FOLD", 3.2, 4.466], ["MY DAY", 4.466, 5.049], ["IN DRAFT MODE", 5.049, 5.86]], "cad": [[0, 1], [2]], "arr": 3.01, "temps": 1, "kind": "whip" },
+    { "arete": "voileD", "u": [["I DRAW", 7.184, 7.573], ["LINES", 7.573, 7.961], ["BUT NOT", 7.961, 8.26], ["FOR SHOW", 8.26, 9.14]], "cad": [[0, 1, 2], [3]], "minPx": 104, "arr": 6.95, "temps": 3, "kind": "pivot" },
+    { "arete": "pontD",  "u": [["I'VE BEEN", 10.291, 10.78], ["UP SINCE", 10.78, 11.068], ["5 A.M.", 11.068, 12.2]], "cad": [[0, 1], [2]], "arr": 9.9, "temps": 1.5, "kind": "pivot" },
+    { "arete": "coqueG", "u": [["PRINTER DOWN", 13.01, 14.175], ["CUZ NO INK", 14.175, 15.48]], "cad": [[0], [1]], "arr": 12.82, "temps": 1, "kind": "whip",
+      "annotation": { "type": "croix", "unite": 0, "t": 13.7, "d": 0.3 } },
+    { "arete": "quille", "u": [["DRAFT MODE'S", 16.699, 17.087], ["MY SPARE KEYS", 17.087, 18.58]], "cad": [[0], [1]], "arr": 16.31, "temps": 1.5, "kind": "pivot" },
+    { "arete": "coqueD", "u": [["MAKE ANOTHER", 19.36, 20.44], ["NOTE.TXT", 20.44, 21.26]], "cad": [[0], [1]], "arr": 19.16, "temps": 1.3, "kind": "pivot" },
+    { "arete": "fanion", "u": [["AND YET", 22.88, 23.52]], "cad": [[0]], "arr": 22.52, "temps": 1, "kind": "whip",
+      "annotation": { "type": "fanion", "t": 22.6, "d": 0.7 } },
+    { "arete": "pontG",  "u": [["WRONG", 25.98, 26.64], ["FOLD", 26.64, 27.2]], "cad": [[0, 1]], "arr": 25.79, "temps": 1, "kind": "whip",
+      "annotation": { "type": "boucle", "t": 26.75, "d": 0.45 } },
+    { "arete": "vague1", "u": [["SUCH A LOT", 27.62, 28.1], ["OF WRONG", 28.1, 28.58], ["FOLDS", 28.58, 29.2]], "cad": [[0, 1], [2]], "arr": 27.42, "temps": 0.57, "kind": "whip" }
+  ],
+  "refrain": {
+    "u": [["WE SAIL,", 29.2, 29.9], ["WE SAIL,", 29.9, 30.7], ["AND WE SAIL,", 30.7, 31.54], ["AND WE SAIL,", 31.54, 32.12], ["AND WE SAIL,", 32.12, 32.9]],
+    "rangs": [[0, 1], [2, 3], [4]]
+  }
+}

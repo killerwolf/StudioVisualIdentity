@@ -26,10 +26,12 @@ ORDER = ['swiss-data', 'gazette-1900', 'pixel-arcade', 'brut-meme', 'carte-meteo
          # ajoutées le 2026-11-04 (hors campagne de classement) : le papier découpé du gabarit StudioGabarit et ses 3 déclinaisons
          'papier-decoupe', 'atelier-papier', 'carnet-archives', 'cabinet-curiosites',
          # ajoutée le 2026-11-19 (hors classement) : première identité de la famille de contenus « paroles »
-         'lyrics-punchy']
+         'lyrics-punchy',
+         # ajoutée le 2026-11-19 (hors classement) : seconde identité « paroles », conçue sans regarder lyrics-punchy
+         'lyrics-chemin']
 PAPIER = {'papier-decoupe', 'atelier-papier', 'carnet-archives', 'cabinet-curiosites'}   # non classées, moteur papier partagé
 LOT2 = {'trait-continu', 'carte-meteo'}                                                  # lot 2, classées, voix Gemini Sulafat
-LYRICS = {'lyrics-punchy'}                                                              # vidéo de paroles muette, non classée, sans voix off
+LYRICS = {'lyrics-punchy', 'lyrics-chemin'}                                                            # vidéo de paroles muette, non classée, sans voix off
 ADDED = PAPIER | LOT2 | LYRICS
 # Une seule identité « Papier découpé » et trois dérivations (décision du 2026-11-05) : même moteur out/shared/papier-moteur/, même
 # pop stop-motion, mêmes bandes inclinées, mêmes sous-titres sur bande ; seuls le fond, la palette et les polices changent.
@@ -141,6 +143,15 @@ CURATION.update({
                    'chute-de-pile: the stack falls out of frame while the ground changes tint at each song section',
                    'never black, no gradient, no camera zoom; the song is added in the app (video rendered muted)']),
 })
+CURATION.update({
+    'lyrics-chemin': dict(audience=['teens', 'adults'], confusableWith=['topo-relief', 'atlas-grave'],
+        promiseEn='A muted vertical lyric video shot from above: each word is written in yellow ink on a blue architect plan lying on the floor at the moment it is sung, the camera follows the pen tip in a single sequence shot, and a final zoom-out reveals that the lyrics were drawing a picture (a paper boat).',
+        signature=['blueprint-blue folded sheet taped on a warm concrete floor, seen straight from above (no perspective)',
+                   'one long take: the camera follows the writing tip with glides, beat-timed hairpin turns and one-beat whip pans with real motion blur',
+                   'the sung word alone in fresh yellow ink, drying to ivory; fast passages pre-posed in pencil and inked on the syllable',
+                   'Barlow Condensed capitals set rigidly along the strokes of a drawing; red-pencil cross, flag and correction loop',
+                   'one-bar zoom-out on the chorus revealing the whole picture, chorus written large in the sea']),
+})
 VOICE_LYRICS = {'provider': None, 'name': None,
                 'note': 'no voice-over: muted lyric video, the song itself is added from the app library at publication; short.mp4 carries a silent track for check.py'}
 SHARED = {  # modules identiques (md5) dans les shorts de l'identité — vérifié par ce script
@@ -240,7 +251,11 @@ COST_NOTE = {
     'liquid-chrome': 'Taichi short includes simulation + OpenCV shading; three.js/Babylon shorts are browser only',
     'tableau-craie': 'Manim short 19 s/100; the Rough.js short is 309 s/100 because of a full-frame SVG filter (avoidable)',
 }
-COST_NOTE_LYRICS = 'browser render (DOM text with variable-font axis + inline SVG, render.mjs with Chrome 157 via playwright-core); measured with other sessions running (load average 4.5–15); the screenshot capture dominates'
+COST_NOTE_LYRICS = {
+    'lyrics-punchy': 'browser render (DOM text with variable-font axis + inline SVG, render.mjs with Chrome 157 via playwright-core); measured with other sessions running (load average 4.5–15); the screenshot capture dominates',
+    'lyrics-chemin': 'browser render (canvas 2D, render.mjs with Chrome 157 via playwright-core) including real motion blur (up to 64 sub-frames averaged in floats on camera moves, about a third of the frames); measured with other sessions running (see short.json renderNote)',
+}
+LYRICS_MODULE = {'lyrics-punchy': 'out/shared/lyrics-moteur/', 'lyrics-chemin': 'out/shared/chemin-moteur/'}
 COST_NOTE_LOT2 = {
     'trait-continu': 'Python render (shapely path + pycairo + Pillow text, rawvideo pipe to ffmpeg); opensimplex fields computed once (3.8 s) and cached, '
                      'not included; v2 renders after the review measured with both shorts rendering in parallel (load about 3.3); a v1 control render at low load took 2.8 s/100 frames (identical md5)',
@@ -292,10 +307,10 @@ def main():
             'familiesProven': sorted({x['family'] for x in shorts}),
             'libraries': [re.sub(r'\s+v?\d+(\.\d+)+', '', re.sub(r'\s+\d+(\.\d+)*$', '', l)).strip() for l in (t.get('libraries') or [])],
             'renderCostNote': ('Python cut-paper engine (Pillow/OpenCV, 4 parallel slices) including voice mix and mastering; measured alone on 4 cores'
-                               if s in PAPIER else COST_NOTE_LOT2[s] if s in LOT2 else COST_NOTE_LYRICS if s in LYRICS else
+                               if s in PAPIER else COST_NOTE_LOT2[s] if s in LOT2 else COST_NOTE_LYRICS[s] if s in LYRICS else
                                COST_NOTE.get(s, 'browser render only (renderTimeSec)') + '; measured with up to 10 renders sharing 4 cores: expect ~2–3x faster on a dedicated machine'),
             'renderCostSecPer100Frames': {'min': min(costs), 'max': max(costs), 'measuredUnderLoad': s not in PAPIER} if costs else None,
-            'sharedModule': ([PAPIER_MODULE] if s in PAPIER else ['out/shared/lyrics-moteur/'] if s in LYRICS else shared) or None,
+            'sharedModule': ([PAPIER_MODULE] if s in PAPIER else [LYRICS_MODULE[s]] if s in LYRICS else shared) or None,
             'voiceUsed': VOICE_ADDED if s in PAPIER else (VOICE_LOT2 if s in LOT2 else VOICE_LYRICS if s in LYRICS else VOICE),
             'paths': {'identityMd': f'out/identities/{s}/identity.md', 'tokens': f'out/identities/{s}/tokens.json',
                       'recipes': sorted(f'out/identities/{s}/recipes/{os.path.basename(x)}' for x in glob.glob(str(base / 'recipes' / '*.md'))),
@@ -332,7 +347,7 @@ def main():
         'families': [{'root': r, 'name': next(i['name'] for i in ids if i['id'] == r), 'variants': f['variants'],
                       'sharedEngine': f['sharedEngine'], 'axis': f['axisFr']} for r, f in FAMILIES.items()],
         'fieldNotes': {'variantOf': 'id of the root identity when this entry is a derivation (same engine, only ground / palette / fonts change), else null. A root lists its derivations in variants and what is shared / what varies in variantAxis. Derivations stay ranked, right after their root; counts.identities counts roots only, counts.declinations counts every entry. curation.deliberateSiblings = derivations of the same root, deliberately close and therefore not listed in confusableWith. A new identity that reuses an existing engine and only changes ground / palette / fonts must be registered as a derivation, not as a new identity',
-                       'status': 'selected = kept in Phase 1; rehabilitated = set aside in Phase 1 only to avoid topic overlap with a neighbour, then produced on request with the same rules and evidence level; added = added after the campaign: (a) the cut-paper identity from the StudioGabarit template, papier-decoupe, and its 3 derivations (atelier-papier, carnet-archives, cabinet-curiosites), rendered by the shared Python engine out/shared/papier-moteur/, appended after the ranked identities and not part of the ranking or the blind visual judge; (b) lot 2 of the identity factory (trait-continu, carte-meteo, 2026-11-05: scouting + adversarial challenge + studio + review), ranked with the others, blind visual judge on 8 identities (lot 2 + 6 neighbours, 8/8 pure groups, out/report/notes/revue-2026-11-05.md), voice-over Gemini Sulafat like the cut-paper family (owner decision: Fish Audio credits ran out before Arnold could be recorded); (c) lyrics-punchy (2026-11-19), first identity of the new content family `paroles` (muted lyric video, no voice-over), unranked, appended last, one proof short rendered with filler lyrics (real lyrics and audio stay outside the repository)',
+                       'status': 'selected = kept in Phase 1; rehabilitated = set aside in Phase 1 only to avoid topic overlap with a neighbour, then produced on request with the same rules and evidence level; added = added after the campaign: (a) the cut-paper identity from the StudioGabarit template, papier-decoupe, and its 3 derivations (atelier-papier, carnet-archives, cabinet-curiosites), rendered by the shared Python engine out/shared/papier-moteur/, appended after the ranked identities and not part of the ranking or the blind visual judge; (b) lot 2 of the identity factory (trait-continu, carte-meteo, 2026-11-05: scouting + adversarial challenge + studio + review), ranked with the others, blind visual judge on 8 identities (lot 2 + 6 neighbours, 8/8 pure groups, out/report/notes/revue-2026-11-05.md), voice-over Gemini Sulafat like the cut-paper family (owner decision: Fish Audio credits ran out before Arnold could be recorded); (c) lyrics-punchy and lyrics-chemin (2026-11-19), the two identities of the new content family `paroles` (muted lyric video, no voice-over), unranked, appended last, one proof short each rendered with filler lyrics (real lyrics and audio stay outside the repository)',
                        'voiceUsed': 'voice actually mixed into short.mp4 (Fish Audio Arnold for the 31 campaign shorts, Gemini Sulafat for the 8 cut-paper and 4 lot 2 shorts; see shorts[].voiced)',
                        'coreTokens.motion.staggerSec': "the identity's default stagger as written in its tokens.json; meaning varies (per-item stagger for most, spacing between beats/captions for atlas-grave 1.5 and liquid-chrome 1.55, title-to-body delay for neon-lab 0.8)",
                        'coreTokens.motion.durationSec.slow': 'longest standard duration; for gazette-1900 it is one page (6 beats at 128 bpm)',
