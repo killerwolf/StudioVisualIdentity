@@ -314,7 +314,7 @@ def main():
             if cost:
                 costs.append(cost)
             r = nn.get(n, {})
-            shorts.append({'dir': f'out/shorts/{n}', 'family': j['family'], 'title': j['title'], 'durationSec': j['duration'],
+            shorts.append({'dir': f'out/shorts/{n}', 'family': j['family'], **({'declinaison': j['declinaison']} if j.get('declinaison') else {}), 'title': j['title'], 'durationSec': j['duration'],
                            'libraries': j['libraries'], 'renderCostSecPer100Frames': cost, 'loopable': bool(j.get('loopable')),
                            'voiced': bool((j.get('sound') or {}).get('voice')),
                            'recognitionNearestShort': r.get('nearest'), 'recognitionSameIdentity': r.get('sameIdentity')})

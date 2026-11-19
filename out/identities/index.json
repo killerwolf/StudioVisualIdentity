@@ -4518,6 +4518,7 @@
     {
      "dir": "out/shorts/lyrics-chemin__explicatif__le-quatre-quarts",
      "family": "explicatif",
+     "declinaison": "A2 — habillage ardoise, dessin quatre-quarts (short narré)",
      "title": "Le quatre-quarts — la recette écrite à la craie le long d'un gâteau coupé en quatre parts égales",
      "durationSec": 25.6,
      "libraries": [
@@ -4535,6 +4536,7 @@
     {
      "dir": "out/shorts/lyrics-chemin__histoire__le-premier-tour-du-monde",
      "family": "histoire",
+     "declinaison": "A1 — habillage portulan, dessin tour-du-monde (short narré)",
      "title": "Le premier tour du monde — la route de Magellan et Elcano écrite à l'encre sur une carte vue du pôle Sud, qui se referme en boucle",
      "durationSec": 45.0,
      "libraries": [
@@ -4571,6 +4573,7 @@
     {
      "dir": "out/shorts/lyrics-chemin__paroles__claudes-plan-tech",
      "family": "paroles",
+     "declinaison": "B — habillage editeur, dessin cargo",
      "title": "Claude's Plan, version tech — 32,6 premières secondes, jusqu'au refrain (paroles de remplissage en anglais : « Monday's draft »)",
      "durationSec": 32.62,
      "libraries": [
