@@ -6,7 +6,7 @@
   "identities": 19,
   "derivations": 3,
   "declinations": 22,
-  "shorts": 46
+  "shorts": 47
  },
  "families": [
   {
@@ -4254,7 +4254,8 @@
    "promiseFr": "On suit la chanson du bout du crayon : chaque mot s'écrit en jaune à l'instant où il est chanté, la caméra file d'un trait à l'autre sur le plan, et à la fin on recule pour découvrir que les paroles dessinaient quelque chose.",
    "promiseEn": "A muted vertical lyric video shot from above: each word is written in yellow ink on a blue architect plan lying on the floor at the moment it is sung, the camera follows the pen tip in a single sequence shot, and a final zoom-out reveals that the lyrics were drawing a picture (a paper boat).",
    "familiesProven": [
-    "paroles"
+    "paroles",
+    "explicatif"
    ],
    "libraries": [
     "@fontsource/barlow-condensed",
@@ -4318,6 +4319,24 @@
      "renderCostSecPer100Frames": 95.0,
      "loopable": false,
      "voiced": false,
+     "recognitionNearestShort": null,
+     "recognitionSameIdentity": null
+    },
+    {
+     "dir": "out/shorts/lyrics-chemin__explicatif__le-quatre-quarts",
+     "family": "explicatif",
+     "declinaison": "A2 — habillage ardoise, dessin quatre-quarts (short narré)",
+     "title": "Le quatre-quarts — la recette écrite à la craie le long d'un gâteau coupé en quatre parts égales",
+     "durationSec": 25.6,
+     "libraries": [
+      "@fontsource/barlow-condensed 5.3.0",
+      "Canvas 2D (render.mjs, Chrome par playwright-core)",
+      "ffmpeg",
+      "faster-whisper small (horodatage des mots, hors dépôt)"
+     ],
+     "renderCostSecPer100Frames": 120.6,
+     "loopable": false,
+     "voiced": true,
      "recognitionNearestShort": null,
      "recognitionSameIdentity": null
     }

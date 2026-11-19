@@ -1,0 +1,259 @@
+{
+ "id": "quatre-quarts",
+ "note": "Gâteau rond vu de dessus, coupé en quatre parts égales (déclinaison A2 de lyrics-chemin, habillage « ardoise »). Repère monde = image finale. Les deux coups de couteau portent les phrases (corps commun de 40 px), chaque part reçoit le nom d'un ingrédient (84 px), le moule cannelé se trace sans texte (G.moule, temps dans le fichier de narration), la cuisson s'écrit dessous en rangs finaux.",
+ "feuille": {
+  "x": 36,
+  "y": 96,
+  "w": 1008,
+  "h": 1704
+ },
+ "points": {
+  "C": [
+   512,
+   930
+  ],
+  "TL": [
+   236.2,
+   654.2
+  ],
+  "TR": [
+   787.8,
+   654.2
+  ],
+  "BL": [
+   236.2,
+   1205.8
+  ],
+  "BR": [
+   787.8,
+   1205.8
+  ]
+ },
+ "aretes": {
+  "titre": {
+   "chemin": {
+    "type": "droite",
+    "a": [
+     192,
+     400
+    ],
+    "b": [
+     832,
+     400
+    ]
+   },
+   "em": [
+    92,
+    112
+   ],
+   "center": true,
+   "noLine": true,
+   "weight": 800,
+   "track": 0.02,
+   "guide": true
+  },
+  "coupe1a": {
+   "chemin": {
+    "type": "droite",
+    "a": "TL",
+    "b": "C"
+   },
+   "m": [
+    34,
+    62
+   ],
+   "em": [
+    40,
+    40
+   ],
+   "noFit": true,
+   "center": true
+  },
+  "coupe1b": {
+   "chemin": {
+    "type": "droite",
+    "a": "C",
+    "b": "BR"
+   },
+   "m": [
+    62,
+    34
+   ],
+   "em": [
+    40,
+    40
+   ],
+   "noFit": true,
+   "center": true
+  },
+  "oeufs": {
+   "chemin": {
+    "type": "droite",
+    "a": [
+     352,
+     712
+    ],
+    "b": [
+     672,
+     712
+    ]
+   },
+   "em": [
+    84,
+    84
+   ],
+   "center": true,
+   "noLine": true,
+   "noFit": true,
+   "weight": 800
+  },
+  "sucre": {
+   "chemin": {
+    "type": "droite",
+    "a": [
+     618,
+     960
+    ],
+    "b": [
+     878,
+     960
+    ]
+   },
+   "em": [
+    84,
+    84
+   ],
+   "center": true,
+   "noLine": true,
+   "noFit": true,
+   "weight": 800
+  },
+  "farine": {
+   "chemin": {
+    "type": "droite",
+    "a": [
+     372,
+     1146
+    ],
+    "b": [
+     652,
+     1146
+    ]
+   },
+   "em": [
+    84,
+    84
+   ],
+   "center": true,
+   "noLine": true,
+   "noFit": true,
+   "weight": 800
+  },
+  "beurre": {
+   "chemin": {
+    "type": "droite",
+    "a": [
+     140,
+     960
+    ],
+    "b": [
+     410,
+     960
+    ]
+   },
+   "em": [
+    84,
+    84
+   ],
+   "center": true,
+   "noLine": true,
+   "noFit": true,
+   "weight": 800
+  },
+  "coupe2a": {
+   "chemin": {
+    "type": "droite",
+    "a": "BL",
+    "b": "C"
+   },
+   "m": [
+    34,
+    62
+   ],
+   "em": [
+    40,
+    40
+   ],
+   "noFit": true,
+   "center": true
+  },
+  "coupe2b": {
+   "chemin": {
+    "type": "droite",
+    "a": "C",
+    "b": "TR"
+   },
+   "m": [
+    62,
+    34
+   ],
+   "em": [
+    40,
+    40
+   ],
+   "noFit": true,
+   "center": true
+  }
+ },
+ "moule": {
+  "c": [
+   512,
+   930
+  ],
+  "r": 390,
+  "r2": 407
+ },
+ "final": {
+  "cx": 512,
+  "largeurMax": 780,
+  "emMax": 100,
+  "espace": 0.27,
+  "rangs": [
+   {
+    "y": 1452
+   },
+   {
+    "y": 1562
+   }
+  ]
+ },
+ "objets": {
+  "fouet": {
+   "x": 1022,
+   "y": 196,
+   "angle": 173
+  },
+  "oeufs": [
+   [
+    150,
+    238,
+    -20
+   ],
+   [
+    236,
+    204,
+    14
+   ]
+  ],
+  "cuillere": {
+   "x": 96,
+   "y": 1722,
+   "angle": -17
+  },
+  "beurre": {
+   "x": 902,
+   "y": 1682,
+   "angle": 9
+  }
+ }
+}

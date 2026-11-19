@@ -4,7 +4,7 @@
 
 An **exploratory study of visual and cinematic identities for vertical short videos** (TikTok, Reels, Shorts; 1080×1920, 30 fps, 12–19 s).
 It contains **19 identities, 22 declinations** (the 14 of the original campaign, the cut-paper identity « Papier découpé » with its 3 derivations added on 2026-11-04 and the 2 identities of
-lot 2 of the identity factory added on 2026-11-05, and `lyrics-punchy` and `lyrics-chemin` added on 2026-11-19, see below), each documented as a design system and **proven by 2–3 real shorts rendered by code** (46 shorts in total),
+lot 2 of the identity factory added on 2026-11-05, and `lyrics-punchy` and `lyrics-chemin` added on 2026-11-19, see below), each documented as a design system and **proven by 2–3 real shorts rendered by code** (47 shorts in total),
 plus the open-source rendering toolkit that made them.
 
 **It is a menu with evidence, not a finished brand.** You are expected to read it and then **define your own identity**:

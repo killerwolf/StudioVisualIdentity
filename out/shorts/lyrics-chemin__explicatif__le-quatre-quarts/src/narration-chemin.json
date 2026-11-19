@@ -1,0 +1,236 @@
+{
+ "note": "Narration A2 « Le quatre-quarts » (déclinaison de lyrics-chemin, habillage ardoise, dessin quatre-quarts). Temps mesurés sur la voix réelle (ElevenLabs, Gipsy Paladini, eleven_multilingual_v2 ; mots horodatés par faster-whisper small, langue fr). Ce qui s'écrit au sol = mot clé de ce qui est dit.",
+ "titre": "LE QUATRE-QUARTS",
+ "langue": "fr",
+ "sens": "ltr",
+ "temps": 0.5,
+ "duree": 25.6,
+ "dessin": "quatre-quarts",
+ "habillage": "ardoise",
+ "zoomArriere": [
+  16.25,
+  17.9
+ ],
+ "moule": [
+  16.4,
+  18.0
+ ],
+ "lignes": [
+  {
+   "arete": "titre",
+   "u": [
+    [
+     "QUATRE-QUARTS",
+     0.05,
+     1.3
+    ]
+   ],
+   "cad": [
+    [
+     0
+    ]
+   ],
+   "arr": 0,
+   "duree": 0,
+   "kind": "cut",
+   "maxPx": 250,
+   "annotation": {
+    "type": "souligne",
+    "t": 21.2,
+    "d": 0.6
+   }
+  },
+  {
+   "arete": "coupe1a",
+   "u": [
+    [
+     "QUATRE",
+     3.1,
+     3.32
+    ],
+    [
+     "INGRÉDIENTS",
+     3.32,
+     4.0
+    ]
+   ],
+   "cad": [
+    [
+     0,
+     1
+    ]
+   ],
+   "arr": 2.9,
+   "duree": 0.7,
+   "kind": "pivot",
+   "minPx": 104
+  },
+  {
+   "arete": "coupe1b",
+   "u": [
+    [
+     "À PARTS",
+     4.1,
+     4.44
+    ],
+    [
+     "ÉGALES",
+     4.44,
+     5.1
+    ]
+   ],
+   "cad": [
+    [
+     0,
+     1
+    ]
+   ],
+   "arr": 4.05,
+   "duree": 0.3,
+   "kind": "glide"
+  },
+  {
+   "arete": "oeufs",
+   "u": [
+    [
+     "3 ŒUFS",
+     5.98,
+     7.1
+    ]
+   ],
+   "cad": [
+    [
+     0
+    ]
+   ],
+   "arr": 5.75,
+   "duree": 0.5,
+   "kind": "whip"
+  },
+  {
+   "arete": "sucre",
+   "u": [
+    [
+     "SUCRE",
+     8.78,
+     9.4
+    ]
+   ],
+   "cad": [
+    [
+     0
+    ]
+   ],
+   "arr": 8.6,
+   "duree": 0.4,
+   "kind": "glide",
+   "maxPx": 200
+  },
+  {
+   "arete": "farine",
+   "u": [
+    [
+     "FARINE",
+     9.54,
+     10.2
+    ]
+   ],
+   "cad": [
+    [
+     0
+    ]
+   ],
+   "arr": 9.5,
+   "duree": 0.3,
+   "kind": "glide"
+  },
+  {
+   "arete": "beurre",
+   "u": [
+    [
+     "BEURRE",
+     10.56,
+     11.4
+    ]
+   ],
+   "cad": [
+    [
+     0
+    ]
+   ],
+   "arr": 10.5,
+   "duree": 0.3,
+   "kind": "glide"
+  },
+  {
+   "arete": "coupe2a",
+   "u": [
+    [
+     "ŒUFS",
+     12.42,
+     12.86
+    ],
+    [
+     "+ SUCRE",
+     13.32,
+     13.85
+    ]
+   ],
+   "cad": [
+    [
+     0,
+     1
+    ]
+   ],
+   "arr": 12.3,
+   "duree": 0.7,
+   "kind": "pivot"
+  },
+  {
+   "arete": "coupe2b",
+   "u": [
+    [
+     "+ FARINE",
+     14.46,
+     14.95
+    ],
+    [
+     "+ BEURRE",
+     15.36,
+     16.1
+    ]
+   ],
+   "cad": [
+    [
+     0,
+     1
+    ]
+   ],
+   "arr": 14.3,
+   "duree": 0.35,
+   "kind": "glide"
+  }
+ ],
+ "final": {
+  "u": [
+   [
+    "40 MINUTES",
+    18.1,
+    18.9
+   ],
+   [
+    "À 180 °C",
+    19.12,
+    26.6
+   ]
+  ],
+  "rangs": [
+   [
+    0
+   ],
+   [
+    1
+   ]
+  ]
+ }
+}
