@@ -1,0 +1,28 @@
+{
+ "id": "simulation-deterministe",
+ "nom": "Simulation (billes, territoires)",
+ "niveau": "declare",
+ "description": "Physique pré-simulée et déterministe, mouvement quantifié à 4 px, mosaïque de pixels en transition, photo-finish.",
+ "separation": "MOYEN",
+ "moteur": {
+  "code": "simulations ring.js, course.js, conquest.js (dans les shorts)",
+  "env": "navigateur (p5 / Matter, pré-simulé)",
+  "audit": null
+ },
+ "signature": [
+  "real pre-simulated physics with photo finish",
+  "pixel-mosaic transition + chiptune blips on collisions"
+ ],
+ "requiert": null,
+ "formats": [
+  "narre-court"
+ ],
+ "habillagesTestes": [
+  "arcade-marine"
+ ],
+ "recettes": [
+  "pixel-arcade"
+ ],
+ "source": "out/report/notes/composition/inventaire.md",
+ "date": "2026-11-19"
+}

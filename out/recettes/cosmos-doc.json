@@ -1,0 +1,35 @@
+{
+ "id": "cosmos-doc",
+ "nom": "Cosmos Doc",
+ "habillage": "cosmos-noir",
+ "mecanique": "travelling-cine-3d",
+ "formats": [
+  "narre-court"
+ ],
+ "son": null,
+ "statut": "validee",
+ "signaturePortee": {
+  "habillage": [
+   "true black space with warm starlight and anamorphic lens flare",
+   "Bebas Neue capitals with tracking that tightens",
+   "film grain, no HUD or neon lines"
+  ],
+  "mecanique": [
+   "single slow sine easing, slow dolly"
+  ],
+  "autres": []
+ },
+ "dossier": "out/identities/cosmos-doc/",
+ "identite": "cosmos-doc",
+ "shorts": [
+  "out/shorts/cosmos-doc__evenements__voyager-1-a-un-jour-lumiere",
+  "out/shorts/cosmos-doc__explicatif__pourquoi-venus-plus-chaude-que-mercure"
+ ],
+ "confusableWith": [
+  "cabinet-curiosites",
+  "liquid-chrome",
+  "neon-lab"
+ ],
+ "separation": "MOYEN",
+ "date": "2026-11-19"
+}

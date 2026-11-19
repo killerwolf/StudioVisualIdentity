@@ -1,0 +1,66 @@
+{
+ "id": "pixel-jour",
+ "nom": "Pixel jour",
+ "niveau": "declare",
+ "de": "survol-pixel",
+ "palette": {
+  "fond": "#1E5AA8",
+  "surface": "#FBF3D5",
+  "encre": "#14213D",
+  "vif": "#B5341A",
+  "second": "#FFC94A",
+  "decor": [
+   "#7CCBEB"
+  ]
+ },
+ "contrasteSurSurface": {
+  "encre": 14.36,
+  "vif": 5.44,
+  "second": 1.38
+ },
+ "typo": {
+  "titre": {
+   "famille": "Jersey 20",
+   "fontsource": "jersey-20",
+   "graisses": [
+    400
+   ]
+  },
+  "texte": {
+   "famille": "Jersey 15",
+   "fontsource": "jersey-15",
+   "graisses": [
+    400
+   ]
+  },
+  "legende": {
+   "famille": "Jersey 10",
+   "fontsource": "jersey-10",
+   "graisses": [
+    400
+   ]
+  }
+ },
+ "matiere": "indexed palette with quantised shade tables and a 6-step haze towards a very pale blue (#DCEEF5), rendered at 270x480 and scaled x4 nearest-neighbour",
+ "signature": [
+  "indexed palette with quantised shade tables and a 6-step haze towards a very pale blue (#DCEEF5), rendered at 270x480 and scaled x4 nearest-neighbour",
+  "Jersey 15 cartouches on cream with ink border (hook, dates, narrative; one at a time since the A+B+C pass; Jersey 20 reserved), Jersey 10 mentions only; never text on the map or sky"
+ ],
+ "lisibilite": {
+  "corpsMinPx": 54,
+  "contrasteTexteMin": 4.5,
+  "couleurReservee": "vif"
+ },
+ "contraintes": {
+  "grillePixel": "270×480 ×4, plus proche voisin",
+  "paletteIndexee": true,
+  "projection": "3d (sol en perspective)"
+ },
+ "adaptateurs": {},
+ "image": "out/shorts/survol-pixel__explicatif__comment-nait-un-atoll/stills/01_hook-anneau_0.5s.jpg",
+ "recettes": [
+  "survol-pixel"
+ ],
+ "source": "coreTokens de out/identities/index.json (le code des scènes écrit ses valeurs en dur : brique déclarée)",
+ "date": "2026-11-19"
+}

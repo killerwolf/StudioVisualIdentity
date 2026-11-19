@@ -1,0 +1,33 @@
+{
+ "id": "aquarelle-conte",
+ "nom": "Aquarelle Conte",
+ "habillage": "aquarelle",
+ "mecanique": "lavis-multiplan",
+ "formats": [
+  "narre-court"
+ ],
+ "son": null,
+ "statut": "validee",
+ "signaturePortee": {
+  "habillage": [
+   "watercolour washes on cream paper",
+   "Fraunces storybook titles on a bottom album page"
+  ],
+  "mecanique": [
+   "multiplane parallax",
+   "gentle storyteller pacing and fades"
+  ],
+  "autres": []
+ },
+ "dossier": "out/identities/aquarelle-conte/",
+ "identite": "aquarelle-conte",
+ "shorts": [
+  "out/shorts/aquarelle-conte__enfants__ou-vont-les-etoiles-le-jour",
+  "out/shorts/aquarelle-conte__histoire__phare-d-alexandrie"
+ ],
+ "confusableWith": [
+  "pastel-diorama"
+ ],
+ "separation": "MOYEN",
+ "date": "2026-11-19"
+}

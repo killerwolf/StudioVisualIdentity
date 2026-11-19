@@ -1,0 +1,71 @@
+{
+ "id": "cabinet-curiosites",
+ "nom": "Cabinet bleu et or",
+ "niveau": "executable",
+ "de": "cabinet-curiosites",
+ "palette": {
+  "fond": "#161E34",
+  "surface": "#F2E8D0",
+  "encre": "#141826",
+  "vif": "#D6AC58",
+  "second": "#841E30",
+  "decor": [
+   "#1C4C54",
+   "#CE969C",
+   "#76A8AA",
+   "#B08C64"
+  ]
+ },
+ "contrasteSurSurface": {
+  "encre": 14.5,
+  "vif": 1.74,
+  "second": 7.8
+ },
+ "typo": {
+  "titre": {
+   "famille": "DM Serif Display",
+   "fontsource": "dm-serif-display",
+   "graisses": [
+    400
+   ]
+  },
+  "texte": {
+   "famille": "DM Serif Display",
+   "fontsource": "dm-serif-display",
+   "graisses": [
+    400
+   ]
+  },
+  "mono": {
+   "famille": "DM Mono",
+   "fontsource": "dm-mono",
+   "graisses": [
+    500
+   ]
+  }
+ },
+ "matiere": "fond bleu nuit uni vignetté ; pièces de papier découpées aux ciseaux, ombre portée",
+ "signature": [
+  "plain vignetted midnight-blue ground",
+  "DM Serif Display titles on cream / teal / burgundy strips",
+  "DM Serif Display italic captions",
+  "gold accent for notes"
+ ],
+ "lisibilite": {
+  "corpsMinPx": 54,
+  "contrasteTexteMin": 4.5,
+  "couleurReservee": "vif"
+ },
+ "contraintes": {
+  "cadence": "12 i/s (matière de papier : un papier découpé ne glisse pas en douceur)"
+ },
+ "adaptateurs": {
+  "pop-papier-12ips": "out/shared/papier-moteur/themes/cabinet-curiosites.json"
+ },
+ "image": "out/shorts/cabinet-curiosites__explicatif__d-ou-vient-le-mot-sandwich/stills/still_t_003.50.jpg",
+ "recettes": [
+  "cabinet-curiosites"
+ ],
+ "source": "valeurs relevées dans l'adaptateur",
+ "date": "2026-11-19"
+}

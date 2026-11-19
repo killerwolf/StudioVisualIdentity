@@ -1,0 +1,70 @@
+{
+ "id": "atelier-papier",
+ "nom": "Papier, bleu nuit",
+ "niveau": "executable",
+ "de": "atelier-papier",
+ "palette": {
+  "fond": "#21345C",
+  "surface": "#F8F2E4",
+  "encre": "#181C28",
+  "vif": "#F6C446",
+  "second": "#E2523A",
+  "decor": [
+   "#2462D6",
+   "#F4A0B4",
+   "#78C8D6",
+   "#C99A5B"
+  ]
+ },
+ "contrasteSurSurface": {
+  "encre": 15.23,
+  "vif": 1.46,
+  "second": 3.42
+ },
+ "typo": {
+  "titre": {
+   "famille": "Dela Gothic One",
+   "fontsource": "dela-gothic-one",
+   "graisses": [
+    400
+   ]
+  },
+  "texte": {
+   "famille": "Kalam",
+   "fontsource": "kalam",
+   "graisses": [
+    700
+   ]
+  },
+  "mono": {
+   "famille": "DM Mono",
+   "fontsource": "dm-mono",
+   "graisses": [
+    500
+   ]
+  }
+ },
+ "matiere": "tapis de découpe bleu nuit gradué ; pièces de papier découpées aux ciseaux, ombre portée",
+ "signature": [
+  "midnight-blue graduated cutting mat",
+  "Dela Gothic One strips in cream / royal blue / coral",
+  "Kalam captions on cream strips"
+ ],
+ "lisibilite": {
+  "corpsMinPx": 54,
+  "contrasteTexteMin": 4.5,
+  "couleurReservee": "vif"
+ },
+ "contraintes": {
+  "cadence": "12 i/s (matière de papier : un papier découpé ne glisse pas en douceur)"
+ },
+ "adaptateurs": {
+  "pop-papier-12ips": "out/shared/papier-moteur/themes/atelier-papier.json"
+ },
+ "image": "out/shorts/atelier-papier__explicatif__d-ou-vient-le-mot-sandwich/stills/still_t_003.50.jpg",
+ "recettes": [
+  "atelier-papier"
+ ],
+ "source": "valeurs relevées dans l'adaptateur",
+ "date": "2026-11-19"
+}

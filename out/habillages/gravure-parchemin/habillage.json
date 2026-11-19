@@ -1,0 +1,62 @@
+{
+ "id": "gravure-parchemin",
+ "nom": "Gravure parchemin",
+ "niveau": "declare",
+ "de": "atlas-grave",
+ "palette": {
+  "fond": "#EFE3C8",
+  "surface": "#E2D2AE",
+  "encre": "#2A1F14",
+  "vif": "#8C2F1B",
+  "second": "#2D4A5A",
+  "decor": [
+   "#B8862B"
+  ]
+ },
+ "contrasteSurSurface": {
+  "encre": 10.78,
+  "vif": 5.54,
+  "second": 6.28
+ },
+ "typo": {
+  "titre": {
+   "famille": "Cormorant Garamond",
+   "fontsource": "cormorant-garamond",
+   "graisses": [
+    700
+   ]
+  },
+  "texte": {
+   "famille": "Cormorant Garamond",
+   "fontsource": "cormorant-garamond",
+   "graisses": [
+    700
+   ]
+  },
+  "legende": {
+   "famille": "IBM Plex Mono",
+   "fontsource": "ibm-plex-mono",
+   "graisses": [
+    600
+   ]
+  }
+ },
+ "matiere": "laid-paper parchment and engraved hand-drawn maps",
+ "signature": [
+  "laid-paper parchment and engraved hand-drawn maps",
+  "Cormorant Garamond / Cinzel serif"
+ ],
+ "lisibilite": {
+  "corpsMinPx": 54,
+  "contrasteTexteMin": 4.5,
+  "couleurReservee": "vif"
+ },
+ "contraintes": null,
+ "adaptateurs": {},
+ "image": "out/shorts/atlas-grave__geographie__plus-longs-fleuves-du-monde/stills/03_rang-I-Nil_8.9s.jpg",
+ "recettes": [
+  "atlas-grave"
+ ],
+ "source": "coreTokens de out/identities/index.json (le code des scènes écrit ses valeurs en dur : brique déclarée)",
+ "date": "2026-11-19"
+}

@@ -1,0 +1,28 @@
+{
+ "id": "tourniquet-tampon",
+ "nom": "Journal qui tourne, tampon",
+ "niveau": "declare",
+ "description": "Page qui tourne (−540° → ±1,5°) et se pose, tampon, dépêche en machine à écrire, 128 bpm ; tremblement de projecteur dans post.py.",
+ "separation": "MOYEN",
+ "moteur": {
+  "code": "src/gazette.js + src/post.py (copiés)",
+  "env": "navigateur + passe OpenCV",
+  "audit": null
+ },
+ "signature": [
+  "broadsheet front page that spins in and lands",
+  "red rubber stamp"
+ ],
+ "requiert": null,
+ "formats": [
+  "narre-court"
+ ],
+ "habillagesTestes": [
+  "gazette-sepia"
+ ],
+ "recettes": [
+  "gazette-1900"
+ ],
+ "source": "out/report/notes/composition/inventaire.md",
+ "date": "2026-11-19"
+}

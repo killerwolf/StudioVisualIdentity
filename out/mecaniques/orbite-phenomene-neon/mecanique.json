@@ -1,0 +1,28 @@
+{
+ "id": "orbite-phenomene-neon",
+ "nom": "Orbite autour d'un phénomène",
+ "niveau": "declare",
+ "description": "Orbite autour d'un phénomène, pulsations de bloom au changement de temps ; la matière est le shader.",
+ "separation": "DIFFICILE",
+ "moteur": {
+  "code": "aucun moteur commun (twgl, Matplotlib, three.js)",
+  "env": "navigateur ou Python",
+  "audit": null
+ },
+ "signature": [
+  "bloom pulses on beat changes"
+ ],
+ "requiert": null,
+ "formats": [
+  "boucle",
+  "narre-court"
+ ],
+ "habillagesTestes": [
+  "neon-labo"
+ ],
+ "recettes": [
+  "neon-lab"
+ ],
+ "source": "out/report/notes/composition/inventaire.md",
+ "date": "2026-11-19"
+}

@@ -1,0 +1,81 @@
+{
+ "id": "punchy",
+ "nom": "Punchy (3 camaïeux)",
+ "niveau": "declare",
+ "de": "lyrics-punchy",
+ "palette": {
+  "fond": "#2A1160",
+  "surface": null,
+  "encre": "#140A33",
+  "vif": "#E6FF4F",
+  "second": null,
+  "decor": [
+   "#B9A4F5",
+   "#8468DB",
+   "#5F45B8"
+  ],
+  "tons": {
+   "nuit": [
+    "#2A1160",
+    "#E6FF4F"
+   ],
+   "lagon": [
+    "#063F4A",
+    "#FF8A5C"
+   ],
+   "braise": [
+    "#5E0F2C",
+    "#FFD166"
+   ]
+  }
+ },
+ "contrasteSurSurface": {
+  "encre": 1.2,
+  "vif": 13.94
+ },
+ "typo": {
+  "titre": {
+   "famille": "Anybody",
+   "fontsource": "anybody",
+   "graisses": [
+    900
+   ]
+  },
+  "texte": {
+   "famille": "Anybody",
+   "fontsource": "anybody",
+   "graisses": [
+    900
+   ]
+  },
+  "legende": {
+   "famille": "Anybody",
+   "fontsource": "anybody",
+   "graisses": [
+    800
+   ]
+  }
+ },
+ "matiere": "a wall of past lines stacked above the current one in 3 tints of the background hue (nuit / lagon / braise)",
+ "signature": [
+  "a wall of past lines stacked above the current one in 3 tints of the background hue (nuit / lagon / braise)",
+  "tilted accent-coloured square card (±4°) with a 3-colour SVG pictogram, one per line at most"
+ ],
+ "lisibilite": {
+  "corpsMinPx": 54,
+  "contrasteTexteMin": 4.5,
+  "couleurReservee": "vif"
+ },
+ "contraintes": {
+  "typo": "police variable à axe wdth (Anybody)"
+ },
+ "adaptateurs": {
+  "colonne-mot-a-mot": "out/shared/lyrics-moteur/lyrics.js (CAMAIEUX, dans le moteur)"
+ },
+ "image": "out/shorts/lyrics-punchy__paroles__claudes-plan/stills/03_mur-version_11.3s.jpg",
+ "recettes": [
+  "lyrics-punchy"
+ ],
+ "source": "coreTokens de out/identities/index.json (le code des scènes écrit ses valeurs en dur : brique déclarée)",
+ "date": "2026-11-19"
+}

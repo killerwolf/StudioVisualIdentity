@@ -1,0 +1,80 @@
+{
+ "id": "trace-chemin",
+ "nom": "Chemin qui se trace",
+ "niveau": "executable",
+ "description": "Mot entier posé sur le trait au moment où il est dit (encre fraîche qui sèche en 0,35 s, pré-pose sous 0,30 s/mot) ; caméra de dessus sans perspective qui suit la pointe (glissés, virages au temps, filés d'un temps avec flou de bougé) ; zoom arrière final unique qui révèle le dessin.",
+ "separation": "FACILE",
+ "moteur": {
+  "code": "out/shared/chemin-moteur/chemin.js",
+  "env": "navigateur (Canvas 2D, renderAt(t))",
+  "audit": "out/tools/chemin_audit.mjs"
+ },
+ "signature": [
+  "one long take: the camera follows the writing tip with glides, beat-timed hairpin turns and one-beat whip pans with real motion blur",
+  "the sung word alone in fresh yellow ink, drying to ivory; fast passages pre-posed in pencil and inked on the syllable",
+  "one-bar zoom-out on the chorus revealing the whole picture, chorus written large in the sea"
+ ],
+ "requiert": {
+  "palette": [
+   "fond",
+   "encre",
+   "vif",
+   "second"
+  ],
+  "typo": [
+   "titre"
+  ],
+  "crochets": [
+   "prepare",
+   "floor",
+   "sheet",
+   "objects",
+   "finish"
+  ],
+  "crochetsFacultatifs": [
+   "under",
+   "tip",
+   "afterInk",
+   "annotations",
+   "textErode",
+   "dryColor",
+   "route"
+  ],
+  "valeurs": [
+   "font",
+   "weight",
+   "wFinal",
+   "cap",
+   "gap",
+   "em",
+   "trackMax",
+   "floorPx",
+   "floorFast",
+   "maxPx",
+   "col.fresh",
+   "col.dry",
+   "col.stroke",
+   "col.annot"
+  ],
+  "projection": "plane",
+  "note": "les crochets lisent des champs du dessin (G.mat, G.boites, G.moule, G.route) : un habillage du chemin n'est compatible qu'avec un dessin dont il sait dessiner les primitives (inventaire.md § 3)"
+ },
+ "formats": [
+  "narre-long",
+  "paroles-muet"
+ ],
+ "habillagesTestes": [
+  "ardoise",
+  "editeur",
+  "plan-bleu",
+  "portulan"
+ ],
+ "recettes": [
+  "lyrics-chemin",
+  "chemin-editeur",
+  "chemin-ardoise",
+  "chemin-portulan"
+ ],
+ "source": "out/report/notes/composition/inventaire.md",
+ "date": "2026-11-19"
+}

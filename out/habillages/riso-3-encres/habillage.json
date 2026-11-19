@@ -1,0 +1,63 @@
+{
+ "id": "riso-3-encres",
+ "nom": "Riso 3 encres",
+ "niveau": "declare",
+ "de": "riso-zine",
+ "palette": {
+  "fond": "#F6F0E4",
+  "surface": "#F6F0E4",
+  "encre": "#1A1A1A",
+  "vif": "#FF48B0",
+  "second": "#0078BF",
+  "decor": [
+   "#FFE800"
+  ]
+ },
+ "contrasteSurSurface": {
+  "encre": 15.33,
+  "vif": 2.72,
+  "second": 4.17
+ },
+ "typo": {
+  "titre": {
+   "famille": "Space Mono",
+   "fontsource": "space-mono",
+   "graisses": [
+    700
+   ]
+  },
+  "texte": {
+   "famille": "Space Mono",
+   "fontsource": "space-mono",
+   "graisses": [
+    700
+   ]
+  },
+  "legende": {
+   "famille": "Permanent Marker",
+   "fontsource": "permanent-marker",
+   "graisses": [
+    400
+   ]
+  }
+ },
+ "matiere": "cream paper with 2–3 overprinted spot inks (fluo pink, blue, yellow)",
+ "signature": [
+  "cream paper with 2–3 overprinted spot inks (fluo pink, blue, yellow)",
+  "misregistration + halftone dots",
+  "Space Mono + Permanent Marker annotations"
+ ],
+ "lisibilite": {
+  "corpsMinPx": 54,
+  "contrasteTexteMin": 4.5,
+  "couleurReservee": "vif"
+ },
+ "contraintes": null,
+ "adaptateurs": {},
+ "image": "out/shorts/riso-zine__evenements__geminides-j-39/stills/03_phaeton_11.0s.jpg",
+ "recettes": [
+  "riso-zine"
+ ],
+ "source": "coreTokens de out/identities/index.json (le code des scènes écrit ses valeurs en dur : brique déclarée)",
+ "date": "2026-11-19"
+}

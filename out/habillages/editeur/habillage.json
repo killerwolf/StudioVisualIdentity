@@ -1,0 +1,53 @@
+{
+ "id": "editeur",
+ "nom": "Éditeur de code",
+ "niveau": "executable",
+ "de": "chemin-editeur",
+ "palette": {
+  "fond": "#0B101D",
+  "surface": "#141B30",
+  "encre": "#D5DCEA",
+  "vif": null,
+  "second": "#F2A65A",
+  "decor": [
+   "#B79CF7",
+   "#93D8A0",
+   "#66769A",
+   "#8497C4"
+  ]
+ },
+ "contrasteSurSurface": {
+  "encre": 12.41,
+  "second": 8.44
+ },
+ "typo": {
+  "titre": {
+   "famille": "JetBrains Mono",
+   "fontsource": "jetbrains-mono",
+   "graisses": [
+    400,
+    700,
+    800
+   ]
+  }
+ },
+ "matiere": "éditeur de code sombre, coloration syntaxique, frappe au clavier",
+ "signature": [],
+ "lisibilite": {
+  "corpsMinPx": 96,
+  "contrasteTexteMin": 4.5,
+  "couleurReservee": null
+ },
+ "contraintes": {
+  "projection": "plane (vu de dessus)"
+ },
+ "adaptateurs": {
+  "trace-chemin": "out/shared/chemin-moteur/habillages/editeur.js"
+ },
+ "image": "out/shorts/lyrics-chemin__paroles__claudes-plan-tech/stills/03_flanc-echec_14.5s.jpg",
+ "recettes": [
+  "chemin-editeur"
+ ],
+ "source": "valeurs relevées dans l'adaptateur",
+ "date": "2026-11-19"
+}

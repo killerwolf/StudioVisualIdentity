@@ -1,0 +1,28 @@
+{
+ "id": "lavis-multiplan",
+ "nom": "Lavis qui s'ouvre, plans superposés",
+ "niveau": "declare",
+ "description": "Travelling multiplan, lavis qui s'ouvre (bloom()) comme transition : la transition est la matière.",
+ "separation": "MOYEN",
+ "moteur": {
+  "code": "src/aq.js (copié)",
+  "env": "navigateur (p5 + Paper.js)",
+  "audit": null
+ },
+ "signature": [
+  "multiplane parallax",
+  "gentle storyteller pacing and fades"
+ ],
+ "requiert": null,
+ "formats": [
+  "narre-court"
+ ],
+ "habillagesTestes": [
+  "aquarelle"
+ ],
+ "recettes": [
+  "aquarelle-conte"
+ ],
+ "source": "out/report/notes/composition/inventaire.md",
+ "date": "2026-11-19"
+}

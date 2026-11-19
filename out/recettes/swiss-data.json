@@ -1,0 +1,34 @@
+{
+ "id": "swiss-data",
+ "nom": "Grille Suisse",
+ "habillage": "grille-suisse",
+ "mecanique": "chiffre-volet-compteur",
+ "formats": [
+  "narre-court"
+ ],
+ "son": null,
+ "statut": "validee",
+ "signaturePortee": {
+  "habillage": [
+   "visible 12-column grid on warm off-white",
+   "palette limited to red / black / blue"
+  ],
+  "mecanique": [
+   "one giant Archivo Black number per screen",
+   "red wipe transitions"
+  ],
+  "autres": []
+ },
+ "dossier": "out/identities/swiss-data/",
+ "identite": "swiss-data",
+ "shorts": [
+  "out/shorts/swiss-data__evenements__j-272-eclipse-2-aout-2027",
+  "out/shorts/swiss-data__geographie__ou-vivent-8-milliards"
+ ],
+ "confusableWith": [
+  "bauhaus-kinetic",
+  "carte-meteo"
+ ],
+ "separation": "FACILE",
+ "date": "2026-11-19"
+}

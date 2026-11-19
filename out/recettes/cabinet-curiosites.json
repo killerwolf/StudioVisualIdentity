@@ -1,0 +1,32 @@
+{
+ "id": "cabinet-curiosites",
+ "nom": "Cabinet de curiosités",
+ "habillage": "cabinet-curiosites",
+ "mecanique": "pop-papier-12ips",
+ "formats": [
+  "narre-court"
+ ],
+ "son": null,
+ "statut": "validee",
+ "signaturePortee": {
+  "habillage": [
+   "plain vignetted midnight-blue ground",
+   "DM Serif Display titles on cream / teal / burgundy strips",
+   "DM Serif Display italic captions",
+   "gold accent for notes"
+  ],
+  "mecanique": [],
+  "autres": []
+ },
+ "dossier": "out/identities/cabinet-curiosites/",
+ "identite": "cabinet-curiosites",
+ "shorts": [
+  "out/shorts/cabinet-curiosites__explicatif__d-ou-vient-le-mot-sandwich",
+  "out/shorts/cabinet-curiosites__histoire__la-fourchette-a-fait-scandale"
+ ],
+ "confusableWith": [
+  "cosmos-doc"
+ ],
+ "separation": "exécutable",
+ "date": "2026-11-19"
+}

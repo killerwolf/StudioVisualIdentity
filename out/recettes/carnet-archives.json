@@ -1,0 +1,32 @@
+{
+ "id": "carnet-archives",
+ "nom": "Carnet d'archives",
+ "habillage": "carnet-archives",
+ "mecanique": "pop-papier-12ips",
+ "formats": [
+  "narre-court"
+ ],
+ "son": null,
+ "statut": "validee",
+ "signaturePortee": {
+  "habillage": [
+   "fibrous brown kraft ground, no grid",
+   "Abril Fatface titles on cream / ink-blue / stamp-red strips",
+   "Special Elite typewriter captions and notes",
+   "sepia palette with stamp red and ochre"
+  ],
+  "mecanique": [],
+  "autres": []
+ },
+ "dossier": "out/identities/carnet-archives/",
+ "identite": "carnet-archives",
+ "shorts": [
+  "out/shorts/carnet-archives__explicatif__d-ou-vient-le-mot-sandwich",
+  "out/shorts/carnet-archives__histoire__la-fourchette-a-fait-scandale"
+ ],
+ "confusableWith": [
+  "gazette-1900"
+ ],
+ "separation": "exécutable",
+ "date": "2026-11-19"
+}

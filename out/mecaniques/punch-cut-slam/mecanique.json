@@ -1,0 +1,29 @@
+{
+ "id": "punch-cut-slam",
+ "nom": "Coupes franches, mots qui claquent",
+ "niveau": "declare",
+ "description": "Coupes franches au temps, punch-in ×1,15 en 3 images, slam de mot, inversion noir/jaune, texte ajusté à la largeur ; ≤ 3 flashs/s.",
+ "separation": "FACILE",
+ "moteur": {
+  "code": "src/brut.js (copié dans chaque short)",
+  "env": "navigateur (PixiJS + GSAP)",
+  "audit": null
+ },
+ "signature": [
+  "Anton auto-fitted to fill the frame",
+  "hard cuts on the beat with 3-frame punch-in",
+  "photosensitivity rule: <= 3 flashes/s, no full-frame flash"
+ ],
+ "requiert": null,
+ "formats": [
+  "narre-court"
+ ],
+ "habillagesTestes": [
+  "brut-jaune"
+ ],
+ "recettes": [
+  "brut-meme"
+ ],
+ "source": "out/report/notes/composition/inventaire.md",
+ "date": "2026-11-19"
+}

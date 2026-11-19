@@ -1,0 +1,31 @@
+{
+ "id": "papier-decoupe",
+ "nom": "Papier découpé",
+ "habillage": "papier-decoupe",
+ "mecanique": "pop-papier-12ips",
+ "formats": [
+  "narre-court"
+ ],
+ "son": null,
+ "statut": "validee",
+ "signaturePortee": {
+  "habillage": [
+   "green graduated cutting mat",
+   "Dela Gothic One titles on alternately tilted paper strips",
+   "burned-in Kalam captions on a paper strip"
+  ],
+  "mecanique": [
+   "pieces pop in 4 steps at 12 fps with drop shadow and scissor-cut edges"
+  ],
+  "autres": []
+ },
+ "dossier": "out/identities/papier-decoupe/",
+ "identite": "papier-decoupe",
+ "shorts": [
+  "out/shorts/papier-decoupe__explicatif__d-ou-vient-le-mot-sandwich",
+  "out/shorts/papier-decoupe__histoire__la-fourchette-a-fait-scandale"
+ ],
+ "confusableWith": [],
+ "separation": "exécutable",
+ "date": "2026-11-19"
+}

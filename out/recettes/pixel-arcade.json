@@ -1,0 +1,34 @@
+{
+ "id": "pixel-arcade",
+ "nom": "Arcade Pixel",
+ "habillage": "arcade-marine",
+ "mecanique": "simulation-deterministe",
+ "formats": [
+  "narre-court"
+ ],
+ "son": null,
+ "statut": "validee",
+ "signaturePortee": {
+  "habillage": [
+   "dark navy pixel playfield, motion quantised to 4 px",
+   "Press Start 2P HUD (score, time)"
+  ],
+  "mecanique": [
+   "real pre-simulated physics with photo finish",
+   "pixel-mosaic transition + chiptune blips on collisions"
+  ],
+  "autres": []
+ },
+ "dossier": "out/identities/pixel-arcade/",
+ "identite": "pixel-arcade",
+ "shorts": [
+  "out/shorts/pixel-arcade__abstrait__la-balle-peut-elle-s-echapper",
+  "out/shorts/pixel-arcade__engagement__quelle-bille-gagne-la-course",
+  "out/shorts/pixel-arcade__engagement__quelle-couleur-conquiert-l-ecran"
+ ],
+ "confusableWith": [
+  "survol-pixel"
+ ],
+ "separation": "MOYEN",
+ "date": "2026-11-19"
+}

@@ -1,0 +1,36 @@
+{
+ "id": "liquid-chrome",
+ "nom": "Chrome Liquide",
+ "habillage": "chrome-irise",
+ "mecanique": "plan-sequence-matiere",
+ "formats": [
+  "boucle",
+  "narre-court"
+ ],
+ "son": null,
+ "statut": "validee",
+ "signaturePortee": {
+  "habillage": [
+   "chrome / iridescent liquid matter in one continuous macro shot",
+   "Syne 800 titles with a pastel-gradient keyword",
+   "prefer the warm graphite/pearl background to stay distinct from neon-lab and cosmos-doc"
+  ],
+  "mecanique": [
+   "slow motion, no cuts"
+  ],
+  "autres": []
+ },
+ "dossier": "out/identities/liquid-chrome/",
+ "identite": "liquid-chrome",
+ "shorts": [
+  "out/shorts/liquid-chrome__abstrait__pendule-de-newton-chrome",
+  "out/shorts/liquid-chrome__abstrait__quatre-peintures-mpm",
+  "out/shorts/liquid-chrome__engagement__quelle-couleur-remplit-le-verre"
+ ],
+ "confusableWith": [
+  "cosmos-doc",
+  "neon-lab"
+ ],
+ "separation": "DIFFICILE",
+ "date": "2026-11-19"
+}

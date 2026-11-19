@@ -1,0 +1,29 @@
+{
+ "id": "traceur-escalier-plaque",
+ "nom": "Traceur sur plaque",
+ "niveau": "declare",
+ "description": "Un trait continu en escalier jamais levé, à vitesse constante, règles et curseurs, avance de plaque par pas : le traceur est le mouvement.",
+ "separation": "DIFFICILE",
+ "moteur": {
+  "code": "src/traceur.py (copié)",
+  "env": "Python (shapely, pycairo)",
+  "audit": null
+ },
+ "signature": [
+  "one continuous graphite stair-stepped line at constant speed, never lifted",
+  "two rulers with sliding cursors and a carriage at the pen tip",
+  "plate-advance transition in steps"
+ ],
+ "requiert": null,
+ "formats": [
+  "narre-court"
+ ],
+ "habillagesTestes": [
+  "orange-graphite"
+ ],
+ "recettes": [
+  "trait-continu"
+ ],
+ "source": "out/report/notes/composition/inventaire.md",
+ "date": "2026-11-19"
+}

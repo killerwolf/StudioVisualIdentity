@@ -1,0 +1,38 @@
+{
+ "id": "survol-pixel",
+ "nom": "Survol pixel",
+ "habillage": "pixel-jour",
+ "mecanique": "survol-terrain",
+ "formats": [
+  "narre-court"
+ ],
+ "son": null,
+ "statut": "validee",
+ "signaturePortee": {
+  "habillage": [
+   "indexed palette with quantised shade tables and a 6-step haze towards a very pale blue (#DCEEF5), rendered at 270x480 and scaled x4 nearest-neighbour",
+   "Jersey 15 cartouches on cream with ink border (hook, dates, narrative; one at a time since the A+B+C pass; Jersey 20 reserved), Jersey 10 mentions only; never text on the map or sky"
+  ],
+  "mecanique": [
+   "3D depth is the rule: perspective ground (Mode 7 style) at any pitch, terraced heightfield with lit / shaded risers, cast shadows, layered depth and a camera that keeps moving forward (one single camera per short)",
+   "cut-away section of the ground (ink base, coloured walls) as the on-ground diagram",
+   "dive / climb-back camera move in true perspective as the signature transition"
+  ],
+  "autres": [
+   "form, not content: a pixel-art look for explainers, kids, history and narrated shorts, not a video-game or flight theme (no score, no game element; HUD and cockpit optional and absent from the proofs)",
+   "no phosphor plate (pixel-arcade) and no \"ALT ... M\" readout (topo-relief)"
+  ]
+ },
+ "dossier": "out/identities/survol-pixel/",
+ "identite": "survol-pixel",
+ "shorts": [
+  "out/shorts/survol-pixel__explicatif__comment-nait-un-atoll",
+  "out/shorts/survol-pixel__histoire__machu-picchu-pourquoi-une-cite-en-escaliers"
+ ],
+ "confusableWith": [
+  "pixel-arcade",
+  "topo-relief"
+ ],
+ "separation": "MOYEN",
+ "date": "2026-11-19"
+}

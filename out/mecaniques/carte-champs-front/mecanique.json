@@ -1,0 +1,29 @@
+{
+ "id": "carte-champs-front",
+ "nom": "Carte météo et front",
+ "niveau": "declare",
+ "description": "Carte toujours visible, isobares qui respirent, traînées de vent ; le front météo est la seule transition.",
+ "separation": "MOYEN",
+ "moteur": {
+  "code": "src/meteo.js (copié)",
+  "env": "navigateur (canvas + d3-geo Lambert)",
+  "audit": null
+ },
+ "signature": [
+  "dark wind trails when wind is the subject (proven by the mistral short only)",
+  "diagonal cold-front (blue triangles) / warm-front sweep as the only transition",
+  "map always visible, no tables or bars"
+ ],
+ "requiert": null,
+ "formats": [
+  "narre-court"
+ ],
+ "habillagesTestes": [
+  "meteo-clair"
+ ],
+ "recettes": [
+  "carte-meteo"
+ ],
+ "source": "out/report/notes/composition/inventaire.md",
+ "date": "2026-11-19"
+}

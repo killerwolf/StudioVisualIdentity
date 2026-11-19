@@ -1,0 +1,31 @@
+{
+ "id": "riso-zine",
+ "nom": "Zine Riso",
+ "habillage": "riso-3-encres",
+ "mecanique": "impression-on-twos",
+ "formats": [
+  "narre-court"
+ ],
+ "son": null,
+ "statut": "validee",
+ "signaturePortee": {
+  "habillage": [
+   "cream paper with 2–3 overprinted spot inks (fluo pink, blue, yellow)",
+   "misregistration + halftone dots",
+   "Space Mono + Permanent Marker annotations"
+  ],
+  "mecanique": [
+   "stepped 12 fps motion, collage cut-outs"
+  ],
+  "autres": []
+ },
+ "dossier": "out/identities/riso-zine/",
+ "identite": "riso-zine",
+ "shorts": [
+  "out/shorts/riso-zine__evenements__geminides-j-39",
+  "out/shorts/riso-zine__geographie__5-plus-grands-deserts"
+ ],
+ "confusableWith": [],
+ "separation": "MOYEN",
+ "date": "2026-11-19"
+}

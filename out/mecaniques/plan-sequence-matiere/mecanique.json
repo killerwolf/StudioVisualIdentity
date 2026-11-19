@@ -1,0 +1,28 @@
+{
+ "id": "plan-sequence-matiere",
+ "nom": "Plan-séquence de matière",
+ "niveau": "declare",
+ "description": "Un seul plan macro continu, ralenti, sans coupe : la matière (chrome, physique) est la mécanique.",
+ "separation": "DIFFICILE",
+ "moteur": {
+  "code": "aucun moteur commun (Babylon, Taichi, three.js)",
+  "env": "navigateur ou Python",
+  "audit": null
+ },
+ "signature": [
+  "slow motion, no cuts"
+ ],
+ "requiert": null,
+ "formats": [
+  "boucle",
+  "narre-court"
+ ],
+ "habillagesTestes": [
+  "chrome-irise"
+ ],
+ "recettes": [
+  "liquid-chrome"
+ ],
+ "source": "out/report/notes/composition/inventaire.md",
+ "date": "2026-11-19"
+}

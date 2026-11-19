@@ -1,0 +1,64 @@
+{
+ "id": "chrome-irise",
+ "nom": "Chrome irisé",
+ "niveau": "declare",
+ "de": "liquid-chrome",
+ "palette": {
+  "fond": "#0B0B10",
+  "surface": "#1A1A24",
+  "encre": "#FFFFFF",
+  "vif": "#C8D3FF",
+  "second": "#FF9AE8",
+  "decor": [
+   "#7CF7E4",
+   "#FFE29A"
+  ]
+ },
+ "contrasteSurSurface": {
+  "encre": 17.25,
+  "vif": 11.68,
+  "second": 9.07
+ },
+ "typo": {
+  "titre": {
+   "famille": "Syne",
+   "fontsource": "syne",
+   "graisses": [
+    800
+   ]
+  },
+  "texte": {
+   "famille": "Inter",
+   "fontsource": "inter",
+   "graisses": [
+    500
+   ]
+  },
+  "legende": {
+   "famille": "Inter",
+   "fontsource": "inter",
+   "graisses": [
+    500
+   ]
+  }
+ },
+ "matiere": "chrome / iridescent liquid matter in one continuous macro shot",
+ "signature": [
+  "chrome / iridescent liquid matter in one continuous macro shot",
+  "Syne 800 titles with a pastel-gradient keyword",
+  "prefer the warm graphite/pearl background to stay distinct from neon-lab and cosmos-doc"
+ ],
+ "lisibilite": {
+  "corpsMinPx": 54,
+  "contrasteTexteMin": 4.5,
+  "couleurReservee": "vif"
+ },
+ "contraintes": null,
+ "adaptateurs": {},
+ "image": "out/shorts/liquid-chrome__abstrait__pendule-de-newton-chrome/stills/final_05.40s.jpg",
+ "recettes": [
+  "liquid-chrome"
+ ],
+ "source": "coreTokens de out/identities/index.json (le code des scènes écrit ses valeurs en dur : brique déclarée)",
+ "date": "2026-11-19"
+}

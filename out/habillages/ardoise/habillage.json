@@ -1,0 +1,50 @@
+{
+ "id": "ardoise",
+ "nom": "Ardoise",
+ "niveau": "executable",
+ "de": "chemin-ardoise",
+ "palette": {
+  "fond": "#E7E3DC",
+  "surface": "#2C3836",
+  "encre": "#F1EEE6",
+  "vif": "#FFD766",
+  "second": "#F29A85",
+  "decor": [
+   "#C39A62"
+  ]
+ },
+ "contrasteSurSurface": {
+  "encre": 10.49,
+  "vif": 8.79,
+  "second": 5.64
+ },
+ "typo": {
+  "titre": {
+   "famille": "Barlow Condensed",
+   "fontsource": "barlow-condensed",
+   "graisses": [
+    700,
+    800
+   ]
+  }
+ },
+ "matiere": "ardoise de bistrot dans un cadre en chêne, sur un plan de travail en marbre ; craie érodée (textErode)",
+ "signature": [],
+ "lisibilite": {
+  "corpsMinPx": 120,
+  "contrasteTexteMin": 4.5,
+  "couleurReservee": "vif"
+ },
+ "contraintes": {
+  "projection": "plane (vu de dessus)"
+ },
+ "adaptateurs": {
+  "trace-chemin": "out/shared/chemin-moteur/habillages/ardoise.js"
+ },
+ "image": "out/shorts/lyrics-chemin__explicatif__le-quatre-quarts/stills/03_beurre_11.0s.jpg",
+ "recettes": [
+  "chemin-ardoise"
+ ],
+ "source": "valeurs relevées dans l'adaptateur",
+ "date": "2026-11-19"
+}

@@ -1,0 +1,65 @@
+{
+ "id": "arcade-marine",
+ "nom": "Arcade marine",
+ "niveau": "declare",
+ "de": "pixel-arcade",
+ "palette": {
+  "fond": "#0E0B1F",
+  "surface": "#1D1740",
+  "encre": "#FFFFFF",
+  "vif": "#FF4F79",
+  "second": "#3CF2A0",
+  "decor": [
+   "#FFD23F",
+   "#4FB3FF"
+  ]
+ },
+ "contrasteSurSurface": {
+  "encre": 16.82,
+  "vif": 5.32,
+  "second": 11.53
+ },
+ "typo": {
+  "titre": {
+   "famille": "Rubik Mono One",
+   "fontsource": "rubik-mono-one",
+   "graisses": [
+    400
+   ]
+  },
+  "texte": {
+   "famille": "Press Start 2P",
+   "fontsource": "press-start-2p",
+   "graisses": [
+    400
+   ]
+  },
+  "legende": {
+   "famille": "Press Start 2P",
+   "fontsource": "press-start-2p",
+   "graisses": [
+    400
+   ]
+  }
+ },
+ "matiere": "dark navy pixel playfield, motion quantised to 4 px",
+ "signature": [
+  "dark navy pixel playfield, motion quantised to 4 px",
+  "Press Start 2P HUD (score, time)"
+ ],
+ "lisibilite": {
+  "corpsMinPx": 54,
+  "contrasteTexteMin": 4.5,
+  "couleurReservee": "vif"
+ },
+ "contraintes": {
+  "grillePixel": "270×480 ×4, plus proche voisin"
+ },
+ "adaptateurs": {},
+ "image": "out/shorts/pixel-arcade__abstrait__la-balle-peut-elle-s-echapper/stills/03_tension_8.00s.jpg",
+ "recettes": [
+  "pixel-arcade"
+ ],
+ "source": "coreTokens de out/identities/index.json (le code des scènes écrit ses valeurs en dur : brique déclarée)",
+ "date": "2026-11-19"
+}

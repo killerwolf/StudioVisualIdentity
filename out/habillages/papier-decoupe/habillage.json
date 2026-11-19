@@ -1,0 +1,71 @@
+{
+ "id": "papier-decoupe",
+ "nom": "Papier, tapis vert",
+ "niveau": "executable",
+ "de": "papier-decoupe",
+ "palette": {
+  "fond": "#1F5A4A",
+  "surface": "#F7F4EC",
+  "encre": "#10231D",
+  "vif": "#FFD23F",
+  "second": "#E4432D",
+  "decor": [
+   "#2F5CF5",
+   "#E4432D",
+   "#FFD23F",
+   "#FF9EC7",
+   "#7FE3D6"
+  ]
+ },
+ "contrasteSurSurface": {
+  "encre": 14.92,
+  "vif": 1.31,
+  "second": 3.72
+ },
+ "typo": {
+  "titre": {
+   "famille": "Dela Gothic One",
+   "fontsource": "dela-gothic-one",
+   "graisses": [
+    400
+   ]
+  },
+  "texte": {
+   "famille": "Kalam",
+   "fontsource": "kalam",
+   "graisses": [
+    700
+   ]
+  },
+  "mono": {
+   "famille": "DM Mono",
+   "fontsource": "dm-mono",
+   "graisses": [
+    500
+   ]
+  }
+ },
+ "matiere": "tapis de découpe vert gradué ; pièces de papier découpées aux ciseaux, ombre portée",
+ "signature": [
+  "green graduated cutting mat",
+  "Dela Gothic One titles on alternately tilted paper strips",
+  "burned-in Kalam captions on a paper strip"
+ ],
+ "lisibilite": {
+  "corpsMinPx": 54,
+  "contrasteTexteMin": 4.5,
+  "couleurReservee": "vif"
+ },
+ "contraintes": {
+  "cadence": "12 i/s (matière de papier : un papier découpé ne glisse pas en douceur)"
+ },
+ "adaptateurs": {
+  "pop-papier-12ips": "out/shared/papier-moteur/pipeline/papier.py (valeurs par défaut, sans thème)"
+ },
+ "image": "out/shorts/papier-decoupe__explicatif__d-ou-vient-le-mot-sandwich/stills/still_t_003.50.jpg",
+ "recettes": [
+  "papier-decoupe"
+ ],
+ "source": "valeurs relevées dans l'adaptateur",
+ "date": "2026-11-19"
+}

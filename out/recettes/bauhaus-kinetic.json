@@ -1,0 +1,33 @@
+{
+ "id": "bauhaus-kinetic",
+ "nom": "Bauhaus Cinétique",
+ "habillage": "bauhaus-primaires",
+ "mecanique": "puzzle-grille-morph",
+ "formats": [
+  "narre-court"
+ ],
+ "son": null,
+ "statut": "validee",
+ "signaturePortee": {
+  "habillage": [
+   "cream ground with red / yellow / blue / black primary shapes",
+   "Unbounded 800 headlines"
+  ],
+  "mecanique": [
+   "grid staggers and shape morphs (flubber)",
+   "grid-wipe transition"
+  ],
+  "autres": []
+ },
+ "dossier": "out/identities/bauhaus-kinetic/",
+ "identite": "bauhaus-kinetic",
+ "shorts": [
+  "out/shorts/bauhaus-kinetic__engagement__trouve-l-intrus",
+  "out/shorts/bauhaus-kinetic__explicatif__abeilles-hexagones"
+ ],
+ "confusableWith": [
+  "swiss-data"
+ ],
+ "separation": "MOYEN",
+ "date": "2026-11-19"
+}

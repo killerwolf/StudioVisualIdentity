@@ -1,0 +1,63 @@
+{
+ "id": "neon-labo",
+ "nom": "Néon labo",
+ "niveau": "declare",
+ "de": "neon-lab",
+ "palette": {
+  "fond": "#05060B",
+  "surface": "#11142A",
+  "encre": "#F2F6FF",
+  "vif": "#38F9FF",
+  "second": "#FF3DCB",
+  "decor": [
+   "#B6FF3B"
+  ]
+ },
+ "contrasteSurSurface": {
+  "encre": 16.76,
+  "vif": 13.97,
+  "second": 5.86
+ },
+ "typo": {
+  "titre": {
+   "famille": "Space Grotesk",
+   "fontsource": "space-grotesk",
+   "graisses": [
+    700
+   ]
+  },
+  "texte": {
+   "famille": "Space Grotesk",
+   "fontsource": "space-grotesk",
+   "graisses": [
+    500
+   ]
+  },
+  "legende": {
+   "famille": "JetBrains Mono",
+   "fontsource": "jetbrains-mono",
+   "graisses": [
+    500
+   ]
+  }
+ },
+ "matiere": "near-black lab with cyan / magenta / lime neon",
+ "signature": [
+  "near-black lab with cyan / magenta / lime neon",
+  "GLSL force-field background",
+  "LABO/0X tag + JetBrains Mono data captions"
+ ],
+ "lisibilite": {
+  "corpsMinPx": 54,
+  "contrasteTexteMin": 4.5,
+  "couleurReservee": "vif"
+ },
+ "contraintes": null,
+ "adaptateurs": {},
+ "image": "out/shorts/neon-lab__abstrait__champ-de-force-lucioles/stills/03_papillon_8.4s.jpg",
+ "recettes": [
+  "neon-lab"
+ ],
+ "source": "coreTokens de out/identities/index.json (le code des scènes écrit ses valeurs en dur : brique déclarée)",
+ "date": "2026-11-19"
+}

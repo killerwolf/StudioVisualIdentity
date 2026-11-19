@@ -1,0 +1,36 @@
+{
+ "id": "neon-lab",
+ "nom": "Labo Néon",
+ "habillage": "neon-labo",
+ "mecanique": "orbite-phenomene-neon",
+ "formats": [
+  "boucle",
+  "narre-court"
+ ],
+ "son": null,
+ "statut": "validee",
+ "signaturePortee": {
+  "habillage": [
+   "near-black lab with cyan / magenta / lime neon",
+   "GLSL force-field background",
+   "LABO/0X tag + JetBrains Mono data captions"
+  ],
+  "mecanique": [
+   "bloom pulses on beat changes"
+  ],
+  "autres": []
+ },
+ "dossier": "out/identities/neon-lab/",
+ "identite": "neon-lab",
+ "shorts": [
+  "out/shorts/neon-lab__abstrait__champ-de-force-lucioles",
+  "out/shorts/neon-lab__explicatif__effet-papillon-double-pendule",
+  "out/shorts/neon-lab__explicatif__lune-meme-face"
+ ],
+ "confusableWith": [
+  "cosmos-doc",
+  "liquid-chrome"
+ ],
+ "separation": "DIFFICILE",
+ "date": "2026-11-19"
+}

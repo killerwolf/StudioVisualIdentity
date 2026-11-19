@@ -1,0 +1,33 @@
+{
+ "id": "tableau-craie",
+ "nom": "Tableau Craie",
+ "habillage": "craie-verte",
+ "mecanique": "ecriture-trace-chiffon",
+ "formats": [
+  "narre-court"
+ ],
+ "son": null,
+ "statut": "validee",
+ "signaturePortee": {
+  "habillage": [
+   "dark green chalkboard with chalk grain",
+   "Caveat handwriting + Nunito titles"
+  ],
+  "mecanique": [
+   "everything draws itself (Manim Create / stroke-dashoffset)",
+   "eraser-cloth wipe between ideas"
+  ],
+  "autres": []
+ },
+ "dossier": "out/identities/tableau-craie/",
+ "identite": "tableau-craie",
+ "shorts": [
+  "out/shorts/tableau-craie__enfants__comment-une-graine-devient-un-arbre",
+  "out/shorts/tableau-craie__explicatif__pourquoi-le-ciel-est-bleu"
+ ],
+ "confusableWith": [
+  "trait-continu"
+ ],
+ "separation": "MOYEN",
+ "date": "2026-11-19"
+}

@@ -1,0 +1,32 @@
+{
+ "id": "survol-terrain",
+ "nom": "Survol de relief",
+ "niveau": "declare",
+ "description": "Relief survolé par une caméra de drone (orbite, plongée) ; deux codes sans ligne commune (à mesurer : matrice.md M2).",
+ "separation": "MOYEN",
+ "moteur": {
+  "code": "src/topo.js (topo-relief, three.js) ; src/survol.py (survol-pixel, numpy)",
+  "env": "navigateur ou Python",
+  "audit": null
+ },
+ "signature": [
+  "drone fly-over camera",
+  "3D depth is the rule: perspective ground (Mode 7 style) at any pitch, terraced heightfield with lit / shaded risers, cast shadows, layered depth and a camera that keeps moving forward (one single camera per short)",
+  "cut-away section of the ground (ink base, coloured walls) as the on-ground diagram",
+  "dive / climb-back camera move in true perspective as the signature transition"
+ ],
+ "requiert": null,
+ "formats": [
+  "narre-court"
+ ],
+ "habillagesTestes": [
+  "pixel-jour",
+  "relief-vert"
+ ],
+ "recettes": [
+  "topo-relief",
+  "survol-pixel"
+ ],
+ "source": "out/report/notes/composition/inventaire.md",
+ "date": "2026-11-19"
+}

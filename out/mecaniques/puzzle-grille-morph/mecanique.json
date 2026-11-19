@@ -1,0 +1,28 @@
+{
+ "id": "puzzle-grille-morph",
+ "nom": "Formes qui pivotent en grille",
+ "niveau": "declare",
+ "description": "Snap à 90°, stagger en grille, morph de formes, volet en 6 colonnes.",
+ "separation": "MOYEN",
+ "moteur": {
+  "code": "src/bk.js (copié)",
+  "env": "navigateur (Paper.js + anime.js + flubber)",
+  "audit": null
+ },
+ "signature": [
+  "grid staggers and shape morphs (flubber)",
+  "grid-wipe transition"
+ ],
+ "requiert": null,
+ "formats": [
+  "narre-court"
+ ],
+ "habillagesTestes": [
+  "bauhaus-primaires"
+ ],
+ "recettes": [
+  "bauhaus-kinetic"
+ ],
+ "source": "out/report/notes/composition/inventaire.md",
+ "date": "2026-11-19"
+}

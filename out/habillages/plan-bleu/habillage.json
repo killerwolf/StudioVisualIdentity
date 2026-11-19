@@ -1,0 +1,58 @@
+{
+ "id": "plan-bleu",
+ "nom": "Plan bleu (blueprint)",
+ "niveau": "executable",
+ "de": "lyrics-chemin",
+ "palette": {
+  "fond": "#CFC8BA",
+  "surface": "#1B4C92",
+  "encre": "#F3F0E4",
+  "vif": "#FFD84A",
+  "second": "#FF7D5C",
+  "decor": []
+ },
+ "contrasteSurSurface": {
+  "encre": 7.37,
+  "vif": 6.08,
+  "second": 3.34
+ },
+ "typo": {
+  "titre": {
+   "famille": "Barlow Condensed",
+   "fontsource": "barlow-condensed",
+   "graisses": [
+    700,
+    800
+   ]
+  },
+  "mono": {
+   "famille": "JetBrains Mono",
+   "fontsource": "jetbrains-mono",
+   "graisses": [
+    400
+   ]
+  }
+ },
+ "matiere": "plan d'architecte bleu plié, scotché sur un sol en béton chaud ; vu de dessus sans perspective",
+ "signature": [
+  "blueprint-blue folded sheet taped on a warm concrete floor, seen straight from above (no perspective)",
+  "Barlow Condensed capitals set rigidly along the strokes of a drawing; red-pencil cross, flag and correction loop"
+ ],
+ "lisibilite": {
+  "corpsMinPx": 120,
+  "contrasteTexteMin": 4.5,
+  "couleurReservee": "vif"
+ },
+ "contraintes": {
+  "projection": "plane (vu de dessus)"
+ },
+ "adaptateurs": {
+  "trace-chemin": "out/shared/chemin-moteur/habillages/plan-bleu.js"
+ },
+ "image": "out/shorts/lyrics-chemin__paroles__claudes-plan/stills/04_pre-pose_7.7s.jpg",
+ "recettes": [
+  "lyrics-chemin"
+ ],
+ "source": "valeurs relevées dans l'adaptateur",
+ "date": "2026-11-19"
+}

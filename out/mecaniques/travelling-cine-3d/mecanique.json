@@ -1,0 +1,27 @@
+{
+ "id": "travelling-cine-3d",
+ "nom": "Travelling de cinéma 3D",
+ "niveau": "declare",
+ "description": "Dolly lent, easing sinus unique, interlettrage qui se resserre, noir de 0,6 s entre plans.",
+ "separation": "MOYEN",
+ "moteur": {
+  "code": "src/cosmos.js (copié)",
+  "env": "navigateur (three.js + bloom + grain)",
+  "audit": null
+ },
+ "signature": [
+  "single slow sine easing, slow dolly"
+ ],
+ "requiert": null,
+ "formats": [
+  "narre-court"
+ ],
+ "habillagesTestes": [
+  "cosmos-noir"
+ ],
+ "recettes": [
+  "cosmos-doc"
+ ],
+ "source": "out/report/notes/composition/inventaire.md",
+ "date": "2026-11-19"
+}

@@ -1,0 +1,31 @@
+{
+ "id": "chemin-ardoise",
+ "nom": "Chemin ardoise",
+ "habillage": "ardoise",
+ "mecanique": "trace-chemin",
+ "formats": [
+  "narre-long"
+ ],
+ "son": null,
+ "statut": "validee",
+ "signaturePortee": {
+  "habillage": [],
+  "mecanique": [
+   "one long take: the camera follows the writing tip with glides, beat-timed hairpin turns and one-beat whip pans with real motion blur",
+   "the sung word alone in fresh yellow ink, drying to ivory; fast passages pre-posed in pencil and inked on the syllable",
+   "one-bar zoom-out on the chorus revealing the whole picture, chorus written large in the sea"
+  ],
+  "autres": []
+ },
+ "dossier": "out/identities/lyrics-chemin/",
+ "identite": "lyrics-chemin",
+ "shorts": [
+  "out/shorts/lyrics-chemin__explicatif__le-quatre-quarts"
+ ],
+ "confusableWith": [
+  "atlas-grave",
+  "topo-relief"
+ ],
+ "separation": "exécutable",
+ "date": "2026-11-19"
+}

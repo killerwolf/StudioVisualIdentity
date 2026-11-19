@@ -1,0 +1,31 @@
+{
+ "id": "atelier-papier",
+ "nom": "Atelier papier",
+ "habillage": "atelier-papier",
+ "mecanique": "pop-papier-12ips",
+ "formats": [
+  "narre-court"
+ ],
+ "son": null,
+ "statut": "validee",
+ "signaturePortee": {
+  "habillage": [
+   "midnight-blue graduated cutting mat",
+   "Dela Gothic One strips in cream / royal blue / coral",
+   "Kalam captions on cream strips"
+  ],
+  "mecanique": [
+   "stop-motion pop at 12 fps"
+  ],
+  "autres": []
+ },
+ "dossier": "out/identities/atelier-papier/",
+ "identite": "atelier-papier",
+ "shorts": [
+  "out/shorts/atelier-papier__explicatif__d-ou-vient-le-mot-sandwich",
+  "out/shorts/atelier-papier__histoire__la-fourchette-a-fait-scandale"
+ ],
+ "confusableWith": [],
+ "separation": "exécutable",
+ "date": "2026-11-19"
+}

@@ -1,0 +1,62 @@
+{
+ "id": "orange-graphite",
+ "nom": "Orange graphite",
+ "niveau": "declare",
+ "de": "trait-continu",
+ "palette": {
+  "fond": "#F26A21",
+  "surface": "#D3D4CE",
+  "encre": "#1A1410",
+  "vif": "#3A3D42",
+  "second": "#1D47A8",
+  "decor": [
+   "#FFF8EE"
+  ]
+ },
+ "contrasteSurSurface": {
+  "encre": 12.23,
+  "vif": 7.31,
+  "second": 5.59
+ },
+ "typo": {
+  "titre": {
+   "famille": "Fredoka",
+   "fontsource": "fredoka",
+   "graisses": [
+    700
+   ]
+  },
+  "texte": {
+   "famille": "Fredoka",
+   "fontsource": "fredoka",
+   "graisses": [
+    600
+   ]
+  },
+  "legende": {
+   "famille": "Fredoka",
+   "fontsource": "fredoka",
+   "graisses": [
+    600
+   ]
+  }
+ },
+ "matiere": "full-bleed orange ground with a sharp-cornered grey plate",
+ "signature": [
+  "full-bleed orange ground with a sharp-cornered grey plate",
+  "never cream or white on the orange; Fredoka only"
+ ],
+ "lisibilite": {
+  "corpsMinPx": 54,
+  "contrasteTexteMin": 4.5,
+  "couleurReservee": "vif"
+ },
+ "contraintes": null,
+ "adaptateurs": {},
+ "image": "out/shorts/trait-continu__enfants__dessine-un-escargot-d-un-seul-trait/stills/03_avance-plaque_5.85s.jpg",
+ "recettes": [
+  "trait-continu"
+ ],
+ "source": "coreTokens de out/identities/index.json (le code des scènes écrit ses valeurs en dur : brique déclarée)",
+ "date": "2026-11-19"
+}

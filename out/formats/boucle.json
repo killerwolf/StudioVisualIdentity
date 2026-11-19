@@ -1,0 +1,35 @@
+{
+ "id": "boucle",
+ "nom": "Boucle",
+ "resume": "10–20 s, dernière image = première",
+ "dureeSec": [
+  10,
+  20
+ ],
+ "audio": "voix off ou musique",
+ "regles": [
+  "dernière image = première (short.json \"loopable\": true)"
+ ],
+ "canevas": {
+  "w": 1080,
+  "h": 1920,
+  "fps": 30,
+  "codec": "H.264",
+  "pixFmt": "yuv420p"
+ },
+ "zonesSuresPx": {
+  "top": 220,
+  "bottom": 320,
+  "right": 120,
+  "left": [
+   60,
+   72
+  ]
+ },
+ "corpsMinPx": 54,
+ "titreMinPx": 90,
+ "contrasteTexteMin": 4.5,
+ "controleAujourdhui": "check.py : 10–20 s ; loopable non contrôlé",
+ "niveau": "declare",
+ "date": "2026-11-19"
+}

@@ -1,0 +1,33 @@
+{
+ "id": "pastel-diorama",
+ "nom": "Diorama Pastel",
+ "habillage": "diorama-pastel",
+ "mecanique": "maquette-rebond",
+ "formats": [
+  "narre-court"
+ ],
+ "son": null,
+ "statut": "validee",
+ "signaturePortee": {
+  "habillage": [
+   "pink pastel toy diorama on a felt base",
+   "soft rounded toys and invented recurring characters",
+   "Baloo 2 titles and pill labels"
+  ],
+  "mecanique": [
+   "bouncy back.out motion"
+  ],
+  "autres": []
+ },
+ "dossier": "out/identities/pastel-diorama/",
+ "identite": "pastel-diorama",
+ "shorts": [
+  "out/shorts/pastel-diorama__enfants__d-ou-vient-la-pluie",
+  "out/shorts/pastel-diorama__engagement__choisis-ta-boite-renard"
+ ],
+ "confusableWith": [
+  "aquarelle-conte"
+ ],
+ "separation": "DIFFICILE",
+ "date": "2026-11-19"
+}

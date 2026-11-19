@@ -1,0 +1,50 @@
+{
+ "id": "portulan",
+ "nom": "Portulan",
+ "niveau": "executable",
+ "de": "chemin-portulan",
+ "palette": {
+  "fond": "#E9DCBC",
+  "surface": "#E9DCBC",
+  "encre": "#3A2718",
+  "vif": "#B8301A",
+  "second": "#27506E",
+  "decor": [
+   "#CDB684"
+  ]
+ },
+ "contrasteSurSurface": {
+  "encre": 10.4,
+  "vif": 4.44,
+  "second": 6.27
+ },
+ "typo": {
+  "titre": {
+   "famille": "Cormorant Garamond",
+   "fontsource": "cormorant-garamond",
+   "graisses": [
+    500,
+    700
+   ]
+  }
+ },
+ "matiere": "carte portulan sur parchemin, encre sépia, vermillon",
+ "signature": [],
+ "lisibilite": {
+  "corpsMinPx": 120,
+  "contrasteTexteMin": 4.5,
+  "couleurReservee": "vif"
+ },
+ "contraintes": {
+  "projection": "plane (vu de dessus)"
+ },
+ "adaptateurs": {
+  "trace-chemin": "out/shared/chemin-moteur/habillages/portulan.js"
+ },
+ "image": "out/shorts/lyrics-chemin__histoire__le-premier-tour-du-monde/stills/03_magellan_7.5s.jpg",
+ "recettes": [
+  "chemin-portulan"
+ ],
+ "source": "valeurs relevées dans l'adaptateur",
+ "date": "2026-11-19"
+}

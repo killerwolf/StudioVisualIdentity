@@ -1,0 +1,62 @@
+{
+ "id": "grille-suisse",
+ "nom": "Grille suisse",
+ "niveau": "declare",
+ "de": "swiss-data",
+ "palette": {
+  "fond": "#F4F1EA",
+  "surface": "#FFFFFF",
+  "encre": "#111111",
+  "vif": "#E3241B",
+  "second": "#1B4DE3",
+  "decor": [
+   "#6B665C"
+  ]
+ },
+ "contrasteSurSurface": {
+  "encre": 18.88,
+  "vif": 4.63,
+  "second": 6.53
+ },
+ "typo": {
+  "titre": {
+   "famille": "Archivo Black",
+   "fontsource": "archivo-black",
+   "graisses": [
+    400
+   ]
+  },
+  "texte": {
+   "famille": "Inter",
+   "fontsource": "inter",
+   "graisses": [
+    600
+   ]
+  },
+  "legende": {
+   "famille": "Inter",
+   "fontsource": "inter",
+   "graisses": [
+    800
+   ]
+  }
+ },
+ "matiere": "visible 12-column grid on warm off-white",
+ "signature": [
+  "visible 12-column grid on warm off-white",
+  "palette limited to red / black / blue"
+ ],
+ "lisibilite": {
+  "corpsMinPx": 54,
+  "contrasteTexteMin": 4.5,
+  "couleurReservee": "vif"
+ },
+ "contraintes": null,
+ "adaptateurs": {},
+ "image": "out/shorts/swiss-data__evenements__j-272-eclipse-2-aout-2027/stills/03_trace_10.9s.jpg",
+ "recettes": [
+  "swiss-data"
+ ],
+ "source": "coreTokens de out/identities/index.json (le code des scènes écrit ses valeurs en dur : brique déclarée)",
+ "date": "2026-11-19"
+}

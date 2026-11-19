@@ -1,0 +1,28 @@
+{
+ "id": "chiffre-volet-compteur",
+ "nom": "Chiffres qui roulent, volets",
+ "niveau": "declare",
+ "description": "Titre par masque horizontal, compteurs qui roulent, volet rouge plein cadre 0,45 s, push-in ×1,08, scènes de 4–5 s à 120 bpm, un chiffre géant par écran.",
+ "separation": "FACILE",
+ "moteur": {
+  "code": "src/grille.js (copié dans chaque short)",
+  "env": "navigateur (D3 + GSAP seeké)",
+  "audit": null
+ },
+ "signature": [
+  "one giant Archivo Black number per screen",
+  "red wipe transitions"
+ ],
+ "requiert": null,
+ "formats": [
+  "narre-court"
+ ],
+ "habillagesTestes": [
+  "grille-suisse"
+ ],
+ "recettes": [
+  "swiss-data"
+ ],
+ "source": "out/report/notes/composition/inventaire.md",
+ "date": "2026-11-19"
+}

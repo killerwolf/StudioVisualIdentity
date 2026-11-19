@@ -1,0 +1,27 @@
+{
+ "id": "maquette-rebond",
+ "nom": "Maquette qui rebondit",
+ "niveau": "declare",
+ "description": "Jouets qui rebondissent (back.out), timeline écrite par état du contenu.",
+ "separation": "DIFFICILE",
+ "moteur": {
+  "code": "aucun moteur commun (Zdog / A-Frame)",
+  "env": "navigateur",
+  "audit": null
+ },
+ "signature": [
+  "bouncy back.out motion"
+ ],
+ "requiert": null,
+ "formats": [
+  "narre-court"
+ ],
+ "habillagesTestes": [
+  "diorama-pastel"
+ ],
+ "recettes": [
+  "pastel-diorama"
+ ],
+ "source": "out/report/notes/composition/inventaire.md",
+ "date": "2026-11-19"
+}

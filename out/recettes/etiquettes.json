@@ -1,0 +1,305 @@
+{
+ "note": "Étiquetage des 50 shorts existants (migration.md étape 2), tenu ici plutôt que dans les short.json : consigne du 19/11/2026 de ne modifier aucun short existant. Clé = dossier sous out/shorts/.",
+ "shorts": {
+  "aquarelle-conte__enfants__ou-vont-les-etoiles-le-jour": {
+   "recette": "aquarelle-conte",
+   "habillage": "aquarelle",
+   "mecanique": "lavis-multiplan",
+   "format": "narre-court"
+  },
+  "aquarelle-conte__histoire__phare-d-alexandrie": {
+   "recette": "aquarelle-conte",
+   "habillage": "aquarelle",
+   "mecanique": "lavis-multiplan",
+   "format": "narre-court"
+  },
+  "atelier-papier__explicatif__d-ou-vient-le-mot-sandwich": {
+   "recette": "atelier-papier",
+   "habillage": "atelier-papier",
+   "mecanique": "pop-papier-12ips",
+   "format": "narre-court"
+  },
+  "atelier-papier__histoire__la-fourchette-a-fait-scandale": {
+   "recette": "atelier-papier",
+   "habillage": "atelier-papier",
+   "mecanique": "pop-papier-12ips",
+   "format": "narre-court"
+  },
+  "atlas-grave__geographie__plus-longs-fleuves-du-monde": {
+   "recette": "atlas-grave",
+   "habillage": "gravure-parchemin",
+   "mecanique": "carte-trace-panoramique",
+   "format": "narre-court"
+  },
+  "atlas-grave__histoire__premier-tour-du-monde-1519-1522": {
+   "recette": "atlas-grave",
+   "habillage": "gravure-parchemin",
+   "mecanique": "carte-trace-panoramique",
+   "format": "narre-court"
+  },
+  "bauhaus-kinetic__engagement__trouve-l-intrus": {
+   "recette": "bauhaus-kinetic",
+   "habillage": "bauhaus-primaires",
+   "mecanique": "puzzle-grille-morph",
+   "format": "narre-court"
+  },
+  "bauhaus-kinetic__explicatif__abeilles-hexagones": {
+   "recette": "bauhaus-kinetic",
+   "habillage": "bauhaus-primaires",
+   "mecanique": "puzzle-grille-morph",
+   "format": "narre-court"
+  },
+  "brut-meme__engagement__test-des-3-secondes-stroop": {
+   "recette": "brut-meme",
+   "habillage": "brut-jaune",
+   "mecanique": "punch-cut-slam",
+   "format": "narre-court"
+  },
+  "brut-meme__evenements__pendant-ces-15-secondes-dans-le-monde": {
+   "recette": "brut-meme",
+   "habillage": "brut-jaune",
+   "mecanique": "punch-cut-slam",
+   "format": "narre-court"
+  },
+  "cabinet-curiosites__explicatif__d-ou-vient-le-mot-sandwich": {
+   "recette": "cabinet-curiosites",
+   "habillage": "cabinet-curiosites",
+   "mecanique": "pop-papier-12ips",
+   "format": "narre-court"
+  },
+  "cabinet-curiosites__histoire__la-fourchette-a-fait-scandale": {
+   "recette": "cabinet-curiosites",
+   "habillage": "cabinet-curiosites",
+   "mecanique": "pop-papier-12ips",
+   "format": "narre-court"
+  },
+  "carnet-archives__explicatif__d-ou-vient-le-mot-sandwich": {
+   "recette": "carnet-archives",
+   "habillage": "carnet-archives",
+   "mecanique": "pop-papier-12ips",
+   "format": "narre-court"
+  },
+  "carnet-archives__histoire__la-fourchette-a-fait-scandale": {
+   "recette": "carnet-archives",
+   "habillage": "carnet-archives",
+   "mecanique": "pop-papier-12ips",
+   "format": "narre-court"
+  },
+  "carte-meteo__evenements__28-juin-2019-46-degres-record-de-chaleur": {
+   "recette": "carte-meteo",
+   "habillage": "meteo-clair",
+   "mecanique": "carte-champs-front",
+   "format": "narre-court"
+  },
+  "carte-meteo__geographie__le-mistral-pourquoi-il-souffle-si-fort": {
+   "recette": "carte-meteo",
+   "habillage": "meteo-clair",
+   "mecanique": "carte-champs-front",
+   "format": "narre-court"
+  },
+  "cosmos-doc__evenements__voyager-1-a-un-jour-lumiere": {
+   "recette": "cosmos-doc",
+   "habillage": "cosmos-noir",
+   "mecanique": "travelling-cine-3d",
+   "format": "narre-court"
+  },
+  "cosmos-doc__explicatif__pourquoi-venus-plus-chaude-que-mercure": {
+   "recette": "cosmos-doc",
+   "habillage": "cosmos-noir",
+   "mecanique": "travelling-cine-3d",
+   "format": "narre-court"
+  },
+  "gazette-1900__evenements__9-novembre-1989-mur-de-berlin": {
+   "recette": "gazette-1900",
+   "habillage": "gazette-sepia",
+   "mecanique": "tourniquet-tampon",
+   "format": "narre-court"
+  },
+  "gazette-1900__histoire__1789-en-20-secondes": {
+   "recette": "gazette-1900",
+   "habillage": "gazette-sepia",
+   "mecanique": "tourniquet-tampon",
+   "format": "narre-court"
+  },
+  "liquid-chrome__abstrait__pendule-de-newton-chrome": {
+   "recette": "liquid-chrome",
+   "habillage": "chrome-irise",
+   "mecanique": "plan-sequence-matiere",
+   "format": "boucle"
+  },
+  "liquid-chrome__abstrait__quatre-peintures-mpm": {
+   "recette": "liquid-chrome",
+   "habillage": "chrome-irise",
+   "mecanique": "plan-sequence-matiere",
+   "format": "narre-court"
+  },
+  "liquid-chrome__engagement__quelle-couleur-remplit-le-verre": {
+   "recette": "liquid-chrome",
+   "habillage": "chrome-irise",
+   "mecanique": "plan-sequence-matiere",
+   "format": "narre-court"
+  },
+  "lyrics-chemin__explicatif__le-quatre-quarts": {
+   "recette": "chemin-ardoise",
+   "habillage": "ardoise",
+   "mecanique": "trace-chemin",
+   "format": "narre-long"
+  },
+  "lyrics-chemin__histoire__le-premier-tour-du-monde": {
+   "recette": "chemin-portulan",
+   "habillage": "portulan",
+   "mecanique": "trace-chemin",
+   "format": "narre-long"
+  },
+  "lyrics-chemin__paroles__claudes-plan": {
+   "recette": "lyrics-chemin",
+   "habillage": "plan-bleu",
+   "mecanique": "trace-chemin",
+   "format": "paroles-muet"
+  },
+  "lyrics-chemin__paroles__claudes-plan-tech": {
+   "recette": "chemin-editeur",
+   "habillage": "editeur",
+   "mecanique": "trace-chemin",
+   "format": "paroles-muet"
+  },
+  "lyrics-punchy__paroles__claudes-plan": {
+   "recette": "lyrics-punchy",
+   "habillage": "punchy",
+   "mecanique": "colonne-mot-a-mot",
+   "format": "paroles-muet"
+  },
+  "neon-lab__abstrait__champ-de-force-lucioles": {
+   "recette": "neon-lab",
+   "habillage": "neon-labo",
+   "mecanique": "orbite-phenomene-neon",
+   "format": "boucle"
+  },
+  "neon-lab__explicatif__effet-papillon-double-pendule": {
+   "recette": "neon-lab",
+   "habillage": "neon-labo",
+   "mecanique": "orbite-phenomene-neon",
+   "format": "narre-court"
+  },
+  "neon-lab__explicatif__lune-meme-face": {
+   "recette": "neon-lab",
+   "habillage": "neon-labo",
+   "mecanique": "orbite-phenomene-neon",
+   "format": "narre-court"
+  },
+  "papier-decoupe__explicatif__d-ou-vient-le-mot-sandwich": {
+   "recette": "papier-decoupe",
+   "habillage": "papier-decoupe",
+   "mecanique": "pop-papier-12ips",
+   "format": "narre-court"
+  },
+  "papier-decoupe__histoire__la-fourchette-a-fait-scandale": {
+   "recette": "papier-decoupe",
+   "habillage": "papier-decoupe",
+   "mecanique": "pop-papier-12ips",
+   "format": "narre-court"
+  },
+  "pastel-diorama__enfants__d-ou-vient-la-pluie": {
+   "recette": "pastel-diorama",
+   "habillage": "diorama-pastel",
+   "mecanique": "maquette-rebond",
+   "format": "narre-court"
+  },
+  "pastel-diorama__engagement__choisis-ta-boite-renard": {
+   "recette": "pastel-diorama",
+   "habillage": "diorama-pastel",
+   "mecanique": "maquette-rebond",
+   "format": "narre-court"
+  },
+  "pixel-arcade__abstrait__la-balle-peut-elle-s-echapper": {
+   "recette": "pixel-arcade",
+   "habillage": "arcade-marine",
+   "mecanique": "simulation-deterministe",
+   "format": "narre-court"
+  },
+  "pixel-arcade__engagement__quelle-bille-gagne-la-course": {
+   "recette": "pixel-arcade",
+   "habillage": "arcade-marine",
+   "mecanique": "simulation-deterministe",
+   "format": "narre-court"
+  },
+  "pixel-arcade__engagement__quelle-couleur-conquiert-l-ecran": {
+   "recette": "pixel-arcade",
+   "habillage": "arcade-marine",
+   "mecanique": "simulation-deterministe",
+   "format": "narre-court"
+  },
+  "riso-zine__evenements__geminides-j-39": {
+   "recette": "riso-zine",
+   "habillage": "riso-3-encres",
+   "mecanique": "impression-on-twos",
+   "format": "narre-court"
+  },
+  "riso-zine__geographie__5-plus-grands-deserts": {
+   "recette": "riso-zine",
+   "habillage": "riso-3-encres",
+   "mecanique": "impression-on-twos",
+   "format": "narre-court"
+  },
+  "survol-pixel__explicatif__comment-nait-un-atoll": {
+   "recette": "survol-pixel",
+   "habillage": "pixel-jour",
+   "mecanique": "survol-terrain",
+   "format": "narre-court"
+  },
+  "survol-pixel__histoire__machu-picchu-pourquoi-une-cite-en-escaliers": {
+   "recette": "survol-pixel",
+   "habillage": "pixel-jour",
+   "mecanique": "survol-terrain",
+   "format": "narre-court"
+  },
+  "swiss-data__evenements__j-272-eclipse-2-aout-2027": {
+   "recette": "swiss-data",
+   "habillage": "grille-suisse",
+   "mecanique": "chiffre-volet-compteur",
+   "format": "narre-court"
+  },
+  "swiss-data__geographie__ou-vivent-8-milliards": {
+   "recette": "swiss-data",
+   "habillage": "grille-suisse",
+   "mecanique": "chiffre-volet-compteur",
+   "format": "narre-court"
+  },
+  "tableau-craie__enfants__comment-une-graine-devient-un-arbre": {
+   "recette": "tableau-craie",
+   "habillage": "craie-verte",
+   "mecanique": "ecriture-trace-chiffon",
+   "format": "narre-court"
+  },
+  "tableau-craie__explicatif__pourquoi-le-ciel-est-bleu": {
+   "recette": "tableau-craie",
+   "habillage": "craie-verte",
+   "mecanique": "ecriture-trace-chiffon",
+   "format": "narre-court"
+  },
+  "topo-relief__geographie__comment-mesure-t-on-l-everest": {
+   "recette": "topo-relief",
+   "habillage": "relief-vert",
+   "mecanique": "survol-terrain",
+   "format": "narre-court"
+  },
+  "topo-relief__histoire__hannibal-traverse-les-alpes": {
+   "recette": "topo-relief",
+   "habillage": "relief-vert",
+   "mecanique": "survol-terrain",
+   "format": "narre-court"
+  },
+  "trait-continu__enfants__dessine-un-escargot-d-un-seul-trait": {
+   "recette": "trait-continu",
+   "habillage": "orange-graphite",
+   "mecanique": "traceur-escalier-plaque",
+   "format": "narre-court"
+  },
+  "trait-continu__geographie__l-italie-a-la-forme-d-une-botte": {
+   "recette": "trait-continu",
+   "habillage": "orange-graphite",
+   "mecanique": "traceur-escalier-plaque",
+   "format": "narre-court"
+  }
+ }
+}

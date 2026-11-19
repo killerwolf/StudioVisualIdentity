@@ -1,0 +1,63 @@
+{
+ "id": "cosmos-noir",
+ "nom": "Cosmos noir",
+ "niveau": "declare",
+ "de": "cosmos-doc",
+ "palette": {
+  "fond": "#000004",
+  "surface": "#000006",
+  "encre": "#EAF2FF",
+  "vif": "#FFB347",
+  "second": "#6EC6FF",
+  "decor": [
+   "#FF6A2A"
+  ]
+ },
+ "contrasteSurSurface": {
+  "encre": 18.59,
+  "vif": 11.76,
+  "second": 11.16
+ },
+ "typo": {
+  "titre": {
+   "famille": "Bebas Neue",
+   "fontsource": "bebas-neue",
+   "graisses": [
+    400
+   ]
+  },
+  "texte": {
+   "famille": "Inter",
+   "fontsource": "inter",
+   "graisses": [
+    400
+   ]
+  },
+  "legende": {
+   "famille": "Bebas Neue",
+   "fontsource": "bebas-neue",
+   "graisses": [
+    400
+   ]
+  }
+ },
+ "matiere": "true black space with warm starlight and anamorphic lens flare",
+ "signature": [
+  "true black space with warm starlight and anamorphic lens flare",
+  "Bebas Neue capitals with tracking that tightens",
+  "film grain, no HUD or neon lines"
+ ],
+ "lisibilite": {
+  "corpsMinPx": 54,
+  "contrasteTexteMin": 4.5,
+  "couleurReservee": "vif"
+ },
+ "contraintes": null,
+ "adaptateurs": {},
+ "image": "out/shorts/cosmos-doc__evenements__voyager-1-a-un-jour-lumiere/stills/still_10.80s.jpg",
+ "recettes": [
+  "cosmos-doc"
+ ],
+ "source": "coreTokens de out/identities/index.json (le code des scènes écrit ses valeurs en dur : brique déclarée)",
+ "date": "2026-11-19"
+}

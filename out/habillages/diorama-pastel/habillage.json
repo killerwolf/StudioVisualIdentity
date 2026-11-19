@@ -1,0 +1,64 @@
+{
+ "id": "diorama-pastel",
+ "nom": "Diorama pastel",
+ "niveau": "declare",
+ "de": "pastel-diorama",
+ "palette": {
+  "fond": "#FFE8EF",
+  "surface": "#FFFFFF",
+  "encre": "#3B2E5A",
+  "vif": "#FF8FAB",
+  "second": "#8ED6FF",
+  "decor": [
+   "#FFD670",
+   "#9BE7B0"
+  ]
+ },
+ "contrasteSurSurface": {
+  "encre": 12.18,
+  "vif": 2.15,
+  "second": 1.59
+ },
+ "typo": {
+  "titre": {
+   "famille": "Baloo 2",
+   "fontsource": "baloo-2",
+   "graisses": [
+    800
+   ]
+  },
+  "texte": {
+   "famille": "Nunito",
+   "fontsource": "nunito",
+   "graisses": [
+    800
+   ]
+  },
+  "legende": {
+   "famille": "Nunito",
+   "fontsource": "nunito",
+   "graisses": [
+    800
+   ]
+  }
+ },
+ "matiere": "pink pastel toy diorama on a felt base",
+ "signature": [
+  "pink pastel toy diorama on a felt base",
+  "soft rounded toys and invented recurring characters",
+  "Baloo 2 titles and pill labels"
+ ],
+ "lisibilite": {
+  "corpsMinPx": 54,
+  "contrasteTexteMin": 4.5,
+  "couleurReservee": "vif"
+ },
+ "contraintes": null,
+ "adaptateurs": {},
+ "image": "out/shorts/pastel-diorama__enfants__d-ou-vient-la-pluie/stills/still_08.90s.jpg",
+ "recettes": [
+  "pastel-diorama"
+ ],
+ "source": "coreTokens de out/identities/index.json (le code des scènes écrit ses valeurs en dur : brique déclarée)",
+ "date": "2026-11-19"
+}

@@ -1,0 +1,63 @@
+{
+ "id": "aquarelle",
+ "nom": "Aquarelle",
+ "niveau": "declare",
+ "de": "aquarelle-conte",
+ "palette": {
+  "fond": "#F7F1E6",
+  "surface": "#EFE4D0",
+  "encre": "#3A3042",
+  "vif": "#E88D72",
+  "second": "#6C9BCF",
+  "decor": [
+   "#F2C14E",
+   "#7FB685"
+  ]
+ },
+ "contrasteSurSurface": {
+  "encre": 9.92,
+  "vif": 1.97,
+  "second": 2.31
+ },
+ "typo": {
+  "titre": {
+   "famille": "Fraunces",
+   "fontsource": "fraunces",
+   "graisses": [
+    700
+   ]
+  },
+  "texte": {
+   "famille": "Nunito",
+   "fontsource": "nunito",
+   "graisses": [
+    600
+   ]
+  },
+  "legende": {
+   "famille": "Nunito",
+   "fontsource": "nunito",
+   "graisses": [
+    600
+   ]
+  }
+ },
+ "matiere": "watercolour washes on cream paper",
+ "signature": [
+  "watercolour washes on cream paper",
+  "Fraunces storybook titles on a bottom album page"
+ ],
+ "lisibilite": {
+  "corpsMinPx": 54,
+  "contrasteTexteMin": 4.5,
+  "couleurReservee": "vif"
+ },
+ "contraintes": null,
+ "adaptateurs": {},
+ "image": "out/shorts/aquarelle-conte__enfants__ou-vont-les-etoiles-le-jour/stills/still_09.20s.jpg",
+ "recettes": [
+  "aquarelle-conte"
+ ],
+ "source": "coreTokens de out/identities/index.json (le code des scènes écrit ses valeurs en dur : brique déclarée)",
+ "date": "2026-11-19"
+}

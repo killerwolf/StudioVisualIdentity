@@ -1,0 +1,27 @@
+{
+ "id": "impression-on-twos",
+ "nom": "Impression riso saccadée",
+ "niveau": "declare",
+ "description": "Mouvement quantifié à 12 i/s, une couche par encre, défaut de repérage tiré à chaque pas.",
+ "separation": "MOYEN",
+ "moteur": {
+  "code": "src/riso.js + src/post.py (copiés)",
+  "env": "navigateur (p5 + GSAP quantifié) + OpenCV",
+  "audit": null
+ },
+ "signature": [
+  "stepped 12 fps motion, collage cut-outs"
+ ],
+ "requiert": null,
+ "formats": [
+  "narre-court"
+ ],
+ "habillagesTestes": [
+  "riso-3-encres"
+ ],
+ "recettes": [
+  "riso-zine"
+ ],
+ "source": "out/report/notes/composition/inventaire.md",
+ "date": "2026-11-19"
+}

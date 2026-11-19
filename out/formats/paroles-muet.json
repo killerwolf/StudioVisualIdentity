@@ -1,0 +1,36 @@
+{
+ "id": "paroles-muet",
+ "nom": "Paroles, muet",
+ "resume": "10–60 s, muet, chanson ajoutée à la publication",
+ "dureeSec": [
+  10,
+  60
+ ],
+ "audio": "piste silencieuse (ou lit très bas) : la chanson est ajoutée dans l'application à la publication",
+ "regles": [
+  "paroles jamais traduites",
+  "vraies paroles et audio de la chanson hors dépôt (paroles de remplissage dans le dépôt)"
+ ],
+ "canevas": {
+  "w": 1080,
+  "h": 1920,
+  "fps": 30,
+  "codec": "H.264",
+  "pixFmt": "yuv420p"
+ },
+ "zonesSuresPx": {
+  "top": 220,
+  "bottom": 320,
+  "right": 120,
+  "left": [
+   60,
+   72
+  ]
+ },
+ "corpsMinPx": 54,
+ "titreMinPx": 90,
+ "contrasteTexteMin": 4.5,
+ "controleAujourdhui": "check.py : jusqu'à 60 s pour la famille « paroles »",
+ "niveau": "declare",
+ "date": "2026-11-19"
+}

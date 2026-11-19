@@ -1,0 +1,62 @@
+{
+ "id": "brut-jaune",
+ "nom": "Brut jaune",
+ "niveau": "declare",
+ "de": "brut-meme",
+ "palette": {
+  "fond": "#111111",
+  "surface": "#FFE600",
+  "encre": "#FFFFFF",
+  "vif": "#FFE600",
+  "second": "#FF2D2D",
+  "decor": [
+   "#FFFFFF"
+  ]
+ },
+ "contrasteSurSurface": {
+  "encre": 1.27,
+  "vif": 1.0,
+  "second": 2.92
+ },
+ "typo": {
+  "titre": {
+   "famille": "Anton",
+   "fontsource": "anton",
+   "graisses": [
+    400
+   ]
+  },
+  "texte": {
+   "famille": "Inter",
+   "fontsource": "inter",
+   "graisses": [
+    900
+   ]
+  },
+  "legende": {
+   "famille": "Inter",
+   "fontsource": "inter",
+   "graisses": [
+    900
+   ]
+  }
+ },
+ "matiere": "black / #FFE600 yellow / red only",
+ "signature": [
+  "black / #FFE600 yellow / red only",
+  "round stickers and hazard-stripe progress bar"
+ ],
+ "lisibilite": {
+  "corpsMinPx": 54,
+  "contrasteTexteMin": 4.5,
+  "couleurReservee": "vif"
+ },
+ "contraintes": null,
+ "adaptateurs": {},
+ "image": "out/shorts/brut-meme__engagement__test-des-3-secondes-stroop/stills/03_07.50s.jpg",
+ "recettes": [
+  "brut-meme"
+ ],
+ "source": "coreTokens de out/identities/index.json (le code des scènes écrit ses valeurs en dur : brique déclarée)",
+ "date": "2026-11-19"
+}

@@ -1,0 +1,71 @@
+{
+ "id": "carnet-archives",
+ "nom": "Carnet kraft",
+ "niveau": "executable",
+ "de": "carnet-archives",
+ "palette": {
+  "fond": "#B28C60",
+  "surface": "#F6EED8",
+  "encre": "#34241A",
+  "vif": "#E4BE68",
+  "second": "#A82C24",
+  "decor": [
+   "#284A5C",
+   "#DEAA96",
+   "#86A08C",
+   "#BE9668"
+  ]
+ },
+ "contrasteSurSurface": {
+  "encre": 12.84,
+  "vif": 1.53,
+  "second": 5.95
+ },
+ "typo": {
+  "titre": {
+   "famille": "Abril Fatface",
+   "fontsource": "abril-fatface",
+   "graisses": [
+    400
+   ]
+  },
+  "texte": {
+   "famille": "Special Elite",
+   "fontsource": "special-elite",
+   "graisses": [
+    400
+   ]
+  },
+  "mono": {
+   "famille": "Courier Prime",
+   "fontsource": "courier-prime",
+   "graisses": [
+    400
+   ]
+  }
+ },
+ "matiere": "papier kraft fibreux, sans grille ; pièces de papier découpées aux ciseaux, ombre portée",
+ "signature": [
+  "fibrous brown kraft ground, no grid",
+  "Abril Fatface titles on cream / ink-blue / stamp-red strips",
+  "Special Elite typewriter captions and notes",
+  "sepia palette with stamp red and ochre"
+ ],
+ "lisibilite": {
+  "corpsMinPx": 54,
+  "contrasteTexteMin": 4.5,
+  "couleurReservee": "vif"
+ },
+ "contraintes": {
+  "cadence": "12 i/s (matière de papier : un papier découpé ne glisse pas en douceur)"
+ },
+ "adaptateurs": {
+  "pop-papier-12ips": "out/shared/papier-moteur/themes/carnet-archives.json"
+ },
+ "image": "out/shorts/carnet-archives__explicatif__d-ou-vient-le-mot-sandwich/stills/still_t_003.50.jpg",
+ "recettes": [
+  "carnet-archives"
+ ],
+ "source": "valeurs relevées dans l'adaptateur",
+ "date": "2026-11-19"
+}

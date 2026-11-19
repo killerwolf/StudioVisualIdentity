@@ -1,0 +1,33 @@
+{
+ "id": "lyrics-punchy",
+ "nom": "Lyrics punchy",
+ "habillage": "punchy",
+ "mecanique": "colonne-mot-a-mot",
+ "formats": [
+  "paroles-muet"
+ ],
+ "son": null,
+ "statut": "validee",
+ "signaturePortee": {
+  "habillage": [
+   "a wall of past lines stacked above the current one in 3 tints of the background hue (nuit / lagon / braise)",
+   "tilted accent-coloured square card (±4°) with a 3-colour SVG pictogram, one per line at most"
+  ],
+  "mecanique": [
+   "column justified by the width axis of the variable font Anybody (wdth 50–150), every row exactly 876 px wide",
+   "chute-de-pile: the stack falls out of frame while the ground changes tint at each song section",
+   "never black, no gradient, no camera zoom; the song is added in the app (video rendered muted)"
+  ],
+  "autres": []
+ },
+ "dossier": "out/identities/lyrics-punchy/",
+ "identite": "lyrics-punchy",
+ "shorts": [
+  "out/shorts/lyrics-punchy__paroles__claudes-plan"
+ ],
+ "confusableWith": [
+  "brut-meme"
+ ],
+ "separation": "MOYEN",
+ "date": "2026-11-19"
+}

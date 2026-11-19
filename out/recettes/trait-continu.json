@@ -1,0 +1,34 @@
+{
+ "id": "trait-continu",
+ "nom": "Trait continu",
+ "habillage": "orange-graphite",
+ "mecanique": "traceur-escalier-plaque",
+ "formats": [
+  "narre-court"
+ ],
+ "son": null,
+ "statut": "validee",
+ "signaturePortee": {
+  "habillage": [
+   "full-bleed orange ground with a sharp-cornered grey plate",
+   "never cream or white on the orange; Fredoka only"
+  ],
+  "mecanique": [
+   "one continuous graphite stair-stepped line at constant speed, never lifted",
+   "two rulers with sliding cursors and a carriage at the pen tip",
+   "plate-advance transition in steps"
+  ],
+  "autres": []
+ },
+ "dossier": "out/identities/trait-continu/",
+ "identite": "trait-continu",
+ "shorts": [
+  "out/shorts/trait-continu__enfants__dessine-un-escargot-d-un-seul-trait",
+  "out/shorts/trait-continu__geographie__l-italie-a-la-forme-d-une-botte"
+ ],
+ "confusableWith": [
+  "tableau-craie"
+ ],
+ "separation": "DIFFICILE",
+ "date": "2026-11-19"
+}

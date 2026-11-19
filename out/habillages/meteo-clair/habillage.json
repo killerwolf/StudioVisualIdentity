@@ -1,0 +1,63 @@
+{
+ "id": "meteo-clair",
+ "nom": "Météo claire",
+ "niveau": "declare",
+ "de": "carte-meteo",
+ "palette": {
+  "fond": "#CFE6F5",
+  "surface": "#FFFFFF",
+  "encre": "#10263D",
+  "vif": "#D63A2A",
+  "second": "#1F5FD6",
+  "decor": [
+   "#F59A2C"
+  ]
+ },
+ "contrasteSurSurface": {
+  "encre": 15.37,
+  "vif": 4.67,
+  "second": 5.73
+ },
+ "typo": {
+  "titre": {
+   "famille": "Space Grotesk",
+   "fontsource": "space-grotesk",
+   "graisses": [
+    700
+   ]
+  },
+  "texte": {
+   "famille": "Atkinson Hyperlegible",
+   "fontsource": "atkinson-hyperlegible",
+   "graisses": [
+    700
+   ]
+  },
+  "legende": {
+   "famille": "Atkinson Hyperlegible",
+   "fontsource": "atkinson-hyperlegible",
+   "graisses": [
+    700
+   ]
+  }
+ },
+ "matiere": "pale sky-blue sea and tender green land with coastline and breathing isobars",
+ "signature": [
+  "pale sky-blue sea and tender green land with coastline and breathing isobars",
+  "temperature pills on white cartouches, Atkinson Hyperlegible + Space Grotesk titles",
+  "text only on white cartouches"
+ ],
+ "lisibilite": {
+  "corpsMinPx": 54,
+  "contrasteTexteMin": 4.5,
+  "couleurReservee": "vif"
+ },
+ "contraintes": null,
+ "adaptateurs": {},
+ "image": "out/shorts/carte-meteo__evenements__28-juin-2019-46-degres-record-de-chaleur/stills/03_ancien-record_6.5s.jpg",
+ "recettes": [
+  "carte-meteo"
+ ],
+ "source": "coreTokens de out/identities/index.json (le code des scènes écrit ses valeurs en dur : brique déclarée)",
+ "date": "2026-11-19"
+}

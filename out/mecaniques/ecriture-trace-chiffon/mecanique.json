@@ -1,0 +1,28 @@
+{
+ "id": "ecriture-trace-chiffon",
+ "nom": "Écriture à la craie, chiffon",
+ "niveau": "declare",
+ "description": "Tout se dessine (tracé progressif), effacement au chiffon entre les idées.",
+ "separation": "MOYEN",
+ "moteur": {
+  "code": "aucun moteur commun (Rough.js / Manim)",
+  "env": "navigateur ou Python (Manim)",
+  "audit": null
+ },
+ "signature": [
+  "everything draws itself (Manim Create / stroke-dashoffset)",
+  "eraser-cloth wipe between ideas"
+ ],
+ "requiert": null,
+ "formats": [
+  "narre-court"
+ ],
+ "habillagesTestes": [
+  "craie-verte"
+ ],
+ "recettes": [
+  "tableau-craie"
+ ],
+ "source": "out/report/notes/composition/inventaire.md",
+ "date": "2026-11-19"
+}

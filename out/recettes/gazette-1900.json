@@ -1,0 +1,33 @@
+{
+ "id": "gazette-1900",
+ "nom": "Gazette 1900",
+ "habillage": "gazette-sepia",
+ "mecanique": "tourniquet-tampon",
+ "formats": [
+  "narre-court"
+ ],
+ "son": null,
+ "statut": "validee",
+ "signaturePortee": {
+  "habillage": [
+   "Playfair Display 900 headline + typewriter dispatch in IBM Plex Mono",
+   "sepia + film-grain OpenCV pass"
+  ],
+  "mecanique": [
+   "broadsheet front page that spins in and lands",
+   "red rubber stamp"
+  ],
+  "autres": []
+ },
+ "dossier": "out/identities/gazette-1900/",
+ "identite": "gazette-1900",
+ "shorts": [
+  "out/shorts/gazette-1900__evenements__9-novembre-1989-mur-de-berlin",
+  "out/shorts/gazette-1900__histoire__1789-en-20-secondes"
+ ],
+ "confusableWith": [
+  "carnet-archives"
+ ],
+ "separation": "MOYEN",
+ "date": "2026-11-19"
+}

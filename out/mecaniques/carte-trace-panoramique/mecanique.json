@@ -1,0 +1,28 @@
+{
+ "id": "carte-trace-panoramique",
+ "nom": "Carte qui se trace, panoramique",
+ "niveau": "declare",
+ "description": "Fleuves et routes en stroke-dashoffset, panoramique lent, sceau de cire.",
+ "separation": "MOYEN",
+ "moteur": {
+  "code": "src/atlas.js + src/textures.py (copiés)",
+  "env": "navigateur (D3 geo + GSAP)",
+  "audit": null
+ },
+ "signature": [
+  "ink that draws itself",
+  "wax seals, compass rose, slow pans"
+ ],
+ "requiert": null,
+ "formats": [
+  "narre-court"
+ ],
+ "habillagesTestes": [
+  "gravure-parchemin"
+ ],
+ "recettes": [
+  "atlas-grave"
+ ],
+ "source": "out/report/notes/composition/inventaire.md",
+ "date": "2026-11-19"
+}

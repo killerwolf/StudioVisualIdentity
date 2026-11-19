@@ -1,0 +1,64 @@
+{
+ "id": "pop-papier-12ips",
+ "nom": "Papier qui saute (12 images/s)",
+ "niveau": "executable",
+ "description": "Mouvement à 12 i/s : pop en 4 pas (0,35 → 1,15 → 0,96 → 1), chute en 5 pas, tampon, glissé de scène 0,25 s, titres sur bandes inclinées, sous-titres sur bande ; voix, musique et SFX mixés et masterisés (−14 LUFS) par le moteur.",
+ "separation": "FACILE",
+ "moteur": {
+  "code": "out/shared/papier-moteur/pipeline/",
+  "env": "Python (Pillow, OpenCV), 4 tranches en parallèle",
+  "audit": null
+ },
+ "signature": [
+  "pieces pop in 4 steps at 12 fps with drop shadow and scissor-cut edges",
+  "stop-motion pop at 12 fps"
+ ],
+ "requiert": {
+  "palette": [
+   "MAT",
+   "MAT_DEEP",
+   "PAPER",
+   "INK",
+   "INK_SOFT",
+   "BLUE",
+   "RED",
+   "YELLOW",
+   "PINK",
+   "CYAN",
+   "KRAFT"
+  ],
+  "typo": [
+   "display",
+   "hand",
+   "hand-r",
+   "mono",
+   "mono-r"
+  ],
+  "tapis": [
+   "grille",
+   "kraft",
+   "nuit (tout autre nom = fond uni vignetté)"
+  ],
+  "contraintes": [
+   "cadence 12 i/s imposée par la mécanique"
+  ],
+  "note": "thème JSON (out/shared/papier-moteur/themes/<id>.json) passé par THEME_ESSAI ; résidus non thématisés : grille verte papier.py:251-256, RGB hors thème elements.py:208-210, 448, 547"
+ },
+ "formats": [
+  "narre-court"
+ ],
+ "habillagesTestes": [
+  "atelier-papier",
+  "cabinet-curiosites",
+  "carnet-archives",
+  "papier-decoupe"
+ ],
+ "recettes": [
+  "papier-decoupe",
+  "atelier-papier",
+  "carnet-archives",
+  "cabinet-curiosites"
+ ],
+ "source": "out/report/notes/composition/inventaire.md",
+ "date": "2026-11-19"
+}

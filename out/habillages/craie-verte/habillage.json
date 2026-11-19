@@ -1,0 +1,64 @@
+{
+ "id": "craie-verte",
+ "nom": "Craie verte",
+ "niveau": "declare",
+ "de": "tableau-craie",
+ "palette": {
+  "fond": "#1F3A30",
+  "surface": "#264639",
+  "encre": "#F7F3E3",
+  "vif": "#FFB84C",
+  "second": "#7FD1FF",
+  "decor": [
+   "#FFF6D5",
+   "#FF7A7A",
+   "#9BE58A"
+  ]
+ },
+ "contrasteSurSurface": {
+  "encre": 9.36,
+  "vif": 6.05,
+  "second": 6.18
+ },
+ "typo": {
+  "titre": {
+   "famille": "Nunito",
+   "fontsource": "nunito",
+   "graisses": [
+    800
+   ]
+  },
+  "texte": {
+   "famille": "Caveat",
+   "fontsource": "caveat",
+   "graisses": [
+    700
+   ]
+  },
+  "legende": {
+   "famille": "Caveat",
+   "fontsource": "caveat",
+   "graisses": [
+    700
+   ]
+  }
+ },
+ "matiere": "dark green chalkboard with chalk grain",
+ "signature": [
+  "dark green chalkboard with chalk grain",
+  "Caveat handwriting + Nunito titles"
+ ],
+ "lisibilite": {
+  "corpsMinPx": 54,
+  "contrasteTexteMin": 4.5,
+  "couleurReservee": "vif"
+ },
+ "contraintes": null,
+ "adaptateurs": {},
+ "image": "out/shorts/tableau-craie__enfants__comment-une-graine-devient-un-arbre/stills/still_07.90s.jpg",
+ "recettes": [
+  "tableau-craie"
+ ],
+ "source": "coreTokens de out/identities/index.json (le code des scènes écrit ses valeurs en dur : brique déclarée)",
+ "date": "2026-11-19"
+}

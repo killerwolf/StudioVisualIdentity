@@ -1,0 +1,35 @@
+{
+ "id": "carte-meteo",
+ "nom": "Carte Météo",
+ "habillage": "meteo-clair",
+ "mecanique": "carte-champs-front",
+ "formats": [
+  "narre-court"
+ ],
+ "son": null,
+ "statut": "validee",
+ "signaturePortee": {
+  "habillage": [
+   "pale sky-blue sea and tender green land with coastline and breathing isobars",
+   "temperature pills on white cartouches, Atkinson Hyperlegible + Space Grotesk titles",
+   "text only on white cartouches"
+  ],
+  "mecanique": [
+   "dark wind trails when wind is the subject (proven by the mistral short only)",
+   "diagonal cold-front (blue triangles) / warm-front sweep as the only transition",
+   "map always visible, no tables or bars"
+  ],
+  "autres": []
+ },
+ "dossier": "out/identities/carte-meteo/",
+ "identite": "carte-meteo",
+ "shorts": [
+  "out/shorts/carte-meteo__evenements__28-juin-2019-46-degres-record-de-chaleur",
+  "out/shorts/carte-meteo__geographie__le-mistral-pourquoi-il-souffle-si-fort"
+ ],
+ "confusableWith": [
+  "swiss-data"
+ ],
+ "separation": "MOYEN",
+ "date": "2026-11-19"
+}

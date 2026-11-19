@@ -1,0 +1,35 @@
+{
+ "id": "topo-relief",
+ "nom": "Relief Topo",
+ "habillage": "relief-vert",
+ "mecanique": "survol-terrain",
+ "formats": [
+  "narre-court"
+ ],
+ "son": null,
+ "statut": "validee",
+ "signaturePortee": {
+  "habillage": [
+   "dark forest-green 3D terrain block with glowing contour lines",
+   "altitude readout in JetBrains Mono",
+   "ochre / terracotta / teal accents"
+  ],
+  "mecanique": [
+   "drone fly-over camera"
+  ],
+  "autres": []
+ },
+ "dossier": "out/identities/topo-relief/",
+ "identite": "topo-relief",
+ "shorts": [
+  "out/shorts/topo-relief__geographie__comment-mesure-t-on-l-everest",
+  "out/shorts/topo-relief__histoire__hannibal-traverse-les-alpes"
+ ],
+ "confusableWith": [
+  "atlas-grave",
+  "lyrics-chemin",
+  "survol-pixel"
+ ],
+ "separation": "MOYEN",
+ "date": "2026-11-19"
+}

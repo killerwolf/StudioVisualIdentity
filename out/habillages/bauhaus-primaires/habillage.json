@@ -1,0 +1,63 @@
+{
+ "id": "bauhaus-primaires",
+ "nom": "Bauhaus primaires",
+ "niveau": "declare",
+ "de": "bauhaus-kinetic",
+ "palette": {
+  "fond": "#F2EDE3",
+  "surface": "#FFFFFF",
+  "encre": "#111111",
+  "vif": "#E63B2E",
+  "second": "#F5B700",
+  "decor": [
+   "#1D4ED8",
+   "#111111"
+  ]
+ },
+ "contrasteSurSurface": {
+  "encre": 18.88,
+  "vif": 4.18,
+  "second": 1.8
+ },
+ "typo": {
+  "titre": {
+   "famille": "Unbounded",
+   "fontsource": "unbounded",
+   "graisses": [
+    800
+   ]
+  },
+  "texte": {
+   "famille": "Space Grotesk",
+   "fontsource": "space-grotesk",
+   "graisses": [
+    500
+   ]
+  },
+  "legende": {
+   "famille": "Unbounded",
+   "fontsource": "unbounded",
+   "graisses": [
+    800
+   ]
+  }
+ },
+ "matiere": "cream ground with red / yellow / blue / black primary shapes",
+ "signature": [
+  "cream ground with red / yellow / blue / black primary shapes",
+  "Unbounded 800 headlines"
+ ],
+ "lisibilite": {
+  "corpsMinPx": 54,
+  "contrasteTexteMin": 4.5,
+  "couleurReservee": "vif"
+ },
+ "contraintes": null,
+ "adaptateurs": {},
+ "image": "out/shorts/bauhaus-kinetic__engagement__trouve-l-intrus/stills/03_revelation_8.6s.jpg",
+ "recettes": [
+  "bauhaus-kinetic"
+ ],
+ "source": "coreTokens de out/identities/index.json (le code des scènes écrit ses valeurs en dur : brique déclarée)",
+ "date": "2026-11-19"
+}

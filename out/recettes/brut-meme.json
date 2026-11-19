@@ -1,0 +1,34 @@
+{
+ "id": "brut-meme",
+ "nom": "Brut Mème",
+ "habillage": "brut-jaune",
+ "mecanique": "punch-cut-slam",
+ "formats": [
+  "narre-court"
+ ],
+ "son": null,
+ "statut": "validee",
+ "signaturePortee": {
+  "habillage": [
+   "black / #FFE600 yellow / red only",
+   "round stickers and hazard-stripe progress bar"
+  ],
+  "mecanique": [
+   "Anton auto-fitted to fill the frame",
+   "hard cuts on the beat with 3-frame punch-in",
+   "photosensitivity rule: <= 3 flashes/s, no full-frame flash"
+  ],
+  "autres": []
+ },
+ "dossier": "out/identities/brut-meme/",
+ "identite": "brut-meme",
+ "shorts": [
+  "out/shorts/brut-meme__engagement__test-des-3-secondes-stroop",
+  "out/shorts/brut-meme__evenements__pendant-ces-15-secondes-dans-le-monde"
+ ],
+ "confusableWith": [
+  "lyrics-punchy"
+ ],
+ "separation": "FACILE",
+ "date": "2026-11-19"
+}

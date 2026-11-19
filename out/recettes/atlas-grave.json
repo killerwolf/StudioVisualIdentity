@@ -1,0 +1,34 @@
+{
+ "id": "atlas-grave",
+ "nom": "Atlas Gravé",
+ "habillage": "gravure-parchemin",
+ "mecanique": "carte-trace-panoramique",
+ "formats": [
+  "narre-court"
+ ],
+ "son": null,
+ "statut": "validee",
+ "signaturePortee": {
+  "habillage": [
+   "laid-paper parchment and engraved hand-drawn maps",
+   "Cormorant Garamond / Cinzel serif"
+  ],
+  "mecanique": [
+   "ink that draws itself",
+   "wax seals, compass rose, slow pans"
+  ],
+  "autres": []
+ },
+ "dossier": "out/identities/atlas-grave/",
+ "identite": "atlas-grave",
+ "shorts": [
+  "out/shorts/atlas-grave__geographie__plus-longs-fleuves-du-monde",
+  "out/shorts/atlas-grave__histoire__premier-tour-du-monde-1519-1522"
+ ],
+ "confusableWith": [
+  "lyrics-chemin",
+  "topo-relief"
+ ],
+ "separation": "MOYEN",
+ "date": "2026-11-19"
+}

@@ -1,0 +1,40 @@
+{
+ "id": "colonne-mot-a-mot",
+ "nom": "Colonne mot à mot",
+ "niveau": "declare",
+ "description": "Mot qui tombe sur le temps, colonne justifiée par l'axe de largeur (fit()), mur de 4 lignes passées, carton penché illustré ; chute de pile à chaque section.",
+ "separation": "MOYEN",
+ "moteur": {
+  "code": "out/shared/lyrics-moteur/lyrics.js",
+  "env": "navigateur (DOM + SVG, renderAt(t))",
+  "audit": "out/tools/lyrics_audit.mjs"
+ },
+ "signature": [
+  "column justified by the width axis of the variable font Anybody (wdth 50–150), every row exactly 876 px wide",
+  "chute-de-pile: the stack falls out of frame while the ground changes tint at each song section",
+  "never black, no gradient, no camera zoom; the song is added in the app (video rendered muted)"
+ ],
+ "requiert": {
+  "palette": [
+   "bg",
+   "mur[3]",
+   "accent",
+   "encre"
+  ],
+  "typo": [
+   "police variable à axe wdth (exigée, setupMeasure lève une erreur sinon)"
+  ],
+  "note": "camaïeux écrits dans le moteur (CAMAIEUX, lyrics.js:12-16), police en dur : habillage non séparable sans toucher au moteur"
+ },
+ "formats": [
+  "paroles-muet"
+ ],
+ "habillagesTestes": [
+  "punchy"
+ ],
+ "recettes": [
+  "lyrics-punchy"
+ ],
+ "source": "out/report/notes/composition/inventaire.md",
+ "date": "2026-11-19"
+}
