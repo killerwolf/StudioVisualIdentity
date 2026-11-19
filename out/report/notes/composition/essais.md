@@ -13,7 +13,7 @@ relancé (il réécrit `recognition.json` et ne sait pas encore séparer habilla
 |---|---|---|---|---|---|
 | C1 craie-verte × trace-chemin × narré long | `out/shorts/chemin-craie-verte__explicatif__le-quatre-quarts/short.mp4` (25,6 s) | 779,7 s, 101,5 s / 100 images | OK, 0 avertissement | [`essais/C1-planche.jpg`](essais/C1-planche.jpg) | [`essais/C1-comparaison.jpg`](essais/C1-comparaison.jpg) : ardoise / C1 / tableau-craie aux mêmes instants |
 | C2 grille-suisse × trace-chemin × narré court | `out/shorts/chemin-grille-suisse__geographie__ou-vivent-8-milliards/short.mp4` (15 s) | 124,4 s, 27,7 s / 100 images | OK, 0 avertissement | [`essais/C2-planche.jpg`](essais/C2-planche.jpg) | [`essais/C2-comparaison.jpg`](essais/C2-comparaison.jpg) : swiss-data 8 milliards / C2 / swiss-data éclipse / bauhaus |
-| C4 plan-bleu × pop-papier-12ips × narré court | `out/shorts/papier-plan-bleu__explicatif__d-ou-vient-le-mot-sandwich/short.mp4` (12,2 s) | 15 s (4 tranches) | OK, 1 avertissement (image figée ≥ 3 s à 3,2 s, comme l'épisode d'origine) | [`essais/C4-planche.jpg`](essais/C4-planche.jpg) | [`essais/C4-comparaison.jpg`](essais/C4-comparaison.jpg) : papier-decoupe / C4 / lyrics-chemin (plan bleu) |
+| C4 plan-bleu × pop-papier-12ips × narré court | `out/shorts/papier-plan-bleu__explicatif__d-ou-vient-le-mot-sandwich/short.mp4` (12,2 s) | 15 s (4 tranches) | OK, 1 avertissement : image figée ≥ 3 s à 3,2 s (le plan où rien ne bouge entre deux répliques ; l'épisode d'origine sur tapis vert ne le déclenche pas, son quadrillage plus contrasté et ses chiffres de règle suffisent à le « faire bouger » pour le détecteur) | [`essais/C4-planche.jpg`](essais/C4-planche.jpg) | [`essais/C4-comparaison.jpg`](essais/C4-comparaison.jpg) : papier-decoupe / C4 / lyrics-chemin (plan bleu) |
 
 Les `chemin_audit.mjs` de C1 et C2 disent « aucune » erreur.
 
@@ -25,7 +25,7 @@ Les `chemin_audit.mjs` de C1 et C2 disent « aucune » erreur.
 - **Doublon de l'ardoise ?** Pas à l'image : sur la comparaison, aux mêmes instants, on distingue toujours les deux (vert et
   minuscules manuscrites contre noir et majuscules étroites ; craie dessinée contre objets ; tableau pleine image contre ardoise
   encadrée sur du marbre). Mais c'est la **même matière** (craie érodée par le même grain, même dessin, même mise en page) en
-  deux tons, et le code de C1 est dérivé à 80 % de `ardoise.js`. Recommandation : **un habillage parent `craie` avec deux tons**
+  deux tons, et `craie-verte.js` a les mêmes crochets que `ardoise.js` (dont il est parti). Recommandation : **un habillage parent `craie` avec deux tons**
   (`ardoise` = bistrot, adultes ; `craie-verte` = école, enfants), pas deux marques distinctes sur la même mécanique.
 - **Qu'apporte-t-il ?** À Tableau Craie, un mouvement qu'il n'avait pas : une caméra qui suit la craie en un plan et un zoom
   arrière qui révèle la recette entière. Face à l'ardoise, seulement un autre ton.
@@ -40,8 +40,8 @@ Les `chemin_audit.mjs` de C1 et C2 disent « aucune » erreur.
   swiss-data et pas avec bauhaus (son voisin `confusableWith`).
 - **Différent de l'existant ?** Oui : swiss-data montre un écran par chiffre, séparés par des volets rouges ; C2 suit l'écriture
   en un seul plan, chaque chiffre remplit sa barre, et le zoom arrière montre que la page entière était un graphique, à la
-  même échelle (Asie 4,72 Md, Afrique 1,44, Inde 1,45, Chine 1,41). C'est **le premier habillage prouvé sur deux
-  mécaniques**, ce que la règle de reconnaissance (proposition § 8) attendait.
+  même échelle (Asie 4,72 Md, Afrique 1,44, Inde 1,45, Chine 1,41). Avec C1 (craie-verte) et C4 (plan-bleu), c'est l'un des trois premiers habillages portés sur une deuxième mécanique, et
+  **le cas le plus net** des trois : ce que la règle de reconnaissance (proposition § 8) attendait.
 - **Faiblesses** : l'image d'ouverture est trop vide (le titre au corps minimal dans une page encore blanche) ; « 1 carré =
   100 millions » n'a plus de sens sans les carrés de l'unit chart d'origine (le texte de la voix a été gardé tel quel) ; les
   filets de la grille deviennent des bandes grises floues en gros plan.
