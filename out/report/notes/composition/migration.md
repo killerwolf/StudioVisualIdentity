@@ -31,7 +31,7 @@ Statut : **plan, rien n'est exécuté.** Modèle : [`proposition.md`](propositio
 | 7 | **Docs** : `AGENTS.md` (le modèle en une section, la doctrine du mélange revue), skill `fabrique-identites` (« nouvelle pâte sur une mécanique existante = nouvelle recette »), mise à jour de `lyrics-chemin/identity.md` et `recipes/` | texte | — | revert | 0,5 session |
 | 8 | **Briques exécutables, une mécanique à la fois**, dans l'ordre de facilité (ci-dessous) | code de moteur, **à côté** du code des shorts existants | stills au pixel près sur les shorts du moteur (règle 1) | revert | 0,5 à 1 session par mécanique |
 
-**Total des étapes 0 à 7 : 5 à 6,5 sessions.** Étape 8, première vague (5 mécaniques) : 3 à 4 sessions.
+**Total des étapes 0 à 7 : 5,5 à 6,5 sessions.** Étape 8, première vague (5 mécaniques) : 3 à 4 sessions.
 
 ### Variante minimale (80 % du gain, 2 sessions)
 

@@ -133,8 +133,8 @@ Une recette est une combinaison nommée et validée :
 - Les 3 déclinaisons de `lyrics-chemin` deviennent 3 recettes nouvelles (total : 26 recettes, 26 habillages, 19 mécaniques ; voir `inventaire.md`) (ids proposés : `chemin-editeur`,
   `chemin-ardoise`, `chemin-portulan`), dont les shorts existants gardent leur nom de dossier.
 - La règle de `fieldNotes.variantOf` se généralise : **une nouvelle pâte sur une mécanique existante est une nouvelle
-  recette (et un nouvel habillage), pas une nouvelle identité.** `variantOf` devient inutile : deux recettes qui partagent
-  une mécanique sont sœurs par construction.
+  recette (et un nouvel habillage), pas une nouvelle identité.** `variantOf` devient dérivable des recettes (deux recettes qui
+  partagent une mécanique sont sœurs par construction) ; il est gardé dans `identities[]` pour les lecteurs actuels.
 
 ### 2.6 La doctrine du mélange, revue
 
@@ -279,7 +279,7 @@ design system complet.
   "compatibilite": [
     { "habillage": "editeur", "mecanique": "trace-chemin", "format": "paroles-muet", "etat": "teste",
       "preuve": ["out/shorts/lyrics-chemin__paroles__claudes-plan-tech"], "recette": "chemin-editeur" },
-    { "habillage": "tableau-craie", "mecanique": "trace-chemin", "etat": "a-tester",
+    { "habillage": "craie-verte", "mecanique": "trace-chemin", "etat": "a-tester",
       "raison": "requiert rempli par habillage.json ; pas d'adaptateur" }
   ]
 }
@@ -302,16 +302,17 @@ la recette héritant des deux.
 ## 6. Cas limites repérés
 
 - **La cadence du papier (12 i/s en 4 pas)** : c'est un mouvement, donc de la mécanique, mais il est indissociable de la
-  matière (un papier découpé ne glisse pas en douceur). On le range dans la mécanique `collage-papier` et on l'écrit dans
+  matière (un papier découpé ne glisse pas en douceur). On le range dans la mécanique `pop-papier-12ips` et on l'écrit dans
   `habillage.contraintes.cadence` des 4 habillages papier : un habillage papier sur une mécanique fluide sera
   `incompatible` tant qu'on ne l'a pas essayé.
 - **Le pixel commun** : `survol-pixel` (PR #4, fusionnée dans `main` en `ee30e24`, pas encore dans `identite-lyrics`) et `pixel-arcade` partagent la
   grille 270×480 ×4, et la note de `survol-pixel` dit déjà que « ce n'est pas une différence ». Dans le modèle : deux
   habillages distincts (palette, polices, lumière), qui partagent une contrainte `grillePixel`. La contrainte peut
   devenir un habillage parent commun (`pixel-16`) si un jour on veut porter l'un sur la mécanique de l'autre.
-- **La mécanique qui est la matière** : `trait-continu` (une ligne unique jamais levée), `liquid-chrome` (une matière
-  liquide simulée), `pixel-arcade` (la physique quantifiée à 4 px). Pour celles-là, la séparation est surtout déclarée :
-  voir le classement de `inventaire.md`.
+- **La mécanique qui est la matière** : `trait-continu` (le traceur, ses règles et sa plaque sont le mouvement),
+  `liquid-chrome` (une matière liquide simulée), et les transitions qui sont des objets de matière : le front de
+  `carte-meteo`, le lavis qui s'ouvre d'`aquarelle-conte` (`bloom()`), le défaut de repérage de `riso-zine`, les courbes
+  qui montent dans le shader de `topo-relief`. Pour celles-là, la séparation reste déclarée : voir `inventaire.md`.
 - **L'habillage lié au dessin** (`trace-chemin`) : les 4 habillages du chemin lisent des champs propres à leur dessin
   (`G.mat` et la ligne `'vague1'` pour `plan-bleu`, `G.boites` pour `editeur`, `G.moule` pour `ardoise`, `G.route` pour
   `portulan` ; détail dans `inventaire.md`). Le **dessin** est du contenu d'épisode, donc il appartient à la mécanique
@@ -348,11 +349,11 @@ briques le sont.**
    plus) : énergie de différence image à image dans le temps, mouvement global estimé (corrélation de phase : translation,
    rotation, échelle de la caméra), taux de coupes (détection de changement de plan), part de l'image qui bouge. Test :
    le plus proche voisin doit avoir **la même mécanique**, et ce test compte surtout **entre habillages différents** :
-   les 4 shorts de `trace-chemin` (4 habillages) et les 8 shorts de `collage-papier` (4 habillages) sont les premiers
+   les 4 shorts de `trace-chemin` (4 habillages) et les 8 shorts de `pop-papier-12ips` (4 habillages) sont les premiers
    jeux de contrôle — ils existent déjà.
 3. **Voisinage** — deux habillages dont la distance est inférieure à la distance moyenne entre deux shorts d'un même
    habillage sont un doublon probable : les fusionner, ou en faire un parent et un enfant. Candidats déjà signalés par les
-   notes : `ardoise` / `tableau-craie`, `portulan` / `atlas-grave` / `carnet-archives`, `swiss-data` / `bauhaus-kinetic`
+   notes et l'inventaire : `ardoise` / `craie-verte` (tableau-craie), `portulan` / `gravure-parchemin` (atlas-grave) / `carnet-archives`, `grille-suisse` / `bauhaus-primaires`
    (voir `matrice.md`).
 4. **Le juge aveugle** (images fixes) juge les habillages ; un juge aveugle sur vidéo muette en niveaux de gris jugerait
    les mécaniques. Les résultats existants (`blindJudge14`, `blindJudgeLot2`) sont rattachés aux habillages des recettes
