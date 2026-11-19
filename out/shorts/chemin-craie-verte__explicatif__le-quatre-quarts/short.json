@@ -1,0 +1,83 @@
+{
+ "identity": "chemin-craie-verte",
+ "recette": "chemin-craie-verte",
+ "essai": "C1",
+ "habillage": "craie-verte",
+ "mecanique": "trace-chemin",
+ "format": "narre-long",
+ "family": "explicatif",
+ "longForm": true,
+ "title": "Le quatre-quarts, à la craie verte — essai C1 : habillage craie-verte (Tableau Craie) sur le chemin qui se trace",
+ "hook": "Image 0 : « Quatre-quarts » s'écrit en craie orange, à la main (Caveat), sur un tableau vert, bâton de craie à la pointe ; la voix dit le titre",
+ "duration": 25.6,
+ "libraries": [
+  "@fontsource/caveat 5.3.0",
+  "Canvas 2D (render.mjs, Chrome par playwright-core)",
+  "ffmpeg"
+ ],
+ "seed": "textures à graine fixe (21–26, 31, 55, 77) ; aucun hasard dépendant du temps",
+ "renderTimeSec": 779.7,
+ "renderNote": "render.mjs, 768 images, 101,5 s / 100 images, seul rendu sur la machine (Chrome 157 par SVI_CHROME) ; voix posée par ffmpeg (loudnorm −16 LUFS), crf 24.",
+ "measuredUnderLoad": true,
+ "data": "src/narration-chemin.json (copie de celle du quatre-quarts, texte en minuscules) + out/shared/chemin-moteur/dessins/quatre-quarts.json + habillages/craie-verte.js",
+ "structure": [
+  {
+   "t": 0,
+   "beat": "Quatre-quarts écrit en très gros plan, bâton de craie orange ; « Le quatre-quarts. »"
+  },
+  {
+   "t": 2.2,
+   "beat": "virage de 40° sur la première coupe : QUATRE INGRÉDIENTS, glissé par le centre : À PARTS ÉGALES"
+  },
+  {
+   "t": 5.25,
+   "beat": "fouetté, rotation ramenée à 0° : 3 ŒUFS dans la part du haut"
+  },
+  {
+   "t": 8.2,
+   "beat": "glissés de 0,3–0,4 s dans le sens des aiguilles d'une montre : SUCRE, FARINE, BEURRE, un mot par part"
+  },
+  {
+   "t": 11.6,
+   "beat": "virage de −40° sur la seconde coupe : ŒUFS + SUCRE, glissé : + FARINE + BEURRE"
+  },
+  {
+   "t": 16.25,
+   "beat": "zoom arrière pendant « Versez dans un moule beurré » : le moule cannelé se trace d'un tour"
+  },
+  {
+   "t": 18.1,
+   "beat": "rangs finaux : 40 MINUTES / À 180 °C ; double soulignement rose sous le titre sur « Quatre parts égales » ; dernier rang encore jaune"
+  }
+ ],
+ "engagement": {
+  "mechanic": "fiche de recette qu'on peut capturer : le dessin final est la recette",
+  "cta": null
+ },
+ "loopable": false,
+ "sound": {
+  "type": "voice",
+  "voice": true,
+  "music": "aucune (lit sonore facultatif non posé : aucun son libre de droits adapté dans le dépôt)",
+  "silentTrack": false
+ },
+ "qualityChecks": {
+  "stillsReviewed": true,
+  "textMinPx": 104,
+  "safeAreaOk": true,
+  "audit": "out/tools/chemin_audit.mjs : aucune erreur",
+  "maxWordsOnScreen": 3
+ },
+ "facts": {
+  "checked": "2026-11-19, recherche web rapide",
+  "notes": "principe : quatre ingrédients à poids égal (œufs, sucre, farine, beurre), origine bretonne ; cuisson à 180 °C, 30 à 45 min selon le moule (vérifier à la lame) : « quarante minutes » retenu au lieu de 45 ; « avec leur coquille » retiré (les sources pèsent le plus souvent les œufs cassés)",
+  "sources": [
+   "https://www.demotivateur.fr/food/recette/quatre-quarts-facile-et-rapide-2628",
+   "https://meilleurduchef.com/fr/recette/quatre-quarts.html",
+   "https://mariefoodtips.com/quatre-quarts"
+  ]
+ },
+ "notes": "Essai C1 de la composition (out/report/notes/composition/matrice.md, verdict dans essais.md) : même narration, mêmes temps, même dessin et même voix que lyrics-chemin__explicatif__le-quatre-quarts ; seul l'habillage change (craie-verte au lieu d'ardoise). longForm : check.py admet jusqu'à 60 s.",
+ "reproduce": "voir src/README.md",
+ "language": "fr"
+}

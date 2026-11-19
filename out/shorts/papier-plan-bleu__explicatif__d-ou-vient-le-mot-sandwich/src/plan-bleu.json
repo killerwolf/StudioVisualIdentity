@@ -1,0 +1,10 @@
+{"nom": "Essai C4 · Plan bleu", "resume": "Habillage plan-bleu (lyrics-chemin) dans le moteur papier : feuille de plan bleue quadrillée et pliée, papier ivoire, encre jaune réservée, Barlow Condensed et JetBrains Mono.",
+ "tapis": "plan",
+ "couleurs": {"MAT": [27, 76, 146], "MAT_DEEP": [20, 60, 120], "PAPER": [243, 240, 228], "INK": [18, 38, 74], "INK_SOFT": [70, 92, 128],
+   "BLUE": [27, 76, 146], "RED": [255, 125, 92], "YELLOW": [255, 216, 74], "PINK": [157, 179, 214], "CYAN": [157, 179, 214], "KRAFT": [207, 200, 186],
+   "MUTED": [157, 179, 214]},
+ "polices": {"display": "../../../../../node_modules/@fontsource/barlow-condensed/files/barlow-condensed-latin-800-normal.woff2",
+   "hand": "../../../../../node_modules/@fontsource/barlow-condensed/files/barlow-condensed-latin-600-italic.woff2",
+   "hand-r": "../../../../../node_modules/@fontsource/barlow-condensed/files/barlow-condensed-latin-600-italic.woff2",
+   "mono": "../../../../../node_modules/@fontsource/jetbrains-mono/files/jetbrains-mono-latin-500-normal.woff2",
+   "mono-r": "../../../../../node_modules/@fontsource/jetbrains-mono/files/jetbrains-mono-latin-400-normal.woff2"}}

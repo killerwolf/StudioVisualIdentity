@@ -1,0 +1,78 @@
+{
+ "identity": "chemin-grille-suisse",
+ "recette": "chemin-grille-suisse",
+ "essai": "C2",
+ "habillage": "grille-suisse",
+ "mecanique": "trace-chemin",
+ "format": "narre-court",
+ "family": "geographie",
+ "title": "Où vivent les 8 milliards d'humains ? — essai C2 : habillage grille-suisse (Grille Suisse) sur le chemin qui se trace",
+ "hook": "Image 0 : « 8 MILLIARDS » s'écrit en rouge, Archivo Black, sous le filet « 01 · MONDE » d'une page crème à 12 colonnes ; la voix dit « Huit milliards d'humains »",
+ "duration": 15.0,
+ "libraries": [
+  "@fontsource/archivo-black 5.3.0",
+  "@fontsource/inter 5.3.0",
+  "Canvas 2D (render.mjs, Chrome par playwright-core)",
+  "ffmpeg"
+ ],
+ "seed": "aucun hasard",
+ "renderTimeSec": 124.4,
+ "renderNote": "render.mjs, 450 images, 27,7 s / 100 images, seul rendu sur la machine ; voix reconstruite par src/voix.py, posée par ffmpeg (loudnorm −16 LUFS), crf 24.",
+ "data": "src/narration-chemin.json + out/shared/chemin-moteur/dessins/barres-humains.json + habillages/grille-suisse.js",
+ "structure": [
+  {
+   "t": 0,
+   "beat": "8 MILLIARDS écrit en rouge sous le filet 01 · MONDE"
+  },
+  {
+   "t": 1.6,
+   "beat": "glissé : OÙ ?"
+  },
+  {
+   "t": 3.2,
+   "beat": "1 CARRÉ / 100 MILLIONS"
+  },
+  {
+   "t": 5.25,
+   "beat": "ASIE 59 % : la barre rouge se remplit sur toute la largeur"
+  },
+  {
+   "t": 7.05,
+   "beat": "AFRIQUE 18 % : barre bleue"
+  },
+  {
+   "t": 8.95,
+   "beat": "filé vers 03 · PAYS : INDE 1,45 Md, puis CHINE 1,41 Md, barres noires à la même échelle"
+  },
+  {
+   "t": 11.35,
+   "beat": "zoom arrière : la page entière est un graphique ; les barres Inde et Chine passent au rouge sur « À elles deux »"
+  },
+  {
+   "t": 12.26,
+   "beat": "rangs finaux : PLUS D'1 HUMAIN / SUR 3"
+  }
+ ],
+ "engagement": {
+  "mechanic": "question",
+  "cta": "Quel est le 6e pays le plus peuplé ? Réponse en commentaire."
+ },
+ "loopable": false,
+ "sound": {
+  "type": "voice",
+  "voice": true,
+  "music": "aucune (la musique de swiss-data est calée sur ses volets)",
+  "voiceUsed": "Fish Audio – Arnold (voice_lines de swiss-data réutilisées)"
+ },
+ "qualityChecks": {
+  "stillsReviewed": true,
+  "safeAreaOk": true,
+  "audit": "out/tools/chemin_audit.mjs : aucune erreur (corps des mots dits 100–124 px ; titre 88 minimum)"
+ },
+ "facts": {
+  "notes": "chiffres du short d'origine (ONU 2024) ; barres à la même échelle en milliards (Asie et Afrique = 59 % et 18 % de 8 milliards)"
+ },
+ "notes": "Essai C2 de la composition (out/report/notes/composition/matrice.md, verdict dans essais.md) : premier habillage porté sur une 2ᵉ mécanique.",
+ "reproduce": "voir src/README.md",
+ "language": "fr"
+}

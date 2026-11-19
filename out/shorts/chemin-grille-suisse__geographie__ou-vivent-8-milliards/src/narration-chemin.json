@@ -1,0 +1,202 @@
+{
+ "note": "Essai C2 de la composition : habillage grille-suisse (pâte de swiss-data) × mécanique trace-chemin × narré court. Texte et voix de swiss-data__geographie__ou-vivent-8-milliards (Fish Audio Arnold, voice_lines réutilisées par src/voix.py, aucun nouvel appel) ; temps des mots mesurés sur cette piste (silences par ffmpeg silencedetect −35 dB, mots par faster-whisper small). Ce qui s'écrit au sol = le chiffre ou le mot clé de ce qui est dit ; chaque chiffre s'écrit au-dessus de sa barre.",
+ "titre": "OÙ VIVENT 8 MILLIARDS D'HUMAINS ?",
+ "langue": "fr",
+ "sens": "ltr",
+ "temps": 0.5,
+ "duree": 15.0,
+ "dessin": "barres-humains",
+ "habillage": "grille-suisse",
+ "zoomArriere": [
+  11.35,
+  12.25
+ ],
+ "lignes": [
+  {
+   "arete": "titre",
+   "u": [
+    [
+     "8 MILLIARDS",
+     0.31,
+     1.23
+    ]
+   ],
+   "cad": [
+    [
+     0
+    ]
+   ],
+   "arr": 0,
+   "duree": 0,
+   "kind": "cut",
+   "minPx": 88
+  },
+  {
+   "arete": "question",
+   "u": [
+    [
+     "OÙ ?",
+     1.99,
+     2.61
+    ]
+   ],
+   "cad": [
+    [
+     0
+    ]
+   ],
+   "arr": 1.6,
+   "duree": 0.3,
+   "kind": "glide"
+  },
+  {
+   "arete": "unite",
+   "u": [
+    [
+     "1 CARRÉ",
+     3.51,
+     3.98
+    ],
+    [
+     "100 MILLIONS",
+     4.28,
+     5.13
+    ]
+   ],
+   "cad": [
+    [
+     0
+    ],
+    [
+     1
+    ]
+   ],
+   "arr": 3.2,
+   "duree": 0.3,
+   "kind": "glide",
+   "minPx": 100
+  },
+  {
+   "arete": "asie",
+   "u": [
+    [
+     "ASIE",
+     5.57,
+     5.93
+    ],
+    [
+     "59 %",
+     6.16,
+     7.08
+    ]
+   ],
+   "cad": [
+    [
+     0,
+     1
+    ]
+   ],
+   "arr": 5.25,
+   "duree": 0.3,
+   "kind": "glide"
+  },
+  {
+   "arete": "afrique",
+   "u": [
+    [
+     "AFRIQUE",
+     7.23,
+     7.68
+    ],
+    [
+     "18 %",
+     7.82,
+     8.65
+    ]
+   ],
+   "cad": [
+    [
+     0
+    ],
+    [
+     1
+    ]
+   ],
+   "arr": 7.05,
+   "duree": 0.25,
+   "kind": "glide"
+  },
+  {
+   "arete": "inde",
+   "u": [
+    [
+     "INDE",
+     9.4,
+     9.82
+    ],
+    [
+     "1,45 Md",
+     9.85,
+     10.35
+    ]
+   ],
+   "cad": [
+    [
+     0,
+     1
+    ]
+   ],
+   "arr": 8.95,
+   "duree": 0.45,
+   "kind": "whip",
+   "minPx": 100
+  },
+  {
+   "arete": "chine",
+   "u": [
+    [
+     "CHINE",
+     10.6,
+     11.04
+    ],
+    [
+     "1,41 Md",
+     11.06,
+     11.5
+    ]
+   ],
+   "cad": [
+    [
+     0,
+     1
+    ]
+   ],
+   "arr": 10.45,
+   "duree": 0.25,
+   "kind": "glide",
+   "minPx": 100
+  }
+ ],
+ "final": {
+  "u": [
+   [
+    "PLUS D'1 HUMAIN",
+    12.26,
+    12.85
+   ],
+   [
+    "SUR 3",
+    12.85,
+    15.0
+   ]
+  ],
+  "rangs": [
+   [
+    0
+   ],
+   [
+    1
+   ]
+  ]
+ }
+}

@@ -51,13 +51,15 @@
   "atelier-papier",
   "cabinet-curiosites",
   "carnet-archives",
-  "papier-decoupe"
+  "papier-decoupe",
+  "plan-bleu"
  ],
  "recettes": [
   "papier-decoupe",
   "atelier-papier",
   "carnet-archives",
-  "cabinet-curiosites"
+  "cabinet-curiosites",
+  "papier-plan-bleu"
  ],
  "source": "out/report/notes/composition/inventaire.md",
  "date": "2026-11-19"

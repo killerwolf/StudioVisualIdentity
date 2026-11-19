@@ -1,0 +1,45 @@
+{
+ "language": "fr",
+ "style": "documentaire, posé et net, ton d'infographie de presse",
+ "voiceUsed": {
+  "provider": "Fish Audio",
+  "name": "Arnold",
+  "reference_id": "d704cf8f1216490cbfbed89955f0e938",
+  "model": "s2.1-pro",
+  "note": "voix réellement utilisée pour les 31 shorts ; audio par ligne dans voice_lines/NN.mp3"
+ },
+ "voiceGeminiSuggestion": "Orus (historique : Gemini abandonné, voir out/report/failures.md)",
+ "lines": [
+  {
+   "t": 0.3,
+   "maxDuration": 3.1,
+   "text": "Huit milliards d'humains. Mais où vivent-ils ?"
+  },
+  {
+   "t": 3.5,
+   "maxDuration": 2.0,
+   "text": "Un carré, cent millions d'humains."
+  },
+  {
+   "t": 5.55,
+   "maxDuration": 1.6,
+   "text": "L'Asie, cinquante-neuf pour cent."
+  },
+  {
+   "t": 7.2,
+   "maxDuration": 1.6,
+   "text": "L'Afrique, dix-huit pour cent."
+  },
+  {
+   "t": 8.9,
+   "maxDuration": 2.7,
+   "text": "En tête, l'Inde, juste devant la Chine."
+  },
+  {
+   "t": 11.7,
+   "maxDuration": 3.1,
+   "text": "À elles deux, plus d'un humain sur trois."
+  }
+ ],
+ "note": "Même texte et mêmes fichiers de voix que swiss-data__geographie__ou-vivent-8-milliards (voice_lines/ de ce short, non copiées : src/voix.py les lit là-bas) ; piste de voix seule, sans musique."
+}

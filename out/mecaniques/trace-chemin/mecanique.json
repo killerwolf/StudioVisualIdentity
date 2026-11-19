@@ -60,12 +60,15 @@
   "note": "les crochets lisent des champs du dessin (G.mat, G.boites, G.moule, G.route) : un habillage du chemin n'est compatible qu'avec un dessin dont il sait dessiner les primitives (inventaire.md § 3)"
  },
  "formats": [
+  "narre-court",
   "narre-long",
   "paroles-muet"
  ],
  "habillagesTestes": [
   "ardoise",
+  "craie-verte",
   "editeur",
+  "grille-suisse",
   "plan-bleu",
   "portulan"
  ],
@@ -73,7 +76,9 @@
   "lyrics-chemin",
   "chemin-editeur",
   "chemin-ardoise",
-  "chemin-portulan"
+  "chemin-portulan",
+  "chemin-craie-verte",
+  "chemin-grille-suisse"
  ],
  "source": "out/report/notes/composition/inventaire.md",
  "date": "2026-11-19"

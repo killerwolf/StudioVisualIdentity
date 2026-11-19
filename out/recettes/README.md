@@ -18,7 +18,7 @@ preuve de chaque recette du même id.
   `coreTokens` de l'index) mais le code des scènes écrit ses valeurs en dur.
 - **Étiquetage des shorts** : `etiquettes.json` donne pour chacun des 50 shorts sa recette, son habillage, sa mécanique et
   son format. Il est tenu ici et **pas** dans les `short.json` (consigne du 19/11 : ne modifier aucun short existant ;
-  `migration.md` étape 2 prévoyait des champs dans `short.json`, à faire plus tard si on le veut).
+  `migration.md` étape 2 prévoyait des champs dans `short.json`, à faire plus tard si on le veut). Les 3 shorts d'essai, eux, déclarent leurs briques dans leur propre `short.json`.
 - `famille` (le sujet : `histoire`, `explicatif`, `paroles`…) n'est pas un format : `lyrics-chemin__histoire__le-premier-tour-du-monde`
   est de famille `histoire` au format `narre-long`.
 - Les signatures (`curation.signatureToPreserve` de l'index) sont coupées en deux dans `signaturePortee` de chaque recette
@@ -30,7 +30,7 @@ preuve de chaque recette du même id.
 tester** (besoins remplis sur le papier, pas d'adaptateur), **incompatible** (contrainte violée, raison écrite). Une case
 absente vaut « inconnu ».
 
-### Testées (26)
+### Testées (29 : 26 recettes du catalogue + 3 essais)
 
 | Habillage | Mécanique | Format | Recette | Shorts |
 |---|---|---|---|---|
@@ -60,17 +60,18 @@ absente vaut « inconnu ».
 | editeur | trace-chemin | paroles-muet | chemin-editeur | 1 |
 | ardoise | trace-chemin | narre-long | chemin-ardoise | 1 |
 | portulan | trace-chemin | narre-long | chemin-portulan | 1 |
+| **craie-verte** | **trace-chemin** | **narre-long** | **essai C1** `chemin-craie-verte` | 1 |
+| **grille-suisse** | **trace-chemin** | **narre-court** | **essai C2** `chemin-grille-suisse` | 1 |
+| **plan-bleu** | **pop-papier-12ips** | **narre-court** | **essai C4** `papier-plan-bleu` | 1 |
 
 ### Proposées, pas encore essayées (`matrice.md`)
 
 | # | Habillage × Mécanique × Format | État | Raison ou question |
 |---|---|---|---|
-| C1 | craie-verte × trace-chemin × narre-long | à tester (essai en cours) | doublon probable avec `ardoise` |
-| C2 | grille-suisse × trace-chemin × narre-court | à tester (essai en cours) | premier habillage porté sur une 2ᵉ mécanique |
-| C4 | plan-bleu × pop-papier-12ips × narre-court | à tester (essai en cours) | un thème JSON pour le moteur papier |
 | C3 | carnet-archives × trace-chemin × narre-long | à tester | porter un habillage du moteur Python vers le moteur JS |
 | C5 | grille-suisse × pop-papier-12ips × narre-court | à tester | la grille suisse survit-elle au stop-motion à 12 i/s ? |
 | C6 | brut-jaune × colonne-mot-a-mot × paroles-muet | incompatible | Anton n'a pas d'axe `wdth`, exigé par la colonne justifiée (réparable avec une police variable) |
 | C7 | portulan × survol-terrain (survol.py) | incompatible | le moteur impose une grille 270×480 en palette indexée : un parchemin anticrénelé ne passe pas |
 | C8 | pixel-jour × simulation-deterministe × narre-court | à tester | même grille 270×480 ×4 : faut-il un habillage parent `pixel-16` ? |
 
+Verdicts des essais C1, C2, C4 : [`out/report/notes/composition/essais.md`](../report/notes/composition/essais.md).

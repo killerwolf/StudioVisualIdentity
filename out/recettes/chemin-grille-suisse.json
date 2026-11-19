@@ -1,0 +1,26 @@
+{
+ "id": "chemin-grille-suisse",
+ "nom": "Chemin grille suisse",
+ "habillage": "grille-suisse",
+ "mecanique": "trace-chemin",
+ "formats": [
+  "narre-court"
+ ],
+ "son": null,
+ "statut": "essai",
+ "essai": "C2",
+ "question": "un habillage (grille-suisse) reste-t-il reconnaissable quand on change sa mécanique ?",
+ "shorts": [
+  "out/shorts/chemin-grille-suisse__geographie__ou-vivent-8-milliards"
+ ],
+ "adaptateur": "out/shared/chemin-moteur/habillages/grille-suisse.js",
+ "verdict": {
+  "cle": "reconnu",
+  "titre": "Oui : Grille Suisse reste reconnaissable sur un autre mouvement",
+  "texte": "Sur une image fixe, on reconnaît Grille Suisse tout de suite : crème, 12 colonnes, Archivo Black, rouge, noir et bleu seulement, filets « 01 · MONDE ». Le mouvement change tout le reste : un seul plan qui suit le chiffre, les barres qui se remplissent, puis la page entière devient un vrai graphique à la même échelle. C'est le premier habillage prouvé sur deux mécaniques. Faiblesses : l'image d'ouverture est trop vide, et « 1 carré = 100 millions » n'a plus de sens sans les carrés de l'original.",
+  "cout": "≈ 1 session · 1 habillage + 1 dessin en barres · rendu 2 min · voix d'Arnold réutilisée"
+ },
+ "date": "2026-11-19",
+ "planche": "out/report/notes/composition/essais/C2-planche.jpg",
+ "comparaison": "out/report/notes/composition/essais/C2-comparaison.jpg"
+}

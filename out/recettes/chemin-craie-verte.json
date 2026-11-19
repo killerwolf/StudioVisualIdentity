@@ -1,0 +1,26 @@
+{
+ "id": "chemin-craie-verte",
+ "nom": "Chemin craie verte",
+ "habillage": "craie-verte",
+ "mecanique": "trace-chemin",
+ "formats": [
+  "narre-long"
+ ],
+ "son": null,
+ "statut": "essai",
+ "essai": "C1",
+ "question": "la pâte de tableau-craie (tableau vert, craies de couleur, écriture Caveat, rebord en bois) peut-elle habiller le chemin, et se distingue-t-elle de l'ardoise ?",
+ "shorts": [
+  "out/shorts/chemin-craie-verte__explicatif__le-quatre-quarts"
+ ],
+ "adaptateur": "out/shared/chemin-moteur/habillages/craie-verte.js",
+ "verdict": {
+  "cle": "distinct-mais-cousin",
+  "titre": "Reconnaissable, distinct de l'ardoise, mais de la même famille",
+  "texte": "On reconnaît Tableau Craie au premier coup d'œil (tableau vert, craie orange et bleue, écriture à la main, rebord avec ses bâtons), et on ne le confond pas avec l'ardoise (noire, majuscules étroites, vrais objets, cadre en chêne). Ce n'est donc pas un doublon à l'image. Mais c'est la même matière (craie érodée sur un tableau) en deux tons : on en fait un habillage parent « craie » avec deux variantes, pas deux marques. Ce que l'essai apporte à Tableau Craie : une caméra qui suit la craie et un dessin final révélé, qu'il n'avait pas.",
+  "cout": "≈ 0,5 session · 1 fichier d'habillage (dérivé de l'ardoise) · rendu 13 min · même voix"
+ },
+ "date": "2026-11-19",
+ "planche": "out/report/notes/composition/essais/C1-planche.jpg",
+ "comparaison": "out/report/notes/composition/essais/C1-comparaison.jpg"
+}

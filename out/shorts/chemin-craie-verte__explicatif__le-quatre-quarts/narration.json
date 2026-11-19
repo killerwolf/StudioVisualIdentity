@@ -1,0 +1,56 @@
+{
+ "language": "fr",
+ "style": "cheffe qui explique dans sa cuisine : chaleureuse, simple, précise sur les verbes",
+ "voice": "Gipsy Paladini (ElevenLabs)",
+ "voiceUsed": {
+  "provider": "ElevenLabs",
+  "name": "Gipsy Paladini - Narration, conversation",
+  "voiceId": "J2o6r07MidKFMEnchGg5",
+  "model": "eleven_multilingual_v2",
+  "date": "2026-11-19",
+  "credits": 336,
+  "note": "une seule génération pour tout le texte (336 caractères, nombres en toutes lettres : « Quarante minutes, à cent quatre-vingts degrés »), aucune reprise ; voix de la bibliothèque (fr-standard, femme, âge moyen), choisie sur le profil de Fable ; fichier maître hors dépôt (~/git/StudioVisualIdentity-sources/lyrics-chemin-narres/a2-quatre-quarts.elevenlabs.mp3), mixé dans short.mp4 ; mots horodatés par faster-whisper small (fr)"
+ },
+ "lines": [
+  {
+   "t": 0.0,
+   "maxDuration": 1.26,
+   "text": "Le quatre-quarts."
+  },
+  {
+   "t": 1.74,
+   "maxDuration": 3.52,
+   "text": "Tout est dans son nom : quatre ingrédients, à parts égales."
+  },
+  {
+   "t": 5.5,
+   "maxDuration": 1.78,
+   "text": "Pesez trois œufs."
+  },
+  {
+   "t": 7.14,
+   "maxDuration": 4.44,
+   "text": "Puis le même poids de sucre, de farine, et de beurre fondu."
+  },
+  {
+   "t": 11.72,
+   "maxDuration": 4.58,
+   "text": "Fouettez les œufs avec le sucre, ajoutez la farine, puis le beurre."
+  },
+  {
+   "t": 16.2,
+   "maxDuration": 1.84,
+   "text": "Versez dans un moule beurré."
+  },
+  {
+   "t": 18.1,
+   "maxDuration": 2.98,
+   "text": "Quarante minutes, à cent quatre-vingts degrés."
+  },
+  {
+   "t": 21.16,
+   "maxDuration": 2.78,
+   "text": "Quatre parts égales. Un seul gâteau."
+  }
+ ]
+}

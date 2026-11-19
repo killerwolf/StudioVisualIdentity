@@ -54,11 +54,15 @@
   "couleurReservee": "vif"
  },
  "contraintes": null,
- "adaptateurs": {},
+ "adaptateurs": {
+  "trace-chemin": "out/shared/chemin-moteur/habillages/craie-verte.js"
+ },
  "image": "out/shorts/tableau-craie__enfants__comment-une-graine-devient-un-arbre/stills/still_07.90s.jpg",
  "recettes": [
-  "tableau-craie"
+  "tableau-craie",
+  "chemin-craie-verte"
  ],
  "source": "coreTokens de out/identities/index.json (le code des scènes écrit ses valeurs en dur : brique déclarée)",
- "date": "2026-11-19"
+ "date": "2026-11-19",
+ "note": "adaptateur ajouté par un essai de composition (19/11/2026) : le reste de la fiche reste au niveau « declare »"
 }

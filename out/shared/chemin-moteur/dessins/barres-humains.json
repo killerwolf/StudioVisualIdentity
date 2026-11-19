@@ -1,0 +1,208 @@
+{
+ "id": "barres-humains",
+ "note": "Essai C2 de la composition (habillage grille-suisse sur trace-chemin), texte et voix de swiss-data__geographie__ou-vivent-8-milliards. Repère monde = image finale 1080×1920, grille de 12 colonnes sur x 96–984. Chaque chiffre s'écrit au-dessus d'une barre horizontale qui se remplit pendant qu'il est dit ; toutes les barres sont à la même échelle (milliards d'humains : Asie 4,72 et Afrique 1,44 = 59 % et 18 % de 8 milliards, Inde 1,45 et Chine 1,41, chiffres ONU 2024 repris du short d'origine), si bien que l'image finale est un vrai graphique. Les rangs finaux (la chute) s'écrivent dessous.",
+ "feuille": {
+  "x": 96,
+  "y": 230,
+  "w": 888,
+  "h": 1380
+ },
+ "points": {},
+ "aretes": {
+  "titre": {
+   "chemin": {
+    "type": "droite",
+    "a": [
+     96,
+     420
+    ],
+    "b": [
+     984,
+     420
+    ]
+   },
+   "em": [
+    118,
+    118
+   ],
+   "noLine": true,
+   "noFit": true
+  },
+  "question": {
+   "chemin": {
+    "type": "droite",
+    "a": [
+     96,
+     525
+    ],
+    "b": [
+     984,
+     525
+    ]
+   },
+   "em": [
+    64,
+    64
+   ],
+   "noLine": true,
+   "noFit": true
+  },
+  "unite": {
+   "chemin": {
+    "type": "droite",
+    "a": [
+     96,
+     615
+    ],
+    "b": [
+     984,
+     615
+    ]
+   },
+   "em": [
+    42,
+    42
+   ],
+   "noLine": true,
+   "noFit": true
+  },
+  "asie": {
+   "chemin": {
+    "type": "droite",
+    "a": [
+     96,
+     760
+    ],
+    "b": [
+     984,
+     760
+    ]
+   },
+   "em": [
+    52,
+    52
+   ],
+   "noLine": true,
+   "noFit": true
+  },
+  "afrique": {
+   "chemin": {
+    "type": "droite",
+    "a": [
+     96,
+     900
+    ],
+    "b": [
+     984,
+     900
+    ]
+   },
+   "em": [
+    52,
+    52
+   ],
+   "noLine": true,
+   "noFit": true
+  },
+  "inde": {
+   "chemin": {
+    "type": "droite",
+    "a": [
+     96,
+     1130
+    ],
+    "b": [
+     984,
+     1130
+    ]
+   },
+   "em": [
+    52,
+    52
+   ],
+   "noLine": true,
+   "noFit": true
+  },
+  "chine": {
+   "chemin": {
+    "type": "droite",
+    "a": [
+     96,
+     1270
+    ],
+    "b": [
+     984,
+     1270
+    ]
+   },
+   "em": [
+    52,
+    52
+   ],
+   "noLine": true,
+   "noFit": true
+  }
+ },
+ "barres": [
+  {
+   "arete": "asie",
+   "x": 96,
+   "y": 772,
+   "w": 888,
+   "h": 52,
+   "col": "rouge"
+  },
+  {
+   "arete": "afrique",
+   "x": 96,
+   "y": 912,
+   "w": 271,
+   "h": 52,
+   "col": "bleu"
+  },
+  {
+   "arete": "inde",
+   "x": 96,
+   "y": 1142,
+   "w": 273,
+   "h": 52,
+   "col": "noir",
+   "rougeA": 11.8
+  },
+  {
+   "arete": "chine",
+   "x": 96,
+   "y": 1282,
+   "w": 265,
+   "h": 52,
+   "col": "noir",
+   "rougeA": 11.95
+  }
+ ],
+ "regles": [
+  {
+   "y": 250,
+   "g": "01 · MONDE",
+   "d": "ONU · 2024"
+  },
+  {
+   "y": 1020,
+   "g": "03 · PAYS",
+   "d": "EN MILLIARDS"
+  }
+ ],
+ "final": {
+  "gauche": 96,
+  "largeurMax": 888,
+  "emMax": 104,
+  "espace": 0.27,
+  "rangs": [
+   {
+    "y": 1460
+   },
+   {
+    "y": 1575
+   }
+  ]
+ }
+}

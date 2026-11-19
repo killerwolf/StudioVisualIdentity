@@ -1,0 +1,236 @@
+{
+ "note": "Essai C1 de la composition : même narration, mêmes temps et même dessin que lyrics-chemin__explicatif__le-quatre-quarts (habillage ardoise), habillage craie-verte (pâte de tableau-craie). Seule différence de contenu : le texte au sol passe en minuscules (écriture manuscrite Caveat, comme tableau-craie), titre compris.",
+ "titre": "Le quatre-quarts",
+ "langue": "fr",
+ "sens": "ltr",
+ "temps": 0.5,
+ "duree": 25.6,
+ "dessin": "quatre-quarts",
+ "habillage": "craie-verte",
+ "zoomArriere": [
+  16.25,
+  17.9
+ ],
+ "moule": [
+  16.4,
+  18.0
+ ],
+ "lignes": [
+  {
+   "arete": "titre",
+   "u": [
+    [
+     "Quatre-quarts",
+     0.05,
+     1.3
+    ]
+   ],
+   "cad": [
+    [
+     0
+    ]
+   ],
+   "arr": 0,
+   "duree": 0,
+   "kind": "cut",
+   "maxPx": 250,
+   "annotation": {
+    "type": "souligne",
+    "t": 21.2,
+    "d": 0.6
+   }
+  },
+  {
+   "arete": "coupe1a",
+   "u": [
+    [
+     "quatre",
+     3.1,
+     3.32
+    ],
+    [
+     "ingrédients",
+     3.32,
+     4.0
+    ]
+   ],
+   "cad": [
+    [
+     0,
+     1
+    ]
+   ],
+   "arr": 2.9,
+   "duree": 0.7,
+   "kind": "pivot",
+   "minPx": 104
+  },
+  {
+   "arete": "coupe1b",
+   "u": [
+    [
+     "à parts",
+     4.1,
+     4.44
+    ],
+    [
+     "égales",
+     4.44,
+     5.1
+    ]
+   ],
+   "cad": [
+    [
+     0,
+     1
+    ]
+   ],
+   "arr": 4.05,
+   "duree": 0.3,
+   "kind": "glide"
+  },
+  {
+   "arete": "oeufs",
+   "u": [
+    [
+     "3 œufs",
+     5.98,
+     7.1
+    ]
+   ],
+   "cad": [
+    [
+     0
+    ]
+   ],
+   "arr": 5.75,
+   "duree": 0.5,
+   "kind": "whip"
+  },
+  {
+   "arete": "sucre",
+   "u": [
+    [
+     "sucre",
+     8.78,
+     9.4
+    ]
+   ],
+   "cad": [
+    [
+     0
+    ]
+   ],
+   "arr": 8.6,
+   "duree": 0.4,
+   "kind": "glide",
+   "maxPx": 200
+  },
+  {
+   "arete": "farine",
+   "u": [
+    [
+     "farine",
+     9.54,
+     10.2
+    ]
+   ],
+   "cad": [
+    [
+     0
+    ]
+   ],
+   "arr": 9.5,
+   "duree": 0.3,
+   "kind": "glide"
+  },
+  {
+   "arete": "beurre",
+   "u": [
+    [
+     "beurre",
+     10.56,
+     11.4
+    ]
+   ],
+   "cad": [
+    [
+     0
+    ]
+   ],
+   "arr": 10.5,
+   "duree": 0.3,
+   "kind": "glide"
+  },
+  {
+   "arete": "coupe2a",
+   "u": [
+    [
+     "œufs",
+     12.42,
+     12.86
+    ],
+    [
+     "+ sucre",
+     13.32,
+     13.85
+    ]
+   ],
+   "cad": [
+    [
+     0,
+     1
+    ]
+   ],
+   "arr": 12.3,
+   "duree": 0.7,
+   "kind": "pivot"
+  },
+  {
+   "arete": "coupe2b",
+   "u": [
+    [
+     "+ farine",
+     14.46,
+     14.95
+    ],
+    [
+     "+ beurre",
+     15.36,
+     16.1
+    ]
+   ],
+   "cad": [
+    [
+     0,
+     1
+    ]
+   ],
+   "arr": 14.3,
+   "duree": 0.35,
+   "kind": "glide"
+  }
+ ],
+ "final": {
+  "u": [
+   [
+    "40 minutes",
+    18.1,
+    18.9
+   ],
+   [
+    "à 180 °C",
+    19.12,
+    26.6
+   ]
+  ],
+  "rangs": [
+   [
+    0
+   ],
+   [
+    1
+   ]
+  ]
+ }
+}
