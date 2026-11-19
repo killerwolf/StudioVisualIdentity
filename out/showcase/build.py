@@ -36,7 +36,9 @@ COMPOSER (section « Composer ses identités ») : les données (habillages, mé
   C1…C8) sont lues dans la maquette out/report/notes/composition/vitrine-composer.html (objet `const D = {…}`), et
   injectées à la place de __COMPOSER__ avec des noms lisibles (HAB_NOM, MEC_NOM ci-dessous) et le poster de chaque
   habillage (p/<short>.jpg, déjà produit pour les bandes). Les chiffres d'inventaire (23 identités, 7/12/4) et l'effort
-  sont des textes fixes de page.tpl.html, repris de inventaire.md et migration.md.
+  sont des textes fixes de page.tpl.html, repris de inventaire.md et migration.md. Les essais faits (out/recettes/<id>.json
+  avec une clé « essai ») remplissent leur case : short, aperçu v/<short>.mp4, poster p/<short>.jpg et verdict ; leurs
+  shorts ne sont pas dans l'index (préfixe de recette neuf) et ne comptent pas dans les chiffres de l'en-tête.
 
 Les textes fixes de la page (limites, directions, colophon) sont dans page.tpl.html : les mettre à jour à la main quand le
 rapport (out/report/) change. Les chiffres (identités, shorts, QA, reconnaissance mesurée, voix) sont calculés ici.
@@ -200,6 +202,21 @@ def composer_short_habillage():
     return {s['dir']: HAB_NOM.get(r['habillage'], r['habillage']) for r in maquette()['recettes'] for s in r['shorts']}
 
 
+def essais():
+    """Recettes d'essai (out/recettes/<id>.json avec une clé « essai » : C1, C2, C4…) : leur short est hors index."""
+    out = []
+    for f in sorted((ROOT / 'out/recettes').glob('*.json')):
+        r = json.load(open(f))
+        if isinstance(r, dict) and r.get('essai'):
+            out.append(r)
+    return out
+
+
+def essai_shorts():
+    """(dossier, chemin du short.mp4, instant du poster) des shorts d'essai ; posterT de la recette = une image qui montre l'essai (souvent l'image finale)."""
+    return [(Path(d).name, ROOT / d / 'short.mp4', r.get('posterT', 2.2)) for r in essais() for d in r['shorts'] if (ROOT / d / 'short.mp4').exists()]
+
+
 def build_composer(ids):
     D = maquette()
     by_id = {i['id']: i for i in ids}
@@ -207,14 +224,25 @@ def build_composer(ids):
     for r in D['recettes']:
         dirs = [s['dir'] for s in r['shorts']] or [s['dir'] for s in (by_id.get(r['id']) or {}).get('shorts', [])]
         first[r['id']] = dirs[0] if dirs else None
-    anchor = lambda rid: rid if rid in by_id else 'lyrics-chemin' if rid.startswith('chemin-') else rid
-    tested = {c['h']: c['recette'] for c in D['cases'] if c['etat'] == 'teste'}
+    # essais faits (C1, C2, C4…) : la case de la maquette passe à « teste », avec le short, la vidéo et le verdict de la recette
+    ess = {}
+    for r in essais():
+        c = next((c for c in D['cases'] if c.get('essai') == r['essai']), None)
+        if not c or not r['shorts'] or not (ROOT / r['shorts'][0] / 'short.mp4').exists():
+            continue
+        d = Path(r['shorts'][0]).name
+        c.update(etat='teste', recette=r['id'], f=r['formats'][0])
+        first[r['id']] = d
+        ess[r['id']] = {'essai': r['essai'], 'video': f'v/{d}.mp4', 'nom': r['nom'], 'verdict': r.get('verdict') or {},
+                        'duree': json.load(open(ROOT / r['shorts'][0] / 'short.json')).get('duration')}
+    anchor = lambda rid: f"essai-{ess[rid]['essai']}" if rid in ess else rid if rid in by_id else 'lyrics-chemin' if rid.startswith('chemin-') else rid
+    tested = {c['h']: c['recette'] for c in D['cases'] if c['etat'] == 'teste' and c.get('recette') not in ess}
     habs = [{'id': h['id'], 'nom': HAB_NOM.get(h['id'], h['id']), 'de': h['de'],
              'poster': first.get(tested.get(h['id'])), 'ancre': anchor(tested.get(h['id'], h['de']))}
             for h in D['habillages']]
     mecs = [{'id': m['id'], 'nom': MEC_NOM.get(m['id'], m['id']), 'de': m['de']} for m in D['mecaniques']]
     cases = [{**c, 'poster': first.get(c.get('recette')), 'ancre': anchor(c['recette']) if c.get('recette') else None,
-              'fNom': FMT_NOM.get(c['f'], c['f'])} for c in D['cases']]
+              'fNom': FMT_NOM.get(c['f'], c['f']), **({'fait': ess[c['recette']]} if c.get('recette') in ess else {})} for c in D['cases']]
     # un habillage dont aucun short n'est dans la page (ex. pixel-jour sans --also-from sur identite-lyrics) garde un
     # poster nul : il n'apparaît que dans la matrice complète, sous forme de point
     return {'habillages': habs, 'mecaniques': mecs, 'formats': [{**f, 'nom': FMT_NOM.get(f['id'], f['id'])} for f in D['formats']],
@@ -242,6 +270,16 @@ def build_media(ids, force, only=None):
                 print('aperçu', v.name)
             if redo or not p.exists() or p.stat().st_mtime < src.stat().st_mtime:
                 ff('-ss', '2.2', '-i', str(src), '-frames:v', '1', '-vf', 'scale=540:-1', '-q:v', '4', str(p))
+    if not only:   # shorts d'essai de la composition (hors index) : mêmes aperçus et posters
+        for d, src, pt in essai_shorts():
+            v, p = BUILD / f"v/{d}.mp4", BUILD / f"p/{d}.jpg"
+            if force or not v.exists() or v.stat().st_mtime < src.stat().st_mtime:
+                ff('-i', str(src), '-vf', 'scale=540:960', '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '27',
+                   '-maxrate', '1.6M', '-bufsize', '3M', '-pix_fmt', 'yuv420p', '-c:a', 'aac', '-b:a', '112k',
+                   '-movflags', '+faststart', str(v))
+                print('aperçu (essai)', v.name)
+            if force or not p.exists() or p.stat().st_mtime < src.stat().st_mtime:
+                ff('-ss', str(pt), '-i', str(src), '-frames:v', '1', '-vf', 'scale=540:-1', '-q:v', '4', str(p))
     sheet = BUILD / 'p/directions.jpg'
     if (force and not only) or not sheet.exists():
         ff('-i', str(ROOT / 'out/report/directions-contact-sheet.jpg'), '-vf', 'scale=1600:-1', '-q:v', '4', str(sheet))

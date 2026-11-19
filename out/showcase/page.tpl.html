@@ -247,6 +247,14 @@ details.full summary { cursor: pointer; font-weight: 600; color: var(--safelight
 .trial .pair > i { font: 800 18px var(--display); font-style: normal; color: var(--ink-2); }
 .trial .pair .q { aspect-ratio: 9 / 16; border: 2px dashed var(--c-try); border-radius: 5px; display: grid; place-items: center; font: 800 24px var(--display); color: var(--c-try); }
 .trial p { font-size: 14px; color: var(--ink-2); }
+.trial .res { margin: 0 auto; width: 100%; max-width: 260px; }
+.trial .res video { width: 100%; aspect-ratio: 9 / 16; border-radius: 6px; background: #000; display: block; box-shadow: 0 0 0 1px var(--line); }
+.trial .res figcaption { font-size: 12px; color: var(--ink-2); margin-top: 4px; text-align: center; }
+.trial .verdict { color: var(--ink); }
+.trial .verdict .vk { display: block; font: 700 12px var(--mono); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 4px; color: var(--c-try); }
+.mx .thumb.done { position: relative; box-shadow: 0 0 0 2px var(--c-try); }
+.mx .thumb.done b { position: absolute; left: 2px; bottom: 2px; font: 800 10px var(--mono); background: var(--c-try); color: #111; padding: 0 3px; border-radius: 2px; }
+.mxfull .tr.done { border-style: solid; background: color-mix(in srgb, var(--c-try) 18%, transparent); }
 .trial .cost { font: 600 13px var(--mono); color: var(--ink); margin-top: auto; }
 .effort table { min-width: 0; font-size: 14px; }
 .effort td, .effort th { padding: 10px 12px; }
@@ -330,7 +338,7 @@ footer.colophon { margin-top: var(--s7); padding-top: var(--s4); border-top: 1px
 
   <section class="section compose" id="composer" aria-labelledby="composer-h">
     <header>
-      <p class="eyebrow"><span class="new">Nouveau</span>Proposition du 19 novembre 2026 · à valider</p>
+      <p class="eyebrow"><span class="new">Nouveau</span>Validé le 19 novembre 2026 (choix 118) · version minimale faite, 3 essais rendus</p>
       <h2 id="composer-h">Composer ses identités</h2>
       <p>Une identité mélange deux choses : <b>ce qu'on voit</b> sur une image fixe (couleurs, polices, matière) et <b>la façon dont ça bouge</b>. Si on les sépare, on peut les recombiner : garder un mouvement qui marche et lui changer d'habit, ou l'inverse, sans tout refaire. Lyrics chemin l'a déjà fait quatre fois.</p>
     </header>
@@ -362,14 +370,14 @@ footer.colophon { margin-top: var(--s7); padding-top: var(--s4); border-top: 1px
       </ul>
     </div>
 
-    <h3 class="sub">Ce qui existe, et les trois essais proposés</h3>
-    <p class="subl">Lignes : les habillages ; colonnes : les mécaniques. Une image = un short existe déjà (cliquer pour le voir plus bas). Un cadre en pointillés = un essai proposé. Pour l'instant, aucun habillage n'a été essayé sur deux mécaniques différentes : c'est ce que testent les essais.</p>
+    <h3 class="sub">Ce qui existe, et les trois premiers essais</h3>
+    <p class="subl">Lignes : les habillages ; colonnes : les mécaniques. Une image = un short existe (cliquer pour le voir). Une image cerclée avec C1, C2 ou C4 = un essai rendu le 19 novembre : pour la première fois, un habillage a été posé sur une deuxième mécanique. Les fiches de chaque brique et ce tableau sont dans le dépôt : out/habillages/, out/mecaniques/, out/formats/, out/recettes/.</p>
     <div class="mx" id="cx-focus"></div>
-    <div class="mlegend"><span><i class="k1"></i>short existant</span><span><i class="k2"></i>essai proposé (C1, C2, C4)</span><span>Extrait : les 10 habillages et 4 mécaniques concernés</span></div>
+    <div class="mlegend"><span><i class="k1"></i>short existant</span><span><i class="k2"></i>essai (C1, C2, C4 : rendus)</span><span>Extrait : les 10 habillages et 4 mécaniques concernés</span></div>
     <details class="full">
       <summary>Voir la matrice complète : <span id="cx-full-n"></span></summary>
       <div class="mx mxfull" id="cx-full"></div>
-      <div class="mlegend"><span><i class="dot" style="display:inline-block;width:12px;height:12px;border-radius:50%;background:var(--c-fmt)"></i>short existant</span><span>C1, C2, C4 : essais proposés</span></div>
+      <div class="mlegend"><span><i class="dot" style="display:inline-block;width:12px;height:12px;border-radius:50%;background:var(--c-fmt)"></i>short existant</span><span>C1, C2, C4 : essais rendus ; C3, C5 à C8 : proposés</span></div>
     </details>
     <div class="trials" id="cx-trials"></div>
 
@@ -385,13 +393,13 @@ footer.colophon { margin-top: var(--s7); padding-top: var(--s4); border-top: 1px
       </tbody>
     </table></div>
 
-    <h3 class="sub">Ta décision</h3>
+    <h3 class="sub">Ta décision (prise : 118)</h3>
     <div class="choices">
-      <div class="choice best"><span class="flag">Conseillé</span><span class="num">118</span><h4>Je valide le modèle + version minimale + essais C1, C2, C4</h4><p>≈ 4 sessions. On pose le vocabulaire sans toucher aux outils, puis on fait les 3 essais pour voir si un habillage reste reconnaissable sur un autre mouvement. On décide du reste après avoir vu les essais.</p></div>
+      <div class="choice best"><span class="flag">Choisi</span><span class="num">118</span><h4>Je valide le modèle + version minimale + essais C1, C2, C4</h4><p>≈ 4 sessions. On pose le vocabulaire sans toucher aux outils, puis on fait les 3 essais pour voir si un habillage reste reconnaissable sur un autre mouvement. On décide du reste après avoir vu les essais.</p></div>
       <div class="choice"><span class="num">119</span><h4>Je valide le modèle + plan complet</h4><p>5,5 à 6,5 sessions. Tout le chantier d'un coup : fiches, outils, index, vitrine « composer », documentation. Les essais viennent après.</p></div>
       <div class="choice"><span class="num">120</span><h4>Je relis d'abord</h4><p>Rien ne bouge. La proposition détaillée reste disponible dans le dépôt (out/report/notes/composition/).</p></div>
     </div>
-    <p class="answer">Pour répondre, envoie le numéro sur Telegram.</p>
+    <p class="answer">Choix 118 reçu le 19 novembre : modèle validé, version minimale faite, essais C1, C2 et C4 rendus (verdicts ci-dessus). La suite se décide après avoir regardé les essais.</p>
   </section>
 
   <div class="toolbar">
@@ -515,7 +523,7 @@ setText("r-hits", META.recogHits); setText("r-total", META.recogTotal);
   const TRIALS = ["C1", "C2", "C4"];
   const cases = C.cases.filter(c => c.etat === "teste" || TRIALS.includes(c.essai));
   const cell = (h, m) => cases.filter(c => c.h === h && c.m === m);
-  const tested = cases.filter(c => c.etat === "teste");
+  const tested = cases.filter(c => c.etat === "teste" && !c.fait);   // shorts du catalogue (les essais faits ont c.fait)
 
   // l'exemple : Le quatre-quarts = Ardoise × Chemin qui se trace × Narré long + voix
   const ex = C.cases.find(c => c.h === "ardoise" && c.m === "trace-chemin");
@@ -553,6 +561,7 @@ setText("r-hits", META.recogHits); setText("r-total", META.recogTotal);
   const GRP = new Set(["craie-verte", "papier-decoupe"]);
   const td = (h, m) => {
     const cs = cell(h, m), t = cs.find(c => c.etat === "teste"), e = cs.find(c => c.essai);
+    if (t && t.fait) return `<td><a class="thumb done" href="#essai-${t.essai}" title="Essai ${t.essai} fait : ${esc(H[h].nom)} × ${esc(M[m].nom)}"><img src="${poster(t.poster)}" alt="Essai ${t.essai} : ${esc(H[h].nom)} × ${esc(M[m].nom)}" loading="lazy"><b>${t.essai}</b></a></td>`;
     if (t) return `<td><a class="thumb" href="#${t.ancre}" title="${esc(H[h].nom)} × ${esc(M[m].nom)} : short existant"><img src="${poster(t.poster)}" alt="${esc(H[h].nom)} × ${esc(M[m].nom)}" loading="lazy"></a></td>`;
     if (e) return `<td><a class="try" href="#essai-${e.essai}" title="Essai proposé ${e.essai}">${e.essai}</a></td>`;
     return `<td><span class="nil" aria-label="rien"></span></td>`;
@@ -565,6 +574,7 @@ setText("r-hits", META.recogHits); setText("r-total", META.recogTotal);
   document.getElementById("cx-full").innerHTML = `<table><thead><tr><th style="position:sticky;left:0;background:var(--panel);z-index:1;writing-mode:horizontal-tb;transform:none"></th>${C.mecaniques.map(m => `<th scope="col">${esc(m.nom)}</th>`).join("")}</tr></thead><tbody>${
     C.habillages.map(h => `<tr><th scope="row">${esc(h.nom)}</th>${C.mecaniques.map(m => {
       const cs = cell(h.id, m.id), t = cs.find(c => c.etat === "teste"), e = cs.find(c => c.essai);
+      if (t && t.fait) return `<td><a class="tr done" href="#essai-${t.essai}" title="Essai ${t.essai} fait">${t.essai}</a></td>`;
       if (t) return `<td><a href="#${t.ancre}" title="${esc(h.nom)} × ${esc(m.nom)} : short existant"><span class="dot"></span></a></td>`;
       if (e) return `<td><a class="tr" href="#essai-${e.essai}" title="Essai proposé">${e.essai}</a></td>`;
       return "<td></td>";
@@ -582,6 +592,9 @@ setText("r-hits", META.recogHits); setText("r-total", META.recogTotal);
     const MEC_SHOW = { "trace-chemin": "portulan", "pop-papier-12ips": "papier-decoupe" };
     const mecPoster = tested.find(t => t.m === c.m && t.h === MEC_SHOW[c.m]) || tested.find(t => t.m === c.m && t.h !== c.h);
     const [title, body, cost] = TXT[id];
+    const F = c.fait, V = F ? F.verdict : null;
+    const result = F ? `<figure><img src="${poster(c.poster)}" alt="" loading="lazy"><figcaption><b>essai</b></figcaption></figure>` : `<div class="q">?</div>`;
+    const video = F ? `<figure class="res"><video src="${F.video}" poster="${poster(c.poster)}" controls playsinline preload="none" aria-label="Essai ${id} : ${esc(h.nom)} × ${esc(m.nom)}"></video><figcaption>Le short d'essai · ${fmt(F.duree)} s</figcaption></figure>` : "";
     return `<article class="trial" id="essai-${id}">
       <span class="tid">Essai ${id} · ${esc(c.fNom)}</span>
       <h4>${esc(title)}</h4>
@@ -590,10 +603,11 @@ setText("r-hits", META.recogHits); setText("r-total", META.recogTotal);
         <i>×</i>
         <figure><img src="${poster(mecPoster.poster)}" alt="" loading="lazy"><figcaption>mouvement de <b>${esc(m.nom)}</b></figcaption></figure>
         <i>=</i>
-        <div class="q">?</div>
+        ${result}
       </div>
-      <p>${esc(body)}</p>
-      <p class="cost">${esc(cost)}</p>
+      ${video}
+      ${V ? `<p class="verdict"><span class="vk ${esc(V.cle || "")}">${esc(V.titre)}</span>${esc(V.texte)}</p>` : `<p>${esc(body)}</p>`}
+      <p class="cost">${esc(F ? V.cout || cost : cost)}</p>
     </article>`;
   }).join("");
 }
