@@ -5,16 +5,19 @@
   "fluides visqueux 2D (peinture, miel, slime) en MLS-MPM",
   "chutes/éclaboussures/mélanges crédibles pour shorts satisfying",
   "rendu points -> surface liquide avec OpenCV",
-  "boucles abstraites de matière"
+  "boucles abstraites de matière",
+  "porter sur GPU (Metal) une boucle numpy par rayon (marche à pas sûrs + bissections) : image de survol-pixel 1,5–1,9 s → 0,7–0,8 s"
  ],
  "avoidFor": [
   "shorts > 15 s ou > 25 k particules sur CPU partagé",
   "3D MPM sur CPU (coût ×20)",
   "scènes demandant des stills à des temps arbitraires sans re-simuler (état séquentiel)",
-  "eau très fluide sans viscosité (éclabousse jusqu'au haut du cadre, formes en étoile)"
+  "eau très fluide sans viscosité (éclabousse jusqu'au haut du cadre, formes en étoile)",
+  "un rendu qui doit être identique au bit près au CPU : la division Metal n'est pas arrondie au plus proche"
  ],
  "renderCostPer100Frames": [
-  "105,6 s (mesuré, liquid-chrome__abstrait__quatre-peintures-mpm : 24 000 particules, grille 90×196, 80 sous-pas dt=1e-4, 1 thread, ombrage OpenCV compris ; sim 79 s + ombrage 25 s) ; 1er essai 32 k particules / 100 sous-pas / ombrage pleine résolution : 206 s/100 frames [liquid-chrome]"
+  "105,6 s (mesuré, liquid-chrome__abstrait__quatre-peintures-mpm : 24 000 particules, grille 90×196, 80 sous-pas dt=1e-4, 1 thread, ombrage OpenCV compris ; sim 79 s + ombrage 25 s) ; 1er essai 32 k particules / 100 sous-pas / ombrage pleine résolution : 206 s/100 frames [liquid-chrome]",
+  "≈ 70–80 s (survol-pixel, marche seule sur GPU AMD Radeon Pro 560, reste en numpy ; mesure par image, pas de rendu complet livré) [survol-pixel]"
  ],
  "gotchas": [
   "dt ≤ 1e-4 avec E=600 et dx=1/160 ; 80 sous-pas/frame -> 0,008 s de temps simulé par frame, régler la gravité (20) pour le rythme voulu",
@@ -23,20 +26,29 @@
   "activer les gouttes au fil du temps via un champ act[] (les particules inactives sautent P2G/G2P)",
   "cpu_max_num_threads=1 pour respecter les slots CPU ; offline_cache=True",
   "les couleurs ne se mélangent pas seules : P2G/G2P de la couleur + taux de mélange faible (0,0016/sous-pas)",
-  "splat bilinéaire (et non au plus proche) pour éviter le scintillement"
+  "splat bilinéaire (et non au plus proche) pour éviter le scintillement",
+  "macOS Intel : taichi==1.7.2 (1.7.3 et 1.7.4 n'ont pas de roue x86_64)",
+  "Metal : la division float32 n'est pas arrondie au plus proche (≈ 29 % des quotients diffèrent de numpy, jusqu'à 2,5 ulp) ; div_rn (reste exact de Dekker) la corrige seule, mais dans le gros noyau un écart d'1 ulp subsiste sur (pz − bm) / ndz : 0 pixel d'écart sur 6 images, 0–0,2 % des rayons à 1–2 ulp",
+  "le compilateur Metal fusionne produit + addition en fma : passer chaque produit par un bit_cast XOR un zéro reçu à l'exécution",
+  "ti.metal prend le périphérique Metal par défaut du système (GPU dédié sur un Mac à deux GPU) ; fast_math=False"
  ],
  "snippetPath": [
-  "shorts/liquid-chrome__abstrait__quatre-peintures-mpm/src"
+  "shorts/liquid-chrome__abstrait__quatre-peintures-mpm/src",
+  "shorts/survol-pixel__explicatif__comment-nait-un-atoll/src/survol_gpu.py"
  ],
  "pairsWellWith": [
   "OpenCV",
   "textpng.py (overlays)",
-  "ffmpeg rawvideo pipe"
+  "ffmpeg rawvideo pipe",
+  "numpy"
  ],
  "usedBy": [
-  "liquid-chrome"
+  "liquid-chrome",
+  "survol-pixel"
  ],
  "roleAsDeclaredByStudios": [
-  "fluides"
- ]
+  "fluides",
+  "3D (marche de rayons sur GPU, facultative)"
+ ],
+ "version": "1.7.2 (PyPI, .venv, macOS Intel)"
 }

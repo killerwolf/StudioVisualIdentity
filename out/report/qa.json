@@ -148,7 +148,7 @@
   "ok": true,
   "errors": [],
   "warnings": [
-   "image figée ≥3 s à ['3.23333']"
+   "image figée ≥3 s à ['3.233333']"
   ],
   "info": {
    "duration": 12.3,
@@ -180,7 +180,7 @@
   "ok": true,
   "errors": [],
   "warnings": [
-   "image figée ≥3 s à ['3.23333']"
+   "image figée ≥3 s à ['3.233333']"
   ],
   "info": {
    "duration": 12.3,
@@ -503,6 +503,34 @@
   ],
   "info": {
    "duration": 16.0,
+   "width": 1080,
+   "height": 1920,
+   "fps": "30/1",
+   "codec": "h264",
+   "pix": "yuv420p"
+  }
+ },
+ {
+  "short": "survol-pixel__explicatif__comment-nait-un-atoll",
+  "ok": true,
+  "errors": [],
+  "warnings": [],
+  "info": {
+   "duration": 18.6,
+   "width": 1080,
+   "height": 1920,
+   "fps": "30/1",
+   "codec": "h264",
+   "pix": "yuv420p"
+  }
+ },
+ {
+  "short": "survol-pixel__histoire__machu-picchu-pourquoi-une-cite-en-escaliers",
+  "ok": true,
+  "errors": [],
+  "warnings": [],
+  "info": {
+   "duration": 18.8,
    "width": 1080,
    "height": 1920,
    "fps": "30/1",

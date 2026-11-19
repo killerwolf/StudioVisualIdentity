@@ -1,0 +1,25 @@
+{
+ "name": "Jersey 10 / 15 / 20 (@fontsource)",
+ "version": "5.3.0 (npm, épinglée exactement dans package.json, sous-ensemble latin)",
+ "license": "OFL-1.1 (Sarah Cadigan-Fried)",
+ "role": "typo (police pixel)",
+ "bestFor": [
+  "police pixel à grille carrée exacte : 75 / 50 / 38 unités par pixel, soit 18,667 / 27 / 34 px par em natifs (×4 = 74,7 / 108 / 136 px)",
+  "accents français complets dans « latin »",
+  "allure condensée, très différente de Press Start 2P (pixel-arcade)"
+ ],
+ "avoidFor": [
+  "², ³, ± (absents)",
+  "sous-ensemble latin-ext (pas d'accents français)",
+  "Jersey 10 pour le récit (capitale 40 px) : mentions seulement"
+ ],
+ "renderCostPer100Frames": "négligeable",
+ "gotchas": [
+  "≈ 30 / 20 / 15 caractères par ligne de 214 px natifs (bas-de-casse moyenne 7,0 / 10,8 / 14,0 px)",
+  "interligne = em complet (19 / 27 / 34)"
+ ],
+ "snippetPath": "shorts/survol-pixel__explicatif__comment-nait-un-atoll/src/test_jersey_grid.py",
+ "pairsWellWith": [
+  "Pillow"
+ ]
+}

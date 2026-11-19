@@ -1,0 +1,29 @@
+{
+ "name": "scipy",
+ "role": "géométrie raster (morphologie)",
+ "bestFor": [
+  "binary_dilation pour élargir la boîte englobante du relief autour d'une coupe (le rayon qui sort de la coupe doit toucher la paroi d'eau voisine)"
+ ],
+ "avoidFor": [
+  "rien de lourd par image dans ce moteur"
+ ],
+ "renderCostPer100Frames": [
+  "négligeable [survol-pixel]"
+ ],
+ "gotchas": [
+  "sans cette marge, un rayon qui sort de la coupe sous l'eau tombe dans le ciel"
+ ],
+ "snippetPath": [
+  "shorts/survol-pixel__explicatif__comment-nait-un-atoll/src/survol.py (World.__init__)"
+ ],
+ "pairsWellWith": [
+  "numpy"
+ ],
+ "usedBy": [
+  "survol-pixel"
+ ],
+ "roleAsDeclaredByStudios": [
+  "géométrie raster (morphologie)"
+ ],
+ "version": "1.17.1 (PyPI, .venv)"
+}

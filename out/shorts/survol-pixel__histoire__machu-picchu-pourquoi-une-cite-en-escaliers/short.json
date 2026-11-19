@@ -1,0 +1,142 @@
+{
+ "identity": "survol-pixel",
+ "family": "histoire",
+ "title": "Machu Picchu : pourquoi une cité en escaliers ?",
+ "hook": "Dès 0,12 s : « MACHU PICCHU » (Jersey 15) sur une approche à 29° en perspective qui vire (roulis −11°) : la cité en terrasses sur l'ensellement, crêtes andines jusqu'à l'horizon, rivière ; « POURQUOI / DES ESCALIERS ? » à 3,4 s",
+ "duration": 18.8,
+ "libraries": [
+  "numpy",
+  "Pillow",
+  "opensimplex",
+  "scipy",
+  "Jersey (@fontsource 5.3.0)",
+  "ffmpeg"
+ ],
+ "seed": 1911,
+ "renderTimeSec": 1209.4,
+ "renderSecPer100Frames": 214.43,
+ "renderCostNote": "retouche Fable du 18/11 (forêt claire, ombre FOREST_SH, contremarches naturelles éclaircies, pain de sucre élargi et boisé, nuages, rampe du ciel ; moteur inchangé hors draw_clouds) : 1 209,4 s pour 564 images = 214,43 s/100 images, sur CPU, en parallèle du premier rendu de l'atoll sur 4 cœurs pendant ses 8 premières minutes ; charge 1 min 3,77 au départ, 2,88 à la fin ; construction du monde 28,6 s (incluse). Rendus précédents : passe A+B+C 1 501,9 s (266,29/100, charge 6,26 → 10,40), passe de détail 356,0 s (63,1/100), après revue 333,6 s (59,1/100)",
+ "measuredUnderLoad": true,
+ "structure": [
+  {
+   "t": 0,
+   "beat": "hook : approche à 29° qui vire vers la cité (roulis −11°), crêtes andines jusqu'à l'horizon ; « MACHU PICCHU » (Jersey 15), puis épingle « À 2 430 m » (1,5–3,4 s)"
+  },
+  {
+   "t": 3.4,
+   "beat": "« POURQUOI / DES ESCALIERS ? » ; virage qui se rapproche (33°, whoosh 4,95 s)"
+  },
+  {
+   "t": 5.6,
+   "beat": "plaque inversée « XVe SIÈCLE » (pop), puis « LES INCAS BÂTISSENT / DES TERRASSES » (7,05–8,9 s) : la cité et ses terrasses à 38°, cap qui tourne de −46° à −96°, roulis 9–11°"
+  },
+  {
+   "t": 8.0,
+   "beat": "le piqué ralenti (2,0 s, 36° → 20°, whoosh 8,75 s) vers une entaille dans trois terrasses (décision du propriétaire du 18/11)"
+  },
+  {
+   "t": 10.0,
+   "beat": "coupe : épingles « pierres », « gravier », « terre » dans l'ordre de la voix (pop 10,0 / 10,74 / 11,48 s) ; la pluie en pixels bleus traverse les couches et sort au pied du remblai ; lama et son ombre"
+  },
+  {
+   "t": 12.0,
+   "beat": "« LA PLUIE FILE, / LA PENTE TIENT »"
+  },
+  {
+   "t": 13.4,
+   "beat": "la remontée ralentie (2,2 s, 19° → 30°, whoosh 14,55 s, décision du propriétaire du 18/11)"
+  },
+  {
+   "t": 15.1,
+   "beat": "« RÉVÉLÉE AU MONDE / EN 1911 » (chime) ; survol qui s'éloigne en virant (roulis −13°), « reconstitution stylisée » de 16,9 à 18,8 s"
+  }
+ ],
+ "engagement": {
+  "mechanic": "question",
+  "cta": "la coupe répond à « pourquoi des escaliers ? »"
+ },
+ "loopable": false,
+ "sound": {
+  "type": "generated",
+  "voice": true,
+  "music": "pad, lydian, 84 bpm, gain 0.5 (un seul preset, sound.py)",
+  "voiceUsed": "Gemini Sulafat (gemini-3.8-flash-tts, API v1beta), 1 appel par short découpé en voice_lines/, mixé par tts.py --engine files (2026-11-18)",
+  "sfx": [
+   "swell 0,12 s",
+   "whoosh 4,95 s (virage)",
+   "pop 5,6 s",
+   "whoosh 8,75 s (piqué)",
+   "swell 9,9 s",
+   "pop 10,0 / 10,74 / 11,48 s (épingles)",
+   "whoosh 14,55 s (remontée)",
+   "chime 15,1 s"
+  ],
+  "voiceEngine": "gemini",
+  "voiceName": "Gemini – Sulafat",
+  "voiceProvider": "files"
+ },
+ "biome": {
+  "GRANITE": "#9C968C",
+  "GRANITE_SH": "#5F5A55",
+  "THATCH": "#C9A35A",
+  "EARTH": "#8A5A3A",
+  "SNOW": "#EEF3F4"
+ },
+ "qualityChecks": {
+  "stillsReviewed": true,
+  "textMinPx": 74.7,
+  "textMinPxNote": "Jersey 10 corps 74,7 px (reconstitution stylisée) ; nom, question, dates, récit et épingles en Jersey 15 (108 px) depuis la passe A+B+C ; un seul cartouche à la fois",
+  "safeAreaOk": true,
+  "safeAreaNote": "assertion du moteur sur chaque cartouche",
+  "maxWordsOnScreenPerShot": 6,
+  "narrationWordsSpoken": 38,
+  "wordsPerSecond": "2,27–2,58 (mots prononcés)",
+  "pitchLe60Share": 1.0,
+  "colorsPerFrame": "stills (avec cartouches, natif) : 20–28 indices par image après la retouche Fable, 19–29 sur tout le short (pas de 0,4 s) ; palette déclarée 41 couleurs (35 de noyau + 6 biome, FOREST_SH ajoutée)",
+  "dive": "src/dive/ (90/70/50/30/15°, même moteur, 18–27 couleurs ; régénéré après la retouche Fable)",
+  "clouds": "60 nuages bas (rayon 9–16 × K, dont 36 lointains) à une seule altitude sous la cité, jamais traversés (retouche Fable ; passe A+B+C : 40) ; visibles : médiane 12 par image, ≥ 6 sur 99 % des images ; cité et coupe jamais cachées à plus de 5 % ; CLOUD/HATCH/CLOUD_RIM 1,4–9,2 % sur images natives",
+  "photosensitivity": {
+   "maxLumaChange10Frames": 0.0372,
+   "maxLumaStepFrame": 0.0284,
+   "lumaMax": 0.515,
+   "lumaMean": 0.484,
+   "rainPixels": "gouttes 1×3 / 2×2 px natifs",
+   "cloudCrossing": false
+  },
+  "llamaScale": "plafonné à 1:1 (d1/profondeur 1,34–1,69 : jamais agrandi, C4)",
+  "cameraPreflightMinClearance": 41.6,
+  "fileMB": 13.2,
+  "reconstitutionLabel": "« reconstitution stylisée » à l'écran à la fin seulement (16,9–18,8 s), décision du propriétaire du 18/11 (choix 36) ; avant : pendant tout le short",
+  "moireBand5_4to9s": "mesure de la passe de détail, caduque depuis la passe A+B+C (caméra et monde refaits) : voir temporalAliasing",
+  "recognitionCopy": "recognition.py sur copie après revue : 1er voisin = son frère (atoll, 0,6635) : réussite",
+  "temporalAliasing": "retouche Fable, measure2.py de Fable (fichier décodé, 1 px par gros pixel, seuil 24 ; source 2,4 %, pire fenêtre 3,4 %) : A-B-A 2,10 % sur tout le short (2,00 % avant) ; piqué 4,49 % (4,29 %), remontée 3,46 % (3,41 %), survol 2,90 % ; pixels sombres (luminance < 70) 12,0 % (21,8 % avant ; survol 12,7 %, piqué 15,1 %, source 3–6 %). Mesures A+B+C (autre méthode, source 4,0 %) : 3,56 % sur tout le short, piqué 7,30 %",
+  "sourceCompareAfter": "out/report/notes/console-retro-source/comparaison-avant-apres.jpg",
+  "detailPass": "out/report/notes/survol-pixel-detail.md : diffCells natif 0,146 → 0,330 (source 0,221), grandes plages > 5 % 59 → 35 % (source 50 %)",
+  "treesDrawn": "2 965–5 884 boules d'arbres ≥ 1,25 px par image (compte du moteur, 1 image / 0,5 s) (passe de détail ; non recompté après A+B+C)",
+  "camera": "tangage 19–38° (médiane 29°, 72 % du temps dans 25–40°, coupe à 19–20°), roulis jusqu'à 13° (≥ 5° pendant 59 % du temps) ; caméra PCHIP ; piqué 8,0 → 10,0 s et remontée 13,4 → 15,6 s ralentis (passe A+B+C)",
+  "loudness": "−13,8 LUFS intégrés, crête −1,5 dBFS, LRA 3,9 LU (ffmpeg ebur128 sur short.mp4 après la retouche Fable, inchangé)",
+  "sourceCompareFinal": "out/report/notes/console-retro-source/final-abc.jpg",
+  "abcPass": "out/report/notes/survol-pixel.md § « Passe A+B+C » (phases 1 et 2)",
+  "darkPixels": "12,0 % sur tout le short après la retouche Fable (21,8 % avant ; INK 0,5–2,5 % hors coupe sur images natives, 5,8–8,1 % au piqué et à la coupe : joints de pierre)"
+ },
+ "facts": [
+  {
+   "claim": "Altitude ≈ 2 430 m.",
+   "source": "Ministère de la Culture du Pérou, machupicchu.gob.pe (2 430 m) ; UNESCO, Historic Sanctuary of Machu Picchu, WHC 274 (inscrit en 1983)"
+  },
+  {
+   "claim": "XVe siècle, attribuée à l'Inca Pachacutec ; datations AMS : occupation d'environ 1420 à 1530.",
+   "source": "R. L. Burger et al., « New AMS dates for Machu Picchu: results and implications », Antiquity, 2021, doi:10.15184/aqy.2021.99"
+  },
+  {
+   "claim": "Terrasses = murs de soutènement remblayés : de bas en haut grosses pierres, gravier, (sable et gravier), terre ; drainage qui limite l'érosion et les glissements (la pente « tient », sans les supprimer : le site reste surveillé).",
+   "source": "K. R. Wright & A. Valencia Zegarra (avec R. M. Wright et G. McEwan), Machu Picchu: A Civil Engineering Marvel, ASCE Press, 2000 ; K. R. Wright et al., « Machu Picchu: Ancient Hydraulic Engineering », Journal of Hydraulic Engineering, 1997 (waterhistory.org)"
+  },
+  {
+   "claim": "Révélée au monde (internationalement) en 1911 par Hiram Bingham, guidé par des habitants de la région : on dit « révélée », pas « découverte ».",
+   "source": "UNESCO WHC 274 ; récits de l'expédition de Yale 1911"
+  }
+ ],
+ "notes": "Reconstitution stylisée : la disposition générale (deux sommets, ensellement, rivière en boucle) est évoquée, aucune géométrie réelle n'est prétendue ; aucun nombre de terrasses, aucune affirmation sur les séismes ni sur les Espagnols (C19). La couche « sable et gravier » de Wright est fondue dans « gravier » pour tenir en trois mots. Lama et cité dessinés en code (originaux). Passe A+B+C : monde de 1 536 unités (crêtes et vallées andines jusqu'à l'horizon, seconde rivière lointaine, sommets enneigés possibles), fenêtre fine de 512 unités ; rendu par src/survol.py (4 rayons par pixel et vote majoritaire, marche à pas sûrs sur cartes de maxima 128/32/8/2 puis 8 bissections). Rendu livré sur CPU ; la marche sur GPU (src/survol_gpu.py, SURVOL_GPU=1) est facultative et expérimentale (parité au bit non garantie, voir src/README.md). Retouche Fable (18/11) : forêt en bouquets sur une terre claire (sol GRASS_D, clairières GRASS_M, FOREST aux pieds de marche et par grandes plages), ombre de la forêt en vert sombre FOREST_SH au lieu du bleu nuit, contremarches naturelles GRASS_M / GRASS_D ; pain de sucre élargi (gauss 25 × 21 × K, 104 × K) et sorti de la couronne des terrasses au-dessus de la cité, d'où des flancs boisés et une cime de granite ; nuages plus gros et plus nombreux, modelé tramé ; rampe du ciel resserrée. Caméra, cartouches, coupe, terrasses et cité inchangés ; le fond du plan de coupe change (le pain de sucre y est un cône vert, plus une tour grise).",
+ "reproduce": "export SURVOL_CACHE=/private/tmp/survol-pixel/survol-pixel__histoire__machu-picchu-pourquoi-une-cite-en-escaliers && SVI_SLOTS=4 out/tools/slot.sh .venv/bin/python out/shorts/survol-pixel__histoire__machu-picchu-pourquoi-une-cite-en-escaliers/src/video.py --out $SURVOL_CACHE/video.mp4 && .venv/bin/python out/tools/sound.py out/shorts/survol-pixel__histoire__machu-picchu-pourquoi-une-cite-en-escaliers/src/sound.json $SURVOL_CACHE/music.wav && .venv/bin/python out/tools/assemble.py mux --video $SURVOL_CACHE/video.mp4 --music $SURVOL_CACHE/music.wav --out out/shorts/survol-pixel__histoire__machu-picchu-pourquoi-une-cite-en-escaliers/short.mp4 && cp out/shorts/survol-pixel__histoire__machu-picchu-pourquoi-une-cite-en-escaliers/short.mp4 out/shorts/survol-pixel__histoire__machu-picchu-pourquoi-une-cite-en-escaliers/short_novo.mp4 && .venv/bin/python out/tools/tts.py out/shorts/survol-pixel__histoire__machu-picchu-pourquoi-une-cite-en-escaliers --engine files --replace  # voice_lines/ : 1 appel Gemini gemini-3.8-flash-tts Sulafat (API v1beta) découpé, voir out/report/notes/voix-survol-pixel.md"
+}

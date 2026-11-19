@@ -3,8 +3,8 @@
 ## What this repository is
 
 An **exploratory study of visual and cinematic identities for vertical short videos** (TikTok, Reels, Shorts; 1080×1920, 30 fps, 12–19 s).
-It contains **17 identities, 20 declinations** (the 14 of the original campaign, the cut-paper identity « Papier découpé » with its 3 derivations added on 2026-11-04 and the 2 identities of
-lot 2 of the identity factory added on 2026-11-05, see below), each documented as a design system and **proven by 2–3 real shorts rendered by code** (43 shorts in total),
+It contains **18 identities, 21 declinations** (the 14 of the original campaign, the cut-paper identity « Papier découpé » with its 3 derivations added on 2026-11-04, the 2 identities of
+lot 2 of the identity factory added on 2026-11-05 and « Survol pixel » added on 2026-11-18, see below), each documented as a design system and **proven by 2–3 real shorts rendered by code** (45 shorts in total),
 plus the open-source rendering toolkit that made them.
 
 **It is a menu with evidence, not a finished brand.** You are expected to read it and then **define your own identity**:
@@ -15,7 +15,7 @@ Most prose is in **French** (identity.md, recipes, reports, tool docstrings). JS
 
 ## Where this repository fits
 
-- **Choosing a visual identity** is what this repository is for: 17 proven styles (20 declinations), their design systems and their evidence.
+- **Choosing a visual identity** is what this repository is for: 18 proven styles (21 declinations), their design systems and their evidence.
 - **Running a production channel** needs more than a style: writing, validation, voice, review, publishing and scheduling. Two ways:
   - you already have a studio template (for the owner of this repository, the private **StudioGabarit**, which runs on the Mac and is piloted from Notion): use this repository at its *design system* phase to pick 2–3 candidate styles, then port the chosen signature into that template's own render engine;
   - you don't: `bootstrap_studio.py` below gives a lightweight studio (identity + scene templates + render toolkit) to prototype a style and produce episodes by hand.
@@ -47,7 +47,7 @@ python3 out/tools/bootstrap_studio.py ../my-studio --channel-id my-channel --nam
 
 ## The cut-paper identity and its 3 derivations (added 2026-11-04, status `added`)
 
-**One identity, three derivations** (decision 2026-11-05): `papier-decoupe` is the root; `atelier-papier`, `carnet-archives` and `cabinet-curiosites` are its derivations (`variantOf: "papier-decoupe"` in `index.json`). They run on the same engine and only change ground, palette and fonts. Directories, ids and slugs are unchanged. A new identity that reuses an existing engine and only changes ground/palette/fonts must be registered as a derivation, not as a new identity. Counting: 17 identities, 20 declinations, 43 shorts.
+**One identity, three derivations** (decision 2026-11-05): `papier-decoupe` is the root; `atelier-papier`, `carnet-archives` and `cabinet-curiosites` are its derivations (`variantOf: "papier-decoupe"` in `index.json`). They run on the same engine and only change ground, palette and fonts. Directories, ids and slugs are unchanged. A new identity that reuses an existing engine and only changes ground/palette/fonts must be registered as a derivation, not as a new identity. Counting: 18 identities, 21 declinations, 45 shorts.
 
 The cut-paper design system of the **StudioGabarit** template (channels AI Reboot, P'tits Savants, Motion de Culture) and its three
 variants from the Un Jour Une Histoire studio, so they can be found and reused like the others:
@@ -65,7 +65,7 @@ variants from the Un Jour Une Histoire studio, so they can be found and reused l
   and the stills. No `tts.py` step. `bootstrap_studio.py` copies the engine into a studio made from one of them.
 - Proof shorts (2 per identity, same text, only the theme changes): `<id>__histoire__la-fourchette-a-fait-scandale`,
   `<id>__explicatif__d-ou-vient-le-mot-sandwich`. Voice: Gemini « Sulafat », reused from the Un Jour Une Histoire studio.
-- Not part of the ranking or the blind visual judge; they are appended after rank 16 in `index.json` (ranks 17–20). They are in the
+- Not part of the ranking or the blind visual judge; they are appended after rank 17 in `index.json` (ranks 18–21). They are in the
   measured recognition test since 2026-11-05 (each short's nearest neighbour is its sibling).
 
 ## Lot 2 of the identity factory (added 2026-11-05, status `added`, ranked)
@@ -87,6 +87,62 @@ adversarial challenge, one studio per identity, integration, review (`out/report
 - Evidence: a blind visual judge on 8 identities (lot 2 + 6 neighbours, 32 images) made 8/8 pure groups; in the measured test each
   identity's two shorts are each other's nearest neighbour. Render cost measured with the two studios sharing 4 cores (load 1–5.5,
   `measuredUnderLoad: true`). Since the review, carte-meteo's heat-record short has no wind trails: wind is shown only when it is the subject.
+
+## Survol pixel (added 2026-11-18, status `added`, ranked)
+
+Made with the `fabrique-identites` skill from a **source video** instead of the catalogue: a 16-bit pixel-art flight simulator by
+@creativedash (reposted by @meta_pavy), analysed frame by frame (`out/report/notes/console-retro-analyse.md`; the video itself stays
+out of the repository). We copy a **style**, not the work. Then adversarial challenge (20 mandatory fixes), one studio, integration,
+review (`out/report/decisions.md` § « Survol pixel », `out/report/notes/directions-2026-11-18-console-retro.md`,
+`challenge-2026-11-18-console-retro.md`, studio log `survol-pixel.md`).
+
+| Identity | Look | Libraries | Rank |
+|---|---|---|---|
+| `survol-pixel` | a small 16-bit pixel-art world (indexed palette, 270×480 scaled ×4) that one camera flies over, dives into and skims to the horizon; terraced relief with lit / shaded risers, cast shadows, a cut-away section of the ground as the diagram, Jersey 15 / 10 cartouches, one at a time (Jersey 20 reserved) | numpy, Pillow, opensimplex, scipy, @fontsource Jersey 5.3.0 (Python, no browser) | 10 |
+
+- **Owner rules** (signature, keep them): (1) **3D depth** is the rule — perspective ground (Mode 7 style) at any pitch, terraces,
+  cast shadows, layered depth, a camera that moves forward; (2) **form, not content** — a pixel-art look for explainers, kids, history
+  and narrated shorts, not a video-game or flight theme (no score, no game element; HUD and cockpit optional, absent from the proofs).
+- A new identity, **not a derivation of pixel-arcade**: other engine (one 3D camera, numpy ray casting on a terraced heightfield),
+  other fonts (Jersey, not Press Start 2P), other transition (the dive / climb-back, not a pixel mosaic), other sound (no chiptune blips).
+- Engine: pure Python `survol.py` (identical md5 in both shorts' `src/`), `video.py` per short; opensimplex fields cached in
+  `$SURVOL_CACHE` (outside the repository). A new topic = a new terrain / heightfield, a camera path, sprites with shadows and the cut-away.
+- **Detail pass (2026-11-18)**: sub-cell micro-detail, coursed walls, ball-heap clouds, tree clusters with cast shadows; both shorts
+  re-rendered (`out/report/notes/survol-pixel-detail.md`). The challenge's « ≤ 4 clouds » cap (C15) is lifted (3–11 clouds in frame);
+  the owner reopened C15 in the A+B+C pass (other atolls far away, more clouds, but no green archipelago copied from the source).
+- **A+B+C pass (2026-11-18)**, owner request: (A) a world filled to the horizon (atoll 1,080 units with other atolls, seamounts, banks;
+  Machu Picchu 1,536 units of Andean ridges) and a new haze in 6 steps with a world-fixed jagged border towards a very pale blue
+  `HAZE #DCEEF5`, sky in 7 steps (11 core colours added, 35 in all); (B) 4 rays per pixel with a majority vote on the palette index,
+  a 4× finer colour map around the subject, slope bias and « far wall = top colour » rule removed, relief cast shadow, safe-step ray
+  march on block max maps (128/32/8/2) + 8 bisections; (C) a PCHIP camera that flies, banks and rolls (5–13°), one Jersey 15 cartouche
+  at a time; Machu Picchu's dive (8.0 → 10.0 s) and climb-back (13.4 → 15.6 s) slowed down (owner decision). Owner decisions 34 and 36:
+  atoll cartouches « il y a des millions / d'années », « pendant des millions / d'années », the « lagon » pin and the final « basalte » /
+  « calcaire » pins removed; « reconstitution stylisée » only at the end (16.9–18.8 s); haze tables relaxed to 6 steps. Full CPU renders
+  (both in parallel on 4 cores): **atoll 107.18 s/100 frames (598.1 s), Machu Picchu 266.29 (1,501.9 s)**, 1-min load 4.4–10.4; the
+  owner lifted the cost cap for B. Flicker is the main remaining risk: A-B-A pixels on the decoded files 3.56 % over Machu Picchu
+  (1.40 % before), 7.3 % in its dive and 5.4 % in its climb-back (source 4.0 %); atoll 1.06 %. Voice remixed on the new timings without
+  any new call. Before / after board: `out/report/notes/console-retro-source/final-abc.jpg`; log `out/report/notes/survol-pixel.md`
+  § « Passe A+B+C ».
+- **Optional GPU ray march** (`src/survol_gpu.py`, same file in both shorts): `SURVOL_GPU=1`, `taichi==1.7.2`, Metal (AMD Radeon Pro 560,
+  the default Metal device); only the ray march moves to the GPU, frame 1.5–1.9 s → 0.7–0.8 s. Not bit-exact (Metal division is not
+  correctly rounded; 0 px palette-index difference on 6 frames but 0–0.2 % of rays off by 1–2 ulp, see `out/report/facts.md`), so the
+  delivered renders are CPU and the module stays experimental; CPU remains the default and the fallback.
+- **Fable retouch (2026-11-18, owner decision 38)**: 6 art-director fixes in one pass, both shorts re-rendered on CPU with the same voice and timings:
+  bigger, more numerous clouds with a dithered underside (the only engine change, `draw_clouds`), foam strokes on the atoll sea, a light Machu Picchu forest
+  with a dark-green `FOREST_SH` shadow (no more navy), a wider forested sugarloaf, a wider final atoll shot, a tighter sky ramp. Cost 63.9–214.4 s/100 frames;
+  the atoll's on-screen motion is still below Fable's target (`out/report/notes/survol-pixel.md` § « Retouche Fable »).
+- **Voice-over: Gemini « Sulafat »** (owner decision, 2026-11-18), the lot 2 recipe: one `gemini-3.8-flash-tts` call per short, split
+  into `voice_lines/NN.mp3` by word timestamps, mixed by `tts.py --engine files --replace` (`short_novo.mp4` = music + SFX). The call
+  needs API **v1beta** (see `out/report/facts.md`). Atoll 18.6 s at −16.0 LUFS (peak −1.7 dBFS), Machu Picchu 18.8 s at −13.8 LUFS (peak −1.5 dBFS), after the A+B+C remix (−15.9 / −13.7 before). Log:
+  `out/report/notes/voix-survol-pixel.md`.
+- Evidence: 2 proof shorts (`explicatif` atoll, `histoire` Machu Picchu), QA ok (0 warnings). **Blind visual judge**
+  (during the review, fresh agent, 24 anonymised frames, survol-pixel + pixel-arcade, carte-meteo, topo-relief, pastel-diorama,
+  trait-continu): **6/6 pure groups, 24/24** (`recognition.json` → `blindJudgeSurvol`; frames from the detail pass, it does not cover the
+  A+B+C pass). Measured recognition (after the A+B+C pass, 41/45 overall, unchanged): Machu Picchu's nearest neighbour is its sibling
+  (0.754); the **atoll still fails** (nearest aquarelle-conte « phare d'Alexandrie » at 0.722, sibling 3rd at 0.754: blue ocean against
+  green mountain); carte-meteo moved closer (2nd neighbour of Machu Picchu at 0.785); colour + edges miss its signature, which is
+  geometric (perspective, terraces, pixel grid). Render cost 107.18–266.29 s/100 frames on CPU under load (A+B+C renders, 1-min load
+  4.4–10.4, `measuredUnderLoad: true`; 19.6–63.1 after the detail pass, 15.6–59.1 before it).
 
 ## Read in this order (≈ 10 minutes)
 
@@ -112,24 +168,27 @@ it does **not** depend on content family. For a given family, start from the ide
 
 | Family | Proven by |
 |---|---|
-| `explicatif` (explainer / science) | bauhaus-kinetic (6), tableau-craie (7), neon-lab (14), cosmos-doc (15); cut-paper family (added) |
-| `histoire` (history) | gazette-1900 (2), topo-relief (11), atlas-grave (12), aquarelle-conte (13); cut-paper family (added) |
-| `geographie` (geography) | swiss-data (1), carte-meteo (5), riso-zine (8), trait-continu (9), topo-relief (11), atlas-grave (12) |
-| `evenements` (on this day / countdowns) | swiss-data (1), gazette-1900 (2), brut-meme (4), carte-meteo (5), riso-zine (8), cosmos-doc (15) |
-| `engagement` (quiz / vote / bet) | pixel-arcade (3), brut-meme (4), bauhaus-kinetic (6), pastel-diorama (10), liquid-chrome (16) |
-| `enfants` (kids) | tableau-craie (7), trait-continu (9), pastel-diorama (10), aquarelle-conte (13) |
-| `abstrait` (satisfying / loops) | pixel-arcade (3), neon-lab (14), liquid-chrome (16) |
+| `explicatif` (explainer / science) | bauhaus-kinetic (6), tableau-craie (7), survol-pixel (10), neon-lab (15), cosmos-doc (16); cut-paper family (added) |
+| `histoire` (history) | gazette-1900 (2), survol-pixel (10), topo-relief (12), atlas-grave (13), aquarelle-conte (14); cut-paper family (added) |
+| `geographie` (geography) | swiss-data (1), carte-meteo (5), riso-zine (8), trait-continu (9), topo-relief (12), atlas-grave (13) |
+| `evenements` (on this day / countdowns) | swiss-data (1), gazette-1900 (2), brut-meme (4), carte-meteo (5), riso-zine (8), cosmos-doc (16) |
+| `engagement` (quiz / vote / bet) | pixel-arcade (3), brut-meme (4), bauhaus-kinetic (6), pastel-diorama (11), liquid-chrome (17) |
+| `enfants` (kids) | tableau-craie (7), trait-continu (9), pastel-diorama (11), aquarelle-conte (14) |
+| `abstrait` (satisfying / loops) | pixel-arcade (3), neon-lab (15), liquid-chrome (17) |
+
+survol-pixel also has recipes (not proven by a short) for `enfants` and `geographie`.
 
 **Episode effort** (how much code a new topic needs): *data-driven* — swiss-data (new dataset in the same 4-screen grammar), brut-meme
 (new words/numbers), pixel-arcade (new seed / new rules), carte-meteo (mostly: the real map comes from world-atlas; a new topic =
 camera framings, pressure centres, a schematic wind field in `precompute.js` and the pills, in the shared `meteo.js`); *new scene per
 topic* — most others (neon-lab, cosmos-doc, topo-relief, tableau-craie, atlas-grave, aquarelle-conte, pastel-diorama, gazette-1900
-engravings, trait-continu: one hand-designed single-line path per topic in the shared `traceur.py`, contours typed by hand). Tokens are documentation: scene code hard-codes
+engravings, trait-continu: one hand-designed single-line path per topic in the shared `traceur.py`, contours typed by hand;
+survol-pixel: a new terrain / heightfield, camera path, sprites and cut-away per topic in the shared `survol.py`). Tokens are documentation: scene code hard-codes
 the values, it does not read `tokens.json`.
 
 ## Adapting to an audience (orchestrator judgment, not measured)
 
-The 31 campaign shorts use the same French male storyteller voice and ≈ 2.6 words/s (cut-paper and lot 2: Gemini Sulafat, a warm
+The 31 campaign shorts use the same French male storyteller voice and ≈ 2.6 words/s (cut-paper, lot 2 and survol-pixel: Gemini Sulafat, a warm
 female voice; trait-continu is written at 2.2 words/s for kids and measured at ≈ 2.3 words/s once voiced); no short was made specifically for teens.
 Suggested starting deltas, to validate with your own tests:
 
@@ -152,7 +211,7 @@ Suggested starting deltas, to validate with your own tests:
      and *tooling*. Mixing two signatures produces a generic look.
    - *Adapt*: change audience-dependent values (pace, text size, voice, colour temperature — see the table above) but keep the signature.
    - `status` in the index: `selected` = kept in Phase 1; `rehabilitated` = set aside in Phase 1 only to avoid topic overlap, then produced
-     with the same rules — same evidence level; `added` = added after the campaign (cut-paper family, unranked; lot 2, ranked, voiced with Gemini Sulafat).
+     with the same rules — same evidence level; `added` = added after the campaign (cut-paper family, unranked; lot 2, ranked, voiced with Gemini Sulafat; survol-pixel, ranked, voiced with Gemini Sulafat).
 4. **Avoid confusion with neighbours**: check `curation.confusableWith` (e.g. dark identities neon-lab / cosmos-doc / liquid-chrome,
    or the cream flat styles swiss-data / bauhaus-kinetic). If your channel will sit next to one of them, push your palette or type further apart.
 5. **Write your design system in the same format**: an `identity.md` with the same 16 sections, and a `tokens.json` whose core follows
@@ -169,12 +228,13 @@ Suggested starting deltas, to validate with your own tests:
 
 - **Canvas and safe areas**: 1080×1920, 30 fps, H.264 yuv420p. Keep anything important out of the top 220 px, bottom 320 px and right
   120 px (TikTok UI); left margin 60–72 px. Body text ≥ 54 px, titles ≥ 90 px, AA contrast. Hook visible within 1 s.
-- **Voice-over, state at 43 shorts**: 31 campaign shorts voiced with Fish Audio "Arnold" (below); the 8 cut-paper shorts declare and
+- **Voice-over, state at 45 shorts** (31 Arnold + 14 Sulafat): 31 campaign shorts voiced with Fish Audio "Arnold" (below); the 8 cut-paper shorts declare and
   mix the Gemini voice "Sulafat" (mp3 reused from another studio, mixed by the cut-paper engine, not `tts.py`); the **4 lot 2 shorts
   use Sulafat too** (owner decision: Fish Audio credits ran out before Arnold could be recorded): 4 Gemini calls in all, one per short,
   split into `voice_lines/NN.mp3`, mixed by `tts.py --engine files` (see `out/report/notes/voix-lot2.md`). `tts.py --engine files`
   labels the lines `fish-connector` in `voice_report.json` and `short.json.sound.voiceEngine`: fix the label when the audio comes from
-  another engine (done for lot 2).
+  another engine (done for lot 2 and survol-pixel). The **2 survol-pixel shorts use Sulafat too** (owner decision 2026-11-18): 2 Gemini
+  calls through API v1beta, same split and mix (see `out/report/notes/voix-survol-pixel.md`).
 - **Voice-over actually used** for the 31 campaign shorts: Fish Audio "Arnold" (`d704cf8f1216490cbfbed89955f0e938`, model `s2.1-pro`, French male storyteller),
   generated **through the Fish Audio MCP connector**, one call per narration line, saved as `voice_lines/NN.mp3`, then mixed with music
   ducking by `out/tools/tts.py --engine files`. The direct REST engine (`--engine fish`, needs `FISH_API_KEY`, default model
@@ -206,7 +266,7 @@ Suggested starting deltas, to validate with your own tests:
 
 | Path | What it is |
 |---|---|
-| `out/identities/index.json` | machine index of the 17 identities / 20 declinations (start here; `variantOf` links the 3 derivations to `papier-decoupe`) — generated by `out/tools/build_index.py` (ranking and curation are in that script) |
+| `out/identities/index.json` | machine index of the 18 identities / 21 declinations (start here; `variantOf` links the 3 derivations to `papier-decoupe`) — generated by `out/tools/build_index.py` (ranking and curation are in that script) |
 | `out/identities/core-tokens.schema.json` | JSON schema of the normalised `coreTokens` |
 | `out/identities/<id>/` | design system: `identity.md`, `tokens.json` (original, richer, not normalised), `recipes/`, `poster.jpg`, `contact-sheet.jpg` |
 | `out/shorts/<id>__<family>__<topic>/` | proof short: `short.mp4` (voiced), `short_novo.mp4` (no voice), `short.json`, `narration.json`, `voice_lines/`, `stills/`, `src/` |
@@ -222,6 +282,9 @@ Suggested starting deltas, to validate with your own tests:
 ## Set-up (only if you render)
 
 From the repository root: `npm i` (libraries + @fontsource fonts from `package.json`); `uv venv --python 3.11 .venv`, then install
-numpy, scipy, pillow, opencv-python-headless, pycairo, matplotlib, taichi, shapely==2.2.0, opensimplex==0.4.5.1, and Manim without
-manimpango (see `out/report/facts.md`); `package.json` pins `world-atlas` 2.0.2 exactly and includes `@fontsource/atkinson-hyperlegible`;
-Playwright + Chromium and ffmpeg must be available. `node_modules/` and `.venv/` are not versioned.
+numpy, scipy, pillow, opencv-python-headless, pycairo, matplotlib, taichi (`taichi==1.7.2` on macOS Intel: newer releases have no
+x86_64 wheel; also used by survol-pixel's optional GPU ray march, `SURVOL_GPU=1`), shapely==2.2.0, opensimplex==0.4.5.1, and Manim without
+manimpango (see `out/report/facts.md`); `package.json` pins `world-atlas` 2.0.2 exactly and includes `@fontsource/atkinson-hyperlegible`
+and `@fontsource/jersey-10` / `jersey-15` / `jersey-20` 5.3.0 exactly (survol-pixel; fontTools for its grid test);
+Playwright + Chromium and ffmpeg must be available (survol-pixel and trait-continu need no browser). `out/tools/slot.sh` falls back to
+`sysctl -n hw.ncpu` on macOS (no `nproc`); `SVI_SLOTS` still overrides it. `node_modules/` and `.venv/` are not versioned.

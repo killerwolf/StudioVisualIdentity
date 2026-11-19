@@ -1,0 +1,31 @@
+{
+ "name": "numpy",
+ "version": "2.4.6 (PyPI, .venv)",
+ "role": "3D (lancer de rayon raster en Python pur)",
+ "bestFor": [
+  "moteur 3D pixel art image par image sans navigateur : caméra sténopé, rayons par pixel (270×480), intersection rayon–plan en forme close (« Mode 7 » à tout tangage)",
+  "lancer de rayon sur carte de hauteurs en terrasses : marche à pas sûrs sur des cartes de maxima par blocs (128, 32, 8, 2, dilatées d'un bloc), sinon pas géométriques, puis 8 bissections (passe A+B+C du 18/11 ; avant : pas fixes par paquets de 12 + 6 bissections)",
+  "palette indexée : images en indices uint8, tables indice -> indice pour ombres et brume, conversion RGB par palette[idx] puis np.repeat ×4",
+  "cartes réduites par vote majoritaire (mip sans moyenne) contre le scintillement du lointain",
+  "4 rayons par pixel et vote majoritaire 2×2 sur l'indice de palette (vote4) : anticrénelage sans sortir de la palette indexée"
+ ],
+ "avoidFor": [
+  "relief étendu vu en rasante avec 4 rayons par pixel : 107–266 s/100 images sous charge sur des mondes de 1 080–1 536 unités (passe A+B+C) ; une transition rapide fait scintiller les marches de 1 px au loin",
+  "géométrie fine (< 1 cellule) : la marche à pas fixes peut la manquer ; la bissection ne rattrape que le premier croisement"
+ ],
+ "renderCostPer100Frames": "107,18 s (atoll, monde 1 080, 4 rayons/pixel, charge 4,4–6,0) ; 266,29 s (Machu Picchu, monde 1 536, charge 6,3–10,4) — rendus complets sur CPU après la passe A+B+C du 18/11, en parallèle ; avant : 19,6 / 63,1 (passe de détail), 21,9 / 58,8 (premiers rendus)",
+ "gotchas": [
+  "un rayon qui entre dans la boîte par le côté sous z = 0 doit garder l'eau touchée avant (sinon faux flanc) : n'activer que tmin < t_plan",
+  "les rayons qui traversent la boîte sans rien toucher ne doivent pas reprendre le plan z = 0 à l'intérieur de la boîte",
+  "une paroi « de coupe » ne compte que si le point précédent était sous le dessus d'origine de la région coupée (sinon un rayon qui passe haut au-dessus de la coupe colore la montagne d'en face)",
+  "contrôler la caméra au-dessus du relief sur toutes les images avant le rendu (--preflight) : un plan rasant entre facilement dans une montagne",
+  "float32 partout pour les tableaux de rayons : 2× moins de mémoire, assez précis à 270×480"
+ ],
+ "snippetPath": "shorts/survol-pixel__explicatif__comment-nait-un-atoll/src/survol.py (Renderer.ground, Renderer._march, mode_down, Cam)",
+ "pairsWellWith": [
+  "Pillow",
+  "opensimplex",
+  "scipy",
+  "ffmpeg"
+ ]
+}

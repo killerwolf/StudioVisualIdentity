@@ -1,0 +1,42 @@
+{
+ "language": "fr",
+ "style": "conteur documentaire chaleureux, ≤ 2,6 mots/s (nombres comptés en mots prononcés) ; silence pendant les piqués",
+ "voice": "Sulafat (Gemini)",
+ "voiceUsed": {
+  "provider": "Gemini",
+  "name": "Sulafat",
+  "model": "gemini-3.8-flash-tts",
+  "date": "2026-11-18",
+  "note": "un seul appel pour tout le short (lignes séparées par <long pause>, nombres envoyés en toutes lettres), appel via une copie locale du script du skill gemini-voices forcée en api_version v1beta (le script d'origine, en v1, renvoie 404) ; découpé en voice_lines/NN.mp3 (bornes : horodatage des mots par faster-whisper small + silences) ; style « voix documentaire claire et posée, conteuse curieuse, débit régulier » (annotation, non lue) ; pauses internes > 0,25 s ramenées à 0,25 s ; mixé par out/tools/tts.py --engine files --replace ; décision du propriétaire du 18/11/2026"
+ },
+ "wordsPerSecondTarget": 2.4,
+ "totalWordsSpoken": 38,
+ "lines": [
+  {
+   "t": 0.2,
+   "maxDuration": 4.65,
+   "text": "Machu Picchu, à 2 430 mètres : pourquoi des escaliers ?",
+   "spokenWords": 12,
+   "note": "« deux mille quatre cent trente »"
+  },
+  {
+   "t": 5.6,
+   "maxDuration": 3.5,
+   "text": "Au quinzième siècle, les Incas bâtissent des terrasses.",
+   "spokenWords": 8
+  },
+  {
+   "t": 10.0,
+   "maxDuration": 4.4,
+   "text": "Pierres, gravier, terre : la pluie file, la pente tient.",
+   "spokenWords": 10
+  },
+  {
+   "t": 15.1,
+   "maxDuration": 3.5,
+   "text": "Révélée au monde en 1911.",
+   "spokenWords": 8,
+   "note": "« mille neuf cent onze »"
+  }
+ ]
+}
