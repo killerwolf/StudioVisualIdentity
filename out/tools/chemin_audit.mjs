@@ -7,8 +7,8 @@
  * Règles (concept lyrics-chemin, § Règles de lisibilité) :
  *   1. le mot chanté est entièrement dans x 64–960, y 220–1600 de son attaque à 60 % de sa durée
  *      (après 60 %, la caméra peut partir vers le mot suivant, règle 4) ; zoom arrière exclu (règle 7) ;
- *   2. corps à l'écran du mot chanté : ≥ 120 px (104 si la ligne le permet, 92 si tout le cadrage dépasse 4,5 mots/s),
- *      ≤ 220 px (titre 250), tolérance 4 % (poussée lente) ;
+ *   2. corps à l'écran du mot chanté : ≥ plancher de l'habillage (floorPx : 120 px pour le plan bleu ; minPx de la ligne si
+ *      elle le permet ; floorFast, 92 px, si tout le cadrage dépasse 4,5 mots/s), ≤ maxPx (220, titre 250), tolérance 4 % ;
  *   3. un cadrage dure ≥ 0,5 s ;
  *   4. la caméra ne quitte pas une unité avant 60 % de sa durée et arrive au plus tard sur l'attaque de la suivante ;
  *   5. au repos, déplacement du point de lecture < 60 px/s à l'écran.
@@ -97,7 +97,10 @@ function sat(A, B) { for (const P of [A, B]) for (let i = 0; i < 4; i++) { const
   const pa = A.map(([x, y]) => x * nx + y * ny), pb = B.map(([x, y]) => x * nx + y * ny);
   if (Math.max(...pa) <= Math.min(...pb) || Math.max(...pb) <= Math.min(...pa)) return false; } return true; }
 for (let i = 0; i < R.boxes.length; i++) for (let j = i + 1; j < R.boxes.length; j++) if (sat(R.boxes[i].poly, R.boxes[j].poly)) tag('final', `« ${R.boxes[i].txt} » (${R.boxes[i].line}) recouvre « ${R.boxes[j].txt} » (${R.boxes[j].line})`);
-const report = { ok: err.length === 0, errors: err, sizes: info, transitions: trans };
-console.log(info.join('\n')); console.log('--- transitions'); console.log(trans.join('\n')); console.log('--- erreurs'); console.log(err.length ? err.join('\n') : 'aucune');
+// corps de chaque ligne dans l'image finale (zoom 1), pour information
+const fin = {}; for (const b of R.boxes) { const f = fin[b.line] ||= { min: 1e9, max: 0 }; f.min = Math.min(f.min, b.px); f.max = Math.max(f.max, b.px); }
+const finale = Object.entries(fin).map(([k, f]) => `${k.padEnd(12)} ${f.min.toFixed(1)}${f.max > f.min + 0.05 ? '–' + f.max.toFixed(1) : ''} px`);
+const report = { ok: err.length === 0, errors: err, sizes: info, transitions: trans, finale };
+console.log(info.join('\n')); console.log('--- corps dans l\'image finale'); console.log(finale.join('\n')); console.log('--- transitions'); console.log(trans.join('\n')); console.log('--- erreurs'); console.log(err.length ? err.join('\n') : 'aucune');
 if (args.json) fs.writeFileSync(args.json, JSON.stringify(report, null, 1));
 process.exit(err.length ? 1 : 0);
