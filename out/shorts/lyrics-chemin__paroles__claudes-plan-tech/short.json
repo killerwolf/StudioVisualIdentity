@@ -1,0 +1,86 @@
+{
+ "identity": "lyrics-chemin",
+ "family": "paroles",
+ "declinaison": "B — habillage editeur, dessin cargo",
+ "title": "Claude's Plan, version tech — 32,6 premières secondes, jusqu'au refrain (paroles de remplissage en anglais : « Monday's draft »)",
+ "hook": "Image 0 : très gros plan sur MONDAY'S qui se tape en jaune dans un éditeur de code sombre, curseur bloc jaune, grille de points",
+ "duration": 32.62,
+ "libraries": [
+  "@fontsource/jetbrains-mono 5.3.0 (400, 400 italique, 700, 800)",
+  "Canvas 2D (render.mjs, Chrome par playwright-core)",
+  "ffmpeg"
+ ],
+ "seed": "textures à graine fixe (41, 77) ; aucun hasard dépendant du temps",
+ "renderTimeSec": 929.5,
+ "renderNote": "render.mjs, 979 images, 94,9 s / 100 images, seul rendu sur la machine (charge 3–5 due aux autres sessions) ; flou de mouvement jusqu'à 64 sous-images. Encodage final crf 24.",
+ "measuredUnderLoad": true,
+ "data": "src/paroles.remplissage.json (REMPLISSAGE, mêmes temps que lyrics-chemin__paroles__claudes-plan) + out/shared/chemin-moteur/dessins/cargo.json + habillages/editeur.js ; vraies paroles et audio hors dépôt",
+ "tempo": {
+  "bpm": 154.5,
+  "t0": 0.0,
+  "source": "relevé AR-16, non redétecté"
+ },
+ "structure": [
+  {
+   "t": 0,
+   "beat": "titre sur la coque : MONDAY'S tapé en jaune, curseur bloc ; glissé sur DRAFT"
+  },
+  {
+   "t": 2.62,
+   "beat": "fouetté vers le conteneur 01 (violet) ; « i fold my day » tapé caractère par caractère, retour chariot sur « in draft mode » (suggestion en italique gris, acceptée à l'attaque, sèche en violet)"
+  },
+  {
+   "t": 6.56,
+   "beat": "retour chariot d'un étage : conteneur 03–04 (vert), « but not for show » pré-posé en suggestion"
+  },
+  {
+   "t": 9.51,
+   "beat": "conteneur 05–06 (orange) ; « 5 a.m. » sèche en orange ; le château se trace"
+  },
+  {
+   "t": 12.24,
+   "beat": "virage de 61° sur le flanc gauche de la coque : ✗ rouge et notification d'échec"
+  },
+  {
+   "t": 15.73,
+   "beat": "virage sur la quille (pastille « clé ») ; virage sur le flanc droit (onglet de fichier, note.txt sèche en vert)"
+  },
+  {
+   "t": 22.13,
+   "beat": "fouetté vers le fanion en tête de mât ; respiration de 4 temps (recul à ×1,6 : la pile se devine)"
+  },
+  {
+   "t": 25.4,
+   "beat": "fouetté vers le conteneur de travers (rouge) : wrong fold, soulignement ondulé ; fouetté vers la première vague"
+  },
+  {
+   "t": 29.515,
+   "beat": "zoom arrière d'une mesure pendant que le refrain s'écrit en sortie de terminal (rangs alignés à gauche, invites >)"
+  },
+  {
+   "t": 31.068,
+   "beat": "image d'ensemble : le porte-conteneurs dans l'éditeur, l'écran, le clavier, la canette ; dernier rang jaune"
+  }
+ ],
+ "engagement": {
+  "mechanic": "lecture de la chanson au rythme (son de l'appli) et révélation finale du dessin",
+  "cta": null
+ },
+ "loopable": false,
+ "sound": {
+  "type": "none",
+  "voice": false,
+  "music": "aucune dans le fichier : la chanson vient de la bibliothèque de l'appli à la publication",
+  "silentTrack": true
+ },
+ "qualityChecks": {
+  "stillsReviewed": true,
+  "textMinPx": 81,
+  "safeAreaOk": true,
+  "audit": "out/tools/chemin_audit.mjs, 979 images : aucune erreur, sur le remplissage comme sur les vraies paroles (plancher de l'habillage 96 px ; 86 px sur le rang « up since 5 a.m. », 80 px sur « but not for show », 92 px sur la vague : passages pré-posés en suggestion) ; corps dans l'image finale : conteneurs 46 px (29–30 px dans la maquette), coque 30–32, vague 36, fanion 42, titre 53, refrain 68",
+  "maxWordsOnScreen": 5
+ },
+ "notes": "Déclinaison B de lyrics-chemin (direction artistique de Fable : out/report/notes/lyrics-chemin/declinaisons/b-claudes-plan-tech.md ; réalisation et écarts : declinaisons/realisation.md). Version aux vraies paroles rendue hors dépôt.",
+ "reproduce": "voir src/README.md",
+ "language": "en"
+}

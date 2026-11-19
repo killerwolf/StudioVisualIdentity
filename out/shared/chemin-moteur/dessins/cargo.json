@@ -1,0 +1,448 @@
+{
+ "id": "cargo",
+ "note": "Porte-conteneurs vu de face, dans un éditeur de code (déclinaison B de lyrics-chemin, habillage « editeur »). Repère monde = image finale 1080×1920. Chaque ligne de couplet est un conteneur à deux rangs (la ligne repliée comme du code, numéros de ligne en gouttière) ; le conteneur de travers (c8) porte le mauvais changement. Les rangs finaux sont une sortie de terminal alignée à gauche. Le décor (conteneurs, château, mât, fanion, ligne de flottaison, panneaux d'interface) est tracé par l'habillage à partir de ce fichier ; les temps sont dans le fichier de paroles.",
+ "feuille": {
+  "x": 44,
+  "y": 120,
+  "w": 992,
+  "h": 1440
+ },
+ "points": {
+  "L": [
+   110,
+   706
+  ],
+  "R": [
+   946,
+   706
+  ],
+  "BL": [
+   288,
+   1120
+  ],
+  "BR": [
+   780,
+   1120
+  ]
+ },
+ "aretes": {
+  "titre": {
+   "chemin": {
+    "type": "droite",
+    "a": [
+     290,
+     846
+    ],
+    "b": [
+     766,
+     846
+    ]
+   },
+   "em": [
+    44,
+    58
+   ],
+   "center": true,
+   "noLine": true,
+   "weight": 800,
+   "track": 0.04
+  },
+  "c1a": {
+   "chemin": {
+    "type": "droite",
+    "a": [
+     270,
+     616
+    ],
+    "b": [
+     832,
+     616
+    ]
+   },
+   "inside": true,
+   "noLine": true,
+   "center": true,
+   "noFit": true,
+   "em": [
+    46,
+    46
+   ]
+  },
+  "c1b": {
+   "chemin": {
+    "type": "droite",
+    "a": [
+     270,
+     672
+    ],
+    "b": [
+     832,
+     672
+    ]
+   },
+   "inside": true,
+   "noLine": true,
+   "center": true,
+   "noFit": true,
+   "em": [
+    46,
+    46
+   ]
+  },
+  "c2a": {
+   "chemin": {
+    "type": "droite",
+    "a": [
+     344,
+     486
+    ],
+    "b": [
+     906,
+     486
+    ]
+   },
+   "inside": true,
+   "noLine": true,
+   "center": true,
+   "noFit": true,
+   "em": [
+    46,
+    46
+   ]
+  },
+  "c2b": {
+   "chemin": {
+    "type": "droite",
+    "a": [
+     344,
+     542
+    ],
+    "b": [
+     906,
+     542
+    ]
+   },
+   "inside": true,
+   "noLine": true,
+   "center": true,
+   "noFit": true,
+   "em": [
+    46,
+    46
+   ]
+  },
+  "c3a": {
+   "chemin": {
+    "type": "droite",
+    "a": [
+     284,
+     356
+    ],
+    "b": [
+     846,
+     356
+    ]
+   },
+   "inside": true,
+   "noLine": true,
+   "center": true,
+   "noFit": true,
+   "em": [
+    46,
+    46
+   ]
+  },
+  "c3b": {
+   "chemin": {
+    "type": "droite",
+    "a": [
+     284,
+     412
+    ],
+    "b": [
+     846,
+     412
+    ]
+   },
+   "inside": true,
+   "noLine": true,
+   "center": true,
+   "noFit": true,
+   "em": [
+    46,
+    46
+   ]
+  },
+  "c8": {
+   "chemin": {
+    "type": "droite",
+    "a": [
+     573.8,
+     272.6
+    ],
+    "b": [
+     870.8,
+     230.9
+    ]
+   },
+   "inside": true,
+   "noLine": true,
+   "center": true,
+   "noFit": true,
+   "em": [
+    46,
+    46
+   ]
+  },
+  "coqueG": {
+   "chemin": {
+    "type": "droite",
+    "a": "L",
+    "b": "BL"
+   },
+   "m": [
+    24,
+    12
+   ],
+   "below": true
+  },
+  "quille": {
+   "chemin": {
+    "type": "droite",
+    "a": "BL",
+    "b": "BR"
+   },
+   "m": [
+    12,
+    12
+   ]
+  },
+  "coqueD": {
+   "chemin": {
+    "type": "droite",
+    "a": "BR",
+    "b": "R"
+   },
+   "m": [
+    16,
+    30
+   ],
+   "below": true
+  },
+  "fanion": {
+   "chemin": {
+    "type": "droite",
+    "a": [
+     166,
+     276
+    ],
+    "b": [
+     366,
+     276
+    ]
+   },
+   "em": [
+    42,
+    42
+   ],
+   "noLine": true,
+   "noFit": true
+  },
+  "vague1": {
+   "chemin": {
+    "type": "vague",
+    "x0": 96,
+    "x1": 640,
+    "y": 1182,
+    "amp": 7,
+    "wl": 180,
+    "ph": 0.4
+   },
+   "m": [
+    8,
+    8
+   ],
+   "noFit": true
+  }
+ },
+ "boites": [
+  {
+   "id": "c1",
+   "x": 196,
+   "y": 582,
+   "w": 660,
+   "h": 124,
+   "couleur": "kw",
+   "rangs": [
+    [
+     "c1a",
+     "01",
+     616
+    ],
+    [
+     "c1b",
+     "02",
+     672
+    ]
+   ]
+  },
+  {
+   "decor": "c1b",
+   "x": 864,
+   "y": 582,
+   "w": 76,
+   "h": 124,
+   "couleur": "com"
+  },
+  {
+   "id": "c2",
+   "x": 270,
+   "y": 452,
+   "w": 660,
+   "h": 124,
+   "couleur": "str",
+   "rangs": [
+    [
+     "c2a",
+     "03",
+     486
+    ],
+    [
+     "c2b",
+     "04",
+     542
+    ]
+   ]
+  },
+  {
+   "decor": "c2b",
+   "x": 196,
+   "y": 452,
+   "w": 66,
+   "h": 124,
+   "couleur": "com"
+  },
+  {
+   "id": "c3",
+   "x": 210,
+   "y": 322,
+   "w": 660,
+   "h": 124,
+   "couleur": "num",
+   "rangs": [
+    [
+     "c3a",
+     "05",
+     356
+    ],
+    [
+     "c3b",
+     "06",
+     412
+    ]
+   ]
+  },
+  {
+   "decor": "c3b",
+   "x": 878,
+   "y": 322,
+   "w": 62,
+   "h": 124,
+   "couleur": "com"
+  },
+  {
+   "id": "c8",
+   "x": 510,
+   "y": 242,
+   "w": 390,
+   "h": 80,
+   "couleur": "err",
+   "rot": -8,
+   "rangs": [
+    [
+     "c8",
+     "07",
+     282
+    ]
+   ]
+  }
+ ],
+ "tour": {
+  "x": 96,
+  "y": 414,
+  "w": 86,
+  "h": 292,
+  "mat": [
+   139,
+   236
+  ]
+ },
+ "flottaison": {
+  "y": 1010,
+  "x0": 246,
+  "x1": 822
+ },
+ "suiteVague1": {
+  "x0": 700,
+  "x1": 940
+ },
+ "final": {
+  "gauche": 176,
+  "invite": 112,
+  "largeurMax": 760,
+  "emMax": 68,
+  "espace": 0.6,
+  "rangs": [
+   {
+    "y": 1262
+   },
+   {
+    "y": 1344
+   },
+   {
+    "y": 1426
+   },
+   {
+    "y": 1508
+   }
+  ]
+ },
+ "ui": {
+  "toast": {
+   "x": 312,
+   "y": 912,
+   "ligne": "coqueG",
+   "unite": 0,
+   "decalage": 0.3
+  },
+  "cle": {
+   "x": 596,
+   "y": 1022,
+   "ligne": "quille",
+   "unite": 1,
+   "decalage": -0.1
+  },
+  "fichier": {
+   "x": 664,
+   "y": 914,
+   "ligne": "coqueD",
+   "unite": 1,
+   "decalage": -0.1
+  }
+ },
+ "objets": {
+  "note": {
+   "x": 1002,
+   "y": 566,
+   "angle": 6
+  },
+  "clavier": {
+   "x": -34,
+   "y": 1668
+  },
+  "canette": {
+   "x": 934,
+   "y": 1792
+  }
+ }
+}

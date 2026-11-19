@@ -6,7 +6,7 @@
   "identities": 19,
   "derivations": 3,
   "declinations": 22,
-  "shorts": 45
+  "shorts": 46
  },
  "families": [
   {
@@ -4299,6 +4299,23 @@
       "ffmpeg"
      ],
      "renderCostSecPer100Frames": 207.7,
+     "loopable": false,
+     "voiced": false,
+     "recognitionNearestShort": null,
+     "recognitionSameIdentity": null
+    },
+    {
+     "dir": "out/shorts/lyrics-chemin__paroles__claudes-plan-tech",
+     "family": "paroles",
+     "declinaison": "B — habillage editeur, dessin cargo",
+     "title": "Claude's Plan, version tech — 32,6 premières secondes, jusqu'au refrain (paroles de remplissage en anglais : « Monday's draft »)",
+     "durationSec": 32.62,
+     "libraries": [
+      "@fontsource/jetbrains-mono 5.3.0 (400, 400 italique, 700, 800)",
+      "Canvas 2D (render.mjs, Chrome par playwright-core)",
+      "ffmpeg"
+     ],
+     "renderCostSecPer100Frames": 95.0,
      "loopable": false,
      "voiced": false,
      "recognitionNearestShort": null,
