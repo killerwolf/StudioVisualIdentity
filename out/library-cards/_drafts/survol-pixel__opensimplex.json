@@ -1,0 +1,22 @@
+{
+ "name": "opensimplex",
+ "version": "0.4.5.1 (PyPI, uv pip install opensimplex==0.4.5.1)",
+ "role": "bruit procédural (matière)",
+ "bestFor": [
+  "côte irrégulière d'une île, forêts en taches, crêtes et montagnes alentour d'un monde-maquette",
+  "champs 360² et 640² à 2–3 octaves calculés une fois puis mis en cache (.npy)"
+ ],
+ "avoidFor": [
+  "tout appel par image"
+ ],
+ "renderCostPer100Frames": "0 s par image (cache) ; calcul unique de quelques secondes par champ 640²",
+ "gotchas": [
+  "noise2array(x, y) renvoie (len(y), len(x))",
+  "seed global : appeler seed juste avant chaque octave",
+  "cache hors dépôt (SURVOL_CACHE)"
+ ],
+ "snippetPath": "shorts/survol-pixel__explicatif__comment-nait-un-atoll/src/survol.py (noise_field)",
+ "pairsWellWith": [
+  "numpy"
+ ]
+}

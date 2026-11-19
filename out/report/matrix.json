@@ -184,6 +184,24 @@
    "p5.js"
   ]
  },
+ "survol-pixel": {
+  "explicatif": [
+   "Jersey",
+   "NumPy",
+   "Pillow",
+   "ffmpeg",
+   "opensimplex",
+   "scipy"
+  ],
+  "histoire": [
+   "Jersey",
+   "NumPy",
+   "Pillow",
+   "ffmpeg",
+   "opensimplex",
+   "scipy"
+  ]
+ },
  "swiss-data": {
   "evenements": [
    "D3.js",
@@ -216,17 +234,17 @@
  },
  "trait-continu": {
   "enfants": [
+   "NumPy",
    "Pillow",
    "ffmpeg",
-   "numpy",
    "opensimplex",
    "pycairo",
    "shapely"
   ],
   "geographie": [
+   "NumPy",
    "Pillow",
    "ffmpeg",
-   "numpy",
    "opensimplex",
    "pycairo",
    "shapely"

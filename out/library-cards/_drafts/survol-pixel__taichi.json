@@ -1,0 +1,22 @@
+{
+ "name": "Taichi",
+ "role": "3D (marche de rayons sur GPU, facultative)",
+ "version": "1.7.2 (PyPI, .venv, macOS Intel)",
+ "bestFor": [
+  "porter sur GPU (Metal) une boucle numpy par rayon (marche à pas sûrs + bissections) : image de survol-pixel 1,5–1,9 s → 0,7–0,8 s"
+ ],
+ "avoidFor": [
+  "un rendu qui doit être identique au bit près au CPU : la division Metal n'est pas arrondie au plus proche"
+ ],
+ "renderCostPer100Frames": "≈ 70–80 s (survol-pixel, marche seule sur GPU AMD Radeon Pro 560, reste en numpy ; mesure par image, pas de rendu complet livré)",
+ "gotchas": [
+  "macOS Intel : taichi==1.7.2 (1.7.3 et 1.7.4 n'ont pas de roue x86_64)",
+  "Metal : la division float32 n'est pas arrondie au plus proche (≈ 29 % des quotients diffèrent de numpy, jusqu'à 2,5 ulp) ; div_rn (reste exact de Dekker) la corrige seule, mais dans le gros noyau un écart d'1 ulp subsiste sur (pz − bm) / ndz : 0 pixel d'écart sur 6 images, 0–0,2 % des rayons à 1–2 ulp",
+  "le compilateur Metal fusionne produit + addition en fma : passer chaque produit par un bit_cast XOR un zéro reçu à l'exécution",
+  "ti.metal prend le périphérique Metal par défaut du système (GPU dédié sur un Mac à deux GPU) ; fast_math=False"
+ ],
+ "snippetPath": "shorts/survol-pixel__explicatif__comment-nait-un-atoll/src/survol_gpu.py",
+ "pairsWellWith": [
+  "numpy"
+ ]
+}

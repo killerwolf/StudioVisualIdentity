@@ -336,7 +336,53 @@
   }
  },
  {
+  "short": "lyrics-chemin__explicatif__le-quatre-quarts",
+  "ok": true,
+  "errors": [],
+  "warnings": [],
+  "info": {
+   "duration": 25.6,
+   "width": 1080,
+   "height": 1920,
+   "fps": "30/1",
+   "codec": "h264",
+   "pix": "yuv420p"
+  }
+ },
+ {
+  "short": "lyrics-chemin__histoire__le-premier-tour-du-monde",
+  "ok": true,
+  "errors": [],
+  "warnings": [
+   "ligne 3 : 11 mots en 3.36 s (> 3,2 mots/s)",
+   "ligne 6 : 6 mots en 1.38 s (> 3,2 mots/s)",
+   "ligne 10 : 9 mots en 2.28 s (> 3,2 mots/s)"
+  ],
+  "info": {
+   "duration": 45.0,
+   "width": 1080,
+   "height": 1920,
+   "fps": "30/1",
+   "codec": "h264",
+   "pix": "yuv420p"
+  }
+ },
+ {
   "short": "lyrics-chemin__paroles__claudes-plan",
+  "ok": true,
+  "errors": [],
+  "warnings": [],
+  "info": {
+   "duration": 32.63,
+   "width": 1080,
+   "height": 1920,
+   "fps": "30/1",
+   "codec": "h264",
+   "pix": "yuv420p"
+  }
+ },
+ {
+  "short": "lyrics-chemin__paroles__claudes-plan-tech",
   "ok": true,
   "errors": [],
   "warnings": [],
@@ -531,6 +577,34 @@
   ],
   "info": {
    "duration": 16.0,
+   "width": 1080,
+   "height": 1920,
+   "fps": "30/1",
+   "codec": "h264",
+   "pix": "yuv420p"
+  }
+ },
+ {
+  "short": "survol-pixel__explicatif__comment-nait-un-atoll",
+  "ok": true,
+  "errors": [],
+  "warnings": [],
+  "info": {
+   "duration": 18.6,
+   "width": 1080,
+   "height": 1920,
+   "fps": "30/1",
+   "codec": "h264",
+   "pix": "yuv420p"
+  }
+ },
+ {
+  "short": "survol-pixel__histoire__machu-picchu-pourquoi-une-cite-en-escaliers",
+  "ok": true,
+  "errors": [],
+  "warnings": [],
+  "info": {
+   "duration": 18.8,
    "width": 1080,
    "height": 1920,
    "fps": "30/1",

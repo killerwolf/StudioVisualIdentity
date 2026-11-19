@@ -28,11 +28,15 @@ CANON.update({'three': 'three.js', 'matter': 'Matter.js', 'matterjs': 'Matter.js
               'zdog': 'Zdog', 'flubber': 'flubber', 'pycairo': 'pycairo', 'cairo': 'pycairo',
               # lot 2 (2026-11-05) : librairies hors niveaux A/B
               'shapely': 'shapely', 'opensimplex': 'opensimplex', 'topojsonclient': 'topojson-client', 'topojson': 'topojson-client',
-              'worldatlas': 'world-atlas'})
+              'worldatlas': 'world-atlas',
+              # survol-pixel (2026-11-18) : moteur Python numpy, texte Pillow, police Jersey 10/15/20
+              'numpy': 'NumPy', 'pillow': 'Pillow', 'pil': 'Pillow', 'scipy': 'scipy', 'jersey': 'Jersey',
+              'jerseyfontsource': 'Jersey'})
 # versions utilisées (épinglées : pip `==` ou package.json sans `^`), recopiées dans la carte (champ `version`)
 PINNED = {'shapely': '2.2.0 (PyPI, uv pip install shapely==2.2.0)', 'opensimplex': '0.4.5.1 (PyPI, uv pip install opensimplex==0.4.5.1)',
           'world-atlas': '2.0.2 (npm, version exacte épinglée dans package.json, sans ^)',
-          'topojson-client': '3.1.0 (npm ; package.json "^3.1.0", version installée et utilisée par carte-meteo)'}
+          'topojson-client': '3.1.0 (npm ; package.json "^3.1.0", version installée et utilisée par carte-meteo)',
+          'Jersey': '5.3.0 (npm @fontsource/jersey-10, jersey-15, jersey-20, version exacte épinglée dans package.json, sans ^)'}
 
 
 ROLES = {'three.js': '3D', 'A-Frame': '3D', 'Zdog': '3D', 'Babylon.js': '3D', 'Matter.js': 'physique', 'Taichi': 'fluides',
@@ -42,7 +46,9 @@ ROLES = {'three.js': '3D', 'A-Frame': '3D', 'Zdog': '3D', 'Babylon.js': '3D', 'M
          'PixiJS': 'particules 2D', 'Matplotlib': 'data / science',
          'shapely': 'géométrie 2D (construction de chemin)', 'opensimplex': 'bruit procédural (matière)',
          'topojson-client': 'données géographiques (décodage TopoJSON)',
-         'world-atlas': 'données factuelles (géométries Natural Earth, domaine public)'}
+         'world-atlas': 'données factuelles (géométries Natural Earth, domaine public)',
+         'NumPy': '3D raster (lancer de rayon en Python pur)', 'Pillow': 'typo (texte pixel sans anticrénelage)',
+         'scipy': 'géométrie raster (morphologie)', 'Jersey': 'typo (police pixel)'}
 
 
 def canon(name):

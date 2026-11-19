@@ -1,12 +1,12 @@
 {
  "schemaVersion": "1.1",
- "description": "Machine index of the 19 visual identities for 9:16 shorts (22 declinations: 3 of them are derivations of a root identity, see variantOf). Use it to shortlist identities, then read each identity's identity.md (16 sections, French) and tokens.json. coreTokens is a normalised subset (seconds, pixels on a 1080x1920 canvas, @fontsource slugs); the original tokens.json is authoritative for everything else. curation.* is orchestrator judgment. See AGENTS.md.",
+ "description": "Machine index of the 20 visual identities for 9:16 shorts (23 declinations: 3 of them are derivations of a root identity, see variantOf). Use it to shortlist identities, then read each identity's identity.md (16 sections, French) and tokens.json. coreTokens is a normalised subset (seconds, pixels on a 1080x1920 canvas, @fontsource slugs); the original tokens.json is authoritative for everything else. curation.* is orchestrator judgment. See AGENTS.md.",
  "generatedBy": "out/tools/build_index.py",
  "counts": {
-  "identities": 19,
+  "identities": 20,
   "derivations": 3,
-  "declinations": 22,
-  "shorts": 48
+  "declinations": 23,
+  "shorts": 50
  },
  "families": [
   {
@@ -23,8 +23,8 @@
  ],
  "fieldNotes": {
   "variantOf": "id of the root identity when this entry is a derivation (same engine, only ground / palette / fonts change), else null. A root lists its derivations in variants and what is shared / what varies in variantAxis. Derivations stay ranked, right after their root; counts.identities counts roots only, counts.declinations counts every entry. curation.deliberateSiblings = derivations of the same root, deliberately close and therefore not listed in confusableWith. A new identity that reuses an existing engine and only changes ground / palette / fonts must be registered as a derivation, not as a new identity",
-  "status": "selected = kept in Phase 1; rehabilitated = set aside in Phase 1 only to avoid topic overlap with a neighbour, then produced on request with the same rules and evidence level; added = added after the campaign: (a) the cut-paper identity from the StudioGabarit template, papier-decoupe, and its 3 derivations (atelier-papier, carnet-archives, cabinet-curiosites), rendered by the shared Python engine out/shared/papier-moteur/, appended after the ranked identities and not part of the ranking or the blind visual judge; (b) lot 2 of the identity factory (trait-continu, carte-meteo, 2026-11-05: scouting + adversarial challenge + studio + review), ranked with the others, blind visual judge on 8 identities (lot 2 + 6 neighbours, 8/8 pure groups, out/report/notes/revue-2026-11-05.md), voice-over Gemini Sulafat like the cut-paper family (owner decision: Fish Audio credits ran out before Arnold could be recorded); (c) lyrics-punchy and lyrics-chemin (2026-11-19), the two identities of the new content family `paroles` (muted lyric video, no voice-over), unranked, appended last, one proof short each rendered with filler lyrics (real lyrics and audio stay outside the repository)",
-  "voiceUsed": "voice actually mixed into short.mp4 (Fish Audio Arnold for the 31 campaign shorts, Gemini Sulafat for the 8 cut-paper and 4 lot 2 shorts; see shorts[].voiced)",
+  "status": "selected = kept in Phase 1; rehabilitated = set aside in Phase 1 only to avoid topic overlap with a neighbour, then produced on request with the same rules and evidence level; added = added after the campaign: (a) the cut-paper identity from the StudioGabarit template, papier-decoupe, and its 3 derivations (atelier-papier, carnet-archives, cabinet-curiosites), rendered by the shared Python engine out/shared/papier-moteur/, appended after the ranked identities and not part of the ranking or the blind visual judge; (b) lot 2 of the identity factory (trait-continu, carte-meteo, 2026-11-05: scouting + adversarial challenge + studio + review), ranked with the others, blind visual judge on 8 identities (lot 2 + 6 neighbours, 8/8 pure groups, out/report/notes/revue-2026-11-05.md), voice-over Gemini Sulafat like the cut-paper family (owner decision: Fish Audio credits ran out before Arnold could be recorded); (c) survol-pixel (2026-11-18, same skill, style taken from a source pixel-art flight video), ranked with the others, voice-over Gemini Sulafat (owner decision 2026-11-18, API v1beta), blind visual judge on 6 identities during its review (survol-pixel + pixel-arcade, carte-meteo, topo-relief, pastel-diorama, trait-continu; 6/6 pure groups, 24/24 images, recognition.json blindJudgeSurvol); (d) lyrics-punchy and lyrics-chemin (2026-11-19), the two identities of the new content family `paroles` (muted lyric video, no voice-over), unranked, appended last, one proof short each rendered with filler lyrics (real lyrics and audio stay outside the repository)",
+  "voiceUsed": "voice actually mixed into short.mp4 (Fish Audio Arnold for the 31 campaign shorts, Gemini Sulafat for the 8 cut-paper, 4 lot 2 and 2 survol-pixel shorts, i.e. 31 Arnold + 14 Sulafat; see shorts[].voiced)",
   "coreTokens.motion.staggerSec": "the identity's default stagger as written in its tokens.json; meaning varies (per-item stagger for most, spacing between beats/captions for atlas-grave 1.5 and liquid-chrome 1.55, title-to-body delay for neon-lab 0.8)",
   "coreTokens.motion.durationSec.slow": "longest standard duration; for gazette-1900 it is one page (6 beats at 128 bpm)",
   "coreTokens.color.contrastOnBg": "WCAG contrast ratio against bg, computed; muted/accent colours are often decorative (e.g. gazette-1900 muted = engraving fill, 1.07:1) and must not carry text",
@@ -36,7 +36,9 @@
   "blindJudgeGroups": 14,
   "blindJudgeLot2": 8,
   "blindJudgeLot2Groups": 8,
-  "measuredTop1": "40/43"
+  "blindJudgeSurvol": 6,
+  "blindJudgeSurvolGroups": 6,
+  "measuredTop1": "41/45"
  },
  "identities": [
   {
@@ -642,7 +644,9 @@
      "real pre-simulated physics with photo finish",
      "pixel-mosaic transition + chiptune blips on collisions"
     ],
-    "confusableWith": []
+    "confusableWith": [
+     "survol-pixel"
+    ]
    }
   },
   {
@@ -1836,9 +1840,230 @@
    }
   },
   {
+   "id": "survol-pixel",
+   "name": "Survol pixel",
+   "rank": 10,
+   "variantOf": null,
+   "status": "added",
+   "promiseFr": "Chaque sujet devient un petit monde en pixel art 16 bits que la caméra survole, puis frôle jusqu'à l'horizon : la profondeur d'une console des années 90 au service d'une histoire racontée.",
+   "promiseEn": "Each topic becomes a small 16-bit pixel-art world that one camera flies over, dives into and skims to the horizon: the depth of a 90s console game put at the service of a narrated story.",
+   "familiesProven": [
+    "explicatif",
+    "histoire"
+   ],
+   "libraries": [
+    "numpy",
+    "Pillow",
+    "opensimplex",
+    "scipy",
+    "fontTools (test)",
+    "@fontsource/jersey-10",
+    "@fontsource/jersey-15",
+    "@fontsource/jersey-20",
+    "ffmpeg"
+   ],
+   "renderCostNote": "Python render on CPU (numpy ray casting at 270x480, 4 rays per pixel with a majority vote + Pillow text, no browser), full engine run timed, world build included (6.5 s / 28.6 s), opensimplex fields cached and not included; renders after the A+B+C pass and the Fable retouch (2026-11-18: worlds 3x / 2.4x larger, fine colour map around the subject, 6-step haze, relief shadow, safe-step march on block max maps; retouch: more and bigger clouds, foam strokes, lighter forest, wider sugarloaf, tighter sky ramp): atoll 63.9 rendered alone (1-min load 3.4–3.8; 82.1 in a first run in parallel with Machu Picchu), Machu Picchu 214.4 (load 2.9–5.0, in parallel with the first atoll run for about 8 minutes); A+B+C pass before the retouch: 107.18 and 266.29 (both in parallel, load 4.4–10.4); the owner lifted the cost cap, so it is now 1.1–3.6x the 60 s/100 frames target of the challenge (detail pass: 19.6 and 63.1). Optional GPU ray march (SURVOL_GPU=1, taichi 1.7.2 on Metal) halves the frame time but is not bit-exact; delivered renders are CPU",
+   "renderCostSecPer100Frames": {
+    "min": 63.9,
+    "max": 214.4,
+    "measuredUnderLoad": true
+   },
+   "sharedModule": [
+    "out/shorts/survol-pixel__explicatif__comment-nait-un-atoll/src/survol.py"
+   ],
+   "voiceUsed": {
+    "provider": "Gemini",
+    "name": "Sulafat",
+    "model": "gemini-3.8-flash-tts",
+    "language": "fr",
+    "note": "owner decision 2026-11-18: one Gemini call per short (API v1beta: the v1 endpoint returns 404 for the TTS model), split into voice_lines/NN.mp3 by word timestamps, mixed by out/tools/tts.py --engine files; log out/report/notes/voix-survol-pixel.md"
+   },
+   "paths": {
+    "identityMd": "out/identities/survol-pixel/identity.md",
+    "tokens": "out/identities/survol-pixel/tokens.json",
+    "recipes": [
+     "out/identities/survol-pixel/recipes/enfants.md",
+     "out/identities/survol-pixel/recipes/explicatif.md",
+     "out/identities/survol-pixel/recipes/geographie.md",
+     "out/identities/survol-pixel/recipes/histoire.md"
+    ],
+    "poster": "out/identities/survol-pixel/poster.jpg",
+    "contactSheet": "out/identities/survol-pixel/contact-sheet.jpg",
+    "phase1Poster": null
+   },
+   "shorts": [
+    {
+     "dir": "out/shorts/survol-pixel__explicatif__comment-nait-un-atoll",
+     "family": "explicatif",
+     "title": "Comment naît un atoll ?",
+     "durationSec": 18.6,
+     "libraries": [
+      "numpy",
+      "Pillow",
+      "opensimplex",
+      "scipy",
+      "Jersey (@fontsource 5.3.0)",
+      "ffmpeg"
+     ],
+     "renderCostSecPer100Frames": 63.9,
+     "loopable": false,
+     "voiced": true,
+     "recognitionNearestShort": "aquarelle-conte__histoire__phare-d-alexandrie",
+     "recognitionSameIdentity": false
+    },
+    {
+     "dir": "out/shorts/survol-pixel__histoire__machu-picchu-pourquoi-une-cite-en-escaliers",
+     "family": "histoire",
+     "title": "Machu Picchu : pourquoi une cité en escaliers ?",
+     "durationSec": 18.8,
+     "libraries": [
+      "numpy",
+      "Pillow",
+      "opensimplex",
+      "scipy",
+      "Jersey (@fontsource 5.3.0)",
+      "ffmpeg"
+     ],
+     "renderCostSecPer100Frames": 214.4,
+     "loopable": false,
+     "voiced": true,
+     "recognitionNearestShort": "survol-pixel__explicatif__comment-nait-un-atoll",
+     "recognitionSameIdentity": true
+    }
+   ],
+   "coreTokens": {
+    "color": {
+     "bg": "#1E5AA8",
+     "surface": "#FBF3D5",
+     "text": "#14213D",
+     "muted": "#5A5F73",
+     "accent": [
+      "#B5341A",
+      "#FFC94A",
+      "#7CCBEB"
+     ],
+     "success": "#2F7A2A",
+     "danger": "#B5341A",
+     "contrastOnBg": {
+      "text": 2.35,
+      "muted": 1.08,
+      "success": 1.28,
+      "danger": 1.13,
+      "accent1": 1.13,
+      "accent2": 4.45,
+      "accent3": 3.76
+     },
+     "textSafeOnBg": "only colours with contrastOnBg >= 4.5 may be used for body text (>= 3 for titles >= 90 px bold); check identity.md palette roles"
+    },
+    "typography": {
+     "display": {
+      "family": "Jersey 20",
+      "fontsourceSlug": "jersey-20",
+      "weight": 400,
+      "sizePx": 136.0,
+      "sizeNote": null
+     },
+     "title": {
+      "family": "Jersey 15",
+      "fontsourceSlug": "jersey-15",
+      "weight": 400,
+      "sizePx": 108.0,
+      "sizeNote": null
+     },
+     "body": {
+      "family": "Jersey 15",
+      "fontsourceSlug": "jersey-15",
+      "weight": 400,
+      "sizePx": 108.0,
+      "sizeNote": null
+     },
+     "caption": {
+      "family": "Jersey 10",
+      "fontsourceSlug": "jersey-10",
+      "weight": 400,
+      "sizePx": 74.7,
+      "sizeNote": null
+     }
+    },
+    "motion": {
+     "durationSec": {
+      "fast": 0.13,
+      "base": 0.6,
+      "slow": 3.6
+     },
+     "staggerSec": 0.6,
+     "easingRaw": {
+      "enter": "cartouche : ouverture en hauteur en 4 images (0,13 s)",
+      "exit": "relève franche au plan suivant",
+      "emphasis": "inOutCubic 0,8 s (coupe qui s'ouvre), 1,0 s (retour en arrière du monde)"
+     },
+     "hookDeadlineSec": 0.15,
+     "sourceUnits": "s"
+    },
+    "transitions": [
+     {
+      "name": "le piqué",
+      "ffmpegXfade": "none",
+      "durationSec": 2.0,
+      "use": "vers la coupe ou le détail, souffle whoosh ; signature ; 0,6 s avant la passe A+B+C, ralenti à 2,0 s (décision du propriétaire, 18/11)"
+     },
+     {
+      "name": "la remontée",
+      "ffmpegXfade": "none",
+      "durationSec": 2.2,
+      "use": "pour conclure ou changer d'échelle ; 0,6 s avant la passe A+B+C, ralentie à 2,2 s"
+     },
+     {
+      "name": "la coupe qui s'ouvre",
+      "ffmpegXfade": "none",
+      "durationSec": 0.8,
+      "use": "une région descend jusqu'au socle et montre l'intérieur"
+     },
+     {
+      "name": "le temps qui passe",
+      "ffmpegXfade": "none",
+      "durationSec": 1.0,
+      "use": "le monde change par marches pendant que la caméra vole"
+     }
+    ],
+    "safeAreaPx": {
+     "top": 220.0,
+     "bottom": 320.0,
+     "right": 120.0,
+     "left": 64.0
+    },
+    "canvas": {
+     "width": 1080,
+     "height": 1920,
+     "fps": 30
+    }
+   },
+   "curation": {
+    "by": "orchestrator judgment, not measured",
+    "audience": [
+     "kids",
+     "teens",
+     "adults"
+    ],
+    "signatureToPreserve": [
+     "3D depth is the rule: perspective ground (Mode 7 style) at any pitch, terraced heightfield with lit / shaded risers, cast shadows, layered depth and a camera that keeps moving forward (one single camera per short)",
+     "form, not content: a pixel-art look for explainers, kids, history and narrated shorts, not a video-game or flight theme (no score, no game element; HUD and cockpit optional and absent from the proofs)",
+     "indexed palette with quantised shade tables and a 6-step haze towards a very pale blue (#DCEEF5), rendered at 270x480 and scaled x4 nearest-neighbour",
+     "Jersey 15 cartouches on cream with ink border (hook, dates, narrative; one at a time since the A+B+C pass; Jersey 20 reserved), Jersey 10 mentions only; never text on the map or sky",
+     "cut-away section of the ground (ink base, coloured walls) as the on-ground diagram",
+     "dive / climb-back camera move in true perspective as the signature transition",
+     "no phosphor plate (pixel-arcade) and no \"ALT ... M\" readout (topo-relief)"
+    ],
+    "confusableWith": [
+     "pixel-arcade",
+     "topo-relief"
+    ]
+   }
+  },
+  {
    "id": "pastel-diorama",
    "name": "Diorama Pastel",
-   "rank": 10,
+   "rank": 11,
    "variantOf": null,
    "status": "selected",
    "promiseFr": "Expliquer ou faire jouer les 6–10 ans dans un monde de jouets doux et rassurants où chaque idée « saute » en place avec un rebond, sans jamais faire peur ni brusquer.",
@@ -2031,7 +2256,7 @@
   {
    "id": "topo-relief",
    "name": "Relief Topo",
-   "rank": 11,
+   "rank": 12,
    "variantOf": null,
    "status": "rehabilitated",
    "promiseFr": "Chaque sujet devient un terrain qu'on survole : le relief s'extrude sous nos yeux, les courbes de niveau s'allument en montant et un altimètre en chiffres mono dit exactement où l'on est.",
@@ -2224,14 +2449,15 @@
     ],
     "confusableWith": [
      "atlas-grave",
-     "lyrics-chemin"
+     "lyrics-chemin",
+     "survol-pixel"
     ]
    }
   },
   {
    "id": "atlas-grave",
    "name": "Atlas Gravé",
-   "rank": 12,
+   "rank": 13,
    "variantOf": null,
    "status": "selected",
    "promiseFr": "Un savoir géographique ou historique s'imprime sous vos yeux, à l'encre, sur une carte gravée qui bouge à peine, et finit sur une question ouverte.",
@@ -2435,7 +2661,7 @@
   {
    "id": "aquarelle-conte",
    "name": "Aquarelle Conte",
-   "rank": 13,
+   "rank": 14,
    "variantOf": null,
    "status": "selected",
    "promiseFr": "Chaque short est une page d'album : un paysage peint à l'eau qui respire, un petit personnage ou un monument en vecteur aquarellé, et une phrase courte posée sur du papier crème, racontée par une conteuse.",
@@ -2636,7 +2862,7 @@
   {
    "id": "neon-lab",
    "name": "Labo Néon",
-   "rank": 14,
+   "rank": 15,
    "variantOf": null,
    "status": "selected",
    "promiseFr": "Une nuit de laboratoire où la science se voit en lumière : un phénomène réel (attracteur, orbite, rotation) mis en scène comme une visualisation de musée, précise et émerveillée.",
@@ -2848,7 +3074,7 @@
   {
    "id": "cosmos-doc",
    "name": "Cosmos Doc",
-   "rank": 15,
+   "rank": 16,
    "variantOf": null,
    "status": "rehabilitated",
    "promiseFr": "Chaque short est un plan de cinéma sur un vrai objet du ciel — lumière d'étoile chaude, noir absolu, travelling lent — où un seul chiffre en capitales Bebas Neue suffit à donner le vertige.",
@@ -3043,7 +3269,7 @@
   {
    "id": "liquid-chrome",
    "name": "Chrome Liquide",
-   "rank": 16,
+   "rank": 17,
    "variantOf": null,
    "status": "selected",
    "promiseFr": "Une matière liquide, chromée et hypnotique qu'on regarde couler jusqu'au bout : chaque short est un plan-séquence de satisfaction où la physique fait le spectacle.",
@@ -3253,7 +3479,7 @@
   {
    "id": "papier-decoupe",
    "name": "Papier découpé",
-   "rank": 17,
+   "rank": 18,
    "variantOf": null,
    "variants": [
     "atelier-papier",
@@ -3475,7 +3701,7 @@
   {
    "id": "atelier-papier",
    "name": "Atelier papier",
-   "rank": 18,
+   "rank": 19,
    "variantOf": "papier-decoupe",
    "status": "added",
    "promiseFr": "Le papier découpé du gabarit, en plus chaud : un tapis de découpe bleu nuit, du crème, du corail et de la moutarde pour une chaîne de culture générale grand public.",
@@ -3674,7 +3900,7 @@
   {
    "id": "carnet-archives",
    "name": "Carnet d'archives",
-   "rank": 19,
+   "rank": 20,
    "variantOf": "papier-decoupe",
    "status": "added",
    "promiseFr": "On ouvre un dossier d'archives : vieux papiers crème posés sur du kraft, encre sépia, tampons rouges et sous-titres à la machine à écrire.",
@@ -3875,7 +4101,7 @@
   {
    "id": "cabinet-curiosites",
    "name": "Cabinet de curiosités",
-   "rank": 20,
+   "rank": 21,
    "variantOf": "papier-decoupe",
    "status": "added",
    "promiseFr": "Chaque objet devient une pièce de collection : fond bleu nuit, étiquettes de musée crème et or, lettres à empattements.",
@@ -4076,7 +4302,7 @@
   {
    "id": "lyrics-punchy",
    "name": "Lyrics punchy",
-   "rank": 21,
+   "rank": 22,
    "variantOf": null,
    "status": "added",
    "promiseFr": "Chaque mot chanté tombe pile sur le temps et remplit exactement la colonne, les lignes lues s'empilent en camaïeu, et un carton dessiné illustre le mot qui compte : on lit la chanson d'un coup d'œil, même sans le son.",
@@ -4248,15 +4474,15 @@
   {
    "id": "lyrics-chemin",
    "name": "Lyrics chemin",
-   "rank": 22,
+   "rank": 23,
    "variantOf": null,
    "status": "added",
    "promiseFr": "On suit la chanson du bout du crayon : chaque mot s'écrit en jaune à l'instant où il est chanté, la caméra file d'un trait à l'autre sur le plan, et à la fin on recule pour découvrir que les paroles dessinaient quelque chose.",
    "promiseEn": "A muted vertical lyric video shot from above: each word is written in yellow ink on a blue architect plan lying on the floor at the moment it is sung, the camera follows the pen tip in a single sequence shot, and a final zoom-out reveals that the lyrics were drawing a picture (a paper boat).",
    "familiesProven": [
-    "paroles",
     "explicatif",
-    "histoire"
+    "histoire",
+    "paroles"
    ],
    "libraries": [
     "@fontsource/barlow-condensed",
@@ -4266,7 +4492,7 @@
    ],
    "renderCostNote": "browser render (canvas 2D, render.mjs with Chrome 157 via playwright-core) including real motion blur (up to 64 sub-frames averaged in floats on camera moves, about a third of the frames); measured with other sessions running (see short.json renderNote)",
    "renderCostSecPer100Frames": {
-    "min": 207.7,
+    "min": 94.9,
     "max": 207.7,
     "measuredUnderLoad": true
    },
@@ -4290,6 +4516,42 @@
    },
    "shorts": [
     {
+     "dir": "out/shorts/lyrics-chemin__explicatif__le-quatre-quarts",
+     "family": "explicatif",
+     "title": "Le quatre-quarts — la recette écrite à la craie le long d'un gâteau coupé en quatre parts égales",
+     "durationSec": 25.6,
+     "libraries": [
+      "@fontsource/barlow-condensed 5.3.0",
+      "Canvas 2D (render.mjs, Chrome par playwright-core)",
+      "ffmpeg",
+      "faster-whisper small (horodatage des mots, hors dépôt)"
+     ],
+     "renderCostSecPer100Frames": 120.6,
+     "loopable": false,
+     "voiced": true,
+     "recognitionNearestShort": null,
+     "recognitionSameIdentity": null
+    },
+    {
+     "dir": "out/shorts/lyrics-chemin__histoire__le-premier-tour-du-monde",
+     "family": "histoire",
+     "title": "Le premier tour du monde — la route de Magellan et Elcano écrite à l'encre sur une carte vue du pôle Sud, qui se referme en boucle",
+     "durationSec": 45.0,
+     "libraries": [
+      "@fontsource/cormorant-garamond 5.3.0",
+      "world-atlas 2.0.2 land-50m (Natural Earth, domaine public)",
+      "topojson-client",
+      "Canvas 2D (render.mjs, Chrome par playwright-core)",
+      "ffmpeg",
+      "faster-whisper small (horodatage des mots, hors dépôt)"
+     ],
+     "renderCostSecPer100Frames": 107.3,
+     "loopable": false,
+     "voiced": true,
+     "recognitionNearestShort": null,
+     "recognitionSameIdentity": null
+    },
+    {
      "dir": "out/shorts/lyrics-chemin__paroles__claudes-plan",
      "family": "paroles",
      "title": "Claude's Plan — 32,6 premières secondes, jusqu'au refrain (paroles de remplissage en anglais : « Monday's draft »)",
@@ -4309,7 +4571,6 @@
     {
      "dir": "out/shorts/lyrics-chemin__paroles__claudes-plan-tech",
      "family": "paroles",
-     "declinaison": "B — habillage editeur, dessin cargo",
      "title": "Claude's Plan, version tech — 32,6 premières secondes, jusqu'au refrain (paroles de remplissage en anglais : « Monday's draft »)",
      "durationSec": 32.62,
      "libraries": [
@@ -4317,47 +4578,9 @@
       "Canvas 2D (render.mjs, Chrome par playwright-core)",
       "ffmpeg"
      ],
-     "renderCostSecPer100Frames": 95.0,
+     "renderCostSecPer100Frames": 94.9,
      "loopable": false,
      "voiced": false,
-     "recognitionNearestShort": null,
-     "recognitionSameIdentity": null
-    },
-    {
-     "dir": "out/shorts/lyrics-chemin__explicatif__le-quatre-quarts",
-     "family": "explicatif",
-     "declinaison": "A2 — habillage ardoise, dessin quatre-quarts (short narré)",
-     "title": "Le quatre-quarts — la recette écrite à la craie le long d'un gâteau coupé en quatre parts égales",
-     "durationSec": 25.6,
-     "libraries": [
-      "@fontsource/barlow-condensed 5.3.0",
-      "Canvas 2D (render.mjs, Chrome par playwright-core)",
-      "ffmpeg",
-      "faster-whisper small (horodatage des mots, hors dépôt)"
-     ],
-     "renderCostSecPer100Frames": 120.6,
-     "loopable": false,
-     "voiced": true,
-     "recognitionNearestShort": null,
-     "recognitionSameIdentity": null
-    },
-    {
-     "dir": "out/shorts/lyrics-chemin__histoire__le-premier-tour-du-monde",
-     "family": "histoire",
-     "declinaison": "A1 — habillage portulan, dessin tour-du-monde (short narré)",
-     "title": "Le premier tour du monde — la route de Magellan et Elcano écrite à l'encre sur une carte vue du pôle Sud, qui se referme en boucle",
-     "durationSec": 45.0,
-     "libraries": [
-      "@fontsource/cormorant-garamond 5.3.0",
-      "world-atlas 2.0.2 land-50m (Natural Earth, domaine public)",
-      "topojson-client",
-      "Canvas 2D (render.mjs, Chrome par playwright-core)",
-      "ffmpeg",
-      "faster-whisper small (horodatage des mots, hors dépôt)"
-     ],
-     "renderCostSecPer100Frames": 107.3,
-     "loopable": false,
-     "voiced": true,
      "recognitionNearestShort": null,
      "recognitionSameIdentity": null
     }
