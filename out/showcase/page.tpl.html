@@ -46,7 +46,7 @@ a { color: var(--safelight); }
 .ledger { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: 2px solid var(--ink); }
 .ledger div { padding: var(--s3) 0; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; gap: var(--s3); padding-right: var(--s3); }
 .ledger div:nth-child(even) { padding-left: var(--s3); padding-right: 0; border-left: 1px solid var(--line); }
-.ledger b { font-family: var(--mono); font-weight: 600; font-variant-numeric: tabular-nums; }
+.ledger b { font-family: var(--mono); font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .ledger span { color: var(--ink-2); font-size: 14px; }
 
 .reco { margin-top: var(--s5); display: grid; grid-template-columns: auto 1fr; gap: var(--s3) var(--s4); align-items: baseline; }
@@ -173,6 +173,8 @@ tbody tr:last-child td { border-bottom: 0; }
 
 /* ---------- Composer ses identités ---------- */
 .compose { border-bottom: 1px solid var(--line); padding-bottom: var(--s6); padding-top: var(--s6); }
+:root[data-theme="dark"] .compose .new, :root[data-theme="dark"] .choice .flag { color: var(--bg); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .compose .new, :root:not([data-theme="light"]) .choice .flag { color: var(--bg); } }
 .compose .new { display: inline-block; font: 600 11px var(--mono); letter-spacing: .06em; text-transform: uppercase; background: var(--safelight); color: #fff; padding: 2px 8px; border-radius: 3px; margin-right: 6px; }
 .compose h3.sub { font-size: 22px; margin: var(--s6) 0 var(--s2); }
 .compose p.subl { color: var(--ink-2); max-width: 70ch; margin-bottom: var(--s4); }
@@ -317,12 +319,12 @@ footer.colophon { margin-top: var(--s7); padding-top: var(--s4); border-top: 1px
       <div><span>Déclinaisons</span><b id="m-decl">23</b></div>
       <div><span>Dérivations de Papier découpé</span><b id="m-deriv">3</b></div>
       <div><span>Shorts livrés</span><b id="m-shorts">50</b></div>
-      <div><span>Contrôle qualité</span><b id="m-qa">47 / 47</b></div>
-      <div><span>Familles couvertes</span><b title="les 7 familles de la campagne, plus Paroles (vidéos de paroles de chansons)">7 + Paroles</b></div>
+      <div><span id="m-qa-l">Contrôle qualité</span><b id="m-qa">47 / 47</b></div>
+      <div><span>Familles couvertes (dont Paroles)</span><b title="les 7 familles de la campagne, plus Paroles (vidéos de paroles de chansons)">8</b></div>
       <div><span>Librairies A + B (+ ajouts)</span><b title="lot 2 : shapely, opensimplex, topojson-client, world-atlas ; Survol pixel : NumPy (moteur 3D), scipy, Jersey ; identités lyrics : Canvas 2D et DOM rendus par Chrome (playwright-core), polices @fontsource">8 + 11 (+7)</b></div>
       <div><span>Plus proche voisin</span><b id="m-recog">41 / 45</b></div>
       <div><span>Production</span><b>4 cœurs</b></div>
-      <div><span>Voix off</span><b title="31 Arnold (Fish Audio) + 14 Sulafat (Gemini : 8 papier + 4 lot 2 + 2 Survol pixel) + 2 ElevenLabs (Lyrics chemin narrés) ; 3 vidéos de paroles muettes (la chanson est ajoutée à la publication)">47 voisés, 3 muets</b></div>
+      <div><span>Voix off (3 vidéos muettes)</span><b title="31 Arnold (Fish Audio) + 14 Sulafat (Gemini : 8 papier + 4 lot 2 + 2 Survol pixel) + 2 ElevenLabs (Lyrics chemin narrés) ; 3 vidéos de paroles muettes (la chanson est ajoutée à la publication)">47</b></div>
     </div>
   </section>
 
@@ -486,12 +488,14 @@ const fmt = n => String(n).replace(".", ",");
 const setText = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
 setText("m-ids", META.identities); setText("m-decl", META.declinations); setText("m-deriv", META.derivations); setText("m-shorts", META.shorts);
 setText("m-qa", `${META.qaOk} / ${META.qaTotal}`);
+if (META.qaMissing.length) setText("m-qa-l", `Contrôle qualité (${META.qaMissing.length} shorts pas encore contrôlés)`);
 if (META.qaMissing.length) document.getElementById("m-qa").title = `${META.qaMissing.length} shorts pas encore dans qa.json : ${META.qaMissing.join(", ")}`; setText("m-recog", `${META.recogHits} / ${META.recogTotal}`);
 setText("r-hits", META.recogHits); setText("r-total", META.recogTotal);
 {
   const nm = d => { const id = d.split("__")[0]; const x = DATA.find(e => e.id === id); return x ? x.name : id; };
   const failIds = new Set(META.recogFails.map(f => f.short.split("__")[0]));
-  const addedOkNames = DATA.filter(d => d.added && !failIds.has(d.id) && !d.variantOf).map(d => d.name);
+  const unmeasured = new Set(META.recogMissing.map(s => s.split("__")[0]));
+  const addedOkNames = DATA.filter(d => d.added && !failIds.has(d.id) && !unmeasured.has(d.id) && !d.variantOf).map(d => d.name);
   const fails = META.recogFails.map(f => `${nm(f.short)} → ${nm(f.nearest)} (${fmt(f.distance.toFixed(2))})`).join(" ; ");
   // pourquoi une identité échoue (texte fixe, à revoir quand recognition.json change)
   const WHY = { "liquid-chrome": "Chrome Liquide : des fonds sombres que la couleur seule ne sépare pas",

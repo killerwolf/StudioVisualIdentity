@@ -215,8 +215,8 @@ def build_composer(ids):
     mecs = [{'id': m['id'], 'nom': MEC_NOM.get(m['id'], m['id']), 'de': m['de']} for m in D['mecaniques']]
     cases = [{**c, 'poster': first.get(c.get('recette')), 'ancre': anchor(c['recette']) if c.get('recette') else None,
               'fNom': FMT_NOM.get(c['f'], c['f'])} for c in D['cases']]
-    missing = [h['id'] for h in habs if not h['poster']]
-    assert not missing, f'habillage sans poster : {missing}'
+    # un habillage dont aucun short n'est dans la page (ex. pixel-jour sans --also-from sur identite-lyrics) garde un
+    # poster nul : il n'apparaît que dans la matrice complète, sous forme de point
     return {'habillages': habs, 'mecaniques': mecs, 'formats': [{**f, 'nom': FMT_NOM.get(f['id'], f['id'])} for f in D['formats']],
             'cases': cases}
 
