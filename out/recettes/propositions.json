@@ -1,0 +1,50 @@
+{
+ "note": "Cases proposées de la matrice (out/report/notes/composition/matrice.md § 3) qui n'ont pas encore de short : C3, C5, C6, C7, C8. Lues par build_index.py (compatibilite[]) et la vitrine. Les cases déjà rendues (C1, C2, C4) sont des recettes (out/recettes/<id>.json, clé « case »). L'état « a-tester » / « compatible » est recalculé par build_index.py ; « incompatible » exige une raison écrite ici (proposition.md § 5). Clé « habillage » = clé de pâte (id, ou famille/variante). Ce n'est pas une recette.",
+ "date": "2026-11-20",
+ "cases": [
+  {
+   "case": "C3",
+   "habillage": "carnet-archives",
+   "mecanique": "trace-chemin",
+   "format": "narre-long",
+   "question": "porter un habillage du moteur Python (papier) vers le moteur JS du chemin : le kraft et la machine à écrire comme surface du chemin",
+   "aEcrire": "adaptateur JS ; fibres du kraft réécrites en canvas ; un dessin libre",
+   "cout": "≈ 1 session"
+  },
+  {
+   "case": "C5",
+   "habillage": "grille-suisse",
+   "mecanique": "pop-papier-12ips",
+   "format": "narre-court",
+   "question": "la grille suisse en stop-motion à 12 i/s : la pâte survit-elle à un mouvement qui la contredit ?",
+   "aEcrire": "un thème JSON ; tapis uni crème avec grille 12 colonnes",
+   "cout": "≈ 0,5 session"
+  },
+  {
+   "case": "C6",
+   "habillage": "brut-jaune",
+   "mecanique": "colonne-mot-a-mot",
+   "format": "paroles-muet",
+   "etat": "incompatible",
+   "raison": "Anton n'a pas d'axe de largeur (wdth), exigé par la colonne justifiée. Réparable avec une police variable (Anybody).",
+   "cout": "≈ 1 session si on la répare"
+  },
+  {
+   "case": "C7",
+   "habillage": "portulan",
+   "mecanique": "survol-terrain",
+   "format": "narre-court",
+   "etat": "incompatible",
+   "raison": "Le moteur du survol (survol.py) impose une grille 270×480 en palette indexée : un parchemin anticrénelé ne passe pas."
+  },
+  {
+   "case": "C8",
+   "habillage": "pixel-jour",
+   "mecanique": "simulation-deterministe",
+   "format": "narre-court",
+   "question": "même grille 270×480 ×4 : une course de billes en plein jour. Faut-il un habillage parent « pixel-16 » ?",
+   "aEcrire": "habillage pixel-jour exprimé pour p5/Matter ; une des 3 simulations existantes",
+   "cout": "≈ 1 à 1,5 session"
+  }
+ ]
+}

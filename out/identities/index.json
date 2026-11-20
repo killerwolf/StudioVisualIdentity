@@ -1,12 +1,35 @@
 {
- "schemaVersion": "1.1",
+ "schemaVersion": "2.0",
  "description": "Machine index of the 20 visual identities for 9:16 shorts (23 declinations: 3 of them are derivations of a root identity, see variantOf). Use it to shortlist identities, then read each identity's identity.md (16 sections, French) and tokens.json. coreTokens is a normalised subset (seconds, pixels on a 1080x1920 canvas, @fontsource slugs); the original tokens.json is authoritative for everything else. curation.* is orchestrator judgment. See AGENTS.md.",
  "generatedBy": "out/tools/build_index.py",
  "counts": {
   "identities": 20,
   "derivations": 3,
   "declinations": 23,
-  "shorts": 50
+  "shorts": 50,
+  "briques": {
+   "recettes": 29,
+   "recettesParStatut": {
+    "validee": 27,
+    "essai": 1,
+    "abandonnee": 1
+   },
+   "habillages": 25,
+   "pates": 26,
+   "familleshabillage": 1,
+   "mecaniques": 19,
+   "formats": 4,
+   "shorts": 53,
+   "shortsHorsIdentites": 3,
+   "cases": {
+    "teste": 31,
+    "compatible": 0,
+    "a-tester": 3,
+    "incompatible": 2,
+    "inconnu": 0,
+    "a-controler": 0
+   }
+  }
  },
  "families": [
   {
@@ -239,7 +262,14 @@
      "bauhaus-kinetic",
      "carte-meteo"
     ]
-   }
+   },
+   "recette": "swiss-data",
+   "habillage": "grille-suisse",
+   "variante": null,
+   "mecanique": "chiffre-volet-compteur",
+   "formats": [
+    "narre-court"
+   ]
   },
   {
    "id": "gazette-1900",
@@ -439,7 +469,14 @@
     "confusableWith": [
      "carnet-archives"
     ]
-   }
+   },
+   "recette": "gazette-1900",
+   "habillage": "gazette-sepia",
+   "variante": null,
+   "mecanique": "tourniquet-tampon",
+   "formats": [
+    "narre-court"
+   ]
   },
   {
    "id": "pixel-arcade",
@@ -647,7 +684,14 @@
     "confusableWith": [
      "survol-pixel"
     ]
-   }
+   },
+   "recette": "pixel-arcade",
+   "habillage": "arcade-marine",
+   "variante": null,
+   "mecanique": "simulation-deterministe",
+   "formats": [
+    "narre-court"
+   ]
   },
   {
    "id": "brut-meme",
@@ -853,7 +897,14 @@
     "confusableWith": [
      "lyrics-punchy"
     ]
-   }
+   },
+   "recette": "brut-meme",
+   "habillage": "brut-jaune",
+   "variante": null,
+   "mecanique": "punch-cut-slam",
+   "formats": [
+    "narre-court"
+   ]
   },
   {
    "id": "carte-meteo",
@@ -1051,7 +1102,14 @@
     "confusableWith": [
      "swiss-data"
     ]
-   }
+   },
+   "recette": "carte-meteo",
+   "habillage": "meteo-clair",
+   "variante": null,
+   "mecanique": "carte-champs-front",
+   "formats": [
+    "narre-court"
+   ]
   },
   {
    "id": "bauhaus-kinetic",
@@ -1250,7 +1308,14 @@
     "confusableWith": [
      "swiss-data"
     ]
-   }
+   },
+   "recette": "bauhaus-kinetic",
+   "habillage": "bauhaus-primaires",
+   "variante": null,
+   "mecanique": "puzzle-grille-morph",
+   "formats": [
+    "narre-court"
+   ]
   },
   {
    "id": "tableau-craie",
@@ -1438,7 +1503,14 @@
     "confusableWith": [
      "trait-continu"
     ]
-   }
+   },
+   "recette": "tableau-craie",
+   "habillage": "craie",
+   "variante": "tableau-vert",
+   "mecanique": "ecriture-trace-chiffon",
+   "formats": [
+    "narre-court"
+   ]
   },
   {
    "id": "riso-zine",
@@ -1632,7 +1704,14 @@
      "stepped 12 fps motion, collage cut-outs"
     ],
     "confusableWith": []
-   }
+   },
+   "recette": "riso-zine",
+   "habillage": "riso-3-encres",
+   "variante": null,
+   "mecanique": "impression-on-twos",
+   "formats": [
+    "narre-court"
+   ]
   },
   {
    "id": "trait-continu",
@@ -1837,7 +1916,14 @@
     "confusableWith": [
      "tableau-craie"
     ]
-   }
+   },
+   "recette": "trait-continu",
+   "habillage": "orange-graphite",
+   "variante": null,
+   "mecanique": "traceur-escalier-plaque",
+   "formats": [
+    "narre-court"
+   ]
   },
   {
    "id": "survol-pixel",
@@ -2058,7 +2144,14 @@
      "pixel-arcade",
      "topo-relief"
     ]
-   }
+   },
+   "recette": "survol-pixel",
+   "habillage": "pixel-jour",
+   "variante": null,
+   "mecanique": "survol-terrain",
+   "formats": [
+    "narre-court"
+   ]
   },
   {
    "id": "pastel-diorama",
@@ -2251,7 +2344,14 @@
     "confusableWith": [
      "aquarelle-conte"
     ]
-   }
+   },
+   "recette": "pastel-diorama",
+   "habillage": "diorama-pastel",
+   "variante": null,
+   "mecanique": "maquette-rebond",
+   "formats": [
+    "narre-court"
+   ]
   },
   {
    "id": "topo-relief",
@@ -2452,7 +2552,14 @@
      "lyrics-chemin",
      "survol-pixel"
     ]
-   }
+   },
+   "recette": "topo-relief",
+   "habillage": "relief-vert",
+   "variante": null,
+   "mecanique": "survol-terrain",
+   "formats": [
+    "narre-court"
+   ]
   },
   {
    "id": "atlas-grave",
@@ -2656,7 +2763,14 @@
      "lyrics-chemin",
      "topo-relief"
     ]
-   }
+   },
+   "recette": "atlas-grave",
+   "habillage": "gravure-parchemin",
+   "variante": null,
+   "mecanique": "carte-trace-panoramique",
+   "formats": [
+    "narre-court"
+   ]
   },
   {
    "id": "aquarelle-conte",
@@ -2857,7 +2971,14 @@
     "confusableWith": [
      "pastel-diorama"
     ]
-   }
+   },
+   "recette": "aquarelle-conte",
+   "habillage": "aquarelle",
+   "variante": null,
+   "mecanique": "lavis-multiplan",
+   "formats": [
+    "narre-court"
+   ]
   },
   {
    "id": "neon-lab",
@@ -3069,7 +3190,15 @@
      "cosmos-doc",
      "liquid-chrome"
     ]
-   }
+   },
+   "recette": "neon-lab",
+   "habillage": "neon-labo",
+   "variante": null,
+   "mecanique": "orbite-phenomene-neon",
+   "formats": [
+    "boucle",
+    "narre-court"
+   ]
   },
   {
    "id": "cosmos-doc",
@@ -3264,7 +3393,14 @@
      "liquid-chrome",
      "neon-lab"
     ]
-   }
+   },
+   "recette": "cosmos-doc",
+   "habillage": "cosmos-noir",
+   "variante": null,
+   "mecanique": "travelling-cine-3d",
+   "formats": [
+    "narre-court"
+   ]
   },
   {
    "id": "liquid-chrome",
@@ -3474,7 +3610,15 @@
      "cosmos-doc",
      "neon-lab"
     ]
-   }
+   },
+   "recette": "liquid-chrome",
+   "habillage": "chrome-irise",
+   "variante": null,
+   "mecanique": "plan-sequence-matiere",
+   "formats": [
+    "boucle",
+    "narre-court"
+   ]
   },
   {
    "id": "papier-decoupe",
@@ -3696,7 +3840,14 @@
      "cabinet-curiosites",
      "carnet-archives"
     ]
-   }
+   },
+   "recette": "papier-decoupe",
+   "habillage": "papier-decoupe",
+   "variante": null,
+   "mecanique": "pop-papier-12ips",
+   "formats": [
+    "narre-court"
+   ]
   },
   {
    "id": "atelier-papier",
@@ -3895,7 +4046,14 @@
      "carnet-archives",
      "papier-decoupe"
     ]
-   }
+   },
+   "recette": "atelier-papier",
+   "habillage": "atelier-papier",
+   "variante": null,
+   "mecanique": "pop-papier-12ips",
+   "formats": [
+    "narre-court"
+   ]
   },
   {
    "id": "carnet-archives",
@@ -4096,7 +4254,14 @@
      "cabinet-curiosites",
      "papier-decoupe"
     ]
-   }
+   },
+   "recette": "carnet-archives",
+   "habillage": "carnet-archives",
+   "variante": null,
+   "mecanique": "pop-papier-12ips",
+   "formats": [
+    "narre-court"
+   ]
   },
   {
    "id": "cabinet-curiosites",
@@ -4297,7 +4462,14 @@
      "carnet-archives",
      "papier-decoupe"
     ]
-   }
+   },
+   "recette": "cabinet-curiosites",
+   "habillage": "cabinet-curiosites",
+   "variante": null,
+   "mecanique": "pop-papier-12ips",
+   "formats": [
+    "narre-court"
+   ]
   },
   {
    "id": "lyrics-punchy",
@@ -4469,7 +4641,14 @@
     "confusableWith": [
      "brut-meme"
     ]
-   }
+   },
+   "recette": "lyrics-punchy",
+   "habillage": "punchy",
+   "variante": null,
+   "mecanique": "colonne-mot-a-mot",
+   "formats": [
+    "paroles-muet"
+   ]
   },
   {
    "id": "lyrics-chemin",
@@ -4714,7 +4893,4345 @@
      "atlas-grave",
      "topo-relief"
     ]
+   },
+   "recette": "lyrics-chemin",
+   "habillage": "plan-bleu",
+   "variante": null,
+   "mecanique": "trace-chemin",
+   "formats": [
+    "paroles-muet"
+   ]
+  }
+ ],
+ "briquesNote": "Composition model (2026-11-19/20, out/report/notes/composition/proposition.md): video = habillage (look) x mecanique (motion) x format (+ son); a named, validated combination is a recette (same id as the identity it comes from). Sections below are read from out/habillages, out/mecaniques, out/formats, out/recettes by out/tools/briques.py. compatibilite[] is a sparse matrix; etat is computed (teste / compatible / a-tester / incompatible with a written raison / inconnu). niveau: executable = an adapter exists and the engine applies it; declare = values recorded, scene code hard-codes them.",
+ "habillages": [
+  {
+   "id": "aquarelle",
+   "nom": "Aquarelle",
+   "niveau": "declare",
+   "de": "aquarelle-conte",
+   "palette": {
+    "fond": "#F7F1E6",
+    "surface": "#EFE4D0",
+    "encre": "#3A3042",
+    "vif": "#E88D72",
+    "second": "#6C9BCF",
+    "decor": [
+     "#F2C14E",
+     "#7FB685"
+    ]
+   },
+   "contrasteSurSurface": {
+    "encre": 9.92,
+    "vif": 1.97,
+    "second": 2.31
+   },
+   "typo": {
+    "titre": {
+     "famille": "Fraunces",
+     "fontsource": "fraunces",
+     "graisses": [
+      700
+     ]
+    },
+    "texte": {
+     "famille": "Nunito",
+     "fontsource": "nunito",
+     "graisses": [
+      600
+     ]
+    },
+    "legende": {
+     "famille": "Nunito",
+     "fontsource": "nunito",
+     "graisses": [
+      600
+     ]
+    }
+   },
+   "matiere": "watercolour washes on cream paper",
+   "signature": [
+    "watercolour washes on cream paper",
+    "Fraunces storybook titles on a bottom album page"
+   ],
+   "lisibilite": {
+    "corpsMinPx": 54,
+    "contrasteTexteMin": 4.5,
+    "couleurReservee": "vif"
+   },
+   "contraintes": null,
+   "adaptateurs": {},
+   "image": "out/shorts/aquarelle-conte__enfants__ou-vont-les-etoiles-le-jour/stills/still_09.20s.jpg",
+   "recettes": [
+    "aquarelle-conte"
+   ],
+   "source": "coreTokens de out/identities/index.json (le code des scènes écrit ses valeurs en dur : brique déclarée)",
+   "date": "2026-11-19",
+   "fichier": "out/habillages/aquarelle/habillage.json",
+   "actif": true
+  },
+  {
+   "id": "arcade-marine",
+   "nom": "Arcade marine",
+   "niveau": "declare",
+   "de": "pixel-arcade",
+   "palette": {
+    "fond": "#0E0B1F",
+    "surface": "#1D1740",
+    "encre": "#FFFFFF",
+    "vif": "#FF4F79",
+    "second": "#3CF2A0",
+    "decor": [
+     "#FFD23F",
+     "#4FB3FF"
+    ]
+   },
+   "contrasteSurSurface": {
+    "encre": 16.82,
+    "vif": 5.32,
+    "second": 11.53
+   },
+   "typo": {
+    "titre": {
+     "famille": "Rubik Mono One",
+     "fontsource": "rubik-mono-one",
+     "graisses": [
+      400
+     ]
+    },
+    "texte": {
+     "famille": "Press Start 2P",
+     "fontsource": "press-start-2p",
+     "graisses": [
+      400
+     ]
+    },
+    "legende": {
+     "famille": "Press Start 2P",
+     "fontsource": "press-start-2p",
+     "graisses": [
+      400
+     ]
+    }
+   },
+   "matiere": "dark navy pixel playfield, motion quantised to 4 px",
+   "signature": [
+    "dark navy pixel playfield, motion quantised to 4 px",
+    "Press Start 2P HUD (score, time)"
+   ],
+   "lisibilite": {
+    "corpsMinPx": 54,
+    "contrasteTexteMin": 4.5,
+    "couleurReservee": "vif"
+   },
+   "contraintes": {
+    "grillePixel": "270×480 ×4, plus proche voisin"
+   },
+   "adaptateurs": {},
+   "image": "out/shorts/pixel-arcade__abstrait__la-balle-peut-elle-s-echapper/stills/03_tension_8.00s.jpg",
+   "recettes": [
+    "pixel-arcade"
+   ],
+   "source": "coreTokens de out/identities/index.json (le code des scènes écrit ses valeurs en dur : brique déclarée)",
+   "date": "2026-11-19",
+   "fichier": "out/habillages/arcade-marine/habillage.json",
+   "actif": true
+  },
+  {
+   "id": "ardoise",
+   "nom": "Ardoise",
+   "niveau": "executable",
+   "de": "chemin-ardoise",
+   "palette": {
+    "fond": "#E7E3DC",
+    "surface": "#2C3836",
+    "encre": "#F1EEE6",
+    "vif": "#FFD766",
+    "second": "#F29A85",
+    "decor": [
+     "#C39A62"
+    ]
+   },
+   "contrasteSurSurface": {
+    "encre": 10.49,
+    "vif": 8.79,
+    "second": 5.64
+   },
+   "typo": {
+    "titre": {
+     "famille": "Barlow Condensed",
+     "fontsource": "barlow-condensed",
+     "graisses": [
+      700,
+      800
+     ]
+    }
+   },
+   "matiere": "ardoise de bistrot dans un cadre en chêne, sur un plan de travail en marbre ; craie érodée (textErode)",
+   "signature": [],
+   "lisibilite": {
+    "corpsMinPx": 120,
+    "contrasteTexteMin": 4.5,
+    "couleurReservee": "vif"
+   },
+   "contraintes": {
+    "projection": "plane (vu de dessus)"
+   },
+   "adaptateurs": {
+    "trace-chemin": "out/shared/chemin-moteur/habillages/ardoise.js"
+   },
+   "image": "out/shorts/lyrics-chemin__explicatif__le-quatre-quarts/stills/03_beurre_11.0s.jpg",
+   "recettes": [],
+   "source": "valeurs relevées dans l'adaptateur",
+   "date": "2026-11-19",
+   "statut": "remplacee",
+   "remplacePar": "craie/ardoise",
+   "noteRemplacement": "remplacée le 20/11/2026 (option 124) par la variante « ardoise » de la famille d'habillage « craie » : out/habillages/craie/. Fiche gardée (pas de suppression) ; l'id « ardoise » reste celui de l'adaptateur et de la maquette.",
+   "fichier": "out/habillages/ardoise/habillage.json",
+   "actif": false
+  },
+  {
+   "id": "atelier-papier",
+   "nom": "Papier, bleu nuit",
+   "niveau": "executable",
+   "de": "atelier-papier",
+   "palette": {
+    "fond": "#21345C",
+    "surface": "#F8F2E4",
+    "encre": "#181C28",
+    "vif": "#F6C446",
+    "second": "#E2523A",
+    "decor": [
+     "#2462D6",
+     "#F4A0B4",
+     "#78C8D6",
+     "#C99A5B"
+    ]
+   },
+   "contrasteSurSurface": {
+    "encre": 15.23,
+    "vif": 1.46,
+    "second": 3.42
+   },
+   "typo": {
+    "titre": {
+     "famille": "Dela Gothic One",
+     "fontsource": "dela-gothic-one",
+     "graisses": [
+      400
+     ]
+    },
+    "texte": {
+     "famille": "Kalam",
+     "fontsource": "kalam",
+     "graisses": [
+      700
+     ]
+    },
+    "mono": {
+     "famille": "DM Mono",
+     "fontsource": "dm-mono",
+     "graisses": [
+      500
+     ]
+    }
+   },
+   "matiere": "tapis de découpe bleu nuit gradué ; pièces de papier découpées aux ciseaux, ombre portée",
+   "signature": [
+    "midnight-blue graduated cutting mat",
+    "Dela Gothic One strips in cream / royal blue / coral",
+    "Kalam captions on cream strips"
+   ],
+   "lisibilite": {
+    "corpsMinPx": 54,
+    "contrasteTexteMin": 4.5,
+    "couleurReservee": "vif"
+   },
+   "contraintes": {
+    "cadence": "12 i/s (matière de papier : un papier découpé ne glisse pas en douceur)"
+   },
+   "adaptateurs": {
+    "pop-papier-12ips": "out/shared/papier-moteur/themes/atelier-papier.json"
+   },
+   "image": "out/shorts/atelier-papier__explicatif__d-ou-vient-le-mot-sandwich/stills/still_t_003.50.jpg",
+   "recettes": [
+    "atelier-papier"
+   ],
+   "source": "valeurs relevées dans l'adaptateur",
+   "date": "2026-11-19",
+   "fichier": "out/habillages/atelier-papier/habillage.json",
+   "actif": true
+  },
+  {
+   "id": "bauhaus-primaires",
+   "nom": "Bauhaus primaires",
+   "niveau": "declare",
+   "de": "bauhaus-kinetic",
+   "palette": {
+    "fond": "#F2EDE3",
+    "surface": "#FFFFFF",
+    "encre": "#111111",
+    "vif": "#E63B2E",
+    "second": "#F5B700",
+    "decor": [
+     "#1D4ED8",
+     "#111111"
+    ]
+   },
+   "contrasteSurSurface": {
+    "encre": 18.88,
+    "vif": 4.18,
+    "second": 1.8
+   },
+   "typo": {
+    "titre": {
+     "famille": "Unbounded",
+     "fontsource": "unbounded",
+     "graisses": [
+      800
+     ]
+    },
+    "texte": {
+     "famille": "Space Grotesk",
+     "fontsource": "space-grotesk",
+     "graisses": [
+      500
+     ]
+    },
+    "legende": {
+     "famille": "Unbounded",
+     "fontsource": "unbounded",
+     "graisses": [
+      800
+     ]
+    }
+   },
+   "matiere": "cream ground with red / yellow / blue / black primary shapes",
+   "signature": [
+    "cream ground with red / yellow / blue / black primary shapes",
+    "Unbounded 800 headlines"
+   ],
+   "lisibilite": {
+    "corpsMinPx": 54,
+    "contrasteTexteMin": 4.5,
+    "couleurReservee": "vif"
+   },
+   "contraintes": null,
+   "adaptateurs": {},
+   "image": "out/shorts/bauhaus-kinetic__engagement__trouve-l-intrus/stills/03_revelation_8.6s.jpg",
+   "recettes": [
+    "bauhaus-kinetic"
+   ],
+   "source": "coreTokens de out/identities/index.json (le code des scènes écrit ses valeurs en dur : brique déclarée)",
+   "date": "2026-11-19",
+   "fichier": "out/habillages/bauhaus-primaires/habillage.json",
+   "actif": true
+  },
+  {
+   "id": "brut-jaune",
+   "nom": "Brut jaune",
+   "niveau": "declare",
+   "de": "brut-meme",
+   "palette": {
+    "fond": "#111111",
+    "surface": "#FFE600",
+    "encre": "#FFFFFF",
+    "vif": "#FFE600",
+    "second": "#FF2D2D",
+    "decor": [
+     "#FFFFFF"
+    ]
+   },
+   "contrasteSurSurface": {
+    "encre": 1.27,
+    "vif": 1.0,
+    "second": 2.92
+   },
+   "typo": {
+    "titre": {
+     "famille": "Anton",
+     "fontsource": "anton",
+     "graisses": [
+      400
+     ]
+    },
+    "texte": {
+     "famille": "Inter",
+     "fontsource": "inter",
+     "graisses": [
+      900
+     ]
+    },
+    "legende": {
+     "famille": "Inter",
+     "fontsource": "inter",
+     "graisses": [
+      900
+     ]
+    }
+   },
+   "matiere": "black / #FFE600 yellow / red only",
+   "signature": [
+    "black / #FFE600 yellow / red only",
+    "round stickers and hazard-stripe progress bar"
+   ],
+   "lisibilite": {
+    "corpsMinPx": 54,
+    "contrasteTexteMin": 4.5,
+    "couleurReservee": "vif"
+   },
+   "contraintes": null,
+   "adaptateurs": {},
+   "image": "out/shorts/brut-meme__engagement__test-des-3-secondes-stroop/stills/03_07.50s.jpg",
+   "recettes": [
+    "brut-meme"
+   ],
+   "source": "coreTokens de out/identities/index.json (le code des scènes écrit ses valeurs en dur : brique déclarée)",
+   "date": "2026-11-19",
+   "fichier": "out/habillages/brut-jaune/habillage.json",
+   "actif": true
+  },
+  {
+   "id": "cabinet-curiosites",
+   "nom": "Cabinet bleu et or",
+   "niveau": "executable",
+   "de": "cabinet-curiosites",
+   "palette": {
+    "fond": "#161E34",
+    "surface": "#F2E8D0",
+    "encre": "#141826",
+    "vif": "#D6AC58",
+    "second": "#841E30",
+    "decor": [
+     "#1C4C54",
+     "#CE969C",
+     "#76A8AA",
+     "#B08C64"
+    ]
+   },
+   "contrasteSurSurface": {
+    "encre": 14.5,
+    "vif": 1.74,
+    "second": 7.8
+   },
+   "typo": {
+    "titre": {
+     "famille": "DM Serif Display",
+     "fontsource": "dm-serif-display",
+     "graisses": [
+      400
+     ]
+    },
+    "texte": {
+     "famille": "DM Serif Display",
+     "fontsource": "dm-serif-display",
+     "graisses": [
+      400
+     ]
+    },
+    "mono": {
+     "famille": "DM Mono",
+     "fontsource": "dm-mono",
+     "graisses": [
+      500
+     ]
+    }
+   },
+   "matiere": "fond bleu nuit uni vignetté ; pièces de papier découpées aux ciseaux, ombre portée",
+   "signature": [
+    "plain vignetted midnight-blue ground",
+    "DM Serif Display titles on cream / teal / burgundy strips",
+    "DM Serif Display italic captions",
+    "gold accent for notes"
+   ],
+   "lisibilite": {
+    "corpsMinPx": 54,
+    "contrasteTexteMin": 4.5,
+    "couleurReservee": "vif"
+   },
+   "contraintes": {
+    "cadence": "12 i/s (matière de papier : un papier découpé ne glisse pas en douceur)"
+   },
+   "adaptateurs": {
+    "pop-papier-12ips": "out/shared/papier-moteur/themes/cabinet-curiosites.json"
+   },
+   "image": "out/shorts/cabinet-curiosites__explicatif__d-ou-vient-le-mot-sandwich/stills/still_t_003.50.jpg",
+   "recettes": [
+    "cabinet-curiosites"
+   ],
+   "source": "valeurs relevées dans l'adaptateur",
+   "date": "2026-11-19",
+   "fichier": "out/habillages/cabinet-curiosites/habillage.json",
+   "actif": true
+  },
+  {
+   "id": "carnet-archives",
+   "nom": "Carnet kraft",
+   "niveau": "executable",
+   "de": "carnet-archives",
+   "palette": {
+    "fond": "#B28C60",
+    "surface": "#F6EED8",
+    "encre": "#34241A",
+    "vif": "#E4BE68",
+    "second": "#A82C24",
+    "decor": [
+     "#284A5C",
+     "#DEAA96",
+     "#86A08C",
+     "#BE9668"
+    ]
+   },
+   "contrasteSurSurface": {
+    "encre": 12.84,
+    "vif": 1.53,
+    "second": 5.95
+   },
+   "typo": {
+    "titre": {
+     "famille": "Abril Fatface",
+     "fontsource": "abril-fatface",
+     "graisses": [
+      400
+     ]
+    },
+    "texte": {
+     "famille": "Special Elite",
+     "fontsource": "special-elite",
+     "graisses": [
+      400
+     ]
+    },
+    "mono": {
+     "famille": "Courier Prime",
+     "fontsource": "courier-prime",
+     "graisses": [
+      400
+     ]
+    }
+   },
+   "matiere": "papier kraft fibreux, sans grille ; pièces de papier découpées aux ciseaux, ombre portée",
+   "signature": [
+    "fibrous brown kraft ground, no grid",
+    "Abril Fatface titles on cream / ink-blue / stamp-red strips",
+    "Special Elite typewriter captions and notes",
+    "sepia palette with stamp red and ochre"
+   ],
+   "lisibilite": {
+    "corpsMinPx": 54,
+    "contrasteTexteMin": 4.5,
+    "couleurReservee": "vif"
+   },
+   "contraintes": {
+    "cadence": "12 i/s (matière de papier : un papier découpé ne glisse pas en douceur)"
+   },
+   "adaptateurs": {
+    "pop-papier-12ips": "out/shared/papier-moteur/themes/carnet-archives.json"
+   },
+   "image": "out/shorts/carnet-archives__explicatif__d-ou-vient-le-mot-sandwich/stills/still_t_003.50.jpg",
+   "recettes": [
+    "carnet-archives"
+   ],
+   "source": "valeurs relevées dans l'adaptateur",
+   "date": "2026-11-19",
+   "fichier": "out/habillages/carnet-archives/habillage.json",
+   "actif": true
+  },
+  {
+   "id": "chrome-irise",
+   "nom": "Chrome irisé",
+   "niveau": "declare",
+   "de": "liquid-chrome",
+   "palette": {
+    "fond": "#0B0B10",
+    "surface": "#1A1A24",
+    "encre": "#FFFFFF",
+    "vif": "#C8D3FF",
+    "second": "#FF9AE8",
+    "decor": [
+     "#7CF7E4",
+     "#FFE29A"
+    ]
+   },
+   "contrasteSurSurface": {
+    "encre": 17.25,
+    "vif": 11.68,
+    "second": 9.07
+   },
+   "typo": {
+    "titre": {
+     "famille": "Syne",
+     "fontsource": "syne",
+     "graisses": [
+      800
+     ]
+    },
+    "texte": {
+     "famille": "Inter",
+     "fontsource": "inter",
+     "graisses": [
+      500
+     ]
+    },
+    "legende": {
+     "famille": "Inter",
+     "fontsource": "inter",
+     "graisses": [
+      500
+     ]
+    }
+   },
+   "matiere": "chrome / iridescent liquid matter in one continuous macro shot",
+   "signature": [
+    "chrome / iridescent liquid matter in one continuous macro shot",
+    "Syne 800 titles with a pastel-gradient keyword",
+    "prefer the warm graphite/pearl background to stay distinct from neon-lab and cosmos-doc"
+   ],
+   "lisibilite": {
+    "corpsMinPx": 54,
+    "contrasteTexteMin": 4.5,
+    "couleurReservee": "vif"
+   },
+   "contraintes": null,
+   "adaptateurs": {},
+   "image": "out/shorts/liquid-chrome__abstrait__pendule-de-newton-chrome/stills/final_05.40s.jpg",
+   "recettes": [
+    "liquid-chrome"
+   ],
+   "source": "coreTokens de out/identities/index.json (le code des scènes écrit ses valeurs en dur : brique déclarée)",
+   "date": "2026-11-19",
+   "fichier": "out/habillages/chrome-irise/habillage.json",
+   "actif": true
+  },
+  {
+   "id": "cosmos-noir",
+   "nom": "Cosmos noir",
+   "niveau": "declare",
+   "de": "cosmos-doc",
+   "palette": {
+    "fond": "#000004",
+    "surface": "#000006",
+    "encre": "#EAF2FF",
+    "vif": "#FFB347",
+    "second": "#6EC6FF",
+    "decor": [
+     "#FF6A2A"
+    ]
+   },
+   "contrasteSurSurface": {
+    "encre": 18.59,
+    "vif": 11.76,
+    "second": 11.16
+   },
+   "typo": {
+    "titre": {
+     "famille": "Bebas Neue",
+     "fontsource": "bebas-neue",
+     "graisses": [
+      400
+     ]
+    },
+    "texte": {
+     "famille": "Inter",
+     "fontsource": "inter",
+     "graisses": [
+      400
+     ]
+    },
+    "legende": {
+     "famille": "Bebas Neue",
+     "fontsource": "bebas-neue",
+     "graisses": [
+      400
+     ]
+    }
+   },
+   "matiere": "true black space with warm starlight and anamorphic lens flare",
+   "signature": [
+    "true black space with warm starlight and anamorphic lens flare",
+    "Bebas Neue capitals with tracking that tightens",
+    "film grain, no HUD or neon lines"
+   ],
+   "lisibilite": {
+    "corpsMinPx": 54,
+    "contrasteTexteMin": 4.5,
+    "couleurReservee": "vif"
+   },
+   "contraintes": null,
+   "adaptateurs": {},
+   "image": "out/shorts/cosmos-doc__evenements__voyager-1-a-un-jour-lumiere/stills/still_10.80s.jpg",
+   "recettes": [
+    "cosmos-doc"
+   ],
+   "source": "coreTokens de out/identities/index.json (le code des scènes écrit ses valeurs en dur : brique déclarée)",
+   "date": "2026-11-19",
+   "fichier": "out/habillages/cosmos-noir/habillage.json",
+   "actif": true
+  },
+  {
+   "id": "craie",
+   "nom": "Craie",
+   "type": "famille",
+   "niveau": "executable",
+   "variantes": [
+    "craie/ardoise",
+    "craie/tableau-vert"
+   ],
+   "commun": {
+    "matiere": "craie érodée par le même grain (textErode) sur un support sombre ; même dessin à la craie, même mise en page",
+    "adaptateurBase": "out/shared/chemin-moteur/habillages/ardoise.js (craie-verte.js en est parti : mêmes crochets)",
+    "lisibilite": {
+     "contrasteTexteMin": 4.5,
+     "couleurReservee": "vif"
+    },
+    "contraintes": {
+     "projection": "plane (vu de dessus)"
+    }
+   },
+   "differences": {
+    "ardoise": "bistrot, adultes : ardoise noire dans un cadre en chêne sur du marbre, majuscules étroites Barlow Condensed, vrais objets posés",
+    "tableau-vert": "école, enfants : tableau vert pleine image, Caveat manuscrit en minuscules, craie orange et bleue, rebord en bois avec bâtons de craie et brosse, décor dessiné à la craie"
+   },
+   "remplace": [
+    "ardoise",
+    "craie-verte"
+   ],
+   "recettes": [
+    "chemin-ardoise",
+    "chemin-craie-verte",
+    "tableau-craie"
+   ],
+   "decision": "Hamdi, option 124, 20/11/2026 : l'ardoise et la craie verte sont une seule matière en deux tons (verdict de l'essai C1, essais.md) ; on en fait une famille d'habillage « craie » à deux variantes, pas deux marques. Les fiches out/habillages/ardoise/ et out/habillages/craie-verte/ sont gardées et marquées « remplacée ».",
+   "regle": "une variante ne change que le ton (support, couleurs, polices, décor) ; une nouvelle craie (ex. craie blanche sur tableau noir d'école) s'ajoute comme variante, pas comme habillage",
+   "source": "out/report/notes/composition/essais.md (C1) ; proposition.md § 8.3 (voisinage)",
+   "date": "2026-11-20",
+   "fichier": "out/habillages/craie/habillage.json",
+   "actif": true
+  },
+  {
+   "id": "craie/ardoise",
+   "parent": "craie",
+   "variante": "ardoise",
+   "nom": "Craie · ardoise",
+   "ton": "bistrot, adultes : ardoise noire dans un cadre en chêne sur du marbre, majuscules étroites Barlow Condensed, vrais objets posés",
+   "niveau": "executable",
+   "de": "chemin-ardoise",
+   "palette": {
+    "fond": "#E7E3DC",
+    "surface": "#2C3836",
+    "encre": "#F1EEE6",
+    "vif": "#FFD766",
+    "second": "#F29A85",
+    "decor": [
+     "#C39A62"
+    ]
+   },
+   "contrasteSurSurface": {
+    "encre": 10.49,
+    "vif": 8.79,
+    "second": 5.64
+   },
+   "typo": {
+    "titre": {
+     "famille": "Barlow Condensed",
+     "fontsource": "barlow-condensed",
+     "graisses": [
+      700,
+      800
+     ]
+    }
+   },
+   "matiere": "ardoise de bistrot dans un cadre en chêne, sur un plan de travail en marbre ; craie érodée (textErode)",
+   "signature": [],
+   "lisibilite": {
+    "corpsMinPx": 120,
+    "contrasteTexteMin": 4.5,
+    "couleurReservee": "vif"
+   },
+   "contraintes": {
+    "projection": "plane (vu de dessus)"
+   },
+   "adaptateurs": {
+    "trace-chemin": "out/shared/chemin-moteur/habillages/ardoise.js"
+   },
+   "image": "out/shorts/lyrics-chemin__explicatif__le-quatre-quarts/stills/03_beurre_11.0s.jpg",
+   "recettes": [
+    "chemin-ardoise"
+   ],
+   "source": "valeurs relevées dans l'adaptateur",
+   "date": "2026-11-20",
+   "ancienId": "ardoise",
+   "ancienneFiche": "out/habillages/ardoise/habillage.json",
+   "fichier": "out/habillages/craie/variantes/ardoise.json",
+   "actif": true
+  },
+  {
+   "id": "craie/tableau-vert",
+   "parent": "craie",
+   "variante": "tableau-vert",
+   "nom": "Craie · tableau vert",
+   "ton": "école, enfants : tableau vert pleine image, Caveat manuscrit en minuscules, craie orange et bleue, rebord en bois avec bâtons de craie et brosse, décor dessiné à la craie",
+   "niveau": "declare",
+   "de": "tableau-craie",
+   "palette": {
+    "fond": "#1F3A30",
+    "surface": "#264639",
+    "encre": "#F7F3E3",
+    "vif": "#FFB84C",
+    "second": "#7FD1FF",
+    "decor": [
+     "#FFF6D5",
+     "#FF7A7A",
+     "#9BE58A"
+    ]
+   },
+   "contrasteSurSurface": {
+    "encre": 9.36,
+    "vif": 6.05,
+    "second": 6.18
+   },
+   "typo": {
+    "titre": {
+     "famille": "Nunito",
+     "fontsource": "nunito",
+     "graisses": [
+      800
+     ]
+    },
+    "texte": {
+     "famille": "Caveat",
+     "fontsource": "caveat",
+     "graisses": [
+      700
+     ]
+    },
+    "legende": {
+     "famille": "Caveat",
+     "fontsource": "caveat",
+     "graisses": [
+      700
+     ]
+    }
+   },
+   "matiere": "dark green chalkboard with chalk grain",
+   "signature": [
+    "dark green chalkboard with chalk grain",
+    "Caveat handwriting + Nunito titles"
+   ],
+   "lisibilite": {
+    "corpsMinPx": 54,
+    "contrasteTexteMin": 4.5,
+    "couleurReservee": "vif"
+   },
+   "contraintes": null,
+   "adaptateurs": {
+    "trace-chemin": "out/shared/chemin-moteur/habillages/craie-verte.js"
+   },
+   "image": "out/shorts/tableau-craie__enfants__comment-une-graine-devient-un-arbre/stills/still_07.90s.jpg",
+   "recettes": [
+    "chemin-craie-verte",
+    "tableau-craie"
+   ],
+   "source": "coreTokens de out/identities/index.json (le code des scènes écrit ses valeurs en dur : brique déclarée)",
+   "date": "2026-11-20",
+   "ancienId": "craie-verte",
+   "ancienneFiche": "out/habillages/craie-verte/habillage.json",
+   "note": "niveau « declare » pour la pâte de Tableau Craie (code des scènes en dur) ; adaptateur exécutable pour le chemin (craie-verte.js, essai C1)",
+   "fichier": "out/habillages/craie/variantes/tableau-vert.json",
+   "actif": true
+  },
+  {
+   "id": "craie-verte",
+   "nom": "Craie verte",
+   "niveau": "declare",
+   "de": "tableau-craie",
+   "palette": {
+    "fond": "#1F3A30",
+    "surface": "#264639",
+    "encre": "#F7F3E3",
+    "vif": "#FFB84C",
+    "second": "#7FD1FF",
+    "decor": [
+     "#FFF6D5",
+     "#FF7A7A",
+     "#9BE58A"
+    ]
+   },
+   "contrasteSurSurface": {
+    "encre": 9.36,
+    "vif": 6.05,
+    "second": 6.18
+   },
+   "typo": {
+    "titre": {
+     "famille": "Nunito",
+     "fontsource": "nunito",
+     "graisses": [
+      800
+     ]
+    },
+    "texte": {
+     "famille": "Caveat",
+     "fontsource": "caveat",
+     "graisses": [
+      700
+     ]
+    },
+    "legende": {
+     "famille": "Caveat",
+     "fontsource": "caveat",
+     "graisses": [
+      700
+     ]
+    }
+   },
+   "matiere": "dark green chalkboard with chalk grain",
+   "signature": [
+    "dark green chalkboard with chalk grain",
+    "Caveat handwriting + Nunito titles"
+   ],
+   "lisibilite": {
+    "corpsMinPx": 54,
+    "contrasteTexteMin": 4.5,
+    "couleurReservee": "vif"
+   },
+   "contraintes": null,
+   "adaptateurs": {
+    "trace-chemin": "out/shared/chemin-moteur/habillages/craie-verte.js"
+   },
+   "image": "out/shorts/tableau-craie__enfants__comment-une-graine-devient-un-arbre/stills/still_07.90s.jpg",
+   "recettes": [],
+   "source": "coreTokens de out/identities/index.json (le code des scènes écrit ses valeurs en dur : brique déclarée)",
+   "date": "2026-11-19",
+   "note": "adaptateur ajouté par un essai de composition (19/11/2026) : le reste de la fiche reste au niveau « declare »",
+   "statut": "remplacee",
+   "remplacePar": "craie/tableau-vert",
+   "noteRemplacement": "remplacée le 20/11/2026 (option 124) par la variante « tableau-vert » de la famille d'habillage « craie » : out/habillages/craie/. Fiche gardée (pas de suppression) ; l'id « craie-verte » reste celui de l'adaptateur et de la maquette.",
+   "fichier": "out/habillages/craie-verte/habillage.json",
+   "actif": false
+  },
+  {
+   "id": "diorama-pastel",
+   "nom": "Diorama pastel",
+   "niveau": "declare",
+   "de": "pastel-diorama",
+   "palette": {
+    "fond": "#FFE8EF",
+    "surface": "#FFFFFF",
+    "encre": "#3B2E5A",
+    "vif": "#FF8FAB",
+    "second": "#8ED6FF",
+    "decor": [
+     "#FFD670",
+     "#9BE7B0"
+    ]
+   },
+   "contrasteSurSurface": {
+    "encre": 12.18,
+    "vif": 2.15,
+    "second": 1.59
+   },
+   "typo": {
+    "titre": {
+     "famille": "Baloo 2",
+     "fontsource": "baloo-2",
+     "graisses": [
+      800
+     ]
+    },
+    "texte": {
+     "famille": "Nunito",
+     "fontsource": "nunito",
+     "graisses": [
+      800
+     ]
+    },
+    "legende": {
+     "famille": "Nunito",
+     "fontsource": "nunito",
+     "graisses": [
+      800
+     ]
+    }
+   },
+   "matiere": "pink pastel toy diorama on a felt base",
+   "signature": [
+    "pink pastel toy diorama on a felt base",
+    "soft rounded toys and invented recurring characters",
+    "Baloo 2 titles and pill labels"
+   ],
+   "lisibilite": {
+    "corpsMinPx": 54,
+    "contrasteTexteMin": 4.5,
+    "couleurReservee": "vif"
+   },
+   "contraintes": null,
+   "adaptateurs": {},
+   "image": "out/shorts/pastel-diorama__enfants__d-ou-vient-la-pluie/stills/still_08.90s.jpg",
+   "recettes": [
+    "pastel-diorama"
+   ],
+   "source": "coreTokens de out/identities/index.json (le code des scènes écrit ses valeurs en dur : brique déclarée)",
+   "date": "2026-11-19",
+   "fichier": "out/habillages/diorama-pastel/habillage.json",
+   "actif": true
+  },
+  {
+   "id": "editeur",
+   "nom": "Éditeur de code",
+   "niveau": "executable",
+   "de": "chemin-editeur",
+   "palette": {
+    "fond": "#0B101D",
+    "surface": "#141B30",
+    "encre": "#D5DCEA",
+    "vif": null,
+    "second": "#F2A65A",
+    "decor": [
+     "#B79CF7",
+     "#93D8A0",
+     "#66769A",
+     "#8497C4"
+    ]
+   },
+   "contrasteSurSurface": {
+    "encre": 12.41,
+    "second": 8.44
+   },
+   "typo": {
+    "titre": {
+     "famille": "JetBrains Mono",
+     "fontsource": "jetbrains-mono",
+     "graisses": [
+      400,
+      700,
+      800
+     ]
+    }
+   },
+   "matiere": "éditeur de code sombre, coloration syntaxique, frappe au clavier",
+   "signature": [],
+   "lisibilite": {
+    "corpsMinPx": 96,
+    "contrasteTexteMin": 4.5,
+    "couleurReservee": null
+   },
+   "contraintes": {
+    "projection": "plane (vu de dessus)"
+   },
+   "adaptateurs": {
+    "trace-chemin": "out/shared/chemin-moteur/habillages/editeur.js"
+   },
+   "image": "out/shorts/lyrics-chemin__paroles__claudes-plan-tech/stills/03_flanc-echec_14.5s.jpg",
+   "recettes": [
+    "chemin-editeur"
+   ],
+   "source": "valeurs relevées dans l'adaptateur",
+   "date": "2026-11-19",
+   "fichier": "out/habillages/editeur/habillage.json",
+   "actif": true
+  },
+  {
+   "id": "gazette-sepia",
+   "nom": "Gazette sépia",
+   "niveau": "declare",
+   "de": "gazette-1900",
+   "palette": {
+    "fond": "#E9E1CF",
+    "surface": "#D8CDB4",
+    "encre": "#1E1B18",
+    "vif": "#B3261E",
+    "second": "#1E1B18",
+    "decor": [
+     "#E4DAC4"
+    ]
+   },
+   "contrasteSurSurface": {
+    "encre": 10.86,
+    "vif": 4.14,
+    "second": 10.86
+   },
+   "typo": {
+    "titre": {
+     "famille": "Playfair Display",
+     "fontsource": "playfair-display",
+     "graisses": [
+      900
+     ]
+    },
+    "texte": {
+     "famille": "IBM Plex Mono",
+     "fontsource": "ibm-plex-mono",
+     "graisses": [
+      500
+     ]
+    },
+    "legende": {
+     "famille": "DM Serif Display",
+     "fontsource": "dm-serif-display",
+     "graisses": [
+      400
+     ]
+    }
+   },
+   "matiere": "Playfair Display 900 headline + typewriter dispatch in IBM Plex Mono",
+   "signature": [
+    "Playfair Display 900 headline + typewriter dispatch in IBM Plex Mono",
+    "sepia + film-grain OpenCV pass"
+   ],
+   "lisibilite": {
+    "corpsMinPx": 54,
+    "contrasteTexteMin": 4.5,
+    "couleurReservee": "vif"
+   },
+   "contraintes": null,
+   "adaptateurs": {},
+   "image": "out/shorts/gazette-1900__evenements__9-novembre-1989-mur-de-berlin/stills/still_07.80s.jpg",
+   "recettes": [
+    "gazette-1900"
+   ],
+   "source": "coreTokens de out/identities/index.json (le code des scènes écrit ses valeurs en dur : brique déclarée)",
+   "date": "2026-11-19",
+   "fichier": "out/habillages/gazette-sepia/habillage.json",
+   "actif": true
+  },
+  {
+   "id": "gravure-parchemin",
+   "nom": "Gravure parchemin",
+   "niveau": "declare",
+   "de": "atlas-grave",
+   "palette": {
+    "fond": "#EFE3C8",
+    "surface": "#E2D2AE",
+    "encre": "#2A1F14",
+    "vif": "#8C2F1B",
+    "second": "#2D4A5A",
+    "decor": [
+     "#B8862B"
+    ]
+   },
+   "contrasteSurSurface": {
+    "encre": 10.78,
+    "vif": 5.54,
+    "second": 6.28
+   },
+   "typo": {
+    "titre": {
+     "famille": "Cormorant Garamond",
+     "fontsource": "cormorant-garamond",
+     "graisses": [
+      700
+     ]
+    },
+    "texte": {
+     "famille": "Cormorant Garamond",
+     "fontsource": "cormorant-garamond",
+     "graisses": [
+      700
+     ]
+    },
+    "legende": {
+     "famille": "IBM Plex Mono",
+     "fontsource": "ibm-plex-mono",
+     "graisses": [
+      600
+     ]
+    }
+   },
+   "matiere": "laid-paper parchment and engraved hand-drawn maps",
+   "signature": [
+    "laid-paper parchment and engraved hand-drawn maps",
+    "Cormorant Garamond / Cinzel serif"
+   ],
+   "lisibilite": {
+    "corpsMinPx": 54,
+    "contrasteTexteMin": 4.5,
+    "couleurReservee": "vif"
+   },
+   "contraintes": null,
+   "adaptateurs": {},
+   "image": "out/shorts/atlas-grave__geographie__plus-longs-fleuves-du-monde/stills/03_rang-I-Nil_8.9s.jpg",
+   "recettes": [
+    "atlas-grave"
+   ],
+   "source": "coreTokens de out/identities/index.json (le code des scènes écrit ses valeurs en dur : brique déclarée)",
+   "date": "2026-11-19",
+   "fichier": "out/habillages/gravure-parchemin/habillage.json",
+   "actif": true
+  },
+  {
+   "id": "grille-suisse",
+   "nom": "Grille suisse",
+   "niveau": "declare",
+   "de": "swiss-data",
+   "palette": {
+    "fond": "#F4F1EA",
+    "surface": "#FFFFFF",
+    "encre": "#111111",
+    "vif": "#E3241B",
+    "second": "#1B4DE3",
+    "decor": [
+     "#6B665C"
+    ]
+   },
+   "contrasteSurSurface": {
+    "encre": 18.88,
+    "vif": 4.63,
+    "second": 6.53
+   },
+   "typo": {
+    "titre": {
+     "famille": "Archivo Black",
+     "fontsource": "archivo-black",
+     "graisses": [
+      400
+     ]
+    },
+    "texte": {
+     "famille": "Inter",
+     "fontsource": "inter",
+     "graisses": [
+      600
+     ]
+    },
+    "legende": {
+     "famille": "Inter",
+     "fontsource": "inter",
+     "graisses": [
+      800
+     ]
+    }
+   },
+   "matiere": "visible 12-column grid on warm off-white",
+   "signature": [
+    "visible 12-column grid on warm off-white",
+    "palette limited to red / black / blue"
+   ],
+   "lisibilite": {
+    "corpsMinPx": 54,
+    "contrasteTexteMin": 4.5,
+    "couleurReservee": "vif"
+   },
+   "contraintes": null,
+   "adaptateurs": {
+    "trace-chemin": "out/shared/chemin-moteur/habillages/grille-suisse.js"
+   },
+   "image": "out/shorts/swiss-data__evenements__j-272-eclipse-2-aout-2027/stills/03_trace_10.9s.jpg",
+   "recettes": [
+    "chemin-grille-suisse",
+    "swiss-data"
+   ],
+   "source": "coreTokens de out/identities/index.json (le code des scènes écrit ses valeurs en dur : brique déclarée)",
+   "date": "2026-11-19",
+   "note": "adaptateur ajouté par l'essai C2 (19/11/2026), devenu la recette de chaîne « Données qui se tracent » (chemin-grille-suisse) le 20/11/2026 : le reste de la fiche reste au niveau « declare »",
+   "fichier": "out/habillages/grille-suisse/habillage.json",
+   "actif": true
+  },
+  {
+   "id": "meteo-clair",
+   "nom": "Météo claire",
+   "niveau": "declare",
+   "de": "carte-meteo",
+   "palette": {
+    "fond": "#CFE6F5",
+    "surface": "#FFFFFF",
+    "encre": "#10263D",
+    "vif": "#D63A2A",
+    "second": "#1F5FD6",
+    "decor": [
+     "#F59A2C"
+    ]
+   },
+   "contrasteSurSurface": {
+    "encre": 15.37,
+    "vif": 4.67,
+    "second": 5.73
+   },
+   "typo": {
+    "titre": {
+     "famille": "Space Grotesk",
+     "fontsource": "space-grotesk",
+     "graisses": [
+      700
+     ]
+    },
+    "texte": {
+     "famille": "Atkinson Hyperlegible",
+     "fontsource": "atkinson-hyperlegible",
+     "graisses": [
+      700
+     ]
+    },
+    "legende": {
+     "famille": "Atkinson Hyperlegible",
+     "fontsource": "atkinson-hyperlegible",
+     "graisses": [
+      700
+     ]
+    }
+   },
+   "matiere": "pale sky-blue sea and tender green land with coastline and breathing isobars",
+   "signature": [
+    "pale sky-blue sea and tender green land with coastline and breathing isobars",
+    "temperature pills on white cartouches, Atkinson Hyperlegible + Space Grotesk titles",
+    "text only on white cartouches"
+   ],
+   "lisibilite": {
+    "corpsMinPx": 54,
+    "contrasteTexteMin": 4.5,
+    "couleurReservee": "vif"
+   },
+   "contraintes": null,
+   "adaptateurs": {},
+   "image": "out/shorts/carte-meteo__evenements__28-juin-2019-46-degres-record-de-chaleur/stills/03_ancien-record_6.5s.jpg",
+   "recettes": [
+    "carte-meteo"
+   ],
+   "source": "coreTokens de out/identities/index.json (le code des scènes écrit ses valeurs en dur : brique déclarée)",
+   "date": "2026-11-19",
+   "fichier": "out/habillages/meteo-clair/habillage.json",
+   "actif": true
+  },
+  {
+   "id": "neon-labo",
+   "nom": "Néon labo",
+   "niveau": "declare",
+   "de": "neon-lab",
+   "palette": {
+    "fond": "#05060B",
+    "surface": "#11142A",
+    "encre": "#F2F6FF",
+    "vif": "#38F9FF",
+    "second": "#FF3DCB",
+    "decor": [
+     "#B6FF3B"
+    ]
+   },
+   "contrasteSurSurface": {
+    "encre": 16.76,
+    "vif": 13.97,
+    "second": 5.86
+   },
+   "typo": {
+    "titre": {
+     "famille": "Space Grotesk",
+     "fontsource": "space-grotesk",
+     "graisses": [
+      700
+     ]
+    },
+    "texte": {
+     "famille": "Space Grotesk",
+     "fontsource": "space-grotesk",
+     "graisses": [
+      500
+     ]
+    },
+    "legende": {
+     "famille": "JetBrains Mono",
+     "fontsource": "jetbrains-mono",
+     "graisses": [
+      500
+     ]
+    }
+   },
+   "matiere": "near-black lab with cyan / magenta / lime neon",
+   "signature": [
+    "near-black lab with cyan / magenta / lime neon",
+    "GLSL force-field background",
+    "LABO/0X tag + JetBrains Mono data captions"
+   ],
+   "lisibilite": {
+    "corpsMinPx": 54,
+    "contrasteTexteMin": 4.5,
+    "couleurReservee": "vif"
+   },
+   "contraintes": null,
+   "adaptateurs": {},
+   "image": "out/shorts/neon-lab__abstrait__champ-de-force-lucioles/stills/03_papillon_8.4s.jpg",
+   "recettes": [
+    "neon-lab"
+   ],
+   "source": "coreTokens de out/identities/index.json (le code des scènes écrit ses valeurs en dur : brique déclarée)",
+   "date": "2026-11-19",
+   "fichier": "out/habillages/neon-labo/habillage.json",
+   "actif": true
+  },
+  {
+   "id": "orange-graphite",
+   "nom": "Orange graphite",
+   "niveau": "declare",
+   "de": "trait-continu",
+   "palette": {
+    "fond": "#F26A21",
+    "surface": "#D3D4CE",
+    "encre": "#1A1410",
+    "vif": "#3A3D42",
+    "second": "#1D47A8",
+    "decor": [
+     "#FFF8EE"
+    ]
+   },
+   "contrasteSurSurface": {
+    "encre": 12.23,
+    "vif": 7.31,
+    "second": 5.59
+   },
+   "typo": {
+    "titre": {
+     "famille": "Fredoka",
+     "fontsource": "fredoka",
+     "graisses": [
+      700
+     ]
+    },
+    "texte": {
+     "famille": "Fredoka",
+     "fontsource": "fredoka",
+     "graisses": [
+      600
+     ]
+    },
+    "legende": {
+     "famille": "Fredoka",
+     "fontsource": "fredoka",
+     "graisses": [
+      600
+     ]
+    }
+   },
+   "matiere": "full-bleed orange ground with a sharp-cornered grey plate",
+   "signature": [
+    "full-bleed orange ground with a sharp-cornered grey plate",
+    "never cream or white on the orange; Fredoka only"
+   ],
+   "lisibilite": {
+    "corpsMinPx": 54,
+    "contrasteTexteMin": 4.5,
+    "couleurReservee": "vif"
+   },
+   "contraintes": null,
+   "adaptateurs": {},
+   "image": "out/shorts/trait-continu__enfants__dessine-un-escargot-d-un-seul-trait/stills/03_avance-plaque_5.85s.jpg",
+   "recettes": [
+    "trait-continu"
+   ],
+   "source": "coreTokens de out/identities/index.json (le code des scènes écrit ses valeurs en dur : brique déclarée)",
+   "date": "2026-11-19",
+   "fichier": "out/habillages/orange-graphite/habillage.json",
+   "actif": true
+  },
+  {
+   "id": "papier-decoupe",
+   "nom": "Papier, tapis vert",
+   "niveau": "executable",
+   "de": "papier-decoupe",
+   "palette": {
+    "fond": "#1F5A4A",
+    "surface": "#F7F4EC",
+    "encre": "#10231D",
+    "vif": "#FFD23F",
+    "second": "#E4432D",
+    "decor": [
+     "#2F5CF5",
+     "#E4432D",
+     "#FFD23F",
+     "#FF9EC7",
+     "#7FE3D6"
+    ]
+   },
+   "contrasteSurSurface": {
+    "encre": 14.92,
+    "vif": 1.31,
+    "second": 3.72
+   },
+   "typo": {
+    "titre": {
+     "famille": "Dela Gothic One",
+     "fontsource": "dela-gothic-one",
+     "graisses": [
+      400
+     ]
+    },
+    "texte": {
+     "famille": "Kalam",
+     "fontsource": "kalam",
+     "graisses": [
+      700
+     ]
+    },
+    "mono": {
+     "famille": "DM Mono",
+     "fontsource": "dm-mono",
+     "graisses": [
+      500
+     ]
+    }
+   },
+   "matiere": "tapis de découpe vert gradué ; pièces de papier découpées aux ciseaux, ombre portée",
+   "signature": [
+    "green graduated cutting mat",
+    "Dela Gothic One titles on alternately tilted paper strips",
+    "burned-in Kalam captions on a paper strip"
+   ],
+   "lisibilite": {
+    "corpsMinPx": 54,
+    "contrasteTexteMin": 4.5,
+    "couleurReservee": "vif"
+   },
+   "contraintes": {
+    "cadence": "12 i/s (matière de papier : un papier découpé ne glisse pas en douceur)"
+   },
+   "adaptateurs": {
+    "pop-papier-12ips": "out/shared/papier-moteur/pipeline/papier.py (valeurs par défaut, sans thème)"
+   },
+   "image": "out/shorts/papier-decoupe__explicatif__d-ou-vient-le-mot-sandwich/stills/still_t_003.50.jpg",
+   "recettes": [
+    "papier-decoupe"
+   ],
+   "source": "valeurs relevées dans l'adaptateur",
+   "date": "2026-11-19",
+   "fichier": "out/habillages/papier-decoupe/habillage.json",
+   "actif": true
+  },
+  {
+   "id": "pixel-jour",
+   "nom": "Pixel jour",
+   "niveau": "declare",
+   "de": "survol-pixel",
+   "palette": {
+    "fond": "#1E5AA8",
+    "surface": "#FBF3D5",
+    "encre": "#14213D",
+    "vif": "#B5341A",
+    "second": "#FFC94A",
+    "decor": [
+     "#7CCBEB"
+    ]
+   },
+   "contrasteSurSurface": {
+    "encre": 14.36,
+    "vif": 5.44,
+    "second": 1.38
+   },
+   "typo": {
+    "titre": {
+     "famille": "Jersey 20",
+     "fontsource": "jersey-20",
+     "graisses": [
+      400
+     ]
+    },
+    "texte": {
+     "famille": "Jersey 15",
+     "fontsource": "jersey-15",
+     "graisses": [
+      400
+     ]
+    },
+    "legende": {
+     "famille": "Jersey 10",
+     "fontsource": "jersey-10",
+     "graisses": [
+      400
+     ]
+    }
+   },
+   "matiere": "indexed palette with quantised shade tables and a 6-step haze towards a very pale blue (#DCEEF5), rendered at 270x480 and scaled x4 nearest-neighbour",
+   "signature": [
+    "indexed palette with quantised shade tables and a 6-step haze towards a very pale blue (#DCEEF5), rendered at 270x480 and scaled x4 nearest-neighbour",
+    "Jersey 15 cartouches on cream with ink border (hook, dates, narrative; one at a time since the A+B+C pass; Jersey 20 reserved), Jersey 10 mentions only; never text on the map or sky"
+   ],
+   "lisibilite": {
+    "corpsMinPx": 54,
+    "contrasteTexteMin": 4.5,
+    "couleurReservee": "vif"
+   },
+   "contraintes": {
+    "grillePixel": "270×480 ×4, plus proche voisin",
+    "paletteIndexee": true,
+    "projection": "3d (sol en perspective)"
+   },
+   "adaptateurs": {},
+   "image": "out/shorts/survol-pixel__explicatif__comment-nait-un-atoll/stills/01_hook-anneau_0.5s.jpg",
+   "recettes": [
+    "survol-pixel"
+   ],
+   "source": "coreTokens de out/identities/index.json (le code des scènes écrit ses valeurs en dur : brique déclarée)",
+   "date": "2026-11-19",
+   "fichier": "out/habillages/pixel-jour/habillage.json",
+   "actif": true
+  },
+  {
+   "id": "plan-bleu",
+   "nom": "Plan bleu (blueprint)",
+   "niveau": "executable",
+   "de": "lyrics-chemin",
+   "palette": {
+    "fond": "#CFC8BA",
+    "surface": "#1B4C92",
+    "encre": "#F3F0E4",
+    "vif": "#FFD84A",
+    "second": "#FF7D5C",
+    "decor": []
+   },
+   "contrasteSurSurface": {
+    "encre": 7.37,
+    "vif": 6.08,
+    "second": 3.34
+   },
+   "typo": {
+    "titre": {
+     "famille": "Barlow Condensed",
+     "fontsource": "barlow-condensed",
+     "graisses": [
+      700,
+      800
+     ]
+    },
+    "mono": {
+     "famille": "JetBrains Mono",
+     "fontsource": "jetbrains-mono",
+     "graisses": [
+      400
+     ]
+    }
+   },
+   "matiere": "plan d'architecte bleu plié, scotché sur un sol en béton chaud ; vu de dessus sans perspective",
+   "signature": [
+    "blueprint-blue folded sheet taped on a warm concrete floor, seen straight from above (no perspective)",
+    "Barlow Condensed capitals set rigidly along the strokes of a drawing; red-pencil cross, flag and correction loop"
+   ],
+   "lisibilite": {
+    "corpsMinPx": 120,
+    "contrasteTexteMin": 4.5,
+    "couleurReservee": "vif"
+   },
+   "contraintes": {
+    "projection": "plane (vu de dessus)"
+   },
+   "adaptateurs": {
+    "trace-chemin": "out/shared/chemin-moteur/habillages/plan-bleu.js",
+    "pop-papier-12ips": "out/shorts/papier-plan-bleu__explicatif__d-ou-vient-le-mot-sandwich/src/plan-bleu.json (+ tapis_plan() du même short) — essai C4 abandonné le 20/11/2026"
+   },
+   "image": "out/shorts/lyrics-chemin__paroles__claudes-plan/stills/04_pre-pose_7.7s.jpg",
+   "recettes": [
+    "lyrics-chemin",
+    "papier-plan-bleu"
+   ],
+   "source": "valeurs relevées dans l'adaptateur",
+   "date": "2026-11-19",
+   "fichier": "out/habillages/plan-bleu/habillage.json",
+   "actif": true
+  },
+  {
+   "id": "portulan",
+   "nom": "Portulan",
+   "niveau": "executable",
+   "de": "chemin-portulan",
+   "palette": {
+    "fond": "#E9DCBC",
+    "surface": "#E9DCBC",
+    "encre": "#3A2718",
+    "vif": "#B8301A",
+    "second": "#27506E",
+    "decor": [
+     "#CDB684"
+    ]
+   },
+   "contrasteSurSurface": {
+    "encre": 10.4,
+    "vif": 4.44,
+    "second": 6.27
+   },
+   "typo": {
+    "titre": {
+     "famille": "Cormorant Garamond",
+     "fontsource": "cormorant-garamond",
+     "graisses": [
+      500,
+      700
+     ]
+    }
+   },
+   "matiere": "carte portulan sur parchemin, encre sépia, vermillon",
+   "signature": [],
+   "lisibilite": {
+    "corpsMinPx": 120,
+    "contrasteTexteMin": 4.5,
+    "couleurReservee": "vif"
+   },
+   "contraintes": {
+    "projection": "plane (vu de dessus)"
+   },
+   "adaptateurs": {
+    "trace-chemin": "out/shared/chemin-moteur/habillages/portulan.js"
+   },
+   "image": "out/shorts/lyrics-chemin__histoire__le-premier-tour-du-monde/stills/03_magellan_7.5s.jpg",
+   "recettes": [
+    "chemin-portulan"
+   ],
+   "source": "valeurs relevées dans l'adaptateur",
+   "date": "2026-11-19",
+   "fichier": "out/habillages/portulan/habillage.json",
+   "actif": true
+  },
+  {
+   "id": "punchy",
+   "nom": "Punchy (3 camaïeux)",
+   "niveau": "declare",
+   "de": "lyrics-punchy",
+   "palette": {
+    "fond": "#2A1160",
+    "surface": null,
+    "encre": "#140A33",
+    "vif": "#E6FF4F",
+    "second": null,
+    "decor": [
+     "#B9A4F5",
+     "#8468DB",
+     "#5F45B8"
+    ],
+    "tons": {
+     "nuit": [
+      "#2A1160",
+      "#E6FF4F"
+     ],
+     "lagon": [
+      "#063F4A",
+      "#FF8A5C"
+     ],
+     "braise": [
+      "#5E0F2C",
+      "#FFD166"
+     ]
+    }
+   },
+   "contrasteSurSurface": {
+    "encre": 1.2,
+    "vif": 13.94
+   },
+   "typo": {
+    "titre": {
+     "famille": "Anybody",
+     "fontsource": "anybody",
+     "graisses": [
+      900
+     ]
+    },
+    "texte": {
+     "famille": "Anybody",
+     "fontsource": "anybody",
+     "graisses": [
+      900
+     ]
+    },
+    "legende": {
+     "famille": "Anybody",
+     "fontsource": "anybody",
+     "graisses": [
+      800
+     ]
+    }
+   },
+   "matiere": "a wall of past lines stacked above the current one in 3 tints of the background hue (nuit / lagon / braise)",
+   "signature": [
+    "a wall of past lines stacked above the current one in 3 tints of the background hue (nuit / lagon / braise)",
+    "tilted accent-coloured square card (±4°) with a 3-colour SVG pictogram, one per line at most"
+   ],
+   "lisibilite": {
+    "corpsMinPx": 54,
+    "contrasteTexteMin": 4.5,
+    "couleurReservee": "vif"
+   },
+   "contraintes": {
+    "typo": "police variable à axe wdth (Anybody)"
+   },
+   "adaptateurs": {
+    "colonne-mot-a-mot": "out/shared/lyrics-moteur/lyrics.js (CAMAIEUX, dans le moteur)"
+   },
+   "image": "out/shorts/lyrics-punchy__paroles__claudes-plan/stills/03_mur-version_11.3s.jpg",
+   "recettes": [
+    "lyrics-punchy"
+   ],
+   "source": "coreTokens de out/identities/index.json (le code des scènes écrit ses valeurs en dur : brique déclarée)",
+   "date": "2026-11-19",
+   "fichier": "out/habillages/punchy/habillage.json",
+   "actif": true
+  },
+  {
+   "id": "relief-vert",
+   "nom": "Relief vert",
+   "niveau": "declare",
+   "de": "topo-relief",
+   "palette": {
+    "fond": "#14221C",
+    "surface": "#1E3329",
+    "encre": "#F1EEDC",
+    "vif": "#E8C872",
+    "second": "#D9734E",
+    "decor": [
+     "#9FD3C7"
+    ]
+   },
+   "contrasteSurSurface": {
+    "encre": 11.54,
+    "vif": 8.29,
+    "second": 4.17
+   },
+   "typo": {
+    "titre": {
+     "famille": "Inter",
+     "fontsource": "inter",
+     "graisses": [
+      800
+     ]
+    },
+    "texte": {
+     "famille": "JetBrains Mono",
+     "fontsource": "jetbrains-mono",
+     "graisses": [
+      500
+     ]
+    },
+    "legende": {
+     "famille": "JetBrains Mono",
+     "fontsource": "jetbrains-mono",
+     "graisses": [
+      700
+     ]
+    }
+   },
+   "matiere": "dark forest-green 3D terrain block with glowing contour lines",
+   "signature": [
+    "dark forest-green 3D terrain block with glowing contour lines",
+    "altitude readout in JetBrains Mono",
+    "ochre / terracotta / teal accents"
+   ],
+   "lisibilite": {
+    "corpsMinPx": 54,
+    "contrasteTexteMin": 4.5,
+    "couleurReservee": "vif"
+   },
+   "contraintes": null,
+   "adaptateurs": {},
+   "image": "out/shorts/topo-relief__geographie__comment-mesure-t-on-l-everest/stills/still_09.20s.jpg",
+   "recettes": [
+    "topo-relief"
+   ],
+   "source": "coreTokens de out/identities/index.json (le code des scènes écrit ses valeurs en dur : brique déclarée)",
+   "date": "2026-11-19",
+   "fichier": "out/habillages/relief-vert/habillage.json",
+   "actif": true
+  },
+  {
+   "id": "riso-3-encres",
+   "nom": "Riso 3 encres",
+   "niveau": "declare",
+   "de": "riso-zine",
+   "palette": {
+    "fond": "#F6F0E4",
+    "surface": "#F6F0E4",
+    "encre": "#1A1A1A",
+    "vif": "#FF48B0",
+    "second": "#0078BF",
+    "decor": [
+     "#FFE800"
+    ]
+   },
+   "contrasteSurSurface": {
+    "encre": 15.33,
+    "vif": 2.72,
+    "second": 4.17
+   },
+   "typo": {
+    "titre": {
+     "famille": "Space Mono",
+     "fontsource": "space-mono",
+     "graisses": [
+      700
+     ]
+    },
+    "texte": {
+     "famille": "Space Mono",
+     "fontsource": "space-mono",
+     "graisses": [
+      700
+     ]
+    },
+    "legende": {
+     "famille": "Permanent Marker",
+     "fontsource": "permanent-marker",
+     "graisses": [
+      400
+     ]
+    }
+   },
+   "matiere": "cream paper with 2–3 overprinted spot inks (fluo pink, blue, yellow)",
+   "signature": [
+    "cream paper with 2–3 overprinted spot inks (fluo pink, blue, yellow)",
+    "misregistration + halftone dots",
+    "Space Mono + Permanent Marker annotations"
+   ],
+   "lisibilite": {
+    "corpsMinPx": 54,
+    "contrasteTexteMin": 4.5,
+    "couleurReservee": "vif"
+   },
+   "contraintes": null,
+   "adaptateurs": {},
+   "image": "out/shorts/riso-zine__evenements__geminides-j-39/stills/03_phaeton_11.0s.jpg",
+   "recettes": [
+    "riso-zine"
+   ],
+   "source": "coreTokens de out/identities/index.json (le code des scènes écrit ses valeurs en dur : brique déclarée)",
+   "date": "2026-11-19",
+   "fichier": "out/habillages/riso-3-encres/habillage.json",
+   "actif": true
+  }
+ ],
+ "mecaniques": [
+  {
+   "id": "carte-champs-front",
+   "nom": "Carte météo et front",
+   "niveau": "declare",
+   "description": "Carte toujours visible, isobares qui respirent, traînées de vent ; le front météo est la seule transition.",
+   "separation": "MOYEN",
+   "moteur": {
+    "code": "src/meteo.js (copié)",
+    "env": "navigateur (canvas + d3-geo Lambert)",
+    "audit": null
+   },
+   "signature": [
+    "dark wind trails when wind is the subject (proven by the mistral short only)",
+    "diagonal cold-front (blue triangles) / warm-front sweep as the only transition",
+    "map always visible, no tables or bars"
+   ],
+   "requiert": null,
+   "formats": [
+    "narre-court"
+   ],
+   "habillagesTestes": [
+    "meteo-clair"
+   ],
+   "recettes": [
+    "carte-meteo"
+   ],
+   "source": "out/report/notes/composition/inventaire.md",
+   "date": "2026-11-19",
+   "fichier": "out/mecaniques/carte-champs-front/mecanique.json",
+   "pates": [
+    "meteo-clair"
+   ]
+  },
+  {
+   "id": "carte-trace-panoramique",
+   "nom": "Carte qui se trace, panoramique",
+   "niveau": "declare",
+   "description": "Fleuves et routes en stroke-dashoffset, panoramique lent, sceau de cire.",
+   "separation": "MOYEN",
+   "moteur": {
+    "code": "src/atlas.js + src/textures.py (copiés)",
+    "env": "navigateur (D3 geo + GSAP)",
+    "audit": null
+   },
+   "signature": [
+    "ink that draws itself",
+    "wax seals, compass rose, slow pans"
+   ],
+   "requiert": null,
+   "formats": [
+    "narre-court"
+   ],
+   "habillagesTestes": [
+    "gravure-parchemin"
+   ],
+   "recettes": [
+    "atlas-grave"
+   ],
+   "source": "out/report/notes/composition/inventaire.md",
+   "date": "2026-11-19",
+   "fichier": "out/mecaniques/carte-trace-panoramique/mecanique.json",
+   "pates": [
+    "gravure-parchemin"
+   ]
+  },
+  {
+   "id": "chiffre-volet-compteur",
+   "nom": "Chiffres qui roulent, volets",
+   "niveau": "declare",
+   "description": "Titre par masque horizontal, compteurs qui roulent, volet rouge plein cadre 0,45 s, push-in ×1,08, scènes de 4–5 s à 120 bpm, un chiffre géant par écran.",
+   "separation": "FACILE",
+   "moteur": {
+    "code": "src/grille.js (copié dans chaque short)",
+    "env": "navigateur (D3 + GSAP seeké)",
+    "audit": null
+   },
+   "signature": [
+    "one giant Archivo Black number per screen",
+    "red wipe transitions"
+   ],
+   "requiert": null,
+   "formats": [
+    "narre-court"
+   ],
+   "habillagesTestes": [
+    "grille-suisse"
+   ],
+   "recettes": [
+    "swiss-data"
+   ],
+   "source": "out/report/notes/composition/inventaire.md",
+   "date": "2026-11-19",
+   "fichier": "out/mecaniques/chiffre-volet-compteur/mecanique.json",
+   "pates": [
+    "grille-suisse"
+   ]
+  },
+  {
+   "id": "colonne-mot-a-mot",
+   "nom": "Colonne mot à mot",
+   "niveau": "declare",
+   "description": "Mot qui tombe sur le temps, colonne justifiée par l'axe de largeur (fit()), mur de 4 lignes passées, carton penché illustré ; chute de pile à chaque section.",
+   "separation": "MOYEN",
+   "moteur": {
+    "code": "out/shared/lyrics-moteur/lyrics.js",
+    "env": "navigateur (DOM + SVG, renderAt(t))",
+    "audit": "out/tools/lyrics_audit.mjs"
+   },
+   "signature": [
+    "column justified by the width axis of the variable font Anybody (wdth 50–150), every row exactly 876 px wide",
+    "chute-de-pile: the stack falls out of frame while the ground changes tint at each song section",
+    "never black, no gradient, no camera zoom; the song is added in the app (video rendered muted)"
+   ],
+   "requiert": {
+    "palette": [
+     "bg",
+     "mur[3]",
+     "accent",
+     "encre"
+    ],
+    "typo": [
+     "police variable à axe wdth (exigée, setupMeasure lève une erreur sinon)"
+    ],
+    "note": "camaïeux écrits dans le moteur (CAMAIEUX, lyrics.js:12-16), police en dur : habillage non séparable sans toucher au moteur"
+   },
+   "formats": [
+    "paroles-muet"
+   ],
+   "habillagesTestes": [
+    "punchy"
+   ],
+   "recettes": [
+    "lyrics-punchy"
+   ],
+   "source": "out/report/notes/composition/inventaire.md",
+   "date": "2026-11-19",
+   "fichier": "out/mecaniques/colonne-mot-a-mot/mecanique.json",
+   "pates": [
+    "punchy"
+   ]
+  },
+  {
+   "id": "ecriture-trace-chiffon",
+   "nom": "Écriture à la craie, chiffon",
+   "niveau": "declare",
+   "description": "Tout se dessine (tracé progressif), effacement au chiffon entre les idées.",
+   "separation": "MOYEN",
+   "moteur": {
+    "code": "aucun moteur commun (Rough.js / Manim)",
+    "env": "navigateur ou Python (Manim)",
+    "audit": null
+   },
+   "signature": [
+    "everything draws itself (Manim Create / stroke-dashoffset)",
+    "eraser-cloth wipe between ideas"
+   ],
+   "requiert": null,
+   "formats": [
+    "narre-court"
+   ],
+   "habillagesTestes": [
+    "craie/tableau-vert"
+   ],
+   "recettes": [
+    "tableau-craie"
+   ],
+   "source": "out/report/notes/composition/inventaire.md",
+   "date": "2026-11-19",
+   "fichier": "out/mecaniques/ecriture-trace-chiffon/mecanique.json",
+   "pates": [
+    "craie/tableau-vert"
+   ]
+  },
+  {
+   "id": "impression-on-twos",
+   "nom": "Impression riso saccadée",
+   "niveau": "declare",
+   "description": "Mouvement quantifié à 12 i/s, une couche par encre, défaut de repérage tiré à chaque pas.",
+   "separation": "MOYEN",
+   "moteur": {
+    "code": "src/riso.js + src/post.py (copiés)",
+    "env": "navigateur (p5 + GSAP quantifié) + OpenCV",
+    "audit": null
+   },
+   "signature": [
+    "stepped 12 fps motion, collage cut-outs"
+   ],
+   "requiert": null,
+   "formats": [
+    "narre-court"
+   ],
+   "habillagesTestes": [
+    "riso-3-encres"
+   ],
+   "recettes": [
+    "riso-zine"
+   ],
+   "source": "out/report/notes/composition/inventaire.md",
+   "date": "2026-11-19",
+   "fichier": "out/mecaniques/impression-on-twos/mecanique.json",
+   "pates": [
+    "riso-3-encres"
+   ]
+  },
+  {
+   "id": "lavis-multiplan",
+   "nom": "Lavis qui s'ouvre, plans superposés",
+   "niveau": "declare",
+   "description": "Travelling multiplan, lavis qui s'ouvre (bloom()) comme transition : la transition est la matière.",
+   "separation": "MOYEN",
+   "moteur": {
+    "code": "src/aq.js (copié)",
+    "env": "navigateur (p5 + Paper.js)",
+    "audit": null
+   },
+   "signature": [
+    "multiplane parallax",
+    "gentle storyteller pacing and fades"
+   ],
+   "requiert": null,
+   "formats": [
+    "narre-court"
+   ],
+   "habillagesTestes": [
+    "aquarelle"
+   ],
+   "recettes": [
+    "aquarelle-conte"
+   ],
+   "source": "out/report/notes/composition/inventaire.md",
+   "date": "2026-11-19",
+   "fichier": "out/mecaniques/lavis-multiplan/mecanique.json",
+   "pates": [
+    "aquarelle"
+   ]
+  },
+  {
+   "id": "maquette-rebond",
+   "nom": "Maquette qui rebondit",
+   "niveau": "declare",
+   "description": "Jouets qui rebondissent (back.out), timeline écrite par état du contenu.",
+   "separation": "DIFFICILE",
+   "moteur": {
+    "code": "aucun moteur commun (Zdog / A-Frame)",
+    "env": "navigateur",
+    "audit": null
+   },
+   "signature": [
+    "bouncy back.out motion"
+   ],
+   "requiert": null,
+   "formats": [
+    "narre-court"
+   ],
+   "habillagesTestes": [
+    "diorama-pastel"
+   ],
+   "recettes": [
+    "pastel-diorama"
+   ],
+   "source": "out/report/notes/composition/inventaire.md",
+   "date": "2026-11-19",
+   "fichier": "out/mecaniques/maquette-rebond/mecanique.json",
+   "pates": [
+    "diorama-pastel"
+   ]
+  },
+  {
+   "id": "orbite-phenomene-neon",
+   "nom": "Orbite autour d'un phénomène",
+   "niveau": "declare",
+   "description": "Orbite autour d'un phénomène, pulsations de bloom au changement de temps ; la matière est le shader.",
+   "separation": "DIFFICILE",
+   "moteur": {
+    "code": "aucun moteur commun (twgl, Matplotlib, three.js)",
+    "env": "navigateur ou Python",
+    "audit": null
+   },
+   "signature": [
+    "bloom pulses on beat changes"
+   ],
+   "requiert": null,
+   "formats": [
+    "boucle",
+    "narre-court"
+   ],
+   "habillagesTestes": [
+    "neon-labo"
+   ],
+   "recettes": [
+    "neon-lab"
+   ],
+   "source": "out/report/notes/composition/inventaire.md",
+   "date": "2026-11-19",
+   "fichier": "out/mecaniques/orbite-phenomene-neon/mecanique.json",
+   "pates": [
+    "neon-labo"
+   ]
+  },
+  {
+   "id": "plan-sequence-matiere",
+   "nom": "Plan-séquence de matière",
+   "niveau": "declare",
+   "description": "Un seul plan macro continu, ralenti, sans coupe : la matière (chrome, physique) est la mécanique.",
+   "separation": "DIFFICILE",
+   "moteur": {
+    "code": "aucun moteur commun (Babylon, Taichi, three.js)",
+    "env": "navigateur ou Python",
+    "audit": null
+   },
+   "signature": [
+    "slow motion, no cuts"
+   ],
+   "requiert": null,
+   "formats": [
+    "boucle",
+    "narre-court"
+   ],
+   "habillagesTestes": [
+    "chrome-irise"
+   ],
+   "recettes": [
+    "liquid-chrome"
+   ],
+   "source": "out/report/notes/composition/inventaire.md",
+   "date": "2026-11-19",
+   "fichier": "out/mecaniques/plan-sequence-matiere/mecanique.json",
+   "pates": [
+    "chrome-irise"
+   ]
+  },
+  {
+   "id": "pop-papier-12ips",
+   "nom": "Papier qui saute (12 images/s)",
+   "niveau": "executable",
+   "description": "Mouvement à 12 i/s : pop en 4 pas (0,35 → 1,15 → 0,96 → 1), chute en 5 pas, tampon, glissé de scène 0,25 s, titres sur bandes inclinées, sous-titres sur bande ; voix, musique et SFX mixés et masterisés (−14 LUFS) par le moteur.",
+   "separation": "FACILE",
+   "moteur": {
+    "code": "out/shared/papier-moteur/pipeline/",
+    "env": "Python (Pillow, OpenCV), 4 tranches en parallèle",
+    "audit": null
+   },
+   "signature": [
+    "pieces pop in 4 steps at 12 fps with drop shadow and scissor-cut edges",
+    "stop-motion pop at 12 fps"
+   ],
+   "requiert": {
+    "palette": [
+     "MAT",
+     "MAT_DEEP",
+     "PAPER",
+     "INK",
+     "INK_SOFT",
+     "BLUE",
+     "RED",
+     "YELLOW",
+     "PINK",
+     "CYAN",
+     "KRAFT"
+    ],
+    "typo": [
+     "display",
+     "hand",
+     "hand-r",
+     "mono",
+     "mono-r"
+    ],
+    "tapis": [
+     "grille",
+     "kraft",
+     "nuit (tout autre nom = fond uni vignetté)"
+    ],
+    "contraintes": [
+     "cadence 12 i/s imposée par la mécanique"
+    ],
+    "note": "thème JSON (out/shared/papier-moteur/themes/<id>.json) passé par THEME_ESSAI ; résidus non thématisés : grille verte papier.py:251-256, RGB hors thème elements.py:208-210, 448, 547"
+   },
+   "formats": [
+    "narre-court"
+   ],
+   "habillagesTestes": [
+    "atelier-papier",
+    "cabinet-curiosites",
+    "carnet-archives",
+    "papier-decoupe",
+    "plan-bleu"
+   ],
+   "recettes": [
+    "atelier-papier",
+    "cabinet-curiosites",
+    "carnet-archives",
+    "papier-decoupe",
+    "papier-plan-bleu"
+   ],
+   "source": "out/report/notes/composition/inventaire.md",
+   "date": "2026-11-19",
+   "fichier": "out/mecaniques/pop-papier-12ips/mecanique.json",
+   "pates": [
+    "atelier-papier",
+    "cabinet-curiosites",
+    "carnet-archives",
+    "papier-decoupe",
+    "plan-bleu"
+   ]
+  },
+  {
+   "id": "punch-cut-slam",
+   "nom": "Coupes franches, mots qui claquent",
+   "niveau": "declare",
+   "description": "Coupes franches au temps, punch-in ×1,15 en 3 images, slam de mot, inversion noir/jaune, texte ajusté à la largeur ; ≤ 3 flashs/s.",
+   "separation": "FACILE",
+   "moteur": {
+    "code": "src/brut.js (copié dans chaque short)",
+    "env": "navigateur (PixiJS + GSAP)",
+    "audit": null
+   },
+   "signature": [
+    "Anton auto-fitted to fill the frame",
+    "hard cuts on the beat with 3-frame punch-in",
+    "photosensitivity rule: <= 3 flashes/s, no full-frame flash"
+   ],
+   "requiert": null,
+   "formats": [
+    "narre-court"
+   ],
+   "habillagesTestes": [
+    "brut-jaune"
+   ],
+   "recettes": [
+    "brut-meme"
+   ],
+   "source": "out/report/notes/composition/inventaire.md",
+   "date": "2026-11-19",
+   "fichier": "out/mecaniques/punch-cut-slam/mecanique.json",
+   "pates": [
+    "brut-jaune"
+   ]
+  },
+  {
+   "id": "puzzle-grille-morph",
+   "nom": "Formes qui pivotent en grille",
+   "niveau": "declare",
+   "description": "Snap à 90°, stagger en grille, morph de formes, volet en 6 colonnes.",
+   "separation": "MOYEN",
+   "moteur": {
+    "code": "src/bk.js (copié)",
+    "env": "navigateur (Paper.js + anime.js + flubber)",
+    "audit": null
+   },
+   "signature": [
+    "grid staggers and shape morphs (flubber)",
+    "grid-wipe transition"
+   ],
+   "requiert": null,
+   "formats": [
+    "narre-court"
+   ],
+   "habillagesTestes": [
+    "bauhaus-primaires"
+   ],
+   "recettes": [
+    "bauhaus-kinetic"
+   ],
+   "source": "out/report/notes/composition/inventaire.md",
+   "date": "2026-11-19",
+   "fichier": "out/mecaniques/puzzle-grille-morph/mecanique.json",
+   "pates": [
+    "bauhaus-primaires"
+   ]
+  },
+  {
+   "id": "simulation-deterministe",
+   "nom": "Simulation (billes, territoires)",
+   "niveau": "declare",
+   "description": "Physique pré-simulée et déterministe, mouvement quantifié à 4 px, mosaïque de pixels en transition, photo-finish.",
+   "separation": "MOYEN",
+   "moteur": {
+    "code": "simulations ring.js, course.js, conquest.js (dans les shorts)",
+    "env": "navigateur (p5 / Matter, pré-simulé)",
+    "audit": null
+   },
+   "signature": [
+    "real pre-simulated physics with photo finish",
+    "pixel-mosaic transition + chiptune blips on collisions"
+   ],
+   "requiert": null,
+   "formats": [
+    "narre-court"
+   ],
+   "habillagesTestes": [
+    "arcade-marine"
+   ],
+   "recettes": [
+    "pixel-arcade"
+   ],
+   "source": "out/report/notes/composition/inventaire.md",
+   "date": "2026-11-19",
+   "fichier": "out/mecaniques/simulation-deterministe/mecanique.json",
+   "pates": [
+    "arcade-marine"
+   ]
+  },
+  {
+   "id": "survol-terrain",
+   "nom": "Survol de relief",
+   "niveau": "declare",
+   "description": "Relief survolé par une caméra de drone (orbite, plongée) ; deux codes sans ligne commune (à mesurer : matrice.md M2).",
+   "separation": "MOYEN",
+   "moteur": {
+    "code": "src/topo.js (topo-relief, three.js) ; src/survol.py (survol-pixel, numpy)",
+    "env": "navigateur ou Python",
+    "audit": null
+   },
+   "signature": [
+    "drone fly-over camera",
+    "3D depth is the rule: perspective ground (Mode 7 style) at any pitch, terraced heightfield with lit / shaded risers, cast shadows, layered depth and a camera that keeps moving forward (one single camera per short)",
+    "cut-away section of the ground (ink base, coloured walls) as the on-ground diagram",
+    "dive / climb-back camera move in true perspective as the signature transition"
+   ],
+   "requiert": null,
+   "formats": [
+    "narre-court"
+   ],
+   "habillagesTestes": [
+    "pixel-jour",
+    "relief-vert"
+   ],
+   "recettes": [
+    "survol-pixel",
+    "topo-relief"
+   ],
+   "source": "out/report/notes/composition/inventaire.md",
+   "date": "2026-11-19",
+   "fichier": "out/mecaniques/survol-terrain/mecanique.json",
+   "pates": [
+    "pixel-jour",
+    "relief-vert"
+   ]
+  },
+  {
+   "id": "tourniquet-tampon",
+   "nom": "Journal qui tourne, tampon",
+   "niveau": "declare",
+   "description": "Page qui tourne (−540° → ±1,5°) et se pose, tampon, dépêche en machine à écrire, 128 bpm ; tremblement de projecteur dans post.py.",
+   "separation": "MOYEN",
+   "moteur": {
+    "code": "src/gazette.js + src/post.py (copiés)",
+    "env": "navigateur + passe OpenCV",
+    "audit": null
+   },
+   "signature": [
+    "broadsheet front page that spins in and lands",
+    "red rubber stamp"
+   ],
+   "requiert": null,
+   "formats": [
+    "narre-court"
+   ],
+   "habillagesTestes": [
+    "gazette-sepia"
+   ],
+   "recettes": [
+    "gazette-1900"
+   ],
+   "source": "out/report/notes/composition/inventaire.md",
+   "date": "2026-11-19",
+   "fichier": "out/mecaniques/tourniquet-tampon/mecanique.json",
+   "pates": [
+    "gazette-sepia"
+   ]
+  },
+  {
+   "id": "trace-chemin",
+   "nom": "Chemin qui se trace",
+   "niveau": "executable",
+   "description": "Mot entier posé sur le trait au moment où il est dit (encre fraîche qui sèche en 0,35 s, pré-pose sous 0,30 s/mot) ; caméra de dessus sans perspective qui suit la pointe (glissés, virages au temps, filés d'un temps avec flou de bougé) ; zoom arrière final unique qui révèle le dessin.",
+   "separation": "FACILE",
+   "moteur": {
+    "code": "out/shared/chemin-moteur/chemin.js",
+    "env": "navigateur (Canvas 2D, renderAt(t))",
+    "audit": "out/tools/chemin_audit.mjs"
+   },
+   "signature": [
+    "one long take: the camera follows the writing tip with glides, beat-timed hairpin turns and one-beat whip pans with real motion blur",
+    "the sung word alone in fresh yellow ink, drying to ivory; fast passages pre-posed in pencil and inked on the syllable",
+    "one-bar zoom-out on the chorus revealing the whole picture, chorus written large in the sea"
+   ],
+   "requiert": {
+    "palette": [
+     "fond",
+     "encre",
+     "vif",
+     "second"
+    ],
+    "typo": [
+     "titre"
+    ],
+    "crochets": [
+     "prepare",
+     "floor",
+     "sheet",
+     "objects",
+     "finish"
+    ],
+    "crochetsFacultatifs": [
+     "under",
+     "tip",
+     "afterInk",
+     "annotations",
+     "textErode",
+     "dryColor",
+     "route"
+    ],
+    "valeurs": [
+     "font",
+     "weight",
+     "wFinal",
+     "cap",
+     "gap",
+     "em",
+     "trackMax",
+     "floorPx",
+     "floorFast",
+     "maxPx",
+     "col.fresh",
+     "col.dry",
+     "col.stroke",
+     "col.annot"
+    ],
+    "projection": "plane",
+    "note": "les crochets lisent des champs du dessin (G.mat, G.boites, G.moule, G.route) : un habillage du chemin n'est compatible qu'avec un dessin dont il sait dessiner les primitives (inventaire.md § 3)"
+   },
+   "formats": [
+    "narre-court",
+    "narre-long",
+    "paroles-muet"
+   ],
+   "habillagesTestes": [
+    "craie/ardoise",
+    "craie/tableau-vert",
+    "editeur",
+    "grille-suisse",
+    "plan-bleu",
+    "portulan"
+   ],
+   "recettes": [
+    "chemin-ardoise",
+    "chemin-craie-verte",
+    "chemin-editeur",
+    "chemin-grille-suisse",
+    "chemin-portulan",
+    "lyrics-chemin"
+   ],
+   "source": "out/report/notes/composition/inventaire.md",
+   "date": "2026-11-19",
+   "fichier": "out/mecaniques/trace-chemin/mecanique.json",
+   "pates": [
+    "craie/ardoise",
+    "craie/tableau-vert",
+    "editeur",
+    "grille-suisse",
+    "plan-bleu",
+    "portulan"
+   ]
+  },
+  {
+   "id": "traceur-escalier-plaque",
+   "nom": "Traceur sur plaque",
+   "niveau": "declare",
+   "description": "Un trait continu en escalier jamais levé, à vitesse constante, règles et curseurs, avance de plaque par pas : le traceur est le mouvement.",
+   "separation": "DIFFICILE",
+   "moteur": {
+    "code": "src/traceur.py (copié)",
+    "env": "Python (shapely, pycairo)",
+    "audit": null
+   },
+   "signature": [
+    "one continuous graphite stair-stepped line at constant speed, never lifted",
+    "two rulers with sliding cursors and a carriage at the pen tip",
+    "plate-advance transition in steps"
+   ],
+   "requiert": null,
+   "formats": [
+    "narre-court"
+   ],
+   "habillagesTestes": [
+    "orange-graphite"
+   ],
+   "recettes": [
+    "trait-continu"
+   ],
+   "source": "out/report/notes/composition/inventaire.md",
+   "date": "2026-11-19",
+   "fichier": "out/mecaniques/traceur-escalier-plaque/mecanique.json",
+   "pates": [
+    "orange-graphite"
+   ]
+  },
+  {
+   "id": "travelling-cine-3d",
+   "nom": "Travelling de cinéma 3D",
+   "niveau": "declare",
+   "description": "Dolly lent, easing sinus unique, interlettrage qui se resserre, noir de 0,6 s entre plans.",
+   "separation": "MOYEN",
+   "moteur": {
+    "code": "src/cosmos.js (copié)",
+    "env": "navigateur (three.js + bloom + grain)",
+    "audit": null
+   },
+   "signature": [
+    "single slow sine easing, slow dolly"
+   ],
+   "requiert": null,
+   "formats": [
+    "narre-court"
+   ],
+   "habillagesTestes": [
+    "cosmos-noir"
+   ],
+   "recettes": [
+    "cosmos-doc"
+   ],
+   "source": "out/report/notes/composition/inventaire.md",
+   "date": "2026-11-19",
+   "fichier": "out/mecaniques/travelling-cine-3d/mecanique.json",
+   "pates": [
+    "cosmos-noir"
+   ]
+  }
+ ],
+ "formats": [
+  {
+   "id": "boucle",
+   "nom": "Boucle",
+   "resume": "10–20 s, dernière image = première",
+   "dureeSec": [
+    10,
+    20
+   ],
+   "audio": "voix off ou musique",
+   "regles": [
+    "dernière image = première (short.json \"loopable\": true)"
+   ],
+   "canevas": {
+    "w": 1080,
+    "h": 1920,
+    "fps": 30,
+    "codec": "H.264",
+    "pixFmt": "yuv420p"
+   },
+   "zonesSuresPx": {
+    "top": 220,
+    "bottom": 320,
+    "right": 120,
+    "left": [
+     60,
+     72
+    ]
+   },
+   "corpsMinPx": 54,
+   "titreMinPx": 90,
+   "contrasteTexteMin": 4.5,
+   "controleAujourdhui": "check.py : 10–20 s ; loopable non contrôlé",
+   "niveau": "declare",
+   "date": "2026-11-19",
+   "fichier": "out/formats/boucle.json"
+  },
+  {
+   "id": "narre-court",
+   "nom": "Narré court",
+   "resume": "10–20 s, voix off",
+   "dureeSec": [
+    10,
+    20
+   ],
+   "audio": "voix off mixée",
+   "regles": [
+    "accroche visible en moins de 1 s",
+    "débit ≤ 3,2 mots/s"
+   ],
+   "canevas": {
+    "w": 1080,
+    "h": 1920,
+    "fps": 30,
+    "codec": "H.264",
+    "pixFmt": "yuv420p"
+   },
+   "zonesSuresPx": {
+    "top": 220,
+    "bottom": 320,
+    "right": 120,
+    "left": [
+     60,
+     72
+    ]
+   },
+   "corpsMinPx": 54,
+   "titreMinPx": 90,
+   "contrasteTexteMin": 4.5,
+   "controleAujourdhui": "check.py : 10–20 s (règle actuelle)",
+   "niveau": "declare",
+   "date": "2026-11-19",
+   "fichier": "out/formats/narre-court.json"
+  },
+  {
+   "id": "narre-long",
+   "nom": "Narré long",
+   "resume": "20–60 s, voix off",
+   "dureeSec": [
+    20,
+    60
+   ],
+   "audio": "voix off mixée",
+   "regles": [
+    "accroche visible en moins de 1 s",
+    "remplace \"longForm\": true de short.json (lu par check.py)"
+   ],
+   "canevas": {
+    "w": 1080,
+    "h": 1920,
+    "fps": 30,
+    "codec": "H.264",
+    "pixFmt": "yuv420p"
+   },
+   "zonesSuresPx": {
+    "top": 220,
+    "bottom": 320,
+    "right": 120,
+    "left": [
+     60,
+     72
+    ]
+   },
+   "corpsMinPx": 54,
+   "titreMinPx": 90,
+   "contrasteTexteMin": 4.5,
+   "controleAujourdhui": "check.py : jusqu'à 60 s si short.json déclare \"longForm\": true",
+   "niveau": "declare",
+   "date": "2026-11-19",
+   "fichier": "out/formats/narre-long.json"
+  },
+  {
+   "id": "paroles-muet",
+   "nom": "Paroles, muet",
+   "resume": "10–60 s, muet, chanson ajoutée à la publication",
+   "dureeSec": [
+    10,
+    60
+   ],
+   "audio": "piste silencieuse (ou lit très bas) : la chanson est ajoutée dans l'application à la publication",
+   "regles": [
+    "paroles jamais traduites",
+    "vraies paroles et audio de la chanson hors dépôt (paroles de remplissage dans le dépôt)"
+   ],
+   "canevas": {
+    "w": 1080,
+    "h": 1920,
+    "fps": 30,
+    "codec": "H.264",
+    "pixFmt": "yuv420p"
+   },
+   "zonesSuresPx": {
+    "top": 220,
+    "bottom": 320,
+    "right": 120,
+    "left": [
+     60,
+     72
+    ]
+   },
+   "corpsMinPx": 54,
+   "titreMinPx": 90,
+   "contrasteTexteMin": 4.5,
+   "controleAujourdhui": "check.py : jusqu'à 60 s pour la famille « paroles »",
+   "niveau": "declare",
+   "date": "2026-11-19",
+   "fichier": "out/formats/paroles-muet.json"
+  }
+ ],
+ "recettes": [
+  {
+   "id": "aquarelle-conte",
+   "nom": "Aquarelle Conte",
+   "habillage": "aquarelle",
+   "mecanique": "lavis-multiplan",
+   "formats": [
+    "narre-court"
+   ],
+   "son": null,
+   "statut": "validee",
+   "signaturePortee": {
+    "habillage": [
+     "watercolour washes on cream paper",
+     "Fraunces storybook titles on a bottom album page"
+    ],
+    "mecanique": [
+     "multiplane parallax",
+     "gentle storyteller pacing and fades"
+    ],
+    "autres": []
+   },
+   "dossier": "out/identities/aquarelle-conte/",
+   "identite": "aquarelle-conte",
+   "shorts": [
+    "out/shorts/aquarelle-conte__enfants__ou-vont-les-etoiles-le-jour",
+    "out/shorts/aquarelle-conte__histoire__phare-d-alexandrie"
+   ],
+   "confusableWith": [
+    "pastel-diorama"
+   ],
+   "separation": "MOYEN",
+   "date": "2026-11-19",
+   "fichier": "out/recettes/aquarelle-conte.json",
+   "pate": "aquarelle",
+   "dansIdentities": true
+  },
+  {
+   "id": "atelier-papier",
+   "nom": "Atelier papier",
+   "habillage": "atelier-papier",
+   "mecanique": "pop-papier-12ips",
+   "formats": [
+    "narre-court"
+   ],
+   "son": null,
+   "statut": "validee",
+   "signaturePortee": {
+    "habillage": [
+     "midnight-blue graduated cutting mat",
+     "Dela Gothic One strips in cream / royal blue / coral",
+     "Kalam captions on cream strips"
+    ],
+    "mecanique": [
+     "stop-motion pop at 12 fps"
+    ],
+    "autres": []
+   },
+   "dossier": "out/identities/atelier-papier/",
+   "identite": "atelier-papier",
+   "shorts": [
+    "out/shorts/atelier-papier__explicatif__d-ou-vient-le-mot-sandwich",
+    "out/shorts/atelier-papier__histoire__la-fourchette-a-fait-scandale"
+   ],
+   "confusableWith": [],
+   "separation": "exécutable",
+   "date": "2026-11-19",
+   "fichier": "out/recettes/atelier-papier.json",
+   "pate": "atelier-papier",
+   "dansIdentities": true
+  },
+  {
+   "id": "atlas-grave",
+   "nom": "Atlas Gravé",
+   "habillage": "gravure-parchemin",
+   "mecanique": "carte-trace-panoramique",
+   "formats": [
+    "narre-court"
+   ],
+   "son": null,
+   "statut": "validee",
+   "signaturePortee": {
+    "habillage": [
+     "laid-paper parchment and engraved hand-drawn maps",
+     "Cormorant Garamond / Cinzel serif"
+    ],
+    "mecanique": [
+     "ink that draws itself",
+     "wax seals, compass rose, slow pans"
+    ],
+    "autres": []
+   },
+   "dossier": "out/identities/atlas-grave/",
+   "identite": "atlas-grave",
+   "shorts": [
+    "out/shorts/atlas-grave__geographie__plus-longs-fleuves-du-monde",
+    "out/shorts/atlas-grave__histoire__premier-tour-du-monde-1519-1522"
+   ],
+   "confusableWith": [
+    "lyrics-chemin",
+    "topo-relief"
+   ],
+   "separation": "MOYEN",
+   "date": "2026-11-19",
+   "fichier": "out/recettes/atlas-grave.json",
+   "pate": "gravure-parchemin",
+   "dansIdentities": true
+  },
+  {
+   "id": "bauhaus-kinetic",
+   "nom": "Bauhaus Cinétique",
+   "habillage": "bauhaus-primaires",
+   "mecanique": "puzzle-grille-morph",
+   "formats": [
+    "narre-court"
+   ],
+   "son": null,
+   "statut": "validee",
+   "signaturePortee": {
+    "habillage": [
+     "cream ground with red / yellow / blue / black primary shapes",
+     "Unbounded 800 headlines"
+    ],
+    "mecanique": [
+     "grid staggers and shape morphs (flubber)",
+     "grid-wipe transition"
+    ],
+    "autres": []
+   },
+   "dossier": "out/identities/bauhaus-kinetic/",
+   "identite": "bauhaus-kinetic",
+   "shorts": [
+    "out/shorts/bauhaus-kinetic__engagement__trouve-l-intrus",
+    "out/shorts/bauhaus-kinetic__explicatif__abeilles-hexagones"
+   ],
+   "confusableWith": [
+    "swiss-data"
+   ],
+   "separation": "MOYEN",
+   "date": "2026-11-19",
+   "fichier": "out/recettes/bauhaus-kinetic.json",
+   "pate": "bauhaus-primaires",
+   "dansIdentities": true
+  },
+  {
+   "id": "brut-meme",
+   "nom": "Brut Mème",
+   "habillage": "brut-jaune",
+   "mecanique": "punch-cut-slam",
+   "formats": [
+    "narre-court"
+   ],
+   "son": null,
+   "statut": "validee",
+   "signaturePortee": {
+    "habillage": [
+     "black / #FFE600 yellow / red only",
+     "round stickers and hazard-stripe progress bar"
+    ],
+    "mecanique": [
+     "Anton auto-fitted to fill the frame",
+     "hard cuts on the beat with 3-frame punch-in",
+     "photosensitivity rule: <= 3 flashes/s, no full-frame flash"
+    ],
+    "autres": []
+   },
+   "dossier": "out/identities/brut-meme/",
+   "identite": "brut-meme",
+   "shorts": [
+    "out/shorts/brut-meme__engagement__test-des-3-secondes-stroop",
+    "out/shorts/brut-meme__evenements__pendant-ces-15-secondes-dans-le-monde"
+   ],
+   "confusableWith": [
+    "lyrics-punchy"
+   ],
+   "separation": "FACILE",
+   "date": "2026-11-19",
+   "fichier": "out/recettes/brut-meme.json",
+   "pate": "brut-jaune",
+   "dansIdentities": true
+  },
+  {
+   "id": "cabinet-curiosites",
+   "nom": "Cabinet de curiosités",
+   "habillage": "cabinet-curiosites",
+   "mecanique": "pop-papier-12ips",
+   "formats": [
+    "narre-court"
+   ],
+   "son": null,
+   "statut": "validee",
+   "signaturePortee": {
+    "habillage": [
+     "plain vignetted midnight-blue ground",
+     "DM Serif Display titles on cream / teal / burgundy strips",
+     "DM Serif Display italic captions",
+     "gold accent for notes"
+    ],
+    "mecanique": [],
+    "autres": []
+   },
+   "dossier": "out/identities/cabinet-curiosites/",
+   "identite": "cabinet-curiosites",
+   "shorts": [
+    "out/shorts/cabinet-curiosites__explicatif__d-ou-vient-le-mot-sandwich",
+    "out/shorts/cabinet-curiosites__histoire__la-fourchette-a-fait-scandale"
+   ],
+   "confusableWith": [
+    "cosmos-doc"
+   ],
+   "separation": "exécutable",
+   "date": "2026-11-19",
+   "fichier": "out/recettes/cabinet-curiosites.json",
+   "pate": "cabinet-curiosites",
+   "dansIdentities": true
+  },
+  {
+   "id": "carnet-archives",
+   "nom": "Carnet d'archives",
+   "habillage": "carnet-archives",
+   "mecanique": "pop-papier-12ips",
+   "formats": [
+    "narre-court"
+   ],
+   "son": null,
+   "statut": "validee",
+   "signaturePortee": {
+    "habillage": [
+     "fibrous brown kraft ground, no grid",
+     "Abril Fatface titles on cream / ink-blue / stamp-red strips",
+     "Special Elite typewriter captions and notes",
+     "sepia palette with stamp red and ochre"
+    ],
+    "mecanique": [],
+    "autres": []
+   },
+   "dossier": "out/identities/carnet-archives/",
+   "identite": "carnet-archives",
+   "shorts": [
+    "out/shorts/carnet-archives__explicatif__d-ou-vient-le-mot-sandwich",
+    "out/shorts/carnet-archives__histoire__la-fourchette-a-fait-scandale"
+   ],
+   "confusableWith": [
+    "gazette-1900"
+   ],
+   "separation": "exécutable",
+   "date": "2026-11-19",
+   "fichier": "out/recettes/carnet-archives.json",
+   "pate": "carnet-archives",
+   "dansIdentities": true
+  },
+  {
+   "id": "carte-meteo",
+   "nom": "Carte Météo",
+   "habillage": "meteo-clair",
+   "mecanique": "carte-champs-front",
+   "formats": [
+    "narre-court"
+   ],
+   "son": null,
+   "statut": "validee",
+   "signaturePortee": {
+    "habillage": [
+     "pale sky-blue sea and tender green land with coastline and breathing isobars",
+     "temperature pills on white cartouches, Atkinson Hyperlegible + Space Grotesk titles",
+     "text only on white cartouches"
+    ],
+    "mecanique": [
+     "dark wind trails when wind is the subject (proven by the mistral short only)",
+     "diagonal cold-front (blue triangles) / warm-front sweep as the only transition",
+     "map always visible, no tables or bars"
+    ],
+    "autres": []
+   },
+   "dossier": "out/identities/carte-meteo/",
+   "identite": "carte-meteo",
+   "shorts": [
+    "out/shorts/carte-meteo__evenements__28-juin-2019-46-degres-record-de-chaleur",
+    "out/shorts/carte-meteo__geographie__le-mistral-pourquoi-il-souffle-si-fort"
+   ],
+   "confusableWith": [
+    "swiss-data"
+   ],
+   "separation": "MOYEN",
+   "date": "2026-11-19",
+   "fichier": "out/recettes/carte-meteo.json",
+   "pate": "meteo-clair",
+   "dansIdentities": true
+  },
+  {
+   "id": "chemin-ardoise",
+   "nom": "Chemin ardoise",
+   "habillage": "craie",
+   "variante": "ardoise",
+   "habillageAvant": "ardoise",
+   "mecanique": "trace-chemin",
+   "formats": [
+    "narre-long"
+   ],
+   "son": null,
+   "statut": "validee",
+   "signaturePortee": {
+    "habillage": [],
+    "mecanique": [
+     "one long take: the camera follows the writing tip with glides, beat-timed hairpin turns and one-beat whip pans with real motion blur",
+     "the sung word alone in fresh yellow ink, drying to ivory; fast passages pre-posed in pencil and inked on the syllable",
+     "one-bar zoom-out on the chorus revealing the whole picture, chorus written large in the sea"
+    ],
+    "autres": []
+   },
+   "dossier": "out/identities/lyrics-chemin/",
+   "identite": "lyrics-chemin",
+   "shorts": [
+    "out/shorts/lyrics-chemin__explicatif__le-quatre-quarts"
+   ],
+   "confusableWith": [
+    "atlas-grave",
+    "topo-relief"
+   ],
+   "separation": "exécutable",
+   "date": "2026-11-19",
+   "fichier": "out/recettes/chemin-ardoise.json",
+   "pate": "craie/ardoise",
+   "dansIdentities": false
+  },
+  {
+   "id": "chemin-craie-verte",
+   "nom": "Chemin craie verte",
+   "habillage": "craie",
+   "variante": "tableau-vert",
+   "habillageAvant": "craie-verte",
+   "mecanique": "trace-chemin",
+   "formats": [
+    "narre-long"
+   ],
+   "son": null,
+   "statut": "essai",
+   "essai": "C1",
+   "case": "C1",
+   "question": "la pâte de tableau-craie (tableau vert, craies de couleur, écriture Caveat, rebord en bois) peut-elle habiller le chemin, et se distingue-t-elle de l'ardoise ?",
+   "shorts": [
+    "out/shorts/chemin-craie-verte__explicatif__le-quatre-quarts"
+   ],
+   "adaptateur": "out/shared/chemin-moteur/habillages/craie-verte.js",
+   "date": "2026-11-19",
+   "planche": "out/report/notes/composition/essais/C1-planche.jpg",
+   "comparaison": "out/report/notes/composition/essais/C1-comparaison.jpg",
+   "posterT": 24.5,
+   "fichier": "out/recettes/chemin-craie-verte.json",
+   "pate": "craie/tableau-vert",
+   "dansIdentities": false,
+   "verdict": {
+    "cle": "distinct-mais-cousin",
+    "titre": "Reconnaissable, distinct de l'ardoise, mais de la même famille"
    }
+  },
+  {
+   "id": "chemin-editeur",
+   "nom": "Chemin éditeur",
+   "habillage": "editeur",
+   "mecanique": "trace-chemin",
+   "formats": [
+    "paroles-muet"
+   ],
+   "son": null,
+   "statut": "validee",
+   "signaturePortee": {
+    "habillage": [],
+    "mecanique": [
+     "one long take: the camera follows the writing tip with glides, beat-timed hairpin turns and one-beat whip pans with real motion blur",
+     "the sung word alone in fresh yellow ink, drying to ivory; fast passages pre-posed in pencil and inked on the syllable",
+     "one-bar zoom-out on the chorus revealing the whole picture, chorus written large in the sea"
+    ],
+    "autres": []
+   },
+   "dossier": "out/identities/lyrics-chemin/",
+   "identite": "lyrics-chemin",
+   "shorts": [
+    "out/shorts/lyrics-chemin__paroles__claudes-plan-tech"
+   ],
+   "confusableWith": [
+    "atlas-grave",
+    "topo-relief"
+   ],
+   "separation": "exécutable",
+   "date": "2026-11-19",
+   "fichier": "out/recettes/chemin-editeur.json",
+   "pate": "editeur",
+   "dansIdentities": false
+  },
+  {
+   "id": "chemin-grille-suisse",
+   "nom": "Données qui se tracent",
+   "habillage": "grille-suisse",
+   "mecanique": "trace-chemin",
+   "formats": [
+    "narre-court"
+   ],
+   "son": null,
+   "statut": "validee",
+   "case": "C2",
+   "origine": "essai C2 de la composition (19/11/2026, matrice.md), adopté comme recette de chaîne par Hamdi le 20/11/2026 (option 124)",
+   "pourQuoi": "un chiffre ou une comparaison de données : chaque chiffre s'écrit au-dessus de sa barre au moment où il est dit, la caméra suit l'écriture en un plan, puis recule pour montrer que la page entière était un graphique à une seule échelle",
+   "signaturePortee": {
+    "habillage": [
+     "visible 12-column grid on warm off-white",
+     "palette limited to red / black / blue",
+     "Archivo Black figures, Inter 800 section rules (« 01 · MONDE » / source)"
+    ],
+    "mecanique": [
+     "one long take: the camera follows the writing tip",
+     "each figure written above its bar while the bar fills, all bars at one scale",
+     "final zoom-out revealing the whole page as one chart"
+    ],
+    "autres": [
+     "opening frame = one giant red figure (the number that hits)"
+    ]
+   },
+   "regles": [
+    "1re image : un seul chiffre rouge géant en gros plan (le chiffre qui claque), pas une page vide",
+    "une seule échelle pour toutes les barres, écrite à l'image (ex. « 100 % = 8 Md ») et vraie : la part de piste remplie = le pourcentage dit",
+    "rouge réservé au mot dit et à ce qui compte ; le chiffre d'ouverture reste rouge (dryColor)"
+   ],
+   "shorts": [
+    "out/shorts/chemin-grille-suisse__geographie__ou-vivent-8-milliards"
+   ],
+   "adaptateur": "out/shared/chemin-moteur/habillages/grille-suisse.js",
+   "dessin": "out/shared/chemin-moteur/dessins/barres-humains.json",
+   "corrections": [
+    {
+     "date": "2026-11-20",
+     "texte": "ouverture en gros plan sur un « 8 » rouge géant ; « 1 carré = 100 millions » remplacé par « 100 % = 8 Md » (piste entière = 8 milliards) et la réplique de voix correspondante retirée ; 15 s -> 13,8 s"
+    }
+   ],
+   "date": "2026-11-19",
+   "dateAdoption": "2026-11-20",
+   "planche": "out/report/notes/composition/essais/C2-planche-2026-11-20.jpg",
+   "plancheAvant": "out/report/notes/composition/essais/C2-planche.jpg",
+   "comparaison": "out/report/notes/composition/essais/C2-comparaison.jpg",
+   "posterT": 0.0,
+   "fichier": "out/recettes/chemin-grille-suisse.json",
+   "pate": "grille-suisse",
+   "dansIdentities": false,
+   "verdict": {
+    "cle": "adoptee",
+    "titre": "Recette adoptée : Grille Suisse reste reconnaissable sur un autre mouvement"
+   }
+  },
+  {
+   "id": "chemin-portulan",
+   "nom": "Chemin portulan",
+   "habillage": "portulan",
+   "mecanique": "trace-chemin",
+   "formats": [
+    "narre-long"
+   ],
+   "son": null,
+   "statut": "validee",
+   "signaturePortee": {
+    "habillage": [],
+    "mecanique": [
+     "one long take: the camera follows the writing tip with glides, beat-timed hairpin turns and one-beat whip pans with real motion blur",
+     "the sung word alone in fresh yellow ink, drying to ivory; fast passages pre-posed in pencil and inked on the syllable",
+     "one-bar zoom-out on the chorus revealing the whole picture, chorus written large in the sea"
+    ],
+    "autres": []
+   },
+   "dossier": "out/identities/lyrics-chemin/",
+   "identite": "lyrics-chemin",
+   "shorts": [
+    "out/shorts/lyrics-chemin__histoire__le-premier-tour-du-monde"
+   ],
+   "confusableWith": [
+    "atlas-grave",
+    "topo-relief"
+   ],
+   "separation": "exécutable",
+   "date": "2026-11-19",
+   "fichier": "out/recettes/chemin-portulan.json",
+   "pate": "portulan",
+   "dansIdentities": false
+  },
+  {
+   "id": "cosmos-doc",
+   "nom": "Cosmos Doc",
+   "habillage": "cosmos-noir",
+   "mecanique": "travelling-cine-3d",
+   "formats": [
+    "narre-court"
+   ],
+   "son": null,
+   "statut": "validee",
+   "signaturePortee": {
+    "habillage": [
+     "true black space with warm starlight and anamorphic lens flare",
+     "Bebas Neue capitals with tracking that tightens",
+     "film grain, no HUD or neon lines"
+    ],
+    "mecanique": [
+     "single slow sine easing, slow dolly"
+    ],
+    "autres": []
+   },
+   "dossier": "out/identities/cosmos-doc/",
+   "identite": "cosmos-doc",
+   "shorts": [
+    "out/shorts/cosmos-doc__evenements__voyager-1-a-un-jour-lumiere",
+    "out/shorts/cosmos-doc__explicatif__pourquoi-venus-plus-chaude-que-mercure"
+   ],
+   "confusableWith": [
+    "cabinet-curiosites",
+    "liquid-chrome",
+    "neon-lab"
+   ],
+   "separation": "MOYEN",
+   "date": "2026-11-19",
+   "fichier": "out/recettes/cosmos-doc.json",
+   "pate": "cosmos-noir",
+   "dansIdentities": true
+  },
+  {
+   "id": "gazette-1900",
+   "nom": "Gazette 1900",
+   "habillage": "gazette-sepia",
+   "mecanique": "tourniquet-tampon",
+   "formats": [
+    "narre-court"
+   ],
+   "son": null,
+   "statut": "validee",
+   "signaturePortee": {
+    "habillage": [
+     "Playfair Display 900 headline + typewriter dispatch in IBM Plex Mono",
+     "sepia + film-grain OpenCV pass"
+    ],
+    "mecanique": [
+     "broadsheet front page that spins in and lands",
+     "red rubber stamp"
+    ],
+    "autres": []
+   },
+   "dossier": "out/identities/gazette-1900/",
+   "identite": "gazette-1900",
+   "shorts": [
+    "out/shorts/gazette-1900__evenements__9-novembre-1989-mur-de-berlin",
+    "out/shorts/gazette-1900__histoire__1789-en-20-secondes"
+   ],
+   "confusableWith": [
+    "carnet-archives"
+   ],
+   "separation": "MOYEN",
+   "date": "2026-11-19",
+   "fichier": "out/recettes/gazette-1900.json",
+   "pate": "gazette-sepia",
+   "dansIdentities": true
+  },
+  {
+   "id": "liquid-chrome",
+   "nom": "Chrome Liquide",
+   "habillage": "chrome-irise",
+   "mecanique": "plan-sequence-matiere",
+   "formats": [
+    "boucle",
+    "narre-court"
+   ],
+   "son": null,
+   "statut": "validee",
+   "signaturePortee": {
+    "habillage": [
+     "chrome / iridescent liquid matter in one continuous macro shot",
+     "Syne 800 titles with a pastel-gradient keyword",
+     "prefer the warm graphite/pearl background to stay distinct from neon-lab and cosmos-doc"
+    ],
+    "mecanique": [
+     "slow motion, no cuts"
+    ],
+    "autres": []
+   },
+   "dossier": "out/identities/liquid-chrome/",
+   "identite": "liquid-chrome",
+   "shorts": [
+    "out/shorts/liquid-chrome__abstrait__pendule-de-newton-chrome",
+    "out/shorts/liquid-chrome__abstrait__quatre-peintures-mpm",
+    "out/shorts/liquid-chrome__engagement__quelle-couleur-remplit-le-verre"
+   ],
+   "confusableWith": [
+    "cosmos-doc",
+    "neon-lab"
+   ],
+   "separation": "DIFFICILE",
+   "date": "2026-11-19",
+   "fichier": "out/recettes/liquid-chrome.json",
+   "pate": "chrome-irise",
+   "dansIdentities": true
+  },
+  {
+   "id": "lyrics-chemin",
+   "nom": "Lyrics chemin",
+   "habillage": "plan-bleu",
+   "mecanique": "trace-chemin",
+   "formats": [
+    "paroles-muet"
+   ],
+   "son": null,
+   "statut": "validee",
+   "signaturePortee": {
+    "habillage": [
+     "blueprint-blue folded sheet taped on a warm concrete floor, seen straight from above (no perspective)",
+     "Barlow Condensed capitals set rigidly along the strokes of a drawing; red-pencil cross, flag and correction loop"
+    ],
+    "mecanique": [
+     "one long take: the camera follows the writing tip with glides, beat-timed hairpin turns and one-beat whip pans with real motion blur",
+     "the sung word alone in fresh yellow ink, drying to ivory; fast passages pre-posed in pencil and inked on the syllable",
+     "one-bar zoom-out on the chorus revealing the whole picture, chorus written large in the sea"
+    ],
+    "autres": []
+   },
+   "dossier": "out/identities/lyrics-chemin/",
+   "identite": "lyrics-chemin",
+   "shorts": [
+    "out/shorts/lyrics-chemin__paroles__claudes-plan"
+   ],
+   "confusableWith": [
+    "atlas-grave",
+    "topo-relief"
+   ],
+   "separation": "exécutable",
+   "date": "2026-11-19",
+   "fichier": "out/recettes/lyrics-chemin.json",
+   "pate": "plan-bleu",
+   "dansIdentities": true
+  },
+  {
+   "id": "lyrics-punchy",
+   "nom": "Lyrics punchy",
+   "habillage": "punchy",
+   "mecanique": "colonne-mot-a-mot",
+   "formats": [
+    "paroles-muet"
+   ],
+   "son": null,
+   "statut": "validee",
+   "signaturePortee": {
+    "habillage": [
+     "a wall of past lines stacked above the current one in 3 tints of the background hue (nuit / lagon / braise)",
+     "tilted accent-coloured square card (±4°) with a 3-colour SVG pictogram, one per line at most"
+    ],
+    "mecanique": [
+     "column justified by the width axis of the variable font Anybody (wdth 50–150), every row exactly 876 px wide",
+     "chute-de-pile: the stack falls out of frame while the ground changes tint at each song section",
+     "never black, no gradient, no camera zoom; the song is added in the app (video rendered muted)"
+    ],
+    "autres": []
+   },
+   "dossier": "out/identities/lyrics-punchy/",
+   "identite": "lyrics-punchy",
+   "shorts": [
+    "out/shorts/lyrics-punchy__paroles__claudes-plan"
+   ],
+   "confusableWith": [
+    "brut-meme"
+   ],
+   "separation": "MOYEN",
+   "date": "2026-11-19",
+   "fichier": "out/recettes/lyrics-punchy.json",
+   "pate": "punchy",
+   "dansIdentities": true
+  },
+  {
+   "id": "neon-lab",
+   "nom": "Labo Néon",
+   "habillage": "neon-labo",
+   "mecanique": "orbite-phenomene-neon",
+   "formats": [
+    "boucle",
+    "narre-court"
+   ],
+   "son": null,
+   "statut": "validee",
+   "signaturePortee": {
+    "habillage": [
+     "near-black lab with cyan / magenta / lime neon",
+     "GLSL force-field background",
+     "LABO/0X tag + JetBrains Mono data captions"
+    ],
+    "mecanique": [
+     "bloom pulses on beat changes"
+    ],
+    "autres": []
+   },
+   "dossier": "out/identities/neon-lab/",
+   "identite": "neon-lab",
+   "shorts": [
+    "out/shorts/neon-lab__abstrait__champ-de-force-lucioles",
+    "out/shorts/neon-lab__explicatif__effet-papillon-double-pendule",
+    "out/shorts/neon-lab__explicatif__lune-meme-face"
+   ],
+   "confusableWith": [
+    "cosmos-doc",
+    "liquid-chrome"
+   ],
+   "separation": "DIFFICILE",
+   "date": "2026-11-19",
+   "fichier": "out/recettes/neon-lab.json",
+   "pate": "neon-labo",
+   "dansIdentities": true
+  },
+  {
+   "id": "papier-decoupe",
+   "nom": "Papier découpé",
+   "habillage": "papier-decoupe",
+   "mecanique": "pop-papier-12ips",
+   "formats": [
+    "narre-court"
+   ],
+   "son": null,
+   "statut": "validee",
+   "signaturePortee": {
+    "habillage": [
+     "green graduated cutting mat",
+     "Dela Gothic One titles on alternately tilted paper strips",
+     "burned-in Kalam captions on a paper strip"
+    ],
+    "mecanique": [
+     "pieces pop in 4 steps at 12 fps with drop shadow and scissor-cut edges"
+    ],
+    "autres": []
+   },
+   "dossier": "out/identities/papier-decoupe/",
+   "identite": "papier-decoupe",
+   "shorts": [
+    "out/shorts/papier-decoupe__explicatif__d-ou-vient-le-mot-sandwich",
+    "out/shorts/papier-decoupe__histoire__la-fourchette-a-fait-scandale"
+   ],
+   "confusableWith": [],
+   "separation": "exécutable",
+   "date": "2026-11-19",
+   "fichier": "out/recettes/papier-decoupe.json",
+   "pate": "papier-decoupe",
+   "dansIdentities": true
+  },
+  {
+   "id": "papier-plan-bleu",
+   "nom": "Papier plan bleu",
+   "habillage": "plan-bleu",
+   "mecanique": "pop-papier-12ips",
+   "formats": [
+    "narre-court"
+   ],
+   "son": null,
+   "statut": "abandonnee",
+   "essai": "C4",
+   "question": "un habillage du moteur JS (plan-bleu) passe-t-il dans le moteur papier Python par un simple thème ?",
+   "shorts": [
+    "out/shorts/papier-plan-bleu__explicatif__d-ou-vient-le-mot-sandwich"
+   ],
+   "adaptateur": "out/shorts/papier-plan-bleu__explicatif__d-ou-vient-le-mot-sandwich/src/plan-bleu.json + tapis_plan() dans src/video.py",
+   "date": "2026-11-19",
+   "planche": "out/report/notes/composition/essais/C4-planche.jpg",
+   "comparaison": "out/report/notes/composition/essais/C4-comparaison.jpg",
+   "posterT": 8.6,
+   "case": "C4",
+   "abandon": {
+    "date": "2026-11-20",
+    "decision": "Hamdi, option 124",
+    "raison": "presque un doublon d'Atelier papier : dans le moteur papier, la mécanique porte la signature et le plan bleu ne change que le fond ; pas une recette de chaîne. Le short est gardé comme exemple."
+   },
+   "fichier": "out/recettes/papier-plan-bleu.json",
+   "pate": "plan-bleu",
+   "dansIdentities": false,
+   "verdict": {
+    "cle": "abandonne",
+    "titre": "Abandonné : on voit surtout du papier découpé sur fond bleu"
+   }
+  },
+  {
+   "id": "pastel-diorama",
+   "nom": "Diorama Pastel",
+   "habillage": "diorama-pastel",
+   "mecanique": "maquette-rebond",
+   "formats": [
+    "narre-court"
+   ],
+   "son": null,
+   "statut": "validee",
+   "signaturePortee": {
+    "habillage": [
+     "pink pastel toy diorama on a felt base",
+     "soft rounded toys and invented recurring characters",
+     "Baloo 2 titles and pill labels"
+    ],
+    "mecanique": [
+     "bouncy back.out motion"
+    ],
+    "autres": []
+   },
+   "dossier": "out/identities/pastel-diorama/",
+   "identite": "pastel-diorama",
+   "shorts": [
+    "out/shorts/pastel-diorama__enfants__d-ou-vient-la-pluie",
+    "out/shorts/pastel-diorama__engagement__choisis-ta-boite-renard"
+   ],
+   "confusableWith": [
+    "aquarelle-conte"
+   ],
+   "separation": "DIFFICILE",
+   "date": "2026-11-19",
+   "fichier": "out/recettes/pastel-diorama.json",
+   "pate": "diorama-pastel",
+   "dansIdentities": true
+  },
+  {
+   "id": "pixel-arcade",
+   "nom": "Arcade Pixel",
+   "habillage": "arcade-marine",
+   "mecanique": "simulation-deterministe",
+   "formats": [
+    "narre-court"
+   ],
+   "son": null,
+   "statut": "validee",
+   "signaturePortee": {
+    "habillage": [
+     "dark navy pixel playfield, motion quantised to 4 px",
+     "Press Start 2P HUD (score, time)"
+    ],
+    "mecanique": [
+     "real pre-simulated physics with photo finish",
+     "pixel-mosaic transition + chiptune blips on collisions"
+    ],
+    "autres": []
+   },
+   "dossier": "out/identities/pixel-arcade/",
+   "identite": "pixel-arcade",
+   "shorts": [
+    "out/shorts/pixel-arcade__abstrait__la-balle-peut-elle-s-echapper",
+    "out/shorts/pixel-arcade__engagement__quelle-bille-gagne-la-course",
+    "out/shorts/pixel-arcade__engagement__quelle-couleur-conquiert-l-ecran"
+   ],
+   "confusableWith": [
+    "survol-pixel"
+   ],
+   "separation": "MOYEN",
+   "date": "2026-11-19",
+   "fichier": "out/recettes/pixel-arcade.json",
+   "pate": "arcade-marine",
+   "dansIdentities": true
+  },
+  {
+   "id": "riso-zine",
+   "nom": "Zine Riso",
+   "habillage": "riso-3-encres",
+   "mecanique": "impression-on-twos",
+   "formats": [
+    "narre-court"
+   ],
+   "son": null,
+   "statut": "validee",
+   "signaturePortee": {
+    "habillage": [
+     "cream paper with 2–3 overprinted spot inks (fluo pink, blue, yellow)",
+     "misregistration + halftone dots",
+     "Space Mono + Permanent Marker annotations"
+    ],
+    "mecanique": [
+     "stepped 12 fps motion, collage cut-outs"
+    ],
+    "autres": []
+   },
+   "dossier": "out/identities/riso-zine/",
+   "identite": "riso-zine",
+   "shorts": [
+    "out/shorts/riso-zine__evenements__geminides-j-39",
+    "out/shorts/riso-zine__geographie__5-plus-grands-deserts"
+   ],
+   "confusableWith": [],
+   "separation": "MOYEN",
+   "date": "2026-11-19",
+   "fichier": "out/recettes/riso-zine.json",
+   "pate": "riso-3-encres",
+   "dansIdentities": true
+  },
+  {
+   "id": "survol-pixel",
+   "nom": "Survol pixel",
+   "habillage": "pixel-jour",
+   "mecanique": "survol-terrain",
+   "formats": [
+    "narre-court"
+   ],
+   "son": null,
+   "statut": "validee",
+   "signaturePortee": {
+    "habillage": [
+     "indexed palette with quantised shade tables and a 6-step haze towards a very pale blue (#DCEEF5), rendered at 270x480 and scaled x4 nearest-neighbour",
+     "Jersey 15 cartouches on cream with ink border (hook, dates, narrative; one at a time since the A+B+C pass; Jersey 20 reserved), Jersey 10 mentions only; never text on the map or sky"
+    ],
+    "mecanique": [
+     "3D depth is the rule: perspective ground (Mode 7 style) at any pitch, terraced heightfield with lit / shaded risers, cast shadows, layered depth and a camera that keeps moving forward (one single camera per short)",
+     "cut-away section of the ground (ink base, coloured walls) as the on-ground diagram",
+     "dive / climb-back camera move in true perspective as the signature transition"
+    ],
+    "autres": [
+     "form, not content: a pixel-art look for explainers, kids, history and narrated shorts, not a video-game or flight theme (no score, no game element; HUD and cockpit optional and absent from the proofs)",
+     "no phosphor plate (pixel-arcade) and no \"ALT ... M\" readout (topo-relief)"
+    ]
+   },
+   "dossier": "out/identities/survol-pixel/",
+   "identite": "survol-pixel",
+   "shorts": [
+    "out/shorts/survol-pixel__explicatif__comment-nait-un-atoll",
+    "out/shorts/survol-pixel__histoire__machu-picchu-pourquoi-une-cite-en-escaliers"
+   ],
+   "confusableWith": [
+    "pixel-arcade",
+    "topo-relief"
+   ],
+   "separation": "MOYEN",
+   "date": "2026-11-19",
+   "fichier": "out/recettes/survol-pixel.json",
+   "pate": "pixel-jour",
+   "dansIdentities": true
+  },
+  {
+   "id": "swiss-data",
+   "nom": "Grille Suisse",
+   "habillage": "grille-suisse",
+   "mecanique": "chiffre-volet-compteur",
+   "formats": [
+    "narre-court"
+   ],
+   "son": null,
+   "statut": "validee",
+   "signaturePortee": {
+    "habillage": [
+     "visible 12-column grid on warm off-white",
+     "palette limited to red / black / blue"
+    ],
+    "mecanique": [
+     "one giant Archivo Black number per screen",
+     "red wipe transitions"
+    ],
+    "autres": []
+   },
+   "dossier": "out/identities/swiss-data/",
+   "identite": "swiss-data",
+   "shorts": [
+    "out/shorts/swiss-data__evenements__j-272-eclipse-2-aout-2027",
+    "out/shorts/swiss-data__geographie__ou-vivent-8-milliards"
+   ],
+   "confusableWith": [
+    "bauhaus-kinetic",
+    "carte-meteo"
+   ],
+   "separation": "FACILE",
+   "date": "2026-11-19",
+   "fichier": "out/recettes/swiss-data.json",
+   "pate": "grille-suisse",
+   "dansIdentities": true
+  },
+  {
+   "id": "tableau-craie",
+   "nom": "Tableau Craie",
+   "habillage": "craie",
+   "variante": "tableau-vert",
+   "habillageAvant": "craie-verte",
+   "mecanique": "ecriture-trace-chiffon",
+   "formats": [
+    "narre-court"
+   ],
+   "son": null,
+   "statut": "validee",
+   "signaturePortee": {
+    "habillage": [
+     "dark green chalkboard with chalk grain",
+     "Caveat handwriting + Nunito titles"
+    ],
+    "mecanique": [
+     "everything draws itself (Manim Create / stroke-dashoffset)",
+     "eraser-cloth wipe between ideas"
+    ],
+    "autres": []
+   },
+   "dossier": "out/identities/tableau-craie/",
+   "identite": "tableau-craie",
+   "shorts": [
+    "out/shorts/tableau-craie__enfants__comment-une-graine-devient-un-arbre",
+    "out/shorts/tableau-craie__explicatif__pourquoi-le-ciel-est-bleu"
+   ],
+   "confusableWith": [
+    "trait-continu"
+   ],
+   "separation": "MOYEN",
+   "date": "2026-11-19",
+   "fichier": "out/recettes/tableau-craie.json",
+   "pate": "craie/tableau-vert",
+   "dansIdentities": true
+  },
+  {
+   "id": "topo-relief",
+   "nom": "Relief Topo",
+   "habillage": "relief-vert",
+   "mecanique": "survol-terrain",
+   "formats": [
+    "narre-court"
+   ],
+   "son": null,
+   "statut": "validee",
+   "signaturePortee": {
+    "habillage": [
+     "dark forest-green 3D terrain block with glowing contour lines",
+     "altitude readout in JetBrains Mono",
+     "ochre / terracotta / teal accents"
+    ],
+    "mecanique": [
+     "drone fly-over camera"
+    ],
+    "autres": []
+   },
+   "dossier": "out/identities/topo-relief/",
+   "identite": "topo-relief",
+   "shorts": [
+    "out/shorts/topo-relief__geographie__comment-mesure-t-on-l-everest",
+    "out/shorts/topo-relief__histoire__hannibal-traverse-les-alpes"
+   ],
+   "confusableWith": [
+    "atlas-grave",
+    "lyrics-chemin",
+    "survol-pixel"
+   ],
+   "separation": "MOYEN",
+   "date": "2026-11-19",
+   "fichier": "out/recettes/topo-relief.json",
+   "pate": "relief-vert",
+   "dansIdentities": true
+  },
+  {
+   "id": "trait-continu",
+   "nom": "Trait continu",
+   "habillage": "orange-graphite",
+   "mecanique": "traceur-escalier-plaque",
+   "formats": [
+    "narre-court"
+   ],
+   "son": null,
+   "statut": "validee",
+   "signaturePortee": {
+    "habillage": [
+     "full-bleed orange ground with a sharp-cornered grey plate",
+     "never cream or white on the orange; Fredoka only"
+    ],
+    "mecanique": [
+     "one continuous graphite stair-stepped line at constant speed, never lifted",
+     "two rulers with sliding cursors and a carriage at the pen tip",
+     "plate-advance transition in steps"
+    ],
+    "autres": []
+   },
+   "dossier": "out/identities/trait-continu/",
+   "identite": "trait-continu",
+   "shorts": [
+    "out/shorts/trait-continu__enfants__dessine-un-escargot-d-un-seul-trait",
+    "out/shorts/trait-continu__geographie__l-italie-a-la-forme-d-une-botte"
+   ],
+   "confusableWith": [
+    "tableau-craie"
+   ],
+   "separation": "DIFFICILE",
+   "date": "2026-11-19",
+   "fichier": "out/recettes/trait-continu.json",
+   "pate": "orange-graphite",
+   "dansIdentities": true
+  }
+ ],
+ "compatibilite": [
+  {
+   "habillage": "meteo-clair",
+   "variante": null,
+   "pate": "meteo-clair",
+   "mecanique": "carte-champs-front",
+   "format": "narre-court",
+   "etat": "teste",
+   "preuve": [
+    "out/shorts/carte-meteo__evenements__28-juin-2019-46-degres-record-de-chaleur",
+    "out/shorts/carte-meteo__geographie__le-mistral-pourquoi-il-souffle-si-fort"
+   ],
+   "recette": "carte-meteo",
+   "statut": "validee"
+  },
+  {
+   "habillage": "gravure-parchemin",
+   "variante": null,
+   "pate": "gravure-parchemin",
+   "mecanique": "carte-trace-panoramique",
+   "format": "narre-court",
+   "etat": "teste",
+   "preuve": [
+    "out/shorts/atlas-grave__geographie__plus-longs-fleuves-du-monde",
+    "out/shorts/atlas-grave__histoire__premier-tour-du-monde-1519-1522"
+   ],
+   "recette": "atlas-grave",
+   "statut": "validee"
+  },
+  {
+   "habillage": "grille-suisse",
+   "variante": null,
+   "pate": "grille-suisse",
+   "mecanique": "chiffre-volet-compteur",
+   "format": "narre-court",
+   "etat": "teste",
+   "preuve": [
+    "out/shorts/swiss-data__evenements__j-272-eclipse-2-aout-2027",
+    "out/shorts/swiss-data__geographie__ou-vivent-8-milliards"
+   ],
+   "recette": "swiss-data",
+   "statut": "validee"
+  },
+  {
+   "habillage": "brut-jaune",
+   "variante": null,
+   "pate": "brut-jaune",
+   "mecanique": "colonne-mot-a-mot",
+   "format": "paroles-muet",
+   "etat": "incompatible",
+   "raison": "Anton n'a pas d'axe de largeur (wdth), exigé par la colonne justifiée. Réparable avec une police variable (Anybody).",
+   "case": "C6",
+   "cout": "≈ 1 session si on la répare"
+  },
+  {
+   "habillage": "punchy",
+   "variante": null,
+   "pate": "punchy",
+   "mecanique": "colonne-mot-a-mot",
+   "format": "paroles-muet",
+   "etat": "teste",
+   "preuve": [
+    "out/shorts/lyrics-punchy__paroles__claudes-plan"
+   ],
+   "recette": "lyrics-punchy",
+   "statut": "validee"
+  },
+  {
+   "habillage": "craie",
+   "variante": "tableau-vert",
+   "pate": "craie/tableau-vert",
+   "mecanique": "ecriture-trace-chiffon",
+   "format": "narre-court",
+   "etat": "teste",
+   "preuve": [
+    "out/shorts/tableau-craie__enfants__comment-une-graine-devient-un-arbre",
+    "out/shorts/tableau-craie__explicatif__pourquoi-le-ciel-est-bleu"
+   ],
+   "recette": "tableau-craie",
+   "statut": "validee"
+  },
+  {
+   "habillage": "riso-3-encres",
+   "variante": null,
+   "pate": "riso-3-encres",
+   "mecanique": "impression-on-twos",
+   "format": "narre-court",
+   "etat": "teste",
+   "preuve": [
+    "out/shorts/riso-zine__evenements__geminides-j-39",
+    "out/shorts/riso-zine__geographie__5-plus-grands-deserts"
+   ],
+   "recette": "riso-zine",
+   "statut": "validee"
+  },
+  {
+   "habillage": "aquarelle",
+   "variante": null,
+   "pate": "aquarelle",
+   "mecanique": "lavis-multiplan",
+   "format": "narre-court",
+   "etat": "teste",
+   "preuve": [
+    "out/shorts/aquarelle-conte__enfants__ou-vont-les-etoiles-le-jour",
+    "out/shorts/aquarelle-conte__histoire__phare-d-alexandrie"
+   ],
+   "recette": "aquarelle-conte",
+   "statut": "validee"
+  },
+  {
+   "habillage": "diorama-pastel",
+   "variante": null,
+   "pate": "diorama-pastel",
+   "mecanique": "maquette-rebond",
+   "format": "narre-court",
+   "etat": "teste",
+   "preuve": [
+    "out/shorts/pastel-diorama__enfants__d-ou-vient-la-pluie",
+    "out/shorts/pastel-diorama__engagement__choisis-ta-boite-renard"
+   ],
+   "recette": "pastel-diorama",
+   "statut": "validee"
+  },
+  {
+   "habillage": "neon-labo",
+   "variante": null,
+   "pate": "neon-labo",
+   "mecanique": "orbite-phenomene-neon",
+   "format": "boucle",
+   "etat": "teste",
+   "preuve": [
+    "out/shorts/neon-lab__abstrait__champ-de-force-lucioles"
+   ],
+   "recette": "neon-lab",
+   "statut": "validee"
+  },
+  {
+   "habillage": "neon-labo",
+   "variante": null,
+   "pate": "neon-labo",
+   "mecanique": "orbite-phenomene-neon",
+   "format": "narre-court",
+   "etat": "teste",
+   "preuve": [
+    "out/shorts/neon-lab__explicatif__effet-papillon-double-pendule",
+    "out/shorts/neon-lab__explicatif__lune-meme-face"
+   ],
+   "recette": "neon-lab",
+   "statut": "validee"
+  },
+  {
+   "habillage": "chrome-irise",
+   "variante": null,
+   "pate": "chrome-irise",
+   "mecanique": "plan-sequence-matiere",
+   "format": "boucle",
+   "etat": "teste",
+   "preuve": [
+    "out/shorts/liquid-chrome__abstrait__pendule-de-newton-chrome"
+   ],
+   "recette": "liquid-chrome",
+   "statut": "validee"
+  },
+  {
+   "habillage": "chrome-irise",
+   "variante": null,
+   "pate": "chrome-irise",
+   "mecanique": "plan-sequence-matiere",
+   "format": "narre-court",
+   "etat": "teste",
+   "preuve": [
+    "out/shorts/liquid-chrome__abstrait__quatre-peintures-mpm",
+    "out/shorts/liquid-chrome__engagement__quelle-couleur-remplit-le-verre"
+   ],
+   "recette": "liquid-chrome",
+   "statut": "validee"
+  },
+  {
+   "habillage": "atelier-papier",
+   "variante": null,
+   "pate": "atelier-papier",
+   "mecanique": "pop-papier-12ips",
+   "format": "narre-court",
+   "etat": "teste",
+   "preuve": [
+    "out/shorts/atelier-papier__explicatif__d-ou-vient-le-mot-sandwich",
+    "out/shorts/atelier-papier__histoire__la-fourchette-a-fait-scandale"
+   ],
+   "recette": "atelier-papier",
+   "statut": "validee"
+  },
+  {
+   "habillage": "cabinet-curiosites",
+   "variante": null,
+   "pate": "cabinet-curiosites",
+   "mecanique": "pop-papier-12ips",
+   "format": "narre-court",
+   "etat": "teste",
+   "preuve": [
+    "out/shorts/cabinet-curiosites__explicatif__d-ou-vient-le-mot-sandwich",
+    "out/shorts/cabinet-curiosites__histoire__la-fourchette-a-fait-scandale"
+   ],
+   "recette": "cabinet-curiosites",
+   "statut": "validee"
+  },
+  {
+   "habillage": "carnet-archives",
+   "variante": null,
+   "pate": "carnet-archives",
+   "mecanique": "pop-papier-12ips",
+   "format": "narre-court",
+   "etat": "teste",
+   "preuve": [
+    "out/shorts/carnet-archives__explicatif__d-ou-vient-le-mot-sandwich",
+    "out/shorts/carnet-archives__histoire__la-fourchette-a-fait-scandale"
+   ],
+   "recette": "carnet-archives",
+   "statut": "validee"
+  },
+  {
+   "habillage": "grille-suisse",
+   "variante": null,
+   "pate": "grille-suisse",
+   "mecanique": "pop-papier-12ips",
+   "format": "narre-court",
+   "etat": "a-tester",
+   "raison": "rôles exigés par la mécanique présents dans la fiche ; pas d'adaptateur",
+   "case": "C5",
+   "question": "la grille suisse en stop-motion à 12 i/s : la pâte survit-elle à un mouvement qui la contredit ?",
+   "cout": "≈ 0,5 session"
+  },
+  {
+   "habillage": "papier-decoupe",
+   "variante": null,
+   "pate": "papier-decoupe",
+   "mecanique": "pop-papier-12ips",
+   "format": "narre-court",
+   "etat": "teste",
+   "preuve": [
+    "out/shorts/papier-decoupe__explicatif__d-ou-vient-le-mot-sandwich",
+    "out/shorts/papier-decoupe__histoire__la-fourchette-a-fait-scandale"
+   ],
+   "recette": "papier-decoupe",
+   "statut": "validee"
+  },
+  {
+   "habillage": "plan-bleu",
+   "variante": null,
+   "pate": "plan-bleu",
+   "mecanique": "pop-papier-12ips",
+   "format": "narre-court",
+   "etat": "teste",
+   "preuve": [
+    "out/shorts/papier-plan-bleu__explicatif__d-ou-vient-le-mot-sandwich"
+   ],
+   "recette": "papier-plan-bleu",
+   "statut": "abandonnee",
+   "case": "C4"
+  },
+  {
+   "habillage": "brut-jaune",
+   "variante": null,
+   "pate": "brut-jaune",
+   "mecanique": "punch-cut-slam",
+   "format": "narre-court",
+   "etat": "teste",
+   "preuve": [
+    "out/shorts/brut-meme__engagement__test-des-3-secondes-stroop",
+    "out/shorts/brut-meme__evenements__pendant-ces-15-secondes-dans-le-monde"
+   ],
+   "recette": "brut-meme",
+   "statut": "validee"
+  },
+  {
+   "habillage": "bauhaus-primaires",
+   "variante": null,
+   "pate": "bauhaus-primaires",
+   "mecanique": "puzzle-grille-morph",
+   "format": "narre-court",
+   "etat": "teste",
+   "preuve": [
+    "out/shorts/bauhaus-kinetic__engagement__trouve-l-intrus",
+    "out/shorts/bauhaus-kinetic__explicatif__abeilles-hexagones"
+   ],
+   "recette": "bauhaus-kinetic",
+   "statut": "validee"
+  },
+  {
+   "habillage": "arcade-marine",
+   "variante": null,
+   "pate": "arcade-marine",
+   "mecanique": "simulation-deterministe",
+   "format": "narre-court",
+   "etat": "teste",
+   "preuve": [
+    "out/shorts/pixel-arcade__abstrait__la-balle-peut-elle-s-echapper",
+    "out/shorts/pixel-arcade__engagement__quelle-bille-gagne-la-course",
+    "out/shorts/pixel-arcade__engagement__quelle-couleur-conquiert-l-ecran"
+   ],
+   "recette": "pixel-arcade",
+   "statut": "validee"
+  },
+  {
+   "habillage": "pixel-jour",
+   "variante": null,
+   "pate": "pixel-jour",
+   "mecanique": "simulation-deterministe",
+   "format": "narre-court",
+   "etat": "a-tester",
+   "raison": "rôles exigés par la mécanique présents dans la fiche ; pas d'adaptateur",
+   "case": "C8",
+   "question": "même grille 270×480 ×4 : une course de billes en plein jour. Faut-il un habillage parent « pixel-16 » ?",
+   "cout": "≈ 1 à 1,5 session"
+  },
+  {
+   "habillage": "pixel-jour",
+   "variante": null,
+   "pate": "pixel-jour",
+   "mecanique": "survol-terrain",
+   "format": "narre-court",
+   "etat": "teste",
+   "preuve": [
+    "out/shorts/survol-pixel__explicatif__comment-nait-un-atoll",
+    "out/shorts/survol-pixel__histoire__machu-picchu-pourquoi-une-cite-en-escaliers"
+   ],
+   "recette": "survol-pixel",
+   "statut": "validee"
+  },
+  {
+   "habillage": "portulan",
+   "variante": null,
+   "pate": "portulan",
+   "mecanique": "survol-terrain",
+   "format": "narre-court",
+   "etat": "incompatible",
+   "raison": "Le moteur du survol (survol.py) impose une grille 270×480 en palette indexée : un parchemin anticrénelé ne passe pas.",
+   "case": "C7"
+  },
+  {
+   "habillage": "relief-vert",
+   "variante": null,
+   "pate": "relief-vert",
+   "mecanique": "survol-terrain",
+   "format": "narre-court",
+   "etat": "teste",
+   "preuve": [
+    "out/shorts/topo-relief__geographie__comment-mesure-t-on-l-everest",
+    "out/shorts/topo-relief__histoire__hannibal-traverse-les-alpes"
+   ],
+   "recette": "topo-relief",
+   "statut": "validee"
+  },
+  {
+   "habillage": "gazette-sepia",
+   "variante": null,
+   "pate": "gazette-sepia",
+   "mecanique": "tourniquet-tampon",
+   "format": "narre-court",
+   "etat": "teste",
+   "preuve": [
+    "out/shorts/gazette-1900__evenements__9-novembre-1989-mur-de-berlin",
+    "out/shorts/gazette-1900__histoire__1789-en-20-secondes"
+   ],
+   "recette": "gazette-1900",
+   "statut": "validee"
+  },
+  {
+   "habillage": "carnet-archives",
+   "variante": null,
+   "pate": "carnet-archives",
+   "mecanique": "trace-chemin",
+   "format": "narre-long",
+   "etat": "a-tester",
+   "raison": "rôles exigés par la mécanique présents dans la fiche ; pas d'adaptateur",
+   "alerte": [
+    "cadence imposée par l'habillage (12 i/s (matière de papier : un papier découpé ne glisse pas en douceur)) sur une mécanique fluide (proposition.md § 6)"
+   ],
+   "case": "C3",
+   "question": "porter un habillage du moteur Python (papier) vers le moteur JS du chemin : le kraft et la machine à écrire comme surface du chemin",
+   "cout": "≈ 1 session"
+  },
+  {
+   "habillage": "craie",
+   "variante": "ardoise",
+   "pate": "craie/ardoise",
+   "mecanique": "trace-chemin",
+   "format": "narre-long",
+   "etat": "teste",
+   "preuve": [
+    "out/shorts/lyrics-chemin__explicatif__le-quatre-quarts"
+   ],
+   "recette": "chemin-ardoise",
+   "statut": "validee"
+  },
+  {
+   "habillage": "craie",
+   "variante": "tableau-vert",
+   "pate": "craie/tableau-vert",
+   "mecanique": "trace-chemin",
+   "format": "narre-long",
+   "etat": "teste",
+   "preuve": [
+    "out/shorts/chemin-craie-verte__explicatif__le-quatre-quarts"
+   ],
+   "recette": "chemin-craie-verte",
+   "statut": "essai",
+   "case": "C1"
+  },
+  {
+   "habillage": "editeur",
+   "variante": null,
+   "pate": "editeur",
+   "mecanique": "trace-chemin",
+   "format": "paroles-muet",
+   "etat": "teste",
+   "preuve": [
+    "out/shorts/lyrics-chemin__paroles__claudes-plan-tech"
+   ],
+   "recette": "chemin-editeur",
+   "statut": "validee"
+  },
+  {
+   "habillage": "grille-suisse",
+   "variante": null,
+   "pate": "grille-suisse",
+   "mecanique": "trace-chemin",
+   "format": "narre-court",
+   "etat": "teste",
+   "preuve": [
+    "out/shorts/chemin-grille-suisse__geographie__ou-vivent-8-milliards"
+   ],
+   "recette": "chemin-grille-suisse",
+   "statut": "validee",
+   "case": "C2"
+  },
+  {
+   "habillage": "plan-bleu",
+   "variante": null,
+   "pate": "plan-bleu",
+   "mecanique": "trace-chemin",
+   "format": "paroles-muet",
+   "etat": "teste",
+   "preuve": [
+    "out/shorts/lyrics-chemin__paroles__claudes-plan"
+   ],
+   "recette": "lyrics-chemin",
+   "statut": "validee"
+  },
+  {
+   "habillage": "portulan",
+   "variante": null,
+   "pate": "portulan",
+   "mecanique": "trace-chemin",
+   "format": "narre-long",
+   "etat": "teste",
+   "preuve": [
+    "out/shorts/lyrics-chemin__histoire__le-premier-tour-du-monde"
+   ],
+   "recette": "chemin-portulan",
+   "statut": "validee"
+  },
+  {
+   "habillage": "orange-graphite",
+   "variante": null,
+   "pate": "orange-graphite",
+   "mecanique": "traceur-escalier-plaque",
+   "format": "narre-court",
+   "etat": "teste",
+   "preuve": [
+    "out/shorts/trait-continu__enfants__dessine-un-escargot-d-un-seul-trait",
+    "out/shorts/trait-continu__geographie__l-italie-a-la-forme-d-une-botte"
+   ],
+   "recette": "trait-continu",
+   "statut": "validee"
+  },
+  {
+   "habillage": "cosmos-noir",
+   "variante": null,
+   "pate": "cosmos-noir",
+   "mecanique": "travelling-cine-3d",
+   "format": "narre-court",
+   "etat": "teste",
+   "preuve": [
+    "out/shorts/cosmos-doc__evenements__voyager-1-a-un-jour-lumiere",
+    "out/shorts/cosmos-doc__explicatif__pourquoi-venus-plus-chaude-que-mercure"
+   ],
+   "recette": "cosmos-doc",
+   "statut": "validee"
   }
  ]
 }

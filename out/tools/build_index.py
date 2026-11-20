@@ -12,12 +12,30 @@ Pour chaque identité :
   - `curation` : jugement de l'orchestrateur, NON mesuré (public conseillé, signature à préserver, résumé en anglais,
     identités avec lesquelles elle se confond) — à traiter comme une recommandation.
 Relancer ce script après toute modification d'une identité ou d'un short.
+
+SCHÉMA 2.0 (2026-11-20, migration.md étape 4) : `identities[]` est inchangé (mêmes champs, mêmes valeurs ; chaque entrée
+gagne seulement `habillage`, `variante`, `mecanique`, `formats`, `recette` lus dans out/recettes/<id>.json). L'index gagne
+les briques, lues par out/tools/briques.py dans les fiches :
+  - `habillages[]`  (out/habillages/ : une famille, ex. craie, et ses variantes craie/ardoise, craie/tableau-vert ; les fiches
+                    remplacées restent listées avec statut « remplacee »), `mecaniques[]`, `formats[]`, `recettes[]`
+                    (out/recettes/*.json : 27 validées, essais, abandonnées) ;
+  - `compatibilite[]` : la matrice creuse habillage × mécanique × format, états CALCULÉS (proposition.md § 5) :
+      teste        un short déclare ce triplet et passe check.py (out/report/qa.json) ;
+      compatible   adaptateur + image fixe (out/habillages/<id>/planche.jpg), pas de short ;
+      a-tester     les rôles de palette exigés par la mécanique sont dans la fiche, la projection ne se contredit pas,
+                   pas d'adaptateur (ou adaptateur sans image) ; une contrainte de l'habillage (cadence, grille pixel) qui
+                   ne colle pas à la mécanique est signalée dans `alerte` ;
+      incompatible seulement avec une raison écrite (out/recettes/propositions.json : C6, C7).
+    Les cases proposées non rendues (C3, C5…C8) viennent de out/recettes/propositions.json.
+Les dictionnaires en dur (ORDER, CURATION, FAMILIES…) restent la source de identities[] dans cette étape.
 """
-import glob, hashlib, json, os, re
+import glob, hashlib, json, os, re, sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / 'out'
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import briques as B  # noqa: E402
 
 # Classement de durabilité (out/report/comparison.md §5). Le lot 2 (2026-11-05, skill fabrique-identites) est classé
 # parmi les autres : carte-meteo 5ᵉ, trait-continu 9ᵉ (justification dans comparison.md §5 et decisions.md). Survol pixel (2026-11-18,
@@ -295,6 +313,112 @@ def md5(p):
     return hashlib.md5(open(p, 'rb').read()).hexdigest()
 
 
+# ---------- briques (schéma 2.0) ----------
+NEUTRES = {'fond', 'surface', 'encre', 'vif', 'second', 'decor', 'serie'}
+PUBLIC = lambda d: {k: v for k, v in d.items() if not k.startswith('_')}
+
+
+def section_briques():
+    """habillages[], mecaniques[], formats[], recettes[], compatibilite[] et les compteurs, depuis les fiches."""
+    H, M, F, R = B.habillages(), B.mecaniques(), B.formats(), B.recettes()
+    qa = {r['short']: r for r in json.load(open(OUT / 'report/qa.json'))} if (OUT / 'report/qa.json').exists() else {}
+    shorts = sorted(d.name for d in (OUT / 'shorts').iterdir() if d.is_dir())
+    bq = {n: B.briques_du_short(n) for n in shorts}
+    rec_de = {}                                    # clé de pâte -> recettes
+    for rid, r in R.items():
+        rec_de.setdefault(B.pate(r['habillage'], r.get('variante')), []).append(rid)
+    for k, h in H.items():                         # une famille liste les recettes de ses variantes
+        if h.get('type') == 'famille':
+            rec_de[k] = sorted({x for v in h.get('variantes') or [] for x in rec_de.get(v, [])})
+    top, pates = B.actifs()
+    habs = []
+    for k, h in H.items():
+        e = PUBLIC(h)
+        e.update(fichier=h['_fichier'], recettes=sorted(rec_de.get(k, [])),
+                 actif=(k in pates or k in top) and h.get('statut') != 'remplacee')
+        habs.append(e)
+    mecs = []
+    for k, m in M.items():
+        e = PUBLIC(m)
+        e.update(fichier=m['_fichier'], recettes=sorted(rid for rid, r in R.items() if r['mecanique'] == k),
+                 pates=sorted({b['pate'] for b in bq.values() if b['mecanique'] == k}))
+        mecs.append(e)
+    fmts = [{**PUBLIC(f), 'fichier': f['_fichier']} for f in F.values()]
+    recs = []
+    for rid, r in R.items():
+        e = {k: v for k, v in PUBLIC(r).items() if k not in ('verdict',)}
+        e.update(fichier=r['_fichier'], pate=B.pate(r['habillage'], r.get('variante')), dansIdentities=(OUT / 'identities' / rid / 'identity.md').exists())
+        if r.get('verdict'):
+            e['verdict'] = {k: r['verdict'].get(k) for k in ('cle', 'titre')}
+        recs.append(e)
+    # ---- compatibilite : cases avec une preuve, un adaptateur ou une proposition (matrice creuse)
+    cells = {}
+    for n, b in bq.items():
+        if b['pate'] and b['mecanique']:
+            cells.setdefault((b['pate'], b['mecanique'], b['format']), {'preuve': []})['preuve'].append(f'out/shorts/{n}')
+    for k, h in H.items():
+        if h.get('statut') == 'remplacee' or h.get('type') == 'famille':
+            continue
+        for mec in h.get('adaptateurs') or {}:
+            if not any(c[0] == k and c[1] == mec for c in cells):
+                cells.setdefault((k, mec, None), {'preuve': []})
+    for c in B.propositions():
+        cells.setdefault((B.pate(c['habillage']), c['mecanique'], c.get('format')), {'preuve': []})['prop'] = c
+    out = []
+    for (pk, mk, fk), v in sorted(cells.items(), key=lambda x: (x[0][1], x[0][0], x[0][2] or '')):
+        h, m = H.get(pk) or {}, M.get(mk) or {}
+        fam, _, var = pk.partition('/')
+        e = {'habillage': fam, 'variante': var or None, 'pate': pk, 'mecanique': mk, 'format': fk}
+        prop = v.get('prop')
+        if v['preuve']:
+            ok = [d for d in v['preuve'] if (qa.get(d.split('/')[-1]) or {}).get('ok')]
+            rids = sorted({bq[d.split('/')[-1]]['recette'] for d in v['preuve']})
+            e.update(etat='teste' if ok else 'a-controler', preuve=v['preuve'], recette=rids[0] if len(rids) == 1 else rids,
+                     statut=(R.get(rids[0]) or {}).get('statut'))
+            if not ok:
+                e['raison'] = 'short présent mais pas encore OK dans out/report/qa.json (relancer check.py --all)'
+            case = next((R[r].get('case') for r in rids if R.get(r, {}).get('case')), None)
+            if case:
+                e['case'] = case
+        elif prop and prop.get('etat') == 'incompatible':
+            e.update(etat='incompatible', raison=prop.get('raison') or '(raison manquante)', case=prop['case'])
+        else:
+            adapt = (h.get('adaptateurs') or {}).get(mk)
+            fold = OUT / 'habillages' / pk.split('/')[0]
+            image = (fold / 'planche.jpg').exists()
+            req = m.get('requiert') or {}
+            miss = [x for x in (req.get('palette') or []) if x in NEUTRES and not (h.get('palette') or {}).get(x)]
+            proj_m = req.get('projection')
+            proj_h = str((h.get('contraintes') or {}).get('projection') or '')
+            alerte = []
+            cn = h.get('contraintes') or {}
+            if cn.get('cadence') and mk != 'pop-papier-12ips':
+                alerte.append(f"cadence imposée par l'habillage ({cn['cadence']}) sur une mécanique fluide (proposition.md § 6)")
+            if cn.get('grillePixel') and mk not in ('survol-terrain', 'simulation-deterministe'):
+                alerte.append(f"grille pixel de l'habillage ({cn['grillePixel']})")
+            if proj_m and proj_h and not proj_h.startswith(proj_m):
+                miss.append(f'projection {proj_m} (habillage : {proj_h})')
+            if adapt and image:
+                e.update(etat='compatible', adaptateur=adapt)
+            elif not miss:
+                e.update(etat='a-tester', raison=('adaptateur sans image fixe : ' + adapt) if adapt else "rôles exigés par la mécanique présents dans la fiche ; pas d'adaptateur")
+            else:
+                e.update(etat='inconnu', raison='besoins non remplis : ' + ', '.join(miss))
+            if alerte:
+                e['alerte'] = alerte
+            if prop:
+                e['case'] = prop['case']
+        if prop:
+            e.update({k: prop[k] for k in ('question', 'cout') if prop.get(k)})
+        out.append(e)
+    counts = {'recettes': len(R), 'recettesParStatut': {s: sum(1 for r in R.values() if r.get('statut') == s) for s in ('validee', 'essai', 'abandonnee')},
+              'habillages': len(top), 'pates': len(pates), 'familleshabillage': len(B.familles()),
+              'mecaniques': len(M), 'formats': len(F), 'shorts': len(shorts),
+              'shortsHorsIdentites': sum(1 for n in shorts if not (OUT / 'identities' / n.split('__')[0]).exists()),
+              'cases': {s: sum(1 for c in out if c['etat'] == s) for s in ('teste', 'compatible', 'a-tester', 'incompatible', 'inconnu', 'a-controler')}}
+    return {'habillages': habs, 'mecaniques': mecs, 'formats': fmts, 'recettes': recs, 'compatibilite': out}, counts
+
+
 def main():
     recog = json.load(open(OUT / 'report/recognition.json')) if (OUT / 'report/recognition.json').exists() else {}
     nn = {r['short']: r for r in recog.get('rows', [])}
@@ -361,17 +485,22 @@ def main():
         i['curation']['confusableWith'] = sorted(c for c in conf[i['id']] if c not in sibs)
         if sibs:
             i['curation']['deliberateSiblings'] = sibs
+    for i in ids:   # briques de la recette du même id (schéma 2.0) ; les champs existants ne changent pas
+        r = B.recettes().get(i['id'])
+        if r:
+            i.update(recette=r['id'], habillage=r['habillage'], variante=r.get('variante'), mecanique=r['mecanique'], formats=r.get('formats') or [])
+    briq, bcounts = section_briques()
     n_var = len(VARIANT_OF)
     n_roots = len(ids) - n_var
     n_shorts = sum(len(i['shorts']) for i in ids)
     index = {
-        'schemaVersion': '1.1',
+        'schemaVersion': '2.0',
         'description': (f'Machine index of the {n_roots} visual identities for 9:16 shorts ({len(ids)} declinations: {n_var} of them are derivations of a root identity, see variantOf). Use it to shortlist identities, then read each '
                         "identity's identity.md (16 sections, French) and tokens.json. coreTokens is a normalised subset "
                         '(seconds, pixels on a 1080x1920 canvas, @fontsource slugs); the original tokens.json is authoritative for '
                         'everything else. curation.* is orchestrator judgment. See AGENTS.md.'),
         'generatedBy': 'out/tools/build_index.py',
-        'counts': {'identities': n_roots, 'derivations': n_var, 'declinations': len(ids), 'shorts': n_shorts},
+        'counts': {'identities': n_roots, 'derivations': n_var, 'declinations': len(ids), 'shorts': n_shorts, 'briques': bcounts},
         'families': [{'root': r, 'name': next(i['name'] for i in ids if i['id'] == r), 'variants': f['variants'],
                       'sharedEngine': f['sharedEngine'], 'axis': f['axisFr']} for r, f in FAMILIES.items()],
         'fieldNotes': {'variantOf': 'id of the root identity when this entry is a derivation (same engine, only ground / palette / fonts change), else null. A root lists its derivations in variants and what is shared / what varies in variantAxis. Derivations stay ranked, right after their root; counts.identities counts roots only, counts.declinations counts every entry. curation.deliberateSiblings = derivations of the same root, deliberately close and therefore not listed in confusableWith. A new identity that reuses an existing engine and only changes ground / palette / fonts must be registered as a derivation, not as a new identity',
@@ -387,6 +516,12 @@ def main():
                         'blindJudgeSurvol': (recog.get('blindJudgeSurvol') or {}).get('pureGroups'), 'blindJudgeSurvolGroups': (recog.get('blindJudgeSurvol') or {}).get('groups'),
                         'measuredTop1': f"{sum(1 for r in recog.get('rows', []) if r.get('sameIdentity'))}/{len(recog.get('rows', []))}"},
         'identities': ids,
+        'briquesNote': ('Composition model (2026-11-19/20, out/report/notes/composition/proposition.md): video = habillage (look) x mecanique '
+                        '(motion) x format (+ son); a named, validated combination is a recette (same id as the identity it comes from). '
+                        'Sections below are read from out/habillages, out/mecaniques, out/formats, out/recettes by out/tools/briques.py. '
+                        'compatibilite[] is a sparse matrix; etat is computed (teste / compatible / a-tester / incompatible with a written raison / inconnu). '
+                        'niveau: executable = an adapter exists and the engine applies it; declare = values recorded, scene code hard-codes them.'),
+        **briq,
     }
     json.dump(index, open(OUT / 'identities/index.json', 'w'), ensure_ascii=False, indent=1)
     schema = {
@@ -405,6 +540,7 @@ def main():
             'canvas': {'type': 'object'}}}
     json.dump(schema, open(OUT / 'identities/core-tokens.schema.json', 'w'), ensure_ascii=False, indent=1)
     print(f"{len(ids)} identités -> out/identities/index.json ; modules partagés vérifiés : {sum(bool(i['sharedModule']) for i in ids)}")
+    print(f"briques : {bcounts}")
 
 
 if __name__ == '__main__':
