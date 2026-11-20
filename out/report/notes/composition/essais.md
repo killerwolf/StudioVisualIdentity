@@ -15,8 +15,18 @@ Décision d'Hamdi : choix 118 (modèle + version minimale + essais C1, C2, C4). 
 modifié : deux habillages neufs dans `out/shared/chemin-moteur/habillages/` (`craie-verte.js`, `grille-suisse.js`), un dessin
 neuf (`dessins/barres-humains.json`), et pour C4 un thème et un fond rangés dans le dossier du short.
 
-Jugement à l'œil (le mien, sur les planches et les comparaisons ci-dessous), **pas mesuré** : `recognition.py` n'a pas été
+Jugement à l'œil (le mien, sur les planches et les comparaisons ci-dessous), **pas mesuré** le 19/11 : `recognition.py` n'a pas été
 relancé (il réécrit `recognition.json` et ne sait pas encore séparer habillage et mécanique, étape 5 de `migration.md`).
+
+> **Mesure du 20/11/2026 (option 125, `recognition.py --briques`, `out/report/recognition-briques.json`)** : 53 shorts, C4 exclu
+> (abandonné). Habillage, top-1 42/47 (5 shorts seuls de leur habillage non comptés). **Test croisé de l'habillage entre
+> mécaniques : 5/6.** C2 et les deux swiss-data se retrouvent l'un l'autre au 1er rang parmi les shorts d'une autre mécanique
+> (3/3) : la mesure confirme le verdict à l'œil. Les deux tableau-craie ont C1 pour premier voisin (2/2), mais C1, lui,
+> a pour voisin papier-decoupe (tapis vert) et ne trouve un tableau-craie qu'au 3ᵉ rang : craie-verte sur le chemin est
+> reconnue depuis Tableau Craie, pas l'inverse. Mécanique (descripteur temporel neuf) : test croisé entre habillages 13/18
+> (`trace-chemin` 5/6, `pop-papier-12ips` 8/8 ; `survol-terrain` 0/4 : Relief topo et Survol pixel ne bougent pas pareil).
+> C4, mis à part, a pour plus proche voisin d'habillage `lyrics-chemin__paroles__claudes-plan` (le plan bleu) et pour voisin de
+> mécanique un short papier (carnet-archives).
 
 | Essai | Short | Rendu | `check.py` | Planche | Comparaison |
 |---|---|---|---|---|---|

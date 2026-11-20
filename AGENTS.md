@@ -5,7 +5,9 @@
 An **exploratory study of visual and cinematic identities for vertical short videos** (TikTok, Reels, Shorts; 1080×1920, 30 fps, 12–19 s).
 It contains **20 identities, 23 declinations** (the 14 of the original campaign, the cut-paper identity « Papier découpé » with its 3 derivations added on 2026-11-04, the 2 identities of
 lot 2 of the identity factory added on 2026-11-05, « Survol pixel » added on 2026-11-18, and `lyrics-punchy` and `lyrics-chemin` added on 2026-11-19, see below), each documented as a design system and **proven by 1–4 real shorts rendered by code** (50 shorts in total),
-plus the open-source rendering toolkit that made them.
+plus the open-source rendering toolkit that made them. Since 2026-11-20 the catalogue is also described as **bricks**
+(habillage × mécanique × format = recette, see « Composing from bricks » below): 29 recipes, 25 habillages, 19 mécaniques,
+4 formats, and 3 more shorts born from the composition matrix (53 shorts in `out/shorts/`).
 
 **It is a menu with evidence, not a finished brand.** You are expected to read it and then **define your own identity**:
 adopt one identity, blend several, or adapt one to your audience, language and content. Nothing here is a production channel identity.
@@ -170,6 +172,41 @@ along a cake cut in four (`…__explicatif__le-quatre-quarts`), A1 Magellan–El
 loop (`…__histoire__le-premier-tour-du-monde`); ElevenLabs voices, masters outside the repository. A short declaring `"longForm": true`
 may run up to 60 s in `check.py`.
 
+## Composing from bricks: habillage × mécanique × format = recette (2026-11-19/20)
+
+Model validated by the owner (choices 118, 124, 125; detail in `out/report/notes/composition/proposition.md`, French):
+**video = habillage (the look: palette, type, material, light — what a still frame shows) × mécanique (the motion: how
+text arrives, camera, transitions, rhythm — what only video shows) × format (the delivery contract: duration, audio) (+ son).**
+A named, validated combination is a **recette**. Every identity above is a recette with the same id; its
+`out/identities/<id>/` folder stays its evidence folder, and ids, paths and `bootstrap_studio.py --from <id>` are unchanged.
+
+| Brick | Files | Count | Notes |
+|---|---|---|---|
+| habillage | `out/habillages/<id>/habillage.json` | 25 (26 tones) | neutral roles (`fond`, `surface`, `encre`, `vif` = reserved for the active element, `second`), type, material, constraints (`cadence` 12 fps for paper, `grillePixel`), `adaptateurs` = the file each engine actually reads. A **family** has variants: `craie` = `craie/ardoise` (bistrot, adults) and `craie/tableau-vert` (school, kids); old cards `ardoise`, `craie-verte` are kept, `statut: remplacee` |
+| mécanique | `out/mecaniques/<id>/mecanique.json` | 19 | engine, audit, `requiert` (what the habillage must provide), formats, signature |
+| format | `out/formats/<id>.json` | 4 | `narre-court` 10–20 s, `narre-long` 20–60 s, `paroles-muet` 10–60 s, `boucle`; `check.py` reads the duration here |
+| recette | `out/recettes/<id>.json` | 29 | 27 `validee` (26 catalogue + « Données qui se tracent », `chemin-grille-suisse`), 1 `essai` (`chemin-craie-verte`), 1 `abandonnee` (`papier-plan-bleu`, short kept as an example) |
+
+- `niveau`: **executable** = an adapter exists and the engine applies it without touching motion code (only `chemin-moteur`,
+  `papier-moteur` and the `lyrics-moteur` tints today); **declare** = values recorded, the scene code hard-codes them. Only
+  executable mécaniques (`trace-chemin`, `pop-papier-12ips`) take a new habillage cheaply (one adapter file).
+- Each short's bricks: `out/recettes/etiquettes.json` (existing shorts; their `short.json` are not modified), else the
+  short's own `short.json` (shorts born from the matrix declare `recette`, `habillage`, `variante`, `mecanique`, `format`).
+  `out/tools/briques.py` is the one reader used by all tools.
+- `out/identities/index.json` (schemaVersion 2.0) adds `habillages[]`, `mecaniques[]`, `formats[]`, `recettes[]` and
+  **`compatibilite[]`**, a sparse matrix whose states are computed by `build_index.py`: `teste` (a short declares the
+  triple and passes `check.py`), `compatible` (adapter + still, no short), `a-tester` (the habillage card provides what the
+  mécanique requires, no adapter), `incompatible` (only with a written reason, `out/recettes/propositions.json`).
+  `identities[]` is unchanged.
+- Tools: `check.py --briques` (cards valid, references exist, adapter colours and title font = the card for executable
+  engines, contrast, minimum text size → `out/report/qa-briques.json`); `recognition.py --briques` (two-stage recognition →
+  `out/report/recognition-briques.json`, `recognition.json` untouched): **habillage** measured with the appearance
+  descriptor, **mécanique** with a new temporal descriptor on grey frames at 30 fps (held frames, cuts, camera motion,
+  moving area). The tests that matter are crossed: same habillage found among shorts of *another* mécanique, same mécanique
+  among shorts of *another* habillage. A short alone of its key is « sans pair », not a failure; the abandoned recipe is excluded.
+- **New recipe from existing bricks** (a known look on a known motion): `/fabrique-identites recette <habillage> <mecanique>`
+  (`.claude/skills/fabrique-identites/SKILL.md`). It is a recette, not a new identity.
+
 ## Read in this order (≈ 10 minutes)
 
 1. **`out/identities/index.json`** — one entry per identity, ranked. For each: English promise, proven content families, libraries,
@@ -236,6 +273,13 @@ Suggested starting deltas, to validate with your own tests:
    - *Blend*: keep **one** identity's `signatureToPreserve` intact (its type pair, palette core and signature transition — that is what
      makes it recognisable, as the blind tests showed). Borrow from others only *structure* (recipes, beat grids, engagement mechanics)
      and *tooling*. Mixing two signatures produces a generic look.
+   - *Compose* (the blend rule made precise by the brick model, 2026-11-20): each signature is split into a habillage half and a
+     mécanique half (`signaturePortee` in each recipe). Allowed: a recognisable look on a borrowed motion, or a recognisable
+     motion in another look — `lyrics-chemin` did it four times, « Données qui se tracent » (grille-suisse × trace-chemin) is
+     the first look carried to a second motion and adopted. Still forbidden: two habillages in one video, or two mécaniques
+     fighting for the screen. A channel's brand is first **one fixed habillage**; it may alternate two or three mécaniques by
+     topic if the habillage stays recognisable across them (crossed test above). Lesson of the trials: a strong look on a flat
+     ground travels well (C2); a look whose signature lives in the writing gesture does not (C4, abandoned).
    - *Adapt*: change audience-dependent values (pace, text size, voice, colour temperature — see the table above) but keep the signature.
    - `status` in the index: `selected` = kept in Phase 1; `rehabilitated` = set aside in Phase 1 only to avoid topic overlap, then produced
      with the same rules — same evidence level; `added` = added after the campaign (cut-paper family, unranked; lot 2, ranked, voiced with Gemini Sulafat; survol-pixel, ranked, voiced with Gemini Sulafat).
@@ -249,7 +293,8 @@ Suggested starting deltas, to validate with your own tests:
    `short_novo.mp4` as its video source when present. Shared modules contain French UI strings (e.g. the masthead "LE PETIT CRIEUR" in
    `gazette.js`, `lang="fr"`): grep for them when localising. Check one short with `out/tools/check.py out/shorts/<dir>` (`--all` rewrites
    `out/report/qa.json`); `out/tools/recognition.py` measures that your shorts look more alike than they look like the existing identities,
-   but it rewrites `out/report/recognition.json` — run it on a copy if you want to keep the original report.
+   but it rewrites `out/report/recognition.json` — run it on a copy if you want to keep the original report; `recognition.py --briques`
+   writes only `out/report/recognition-briques.json`.
 
 ## Facts you should not have to rediscover
 
@@ -298,11 +343,12 @@ Suggested starting deltas, to validate with your own tests:
 | `out/identities/<id>/` | design system: `identity.md`, `tokens.json` (original, richer, not normalised), `recipes/`, `poster.jpg`, `contact-sheet.jpg` |
 | `out/shorts/<id>__<family>__<topic>/` | proof short: `short.mp4` (voiced), `short_novo.mp4` (no voice), `short.json`, `narration.json`, `voice_lines/`, `stills/`, `src/` |
 | `out/shared/papier-moteur/` | the cut-paper engine (Python) shared by the cut-paper identity and its 3 derivations |
+| `out/habillages/`, `out/mecaniques/`, `out/formats/`, `out/recettes/` | the bricks (see « Composing from bricks »): one card per brick, one manifest per recipe; `out/recettes/etiquettes.json` labels the shorts, `propositions.json` holds the proposed, not yet rendered matrix cells; `out/recettes/README.md` explains them (French) |
 | `out/library-cards/catalogue.md` | catalogue of every library and tool considered (3D, 2D, animation, SVG/data, video frameworks, Python, audio, encoding, services): status, used or not, where — the base to iterate on for new identities |
 | `out/library-cards/<lib>.json` | per-library notes merged from the studios: best/avoid, measured costs (under load), gotchas, code paths. Verbose; `_drafts/` holds the raw per-studio drafts |
 | `out/report/` | campaign report (French): `README.md`, `comparison.md`, `facts.md`, `failures.md`, `decisions.md`, JSON data (`campaign.json`, `matrix.json`, `recognition.json`, `qa.json`, `selection.json`), Phase 1 `posters/` |
 | `out/report/notes/`, `out/report/history/` | studio logs and past session prompts — provenance only, do not follow |
-| `out/tools/` | toolkit: `bootstrap_studio.py` (creates a studio project, see above), `render.mjs` (HTML scene → mp4/stills), `lib/svi.js` (scene helpers), `sound.py`, `textpng.py`, `assemble.py`, `check.py`, `tts.py`, `recognition.py`, `aggregate.py`, `build_index.py`, `catalogue_scan.py` (rescans the code against `catalogue.md`), `templates/`; `STUDIO_BRIEF.md` is the historical brief given to the studios |
+| `out/tools/` | toolkit: `bootstrap_studio.py` (creates a studio project, see above), `render.mjs` (HTML scene → mp4/stills), `lib/svi.js` (scene helpers), `sound.py`, `textpng.py`, `assemble.py`, `check.py`, `tts.py`, `recognition.py`, `aggregate.py`, `build_index.py`, `briques.py` (shared reader of the brick cards), `catalogue_scan.py` (rescans the code against `catalogue.md`), `templates/`; `STUDIO_BRIEF.md` is the historical brief given to the studios |
 | `out/showcase/` | source of the visual showcase page (`build.py` regenerates it; `--videos-for <id>` re-encodes one identity's previews) |
 | `.claude/skills/fabrique-identites/` | the identity-factory skill: orchestrates scouting, adversarial challenge, studios, integration and review of new identities |
 

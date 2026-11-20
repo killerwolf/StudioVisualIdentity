@@ -1,6 +1,10 @@
 # Migration vers les briques : plan par étapes réversibles (2026-11-19)
 
-Statut : **plan, rien n'est exécuté.** Modèle : [`proposition.md`](proposition.md) ; état de départ :
+Statut (20/11/2026) : **étapes 0 à 7 faites** — 0 à 2 le 19/11 (variante minimale, choix 118 ; l'étiquetage de l'étape 2 est
+tenu dans `out/recettes/etiquettes.json` et non dans les `short.json`), 3 à 7 le 20/11 (option 125 : `check.py` et `--briques`,
+`build_index.py` schéma 2.0, `recognition.py --briques`, vitrine « Composer » lue dans les fiches, documentation). **Étape 8
+(briques exécutables) pas faite**, hors périmètre de l'option 125 : à lancer seulement quand une combinaison la réclame.
+Plan d'origine (19/11) ci-dessous, inchangé. Modèle : [`proposition.md`](proposition.md) ; état de départ :
 [`inventaire.md`](inventaire.md).
 
 ## Règles qui tiennent pendant toute la migration

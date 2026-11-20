@@ -1,9 +1,10 @@
 # Composition — le catalogue en briques (proposition, 2026-11-19)
 
-Statut : **proposition à valider**. Ce document décrit le modèle visé. Rien n'est migré : `out/identities/`,
-`out/shorts/` et `out/shared/` sont inchangés. Le plan d'exécution est dans [`migration.md`](migration.md),
+Statut : **modèle validé** (choix 118 le 19/11/2026 ; options 124 et 125 le 20/11, voir § 10 : étapes 0 à 7 de la migration
+faites, étape 8 non). Texte d'origine du 19/11 ci-dessous ; `out/identities/`, les shorts existants et `out/shared/` (hors
+habillages ajoutés à côté) sont restés inchangés. Le plan d'exécution est dans [`migration.md`](migration.md),
 l'état actuel du catalogue identité par identité dans [`inventaire.md`](inventaire.md), les premières combinaisons à
-essayer dans [`matrice.md`](matrice.md), et une maquette de vitrine dans [`vitrine-composer.html`](vitrine-composer.html).
+essayer dans [`matrice.md`](matrice.md), et une maquette de vitrine dans [`vitrine-composer.html`](vitrine-composer.html) (remplacée le 20/11 par la section « Composer » de `out/showcase/`, calculée depuis les fiches).
 
 ## 1. Le constat
 
@@ -379,4 +380,10 @@ Après les essais C1, C2, C4 ([`essais.md`](essais.md)) : **C2 adopté** comme r
 une chaîne garde un habillage fixe et alterne les mécaniques ; **famille d'habillage « craie »** (ardoise, tableau vert) — la
 règle de voisinage du § 8.3 appliquée pour la première fois : un parent à deux variantes plutôt qu'une fusion ; **C4 abandonné**.
 Le plan complet (option 125) est traité à part.
+
+**Option 125, faite le 20/11/2026** : étapes 3 à 7 de [`migration.md`](migration.md). Les outils lisent les fiches
+(`out/tools/briques.py`) ; l'index passe en schéma 2.0 avec la matrice calculée (§ 5) ; la reconnaissance à deux étages (§ 8)
+est mesurée (`out/report/recognition-briques.json` : habillage croisé entre mécaniques 5/6, mécanique croisée entre habillages
+13/18) ; la vitrine « Composer » est calculée depuis les fiches ; `AGENTS.md` et la fabrique d'identités (mode `recette`) sont à
+jour. Statut de ce document : modèle **validé**.
 

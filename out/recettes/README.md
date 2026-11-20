@@ -1,17 +1,23 @@
-# Recettes et briques (version minimale, 2026-11-19)
+# Recettes et briques (version minimale le 2026-11-19, lues par les outils depuis le 2026-11-20)
 
 Modèle validé par Hamdi le 19/11/2026 (choix 118) : **vidéo = Habillage × Mécanique × Format (+ Son)**. Une combinaison
 validée, avec un nom, s'appelle une **recette**. Détail : [`out/report/notes/composition/proposition.md`](../report/notes/composition/proposition.md) ;
-plan : [`migration.md`](../report/notes/composition/migration.md) (ici : étapes 0, 1 et 2, variante minimale).
+plan : [`migration.md`](../report/notes/composition/migration.md) (étapes 0, 1 et 2 le 19/11 ; étapes 3 à 7 le 20/11, option 125).
 
-**Aucun outil ni aucun short existant n'est modifié** : les manifestes ci-dessous sont lus par un humain ou un agent, pas
-encore par `check.py`, `build_index.py` ni `recognition.py` (étapes 3 à 5, non faites). `out/identities/` reste le dossier de
-preuve de chaque recette du même id.
+**Aucun short existant n'est modifié.** Depuis le 20/11/2026, les fiches sont lues par les outils, tous à travers
+`out/tools/briques.py` : `check.py` (durée par format ; `check.py --briques` contrôle les fiches → `out/report/qa-briques.json`),
+`build_index.py` (`out/identities/index.json` schéma 2.0 : `habillages[]`, `mecaniques[]`, `formats[]`, `recettes[]`,
+`compatibilite[]`), `recognition.py --briques` (reconnaissance à deux étages → `out/report/recognition-briques.json`) et la
+vitrine (`out/showcase/build.py`). `out/identities/` reste le dossier de preuve de chaque recette du même id.
 
 ## Le vocabulaire
 
 | Brique | Ce que c'est | Où | Combien |
 |---|---|---|---|
+| Habillage | la pâte : palette par rôles, typo, matière, contraintes, adaptateurs | `out/habillages/<id>/habillage.json` (famille : `variantes/<v>.json`) | 25 en service (26 tons : la famille `craie` en a 2) ; 2 fiches remplacées gardées |
+| Mécanique | le mouvement : texte, caméra, transitions, rythme, `requiert`, moteur | `out/mecaniques/<id>/mecanique.json` | 19 (2 exécutables) |
+| Format | la livraison : durée, audio, zones sûres | `out/formats/<id>.json` | 4 |
+| Recette | une combinaison nommée : habillage + mécanique + formats + statut + preuves | `out/recettes/<id>.json` | 29 (27 validées, 1 essai, 1 abandonnée) |
 
 - **Niveau** de chaque brique : `executable` = un adaptateur existe et le moteur l'applique sans toucher au code de la
   mécanique (chemin-moteur : 4 habillages, papier-moteur : 4 habillages) ; `declare` = valeurs relevées (souvent les
@@ -39,7 +45,12 @@ Dans les recettes et `etiquettes.json` : `"habillage": "craie"` + `"variante": "
 gardé dans `habillageAvant`). Les fichiers d'adaptateur, la maquette de la vitrine et les `narration-chemin.json` gardent les
 anciens ids (`ardoise`, `craie-verte`) : rien n'est renommé.
 
-## Le tableau des combinaisons (tenu à la main)
+## Le tableau des combinaisons
+
+Depuis le 20/11/2026, **la référence est calculée** : `compatibilite[]` de `out/identities/index.json` (états `teste`,
+`compatible`, `a-tester`, `incompatible` ; build_index.py), à partir des fiches, de `etiquettes.json`, de `qa.json` et de
+`propositions.json` (cases proposées non rendues C3, C5–C8, avec la raison écrite des incompatibles). Le tableau ci-dessous
+est la copie lisible du 20/11/2026.
 
 États : **testé** (un short existe et passe `check.py`), **compatible** (adaptateur + image fixe, pas de short), **à
 tester** (besoins remplis sur le papier, pas d'adaptateur), **incompatible** (contrainte violée, raison écrite). Une case

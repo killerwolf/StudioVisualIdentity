@@ -1,6 +1,6 @@
 ---
 name: fabrique-identites
-description: Orchestre la création de nouvelles identités visuelles de shorts pour ce dépôt, à partir du catalogue des librairies (out/library-cards/catalogue.md). L'orchestrateur ne produit rien lui-même, il fait tout faire par des sous-agents Opus 5.5 (préparation, repérage, challenge adversarial, studios, intégration, revue), puis commit et ouvre la PR. Sait aussi enrichir le catalogue (rescan du dépôt) et challenger une identité existante. Déclencheurs - « nouvelles identités », « génère N identités », « fabrique d'identités », « enrichis le catalogue », « challenge l'identité X », /fabrique-identites.
+description: Orchestre la création de nouvelles identités visuelles de shorts pour ce dépôt, à partir du catalogue des librairies (out/library-cards/catalogue.md). L'orchestrateur ne produit rien lui-même, il fait tout faire par des sous-agents Opus 5.5 (préparation, repérage, challenge adversarial, studios, intégration, revue), puis commit et ouvre la PR. Sait aussi créer une nouvelle recette à partir de briques existantes (un habillage et une mécanique du dépôt, sans nouvelle identité), enrichir le catalogue (rescan du dépôt) et challenger une identité existante. Déclencheurs - « nouvelles identités », « génère N identités », « fabrique d'identités », « nouvelle recette », « mets l'habillage X sur la mécanique Y », « compose X × Y », « enrichis le catalogue », « challenge l'identité X », /fabrique-identites.
 ---
 
 # Fabrique d'identités
@@ -19,6 +19,9 @@ chaîne donnée revient à StudioGabarit, pas à ce skill.
 - `/fabrique-identites N` (défaut N = 2) : produit N nouvelles identités complètes.
 - `/fabrique-identites catalogue` : rescanne le dépôt et met le catalogue à jour (voir « Enrichir le catalogue »).
 - `/fabrique-identites challenge <slug>` : lance seulement l'agent adversarial sur une identité existante.
+- `/fabrique-identites recette <habillage> <mecanique> [<format>]` : compose une **nouvelle recette** avec des briques qui
+  existent déjà (voir « Nouvelle recette à partir de briques existantes »). C'est le mode à prendre dès qu'on veut une pâte
+  connue sur un mouvement connu : ce n'est **pas** une nouvelle identité.
 
 ## Sources à donner aux agents (chemins relatifs à la racine du dépôt)
 
@@ -31,6 +34,8 @@ chaîne donnée revient à StudioGabarit, pas à ce skill.
 | `out/report/facts.md`, `out/report/failures.md` | pièges mesurés, coûts de rendu, ce qui a échoué |
 | `AGENTS.md` | format des livrables, voix off Fish Audio « Arnold », zones sûres, contraintes |
 | `out/tools/catalogue_scan.py` | rescan des librairies réellement importées (base de l'enrichissement) |
+| `out/habillages/`, `out/mecaniques/`, `out/formats/`, `out/recettes/` | les briques (modèle « vidéo = habillage × mécanique × format (+ son) », `out/report/notes/composition/proposition.md`) : une fiche par brique, une recette par combinaison nommée ; `out/recettes/README.md` les explique, `out/recettes/propositions.json` liste les cases proposées non rendues |
+| `out/identities/index.json` → `habillages[]`, `mecaniques[]`, `recettes[]`, `compatibilite[]` | la matrice calculée (états `teste`, `compatible`, `a-tester`, `incompatible`) : où chercher une combinaison avant de la proposer |
 | `out/showcase/README.md`, `build.py`, `page.tpl.html` | la vitrine publiée (artifact claude.ai https://claude.ai/artifact/VJEgxZpSjAn3cGGb51c1nK) : comment la régénérer et la republier |
 
 ## Déroulé pour N identités
@@ -88,6 +93,50 @@ indépendant ; attendre la notification de fin, ne pas interroger en boucle.
    serveur a déjà les objets ; pousser avec `git -c push.negotiate=false push`. Un refus « fatal error in commit_refs » vient
    de GitHub lui-même : attendre et retenter.
 
+## Nouvelle recette à partir de briques existantes
+
+Règle (proposition.md § 2.5, généralise `variantOf`) : **une nouvelle pâte sur une mécanique existante, ou une pâte existante
+sur une autre mécanique, est une nouvelle recette (et, pour une pâte neuve, un nouvel habillage), pas une nouvelle
+identité.** Pas de dossier `out/identities/<id>/` sauf si on écrit un design system complet ; pas d'entrée dans `ORDER` ni
+`CURATION` de `build_index.py`. Exemples dans le dépôt : `chemin-grille-suisse` (recette adoptée « Données qui se tracent »,
+essai C2), `chemin-craie-verte` (essai C1), `papier-plan-bleu` (essai C4, abandonné).
+
+Déroulé (mêmes règles que plus haut : tout ce qui exécute est fait par un sous-agent Opus 5.5, l'orchestrateur briefe,
+regarde, décide et commit) :
+
+1. **Lire la case** (orchestrateur) : dans `out/identities/index.json`, `compatibilite[]` pour le couple (clé de pâte =
+   `habillage` ou `famille/variante`, ex. `craie/tableau-vert`). `teste` = existe déjà (ne pas refaire) ; `incompatible` = raison
+   écrite, ne pas lancer sans la lever ; `a-tester` = la fiche de l'habillage donne ce que demande `mecanique.requiert`, mais
+   pas d'adaptateur (lire `alerte` : cadence 12 i/s, grille pixel) ; case absente = inconnue : vérifier `requiert` (rôles de
+   palette, projection, crochets) contre `habillage.json` avant de proposer. Une mécanique `declare` (code copié dans chaque
+   short) n'accepte pas d'habillage sans écrire un moteur : choisir de préférence une mécanique `executable` (`trace-chemin`,
+   `pop-papier-12ips`). Si la case n'est pas dans `out/recettes/propositions.json`, l'y ajouter avec sa question et son coût.
+2. **Adaptateur** (1 agent) : un fichier **à côté** de l'existant, jamais une modification d'un moteur partagé ni d'un short
+   existant : `out/shared/chemin-moteur/habillages/<habillage>.js` (partir d'un habillage voisin, mêmes crochets) ou un thème
+   JSON du moteur papier (dans le dossier du nouveau short tant que la recette est un essai, comme C4). Les couleurs et la police
+   de titre de l'adaptateur doivent être celles de `habillage.json` (`check.py --briques` le contrôle) ; si l'habillage n'a pas
+   de fiche, en écrire une (`out/habillages/<id>/habillage.json`, niveau `declare` ou `executable`). Deux pâtes de la même
+   matière en deux tons = une **famille** à variantes (`out/habillages/craie/` : `variantes/<v>.json`), pas deux habillages.
+3. **Contenu et voix** : réutiliser de préférence un texte et une voix qui existent (les trois essais l'ont fait : aucun
+   appel de voix) ; sinon, voix comme au § 6 ci-dessus.
+4. **Short** (1 agent) : dossier `out/shorts/<recette>__<famille>__<sujet>/` (livrables habituels de `STUDIO_BRIEF.md`) dont le
+   `short.json` déclare `recette`, `habillage` (+ `variante`), `mecanique`, `format`. Un seul rendu à la fois. `check.py` OK, et
+   l'audit de la mécanique s'il existe (`chemin_audit.mjs`).
+5. **Recette** (orchestrateur) : `out/recettes/<id>.json` avec `habillage`, `variante`, `mecanique`, `formats`, `statut`
+   (`essai` tant qu'Hamdi n'a pas validé ; `validee` ; `abandonnee`, short gardé), `case` si elle vient de la matrice,
+   `question`, `shorts`, `adaptateur`, `signaturePortee` (quelle brique porte la signature), `posterT`. Mettre à jour les
+   `recettes` des fiches d'habillage et de mécanique concernées.
+6. **Contrôles** : `python3 out/tools/check.py --briques` (0 erreur), `python3 out/tools/check.py --all`,
+   `python3 out/tools/build_index.py` (la case passe à `teste`), puis `.venv/bin/python out/tools/recognition.py --briques`
+   (`out/report/recognition-briques.json` ; ne pas lancer le mode par défaut, qui réécrit `recognition.json`) : la nouvelle
+   recette doit rester voisine de son habillage parmi les shorts d'**une autre** mécanique, et de sa mécanique parmi les shorts
+   d'**un autre** habillage (tests croisés). Une recette à un seul short est notée « sans pair », ce n'est pas un échec.
+7. **Regarder et juger soi-même** (orchestrateur) : planche contact et comparaison aux mêmes instants avec les shorts de
+   l'habillage et de la mécanique d'origine (modèle : `out/report/notes/composition/essais/`), verdict écrit dans
+   `essais.md` ; ne pas relayer l'auto-évaluation de l'agent.
+8. **Vitrine** : `.venv/bin/python out/showcase/build.py` (la case et le short apparaissent seuls dans « Composer », lus dans
+   l'index ; n'encode que les aperçus nouveaux). Republier seulement si Hamdi le demande.
+
 ## Enrichir le catalogue
 
 Un agent (Opus 5.5) exécute `python3 out/tools/catalogue_scan.py --check` : il liste les librairies réellement importées
@@ -99,7 +148,7 @@ ajoute les nouvelles (catégorie, statut, Oui/Non, Où) et met à jour le bilan 
 ## Règles qui ne se discutent pas
 
 - Pas de scène, de rendu, de design system ni de relecture écrits par l'orchestrateur : un sous-agent Opus 5.5 à chaque fois.
-- Une nouvelle identité qui réutilise un moteur existant et ne change que le fond, la palette et les polices s'enregistre comme **dérivation** (`variantOf` dans `build_index.py`, `FAMILIES`) de son identité racine, pas comme une nouvelle identité (cf. Papier découpé et ses 3 dérivations).
+- Une nouvelle identité qui réutilise un moteur existant et ne change que le fond, la palette et les polices n'est **pas** une nouvelle identité : depuis le 20/11/2026, c'est une **nouvelle recette** (mode `recette` ci-dessus). Les 3 dérivations de Papier découpé restent enregistrées comme `variantOf` dans `build_index.py` (`FAMILIES`) pour les lecteurs actuels de l'index ; on n'en ajoute plus de nouvelles par ce biais.
 - Une nouvelle identité garde **une** signature (type, palette, transition signature) distincte de toutes les voisines ;
   si le challenge ou la revue la juge confusable, on change la direction, pas la présentation.
 - Pas d'asset téléchargé, pas de personnage, logo ni œuvre existants, faits exacts dans les explicatifs, photosensibilité
