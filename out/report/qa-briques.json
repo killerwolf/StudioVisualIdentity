@@ -1,0 +1,30 @@
+{
+ "ok": true,
+ "errors": [],
+ "warnings": [
+  "out/habillages/brut-jaune/habillage.json : encre #FFFFFF sur surface #FFE600 : 1.27:1 < 4.5:1",
+  "out/habillages/craie/variantes/tableau-vert.json : adaptateur out/shared/chemin-moteur/habillages/craie-verte.js : couleurs absentes (surface #264639) ; police de titre « Nunito » absente (fiche « declare »)",
+  "out/habillages/grille-suisse/habillage.json : adaptateur out/shared/chemin-moteur/habillages/grille-suisse.js : couleurs absentes (surface #FFFFFF) (fiche « declare »)",
+  "out/habillages/punchy/habillage.json : encre #140A33 sur fond #2A1160 : 1.2:1 < 4.5:1",
+  "out/recettes/chemin-editeur.json : palette.vif absente(s) de editeur, exigée(s) par trace-chemin"
+ ],
+ "notes": [
+  "chemin-ardoise : une seule preuve (validee)",
+  "chemin-craie-verte : une seule preuve (essai)",
+  "chemin-editeur : une seule preuve (validee)",
+  "chemin-grille-suisse : une seule preuve (validee)",
+  "chemin-portulan : une seule preuve (validee)",
+  "lyrics-chemin : une seule preuve (validee)",
+  "lyrics-punchy : une seule preuve (validee)",
+  "papier-plan-bleu : une seule preuve (abandonnee)"
+ ],
+ "counts": {
+  "habillages": 25,
+  "pates": 26,
+  "fiches": 29,
+  "mecaniques": 19,
+  "formats": 4,
+  "recettes": 29,
+  "etiquettes": 51
+ }
+}

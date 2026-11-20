@@ -10,7 +10,16 @@
    "height": 1920,
    "fps": "30/1",
    "codec": "h264",
-   "pix": "yuv420p"
+   "pix": "yuv420p",
+   "format": "narre-court"
+  },
+  "briques": {
+   "recette": "aquarelle-conte",
+   "pate": "aquarelle",
+   "mecanique": "lavis-multiplan",
+   "format": "narre-court",
+   "statut": "validee",
+   "source": "etiquettes"
   }
  },
  {
@@ -24,7 +33,16 @@
    "height": 1920,
    "fps": "30/1",
    "codec": "h264",
-   "pix": "yuv420p"
+   "pix": "yuv420p",
+   "format": "narre-court"
+  },
+  "briques": {
+   "recette": "aquarelle-conte",
+   "pate": "aquarelle",
+   "mecanique": "lavis-multiplan",
+   "format": "narre-court",
+   "statut": "validee",
+   "source": "etiquettes"
   }
  },
  {
@@ -38,7 +56,16 @@
    "height": 1920,
    "fps": "30/1",
    "codec": "h264",
-   "pix": "yuv420p"
+   "pix": "yuv420p",
+   "format": "narre-court"
+  },
+  "briques": {
+   "recette": "atelier-papier",
+   "pate": "atelier-papier",
+   "mecanique": "pop-papier-12ips",
+   "format": "narre-court",
+   "statut": "validee",
+   "source": "etiquettes"
   }
  },
  {
@@ -54,7 +81,16 @@
    "height": 1920,
    "fps": "30/1",
    "codec": "h264",
-   "pix": "yuv420p"
+   "pix": "yuv420p",
+   "format": "narre-court"
+  },
+  "briques": {
+   "recette": "atelier-papier",
+   "pate": "atelier-papier",
+   "mecanique": "pop-papier-12ips",
+   "format": "narre-court",
+   "statut": "validee",
+   "source": "etiquettes"
   }
  },
  {
@@ -70,7 +106,16 @@
    "height": 1920,
    "fps": "30/1",
    "codec": "h264",
-   "pix": "yuv420p"
+   "pix": "yuv420p",
+   "format": "narre-court"
+  },
+  "briques": {
+   "recette": "atlas-grave",
+   "pate": "gravure-parchemin",
+   "mecanique": "carte-trace-panoramique",
+   "format": "narre-court",
+   "statut": "validee",
+   "source": "etiquettes"
   }
  },
  {
@@ -84,7 +129,16 @@
    "height": 1920,
    "fps": "30/1",
    "codec": "h264",
-   "pix": "yuv420p"
+   "pix": "yuv420p",
+   "format": "narre-court"
+  },
+  "briques": {
+   "recette": "atlas-grave",
+   "pate": "gravure-parchemin",
+   "mecanique": "carte-trace-panoramique",
+   "format": "narre-court",
+   "statut": "validee",
+   "source": "etiquettes"
   }
  },
  {
@@ -98,7 +152,16 @@
    "height": 1920,
    "fps": "30/1",
    "codec": "h264",
-   "pix": "yuv420p"
+   "pix": "yuv420p",
+   "format": "narre-court"
+  },
+  "briques": {
+   "recette": "bauhaus-kinetic",
+   "pate": "bauhaus-primaires",
+   "mecanique": "puzzle-grille-morph",
+   "format": "narre-court",
+   "statut": "validee",
+   "source": "etiquettes"
   }
  },
  {
@@ -112,7 +175,16 @@
    "height": 1920,
    "fps": "30/1",
    "codec": "h264",
-   "pix": "yuv420p"
+   "pix": "yuv420p",
+   "format": "narre-court"
+  },
+  "briques": {
+   "recette": "bauhaus-kinetic",
+   "pate": "bauhaus-primaires",
+   "mecanique": "puzzle-grille-morph",
+   "format": "narre-court",
+   "statut": "validee",
+   "source": "etiquettes"
   }
  },
  {
@@ -126,7 +198,16 @@
    "height": 1920,
    "fps": "30/1",
    "codec": "h264",
-   "pix": "yuv420p"
+   "pix": "yuv420p",
+   "format": "narre-court"
+  },
+  "briques": {
+   "recette": "brut-meme",
+   "pate": "brut-jaune",
+   "mecanique": "punch-cut-slam",
+   "format": "narre-court",
+   "statut": "validee",
+   "source": "etiquettes"
   }
  },
  {
@@ -140,7 +221,16 @@
    "height": 1920,
    "fps": "30/1",
    "codec": "h264",
-   "pix": "yuv420p"
+   "pix": "yuv420p",
+   "format": "narre-court"
+  },
+  "briques": {
+   "recette": "brut-meme",
+   "pate": "brut-jaune",
+   "mecanique": "punch-cut-slam",
+   "format": "narre-court",
+   "statut": "validee",
+   "source": "etiquettes"
   }
  },
  {
@@ -156,7 +246,16 @@
    "height": 1920,
    "fps": "30/1",
    "codec": "h264",
-   "pix": "yuv420p"
+   "pix": "yuv420p",
+   "format": "narre-court"
+  },
+  "briques": {
+   "recette": "cabinet-curiosites",
+   "pate": "cabinet-curiosites",
+   "mecanique": "pop-papier-12ips",
+   "format": "narre-court",
+   "statut": "validee",
+   "source": "etiquettes"
   }
  },
  {
@@ -172,7 +271,16 @@
    "height": 1920,
    "fps": "30/1",
    "codec": "h264",
-   "pix": "yuv420p"
+   "pix": "yuv420p",
+   "format": "narre-court"
+  },
+  "briques": {
+   "recette": "cabinet-curiosites",
+   "pate": "cabinet-curiosites",
+   "mecanique": "pop-papier-12ips",
+   "format": "narre-court",
+   "statut": "validee",
+   "source": "etiquettes"
   }
  },
  {
@@ -188,7 +296,16 @@
    "height": 1920,
    "fps": "30/1",
    "codec": "h264",
-   "pix": "yuv420p"
+   "pix": "yuv420p",
+   "format": "narre-court"
+  },
+  "briques": {
+   "recette": "carnet-archives",
+   "pate": "carnet-archives",
+   "mecanique": "pop-papier-12ips",
+   "format": "narre-court",
+   "statut": "validee",
+   "source": "etiquettes"
   }
  },
  {
@@ -204,7 +321,16 @@
    "height": 1920,
    "fps": "30/1",
    "codec": "h264",
-   "pix": "yuv420p"
+   "pix": "yuv420p",
+   "format": "narre-court"
+  },
+  "briques": {
+   "recette": "carnet-archives",
+   "pate": "carnet-archives",
+   "mecanique": "pop-papier-12ips",
+   "format": "narre-court",
+   "statut": "validee",
+   "source": "etiquettes"
   }
  },
  {
@@ -218,7 +344,16 @@
    "height": 1920,
    "fps": "30/1",
    "codec": "h264",
-   "pix": "yuv420p"
+   "pix": "yuv420p",
+   "format": "narre-court"
+  },
+  "briques": {
+   "recette": "carte-meteo",
+   "pate": "meteo-clair",
+   "mecanique": "carte-champs-front",
+   "format": "narre-court",
+   "statut": "validee",
+   "source": "etiquettes"
   }
  },
  {
@@ -232,7 +367,62 @@
    "height": 1920,
    "fps": "30/1",
    "codec": "h264",
-   "pix": "yuv420p"
+   "pix": "yuv420p",
+   "format": "narre-court"
+  },
+  "briques": {
+   "recette": "carte-meteo",
+   "pate": "meteo-clair",
+   "mecanique": "carte-champs-front",
+   "format": "narre-court",
+   "statut": "validee",
+   "source": "etiquettes"
+  }
+ },
+ {
+  "short": "chemin-craie-verte__explicatif__le-quatre-quarts",
+  "ok": true,
+  "errors": [],
+  "warnings": [],
+  "info": {
+   "duration": 25.6,
+   "width": 1080,
+   "height": 1920,
+   "fps": "30/1",
+   "codec": "h264",
+   "pix": "yuv420p",
+   "format": "narre-long"
+  },
+  "briques": {
+   "recette": "chemin-craie-verte",
+   "pate": "craie/tableau-vert",
+   "mecanique": "trace-chemin",
+   "format": "narre-long",
+   "statut": "essai",
+   "source": "short.json"
+  }
+ },
+ {
+  "short": "chemin-grille-suisse__geographie__ou-vivent-8-milliards",
+  "ok": true,
+  "errors": [],
+  "warnings": [],
+  "info": {
+   "duration": 13.8,
+   "width": 1080,
+   "height": 1920,
+   "fps": "30/1",
+   "codec": "h264",
+   "pix": "yuv420p",
+   "format": "narre-court"
+  },
+  "briques": {
+   "recette": "chemin-grille-suisse",
+   "pate": "grille-suisse",
+   "mecanique": "trace-chemin",
+   "format": "narre-court",
+   "statut": "validee",
+   "source": "etiquettes"
   }
  },
  {
@@ -246,7 +436,16 @@
    "height": 1920,
    "fps": "30/1",
    "codec": "h264",
-   "pix": "yuv420p"
+   "pix": "yuv420p",
+   "format": "narre-court"
+  },
+  "briques": {
+   "recette": "cosmos-doc",
+   "pate": "cosmos-noir",
+   "mecanique": "travelling-cine-3d",
+   "format": "narre-court",
+   "statut": "validee",
+   "source": "etiquettes"
   }
  },
  {
@@ -260,7 +459,16 @@
    "height": 1920,
    "fps": "30/1",
    "codec": "h264",
-   "pix": "yuv420p"
+   "pix": "yuv420p",
+   "format": "narre-court"
+  },
+  "briques": {
+   "recette": "cosmos-doc",
+   "pate": "cosmos-noir",
+   "mecanique": "travelling-cine-3d",
+   "format": "narre-court",
+   "statut": "validee",
+   "source": "etiquettes"
   }
  },
  {
@@ -276,7 +484,16 @@
    "height": 1920,
    "fps": "30/1",
    "codec": "h264",
-   "pix": "yuv420p"
+   "pix": "yuv420p",
+   "format": "narre-court"
+  },
+  "briques": {
+   "recette": "gazette-1900",
+   "pate": "gazette-sepia",
+   "mecanique": "tourniquet-tampon",
+   "format": "narre-court",
+   "statut": "validee",
+   "source": "etiquettes"
   }
  },
  {
@@ -290,7 +507,16 @@
    "height": 1920,
    "fps": "30/1",
    "codec": "h264",
-   "pix": "yuv420p"
+   "pix": "yuv420p",
+   "format": "narre-court"
+  },
+  "briques": {
+   "recette": "gazette-1900",
+   "pate": "gazette-sepia",
+   "mecanique": "tourniquet-tampon",
+   "format": "narre-court",
+   "statut": "validee",
+   "source": "etiquettes"
   }
  },
  {
@@ -304,7 +530,16 @@
    "height": 1920,
    "fps": "30/1",
    "codec": "h264",
-   "pix": "yuv420p"
+   "pix": "yuv420p",
+   "format": "boucle"
+  },
+  "briques": {
+   "recette": "liquid-chrome",
+   "pate": "chrome-irise",
+   "mecanique": "plan-sequence-matiere",
+   "format": "boucle",
+   "statut": "validee",
+   "source": "etiquettes"
   }
  },
  {
@@ -318,7 +553,16 @@
    "height": 1920,
    "fps": "30/1",
    "codec": "h264",
-   "pix": "yuv420p"
+   "pix": "yuv420p",
+   "format": "narre-court"
+  },
+  "briques": {
+   "recette": "liquid-chrome",
+   "pate": "chrome-irise",
+   "mecanique": "plan-sequence-matiere",
+   "format": "narre-court",
+   "statut": "validee",
+   "source": "etiquettes"
   }
  },
  {
@@ -332,7 +576,16 @@
    "height": 1920,
    "fps": "30/1",
    "codec": "h264",
-   "pix": "yuv420p"
+   "pix": "yuv420p",
+   "format": "narre-court"
+  },
+  "briques": {
+   "recette": "liquid-chrome",
+   "pate": "chrome-irise",
+   "mecanique": "plan-sequence-matiere",
+   "format": "narre-court",
+   "statut": "validee",
+   "source": "etiquettes"
   }
  },
  {
@@ -346,7 +599,16 @@
    "height": 1920,
    "fps": "30/1",
    "codec": "h264",
-   "pix": "yuv420p"
+   "pix": "yuv420p",
+   "format": "narre-long"
+  },
+  "briques": {
+   "recette": "chemin-ardoise",
+   "pate": "craie/ardoise",
+   "mecanique": "trace-chemin",
+   "format": "narre-long",
+   "statut": "validee",
+   "source": "etiquettes"
   }
  },
  {
@@ -364,7 +626,16 @@
    "height": 1920,
    "fps": "30/1",
    "codec": "h264",
-   "pix": "yuv420p"
+   "pix": "yuv420p",
+   "format": "narre-long"
+  },
+  "briques": {
+   "recette": "chemin-portulan",
+   "pate": "portulan",
+   "mecanique": "trace-chemin",
+   "format": "narre-long",
+   "statut": "validee",
+   "source": "etiquettes"
   }
  },
  {
@@ -378,7 +649,16 @@
    "height": 1920,
    "fps": "30/1",
    "codec": "h264",
-   "pix": "yuv420p"
+   "pix": "yuv420p",
+   "format": "paroles-muet"
+  },
+  "briques": {
+   "recette": "lyrics-chemin",
+   "pate": "plan-bleu",
+   "mecanique": "trace-chemin",
+   "format": "paroles-muet",
+   "statut": "validee",
+   "source": "etiquettes"
   }
  },
  {
@@ -392,7 +672,16 @@
    "height": 1920,
    "fps": "30/1",
    "codec": "h264",
-   "pix": "yuv420p"
+   "pix": "yuv420p",
+   "format": "paroles-muet"
+  },
+  "briques": {
+   "recette": "chemin-editeur",
+   "pate": "editeur",
+   "mecanique": "trace-chemin",
+   "format": "paroles-muet",
+   "statut": "validee",
+   "source": "etiquettes"
   }
  },
  {
@@ -406,7 +695,16 @@
    "height": 1920,
    "fps": "30/1",
    "codec": "h264",
-   "pix": "yuv420p"
+   "pix": "yuv420p",
+   "format": "paroles-muet"
+  },
+  "briques": {
+   "recette": "lyrics-punchy",
+   "pate": "punchy",
+   "mecanique": "colonne-mot-a-mot",
+   "format": "paroles-muet",
+   "statut": "validee",
+   "source": "etiquettes"
   }
  },
  {
@@ -420,7 +718,16 @@
    "height": 1920,
    "fps": "30/1",
    "codec": "h264",
-   "pix": "yuv420p"
+   "pix": "yuv420p",
+   "format": "boucle"
+  },
+  "briques": {
+   "recette": "neon-lab",
+   "pate": "neon-labo",
+   "mecanique": "orbite-phenomene-neon",
+   "format": "boucle",
+   "statut": "validee",
+   "source": "etiquettes"
   }
  },
  {
@@ -434,7 +741,16 @@
    "height": 1920,
    "fps": "30/1",
    "codec": "h264",
-   "pix": "yuv420p"
+   "pix": "yuv420p",
+   "format": "narre-court"
+  },
+  "briques": {
+   "recette": "neon-lab",
+   "pate": "neon-labo",
+   "mecanique": "orbite-phenomene-neon",
+   "format": "narre-court",
+   "statut": "validee",
+   "source": "etiquettes"
   }
  },
  {
@@ -448,7 +764,16 @@
    "height": 1920,
    "fps": "30/1",
    "codec": "h264",
-   "pix": "yuv420p"
+   "pix": "yuv420p",
+   "format": "narre-court"
+  },
+  "briques": {
+   "recette": "neon-lab",
+   "pate": "neon-labo",
+   "mecanique": "orbite-phenomene-neon",
+   "format": "narre-court",
+   "statut": "validee",
+   "source": "etiquettes"
   }
  },
  {
@@ -462,7 +787,16 @@
    "height": 1920,
    "fps": "30/1",
    "codec": "h264",
-   "pix": "yuv420p"
+   "pix": "yuv420p",
+   "format": "narre-court"
+  },
+  "briques": {
+   "recette": "papier-decoupe",
+   "pate": "papier-decoupe",
+   "mecanique": "pop-papier-12ips",
+   "format": "narre-court",
+   "statut": "validee",
+   "source": "etiquettes"
   }
  },
  {
@@ -478,7 +812,41 @@
    "height": 1920,
    "fps": "30/1",
    "codec": "h264",
-   "pix": "yuv420p"
+   "pix": "yuv420p",
+   "format": "narre-court"
+  },
+  "briques": {
+   "recette": "papier-decoupe",
+   "pate": "papier-decoupe",
+   "mecanique": "pop-papier-12ips",
+   "format": "narre-court",
+   "statut": "validee",
+   "source": "etiquettes"
+  }
+ },
+ {
+  "short": "papier-plan-bleu__explicatif__d-ou-vient-le-mot-sandwich",
+  "ok": true,
+  "errors": [],
+  "warnings": [
+   "image figée ≥3 s à ['3.2']"
+  ],
+  "info": {
+   "duration": 12.2,
+   "width": 1080,
+   "height": 1920,
+   "fps": "30/1",
+   "codec": "h264",
+   "pix": "yuv420p",
+   "format": "narre-court"
+  },
+  "briques": {
+   "recette": "papier-plan-bleu",
+   "pate": "plan-bleu",
+   "mecanique": "pop-papier-12ips",
+   "format": "narre-court",
+   "statut": "abandonnee",
+   "source": "short.json"
   }
  },
  {
@@ -492,7 +860,16 @@
    "height": 1920,
    "fps": "30/1",
    "codec": "h264",
-   "pix": "yuv420p"
+   "pix": "yuv420p",
+   "format": "narre-court"
+  },
+  "briques": {
+   "recette": "pastel-diorama",
+   "pate": "diorama-pastel",
+   "mecanique": "maquette-rebond",
+   "format": "narre-court",
+   "statut": "validee",
+   "source": "etiquettes"
   }
  },
  {
@@ -508,7 +885,16 @@
    "height": 1920,
    "fps": "30/1",
    "codec": "h264",
-   "pix": "yuv420p"
+   "pix": "yuv420p",
+   "format": "narre-court"
+  },
+  "briques": {
+   "recette": "pastel-diorama",
+   "pate": "diorama-pastel",
+   "mecanique": "maquette-rebond",
+   "format": "narre-court",
+   "statut": "validee",
+   "source": "etiquettes"
   }
  },
  {
@@ -522,7 +908,16 @@
    "height": 1920,
    "fps": "30/1",
    "codec": "h264",
-   "pix": "yuv420p"
+   "pix": "yuv420p",
+   "format": "narre-court"
+  },
+  "briques": {
+   "recette": "pixel-arcade",
+   "pate": "arcade-marine",
+   "mecanique": "simulation-deterministe",
+   "format": "narre-court",
+   "statut": "validee",
+   "source": "etiquettes"
   }
  },
  {
@@ -536,7 +931,16 @@
    "height": 1920,
    "fps": "30/1",
    "codec": "h264",
-   "pix": "yuv420p"
+   "pix": "yuv420p",
+   "format": "narre-court"
+  },
+  "briques": {
+   "recette": "pixel-arcade",
+   "pate": "arcade-marine",
+   "mecanique": "simulation-deterministe",
+   "format": "narre-court",
+   "statut": "validee",
+   "source": "etiquettes"
   }
  },
  {
@@ -550,7 +954,16 @@
    "height": 1920,
    "fps": "30/1",
    "codec": "h264",
-   "pix": "yuv420p"
+   "pix": "yuv420p",
+   "format": "narre-court"
+  },
+  "briques": {
+   "recette": "pixel-arcade",
+   "pate": "arcade-marine",
+   "mecanique": "simulation-deterministe",
+   "format": "narre-court",
+   "statut": "validee",
+   "source": "etiquettes"
   }
  },
  {
@@ -564,7 +977,16 @@
    "height": 1920,
    "fps": "30/1",
    "codec": "h264",
-   "pix": "yuv420p"
+   "pix": "yuv420p",
+   "format": "narre-court"
+  },
+  "briques": {
+   "recette": "riso-zine",
+   "pate": "riso-3-encres",
+   "mecanique": "impression-on-twos",
+   "format": "narre-court",
+   "statut": "validee",
+   "source": "etiquettes"
   }
  },
  {
@@ -581,7 +1003,16 @@
    "height": 1920,
    "fps": "30/1",
    "codec": "h264",
-   "pix": "yuv420p"
+   "pix": "yuv420p",
+   "format": "narre-court"
+  },
+  "briques": {
+   "recette": "riso-zine",
+   "pate": "riso-3-encres",
+   "mecanique": "impression-on-twos",
+   "format": "narre-court",
+   "statut": "validee",
+   "source": "etiquettes"
   }
  },
  {
@@ -595,7 +1026,16 @@
    "height": 1920,
    "fps": "30/1",
    "codec": "h264",
-   "pix": "yuv420p"
+   "pix": "yuv420p",
+   "format": "narre-court"
+  },
+  "briques": {
+   "recette": "survol-pixel",
+   "pate": "pixel-jour",
+   "mecanique": "survol-terrain",
+   "format": "narre-court",
+   "statut": "validee",
+   "source": "etiquettes"
   }
  },
  {
@@ -609,7 +1049,16 @@
    "height": 1920,
    "fps": "30/1",
    "codec": "h264",
-   "pix": "yuv420p"
+   "pix": "yuv420p",
+   "format": "narre-court"
+  },
+  "briques": {
+   "recette": "survol-pixel",
+   "pate": "pixel-jour",
+   "mecanique": "survol-terrain",
+   "format": "narre-court",
+   "statut": "validee",
+   "source": "etiquettes"
   }
  },
  {
@@ -623,7 +1072,16 @@
    "height": 1920,
    "fps": "30/1",
    "codec": "h264",
-   "pix": "yuv420p"
+   "pix": "yuv420p",
+   "format": "narre-court"
+  },
+  "briques": {
+   "recette": "swiss-data",
+   "pate": "grille-suisse",
+   "mecanique": "chiffre-volet-compteur",
+   "format": "narre-court",
+   "statut": "validee",
+   "source": "etiquettes"
   }
  },
  {
@@ -637,7 +1095,16 @@
    "height": 1920,
    "fps": "30/1",
    "codec": "h264",
-   "pix": "yuv420p"
+   "pix": "yuv420p",
+   "format": "narre-court"
+  },
+  "briques": {
+   "recette": "swiss-data",
+   "pate": "grille-suisse",
+   "mecanique": "chiffre-volet-compteur",
+   "format": "narre-court",
+   "statut": "validee",
+   "source": "etiquettes"
   }
  },
  {
@@ -654,7 +1121,16 @@
    "height": 1920,
    "fps": "30/1",
    "codec": "h264",
-   "pix": "yuv420p"
+   "pix": "yuv420p",
+   "format": "narre-court"
+  },
+  "briques": {
+   "recette": "tableau-craie",
+   "pate": "craie/tableau-vert",
+   "mecanique": "ecriture-trace-chiffon",
+   "format": "narre-court",
+   "statut": "validee",
+   "source": "etiquettes"
   }
  },
  {
@@ -668,7 +1144,16 @@
    "height": 1920,
    "fps": "30/1",
    "codec": "h264",
-   "pix": "yuv420p"
+   "pix": "yuv420p",
+   "format": "narre-court"
+  },
+  "briques": {
+   "recette": "tableau-craie",
+   "pate": "craie/tableau-vert",
+   "mecanique": "ecriture-trace-chiffon",
+   "format": "narre-court",
+   "statut": "validee",
+   "source": "etiquettes"
   }
  },
  {
@@ -682,7 +1167,16 @@
    "height": 1920,
    "fps": "30/1",
    "codec": "h264",
-   "pix": "yuv420p"
+   "pix": "yuv420p",
+   "format": "narre-court"
+  },
+  "briques": {
+   "recette": "topo-relief",
+   "pate": "relief-vert",
+   "mecanique": "survol-terrain",
+   "format": "narre-court",
+   "statut": "validee",
+   "source": "etiquettes"
   }
  },
  {
@@ -696,7 +1190,16 @@
    "height": 1920,
    "fps": "30/1",
    "codec": "h264",
-   "pix": "yuv420p"
+   "pix": "yuv420p",
+   "format": "narre-court"
+  },
+  "briques": {
+   "recette": "topo-relief",
+   "pate": "relief-vert",
+   "mecanique": "survol-terrain",
+   "format": "narre-court",
+   "statut": "validee",
+   "source": "etiquettes"
   }
  },
  {
@@ -712,7 +1215,16 @@
    "height": 1920,
    "fps": "30/1",
    "codec": "h264",
-   "pix": "yuv420p"
+   "pix": "yuv420p",
+   "format": "narre-court"
+  },
+  "briques": {
+   "recette": "trait-continu",
+   "pate": "orange-graphite",
+   "mecanique": "traceur-escalier-plaque",
+   "format": "narre-court",
+   "statut": "validee",
+   "source": "etiquettes"
   }
  },
  {
@@ -726,7 +1238,16 @@
    "height": 1920,
    "fps": "30/1",
    "codec": "h264",
-   "pix": "yuv420p"
+   "pix": "yuv420p",
+   "format": "narre-court"
+  },
+  "briques": {
+   "recette": "trait-continu",
+   "pate": "orange-graphite",
+   "mecanique": "traceur-escalier-plaque",
+   "format": "narre-court",
+   "statut": "validee",
+   "source": "etiquettes"
   }
  }
 ]
