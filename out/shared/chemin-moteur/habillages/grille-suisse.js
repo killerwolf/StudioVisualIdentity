@@ -59,5 +59,7 @@ export const habillage = {
   em: [36, 60], trackMax: 0.03, floorPx: 120, floorFast: 92, maxPx: 240, dryCloseAlpha: 0.75, lineWidth: 4,
   col: { fresh: T.red, dry: T.ink, stroke: T.ink, annot: T.red },
   ghost: { mode: 'wipe', alpha: 0.35 },
+  // une unité de classe « rouge » (le « 8 » d'ouverture, depuis le 20/11/2026) reste rouge en séchant : le chiffre qui claque
+  dryColor: u => (u.cls === 'rouge' ? T.red : null),
   floor, sheet, under, tip, annotations,
 };

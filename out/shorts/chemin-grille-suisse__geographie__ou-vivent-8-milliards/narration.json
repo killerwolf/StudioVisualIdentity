@@ -16,30 +16,25 @@
    "text": "Huit milliards d'humains. Mais où vivent-ils ?"
   },
   {
-   "t": 3.5,
-   "maxDuration": 2.0,
-   "text": "Un carré, cent millions d'humains."
-  },
-  {
-   "t": 5.55,
+   "t": 4.35,
    "maxDuration": 1.6,
    "text": "L'Asie, cinquante-neuf pour cent."
   },
   {
-   "t": 7.2,
+   "t": 6.0,
    "maxDuration": 1.6,
    "text": "L'Afrique, dix-huit pour cent."
   },
   {
-   "t": 8.9,
+   "t": 7.7,
    "maxDuration": 2.7,
    "text": "En tête, l'Inde, juste devant la Chine."
   },
   {
-   "t": 11.7,
+   "t": 10.5,
    "maxDuration": 3.1,
    "text": "À elles deux, plus d'un humain sur trois."
   }
  ],
- "note": "Même texte et mêmes fichiers de voix que swiss-data__geographie__ou-vivent-8-milliards (voice_lines/ de ce short, non copiées : src/voix.py les lit là-bas) ; piste de voix seule, sans musique."
+ "note": "Même texte et mêmes fichiers de voix que swiss-data__geographie__ou-vivent-8-milliards (voice_lines/ de ce short, non copiées : src/voix.py les lit là-bas), sauf la réplique « Un carré, cent millions d'humains », retirée le 20/11/2026 (plus de carrés à l'image) ; répliques suivantes avancées de 1,2 s. Piste de voix seule, sans musique."
 }

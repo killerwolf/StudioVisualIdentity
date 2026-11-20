@@ -1,6 +1,6 @@
 {
  "id": "barres-humains",
- "note": "Essai C2 de la composition (habillage grille-suisse sur trace-chemin), texte et voix de swiss-data__geographie__ou-vivent-8-milliards. Repère monde = image finale 1080×1920, grille de 12 colonnes sur x 96–984. Chaque chiffre s'écrit au-dessus d'une barre horizontale qui se remplit pendant qu'il est dit ; toutes les barres sont à la même échelle (milliards d'humains : Asie 4,72 et Afrique 1,44 = 59 % et 18 % de 8 milliards, Inde 1,45 et Chine 1,41, chiffres ONU 2024 repris du short d'origine), si bien que l'image finale est un vrai graphique. Les rangs finaux (la chute) s'écrivent dessous.",
+ "note": "Essai C2 de la composition (habillage grille-suisse sur trace-chemin), texte et voix de swiss-data__geographie__ou-vivent-8-milliards. Repère monde = image finale 1080×1920, grille de 12 colonnes sur x 96–984. Chaque chiffre s'écrit au-dessus d'une barre horizontale qui se remplit pendant qu'il est dit ; toutes les barres sont à la même échelle, la piste entière = 8 milliards = 100 % (111 px par milliard, échelle écrite « 100 % = 8 Md » depuis le 20/11/2026 ; avant : Asie = piste entière ; Asie 4,72 et Afrique 1,44 = 59 % et 18 % de 8 milliards, Inde 1,45 et Chine 1,41, chiffres ONU 2024 repris du short d'origine), si bien que l'image finale est un vrai graphique. Les rangs finaux (la chute) s'écrivent dessous.",
  "feuille": {
   "x": 96,
   "y": 230,
@@ -148,7 +148,7 @@
    "arete": "asie",
    "x": 96,
    "y": 772,
-   "w": 888,
+   "w": 524,
    "h": 52,
    "col": "rouge"
   },
@@ -156,7 +156,7 @@
    "arete": "afrique",
    "x": 96,
    "y": 912,
-   "w": 271,
+   "w": 160,
    "h": 52,
    "col": "bleu"
   },
@@ -164,19 +164,19 @@
    "arete": "inde",
    "x": 96,
    "y": 1142,
-   "w": 273,
+   "w": 161,
    "h": 52,
    "col": "noir",
-   "rougeA": 11.8
+   "rougeA": 10.6
   },
   {
    "arete": "chine",
    "x": 96,
    "y": 1282,
-   "w": 265,
+   "w": 157,
    "h": 52,
    "col": "noir",
-   "rougeA": 11.95
+   "rougeA": 10.75
   }
  ],
  "regles": [
