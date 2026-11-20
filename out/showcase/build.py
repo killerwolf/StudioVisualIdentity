@@ -36,9 +36,12 @@ COMPOSER (section « Composer ses identités ») : les données (habillages, mé
   C1…C8) sont lues dans la maquette out/report/notes/composition/vitrine-composer.html (objet `const D = {…}`), et
   injectées à la place de __COMPOSER__ avec des noms lisibles (HAB_NOM, MEC_NOM ci-dessous) et le poster de chaque
   habillage (p/<short>.jpg, déjà produit pour les bandes). Les chiffres d'inventaire (23 identités, 7/12/4) et l'effort
-  sont des textes fixes de page.tpl.html, repris de inventaire.md et migration.md. Les essais faits (out/recettes/<id>.json
-  avec une clé « essai ») remplissent leur case : short, aperçu v/<short>.mp4, poster p/<short>.jpg et verdict ; leurs
-  shorts ne sont pas dans l'index (préfixe de recette neuf) et ne comptent pas dans les chiffres de l'en-tête.
+  sont des textes fixes de page.tpl.html, repris de inventaire.md et migration.md. Les recettes nées d'une case de la
+  matrice (out/recettes/<id>.json avec une clé « case » : C1, C2, C4…, ou l'ancienne clé « essai ») remplissent leur case :
+  short, aperçu v/<short>.mp4, poster p/<short>.jpg (image à posterT), verdict et statut (« validee » = recette adoptée,
+  comme C2 « Données qui se tracent » le 20/11/2026 ; « essai » ; « abandonnee », comme C4) ; leurs shorts ne sont pas dans
+  l'index (préfixe de recette neuf) et ne comptent pas dans les chiffres de l'en-tête. Ardoise et craie verte sont affichées
+  comme les deux variantes de la famille d'habillage « craie » (out/habillages/craie/, 20/11/2026).
 
 Les textes fixes de la page (limites, directions, colophon) sont dans page.tpl.html : les mettre à jour à la main quand le
 rapport (out/report/) change. Les chiffres (identités, shorts, QA, reconnaissance mesurée, voix) sont calculés ici.
@@ -169,12 +172,12 @@ MAQUETTE = ROOT / 'out/report/notes/composition/vitrine-composer.html'
 HAB_NOM = {
     'grille-suisse': 'Grille suisse', 'gazette-sepia': 'Gazette sépia', 'arcade-marine': 'Arcade marine',
     'brut-jaune': 'Brut jaune', 'meteo-clair': 'Météo claire', 'bauhaus-primaires': 'Bauhaus primaires',
-    'craie-verte': 'Craie verte', 'riso-3-encres': 'Riso 3 encres', 'orange-graphite': 'Orange graphite',
+    'craie-verte': 'Craie · tableau vert', 'riso-3-encres': 'Riso 3 encres', 'orange-graphite': 'Orange graphite',
     'diorama-pastel': 'Diorama pastel', 'relief-vert': 'Relief vert', 'gravure-parchemin': 'Gravure parchemin',
     'aquarelle': 'Aquarelle', 'neon-labo': 'Néon labo', 'cosmos-noir': 'Cosmos noir', 'chrome-irise': 'Chrome irisé',
     'papier-decoupe': 'Papier, tapis vert', 'atelier-papier': 'Papier, bleu nuit', 'carnet-archives': 'Carnet kraft',
     'cabinet-curiosites': 'Cabinet bleu et or', 'punchy': 'Punchy (3 camaïeux)', 'plan-bleu': 'Plan bleu (blueprint)',
-    'editeur': 'Éditeur de code', 'ardoise': 'Ardoise', 'portulan': 'Portulan', 'pixel-jour': 'Pixel jour',
+    'editeur': 'Éditeur de code', 'ardoise': 'Craie · ardoise', 'portulan': 'Portulan', 'pixel-jour': 'Pixel jour',
 }
 MEC_NOM = {
     'trace-chemin': 'Chemin qui se trace', 'pop-papier-12ips': 'Papier qui saute (12 images/s)',
@@ -203,12 +206,13 @@ def composer_short_habillage():
 
 
 def essais():
-    """Recettes d'essai (out/recettes/<id>.json avec une clé « essai » : C1, C2, C4…) : leur short est hors index."""
+    """Recettes nées d'une case de la matrice (out/recettes/<id>.json avec une clé « case » ou « essai » : C1, C2, C4…),
+    adoptées, à l'essai ou abandonnées : leur short est hors index. r['case'] est rempli depuis l'ancienne clé si besoin."""
     out = []
     for f in sorted((ROOT / 'out/recettes').glob('*.json')):
         r = json.load(open(f))
-        if isinstance(r, dict) and r.get('essai'):
-            out.append(r)
+        if isinstance(r, dict) and (r.get('case') or r.get('essai')):
+            out.append({**r, 'case': r.get('case') or r['essai']})
     return out
 
 
@@ -227,13 +231,13 @@ def build_composer(ids):
     # essais faits (C1, C2, C4…) : la case de la maquette passe à « teste », avec le short, la vidéo et le verdict de la recette
     ess = {}
     for r in essais():
-        c = next((c for c in D['cases'] if c.get('essai') == r['essai']), None)
+        c = next((c for c in D['cases'] if c.get('essai') == r['case']), None)
         if not c or not r['shorts'] or not (ROOT / r['shorts'][0] / 'short.mp4').exists():
             continue
         d = Path(r['shorts'][0]).name
         c.update(etat='teste', recette=r['id'], f=r['formats'][0])
         first[r['id']] = d
-        ess[r['id']] = {'essai': r['essai'], 'video': f'v/{d}.mp4', 'nom': r['nom'], 'verdict': r.get('verdict') or {},
+        ess[r['id']] = {'essai': r['case'], 'statut': r.get('statut'), 'video': f'v/{d}.mp4', 'nom': r['nom'], 'verdict': r.get('verdict') or {},
                         'duree': json.load(open(ROOT / r['shorts'][0] / 'short.json')).get('duration')}
     anchor = lambda rid: f"essai-{ess[rid]['essai']}" if rid in ess else rid if rid in by_id else 'lyrics-chemin' if rid.startswith('chemin-') else rid
     tested = {c['h']: c['recette'] for c in D['cases'] if c['etat'] == 'teste' and c.get('recette') not in ess}

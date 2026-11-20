@@ -255,6 +255,29 @@ details.full summary { cursor: pointer; font-weight: 600; color: var(--safelight
 .mx .thumb.done { position: relative; box-shadow: 0 0 0 2px var(--c-try); }
 .mx .thumb.done b { position: absolute; left: 2px; bottom: 2px; font: 800 10px var(--mono); background: var(--c-try); color: #111; padding: 0 3px; border-radius: 2px; }
 .mxfull .tr.done { border-style: solid; background: color-mix(in srgb, var(--c-try) 18%, transparent); }
+.mx .thumb.done.ok { box-shadow: 0 0 0 2px var(--c-fmt); }
+.mx .thumb.done.ok b { background: var(--c-fmt); color: #fff; }
+.mx .thumb.done.ab { box-shadow: 0 0 0 2px var(--ink-2); }
+.mx .thumb.done.ab img { filter: grayscale(1); opacity: .55; }
+.mx .thumb.done.ab b { background: var(--ink-2); color: var(--bg); text-decoration: line-through; }
+.mxfull .tr.done.ok { color: var(--c-fmt); border-color: var(--c-fmt); background: color-mix(in srgb, var(--c-fmt) 18%, transparent); }
+.mxfull .tr.done.ab { color: var(--ink-2); border-color: var(--ink-2); background: none; text-decoration: line-through; }
+.mlegend .k3 { display: inline-block; width: 14px; height: 24px; border-radius: 3px; border: 2px solid var(--c-fmt); vertical-align: middle; margin-right: 6px; }
+.mlegend .k4 { display: inline-block; width: 14px; height: 24px; border-radius: 3px; border: 2px solid var(--ink-2); background: var(--line); vertical-align: middle; margin-right: 6px; }
+.trial.ok { border-top-color: var(--c-fmt); }
+.trial.ok .tid, .trial.ok .verdict .vk { color: var(--c-fmt); }
+.trial.ab { border-top-color: var(--ink-2); }
+.trial.ab .tid, .trial.ab .verdict .vk { color: var(--ink-2); }
+.trial.ab .pair, .trial.ab .res { opacity: .6; filter: grayscale(.8); }
+.trial .fam { font-size: 13px; color: var(--ink); border-left: 3px solid var(--c-hab); padding-left: 8px; }
+.family { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 340px); gap: var(--s4); align-items: center; background: var(--panel); border: 1px solid var(--line); border-left: 4px solid var(--c-hab); border-radius: 8px; padding: var(--s4); margin-top: var(--s5); }
+.family h4 { margin: 0 0 var(--s2); font: 700 19px/1.2 var(--display); }
+.family p { font-size: 14px; color: var(--ink-2); margin: 0 0 var(--s2); }
+.family .vars { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s3); }
+.family .vars figure { margin: 0; min-width: 0; }
+.family .vars img { width: 100%; aspect-ratio: 9 / 16; object-fit: cover; border-radius: 6px; box-shadow: 0 0 0 1px var(--line); display: block; }
+.family .vars figcaption { font-size: 12px; color: var(--ink-2); margin-top: 4px; line-height: 1.25; }
+.family .vars figcaption b { color: var(--ink); }
 .trial .cost { font: 600 13px var(--mono); color: var(--ink); margin-top: auto; }
 .effort table { min-width: 0; font-size: 14px; }
 .effort td, .effort th { padding: 10px 12px; }
@@ -285,7 +308,8 @@ footer.colophon { margin-top: var(--s7); padding-top: var(--s4); border-top: 1px
 
 @media (max-width: 860px) {
   .hero { grid-template-columns: minmax(0, 1fr); }
-  .proof, .trials, .choices { grid-template-columns: minmax(0, 1fr); }
+  .proof, .trials, .choices, .family { grid-template-columns: minmax(0, 1fr); }
+  .family .vars { max-width: 360px; }
   .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .split ul { grid-template-columns: minmax(0, 1fr); }
   .example { grid-template-columns: 120px minmax(0, 1fr); gap: var(--s4); }
@@ -338,7 +362,7 @@ footer.colophon { margin-top: var(--s7); padding-top: var(--s4); border-top: 1px
 
   <section class="section compose" id="composer" aria-labelledby="composer-h">
     <header>
-      <p class="eyebrow"><span class="new">Nouveau</span>Validé le 19 novembre 2026 (choix 118) · version minimale faite, 3 essais rendus</p>
+      <p class="eyebrow"><span class="new">Nouveau</span>Validé le 19 novembre 2026 (choix 118) · 20 novembre (option 124) : 1 recette adoptée, famille craie, C4 abandonné</p>
       <h2 id="composer-h">Composer ses identités</h2>
       <p>Une identité mélange deux choses : <b>ce qu'on voit</b> sur une image fixe (couleurs, polices, matière) et <b>la façon dont ça bouge</b>. Si on les sépare, on peut les recombiner : garder un mouvement qui marche et lui changer d'habit, ou l'inverse, sans tout refaire. Lyrics chemin l'a déjà fait quatre fois.</p>
     </header>
@@ -370,16 +394,17 @@ footer.colophon { margin-top: var(--s7); padding-top: var(--s4); border-top: 1px
       </ul>
     </div>
 
-    <h3 class="sub">Ce qui existe, et les trois premiers essais</h3>
-    <p class="subl">Lignes : les habillages ; colonnes : les mécaniques. Une image = un short existe (cliquer pour le voir). Une image cerclée avec C1, C2 ou C4 = un essai rendu le 19 novembre : pour la première fois, un habillage a été posé sur une deuxième mécanique. Les fiches de chaque brique et ce tableau sont dans le dépôt : out/habillages/, out/mecaniques/, out/formats/, out/recettes/.</p>
+    <h3 class="sub">Ce qui existe, la recette adoptée et les essais</h3>
+    <p class="subl">Lignes : les habillages ; colonnes : les mécaniques. Une image = un short existe (cliquer pour le voir). Les cases C1, C2 et C4 ont été rendues le 19 novembre : pour la première fois, un habillage a été posé sur une deuxième mécanique. Le 20 novembre, C2 est devenue une recette de chaîne (« Données qui se tracent », cerclée de vert), C4 est abandonné (grisé), C1 reste un essai. Ardoise et craie verte sont maintenant les deux variantes d'un même habillage, « Craie ». Les fiches de chaque brique et ce tableau sont dans le dépôt : out/habillages/, out/mecaniques/, out/formats/, out/recettes/.</p>
     <div class="mx" id="cx-focus"></div>
-    <div class="mlegend"><span><i class="k1"></i>short existant</span><span><i class="k2"></i>essai (C1, C2, C4 : rendus)</span><span>Extrait : les 10 habillages et 4 mécaniques concernés</span></div>
+    <div class="mlegend"><span><i class="k1"></i>short existant</span><span><i class="k3"></i>recette adoptée (C2)</span><span><i class="k2"></i>essai (C1)</span><span><i class="k4"></i>abandonné (C4)</span><span>Extrait : les 10 habillages et 4 mécaniques concernés</span></div>
     <details class="full">
       <summary>Voir la matrice complète : <span id="cx-full-n"></span></summary>
       <div class="mx mxfull" id="cx-full"></div>
-      <div class="mlegend"><span><i class="dot" style="display:inline-block;width:12px;height:12px;border-radius:50%;background:var(--c-fmt)"></i>short existant</span><span>C1, C2, C4 : essais rendus ; C3, C5 à C8 : proposés</span></div>
+      <div class="mlegend"><span><i class="dot" style="display:inline-block;width:12px;height:12px;border-radius:50%;background:var(--c-fmt)"></i>short existant</span><span>C2 : recette adoptée ; C1 : essai rendu ; C4 : abandonné ; C3, C5 à C8 : proposés</span></div>
     </details>
     <div class="trials" id="cx-trials"></div>
+    <div class="family" id="cx-family"></div>
 
     <h3 class="sub">L'effort</h3>
     <p class="subl">Une session = une séance de travail d'un agent. Aucun short existant n'est modifié, quelle que soit l'option.</p>
@@ -399,7 +424,8 @@ footer.colophon { margin-top: var(--s7); padding-top: var(--s4); border-top: 1px
       <div class="choice"><span class="num">119</span><h4>Je valide le modèle + plan complet</h4><p>5,5 à 6,5 sessions. Tout le chantier d'un coup : fiches, outils, index, vitrine « composer », documentation. Les essais viennent après.</p></div>
       <div class="choice"><span class="num">120</span><h4>Je relis d'abord</h4><p>Rien ne bouge. La proposition détaillée reste disponible dans le dépôt (out/report/notes/composition/).</p></div>
     </div>
-    <p class="answer">Choix 118 reçu le 19 novembre : modèle validé, version minimale faite, essais C1, C2 et C4 rendus (verdicts ci-dessus). La suite se décide après avoir regardé les essais.</p>
+    <p class="answer">Choix 118 reçu le 19 novembre : modèle validé, version minimale faite, essais C1, C2 et C4 rendus (verdicts ci-dessus).</p>
+    <p class="answer">Option 124 reçue le 20 novembre, après avoir regardé les essais : C2 corrigé (ouverture sur le chiffre, échelle juste) et adopté comme recette de chaîne « Données qui se tracent » ; ardoise et craie verte réunies en une famille d'habillage « Craie » à deux variantes ; C4 abandonné (le short reste comme exemple). Le plan complet (option 125) vient ensuite.</p>
   </section>
 
   <div class="toolbar">
@@ -556,12 +582,14 @@ setText("r-hits", META.recogHits); setText("r-total", META.recogTotal);
     .map(([c, n, l]) => `<div class="stat ${c}"><b>${n}</b><span>${l}</span></div>`).join("");
 
   // matrice : extrait
-  const FH = ["plan-bleu", "editeur", "ardoise", "portulan", "craie-verte", "grille-suisse", "papier-decoupe", "atelier-papier", "carnet-archives", "cabinet-curiosites"];
+  const FH = ["plan-bleu", "editeur", "portulan", "ardoise", "craie-verte", "grille-suisse", "papier-decoupe", "atelier-papier", "carnet-archives", "cabinet-curiosites"];
   const FM = ["trace-chemin", "pop-papier-12ips", "ecriture-trace-chiffon", "chiffre-volet-compteur"];
-  const GRP = new Set(["craie-verte", "papier-decoupe"]);
+  const GRP = new Set(["ardoise", "grille-suisse", "papier-decoupe"]);   // ardoise et craie verte : la famille « craie », regroupée
+  const ST = F => F && F.statut === "validee" ? "ok" : F && F.statut === "abandonnee" ? "ab" : "";
+  const STL = F => F && F.statut === "validee" ? `Recette adoptée « ${F.nom} » (issue de l'essai ${F.essai})` : F && F.statut === "abandonnee" ? `Essai ${F.essai} abandonné` : `Essai ${F.essai} fait`;
   const td = (h, m) => {
     const cs = cell(h, m), t = cs.find(c => c.etat === "teste"), e = cs.find(c => c.essai);
-    if (t && t.fait) return `<td><a class="thumb done" href="#essai-${t.essai}" title="Essai ${t.essai} fait : ${esc(H[h].nom)} × ${esc(M[m].nom)}"><img src="${poster(t.poster)}" alt="Essai ${t.essai} : ${esc(H[h].nom)} × ${esc(M[m].nom)}" loading="lazy"><b>${t.essai}</b></a></td>`;
+    if (t && t.fait) return `<td><a class="thumb done ${ST(t.fait)}" href="#essai-${t.essai}" title="${esc(STL(t.fait))} : ${esc(H[h].nom)} × ${esc(M[m].nom)}"><img src="${poster(t.poster)}" alt="${esc(STL(t.fait))} : ${esc(H[h].nom)} × ${esc(M[m].nom)}" loading="lazy"><b>${t.essai}</b></a></td>`;
     if (t) return `<td><a class="thumb" href="#${t.ancre}" title="${esc(H[h].nom)} × ${esc(M[m].nom)} : short existant"><img src="${poster(t.poster)}" alt="${esc(H[h].nom)} × ${esc(M[m].nom)}" loading="lazy"></a></td>`;
     if (e) return `<td><a class="try" href="#essai-${e.essai}" title="Essai proposé ${e.essai}">${e.essai}</a></td>`;
     return `<td><span class="nil" aria-label="rien"></span></td>`;
@@ -574,7 +602,7 @@ setText("r-hits", META.recogHits); setText("r-total", META.recogTotal);
   document.getElementById("cx-full").innerHTML = `<table><thead><tr><th style="position:sticky;left:0;background:var(--panel);z-index:1;writing-mode:horizontal-tb;transform:none"></th>${C.mecaniques.map(m => `<th scope="col">${esc(m.nom)}</th>`).join("")}</tr></thead><tbody>${
     C.habillages.map(h => `<tr><th scope="row">${esc(h.nom)}</th>${C.mecaniques.map(m => {
       const cs = cell(h.id, m.id), t = cs.find(c => c.etat === "teste"), e = cs.find(c => c.essai);
-      if (t && t.fait) return `<td><a class="tr done" href="#essai-${t.essai}" title="Essai ${t.essai} fait">${t.essai}</a></td>`;
+      if (t && t.fait) return `<td><a class="tr done ${ST(t.fait)}" href="#essai-${t.essai}" title="${esc(STL(t.fait))}">${t.essai}</a></td>`;
       if (t) return `<td><a href="#${t.ancre}" title="${esc(h.nom)} × ${esc(m.nom)} : short existant"><span class="dot"></span></a></td>`;
       if (e) return `<td><a class="tr" href="#essai-${e.essai}" title="Essai proposé">${e.essai}</a></td>`;
       return "<td></td>";
@@ -592,12 +620,15 @@ setText("r-hits", META.recogHits); setText("r-total", META.recogTotal);
     const MEC_SHOW = { "trace-chemin": "portulan", "pop-papier-12ips": "papier-decoupe" };
     const mecPoster = tested.find(t => t.m === c.m && t.h === MEC_SHOW[c.m]) || tested.find(t => t.m === c.m && t.h !== c.h);
     const [title, body, cost] = TXT[id];
-    const F = c.fait, V = F ? F.verdict : null;
-    const result = F ? `<figure><img src="${poster(c.poster)}" alt="" loading="lazy"><figcaption><b>essai</b></figcaption></figure>` : `<div class="q">?</div>`;
-    const video = F ? `<figure class="res"><video src="${F.video}" poster="${poster(c.poster)}" controls playsinline preload="none" aria-label="Essai ${id} : ${esc(h.nom)} × ${esc(m.nom)}"></video><figcaption>Le short d'essai · ${fmt(F.duree)} s</figcaption></figure>` : "";
-    return `<article class="trial" id="essai-${id}">
-      <span class="tid">Essai ${id} · ${esc(c.fNom)}</span>
-      <h4>${esc(title)}</h4>
+    const F = c.fait, V = F ? F.verdict : null, st = ST(F);
+    const label = st === "ok" ? "recette" : st === "ab" ? "abandonné" : "essai";
+    const result = F ? `<figure><img src="${poster(c.poster)}" alt="" loading="lazy"><figcaption><b>${label}</b></figcaption></figure>` : `<div class="q">?</div>`;
+    const video = F ? `<figure class="res"><video src="${F.video}" poster="${poster(c.poster)}" controls playsinline preload="none" aria-label="${esc(STL(F))} : ${esc(h.nom)} × ${esc(m.nom)}"></video><figcaption>${st === "ok" ? "Le short de la recette (corrigé le 20 novembre)" : "Le short d'essai"} · ${fmt(F.duree)} s</figcaption></figure>` : "";
+    const tid = st === "ok" ? `Recette adoptée · issue de l'essai ${id} · ${esc(c.fNom)}` : st === "ab" ? `Essai ${id} · abandonné le 20 novembre` : `Essai ${id} · ${esc(c.fNom)}`;
+    const fam = id === "C1" ? `<p class="fam">Depuis le 20 novembre, la craie verte est la variante « tableau vert » de la famille <b>Craie</b> (voir plus bas) : cet essai reste un essai.</p>` : "";
+    return `<article class="trial ${st}" id="essai-${id}">
+      <span class="tid">${tid}</span>
+      <h4>${esc(st === "ok" ? F.nom : title)}</h4>
       <div class="pair">
         <figure><img src="${poster(h.poster)}" alt="" loading="lazy"><figcaption>habillage <b>${esc(h.nom)}</b></figcaption></figure>
         <i>×</i>
@@ -607,9 +638,21 @@ setText("r-hits", META.recogHits); setText("r-total", META.recogTotal);
       </div>
       ${video}
       ${V ? `<p class="verdict"><span class="vk ${esc(V.cle || "")}">${esc(V.titre)}</span>${esc(V.texte)}</p>` : `<p>${esc(body)}</p>`}
+      ${fam}
       <p class="cost">${esc(F ? V.cout || cost : cost)}</p>
     </article>`;
   }).join("");
+
+  // la famille d'habillage « craie » (20 novembre) : ardoise et tableau vert
+  const fv = (id, nm, txt) => `<figure><a href="#${H[id].ancre}"><img src="${poster(H[id].poster)}" alt="Variante ${nm}" loading="lazy"></a><figcaption><b>${nm}</b> · ${txt}</figcaption></figure>`;
+  document.getElementById("cx-family").innerHTML = `
+    <div>
+      <p class="eyebrow">Nouveau · 20 novembre</p>
+      <h4>Une famille d'habillage : « Craie », deux variantes</h4>
+      <p>L'essai C1 a montré que l'ardoise et la craie verte sont la même matière (craie érodée par le même grain, même dessin, même mise en page) en deux tons. Au lieu de deux marques, un seul habillage « Craie » à deux variantes : on choisit le ton selon le public.</p>
+      <p>Fiches : out/habillages/craie/ (la famille et ses variantes). Les anciennes fiches ardoise et craie-verte sont gardées, marquées « remplacée ».</p>
+    </div>
+    <div class="vars">${fv("ardoise", "Ardoise", "bistrot, adultes : ardoise noire, cadre en chêne, majuscules étroites")}${fv("craie-verte", "Tableau vert", "école, enfants : tableau vert, écriture à la main, craies de couleur")}</div>`;
 }
 
 // recommandations
