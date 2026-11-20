@@ -1,0 +1,2781 @@
+{
+ "date": "2026-11-20",
+ "generePar": "out/tools/recognition.py --briques",
+ "regle": "proposition.md § 8 : une recette est reconnaissable quand son habillage et sa mécanique le sont, mesurés séparément",
+ "shorts": 53,
+ "mesures": 52,
+ "exclus": [
+  {
+   "short": "papier-plan-bleu__explicatif__d-ou-vient-le-mot-sandwich",
+   "recette": "papier-plan-bleu",
+   "statut": "abandonnee",
+   "voisinHabillage": "lyrics-chemin__paroles__claudes-plan",
+   "voisinMecanique": "carnet-archives__histoire__la-fourchette-a-fait-scandale"
+  }
+ ],
+ "habillage": {
+  "methode": "Lab 8x8x8 Bhattacharyya + edge-histogram chi2, 8 frames/short (descripteur de recognition.json, inchangé) ; clé = pâte",
+  "top1": "42/47",
+  "top1Accuracy": 0.894,
+  "sansPair": [
+   "lyrics-chemin__explicatif__le-quatre-quarts",
+   "lyrics-chemin__histoire__le-premier-tour-du-monde",
+   "lyrics-chemin__paroles__claudes-plan",
+   "lyrics-chemin__paroles__claudes-plan-tech",
+   "lyrics-punchy__paroles__claudes-plan"
+  ],
+  "meanIntra": 0.2613,
+  "meanInter": 0.8635,
+  "ratioIntraOverInter": 0.303,
+  "croise": {
+   "reussis": "5/6",
+   "lignes": [
+    {
+     "short": "chemin-craie-verte__explicatif__le-quatre-quarts",
+     "cle": "craie/tableau-vert",
+     "voisin": "papier-decoupe__explicatif__d-ou-vient-le-mot-sandwich",
+     "cleVoisin": "papier-decoupe",
+     "reconnu": false,
+     "rangDuPremierPair": 3,
+     "candidats": 46
+    },
+    {
+     "short": "chemin-grille-suisse__geographie__ou-vivent-8-milliards",
+     "cle": "grille-suisse",
+     "voisin": "swiss-data__geographie__ou-vivent-8-milliards",
+     "cleVoisin": "grille-suisse",
+     "reconnu": true,
+     "rangDuPremierPair": 1,
+     "candidats": 46
+    },
+    {
+     "short": "swiss-data__evenements__j-272-eclipse-2-aout-2027",
+     "cle": "grille-suisse",
+     "voisin": "chemin-grille-suisse__geographie__ou-vivent-8-milliards",
+     "cleVoisin": "grille-suisse",
+     "reconnu": true,
+     "rangDuPremierPair": 1,
+     "candidats": 50
+    },
+    {
+     "short": "swiss-data__geographie__ou-vivent-8-milliards",
+     "cle": "grille-suisse",
+     "voisin": "chemin-grille-suisse__geographie__ou-vivent-8-milliards",
+     "cleVoisin": "grille-suisse",
+     "reconnu": true,
+     "rangDuPremierPair": 1,
+     "candidats": 50
+    },
+    {
+     "short": "tableau-craie__enfants__comment-une-graine-devient-un-arbre",
+     "cle": "craie/tableau-vert",
+     "voisin": "chemin-craie-verte__explicatif__le-quatre-quarts",
+     "cleVoisin": "craie/tableau-vert",
+     "reconnu": true,
+     "rangDuPremierPair": 1,
+     "candidats": 50
+    },
+    {
+     "short": "tableau-craie__explicatif__pourquoi-le-ciel-est-bleu",
+     "cle": "craie/tableau-vert",
+     "voisin": "chemin-craie-verte__explicatif__le-quatre-quarts",
+     "cleVoisin": "craie/tableau-vert",
+     "reconnu": true,
+     "rangDuPremierPair": 1,
+     "candidats": 50
+    }
+   ]
+  },
+  "echecs": [
+   {
+    "short": "chemin-craie-verte__explicatif__le-quatre-quarts",
+    "cle": "craie/tableau-vert",
+    "voisin": "papier-decoupe__explicatif__d-ou-vient-le-mot-sandwich",
+    "cleVoisin": "papier-decoupe"
+   },
+   {
+    "short": "liquid-chrome__abstrait__pendule-de-newton-chrome",
+    "cle": "chrome-irise",
+    "voisin": "atelier-papier__histoire__la-fourchette-a-fait-scandale",
+    "cleVoisin": "atelier-papier"
+   },
+   {
+    "short": "liquid-chrome__abstrait__quatre-peintures-mpm",
+    "cle": "chrome-irise",
+    "voisin": "neon-lab__abstrait__champ-de-force-lucioles",
+    "cleVoisin": "neon-labo"
+   },
+   {
+    "short": "liquid-chrome__engagement__quelle-couleur-remplit-le-verre",
+    "cle": "chrome-irise",
+    "voisin": "cosmos-doc__evenements__voyager-1-a-un-jour-lumiere",
+    "cleVoisin": "cosmos-noir"
+   },
+   {
+    "short": "survol-pixel__explicatif__comment-nait-un-atoll",
+    "cle": "pixel-jour",
+    "voisin": "lyrics-chemin__paroles__claudes-plan",
+    "cleVoisin": "plan-bleu"
+   }
+  ],
+  "rows": [
+   {
+    "short": "aquarelle-conte__enfants__ou-vont-les-etoiles-le-jour",
+    "cle": "aquarelle",
+    "voisin": "aquarelle-conte__histoire__phare-d-alexandrie",
+    "cleVoisin": "aquarelle",
+    "distance": 0.282,
+    "reconnu": true
+   },
+   {
+    "short": "aquarelle-conte__histoire__phare-d-alexandrie",
+    "cle": "aquarelle",
+    "voisin": "aquarelle-conte__enfants__ou-vont-les-etoiles-le-jour",
+    "cleVoisin": "aquarelle",
+    "distance": 0.282,
+    "reconnu": true
+   },
+   {
+    "short": "atelier-papier__explicatif__d-ou-vient-le-mot-sandwich",
+    "cle": "atelier-papier",
+    "voisin": "atelier-papier__histoire__la-fourchette-a-fait-scandale",
+    "cleVoisin": "atelier-papier",
+    "distance": 0.0908,
+    "reconnu": true
+   },
+   {
+    "short": "atelier-papier__histoire__la-fourchette-a-fait-scandale",
+    "cle": "atelier-papier",
+    "voisin": "atelier-papier__explicatif__d-ou-vient-le-mot-sandwich",
+    "cleVoisin": "atelier-papier",
+    "distance": 0.0908,
+    "reconnu": true
+   },
+   {
+    "short": "atlas-grave__geographie__plus-longs-fleuves-du-monde",
+    "cle": "gravure-parchemin",
+    "voisin": "atlas-grave__histoire__premier-tour-du-monde-1519-1522",
+    "cleVoisin": "gravure-parchemin",
+    "distance": 0.0447,
+    "reconnu": true
+   },
+   {
+    "short": "atlas-grave__histoire__premier-tour-du-monde-1519-1522",
+    "cle": "gravure-parchemin",
+    "voisin": "atlas-grave__geographie__plus-longs-fleuves-du-monde",
+    "cleVoisin": "gravure-parchemin",
+    "distance": 0.0447,
+    "reconnu": true
+   },
+   {
+    "short": "bauhaus-kinetic__engagement__trouve-l-intrus",
+    "cle": "bauhaus-primaires",
+    "voisin": "bauhaus-kinetic__explicatif__abeilles-hexagones",
+    "cleVoisin": "bauhaus-primaires",
+    "distance": 0.15,
+    "reconnu": true
+   },
+   {
+    "short": "bauhaus-kinetic__explicatif__abeilles-hexagones",
+    "cle": "bauhaus-primaires",
+    "voisin": "bauhaus-kinetic__engagement__trouve-l-intrus",
+    "cleVoisin": "bauhaus-primaires",
+    "distance": 0.15,
+    "reconnu": true
+   },
+   {
+    "short": "brut-meme__engagement__test-des-3-secondes-stroop",
+    "cle": "brut-jaune",
+    "voisin": "brut-meme__evenements__pendant-ces-15-secondes-dans-le-monde",
+    "cleVoisin": "brut-jaune",
+    "distance": 0.1126,
+    "reconnu": true
+   },
+   {
+    "short": "brut-meme__evenements__pendant-ces-15-secondes-dans-le-monde",
+    "cle": "brut-jaune",
+    "voisin": "brut-meme__engagement__test-des-3-secondes-stroop",
+    "cleVoisin": "brut-jaune",
+    "distance": 0.1126,
+    "reconnu": true
+   },
+   {
+    "short": "cabinet-curiosites__explicatif__d-ou-vient-le-mot-sandwich",
+    "cle": "cabinet-curiosites",
+    "voisin": "cabinet-curiosites__histoire__la-fourchette-a-fait-scandale",
+    "cleVoisin": "cabinet-curiosites",
+    "distance": 0.0754,
+    "reconnu": true
+   },
+   {
+    "short": "cabinet-curiosites__histoire__la-fourchette-a-fait-scandale",
+    "cle": "cabinet-curiosites",
+    "voisin": "cabinet-curiosites__explicatif__d-ou-vient-le-mot-sandwich",
+    "cleVoisin": "cabinet-curiosites",
+    "distance": 0.0754,
+    "reconnu": true
+   },
+   {
+    "short": "carnet-archives__explicatif__d-ou-vient-le-mot-sandwich",
+    "cle": "carnet-archives",
+    "voisin": "carnet-archives__histoire__la-fourchette-a-fait-scandale",
+    "cleVoisin": "carnet-archives",
+    "distance": 0.0762,
+    "reconnu": true
+   },
+   {
+    "short": "carnet-archives__histoire__la-fourchette-a-fait-scandale",
+    "cle": "carnet-archives",
+    "voisin": "carnet-archives__explicatif__d-ou-vient-le-mot-sandwich",
+    "cleVoisin": "carnet-archives",
+    "distance": 0.0762,
+    "reconnu": true
+   },
+   {
+    "short": "carte-meteo__evenements__28-juin-2019-46-degres-record-de-chaleur",
+    "cle": "meteo-clair",
+    "voisin": "carte-meteo__geographie__le-mistral-pourquoi-il-souffle-si-fort",
+    "cleVoisin": "meteo-clair",
+    "distance": 0.1697,
+    "reconnu": true
+   },
+   {
+    "short": "carte-meteo__geographie__le-mistral-pourquoi-il-souffle-si-fort",
+    "cle": "meteo-clair",
+    "voisin": "carte-meteo__evenements__28-juin-2019-46-degres-record-de-chaleur",
+    "cleVoisin": "meteo-clair",
+    "distance": 0.1697,
+    "reconnu": true
+   },
+   {
+    "short": "chemin-craie-verte__explicatif__le-quatre-quarts",
+    "cle": "craie/tableau-vert",
+    "voisin": "papier-decoupe__explicatif__d-ou-vient-le-mot-sandwich",
+    "cleVoisin": "papier-decoupe",
+    "distance": 0.3172,
+    "reconnu": false,
+    "croise": {
+     "voisin": "papier-decoupe__explicatif__d-ou-vient-le-mot-sandwich",
+     "cleVoisin": "papier-decoupe",
+     "reconnu": false,
+     "rangDuPremierPair": 3,
+     "candidats": 46
+    }
+   },
+   {
+    "short": "chemin-grille-suisse__geographie__ou-vivent-8-milliards",
+    "cle": "grille-suisse",
+    "voisin": "swiss-data__geographie__ou-vivent-8-milliards",
+    "cleVoisin": "grille-suisse",
+    "distance": 0.3284,
+    "reconnu": true,
+    "croise": {
+     "voisin": "swiss-data__geographie__ou-vivent-8-milliards",
+     "cleVoisin": "grille-suisse",
+     "reconnu": true,
+     "rangDuPremierPair": 1,
+     "candidats": 46
+    }
+   },
+   {
+    "short": "cosmos-doc__evenements__voyager-1-a-un-jour-lumiere",
+    "cle": "cosmos-noir",
+    "voisin": "cosmos-doc__explicatif__pourquoi-venus-plus-chaude-que-mercure",
+    "cleVoisin": "cosmos-noir",
+    "distance": 0.2261,
+    "reconnu": true
+   },
+   {
+    "short": "cosmos-doc__explicatif__pourquoi-venus-plus-chaude-que-mercure",
+    "cle": "cosmos-noir",
+    "voisin": "cosmos-doc__evenements__voyager-1-a-un-jour-lumiere",
+    "cleVoisin": "cosmos-noir",
+    "distance": 0.2261,
+    "reconnu": true
+   },
+   {
+    "short": "gazette-1900__evenements__9-novembre-1989-mur-de-berlin",
+    "cle": "gazette-sepia",
+    "voisin": "gazette-1900__histoire__1789-en-20-secondes",
+    "cleVoisin": "gazette-sepia",
+    "distance": 0.1079,
+    "reconnu": true
+   },
+   {
+    "short": "gazette-1900__histoire__1789-en-20-secondes",
+    "cle": "gazette-sepia",
+    "voisin": "gazette-1900__evenements__9-novembre-1989-mur-de-berlin",
+    "cleVoisin": "gazette-sepia",
+    "distance": 0.1079,
+    "reconnu": true
+   },
+   {
+    "short": "liquid-chrome__abstrait__pendule-de-newton-chrome",
+    "cle": "chrome-irise",
+    "voisin": "atelier-papier__histoire__la-fourchette-a-fait-scandale",
+    "cleVoisin": "atelier-papier",
+    "distance": 0.4833,
+    "reconnu": false
+   },
+   {
+    "short": "liquid-chrome__abstrait__quatre-peintures-mpm",
+    "cle": "chrome-irise",
+    "voisin": "neon-lab__abstrait__champ-de-force-lucioles",
+    "cleVoisin": "neon-labo",
+    "distance": 0.367,
+    "reconnu": false
+   },
+   {
+    "short": "liquid-chrome__engagement__quelle-couleur-remplit-le-verre",
+    "cle": "chrome-irise",
+    "voisin": "cosmos-doc__evenements__voyager-1-a-un-jour-lumiere",
+    "cleVoisin": "cosmos-noir",
+    "distance": 0.4556,
+    "reconnu": false
+   },
+   {
+    "short": "lyrics-chemin__explicatif__le-quatre-quarts",
+    "cle": "craie/ardoise",
+    "voisin": "chemin-craie-verte__explicatif__le-quatre-quarts",
+    "cleVoisin": "craie/tableau-vert",
+    "distance": 0.3181,
+    "sansPair": true
+   },
+   {
+    "short": "lyrics-chemin__histoire__le-premier-tour-du-monde",
+    "cle": "portulan",
+    "voisin": "atlas-grave__histoire__premier-tour-du-monde-1519-1522",
+    "cleVoisin": "gravure-parchemin",
+    "distance": 0.2992,
+    "sansPair": true
+   },
+   {
+    "short": "lyrics-chemin__paroles__claudes-plan",
+    "cle": "plan-bleu",
+    "voisin": "survol-pixel__explicatif__comment-nait-un-atoll",
+    "cleVoisin": "pixel-jour",
+    "distance": 0.4532,
+    "sansPair": true
+   },
+   {
+    "short": "lyrics-chemin__paroles__claudes-plan-tech",
+    "cle": "editeur",
+    "voisin": "pixel-arcade__engagement__quelle-bille-gagne-la-course",
+    "cleVoisin": "arcade-marine",
+    "distance": 0.2453,
+    "sansPair": true
+   },
+   {
+    "short": "lyrics-punchy__paroles__claudes-plan",
+    "cle": "punchy",
+    "voisin": "liquid-chrome__abstrait__quatre-peintures-mpm",
+    "cleVoisin": "chrome-irise",
+    "distance": 0.8224,
+    "sansPair": true
+   },
+   {
+    "short": "neon-lab__abstrait__champ-de-force-lucioles",
+    "cle": "neon-labo",
+    "voisin": "neon-lab__explicatif__lune-meme-face",
+    "cleVoisin": "neon-labo",
+    "distance": 0.1888,
+    "reconnu": true
+   },
+   {
+    "short": "neon-lab__explicatif__effet-papillon-double-pendule",
+    "cle": "neon-labo",
+    "voisin": "neon-lab__abstrait__champ-de-force-lucioles",
+    "cleVoisin": "neon-labo",
+    "distance": 0.1995,
+    "reconnu": true
+   },
+   {
+    "short": "neon-lab__explicatif__lune-meme-face",
+    "cle": "neon-labo",
+    "voisin": "neon-lab__abstrait__champ-de-force-lucioles",
+    "cleVoisin": "neon-labo",
+    "distance": 0.1888,
+    "reconnu": true
+   },
+   {
+    "short": "papier-decoupe__explicatif__d-ou-vient-le-mot-sandwich",
+    "cle": "papier-decoupe",
+    "voisin": "papier-decoupe__histoire__la-fourchette-a-fait-scandale",
+    "cleVoisin": "papier-decoupe",
+    "distance": 0.1041,
+    "reconnu": true
+   },
+   {
+    "short": "papier-decoupe__histoire__la-fourchette-a-fait-scandale",
+    "cle": "papier-decoupe",
+    "voisin": "papier-decoupe__explicatif__d-ou-vient-le-mot-sandwich",
+    "cleVoisin": "papier-decoupe",
+    "distance": 0.1041,
+    "reconnu": true
+   },
+   {
+    "short": "pastel-diorama__enfants__d-ou-vient-la-pluie",
+    "cle": "diorama-pastel",
+    "voisin": "pastel-diorama__engagement__choisis-ta-boite-renard",
+    "cleVoisin": "diorama-pastel",
+    "distance": 0.3968,
+    "reconnu": true
+   },
+   {
+    "short": "pastel-diorama__engagement__choisis-ta-boite-renard",
+    "cle": "diorama-pastel",
+    "voisin": "pastel-diorama__enfants__d-ou-vient-la-pluie",
+    "cleVoisin": "diorama-pastel",
+    "distance": 0.3968,
+    "reconnu": true
+   },
+   {
+    "short": "pixel-arcade__abstrait__la-balle-peut-elle-s-echapper",
+    "cle": "arcade-marine",
+    "voisin": "pixel-arcade__engagement__quelle-bille-gagne-la-course",
+    "cleVoisin": "arcade-marine",
+    "distance": 0.1295,
+    "reconnu": true
+   },
+   {
+    "short": "pixel-arcade__engagement__quelle-bille-gagne-la-course",
+    "cle": "arcade-marine",
+    "voisin": "pixel-arcade__abstrait__la-balle-peut-elle-s-echapper",
+    "cleVoisin": "arcade-marine",
+    "distance": 0.1295,
+    "reconnu": true
+   },
+   {
+    "short": "pixel-arcade__engagement__quelle-couleur-conquiert-l-ecran",
+    "cle": "arcade-marine",
+    "voisin": "pixel-arcade__engagement__quelle-bille-gagne-la-course",
+    "cleVoisin": "arcade-marine",
+    "distance": 0.3486,
+    "reconnu": true
+   },
+   {
+    "short": "riso-zine__evenements__geminides-j-39",
+    "cle": "riso-3-encres",
+    "voisin": "riso-zine__geographie__5-plus-grands-deserts",
+    "cleVoisin": "riso-3-encres",
+    "distance": 0.2091,
+    "reconnu": true
+   },
+   {
+    "short": "riso-zine__geographie__5-plus-grands-deserts",
+    "cle": "riso-3-encres",
+    "voisin": "riso-zine__evenements__geminides-j-39",
+    "cleVoisin": "riso-3-encres",
+    "distance": 0.2091,
+    "reconnu": true
+   },
+   {
+    "short": "survol-pixel__explicatif__comment-nait-un-atoll",
+    "cle": "pixel-jour",
+    "voisin": "lyrics-chemin__paroles__claudes-plan",
+    "cleVoisin": "plan-bleu",
+    "distance": 0.4532,
+    "reconnu": false
+   },
+   {
+    "short": "survol-pixel__histoire__machu-picchu-pourquoi-une-cite-en-escaliers",
+    "cle": "pixel-jour",
+    "voisin": "survol-pixel__explicatif__comment-nait-un-atoll",
+    "cleVoisin": "pixel-jour",
+    "distance": 0.764,
+    "reconnu": true
+   },
+   {
+    "short": "swiss-data__evenements__j-272-eclipse-2-aout-2027",
+    "cle": "grille-suisse",
+    "voisin": "swiss-data__geographie__ou-vivent-8-milliards",
+    "cleVoisin": "grille-suisse",
+    "distance": 0.125,
+    "reconnu": true,
+    "croise": {
+     "voisin": "chemin-grille-suisse__geographie__ou-vivent-8-milliards",
+     "cleVoisin": "grille-suisse",
+     "reconnu": true,
+     "rangDuPremierPair": 1,
+     "candidats": 50
+    }
+   },
+   {
+    "short": "swiss-data__geographie__ou-vivent-8-milliards",
+    "cle": "grille-suisse",
+    "voisin": "swiss-data__evenements__j-272-eclipse-2-aout-2027",
+    "cleVoisin": "grille-suisse",
+    "distance": 0.125,
+    "reconnu": true,
+    "croise": {
+     "voisin": "chemin-grille-suisse__geographie__ou-vivent-8-milliards",
+     "cleVoisin": "grille-suisse",
+     "reconnu": true,
+     "rangDuPremierPair": 1,
+     "candidats": 50
+    }
+   },
+   {
+    "short": "tableau-craie__enfants__comment-une-graine-devient-un-arbre",
+    "cle": "craie/tableau-vert",
+    "voisin": "tableau-craie__explicatif__pourquoi-le-ciel-est-bleu",
+    "cleVoisin": "craie/tableau-vert",
+    "distance": 0.1123,
+    "reconnu": true,
+    "croise": {
+     "voisin": "chemin-craie-verte__explicatif__le-quatre-quarts",
+     "cleVoisin": "craie/tableau-vert",
+     "reconnu": true,
+     "rangDuPremierPair": 1,
+     "candidats": 50
+    }
+   },
+   {
+    "short": "tableau-craie__explicatif__pourquoi-le-ciel-est-bleu",
+    "cle": "craie/tableau-vert",
+    "voisin": "tableau-craie__enfants__comment-une-graine-devient-un-arbre",
+    "cleVoisin": "craie/tableau-vert",
+    "distance": 0.1123,
+    "reconnu": true,
+    "croise": {
+     "voisin": "chemin-craie-verte__explicatif__le-quatre-quarts",
+     "cleVoisin": "craie/tableau-vert",
+     "reconnu": true,
+     "rangDuPremierPair": 1,
+     "candidats": 50
+    }
+   },
+   {
+    "short": "topo-relief__geographie__comment-mesure-t-on-l-everest",
+    "cle": "relief-vert",
+    "voisin": "topo-relief__histoire__hannibal-traverse-les-alpes",
+    "cleVoisin": "relief-vert",
+    "distance": 0.0814,
+    "reconnu": true
+   },
+   {
+    "short": "topo-relief__histoire__hannibal-traverse-les-alpes",
+    "cle": "relief-vert",
+    "voisin": "topo-relief__geographie__comment-mesure-t-on-l-everest",
+    "cleVoisin": "relief-vert",
+    "distance": 0.0814,
+    "reconnu": true
+   },
+   {
+    "short": "trait-continu__enfants__dessine-un-escargot-d-un-seul-trait",
+    "cle": "orange-graphite",
+    "voisin": "trait-continu__geographie__l-italie-a-la-forme-d-une-botte",
+    "cleVoisin": "orange-graphite",
+    "distance": 0.0408,
+    "reconnu": true
+   },
+   {
+    "short": "trait-continu__geographie__l-italie-a-la-forme-d-une-botte",
+    "cle": "orange-graphite",
+    "voisin": "trait-continu__enfants__dessine-un-escargot-d-un-seul-trait",
+    "cleVoisin": "orange-graphite",
+    "distance": 0.0408,
+    "reconnu": true
+   }
+  ]
+ },
+ "mecanique": {
+  "methode": "descripteur temporel sur toutes les images (30 i/s, gris 108x192), composantes centrées-réduites, distance euclidienne ; clé = mécanique",
+  "composantes": [
+   "diff_med",
+   "diff_p90",
+   "diff_std",
+   "held_frac",
+   "held_run_mean",
+   "run1_frac",
+   "run23_frac",
+   "cuts_per_s",
+   "moving_mean",
+   "moving_p90",
+   "cam_speed",
+   "cam_frac",
+   "cam_coherence",
+   "residual"
+  ],
+  "top1": "21/51",
+  "top1Accuracy": 0.412,
+  "sansPair": [
+   "lyrics-punchy__paroles__claudes-plan"
+  ],
+  "meanIntra": 2.5172,
+  "meanInter": 5.1247,
+  "ratioIntraOverInter": 0.491,
+  "croise": {
+   "reussis": "13/18",
+   "lignes": [
+    {
+     "short": "atelier-papier__explicatif__d-ou-vient-le-mot-sandwich",
+     "cle": "pop-papier-12ips",
+     "voisin": "papier-decoupe__explicatif__d-ou-vient-le-mot-sandwich",
+     "cleVoisin": "pop-papier-12ips",
+     "reconnu": true,
+     "rangDuPremierPair": 1,
+     "candidats": 50
+    },
+    {
+     "short": "atelier-papier__histoire__la-fourchette-a-fait-scandale",
+     "cle": "pop-papier-12ips",
+     "voisin": "papier-decoupe__histoire__la-fourchette-a-fait-scandale",
+     "cleVoisin": "pop-papier-12ips",
+     "reconnu": true,
+     "rangDuPremierPair": 1,
+     "candidats": 50
+    },
+    {
+     "short": "cabinet-curiosites__explicatif__d-ou-vient-le-mot-sandwich",
+     "cle": "pop-papier-12ips",
+     "voisin": "atelier-papier__explicatif__d-ou-vient-le-mot-sandwich",
+     "cleVoisin": "pop-papier-12ips",
+     "reconnu": true,
+     "rangDuPremierPair": 1,
+     "candidats": 50
+    },
+    {
+     "short": "cabinet-curiosites__histoire__la-fourchette-a-fait-scandale",
+     "cle": "pop-papier-12ips",
+     "voisin": "atelier-papier__histoire__la-fourchette-a-fait-scandale",
+     "cleVoisin": "pop-papier-12ips",
+     "reconnu": true,
+     "rangDuPremierPair": 1,
+     "candidats": 50
+    },
+    {
+     "short": "carnet-archives__explicatif__d-ou-vient-le-mot-sandwich",
+     "cle": "pop-papier-12ips",
+     "voisin": "papier-decoupe__explicatif__d-ou-vient-le-mot-sandwich",
+     "cleVoisin": "pop-papier-12ips",
+     "reconnu": true,
+     "rangDuPremierPair": 1,
+     "candidats": 50
+    },
+    {
+     "short": "carnet-archives__histoire__la-fourchette-a-fait-scandale",
+     "cle": "pop-papier-12ips",
+     "voisin": "papier-decoupe__histoire__la-fourchette-a-fait-scandale",
+     "cleVoisin": "pop-papier-12ips",
+     "reconnu": true,
+     "rangDuPremierPair": 1,
+     "candidats": 50
+    },
+    {
+     "short": "chemin-craie-verte__explicatif__le-quatre-quarts",
+     "cle": "trace-chemin",
+     "voisin": "lyrics-chemin__histoire__le-premier-tour-du-monde",
+     "cleVoisin": "trace-chemin",
+     "reconnu": true,
+     "rangDuPremierPair": 1,
+     "candidats": 49
+    },
+    {
+     "short": "chemin-grille-suisse__geographie__ou-vivent-8-milliards",
+     "cle": "trace-chemin",
+     "voisin": "lyrics-chemin__paroles__claudes-plan",
+     "cleVoisin": "trace-chemin",
+     "reconnu": true,
+     "rangDuPremierPair": 1,
+     "candidats": 49
+    },
+    {
+     "short": "lyrics-chemin__explicatif__le-quatre-quarts",
+     "cle": "trace-chemin",
+     "voisin": "pixel-arcade__engagement__quelle-couleur-conquiert-l-ecran",
+     "cleVoisin": "simulation-deterministe",
+     "reconnu": false,
+     "rangDuPremierPair": 2,
+     "candidats": 51
+    },
+    {
+     "short": "lyrics-chemin__histoire__le-premier-tour-du-monde",
+     "cle": "trace-chemin",
+     "voisin": "lyrics-chemin__paroles__claudes-plan",
+     "cleVoisin": "trace-chemin",
+     "reconnu": true,
+     "rangDuPremierPair": 1,
+     "candidats": 51
+    },
+    {
+     "short": "lyrics-chemin__paroles__claudes-plan",
+     "cle": "trace-chemin",
+     "voisin": "lyrics-chemin__histoire__le-premier-tour-du-monde",
+     "cleVoisin": "trace-chemin",
+     "reconnu": true,
+     "rangDuPremierPair": 1,
+     "candidats": 51
+    },
+    {
+     "short": "lyrics-chemin__paroles__claudes-plan-tech",
+     "cle": "trace-chemin",
+     "voisin": "lyrics-chemin__explicatif__le-quatre-quarts",
+     "cleVoisin": "trace-chemin",
+     "reconnu": true,
+     "rangDuPremierPair": 1,
+     "candidats": 51
+    },
+    {
+     "short": "papier-decoupe__explicatif__d-ou-vient-le-mot-sandwich",
+     "cle": "pop-papier-12ips",
+     "voisin": "atelier-papier__explicatif__d-ou-vient-le-mot-sandwich",
+     "cleVoisin": "pop-papier-12ips",
+     "reconnu": true,
+     "rangDuPremierPair": 1,
+     "candidats": 50
+    },
+    {
+     "short": "papier-decoupe__histoire__la-fourchette-a-fait-scandale",
+     "cle": "pop-papier-12ips",
+     "voisin": "atelier-papier__histoire__la-fourchette-a-fait-scandale",
+     "cleVoisin": "pop-papier-12ips",
+     "reconnu": true,
+     "rangDuPremierPair": 1,
+     "candidats": 50
+    },
+    {
+     "short": "survol-pixel__explicatif__comment-nait-un-atoll",
+     "cle": "survol-terrain",
+     "voisin": "neon-lab__abstrait__champ-de-force-lucioles",
+     "cleVoisin": "orbite-phenomene-neon",
+     "reconnu": false,
+     "rangDuPremierPair": 2,
+     "candidats": 50
+    },
+    {
+     "short": "survol-pixel__histoire__machu-picchu-pourquoi-une-cite-en-escaliers",
+     "cle": "survol-terrain",
+     "voisin": "gazette-1900__histoire__1789-en-20-secondes",
+     "cleVoisin": "tourniquet-tampon",
+     "reconnu": false,
+     "rangDuPremierPair": 6,
+     "candidats": 50
+    },
+    {
+     "short": "topo-relief__geographie__comment-mesure-t-on-l-everest",
+     "cle": "survol-terrain",
+     "voisin": "lyrics-chemin__paroles__claudes-plan",
+     "cleVoisin": "trace-chemin",
+     "reconnu": false,
+     "rangDuPremierPair": 16,
+     "candidats": 50
+    },
+    {
+     "short": "topo-relief__histoire__hannibal-traverse-les-alpes",
+     "cle": "survol-terrain",
+     "voisin": "cosmos-doc__explicatif__pourquoi-venus-plus-chaude-que-mercure",
+     "cleVoisin": "travelling-cine-3d",
+     "reconnu": false,
+     "rangDuPremierPair": 17,
+     "candidats": 50
+    }
+   ]
+  },
+  "echecs": [
+   {
+    "short": "aquarelle-conte__enfants__ou-vont-les-etoiles-le-jour",
+    "cle": "lavis-multiplan",
+    "voisin": "tableau-craie__enfants__comment-une-graine-devient-un-arbre",
+    "cleVoisin": "ecriture-trace-chiffon"
+   },
+   {
+    "short": "aquarelle-conte__histoire__phare-d-alexandrie",
+    "cle": "lavis-multiplan",
+    "voisin": "atlas-grave__geographie__plus-longs-fleuves-du-monde",
+    "cleVoisin": "carte-trace-panoramique"
+   },
+   {
+    "short": "atlas-grave__geographie__plus-longs-fleuves-du-monde",
+    "cle": "carte-trace-panoramique",
+    "voisin": "aquarelle-conte__histoire__phare-d-alexandrie",
+    "cleVoisin": "lavis-multiplan"
+   },
+   {
+    "short": "atlas-grave__histoire__premier-tour-du-monde-1519-1522",
+    "cle": "carte-trace-panoramique",
+    "voisin": "cosmos-doc__explicatif__pourquoi-venus-plus-chaude-que-mercure",
+    "cleVoisin": "travelling-cine-3d"
+   },
+   {
+    "short": "bauhaus-kinetic__engagement__trouve-l-intrus",
+    "cle": "puzzle-grille-morph",
+    "voisin": "carte-meteo__evenements__28-juin-2019-46-degres-record-de-chaleur",
+    "cleVoisin": "carte-champs-front"
+   },
+   {
+    "short": "bauhaus-kinetic__explicatif__abeilles-hexagones",
+    "cle": "puzzle-grille-morph",
+    "voisin": "chemin-craie-verte__explicatif__le-quatre-quarts",
+    "cleVoisin": "trace-chemin"
+   },
+   {
+    "short": "brut-meme__engagement__test-des-3-secondes-stroop",
+    "cle": "punch-cut-slam",
+    "voisin": "bauhaus-kinetic__explicatif__abeilles-hexagones",
+    "cleVoisin": "puzzle-grille-morph"
+   },
+   {
+    "short": "brut-meme__evenements__pendant-ces-15-secondes-dans-le-monde",
+    "cle": "punch-cut-slam",
+    "voisin": "chemin-grille-suisse__geographie__ou-vivent-8-milliards",
+    "cleVoisin": "trace-chemin"
+   },
+   {
+    "short": "carte-meteo__evenements__28-juin-2019-46-degres-record-de-chaleur",
+    "cle": "carte-champs-front",
+    "voisin": "bauhaus-kinetic__engagement__trouve-l-intrus",
+    "cleVoisin": "puzzle-grille-morph"
+   },
+   {
+    "short": "carte-meteo__geographie__le-mistral-pourquoi-il-souffle-si-fort",
+    "cle": "carte-champs-front",
+    "voisin": "liquid-chrome__engagement__quelle-couleur-remplit-le-verre",
+    "cleVoisin": "plan-sequence-matiere"
+   },
+   {
+    "short": "cosmos-doc__evenements__voyager-1-a-un-jour-lumiere",
+    "cle": "travelling-cine-3d",
+    "voisin": "bauhaus-kinetic__engagement__trouve-l-intrus",
+    "cleVoisin": "puzzle-grille-morph"
+   },
+   {
+    "short": "cosmos-doc__explicatif__pourquoi-venus-plus-chaude-que-mercure",
+    "cle": "travelling-cine-3d",
+    "voisin": "atlas-grave__histoire__premier-tour-du-monde-1519-1522",
+    "cleVoisin": "carte-trace-panoramique"
+   },
+   {
+    "short": "liquid-chrome__abstrait__pendule-de-newton-chrome",
+    "cle": "plan-sequence-matiere",
+    "voisin": "neon-lab__explicatif__lune-meme-face",
+    "cleVoisin": "orbite-phenomene-neon"
+   },
+   {
+    "short": "liquid-chrome__abstrait__quatre-peintures-mpm",
+    "cle": "plan-sequence-matiere",
+    "voisin": "topo-relief__histoire__hannibal-traverse-les-alpes",
+    "cleVoisin": "survol-terrain"
+   },
+   {
+    "short": "liquid-chrome__engagement__quelle-couleur-remplit-le-verre",
+    "cle": "plan-sequence-matiere",
+    "voisin": "aquarelle-conte__enfants__ou-vont-les-etoiles-le-jour",
+    "cleVoisin": "lavis-multiplan"
+   },
+   {
+    "short": "lyrics-chemin__explicatif__le-quatre-quarts",
+    "cle": "trace-chemin",
+    "voisin": "pixel-arcade__engagement__quelle-couleur-conquiert-l-ecran",
+    "cleVoisin": "simulation-deterministe"
+   },
+   {
+    "short": "neon-lab__abstrait__champ-de-force-lucioles",
+    "cle": "orbite-phenomene-neon",
+    "voisin": "survol-pixel__explicatif__comment-nait-un-atoll",
+    "cleVoisin": "survol-terrain"
+   },
+   {
+    "short": "neon-lab__explicatif__effet-papillon-double-pendule",
+    "cle": "orbite-phenomene-neon",
+    "voisin": "pixel-arcade__engagement__quelle-bille-gagne-la-course",
+    "cleVoisin": "simulation-deterministe"
+   },
+   {
+    "short": "neon-lab__explicatif__lune-meme-face",
+    "cle": "orbite-phenomene-neon",
+    "voisin": "cosmos-doc__explicatif__pourquoi-venus-plus-chaude-que-mercure",
+    "cleVoisin": "travelling-cine-3d"
+   },
+   {
+    "short": "pastel-diorama__enfants__d-ou-vient-la-pluie",
+    "cle": "maquette-rebond",
+    "voisin": "aquarelle-conte__histoire__phare-d-alexandrie",
+    "cleVoisin": "lavis-multiplan"
+   },
+   {
+    "short": "pastel-diorama__engagement__choisis-ta-boite-renard",
+    "cle": "maquette-rebond",
+    "voisin": "atlas-grave__geographie__plus-longs-fleuves-du-monde",
+    "cleVoisin": "carte-trace-panoramique"
+   },
+   {
+    "short": "pixel-arcade__abstrait__la-balle-peut-elle-s-echapper",
+    "cle": "simulation-deterministe",
+    "voisin": "chemin-craie-verte__explicatif__le-quatre-quarts",
+    "cleVoisin": "trace-chemin"
+   },
+   {
+    "short": "pixel-arcade__engagement__quelle-bille-gagne-la-course",
+    "cle": "simulation-deterministe",
+    "voisin": "liquid-chrome__abstrait__quatre-peintures-mpm",
+    "cleVoisin": "plan-sequence-matiere"
+   },
+   {
+    "short": "pixel-arcade__engagement__quelle-couleur-conquiert-l-ecran",
+    "cle": "simulation-deterministe",
+    "voisin": "lyrics-chemin__explicatif__le-quatre-quarts",
+    "cleVoisin": "trace-chemin"
+   },
+   {
+    "short": "survol-pixel__explicatif__comment-nait-un-atoll",
+    "cle": "survol-terrain",
+    "voisin": "neon-lab__abstrait__champ-de-force-lucioles",
+    "cleVoisin": "orbite-phenomene-neon"
+   },
+   {
+    "short": "survol-pixel__histoire__machu-picchu-pourquoi-une-cite-en-escaliers",
+    "cle": "survol-terrain",
+    "voisin": "gazette-1900__histoire__1789-en-20-secondes",
+    "cleVoisin": "tourniquet-tampon"
+   },
+   {
+    "short": "topo-relief__geographie__comment-mesure-t-on-l-everest",
+    "cle": "survol-terrain",
+    "voisin": "lyrics-chemin__paroles__claudes-plan",
+    "cleVoisin": "trace-chemin"
+   },
+   {
+    "short": "topo-relief__histoire__hannibal-traverse-les-alpes",
+    "cle": "survol-terrain",
+    "voisin": "cosmos-doc__explicatif__pourquoi-venus-plus-chaude-que-mercure",
+    "cleVoisin": "travelling-cine-3d"
+   },
+   {
+    "short": "trait-continu__enfants__dessine-un-escargot-d-un-seul-trait",
+    "cle": "traceur-escalier-plaque",
+    "voisin": "pastel-diorama__enfants__d-ou-vient-la-pluie",
+    "cleVoisin": "maquette-rebond"
+   },
+   {
+    "short": "trait-continu__geographie__l-italie-a-la-forme-d-une-botte",
+    "cle": "traceur-escalier-plaque",
+    "voisin": "aquarelle-conte__histoire__phare-d-alexandrie",
+    "cleVoisin": "lavis-multiplan"
+   }
+  ],
+  "rows": [
+   {
+    "short": "aquarelle-conte__enfants__ou-vont-les-etoiles-le-jour",
+    "cle": "lavis-multiplan",
+    "voisin": "tableau-craie__enfants__comment-une-graine-devient-un-arbre",
+    "cleVoisin": "ecriture-trace-chiffon",
+    "distance": 1.4555,
+    "reconnu": false
+   },
+   {
+    "short": "aquarelle-conte__histoire__phare-d-alexandrie",
+    "cle": "lavis-multiplan",
+    "voisin": "atlas-grave__geographie__plus-longs-fleuves-du-monde",
+    "cleVoisin": "carte-trace-panoramique",
+    "distance": 1.1394,
+    "reconnu": false
+   },
+   {
+    "short": "atelier-papier__explicatif__d-ou-vient-le-mot-sandwich",
+    "cle": "pop-papier-12ips",
+    "voisin": "papier-decoupe__explicatif__d-ou-vient-le-mot-sandwich",
+    "cleVoisin": "pop-papier-12ips",
+    "distance": 0.1177,
+    "reconnu": true,
+    "croise": {
+     "voisin": "papier-decoupe__explicatif__d-ou-vient-le-mot-sandwich",
+     "cleVoisin": "pop-papier-12ips",
+     "reconnu": true,
+     "rangDuPremierPair": 1,
+     "candidats": 50
+    }
+   },
+   {
+    "short": "atelier-papier__histoire__la-fourchette-a-fait-scandale",
+    "cle": "pop-papier-12ips",
+    "voisin": "papier-decoupe__histoire__la-fourchette-a-fait-scandale",
+    "cleVoisin": "pop-papier-12ips",
+    "distance": 0.3649,
+    "reconnu": true,
+    "croise": {
+     "voisin": "papier-decoupe__histoire__la-fourchette-a-fait-scandale",
+     "cleVoisin": "pop-papier-12ips",
+     "reconnu": true,
+     "rangDuPremierPair": 1,
+     "candidats": 50
+    }
+   },
+   {
+    "short": "atlas-grave__geographie__plus-longs-fleuves-du-monde",
+    "cle": "carte-trace-panoramique",
+    "voisin": "aquarelle-conte__histoire__phare-d-alexandrie",
+    "cleVoisin": "lavis-multiplan",
+    "distance": 1.1394,
+    "reconnu": false
+   },
+   {
+    "short": "atlas-grave__histoire__premier-tour-du-monde-1519-1522",
+    "cle": "carte-trace-panoramique",
+    "voisin": "cosmos-doc__explicatif__pourquoi-venus-plus-chaude-que-mercure",
+    "cleVoisin": "travelling-cine-3d",
+    "distance": 1.6285,
+    "reconnu": false
+   },
+   {
+    "short": "bauhaus-kinetic__engagement__trouve-l-intrus",
+    "cle": "puzzle-grille-morph",
+    "voisin": "carte-meteo__evenements__28-juin-2019-46-degres-record-de-chaleur",
+    "cleVoisin": "carte-champs-front",
+    "distance": 1.6278,
+    "reconnu": false
+   },
+   {
+    "short": "bauhaus-kinetic__explicatif__abeilles-hexagones",
+    "cle": "puzzle-grille-morph",
+    "voisin": "chemin-craie-verte__explicatif__le-quatre-quarts",
+    "cleVoisin": "trace-chemin",
+    "distance": 1.8898,
+    "reconnu": false
+   },
+   {
+    "short": "brut-meme__engagement__test-des-3-secondes-stroop",
+    "cle": "punch-cut-slam",
+    "voisin": "bauhaus-kinetic__explicatif__abeilles-hexagones",
+    "cleVoisin": "puzzle-grille-morph",
+    "distance": 4.4971,
+    "reconnu": false
+   },
+   {
+    "short": "brut-meme__evenements__pendant-ces-15-secondes-dans-le-monde",
+    "cle": "punch-cut-slam",
+    "voisin": "chemin-grille-suisse__geographie__ou-vivent-8-milliards",
+    "cleVoisin": "trace-chemin",
+    "distance": 4.0771,
+    "reconnu": false
+   },
+   {
+    "short": "cabinet-curiosites__explicatif__d-ou-vient-le-mot-sandwich",
+    "cle": "pop-papier-12ips",
+    "voisin": "atelier-papier__explicatif__d-ou-vient-le-mot-sandwich",
+    "cleVoisin": "pop-papier-12ips",
+    "distance": 0.5802,
+    "reconnu": true,
+    "croise": {
+     "voisin": "atelier-papier__explicatif__d-ou-vient-le-mot-sandwich",
+     "cleVoisin": "pop-papier-12ips",
+     "reconnu": true,
+     "rangDuPremierPair": 1,
+     "candidats": 50
+    }
+   },
+   {
+    "short": "cabinet-curiosites__histoire__la-fourchette-a-fait-scandale",
+    "cle": "pop-papier-12ips",
+    "voisin": "cabinet-curiosites__explicatif__d-ou-vient-le-mot-sandwich",
+    "cleVoisin": "pop-papier-12ips",
+    "distance": 0.7538,
+    "reconnu": true,
+    "croise": {
+     "voisin": "atelier-papier__histoire__la-fourchette-a-fait-scandale",
+     "cleVoisin": "pop-papier-12ips",
+     "reconnu": true,
+     "rangDuPremierPair": 1,
+     "candidats": 50
+    }
+   },
+   {
+    "short": "carnet-archives__explicatif__d-ou-vient-le-mot-sandwich",
+    "cle": "pop-papier-12ips",
+    "voisin": "papier-decoupe__explicatif__d-ou-vient-le-mot-sandwich",
+    "cleVoisin": "pop-papier-12ips",
+    "distance": 1.2889,
+    "reconnu": true,
+    "croise": {
+     "voisin": "papier-decoupe__explicatif__d-ou-vient-le-mot-sandwich",
+     "cleVoisin": "pop-papier-12ips",
+     "reconnu": true,
+     "rangDuPremierPair": 1,
+     "candidats": 50
+    }
+   },
+   {
+    "short": "carnet-archives__histoire__la-fourchette-a-fait-scandale",
+    "cle": "pop-papier-12ips",
+    "voisin": "papier-decoupe__histoire__la-fourchette-a-fait-scandale",
+    "cleVoisin": "pop-papier-12ips",
+    "distance": 0.7708,
+    "reconnu": true,
+    "croise": {
+     "voisin": "papier-decoupe__histoire__la-fourchette-a-fait-scandale",
+     "cleVoisin": "pop-papier-12ips",
+     "reconnu": true,
+     "rangDuPremierPair": 1,
+     "candidats": 50
+    }
+   },
+   {
+    "short": "carte-meteo__evenements__28-juin-2019-46-degres-record-de-chaleur",
+    "cle": "carte-champs-front",
+    "voisin": "bauhaus-kinetic__engagement__trouve-l-intrus",
+    "cleVoisin": "puzzle-grille-morph",
+    "distance": 1.6278,
+    "reconnu": false
+   },
+   {
+    "short": "carte-meteo__geographie__le-mistral-pourquoi-il-souffle-si-fort",
+    "cle": "carte-champs-front",
+    "voisin": "liquid-chrome__engagement__quelle-couleur-remplit-le-verre",
+    "cleVoisin": "plan-sequence-matiere",
+    "distance": 1.9148,
+    "reconnu": false
+   },
+   {
+    "short": "chemin-craie-verte__explicatif__le-quatre-quarts",
+    "cle": "trace-chemin",
+    "voisin": "lyrics-chemin__histoire__le-premier-tour-du-monde",
+    "cleVoisin": "trace-chemin",
+    "distance": 1.8419,
+    "reconnu": true,
+    "croise": {
+     "voisin": "lyrics-chemin__histoire__le-premier-tour-du-monde",
+     "cleVoisin": "trace-chemin",
+     "reconnu": true,
+     "rangDuPremierPair": 1,
+     "candidats": 49
+    }
+   },
+   {
+    "short": "chemin-grille-suisse__geographie__ou-vivent-8-milliards",
+    "cle": "trace-chemin",
+    "voisin": "lyrics-chemin__paroles__claudes-plan",
+    "cleVoisin": "trace-chemin",
+    "distance": 3.013,
+    "reconnu": true,
+    "croise": {
+     "voisin": "lyrics-chemin__paroles__claudes-plan",
+     "cleVoisin": "trace-chemin",
+     "reconnu": true,
+     "rangDuPremierPair": 1,
+     "candidats": 49
+    }
+   },
+   {
+    "short": "cosmos-doc__evenements__voyager-1-a-un-jour-lumiere",
+    "cle": "travelling-cine-3d",
+    "voisin": "bauhaus-kinetic__engagement__trouve-l-intrus",
+    "cleVoisin": "puzzle-grille-morph",
+    "distance": 2.2644,
+    "reconnu": false
+   },
+   {
+    "short": "cosmos-doc__explicatif__pourquoi-venus-plus-chaude-que-mercure",
+    "cle": "travelling-cine-3d",
+    "voisin": "atlas-grave__histoire__premier-tour-du-monde-1519-1522",
+    "cleVoisin": "carte-trace-panoramique",
+    "distance": 1.6285,
+    "reconnu": false
+   },
+   {
+    "short": "gazette-1900__evenements__9-novembre-1989-mur-de-berlin",
+    "cle": "tourniquet-tampon",
+    "voisin": "gazette-1900__histoire__1789-en-20-secondes",
+    "cleVoisin": "tourniquet-tampon",
+    "distance": 1.5399,
+    "reconnu": true
+   },
+   {
+    "short": "gazette-1900__histoire__1789-en-20-secondes",
+    "cle": "tourniquet-tampon",
+    "voisin": "gazette-1900__evenements__9-novembre-1989-mur-de-berlin",
+    "cleVoisin": "tourniquet-tampon",
+    "distance": 1.5399,
+    "reconnu": true
+   },
+   {
+    "short": "liquid-chrome__abstrait__pendule-de-newton-chrome",
+    "cle": "plan-sequence-matiere",
+    "voisin": "neon-lab__explicatif__lune-meme-face",
+    "cleVoisin": "orbite-phenomene-neon",
+    "distance": 2.508,
+    "reconnu": false
+   },
+   {
+    "short": "liquid-chrome__abstrait__quatre-peintures-mpm",
+    "cle": "plan-sequence-matiere",
+    "voisin": "topo-relief__histoire__hannibal-traverse-les-alpes",
+    "cleVoisin": "survol-terrain",
+    "distance": 2.3054,
+    "reconnu": false
+   },
+   {
+    "short": "liquid-chrome__engagement__quelle-couleur-remplit-le-verre",
+    "cle": "plan-sequence-matiere",
+    "voisin": "aquarelle-conte__enfants__ou-vont-les-etoiles-le-jour",
+    "cleVoisin": "lavis-multiplan",
+    "distance": 1.7598,
+    "reconnu": false
+   },
+   {
+    "short": "lyrics-chemin__explicatif__le-quatre-quarts",
+    "cle": "trace-chemin",
+    "voisin": "pixel-arcade__engagement__quelle-couleur-conquiert-l-ecran",
+    "cleVoisin": "simulation-deterministe",
+    "distance": 1.4461,
+    "reconnu": false,
+    "croise": {
+     "voisin": "pixel-arcade__engagement__quelle-couleur-conquiert-l-ecran",
+     "cleVoisin": "simulation-deterministe",
+     "reconnu": false,
+     "rangDuPremierPair": 2,
+     "candidats": 51
+    }
+   },
+   {
+    "short": "lyrics-chemin__histoire__le-premier-tour-du-monde",
+    "cle": "trace-chemin",
+    "voisin": "lyrics-chemin__paroles__claudes-plan",
+    "cleVoisin": "trace-chemin",
+    "distance": 1.4909,
+    "reconnu": true,
+    "croise": {
+     "voisin": "lyrics-chemin__paroles__claudes-plan",
+     "cleVoisin": "trace-chemin",
+     "reconnu": true,
+     "rangDuPremierPair": 1,
+     "candidats": 51
+    }
+   },
+   {
+    "short": "lyrics-chemin__paroles__claudes-plan",
+    "cle": "trace-chemin",
+    "voisin": "lyrics-chemin__histoire__le-premier-tour-du-monde",
+    "cleVoisin": "trace-chemin",
+    "distance": 1.4909,
+    "reconnu": true,
+    "croise": {
+     "voisin": "lyrics-chemin__histoire__le-premier-tour-du-monde",
+     "cleVoisin": "trace-chemin",
+     "reconnu": true,
+     "rangDuPremierPair": 1,
+     "candidats": 51
+    }
+   },
+   {
+    "short": "lyrics-chemin__paroles__claudes-plan-tech",
+    "cle": "trace-chemin",
+    "voisin": "lyrics-chemin__explicatif__le-quatre-quarts",
+    "cleVoisin": "trace-chemin",
+    "distance": 2.6021,
+    "reconnu": true,
+    "croise": {
+     "voisin": "lyrics-chemin__explicatif__le-quatre-quarts",
+     "cleVoisin": "trace-chemin",
+     "reconnu": true,
+     "rangDuPremierPair": 1,
+     "candidats": 51
+    }
+   },
+   {
+    "short": "lyrics-punchy__paroles__claudes-plan",
+    "cle": "colonne-mot-a-mot",
+    "voisin": "pixel-arcade__engagement__quelle-couleur-conquiert-l-ecran",
+    "cleVoisin": "simulation-deterministe",
+    "distance": 1.9526,
+    "sansPair": true
+   },
+   {
+    "short": "neon-lab__abstrait__champ-de-force-lucioles",
+    "cle": "orbite-phenomene-neon",
+    "voisin": "survol-pixel__explicatif__comment-nait-un-atoll",
+    "cleVoisin": "survol-terrain",
+    "distance": 1.6621,
+    "reconnu": false
+   },
+   {
+    "short": "neon-lab__explicatif__effet-papillon-double-pendule",
+    "cle": "orbite-phenomene-neon",
+    "voisin": "pixel-arcade__engagement__quelle-bille-gagne-la-course",
+    "cleVoisin": "simulation-deterministe",
+    "distance": 4.1531,
+    "reconnu": false
+   },
+   {
+    "short": "neon-lab__explicatif__lune-meme-face",
+    "cle": "orbite-phenomene-neon",
+    "voisin": "cosmos-doc__explicatif__pourquoi-venus-plus-chaude-que-mercure",
+    "cleVoisin": "travelling-cine-3d",
+    "distance": 1.8382,
+    "reconnu": false
+   },
+   {
+    "short": "papier-decoupe__explicatif__d-ou-vient-le-mot-sandwich",
+    "cle": "pop-papier-12ips",
+    "voisin": "atelier-papier__explicatif__d-ou-vient-le-mot-sandwich",
+    "cleVoisin": "pop-papier-12ips",
+    "distance": 0.1177,
+    "reconnu": true,
+    "croise": {
+     "voisin": "atelier-papier__explicatif__d-ou-vient-le-mot-sandwich",
+     "cleVoisin": "pop-papier-12ips",
+     "reconnu": true,
+     "rangDuPremierPair": 1,
+     "candidats": 50
+    }
+   },
+   {
+    "short": "papier-decoupe__histoire__la-fourchette-a-fait-scandale",
+    "cle": "pop-papier-12ips",
+    "voisin": "atelier-papier__histoire__la-fourchette-a-fait-scandale",
+    "cleVoisin": "pop-papier-12ips",
+    "distance": 0.3649,
+    "reconnu": true,
+    "croise": {
+     "voisin": "atelier-papier__histoire__la-fourchette-a-fait-scandale",
+     "cleVoisin": "pop-papier-12ips",
+     "reconnu": true,
+     "rangDuPremierPair": 1,
+     "candidats": 50
+    }
+   },
+   {
+    "short": "pastel-diorama__enfants__d-ou-vient-la-pluie",
+    "cle": "maquette-rebond",
+    "voisin": "aquarelle-conte__histoire__phare-d-alexandrie",
+    "cleVoisin": "lavis-multiplan",
+    "distance": 1.4279,
+    "reconnu": false
+   },
+   {
+    "short": "pastel-diorama__engagement__choisis-ta-boite-renard",
+    "cle": "maquette-rebond",
+    "voisin": "atlas-grave__geographie__plus-longs-fleuves-du-monde",
+    "cleVoisin": "carte-trace-panoramique",
+    "distance": 1.1791,
+    "reconnu": false
+   },
+   {
+    "short": "pixel-arcade__abstrait__la-balle-peut-elle-s-echapper",
+    "cle": "simulation-deterministe",
+    "voisin": "chemin-craie-verte__explicatif__le-quatre-quarts",
+    "cleVoisin": "trace-chemin",
+    "distance": 2.4284,
+    "reconnu": false
+   },
+   {
+    "short": "pixel-arcade__engagement__quelle-bille-gagne-la-course",
+    "cle": "simulation-deterministe",
+    "voisin": "liquid-chrome__abstrait__quatre-peintures-mpm",
+    "cleVoisin": "plan-sequence-matiere",
+    "distance": 2.6091,
+    "reconnu": false
+   },
+   {
+    "short": "pixel-arcade__engagement__quelle-couleur-conquiert-l-ecran",
+    "cle": "simulation-deterministe",
+    "voisin": "lyrics-chemin__explicatif__le-quatre-quarts",
+    "cleVoisin": "trace-chemin",
+    "distance": 1.4461,
+    "reconnu": false
+   },
+   {
+    "short": "riso-zine__evenements__geminides-j-39",
+    "cle": "impression-on-twos",
+    "voisin": "riso-zine__geographie__5-plus-grands-deserts",
+    "cleVoisin": "impression-on-twos",
+    "distance": 1.2355,
+    "reconnu": true
+   },
+   {
+    "short": "riso-zine__geographie__5-plus-grands-deserts",
+    "cle": "impression-on-twos",
+    "voisin": "riso-zine__evenements__geminides-j-39",
+    "cleVoisin": "impression-on-twos",
+    "distance": 1.2355,
+    "reconnu": true
+   },
+   {
+    "short": "survol-pixel__explicatif__comment-nait-un-atoll",
+    "cle": "survol-terrain",
+    "voisin": "neon-lab__abstrait__champ-de-force-lucioles",
+    "cleVoisin": "orbite-phenomene-neon",
+    "distance": 1.6621,
+    "reconnu": false,
+    "croise": {
+     "voisin": "neon-lab__abstrait__champ-de-force-lucioles",
+     "cleVoisin": "orbite-phenomene-neon",
+     "reconnu": false,
+     "rangDuPremierPair": 2,
+     "candidats": 50
+    }
+   },
+   {
+    "short": "survol-pixel__histoire__machu-picchu-pourquoi-une-cite-en-escaliers",
+    "cle": "survol-terrain",
+    "voisin": "gazette-1900__histoire__1789-en-20-secondes",
+    "cleVoisin": "tourniquet-tampon",
+    "distance": 3.4124,
+    "reconnu": false,
+    "croise": {
+     "voisin": "gazette-1900__histoire__1789-en-20-secondes",
+     "cleVoisin": "tourniquet-tampon",
+     "reconnu": false,
+     "rangDuPremierPair": 6,
+     "candidats": 50
+    }
+   },
+   {
+    "short": "swiss-data__evenements__j-272-eclipse-2-aout-2027",
+    "cle": "chiffre-volet-compteur",
+    "voisin": "swiss-data__geographie__ou-vivent-8-milliards",
+    "cleVoisin": "chiffre-volet-compteur",
+    "distance": 2.1192,
+    "reconnu": true
+   },
+   {
+    "short": "swiss-data__geographie__ou-vivent-8-milliards",
+    "cle": "chiffre-volet-compteur",
+    "voisin": "swiss-data__evenements__j-272-eclipse-2-aout-2027",
+    "cleVoisin": "chiffre-volet-compteur",
+    "distance": 2.1192,
+    "reconnu": true
+   },
+   {
+    "short": "tableau-craie__enfants__comment-une-graine-devient-un-arbre",
+    "cle": "ecriture-trace-chiffon",
+    "voisin": "tableau-craie__explicatif__pourquoi-le-ciel-est-bleu",
+    "cleVoisin": "ecriture-trace-chiffon",
+    "distance": 1.4114,
+    "reconnu": true
+   },
+   {
+    "short": "tableau-craie__explicatif__pourquoi-le-ciel-est-bleu",
+    "cle": "ecriture-trace-chiffon",
+    "voisin": "tableau-craie__enfants__comment-une-graine-devient-un-arbre",
+    "cleVoisin": "ecriture-trace-chiffon",
+    "distance": 1.4114,
+    "reconnu": true
+   },
+   {
+    "short": "topo-relief__geographie__comment-mesure-t-on-l-everest",
+    "cle": "survol-terrain",
+    "voisin": "lyrics-chemin__paroles__claudes-plan",
+    "cleVoisin": "trace-chemin",
+    "distance": 2.5696,
+    "reconnu": false,
+    "croise": {
+     "voisin": "lyrics-chemin__paroles__claudes-plan",
+     "cleVoisin": "trace-chemin",
+     "reconnu": false,
+     "rangDuPremierPair": 16,
+     "candidats": 50
+    }
+   },
+   {
+    "short": "topo-relief__histoire__hannibal-traverse-les-alpes",
+    "cle": "survol-terrain",
+    "voisin": "cosmos-doc__explicatif__pourquoi-venus-plus-chaude-que-mercure",
+    "cleVoisin": "travelling-cine-3d",
+    "distance": 2.0011,
+    "reconnu": false,
+    "croise": {
+     "voisin": "cosmos-doc__explicatif__pourquoi-venus-plus-chaude-que-mercure",
+     "cleVoisin": "travelling-cine-3d",
+     "reconnu": false,
+     "rangDuPremierPair": 17,
+     "candidats": 50
+    }
+   },
+   {
+    "short": "trait-continu__enfants__dessine-un-escargot-d-un-seul-trait",
+    "cle": "traceur-escalier-plaque",
+    "voisin": "pastel-diorama__enfants__d-ou-vient-la-pluie",
+    "cleVoisin": "maquette-rebond",
+    "distance": 1.6086,
+    "reconnu": false
+   },
+   {
+    "short": "trait-continu__geographie__l-italie-a-la-forme-d-une-botte",
+    "cle": "traceur-escalier-plaque",
+    "voisin": "aquarelle-conte__histoire__phare-d-alexandrie",
+    "cleVoisin": "lavis-multiplan",
+    "distance": 1.4423,
+    "reconnu": false
+   }
+  ]
+ },
+ "voisinage": {
+  "seuil (distance intra-habillage moyenne)": 0.2613,
+  "doublonsProbables": [],
+  "plusProches": [
+   {
+    "a": "gravure-parchemin",
+    "b": "portulan",
+    "distance": 0.3071
+   },
+   {
+    "a": "arcade-marine",
+    "b": "editeur",
+    "distance": 0.3144
+   },
+   {
+    "a": "gazette-sepia",
+    "b": "portulan",
+    "distance": 0.3338
+   },
+   {
+    "a": "gazette-sepia",
+    "b": "gravure-parchemin",
+    "distance": 0.3477
+   },
+   {
+    "a": "arcade-marine",
+    "b": "cabinet-curiosites",
+    "distance": 0.3508
+   },
+   {
+    "a": "cabinet-curiosites",
+    "b": "editeur",
+    "distance": 0.3552
+   },
+   {
+    "a": "editeur",
+    "b": "neon-labo",
+    "distance": 0.3677
+   },
+   {
+    "a": "bauhaus-primaires",
+    "b": "grille-suisse",
+    "distance": 0.3948
+   }
+  ]
+ },
+ "M3": {
+  "shorts": [
+   "atlas-grave__histoire__premier-tour-du-monde-1519-1522",
+   "lyrics-chemin__histoire__le-premier-tour-du-monde"
+  ],
+  "distanceHabillage": 0.2992,
+  "distanceMecanique": 4.1736,
+  "rangHabillage": 2,
+  "rangMecanique": 32
+ },
+ "briques": {
+  "aquarelle-conte__enfants__ou-vont-les-etoiles-le-jour": {
+   "pate": "aquarelle",
+   "mecanique": "lavis-multiplan",
+   "recette": "aquarelle-conte",
+   "statut": "validee",
+   "source": "etiquettes"
+  },
+  "aquarelle-conte__histoire__phare-d-alexandrie": {
+   "pate": "aquarelle",
+   "mecanique": "lavis-multiplan",
+   "recette": "aquarelle-conte",
+   "statut": "validee",
+   "source": "etiquettes"
+  },
+  "atelier-papier__explicatif__d-ou-vient-le-mot-sandwich": {
+   "pate": "atelier-papier",
+   "mecanique": "pop-papier-12ips",
+   "recette": "atelier-papier",
+   "statut": "validee",
+   "source": "etiquettes"
+  },
+  "atelier-papier__histoire__la-fourchette-a-fait-scandale": {
+   "pate": "atelier-papier",
+   "mecanique": "pop-papier-12ips",
+   "recette": "atelier-papier",
+   "statut": "validee",
+   "source": "etiquettes"
+  },
+  "atlas-grave__geographie__plus-longs-fleuves-du-monde": {
+   "pate": "gravure-parchemin",
+   "mecanique": "carte-trace-panoramique",
+   "recette": "atlas-grave",
+   "statut": "validee",
+   "source": "etiquettes"
+  },
+  "atlas-grave__histoire__premier-tour-du-monde-1519-1522": {
+   "pate": "gravure-parchemin",
+   "mecanique": "carte-trace-panoramique",
+   "recette": "atlas-grave",
+   "statut": "validee",
+   "source": "etiquettes"
+  },
+  "bauhaus-kinetic__engagement__trouve-l-intrus": {
+   "pate": "bauhaus-primaires",
+   "mecanique": "puzzle-grille-morph",
+   "recette": "bauhaus-kinetic",
+   "statut": "validee",
+   "source": "etiquettes"
+  },
+  "bauhaus-kinetic__explicatif__abeilles-hexagones": {
+   "pate": "bauhaus-primaires",
+   "mecanique": "puzzle-grille-morph",
+   "recette": "bauhaus-kinetic",
+   "statut": "validee",
+   "source": "etiquettes"
+  },
+  "brut-meme__engagement__test-des-3-secondes-stroop": {
+   "pate": "brut-jaune",
+   "mecanique": "punch-cut-slam",
+   "recette": "brut-meme",
+   "statut": "validee",
+   "source": "etiquettes"
+  },
+  "brut-meme__evenements__pendant-ces-15-secondes-dans-le-monde": {
+   "pate": "brut-jaune",
+   "mecanique": "punch-cut-slam",
+   "recette": "brut-meme",
+   "statut": "validee",
+   "source": "etiquettes"
+  },
+  "cabinet-curiosites__explicatif__d-ou-vient-le-mot-sandwich": {
+   "pate": "cabinet-curiosites",
+   "mecanique": "pop-papier-12ips",
+   "recette": "cabinet-curiosites",
+   "statut": "validee",
+   "source": "etiquettes"
+  },
+  "cabinet-curiosites__histoire__la-fourchette-a-fait-scandale": {
+   "pate": "cabinet-curiosites",
+   "mecanique": "pop-papier-12ips",
+   "recette": "cabinet-curiosites",
+   "statut": "validee",
+   "source": "etiquettes"
+  },
+  "carnet-archives__explicatif__d-ou-vient-le-mot-sandwich": {
+   "pate": "carnet-archives",
+   "mecanique": "pop-papier-12ips",
+   "recette": "carnet-archives",
+   "statut": "validee",
+   "source": "etiquettes"
+  },
+  "carnet-archives__histoire__la-fourchette-a-fait-scandale": {
+   "pate": "carnet-archives",
+   "mecanique": "pop-papier-12ips",
+   "recette": "carnet-archives",
+   "statut": "validee",
+   "source": "etiquettes"
+  },
+  "carte-meteo__evenements__28-juin-2019-46-degres-record-de-chaleur": {
+   "pate": "meteo-clair",
+   "mecanique": "carte-champs-front",
+   "recette": "carte-meteo",
+   "statut": "validee",
+   "source": "etiquettes"
+  },
+  "carte-meteo__geographie__le-mistral-pourquoi-il-souffle-si-fort": {
+   "pate": "meteo-clair",
+   "mecanique": "carte-champs-front",
+   "recette": "carte-meteo",
+   "statut": "validee",
+   "source": "etiquettes"
+  },
+  "chemin-craie-verte__explicatif__le-quatre-quarts": {
+   "pate": "craie/tableau-vert",
+   "mecanique": "trace-chemin",
+   "recette": "chemin-craie-verte",
+   "statut": "essai",
+   "source": "short.json"
+  },
+  "chemin-grille-suisse__geographie__ou-vivent-8-milliards": {
+   "pate": "grille-suisse",
+   "mecanique": "trace-chemin",
+   "recette": "chemin-grille-suisse",
+   "statut": "validee",
+   "source": "etiquettes"
+  },
+  "cosmos-doc__evenements__voyager-1-a-un-jour-lumiere": {
+   "pate": "cosmos-noir",
+   "mecanique": "travelling-cine-3d",
+   "recette": "cosmos-doc",
+   "statut": "validee",
+   "source": "etiquettes"
+  },
+  "cosmos-doc__explicatif__pourquoi-venus-plus-chaude-que-mercure": {
+   "pate": "cosmos-noir",
+   "mecanique": "travelling-cine-3d",
+   "recette": "cosmos-doc",
+   "statut": "validee",
+   "source": "etiquettes"
+  },
+  "gazette-1900__evenements__9-novembre-1989-mur-de-berlin": {
+   "pate": "gazette-sepia",
+   "mecanique": "tourniquet-tampon",
+   "recette": "gazette-1900",
+   "statut": "validee",
+   "source": "etiquettes"
+  },
+  "gazette-1900__histoire__1789-en-20-secondes": {
+   "pate": "gazette-sepia",
+   "mecanique": "tourniquet-tampon",
+   "recette": "gazette-1900",
+   "statut": "validee",
+   "source": "etiquettes"
+  },
+  "liquid-chrome__abstrait__pendule-de-newton-chrome": {
+   "pate": "chrome-irise",
+   "mecanique": "plan-sequence-matiere",
+   "recette": "liquid-chrome",
+   "statut": "validee",
+   "source": "etiquettes"
+  },
+  "liquid-chrome__abstrait__quatre-peintures-mpm": {
+   "pate": "chrome-irise",
+   "mecanique": "plan-sequence-matiere",
+   "recette": "liquid-chrome",
+   "statut": "validee",
+   "source": "etiquettes"
+  },
+  "liquid-chrome__engagement__quelle-couleur-remplit-le-verre": {
+   "pate": "chrome-irise",
+   "mecanique": "plan-sequence-matiere",
+   "recette": "liquid-chrome",
+   "statut": "validee",
+   "source": "etiquettes"
+  },
+  "lyrics-chemin__explicatif__le-quatre-quarts": {
+   "pate": "craie/ardoise",
+   "mecanique": "trace-chemin",
+   "recette": "chemin-ardoise",
+   "statut": "validee",
+   "source": "etiquettes"
+  },
+  "lyrics-chemin__histoire__le-premier-tour-du-monde": {
+   "pate": "portulan",
+   "mecanique": "trace-chemin",
+   "recette": "chemin-portulan",
+   "statut": "validee",
+   "source": "etiquettes"
+  },
+  "lyrics-chemin__paroles__claudes-plan": {
+   "pate": "plan-bleu",
+   "mecanique": "trace-chemin",
+   "recette": "lyrics-chemin",
+   "statut": "validee",
+   "source": "etiquettes"
+  },
+  "lyrics-chemin__paroles__claudes-plan-tech": {
+   "pate": "editeur",
+   "mecanique": "trace-chemin",
+   "recette": "chemin-editeur",
+   "statut": "validee",
+   "source": "etiquettes"
+  },
+  "lyrics-punchy__paroles__claudes-plan": {
+   "pate": "punchy",
+   "mecanique": "colonne-mot-a-mot",
+   "recette": "lyrics-punchy",
+   "statut": "validee",
+   "source": "etiquettes"
+  },
+  "neon-lab__abstrait__champ-de-force-lucioles": {
+   "pate": "neon-labo",
+   "mecanique": "orbite-phenomene-neon",
+   "recette": "neon-lab",
+   "statut": "validee",
+   "source": "etiquettes"
+  },
+  "neon-lab__explicatif__effet-papillon-double-pendule": {
+   "pate": "neon-labo",
+   "mecanique": "orbite-phenomene-neon",
+   "recette": "neon-lab",
+   "statut": "validee",
+   "source": "etiquettes"
+  },
+  "neon-lab__explicatif__lune-meme-face": {
+   "pate": "neon-labo",
+   "mecanique": "orbite-phenomene-neon",
+   "recette": "neon-lab",
+   "statut": "validee",
+   "source": "etiquettes"
+  },
+  "papier-decoupe__explicatif__d-ou-vient-le-mot-sandwich": {
+   "pate": "papier-decoupe",
+   "mecanique": "pop-papier-12ips",
+   "recette": "papier-decoupe",
+   "statut": "validee",
+   "source": "etiquettes"
+  },
+  "papier-decoupe__histoire__la-fourchette-a-fait-scandale": {
+   "pate": "papier-decoupe",
+   "mecanique": "pop-papier-12ips",
+   "recette": "papier-decoupe",
+   "statut": "validee",
+   "source": "etiquettes"
+  },
+  "papier-plan-bleu__explicatif__d-ou-vient-le-mot-sandwich": {
+   "pate": "plan-bleu",
+   "mecanique": "pop-papier-12ips",
+   "recette": "papier-plan-bleu",
+   "statut": "abandonnee",
+   "source": "short.json"
+  },
+  "pastel-diorama__enfants__d-ou-vient-la-pluie": {
+   "pate": "diorama-pastel",
+   "mecanique": "maquette-rebond",
+   "recette": "pastel-diorama",
+   "statut": "validee",
+   "source": "etiquettes"
+  },
+  "pastel-diorama__engagement__choisis-ta-boite-renard": {
+   "pate": "diorama-pastel",
+   "mecanique": "maquette-rebond",
+   "recette": "pastel-diorama",
+   "statut": "validee",
+   "source": "etiquettes"
+  },
+  "pixel-arcade__abstrait__la-balle-peut-elle-s-echapper": {
+   "pate": "arcade-marine",
+   "mecanique": "simulation-deterministe",
+   "recette": "pixel-arcade",
+   "statut": "validee",
+   "source": "etiquettes"
+  },
+  "pixel-arcade__engagement__quelle-bille-gagne-la-course": {
+   "pate": "arcade-marine",
+   "mecanique": "simulation-deterministe",
+   "recette": "pixel-arcade",
+   "statut": "validee",
+   "source": "etiquettes"
+  },
+  "pixel-arcade__engagement__quelle-couleur-conquiert-l-ecran": {
+   "pate": "arcade-marine",
+   "mecanique": "simulation-deterministe",
+   "recette": "pixel-arcade",
+   "statut": "validee",
+   "source": "etiquettes"
+  },
+  "riso-zine__evenements__geminides-j-39": {
+   "pate": "riso-3-encres",
+   "mecanique": "impression-on-twos",
+   "recette": "riso-zine",
+   "statut": "validee",
+   "source": "etiquettes"
+  },
+  "riso-zine__geographie__5-plus-grands-deserts": {
+   "pate": "riso-3-encres",
+   "mecanique": "impression-on-twos",
+   "recette": "riso-zine",
+   "statut": "validee",
+   "source": "etiquettes"
+  },
+  "survol-pixel__explicatif__comment-nait-un-atoll": {
+   "pate": "pixel-jour",
+   "mecanique": "survol-terrain",
+   "recette": "survol-pixel",
+   "statut": "validee",
+   "source": "etiquettes"
+  },
+  "survol-pixel__histoire__machu-picchu-pourquoi-une-cite-en-escaliers": {
+   "pate": "pixel-jour",
+   "mecanique": "survol-terrain",
+   "recette": "survol-pixel",
+   "statut": "validee",
+   "source": "etiquettes"
+  },
+  "swiss-data__evenements__j-272-eclipse-2-aout-2027": {
+   "pate": "grille-suisse",
+   "mecanique": "chiffre-volet-compteur",
+   "recette": "swiss-data",
+   "statut": "validee",
+   "source": "etiquettes"
+  },
+  "swiss-data__geographie__ou-vivent-8-milliards": {
+   "pate": "grille-suisse",
+   "mecanique": "chiffre-volet-compteur",
+   "recette": "swiss-data",
+   "statut": "validee",
+   "source": "etiquettes"
+  },
+  "tableau-craie__enfants__comment-une-graine-devient-un-arbre": {
+   "pate": "craie/tableau-vert",
+   "mecanique": "ecriture-trace-chiffon",
+   "recette": "tableau-craie",
+   "statut": "validee",
+   "source": "etiquettes"
+  },
+  "tableau-craie__explicatif__pourquoi-le-ciel-est-bleu": {
+   "pate": "craie/tableau-vert",
+   "mecanique": "ecriture-trace-chiffon",
+   "recette": "tableau-craie",
+   "statut": "validee",
+   "source": "etiquettes"
+  },
+  "topo-relief__geographie__comment-mesure-t-on-l-everest": {
+   "pate": "relief-vert",
+   "mecanique": "survol-terrain",
+   "recette": "topo-relief",
+   "statut": "validee",
+   "source": "etiquettes"
+  },
+  "topo-relief__histoire__hannibal-traverse-les-alpes": {
+   "pate": "relief-vert",
+   "mecanique": "survol-terrain",
+   "recette": "topo-relief",
+   "statut": "validee",
+   "source": "etiquettes"
+  },
+  "trait-continu__enfants__dessine-un-escargot-d-un-seul-trait": {
+   "pate": "orange-graphite",
+   "mecanique": "traceur-escalier-plaque",
+   "recette": "trait-continu",
+   "statut": "validee",
+   "source": "etiquettes"
+  },
+  "trait-continu__geographie__l-italie-a-la-forme-d-une-botte": {
+   "pate": "orange-graphite",
+   "mecanique": "traceur-escalier-plaque",
+   "recette": "trait-continu",
+   "statut": "validee",
+   "source": "etiquettes"
+  }
+ },
+ "vecteursMecanique": {
+  "aquarelle-conte__enfants__ou-vont-les-etoiles-le-jour": [
+   0.2213,
+   0.749,
+   0.3616,
+   0.6503,
+   3.5484,
+   0.3871,
+   0.129,
+   0.0,
+   0.0073,
+   0.0177,
+   0.0434,
+   0.0127,
+   0.8893,
+   3.0
+  ],
+  "aquarelle-conte__histoire__phare-d-alexandrie": [
+   0.2006,
+   1.0438,
+   0.4175,
+   0.6472,
+   4.7273,
+   0.0909,
+   0.0909,
+   0.0,
+   0.0118,
+   0.0393,
+   0.1049,
+   0.2899,
+   0.8301,
+   3.0
+  ],
+  "atelier-papier__explicatif__d-ou-vient-le-mot-sandwich": [
+   0.0009,
+   0.2368,
+   0.5125,
+   0.9022,
+   2.5588,
+   0.4412,
+   0.2941,
+   0.0,
+   0.0049,
+   0.0045,
+   0.0713,
+   0.2778,
+   0.7076,
+   1.1495
+  ],
+  "atelier-papier__histoire__la-fourchette-a-fait-scandale": [
+   0.0011,
+   0.4249,
+   0.5839,
+   0.8797,
+   2.6719,
+   0.4219,
+   0.2969,
+   0.1523,
+   0.0065,
+   0.0088,
+   0.0566,
+   0.1127,
+   0.7589,
+   1.1167
+  ],
+  "atlas-grave__geographie__plus-longs-fleuves-du-monde": [
+   0.101,
+   1.0793,
+   0.4147,
+   0.6615,
+   5.25,
+   0.0,
+   0.1667,
+   0.0,
+   0.0126,
+   0.0473,
+   0.1294,
+   0.1776,
+   0.8031,
+   3.0
+  ],
+  "atlas-grave__histoire__premier-tour-du-monde-1519-1522": [
+   0.5716,
+   0.8578,
+   0.2717,
+   0.2004,
+   3.7778,
+   0.2222,
+   0.2222,
+   0.0,
+   0.0157,
+   0.0339,
+   0.147,
+   0.0548,
+   0.8084,
+   3.0
+  ],
+  "bauhaus-kinetic__engagement__trouve-l-intrus": [
+   0.2271,
+   1.0118,
+   0.5963,
+   0.5728,
+   4.2632,
+   0.0526,
+   0.3684,
+   0.0,
+   0.0128,
+   0.0265,
+   0.0484,
+   0.1676,
+   0.9009,
+   3.0
+  ],
+  "bauhaus-kinetic__explicatif__abeilles-hexagones": [
+   0.3359,
+   2.4827,
+   0.9281,
+   0.4781,
+   3.8571,
+   0.1429,
+   0.381,
+   0.0625,
+   0.0295,
+   0.1121,
+   0.1675,
+   0.328,
+   0.772,
+   3.0
+  ],
+  "brut-meme__engagement__test-des-3-secondes-stroop": [
+   0.0543,
+   2.5605,
+   1.138,
+   0.6573,
+   4.8125,
+   0.0938,
+   0.0938,
+   1.1613,
+   0.0474,
+   0.1422,
+   0.2241,
+   0.4717,
+   0.8683,
+   1.7227
+  ],
+  "brut-meme__evenements__pendant-ces-15-secondes-dans-le-monde": [
+   1.1425,
+   3.0398,
+   1.245,
+   0.334,
+   3.2812,
+   0.3125,
+   0.2812,
+   1.875,
+   0.0792,
+   0.2153,
+   0.1852,
+   0.3762,
+   0.7097,
+   2.9214
+  ],
+  "cabinet-curiosites__explicatif__d-ou-vient-le-mot-sandwich": [
+   0.0003,
+   0.2035,
+   0.5111,
+   0.9076,
+   2.4688,
+   0.4688,
+   0.2812,
+   0.0,
+   0.0042,
+   0.0043,
+   0.0984,
+   0.2059,
+   0.7111,
+   1.1162
+  ],
+  "cabinet-curiosites__histoire__la-fourchette-a-fait-scandale": [
+   0.0003,
+   0.391,
+   0.5719,
+   0.8864,
+   2.65,
+   0.45,
+   0.2667,
+   0.1015,
+   0.0056,
+   0.0083,
+   0.0889,
+   0.1194,
+   0.6913,
+   1.1097
+  ],
+  "carnet-archives__explicatif__d-ou-vient-le-mot-sandwich": [
+   0.0001,
+   0.1308,
+   0.3985,
+   0.9212,
+   2.9643,
+   0.2857,
+   0.3929,
+   0.0,
+   0.0049,
+   0.0041,
+   0.1082,
+   0.2414,
+   0.6905,
+   1.1811
+  ],
+  "carnet-archives__histoire__la-fourchette-a-fait-scandale": [
+   0.0001,
+   0.2813,
+   0.4475,
+   0.9017,
+   3.0,
+   0.3654,
+   0.2885,
+   0.0,
+   0.0063,
+   0.0088,
+   0.0659,
+   0.1724,
+   0.76,
+   1.1644
+  ],
+  "carte-meteo__evenements__28-juin-2019-46-degres-record-de-chaleur": [
+   0.0624,
+   0.9182,
+   0.4136,
+   0.7817,
+   3.9444,
+   0.1667,
+   0.2778,
+   0.0,
+   0.0067,
+   0.0218,
+   0.0862,
+   0.1633,
+   0.8424,
+   3.0
+  ],
+  "carte-meteo__geographie__le-mistral-pourquoi-il-souffle-si-fort": [
+   0.4577,
+   0.9927,
+   0.3509,
+   0.19,
+   2.6667,
+   0.6667,
+   0.0,
+   0.0,
+   0.017,
+   0.0313,
+   0.082,
+   0.0284,
+   0.8587,
+   3.0
+  ],
+  "chemin-craie-verte__explicatif__le-quatre-quarts": [
+   0.4015,
+   1.7652,
+   0.6188,
+   0.3559,
+   3.3548,
+   0.1935,
+   0.4194,
+   0.0,
+   0.0203,
+   0.0728,
+   0.1496,
+   0.3623,
+   0.826,
+   3.0
+  ],
+  "chemin-grille-suisse__geographie__ou-vivent-8-milliards": [
+   0.8076,
+   2.6857,
+   0.8798,
+   0.0896,
+   2.0,
+   0.5714,
+   0.2857,
+   0.942,
+   0.0611,
+   0.171,
+   0.1192,
+   0.2926,
+   0.8307,
+   3.0
+  ],
+  "cosmos-doc__evenements__voyager-1-a-un-jour-lumiere": [
+   0.3711,
+   0.9728,
+   0.318,
+   0.4254,
+   3.4667,
+   0.1,
+   0.6333,
+   0.0,
+   0.0104,
+   0.0312,
+   0.0528,
+   0.0891,
+   0.9284,
+   3.0
+  ],
+  "cosmos-doc__explicatif__pourquoi-venus-plus-chaude-que-mercure": [
+   0.642,
+   1.2329,
+   0.4067,
+   0.2049,
+   4.0,
+   0.2,
+   0.2,
+   0.0,
+   0.0215,
+   0.0434,
+   0.0913,
+   0.1653,
+   0.8927,
+   3.0
+  ],
+  "gazette-1900__evenements__9-novembre-1989-mur-de-berlin": [
+   1.8038,
+   3.1786,
+   0.7584,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.8,
+   0.098,
+   0.3762,
+   0.0556,
+   0.1537,
+   0.8743,
+   3.0
+  ],
+  "gazette-1900__histoire__1789-en-20-secondes": [
+   1.851,
+   3.4848,
+   0.8306,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.6927,
+   0.1365,
+   0.4483,
+   0.066,
+   0.1601,
+   0.9068,
+   3.0
+  ],
+  "liquid-chrome__abstrait__pendule-de-newton-chrome": [
+   0.7408,
+   1.0198,
+   0.1993,
+   0.0084,
+   1.5,
+   0.5,
+   0.5,
+   0.0,
+   0.0196,
+   0.0315,
+   0.0679,
+   0.0056,
+   0.8899,
+   3.0
+  ],
+  "liquid-chrome__abstrait__quatre-peintures-mpm": [
+   0.6676,
+   1.5307,
+   0.5311,
+   0.284,
+   3.7143,
+   0.4286,
+   0.0,
+   0.0,
+   0.0233,
+   0.0549,
+   0.2228,
+   0.4133,
+   0.8211,
+   3.0
+  ],
+  "liquid-chrome__engagement__quelle-couleur-remplit-le-verre": [
+   0.4052,
+   0.5193,
+   0.2357,
+   0.3229,
+   3.8571,
+   0.4286,
+   0.0,
+   0.0,
+   0.0106,
+   0.0159,
+   0.0388,
+   0.0,
+   0.8164,
+   3.0
+  ],
+  "lyrics-chemin__explicatif__le-quatre-quarts": [
+   0.5327,
+   2.119,
+   0.7247,
+   0.2399,
+   2.5,
+   0.4667,
+   0.3667,
+   0.0,
+   0.0313,
+   0.1185,
+   0.138,
+   0.2916,
+   0.8559,
+   3.0
+  ],
+  "lyrics-chemin__histoire__le-premier-tour-du-monde": [
+   0.5783,
+   2.2415,
+   0.8061,
+   0.2928,
+   2.9556,
+   0.2667,
+   0.4667,
+   0.0,
+   0.0505,
+   0.177,
+   0.1446,
+   0.3847,
+   0.8288,
+   3.0
+  ],
+  "lyrics-chemin__paroles__claudes-plan": [
+   0.7455,
+   2.3377,
+   0.7468,
+   0.0092,
+   3.0,
+   0.3333,
+   0.3333,
+   0.0613,
+   0.0582,
+   0.1738,
+   0.1651,
+   0.3055,
+   0.8512,
+   3.0
+  ],
+  "lyrics-chemin__paroles__claudes-plan-tech": [
+   0.8363,
+   2.3638,
+   0.7318,
+   0.0184,
+   1.5,
+   0.75,
+   0.1667,
+   0.0,
+   0.0618,
+   0.1937,
+   0.1194,
+   0.3094,
+   0.8704,
+   3.0
+  ],
+  "lyrics-punchy__paroles__claudes-plan": [
+   0.1549,
+   1.47,
+   0.7457,
+   0.5771,
+   3.9355,
+   0.2903,
+   0.0806,
+   0.2564,
+   0.0201,
+   0.0529,
+   0.1229,
+   0.2227,
+   0.9075,
+   3.0
+  ],
+  "neon-lab__abstrait__champ-de-force-lucioles": [
+   1.2497,
+   1.5735,
+   0.2311,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0702,
+   0.0938,
+   0.0636,
+   0.0,
+   0.9555,
+   2.9082
+  ],
+  "neon-lab__explicatif__effet-papillon-double-pendule": [
+   0.6805,
+   0.7906,
+   0.1703,
+   0.0445,
+   4.0,
+   0.2,
+   0.2,
+   0.0,
+   0.0151,
+   0.0214,
+   0.4191,
+   0.8065,
+   0.6429,
+   3.0
+  ],
+  "neon-lab__explicatif__lune-meme-face": [
+   0.5112,
+   0.7447,
+   0.2944,
+   0.1461,
+   3.2,
+   0.4,
+   0.2,
+   0.0,
+   0.0125,
+   0.019,
+   0.0778,
+   0.0,
+   0.928,
+   3.0
+  ],
+  "papier-decoupe__explicatif__d-ou-vient-le-mot-sandwich": [
+   0.0009,
+   0.2193,
+   0.4962,
+   0.9022,
+   2.5588,
+   0.4412,
+   0.2941,
+   0.0,
+   0.0048,
+   0.003,
+   0.0683,
+   0.2778,
+   0.7077,
+   1.2153
+  ],
+  "papier-decoupe__histoire__la-fourchette-a-fait-scandale": [
+   0.0008,
+   0.3951,
+   0.563,
+   0.8831,
+   2.6935,
+   0.4355,
+   0.2742,
+   0.0508,
+   0.0064,
+   0.0087,
+   0.0592,
+   0.1159,
+   0.7693,
+   1.1489
+  ],
+  "papier-plan-bleu__explicatif__d-ou-vient-le-mot-sandwich": [
+   0.0003,
+   0.2083,
+   0.4731,
+   0.9014,
+   2.697,
+   0.3636,
+   0.3636,
+   0.0,
+   0.0044,
+   0.0045,
+   0.0627,
+   0.1667,
+   0.7449,
+   1.1843
+  ],
+  "pastel-diorama__enfants__d-ou-vient-la-pluie": [
+   0.2209,
+   1.0209,
+   0.3889,
+   0.6827,
+   4.5,
+   0.0714,
+   0.2143,
+   0.0,
+   0.009,
+   0.0259,
+   0.1885,
+   0.3684,
+   0.834,
+   3.0
+  ],
+  "pastel-diorama__engagement__choisis-ta-boite-renard": [
+   0.3065,
+   1.0519,
+   0.411,
+   0.4944,
+   5.0526,
+   0.0526,
+   0.1579,
+   0.0,
+   0.0129,
+   0.0332,
+   0.1113,
+   0.1542,
+   0.8726,
+   3.0
+  ],
+  "pixel-arcade__abstrait__la-balle-peut-elle-s-echapper": [
+   0.9481,
+   1.4043,
+   0.4791,
+   0.1425,
+   2.8947,
+   0.2632,
+   0.4211,
+   0.0,
+   0.0263,
+   0.048,
+   0.1943,
+   0.3818,
+   0.6877,
+   3.0
+  ],
+  "pixel-arcade__engagement__quelle-bille-gagne-la-course": [
+   0.4444,
+   2.2016,
+   0.7133,
+   0.2714,
+   3.7241,
+   0.3103,
+   0.1379,
+   0.0,
+   0.0246,
+   0.1058,
+   0.3376,
+   0.6447,
+   0.8301,
+   3.0
+  ],
+  "pixel-arcade__engagement__quelle-couleur-conquiert-l-ecran": [
+   0.2877,
+   1.9493,
+   0.7848,
+   0.5129,
+   2.9149,
+   0.4255,
+   0.234,
+   0.0645,
+   0.029,
+   0.0931,
+   0.154,
+   0.3274,
+   0.8611,
+   3.0
+  ],
+  "riso-zine__evenements__geminides-j-39": [
+   0.1243,
+   2.1489,
+   0.9516,
+   0.6013,
+   1.5,
+   0.5,
+   0.5,
+   0.25,
+   0.0513,
+   0.1517,
+   0.3165,
+   0.5812,
+   0.8697,
+   0.6676
+  ],
+  "riso-zine__geographie__5-plus-grands-deserts": [
+   0.136,
+   1.8967,
+   0.8498,
+   0.6013,
+   1.5,
+   0.5,
+   0.5,
+   0.125,
+   0.0403,
+   0.1163,
+   0.2852,
+   0.534,
+   0.9351,
+   0.6955
+  ],
+  "survol-pixel__explicatif__comment-nait-un-atoll": [
+   1.0814,
+   1.5167,
+   0.3928,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0513,
+   0.0898,
+   0.102,
+   0.1652,
+   0.8901,
+   3.0
+  ],
+  "survol-pixel__histoire__machu-picchu-pourquoi-une-cite-en-escaliers": [
+   1.7878,
+   2.7196,
+   0.4938,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.177,
+   0.3653,
+   0.1924,
+   0.2664,
+   0.8911,
+   3.0
+  ],
+  "swiss-data__evenements__j-272-eclipse-2-aout-2027": [
+   0.0885,
+   1.8321,
+   0.9277,
+   0.6704,
+   4.0,
+   0.2778,
+   0.0556,
+   0.8,
+   0.0214,
+   0.046,
+   0.0978,
+   0.2162,
+   0.6273,
+   3.0
+  ],
+  "swiss-data__geographie__ou-vivent-8-milliards": [
+   0.1058,
+   0.9169,
+   0.7403,
+   0.7082,
+   4.0625,
+   0.25,
+   0.125,
+   0.5333,
+   0.0162,
+   0.024,
+   0.0773,
+   0.1832,
+   0.7355,
+   3.0
+  ],
+  "tableau-craie__enfants__comment-une-graine-devient-un-arbre": [
+   0.1191,
+   0.5024,
+   0.3239,
+   0.7866,
+   4.4118,
+   0.1765,
+   0.1765,
+   0.0,
+   0.0081,
+   0.0157,
+   0.0523,
+   0.0,
+   0.912,
+   3.0
+  ],
+  "tableau-craie__explicatif__pourquoi-le-ciel-est-bleu": [
+   0.0627,
+   0.5769,
+   0.357,
+   0.8219,
+   5.2727,
+   0.0,
+   0.1818,
+   0.0,
+   0.0092,
+   0.0171,
+   0.0611,
+   0.0227,
+   0.8464,
+   3.0
+  ],
+  "topo-relief__geographie__comment-mesure-t-on-l-everest": [
+   1.1144,
+   1.613,
+   0.4477,
+   0.0379,
+   3.0,
+   0.25,
+   0.5,
+   0.0,
+   0.0496,
+   0.1065,
+   0.0956,
+   0.1667,
+   0.9047,
+   3.0
+  ],
+  "topo-relief__histoire__hannibal-traverse-les-alpes": [
+   0.8661,
+   1.6283,
+   0.478,
+   0.1047,
+   3.4286,
+   0.4286,
+   0.1429,
+   0.0,
+   0.0411,
+   0.1175,
+   0.1406,
+   0.2562,
+   0.912,
+   3.0
+  ],
+  "trait-continu__enfants__dessine-un-escargot-d-un-seul-trait": [
+   0.192,
+   0.3392,
+   0.4029,
+   0.8901,
+   4.625,
+   0.0,
+   0.375,
+   0.0,
+   0.0082,
+   0.0095,
+   0.1742,
+   0.2745,
+   0.8469,
+   3.0
+  ],
+  "trait-continu__geographie__l-italie-a-la-forme-d-une-botte": [
+   0.1775,
+   0.2484,
+   0.3819,
+   0.9123,
+   5.0909,
+   0.0909,
+   0.0909,
+   0.0,
+   0.007,
+   0.0065,
+   0.111,
+   0.2619,
+   0.8751,
+   3.0
+  ]
+ }
+}
