@@ -1,5 +1,14 @@
 # Essais C1, C2, C4 : verdicts (2026-11-19)
 
+> **Décision du 20/11/2026 (Hamdi, option 124).** C2 est corrigé (1re image = un « 8 » rouge géant en gros plan ;
+> « 1 carré = 100 millions » remplacé par l'échelle « 100 % = 8 Md », piste entière = 8 milliards, Asie 59 %, Afrique 18 % ;
+> la réplique de voix « Un carré… » retirée, aucune nouvelle voix ; 13,8 s, planche [`essais/C2-planche-2026-11-20.jpg`](essais/C2-planche-2026-11-20.jpg))
+> et **adopté comme recette de chaîne « Données qui se tracent »** (`out/recettes/chemin-grille-suisse.json`, statut `validee`) :
+> ce n'est plus un essai. **Ardoise et craie verte deviennent une famille d'habillage « craie »** à deux variantes
+> (`craie/ardoise`, `craie/tableau-vert` ; `out/habillages/craie/`), les anciennes fiches gardées et marquées `remplacee` ;
+> C1 reste un essai. **C4 est abandonné** (statut `abandonnee`, short gardé comme exemple). Les verdicts ci-dessous sont
+> ceux du 19/11 et ne sont pas réécrits (les faiblesses de C2 qu'ils citent sont corrigées).
+
 Décision d'Hamdi : choix 118 (modèle + version minimale + essais C1, C2, C4). Combinaisons décrites dans
 [`matrice.md`](matrice.md) ; recettes d'essai dans `out/recettes/chemin-craie-verte.json`, `chemin-grille-suisse.json`,
 `papier-plan-bleu.json`. Aucune nouvelle voix : les trois shorts réutilisent une voix qui existait. Aucun moteur partagé

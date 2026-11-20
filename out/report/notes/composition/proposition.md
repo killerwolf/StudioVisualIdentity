@@ -371,3 +371,12 @@ l'habillage reste reconnaissable entre ses mécaniques (test 1).
 3. Valider l'ordre de `migration.md` : manifestes seulement d'abord (aucun rendu touché), outils ensuite, adaptateurs
    enfin, mécanique par mécanique.
 4. Choisir les 2 ou 3 premières combinaisons de `matrice.md` à essayer.
+
+## 10. Décision du 20/11/2026 (option 124)
+
+Après les essais C1, C2, C4 ([`essais.md`](essais.md)) : **C2 adopté** comme recette de chaîne « Données qui se tracent »
+(grille-suisse × trace-chemin × narré court, corrigé : ouverture sur le chiffre, échelle juste) — c'est le cas prévu au § 8 :
+une chaîne garde un habillage fixe et alterne les mécaniques ; **famille d'habillage « craie »** (ardoise, tableau vert) — la
+règle de voisinage du § 8.3 appliquée pour la première fois : un parent à deux variantes plutôt qu'une fusion ; **C4 abandonné**.
+Le plan complet (option 125) est traité à part.
+
