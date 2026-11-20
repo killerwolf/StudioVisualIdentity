@@ -9,6 +9,7 @@
  "son": null,
  "statut": "essai",
  "essai": "C1",
+ "case": "C1",
  "question": "la pâte de tableau-craie (tableau vert, craies de couleur, écriture Caveat, rebord en bois) peut-elle habiller le chemin, et se distingue-t-elle de l'ardoise ?",
  "shorts": [
   "out/shorts/chemin-craie-verte__explicatif__le-quatre-quarts"

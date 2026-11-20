@@ -1,27 +1,57 @@
 {
  "id": "chemin-grille-suisse",
- "nom": "Chemin grille suisse",
+ "nom": "Données qui se tracent",
  "habillage": "grille-suisse",
  "mecanique": "trace-chemin",
  "formats": [
   "narre-court"
  ],
  "son": null,
- "statut": "essai",
- "essai": "C2",
- "question": "un habillage (grille-suisse) reste-t-il reconnaissable quand on change sa mécanique ?",
+ "statut": "validee",
+ "case": "C2",
+ "origine": "essai C2 de la composition (19/11/2026, matrice.md), adopté comme recette de chaîne par Hamdi le 20/11/2026 (option 124)",
+ "pourQuoi": "un chiffre ou une comparaison de données : chaque chiffre s'écrit au-dessus de sa barre au moment où il est dit, la caméra suit l'écriture en un plan, puis recule pour montrer que la page entière était un graphique à une seule échelle",
+ "signaturePortee": {
+  "habillage": [
+   "visible 12-column grid on warm off-white",
+   "palette limited to red / black / blue",
+   "Archivo Black figures, Inter 800 section rules (« 01 · MONDE » / source)"
+  ],
+  "mecanique": [
+   "one long take: the camera follows the writing tip",
+   "each figure written above its bar while the bar fills, all bars at one scale",
+   "final zoom-out revealing the whole page as one chart"
+  ],
+  "autres": [
+   "opening frame = one giant red figure (the number that hits)"
+  ]
+ },
+ "regles": [
+  "1re image : un seul chiffre rouge géant en gros plan (le chiffre qui claque), pas une page vide",
+  "une seule échelle pour toutes les barres, écrite à l'image (ex. « 100 % = 8 Md ») et vraie : la part de piste remplie = le pourcentage dit",
+  "rouge réservé au mot dit et à ce qui compte ; le chiffre d'ouverture reste rouge (dryColor)"
+ ],
  "shorts": [
   "out/shorts/chemin-grille-suisse__geographie__ou-vivent-8-milliards"
  ],
  "adaptateur": "out/shared/chemin-moteur/habillages/grille-suisse.js",
+ "dessin": "out/shared/chemin-moteur/dessins/barres-humains.json",
  "verdict": {
-  "cle": "reconnu",
-  "titre": "Oui : Grille Suisse reste reconnaissable sur un autre mouvement",
-  "texte": "Sur une image fixe, on reconnaît Grille Suisse tout de suite : crème, 12 colonnes, Archivo Black, rouge, noir et bleu seulement, filets « 01 · MONDE ». Le mouvement change tout le reste : un seul plan qui suit le chiffre, les barres qui se remplissent, puis la page entière devient un vrai graphique à la même échelle. C'est le plus net des trois essais : l'habillage tient sur une deuxième mécanique. Faiblesses : l'image d'ouverture est trop vide, et « 1 carré = 100 millions » n'a plus de sens sans les carrés de l'original.",
+  "cle": "adoptee",
+  "titre": "Recette adoptée : Grille Suisse reste reconnaissable sur un autre mouvement",
+  "texte": "Sur une image fixe, on reconnaît Grille Suisse tout de suite : crème, 12 colonnes, Archivo Black, rouge, noir et bleu seulement, filets « 01 · MONDE ». Le mouvement change tout le reste : un seul plan qui suit le chiffre, les barres qui se remplissent, puis la page entière devient un vrai graphique à la même échelle. Corrigé le 20 novembre : la vidéo s'ouvre sur un « 8 » rouge géant, et l'échelle écrite (« 100 % = 8 Md ») correspond aux barres.",
   "cout": "≈ 1 session · 1 habillage + 1 dessin en barres · rendu 2 min · voix d'Arnold réutilisée"
  },
+ "corrections": [
+  {
+   "date": "2026-11-20",
+   "texte": "ouverture en gros plan sur un « 8 » rouge géant ; « 1 carré = 100 millions » remplacé par « 100 % = 8 Md » (piste entière = 8 milliards) et la réplique de voix correspondante retirée ; 15 s -> 13,8 s"
+  }
+ ],
  "date": "2026-11-19",
- "planche": "out/report/notes/composition/essais/C2-planche.jpg",
+ "dateAdoption": "2026-11-20",
+ "planche": "out/report/notes/composition/essais/C2-planche-2026-11-20.jpg",
+ "plancheAvant": "out/report/notes/composition/essais/C2-planche.jpg",
  "comparaison": "out/report/notes/composition/essais/C2-comparaison.jpg",
- "posterT": 14.5
+ "posterT": 0.0
 }

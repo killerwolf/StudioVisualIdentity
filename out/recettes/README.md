@@ -17,8 +17,8 @@ preuve de chaque recette du même id.
   mécanique (chemin-moteur : 4 habillages, papier-moteur : 4 habillages) ; `declare` = valeurs relevées (souvent les
   `coreTokens` de l'index) mais le code des scènes écrit ses valeurs en dur.
 - **Étiquetage des shorts** : `etiquettes.json` donne pour chacun des 50 shorts sa recette, son habillage, sa mécanique et
-  son format. Il est tenu ici et **pas** dans les `short.json` (consigne du 19/11 : ne modifier aucun short existant ;
-  `migration.md` étape 2 prévoyait des champs dans `short.json`, à faire plus tard si on le veut). Les 3 shorts d'essai, eux, déclarent leurs briques dans leur propre `short.json`.
+  son format (51 depuis le 20/11/2026 : s'y ajoute le short de la recette adoptée « Données qui se tracent »). Il est tenu ici et **pas** dans les `short.json` (consigne du 19/11 : ne modifier aucun short existant ;
+  `migration.md` étape 2 prévoyait des champs dans `short.json`, à faire plus tard si on le veut). Les 3 shorts issus des essais (C1, C2, C4), eux, déclarent aussi leurs briques dans leur propre `short.json`.
 - `famille` (le sujet : `histoire`, `explicatif`, `paroles`…) n'est pas un format : `lyrics-chemin__histoire__le-premier-tour-du-monde`
   est de famille `histoire` au format `narre-long`.
 - Les signatures (`curation.signatureToPreserve` de l'index) sont coupées en deux dans `signaturePortee` de chaque recette
@@ -30,7 +30,7 @@ preuve de chaque recette du même id.
 tester** (besoins remplis sur le papier, pas d'adaptateur), **incompatible** (contrainte violée, raison écrite). Une case
 absente vaut « inconnu ».
 
-### Testées (29 : 26 recettes du catalogue + 3 essais)
+### Testées (29 : 27 recettes de chaîne, dont « Données qui se tracent » adoptée le 20/11/2026, + 1 essai + 1 essai abandonné)
 
 | Habillage | Mécanique | Format | Recette | Shorts |
 |---|---|---|---|---|
@@ -61,8 +61,8 @@ absente vaut « inconnu ».
 | ardoise | trace-chemin | narre-long | chemin-ardoise | 1 |
 | portulan | trace-chemin | narre-long | chemin-portulan | 1 |
 | **craie-verte** | **trace-chemin** | **narre-long** | **essai C1** `chemin-craie-verte` | 1 |
-| **grille-suisse** | **trace-chemin** | **narre-court** | **essai C2** `chemin-grille-suisse` | 1 |
-| **plan-bleu** | **pop-papier-12ips** | **narre-court** | **essai C4** `papier-plan-bleu` | 1 |
+| **grille-suisse** | **trace-chemin** | **narre-court** | **Données qui se tracent** `chemin-grille-suisse` (recette adoptée le 20/11/2026, issue de l'essai C2) | 1 |
+| plan-bleu | pop-papier-12ips | narre-court | essai C4 `papier-plan-bleu` — **abandonné** le 20/11/2026 (presque un doublon d'Atelier papier ; short gardé comme exemple) | 1 |
 
 ### Proposées, pas encore essayées (`matrice.md`)
 
@@ -74,4 +74,8 @@ absente vaut « inconnu ».
 | C7 | portulan × survol-terrain (survol.py) | incompatible | le moteur impose une grille 270×480 en palette indexée : un parchemin anticrénelé ne passe pas |
 | C8 | pixel-jour × simulation-deterministe × narre-court | à tester | même grille 270×480 ×4 : faut-il un habillage parent `pixel-16` ? |
 
-Verdicts des essais C1, C2, C4 : [`out/report/notes/composition/essais.md`](../report/notes/composition/essais.md).
+Verdicts des essais C1, C2, C4 et décision du 20/11/2026 (C2 adopté, famille craie, C4 abandonné) : [`out/report/notes/composition/essais.md`](../report/notes/composition/essais.md).
+
+Statuts d'une recette (`statut`) : `validee` (recette de chaîne : catalogue, ou essai adopté comme C2), `essai` (C1), `abandonnee`
+(C4 : le short reste, la combinaison n'est pas proposée). La clé `case` donne la case de `matrice.md` d'où vient une recette
+(C1, C2, C4) ; `essai` ne reste que sur les recettes encore à l'essai ou abandonnées.

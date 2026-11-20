@@ -1,5 +1,5 @@
 {
- "note": "Étiquetage des 50 shorts existants (migration.md étape 2), tenu ici plutôt que dans les short.json : consigne du 19/11/2026 de ne modifier aucun short existant. Clé = dossier sous out/shorts/.",
+ "note": "Étiquetage des 50 shorts existants (plus, depuis le 20/11/2026, le short de la recette adoptée « Données qui se tracent » : 51) (migration.md étape 2), tenu ici plutôt que dans les short.json : consigne du 19/11/2026 de ne modifier aucun short existant. Clé = dossier sous out/shorts/.",
  "shorts": {
   "aquarelle-conte__enfants__ou-vont-les-etoiles-le-jour": {
    "recette": "aquarelle-conte",
@@ -95,6 +95,12 @@
    "recette": "carte-meteo",
    "habillage": "meteo-clair",
    "mecanique": "carte-champs-front",
+   "format": "narre-court"
+  },
+  "chemin-grille-suisse__geographie__ou-vivent-8-milliards": {
+   "recette": "chemin-grille-suisse",
+   "habillage": "grille-suisse",
+   "mecanique": "trace-chemin",
    "format": "narre-court"
   },
   "cosmos-doc__evenements__voyager-1-a-un-jour-lumiere": {

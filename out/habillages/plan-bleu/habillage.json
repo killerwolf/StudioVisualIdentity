@@ -48,7 +48,7 @@
  },
  "adaptateurs": {
   "trace-chemin": "out/shared/chemin-moteur/habillages/plan-bleu.js",
-  "pop-papier-12ips": "out/shorts/papier-plan-bleu__explicatif__d-ou-vient-le-mot-sandwich/src/plan-bleu.json (+ tapis_plan() du même short)"
+  "pop-papier-12ips": "out/shorts/papier-plan-bleu__explicatif__d-ou-vient-le-mot-sandwich/src/plan-bleu.json (+ tapis_plan() du même short) — essai C4 abandonné le 20/11/2026"
  },
  "image": "out/shorts/lyrics-chemin__paroles__claudes-plan/stills/04_pre-pose_7.7s.jpg",
  "recettes": [

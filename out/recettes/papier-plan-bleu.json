@@ -7,7 +7,7 @@
   "narre-court"
  ],
  "son": null,
- "statut": "essai",
+ "statut": "abandonnee",
  "essai": "C4",
  "question": "un habillage du moteur JS (plan-bleu) passe-t-il dans le moteur papier Python par un simple thème ?",
  "shorts": [
@@ -15,13 +15,19 @@
  ],
  "adaptateur": "out/shorts/papier-plan-bleu__explicatif__d-ou-vient-le-mot-sandwich/src/plan-bleu.json + tapis_plan() dans src/video.py",
  "verdict": {
-  "cle": "presque-doublon",
-  "titre": "Ça marche, mais on voit surtout du papier découpé sur fond bleu",
+  "cle": "abandonne",
+  "titre": "Abandonné : on voit surtout du papier découpé sur fond bleu",
   "texte": "Techniquement, c'est le moins cher : un thème et un fond dessiné, 15 s de rendu, aucun changement du moteur. Le crayon jaune, la tasse de café et les lettres Barlow rappellent le plan bleu. Mais ce sont les bandes, les cartes et les tampons du papier qui dominent, et le résultat ressemble beaucoup à Atelier papier (tapis bleu nuit quadrillé). Le plan bleu se reconnaît surtout à sa façon d'écrire (encre jaune sur le trait), et cette partie-là appartient au mouvement : elle ne passe pas dans le moteur papier.",
   "cout": "≈ 0,3 session · 1 thème + 1 fond (dans le dossier du short) · rendu 15 s · même voix"
  },
  "date": "2026-11-19",
  "planche": "out/report/notes/composition/essais/C4-planche.jpg",
  "comparaison": "out/report/notes/composition/essais/C4-comparaison.jpg",
- "posterT": 8.6
+ "posterT": 8.6,
+ "case": "C4",
+ "abandon": {
+  "date": "2026-11-20",
+  "decision": "Hamdi, option 124",
+  "raison": "presque un doublon d'Atelier papier : dans le moteur papier, la mécanique porte la signature et le plan bleu ne change que le fond ; pas une recette de chaîne. Le short est gardé comme exemple."
+ }
 }
