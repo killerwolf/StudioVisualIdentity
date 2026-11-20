@@ -64,5 +64,8 @@
  ],
  "source": "coreTokens de out/identities/index.json (le code des scènes écrit ses valeurs en dur : brique déclarée)",
  "date": "2026-11-19",
- "note": "adaptateur ajouté par un essai de composition (19/11/2026) : le reste de la fiche reste au niveau « declare »"
+ "note": "adaptateur ajouté par un essai de composition (19/11/2026) : le reste de la fiche reste au niveau « declare »",
+ "statut": "remplacee",
+ "remplacePar": "craie/tableau-vert",
+ "noteRemplacement": "remplacée le 20/11/2026 (option 124) par la variante « tableau-vert » de la famille d'habillage « craie » : out/habillages/craie/. Fiche gardée (pas de suppression) ; l'id « craie-verte » reste celui de l'adaptateur et de la maquette."
 }

@@ -1,7 +1,9 @@
 {
  "id": "chemin-craie-verte",
  "nom": "Chemin craie verte",
- "habillage": "craie-verte",
+ "habillage": "craie",
+ "variante": "tableau-vert",
+ "habillageAvant": "craie-verte",
  "mecanique": "trace-chemin",
  "formats": [
   "narre-long"

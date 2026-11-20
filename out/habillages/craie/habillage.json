@@ -1,0 +1,38 @@
+{
+ "id": "craie",
+ "nom": "Craie",
+ "type": "famille",
+ "niveau": "executable",
+ "variantes": [
+  "craie/ardoise",
+  "craie/tableau-vert"
+ ],
+ "commun": {
+  "matiere": "craie érodée par le même grain (textErode) sur un support sombre ; même dessin à la craie, même mise en page",
+  "adaptateurBase": "out/shared/chemin-moteur/habillages/ardoise.js (craie-verte.js en est parti : mêmes crochets)",
+  "lisibilite": {
+   "contrasteTexteMin": 4.5,
+   "couleurReservee": "vif"
+  },
+  "contraintes": {
+   "projection": "plane (vu de dessus)"
+  }
+ },
+ "differences": {
+  "ardoise": "bistrot, adultes : ardoise noire dans un cadre en chêne sur du marbre, majuscules étroites Barlow Condensed, vrais objets posés",
+  "tableau-vert": "école, enfants : tableau vert pleine image, Caveat manuscrit en minuscules, craie orange et bleue, rebord en bois avec bâtons de craie et brosse, décor dessiné à la craie"
+ },
+ "remplace": [
+  "ardoise",
+  "craie-verte"
+ ],
+ "recettes": [
+  "chemin-ardoise",
+  "tableau-craie",
+  "chemin-craie-verte"
+ ],
+ "decision": "Hamdi, option 124, 20/11/2026 : l'ardoise et la craie verte sont une seule matière en deux tons (verdict de l'essai C1, essais.md) ; on en fait une famille d'habillage « craie » à deux variantes, pas deux marques. Les fiches out/habillages/ardoise/ et out/habillages/craie-verte/ sont gardées et marquées « remplacée ».",
+ "regle": "une variante ne change que le ton (support, couleurs, polices, décor) ; une nouvelle craie (ex. craie blanche sur tableau noir d'école) s'ajoute comme variante, pas comme habillage",
+ "source": "out/report/notes/composition/essais.md (C1) ; proposition.md § 8.3 (voisinage)",
+ "date": "2026-11-20"
+}

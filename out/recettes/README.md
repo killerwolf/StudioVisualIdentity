@@ -24,6 +24,21 @@ preuve de chaque recette du même id.
 - Les signatures (`curation.signatureToPreserve` de l'index) sont coupées en deux dans `signaturePortee` de chaque recette
   (moitié habillage, moitié mécanique). Ce découpage est un jugement, relu à la main.
 
+## Familles d'habillage (depuis le 20/11/2026)
+
+Un habillage peut être une **famille** à plusieurs **variantes** quand deux pâtes sont la même matière en deux tons (règle de
+voisinage, proposition § 8.3 ; verdict de l'essai C1). Première famille : **`craie`** (`out/habillages/craie/habillage.json`,
+variantes dans `out/habillages/craie/variantes/`) :
+
+| Variante | Remplace la fiche | Ton | Adaptateur `trace-chemin` | Recettes |
+|---|---|---|---|---|
+| `craie/ardoise` | `out/habillages/ardoise/` (gardée, marquée `remplacee`) | bistrot, adultes | `ardoise.js` | chemin-ardoise |
+| `craie/tableau-vert` | `out/habillages/craie-verte/` (gardée, marquée `remplacee`) | école, enfants | `craie-verte.js` | tableau-craie, chemin-craie-verte (essai C1) |
+
+Dans les recettes et `etiquettes.json` : `"habillage": "craie"` + `"variante": "ardoise"` ou `"tableau-vert"` (l'ancien id est
+gardé dans `habillageAvant`). Les fichiers d'adaptateur, la maquette de la vitrine et les `narration-chemin.json` gardent les
+anciens ids (`ardoise`, `craie-verte`) : rien n'est renommé.
+
 ## Le tableau des combinaisons (tenu à la main)
 
 États : **testé** (un short existe et passe `check.py`), **compatible** (adaptateur + image fixe, pas de short), **à
@@ -40,7 +55,7 @@ absente vaut « inconnu ».
 | brut-jaune | punch-cut-slam | narre-court | brut-meme | 2 |
 | meteo-clair | carte-champs-front | narre-court | carte-meteo | 2 |
 | bauhaus-primaires | puzzle-grille-morph | narre-court | bauhaus-kinetic | 2 |
-| craie-verte | ecriture-trace-chiffon | narre-court | tableau-craie | 2 |
+| craie · tableau-vert | ecriture-trace-chiffon | narre-court | tableau-craie | 2 |
 | riso-3-encres | impression-on-twos | narre-court | riso-zine | 2 |
 | orange-graphite | traceur-escalier-plaque | narre-court | trait-continu | 2 |
 | pixel-jour | survol-terrain | narre-court | survol-pixel | 2 |
@@ -58,9 +73,9 @@ absente vaut « inconnu ».
 | punchy | colonne-mot-a-mot | paroles-muet | lyrics-punchy | 1 |
 | plan-bleu | trace-chemin | paroles-muet | lyrics-chemin | 1 |
 | editeur | trace-chemin | paroles-muet | chemin-editeur | 1 |
-| ardoise | trace-chemin | narre-long | chemin-ardoise | 1 |
+| craie · ardoise | trace-chemin | narre-long | chemin-ardoise | 1 |
 | portulan | trace-chemin | narre-long | chemin-portulan | 1 |
-| **craie-verte** | **trace-chemin** | **narre-long** | **essai C1** `chemin-craie-verte` | 1 |
+| **craie · tableau-vert** | **trace-chemin** | **narre-long** | **essai C1** `chemin-craie-verte` | 1 |
 | **grille-suisse** | **trace-chemin** | **narre-court** | **Données qui se tracent** `chemin-grille-suisse` (recette adoptée le 20/11/2026, issue de l'essai C2) | 1 |
 | plan-bleu | pop-papier-12ips | narre-court | essai C4 `papier-plan-bleu` — **abandonné** le 20/11/2026 (presque un doublon d'Atelier papier ; short gardé comme exemple) | 1 |
 

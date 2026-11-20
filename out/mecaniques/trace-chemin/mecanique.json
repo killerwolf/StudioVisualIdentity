@@ -65,8 +65,8 @@
   "paroles-muet"
  ],
  "habillagesTestes": [
-  "ardoise",
-  "craie-verte",
+  "craie/ardoise",
+  "craie/tableau-vert",
   "editeur",
   "grille-suisse",
   "plan-bleu",

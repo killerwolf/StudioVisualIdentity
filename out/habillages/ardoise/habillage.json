@@ -46,5 +46,8 @@
   "chemin-ardoise"
  ],
  "source": "valeurs relevées dans l'adaptateur",
- "date": "2026-11-19"
+ "date": "2026-11-19",
+ "statut": "remplacee",
+ "remplacePar": "craie/ardoise",
+ "noteRemplacement": "remplacée le 20/11/2026 (option 124) par la variante « ardoise » de la famille d'habillage « craie » : out/habillages/craie/. Fiche gardée (pas de suppression) ; l'id « ardoise » reste celui de l'adaptateur et de la maquette."
 }

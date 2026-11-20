@@ -1,7 +1,9 @@
 {
  "id": "tableau-craie",
  "nom": "Tableau Craie",
- "habillage": "craie-verte",
+ "habillage": "craie",
+ "variante": "tableau-vert",
+ "habillageAvant": "craie-verte",
  "mecanique": "ecriture-trace-chiffon",
  "formats": [
   "narre-court"

@@ -1,5 +1,5 @@
 {
- "note": "Étiquetage des 50 shorts existants (plus, depuis le 20/11/2026, le short de la recette adoptée « Données qui se tracent » : 51) (migration.md étape 2), tenu ici plutôt que dans les short.json : consigne du 19/11/2026 de ne modifier aucun short existant. Clé = dossier sous out/shorts/.",
+ "note": "Étiquetage des 50 shorts existants (plus, depuis le 20/11/2026, le short de la recette adoptée « Données qui se tracent » : 51) (migration.md étape 2), tenu ici plutôt que dans les short.json : consigne du 19/11/2026 de ne modifier aucun short existant. Clé = dossier sous out/shorts/. Depuis le 20/11/2026, l'ardoise et la craie verte sont la famille « craie » : habillage « craie » + clé « variante » (ardoise, tableau-vert).",
  "shorts": {
   "aquarelle-conte__enfants__ou-vont-les-etoiles-le-jour": {
    "recette": "aquarelle-conte",
@@ -147,7 +147,8 @@
   },
   "lyrics-chemin__explicatif__le-quatre-quarts": {
    "recette": "chemin-ardoise",
-   "habillage": "ardoise",
+   "habillage": "craie",
+   "variante": "ardoise",
    "mecanique": "trace-chemin",
    "format": "narre-long"
   },
@@ -273,13 +274,15 @@
   },
   "tableau-craie__enfants__comment-une-graine-devient-un-arbre": {
    "recette": "tableau-craie",
-   "habillage": "craie-verte",
+   "habillage": "craie",
+   "variante": "tableau-vert",
    "mecanique": "ecriture-trace-chiffon",
    "format": "narre-court"
   },
   "tableau-craie__explicatif__pourquoi-le-ciel-est-bleu": {
    "recette": "tableau-craie",
-   "habillage": "craie-verte",
+   "habillage": "craie",
+   "variante": "tableau-vert",
    "mecanique": "ecriture-trace-chiffon",
    "format": "narre-court"
   },

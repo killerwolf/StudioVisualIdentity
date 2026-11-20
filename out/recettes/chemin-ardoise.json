@@ -1,7 +1,9 @@
 {
  "id": "chemin-ardoise",
  "nom": "Chemin ardoise",
- "habillage": "ardoise",
+ "habillage": "craie",
+ "variante": "ardoise",
+ "habillageAvant": "ardoise",
  "mecanique": "trace-chemin",
  "formats": [
   "narre-long"
