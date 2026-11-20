@@ -376,7 +376,7 @@ footer.colophon { margin-top: var(--s7); padding-top: var(--s4); border-top: 1px
       <div><span>Reconnu par l'habillage</span><b id="m-rh" title="reconnaissance à deux étages, recognition.py --briques : shorts avec un pair, C4 exclu">—</b></div>
       <div><span>Reconnu par la mécanique</span><b id="m-rm" title="reconnaissance à deux étages, recognition.py --briques : shorts avec un pair, C4 exclu">—</b></div>
       <div><span>Production</span><b>4 cœurs</b></div>
-      <div><span>Voix off (3 vidéos muettes)</span><b title="31 Arnold (Fish Audio) + 14 Sulafat (Gemini : 8 papier + 4 lot 2 + 2 Survol pixel) + 2 ElevenLabs (Lyrics chemin narrés) ; 3 vidéos de paroles muettes (la chanson est ajoutée à la publication)">47</b></div>
+      <div><span id="m-voix-l">Voix off (3 vidéos muettes)</span><b id="m-voix" title="32 Arnold (Fish Audio) + 15 Sulafat (Gemini) + 3 ElevenLabs ; 3 vidéos de paroles muettes (la chanson est ajoutée à la publication)">50</b></div>
     </div>
   </section>
 
@@ -544,6 +544,11 @@ const fmt = n => String(n).replace(".", ",");
 const setText = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
 setText("m-ids", META.identities); setText("m-decl", META.declinations); setText("m-deriv", META.derivations);
 setText("m-shorts", META.shortsComposes ? `${META.shortsAll} (${META.shortsComposes})` : META.shortsAll); setText("m-h1-shorts", META.shortsAll);
+{
+  const V = Object.entries(META.voices).filter(([k]) => k !== "non enregistrée").sort((a, b) => b[1] - a[1]);
+  setText("m-voix", META.voiced); setText("m-voix-l", `Voix off (${META.muted} vidéos muettes)`);
+  document.getElementById("m-voix").title = `${V.map(([k, n]) => `${n} ${k}`).join(" + ")} (dont les 3 shorts nés de la matrice, voix réutilisées) ; ${META.muted} vidéos de paroles muettes (la chanson est ajoutée à la publication)`;
+}
 if (META.briques) {
   const b = META.briques;
   setText("m-rec", b.recettes); setText("m-hm", `${b.habillages} · ${b.mecaniques}`);
@@ -731,7 +736,7 @@ setText("r-hits", META.recogHits); setText("r-total", META.recogTotal);
       <div class="big">${G.mecanique.top1.replace("/", "<small> / ") + "</small>"}</div>
       <p>shorts dont le plus proche voisin a la même mécanique (${pl(G.mecanique.sansPair, "short seul de sa mécanique non compté", "shorts seuls de leur mécanique non comptés")}). Score global bas : la plupart des mécaniques n'ont que les 2 shorts de leur recette, sur deux sujets très différents, et ce premier descripteur du mouvement est simple.</p>
       <h4 style="margin-top:var(--s3)">Le test qui compte : la même mécanique sous un autre habillage (${G.mecanique.croise})</h4>
-      <p>On cherche le voisin seulement parmi les shorts d'un autre habillage : retrouve-t-on la même mécanique ? ${grp(G.mecanique)}. Les deux mécaniques qui ont vraiment changé d'habit (le chemin, le papier) sont reconnues ; « Survol de relief » ne l'est pas : Relief topo et Survol pixel bougent différemment, ce sont sans doute deux mécaniques.</p>
+      <p>On cherche le voisin seulement parmi les shorts d'un autre habillage : retrouve-t-on la même mécanique ? ${grp(G.mecanique)}.${G.mecanique.croiseAutreSujet ? ` Contrôle : les 4 papiers rendent les deux mêmes épisodes ; en écartant aussi les shorts du même sujet, ${G.mecanique.croiseAutreSujet} (c'est bien le mouvement qui est reconnu, pas l'épisode).` : ""} Les deux mécaniques qui ont vraiment changé d'habit (le chemin, le papier) sont reconnues ; « Survol de relief » ne l'est pas : Relief topo et Survol pixel bougent différemment, ce sont sans doute deux mécaniques.</p>
       <ul>${G.mecanique.lignes.map(l => line(l, "m")).join("")}</ul>
     </div>`;
 }

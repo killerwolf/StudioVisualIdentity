@@ -29,6 +29,7 @@
   "ratioIntraOverInter": 0.303,
   "croise": {
    "reussis": "5/6",
+   "reussisAutreSujet": "4/5",
    "lignes": [
     {
      "short": "chemin-craie-verte__explicatif__le-quatre-quarts",
@@ -37,7 +38,11 @@
      "cleVoisin": "papier-decoupe",
      "reconnu": false,
      "rangDuPremierPair": 3,
-     "candidats": 46
+     "candidats": 46,
+     "autreSujet": {
+      "voisin": "papier-decoupe__explicatif__d-ou-vient-le-mot-sandwich",
+      "reconnu": false
+     }
     },
     {
      "short": "chemin-grille-suisse__geographie__ou-vivent-8-milliards",
@@ -46,7 +51,11 @@
      "cleVoisin": "grille-suisse",
      "reconnu": true,
      "rangDuPremierPair": 1,
-     "candidats": 46
+     "candidats": 46,
+     "autreSujet": {
+      "voisin": "swiss-data__evenements__j-272-eclipse-2-aout-2027",
+      "reconnu": true
+     }
     },
     {
      "short": "swiss-data__evenements__j-272-eclipse-2-aout-2027",
@@ -55,7 +64,11 @@
      "cleVoisin": "grille-suisse",
      "reconnu": true,
      "rangDuPremierPair": 1,
-     "candidats": 50
+     "candidats": 50,
+     "autreSujet": {
+      "voisin": "chemin-grille-suisse__geographie__ou-vivent-8-milliards",
+      "reconnu": true
+     }
     },
     {
      "short": "swiss-data__geographie__ou-vivent-8-milliards",
@@ -73,7 +86,11 @@
      "cleVoisin": "craie/tableau-vert",
      "reconnu": true,
      "rangDuPremierPair": 1,
-     "candidats": 50
+     "candidats": 50,
+     "autreSujet": {
+      "voisin": "chemin-craie-verte__explicatif__le-quatre-quarts",
+      "reconnu": true
+     }
     },
     {
      "short": "tableau-craie__explicatif__pourquoi-le-ciel-est-bleu",
@@ -82,7 +99,11 @@
      "cleVoisin": "craie/tableau-vert",
      "reconnu": true,
      "rangDuPremierPair": 1,
-     "candidats": 50
+     "candidats": 50,
+     "autreSujet": {
+      "voisin": "chemin-craie-verte__explicatif__le-quatre-quarts",
+      "reconnu": true
+     }
     }
    ]
   },
@@ -259,7 +280,11 @@
      "cleVoisin": "papier-decoupe",
      "reconnu": false,
      "rangDuPremierPair": 3,
-     "candidats": 46
+     "candidats": 46,
+     "autreSujet": {
+      "voisin": "papier-decoupe__explicatif__d-ou-vient-le-mot-sandwich",
+      "reconnu": false
+     }
     }
    },
    {
@@ -274,7 +299,11 @@
      "cleVoisin": "grille-suisse",
      "reconnu": true,
      "rangDuPremierPair": 1,
-     "candidats": 46
+     "candidats": 46,
+     "autreSujet": {
+      "voisin": "swiss-data__evenements__j-272-eclipse-2-aout-2027",
+      "reconnu": true
+     }
     }
    },
    {
@@ -497,7 +526,11 @@
      "cleVoisin": "grille-suisse",
      "reconnu": true,
      "rangDuPremierPair": 1,
-     "candidats": 50
+     "candidats": 50,
+     "autreSujet": {
+      "voisin": "chemin-grille-suisse__geographie__ou-vivent-8-milliards",
+      "reconnu": true
+     }
     }
    },
    {
@@ -527,7 +560,11 @@
      "cleVoisin": "craie/tableau-vert",
      "reconnu": true,
      "rangDuPremierPair": 1,
-     "candidats": 50
+     "candidats": 50,
+     "autreSujet": {
+      "voisin": "chemin-craie-verte__explicatif__le-quatre-quarts",
+      "reconnu": true
+     }
     }
    },
    {
@@ -542,7 +579,11 @@
      "cleVoisin": "craie/tableau-vert",
      "reconnu": true,
      "rangDuPremierPair": 1,
-     "candidats": 50
+     "candidats": 50,
+     "autreSujet": {
+      "voisin": "chemin-craie-verte__explicatif__le-quatre-quarts",
+      "reconnu": true
+     }
     }
    },
    {
@@ -607,6 +648,7 @@
   "ratioIntraOverInter": 0.491,
   "croise": {
    "reussis": "13/18",
+   "reussisAutreSujet": "13/18",
    "lignes": [
     {
      "short": "atelier-papier__explicatif__d-ou-vient-le-mot-sandwich",
@@ -615,7 +657,11 @@
      "cleVoisin": "pop-papier-12ips",
      "reconnu": true,
      "rangDuPremierPair": 1,
-     "candidats": 50
+     "candidats": 50,
+     "autreSujet": {
+      "voisin": "carnet-archives__histoire__la-fourchette-a-fait-scandale",
+      "reconnu": true
+     }
     },
     {
      "short": "atelier-papier__histoire__la-fourchette-a-fait-scandale",
@@ -624,7 +670,11 @@
      "cleVoisin": "pop-papier-12ips",
      "reconnu": true,
      "rangDuPremierPair": 1,
-     "candidats": 50
+     "candidats": 50,
+     "autreSujet": {
+      "voisin": "cabinet-curiosites__explicatif__d-ou-vient-le-mot-sandwich",
+      "reconnu": true
+     }
     },
     {
      "short": "cabinet-curiosites__explicatif__d-ou-vient-le-mot-sandwich",
@@ -633,7 +683,11 @@
      "cleVoisin": "pop-papier-12ips",
      "reconnu": true,
      "rangDuPremierPair": 1,
-     "candidats": 50
+     "candidats": 50,
+     "autreSujet": {
+      "voisin": "carnet-archives__histoire__la-fourchette-a-fait-scandale",
+      "reconnu": true
+     }
     },
     {
      "short": "cabinet-curiosites__histoire__la-fourchette-a-fait-scandale",
@@ -642,7 +696,11 @@
      "cleVoisin": "pop-papier-12ips",
      "reconnu": true,
      "rangDuPremierPair": 1,
-     "candidats": 50
+     "candidats": 50,
+     "autreSujet": {
+      "voisin": "atelier-papier__explicatif__d-ou-vient-le-mot-sandwich",
+      "reconnu": true
+     }
     },
     {
      "short": "carnet-archives__explicatif__d-ou-vient-le-mot-sandwich",
@@ -651,7 +709,11 @@
      "cleVoisin": "pop-papier-12ips",
      "reconnu": true,
      "rangDuPremierPair": 1,
-     "candidats": 50
+     "candidats": 50,
+     "autreSujet": {
+      "voisin": "cabinet-curiosites__histoire__la-fourchette-a-fait-scandale",
+      "reconnu": true
+     }
     },
     {
      "short": "carnet-archives__histoire__la-fourchette-a-fait-scandale",
@@ -660,7 +722,11 @@
      "cleVoisin": "pop-papier-12ips",
      "reconnu": true,
      "rangDuPremierPair": 1,
-     "candidats": 50
+     "candidats": 50,
+     "autreSujet": {
+      "voisin": "cabinet-curiosites__explicatif__d-ou-vient-le-mot-sandwich",
+      "reconnu": true
+     }
     },
     {
      "short": "chemin-craie-verte__explicatif__le-quatre-quarts",
@@ -669,7 +735,11 @@
      "cleVoisin": "trace-chemin",
      "reconnu": true,
      "rangDuPremierPair": 1,
-     "candidats": 49
+     "candidats": 49,
+     "autreSujet": {
+      "voisin": "lyrics-chemin__histoire__le-premier-tour-du-monde",
+      "reconnu": true
+     }
     },
     {
      "short": "chemin-grille-suisse__geographie__ou-vivent-8-milliards",
@@ -678,7 +748,11 @@
      "cleVoisin": "trace-chemin",
      "reconnu": true,
      "rangDuPremierPair": 1,
-     "candidats": 49
+     "candidats": 49,
+     "autreSujet": {
+      "voisin": "lyrics-chemin__paroles__claudes-plan",
+      "reconnu": true
+     }
     },
     {
      "short": "lyrics-chemin__explicatif__le-quatre-quarts",
@@ -687,7 +761,11 @@
      "cleVoisin": "simulation-deterministe",
      "reconnu": false,
      "rangDuPremierPair": 2,
-     "candidats": 51
+     "candidats": 51,
+     "autreSujet": {
+      "voisin": "pixel-arcade__engagement__quelle-couleur-conquiert-l-ecran",
+      "reconnu": false
+     }
     },
     {
      "short": "lyrics-chemin__histoire__le-premier-tour-du-monde",
@@ -696,7 +774,11 @@
      "cleVoisin": "trace-chemin",
      "reconnu": true,
      "rangDuPremierPair": 1,
-     "candidats": 51
+     "candidats": 51,
+     "autreSujet": {
+      "voisin": "lyrics-chemin__paroles__claudes-plan",
+      "reconnu": true
+     }
     },
     {
      "short": "lyrics-chemin__paroles__claudes-plan",
@@ -705,7 +787,11 @@
      "cleVoisin": "trace-chemin",
      "reconnu": true,
      "rangDuPremierPair": 1,
-     "candidats": 51
+     "candidats": 51,
+     "autreSujet": {
+      "voisin": "lyrics-chemin__histoire__le-premier-tour-du-monde",
+      "reconnu": true
+     }
     },
     {
      "short": "lyrics-chemin__paroles__claudes-plan-tech",
@@ -714,7 +800,11 @@
      "cleVoisin": "trace-chemin",
      "reconnu": true,
      "rangDuPremierPair": 1,
-     "candidats": 51
+     "candidats": 51,
+     "autreSujet": {
+      "voisin": "lyrics-chemin__explicatif__le-quatre-quarts",
+      "reconnu": true
+     }
     },
     {
      "short": "papier-decoupe__explicatif__d-ou-vient-le-mot-sandwich",
@@ -723,7 +813,11 @@
      "cleVoisin": "pop-papier-12ips",
      "reconnu": true,
      "rangDuPremierPair": 1,
-     "candidats": 50
+     "candidats": 50,
+     "autreSujet": {
+      "voisin": "carnet-archives__histoire__la-fourchette-a-fait-scandale",
+      "reconnu": true
+     }
     },
     {
      "short": "papier-decoupe__histoire__la-fourchette-a-fait-scandale",
@@ -732,7 +826,11 @@
      "cleVoisin": "pop-papier-12ips",
      "reconnu": true,
      "rangDuPremierPair": 1,
-     "candidats": 50
+     "candidats": 50,
+     "autreSujet": {
+      "voisin": "cabinet-curiosites__explicatif__d-ou-vient-le-mot-sandwich",
+      "reconnu": true
+     }
     },
     {
      "short": "survol-pixel__explicatif__comment-nait-un-atoll",
@@ -741,7 +839,11 @@
      "cleVoisin": "orbite-phenomene-neon",
      "reconnu": false,
      "rangDuPremierPair": 2,
-     "candidats": 50
+     "candidats": 50,
+     "autreSujet": {
+      "voisin": "neon-lab__abstrait__champ-de-force-lucioles",
+      "reconnu": false
+     }
     },
     {
      "short": "survol-pixel__histoire__machu-picchu-pourquoi-une-cite-en-escaliers",
@@ -750,7 +852,11 @@
      "cleVoisin": "tourniquet-tampon",
      "reconnu": false,
      "rangDuPremierPair": 6,
-     "candidats": 50
+     "candidats": 50,
+     "autreSujet": {
+      "voisin": "gazette-1900__histoire__1789-en-20-secondes",
+      "reconnu": false
+     }
     },
     {
      "short": "topo-relief__geographie__comment-mesure-t-on-l-everest",
@@ -759,7 +865,11 @@
      "cleVoisin": "trace-chemin",
      "reconnu": false,
      "rangDuPremierPair": 16,
-     "candidats": 50
+     "candidats": 50,
+     "autreSujet": {
+      "voisin": "lyrics-chemin__paroles__claudes-plan",
+      "reconnu": false
+     }
     },
     {
      "short": "topo-relief__histoire__hannibal-traverse-les-alpes",
@@ -768,7 +878,11 @@
      "cleVoisin": "travelling-cine-3d",
      "reconnu": false,
      "rangDuPremierPair": 17,
-     "candidats": 50
+     "candidats": 50,
+     "autreSujet": {
+      "voisin": "cosmos-doc__explicatif__pourquoi-venus-plus-chaude-que-mercure",
+      "reconnu": false
+     }
     }
    ]
   },
@@ -983,7 +1097,11 @@
      "cleVoisin": "pop-papier-12ips",
      "reconnu": true,
      "rangDuPremierPair": 1,
-     "candidats": 50
+     "candidats": 50,
+     "autreSujet": {
+      "voisin": "carnet-archives__histoire__la-fourchette-a-fait-scandale",
+      "reconnu": true
+     }
     }
    },
    {
@@ -998,7 +1116,11 @@
      "cleVoisin": "pop-papier-12ips",
      "reconnu": true,
      "rangDuPremierPair": 1,
-     "candidats": 50
+     "candidats": 50,
+     "autreSujet": {
+      "voisin": "cabinet-curiosites__explicatif__d-ou-vient-le-mot-sandwich",
+      "reconnu": true
+     }
     }
    },
    {
@@ -1061,7 +1183,11 @@
      "cleVoisin": "pop-papier-12ips",
      "reconnu": true,
      "rangDuPremierPair": 1,
-     "candidats": 50
+     "candidats": 50,
+     "autreSujet": {
+      "voisin": "carnet-archives__histoire__la-fourchette-a-fait-scandale",
+      "reconnu": true
+     }
     }
    },
    {
@@ -1076,7 +1202,11 @@
      "cleVoisin": "pop-papier-12ips",
      "reconnu": true,
      "rangDuPremierPair": 1,
-     "candidats": 50
+     "candidats": 50,
+     "autreSujet": {
+      "voisin": "atelier-papier__explicatif__d-ou-vient-le-mot-sandwich",
+      "reconnu": true
+     }
     }
    },
    {
@@ -1091,7 +1221,11 @@
      "cleVoisin": "pop-papier-12ips",
      "reconnu": true,
      "rangDuPremierPair": 1,
-     "candidats": 50
+     "candidats": 50,
+     "autreSujet": {
+      "voisin": "cabinet-curiosites__histoire__la-fourchette-a-fait-scandale",
+      "reconnu": true
+     }
     }
    },
    {
@@ -1106,7 +1240,11 @@
      "cleVoisin": "pop-papier-12ips",
      "reconnu": true,
      "rangDuPremierPair": 1,
-     "candidats": 50
+     "candidats": 50,
+     "autreSujet": {
+      "voisin": "cabinet-curiosites__explicatif__d-ou-vient-le-mot-sandwich",
+      "reconnu": true
+     }
     }
    },
    {
@@ -1137,7 +1275,11 @@
      "cleVoisin": "trace-chemin",
      "reconnu": true,
      "rangDuPremierPair": 1,
-     "candidats": 49
+     "candidats": 49,
+     "autreSujet": {
+      "voisin": "lyrics-chemin__histoire__le-premier-tour-du-monde",
+      "reconnu": true
+     }
     }
    },
    {
@@ -1152,7 +1294,11 @@
      "cleVoisin": "trace-chemin",
      "reconnu": true,
      "rangDuPremierPair": 1,
-     "candidats": 49
+     "candidats": 49,
+     "autreSujet": {
+      "voisin": "lyrics-chemin__paroles__claudes-plan",
+      "reconnu": true
+     }
     }
    },
    {
@@ -1223,7 +1369,11 @@
      "cleVoisin": "simulation-deterministe",
      "reconnu": false,
      "rangDuPremierPair": 2,
-     "candidats": 51
+     "candidats": 51,
+     "autreSujet": {
+      "voisin": "pixel-arcade__engagement__quelle-couleur-conquiert-l-ecran",
+      "reconnu": false
+     }
     }
    },
    {
@@ -1238,7 +1388,11 @@
      "cleVoisin": "trace-chemin",
      "reconnu": true,
      "rangDuPremierPair": 1,
-     "candidats": 51
+     "candidats": 51,
+     "autreSujet": {
+      "voisin": "lyrics-chemin__paroles__claudes-plan",
+      "reconnu": true
+     }
     }
    },
    {
@@ -1253,7 +1407,11 @@
      "cleVoisin": "trace-chemin",
      "reconnu": true,
      "rangDuPremierPair": 1,
-     "candidats": 51
+     "candidats": 51,
+     "autreSujet": {
+      "voisin": "lyrics-chemin__histoire__le-premier-tour-du-monde",
+      "reconnu": true
+     }
     }
    },
    {
@@ -1268,7 +1426,11 @@
      "cleVoisin": "trace-chemin",
      "reconnu": true,
      "rangDuPremierPair": 1,
-     "candidats": 51
+     "candidats": 51,
+     "autreSujet": {
+      "voisin": "lyrics-chemin__explicatif__le-quatre-quarts",
+      "reconnu": true
+     }
     }
    },
    {
@@ -1315,7 +1477,11 @@
      "cleVoisin": "pop-papier-12ips",
      "reconnu": true,
      "rangDuPremierPair": 1,
-     "candidats": 50
+     "candidats": 50,
+     "autreSujet": {
+      "voisin": "carnet-archives__histoire__la-fourchette-a-fait-scandale",
+      "reconnu": true
+     }
     }
    },
    {
@@ -1330,7 +1496,11 @@
      "cleVoisin": "pop-papier-12ips",
      "reconnu": true,
      "rangDuPremierPair": 1,
-     "candidats": 50
+     "candidats": 50,
+     "autreSujet": {
+      "voisin": "cabinet-curiosites__explicatif__d-ou-vient-le-mot-sandwich",
+      "reconnu": true
+     }
     }
    },
    {
@@ -1401,7 +1571,11 @@
      "cleVoisin": "orbite-phenomene-neon",
      "reconnu": false,
      "rangDuPremierPair": 2,
-     "candidats": 50
+     "candidats": 50,
+     "autreSujet": {
+      "voisin": "neon-lab__abstrait__champ-de-force-lucioles",
+      "reconnu": false
+     }
     }
    },
    {
@@ -1416,7 +1590,11 @@
      "cleVoisin": "tourniquet-tampon",
      "reconnu": false,
      "rangDuPremierPair": 6,
-     "candidats": 50
+     "candidats": 50,
+     "autreSujet": {
+      "voisin": "gazette-1900__histoire__1789-en-20-secondes",
+      "reconnu": false
+     }
     }
    },
    {
@@ -1463,7 +1641,11 @@
      "cleVoisin": "trace-chemin",
      "reconnu": false,
      "rangDuPremierPair": 16,
-     "candidats": 50
+     "candidats": 50,
+     "autreSujet": {
+      "voisin": "lyrics-chemin__paroles__claudes-plan",
+      "reconnu": false
+     }
     }
    },
    {
@@ -1478,7 +1660,11 @@
      "cleVoisin": "travelling-cine-3d",
      "reconnu": false,
      "rangDuPremierPair": 17,
-     "candidats": 50
+     "candidats": 50,
+     "autreSujet": {
+      "voisin": "cosmos-doc__explicatif__pourquoi-venus-plus-chaude-que-mercure",
+      "reconnu": false
+     }
     }
    },
    {

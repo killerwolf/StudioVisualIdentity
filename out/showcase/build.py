@@ -150,20 +150,25 @@ def build_meta(ids, also=None):
     # reconnaissance : le recognition.json qui mesure le plus de shorts (il n'est pas fusionnable : moyennes globales)
     rec = max((json.load(open(r / 'out/report/recognition.json')) for r in roots), key=lambda x: len(x.get('rows', [])))
     voices = {}
-    for s in shorts:
+    comp_voice = []                                      # voix des shorts nés de la matrice (C1, C2, C4)
+    for d in sorted(comp - shown):
+        sd = ROOT / 'out/shorts' / d
+        comp_voice.append(dict(zip(('voice', 'voiced'), voice_of(json.load(open(sd / 'narration.json')), json.load(open(sd / 'short.json'))))))
+    for s in shorts + comp_voice:
         k = s['voice'] if s['voiced'] else 'non enregistrée'
         voices[k] = voices.get(k, 0) + 1
-    fails = [r for r in rec.get('rows', []) if not r.get('sameIdentity')]
+    rows = [r for r in rec.get('rows', []) if not r.get('sansPair')]   # un short seul de son identité n'est pas un échec
+    fails = [r for r in rows if not r.get('sameIdentity')]
     derivations = sum(1 for i in ids if i.get('variantOf'))
     return {
         # identités = racines seules ; déclinaisons = toutes les entrées de l'index (racines + dérivations)
         'identities': len(ids) - derivations, 'derivations': derivations, 'declinations': len(ids), 'shorts': len(shorts),
         'qaOk': sum(1 for r in qa if r.get('ok')), 'qaTotal': len(qa),
-        'recogHits': sum(1 for r in rec.get('rows', []) if r.get('sameIdentity')), 'recogTotal': len(rec.get('rows', [])),
+        'recogHits': sum(1 for r in rows if r.get('sameIdentity')), 'recogTotal': len(rows),
         'recogIntra': rec.get('meanIntra'), 'recogInter': rec.get('meanInter'), 'recogRatio': rec.get('ratioIntraOverInter'),
         'recogFails': [{'short': r['short'], 'nearest': r['nearest'], 'distance': r['distance']} for r in fails],
         'blindJudge14': (rec.get('blindJudge14') or {}).get('pureGroups'),
-        'voiced': sum(1 for s in shorts if s['voiced']), 'voices': voices,
+        'voiced': sum(1 for s in shorts + comp_voice if s['voiced']), 'voices': voices, 'muted': sum(1 for s in shorts + comp_voice if not s['voiced']),
         'qaMissing': sorted((shown | comp) - set(qa_by)), 'recogMissing': sorted(shown - {r['short'] for r in rec.get('rows', [])}),
         'shortsAll': len(shown | comp), 'shortsComposes': len(comp - shown),
         'briques': index_briques()['counts']['briques'], 'recogBriques': reconnaissance_briques(),
@@ -226,7 +231,7 @@ def reconnaissance_briques():
         for l in lignes:
             g = groupes.setdefault(l['cle'], [0, 0]); g[0] += l['ok']; g[1] += 1
         return {'top1': e['top1'], 'acc': e['top1Accuracy'], 'sansPair': len(e['sansPair']), 'ratio': e['ratioIntraOverInter'],
-                'croise': e['croise']['reussis'], 'groupes': [{'cle': k, 'ok': v[0], 'n': v[1]} for k, v in groupes.items()],
+                'croise': e['croise']['reussis'], 'croiseAutreSujet': e['croise'].get('reussisAutreSujet'), 'groupes': [{'cle': k, 'ok': v[0], 'n': v[1]} for k, v in groupes.items()],
                 'lignes': lignes,
                 'echecs': [{'short': x['short'], 'cle': cle_nom(x['cle']), 'voisin': x['voisin'], 'cleVoisin': cle_nom(x['cleVoisin'])} for x in e['echecs']]}
     return {'date': r.get('date'), 'shorts': r['shorts'], 'mesures': r['mesures'], 'exclus': [x['short'] for x in r['exclus']],

@@ -24,7 +24,8 @@ relancé (il réécrit `recognition.json` et ne sait pas encore séparer habilla
 > (3/3) : la mesure confirme le verdict à l'œil. Les deux tableau-craie ont C1 pour premier voisin (2/2), mais C1, lui,
 > a pour voisin papier-decoupe (tapis vert) et ne trouve un tableau-craie qu'au 3ᵉ rang : craie-verte sur le chemin est
 > reconnue depuis Tableau Craie, pas l'inverse. Mécanique (descripteur temporel neuf) : test croisé entre habillages 13/18
-> (`trace-chemin` 5/6, `pop-papier-12ips` 8/8 ; `survol-terrain` 0/4 : Relief topo et Survol pixel ne bougent pas pareil).
+> (`trace-chemin` 5/6, `pop-papier-12ips` 8/8 ; `survol-terrain` 0/4 : Relief topo et Survol pixel ne bougent pas pareil) ;
+> contrôle sans les shorts du même sujet (les 4 papiers rendent les mêmes épisodes) : toujours 13/18, c'est le mouvement qui est reconnu.
 > C4, mis à part, a pour plus proche voisin d'habillage `lyrics-chemin__paroles__claudes-plan` (le plan bleu) et pour voisin de
 > mécanique un short papier (carnet-archives).
 

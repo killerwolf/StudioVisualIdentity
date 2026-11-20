@@ -514,7 +514,8 @@ def main():
         'recognition': {'blindJudge14': (recog.get('blindJudge14') or {}).get('pureGroups'), 'blindJudgeGroups': 14,
                         'blindJudgeLot2': (recog.get('blindJudgeLot2') or {}).get('pureGroups'), 'blindJudgeLot2Groups': (recog.get('blindJudgeLot2') or {}).get('groups'),
                         'blindJudgeSurvol': (recog.get('blindJudgeSurvol') or {}).get('pureGroups'), 'blindJudgeSurvolGroups': (recog.get('blindJudgeSurvol') or {}).get('groups'),
-                        'measuredTop1': f"{sum(1 for r in recog.get('rows', []) if r.get('sameIdentity'))}/{len(recog.get('rows', []))}"},
+                        # un short seul de son identité (sansPair, recognition.py) n'a pas de voisin possible : ni réussite ni échec
+                        'measuredTop1': f"{sum(1 for r in recog.get('rows', []) if r.get('sameIdentity'))}/{sum(1 for r in recog.get('rows', []) if not r.get('sansPair'))}"},
         'identities': ids,
         'briquesNote': ('Composition model (2026-11-19/20, out/report/notes/composition/proposition.md): video = habillage (look) x mecanique '
                         '(motion) x format (+ son); a named, validated combination is a recette (same id as the identity it comes from). '

@@ -30,7 +30,8 @@ MODE --briques (2026-11-20, migration.md étape 5 ; proposition.md § 8) :
   shorts seuls de leur clé sont listés `sansPair`. Les shorts d'une recette abandonnée (C4) sont exclus de tous les scores
   et listés à part. Tests croisés (ceux qui comptent) : habillage reconnu ENTRE mécaniques différentes (voisin cherché
   parmi les shorts d'une autre mécanique) et mécanique reconnue ENTRE habillages différents (voisin cherché parmi les
-  shorts d'un autre habillage). Voisinage (§ 8.3) : paires d'habillages plus proches que la distance moyenne intra-habillage.
+  shorts d'un autre habillage), refaits sans les shorts du même sujet (`autreSujet` : les 4 papiers rendent les mêmes
+  épisodes, on vérifie que c'est le mouvement et pas l'épisode qui est reconnu). Voisinage (§ 8.3) : paires d'habillages plus proches que la distance moyenne intra-habillage.
 """
 import json, random, subprocess, sys, shutil
 from pathlib import Path
@@ -151,6 +152,13 @@ def evaluate(D, keys, pool, names, other=None):
                 first = min((sorted(cross_pool, key=lambda j: D[i, j]).index(j) + 1 for j in cross_pool if keys[j] == keys[i]))
                 row['croise'] = {'voisin': names[cn], 'cleVoisin': keys[cn], 'reconnu': keys[cn] == keys[i],
                                  'rangDuPremierPair': first, 'candidats': len(cross_pool)}
+                # contrôle : sans les shorts du même sujet (les 4 papiers rendent les 2 mêmes épisodes) — reconnaît-on
+                # la mécanique, ou seulement l'épisode ?
+                sujet = lambda k: names[k].split('__')[-1]
+                strict = [j for j in cross_pool if sujet(j) != sujet(i)]
+                if any(keys[j] == keys[i] for j in strict):
+                    sn = _nn(D, i, strict)
+                    row['croise']['autreSujet'] = {'voisin': names[sn], 'reconnu': keys[sn] == keys[i]}
         rows.append(row)
     cross = [r for r in rows if 'croise' in r]
     return {'top1': f'{hits}/{n}', 'top1Accuracy': round(hits / n, 3) if n else None,
@@ -158,6 +166,7 @@ def evaluate(D, keys, pool, names, other=None):
             'meanIntra': round(float(np.mean(intra)), 4) if intra else None, 'meanInter': round(float(np.mean(inter)), 4),
             'ratioIntraOverInter': round(float(np.mean(intra) / np.mean(inter)), 3) if intra else None,
             'croise': {'reussis': f"{sum(r['croise']['reconnu'] for r in cross)}/{len(cross)}",
+                       'reussisAutreSujet': f"{sum(r['croise']['autreSujet']['reconnu'] for r in cross if 'autreSujet' in r['croise'])}/{sum(1 for r in cross if 'autreSujet' in r['croise'])}",
                        'lignes': [{'short': r['short'], 'cle': r['cle'], **r['croise']} for r in cross]},
             'echecs': [{'short': r['short'], 'cle': r['cle'], 'voisin': r['voisin'], 'cleVoisin': r['cleVoisin']} for r in rows if r.get('reconnu') is False],
             'rows': rows}
@@ -220,7 +229,7 @@ def main_briques():
            'vecteursMecanique': {names[i]: [round(float(x), 4) for x in X[i]] for i in range(n)}}
     (ROOT / 'out/report/recognition-briques.json').write_text(json.dumps(res, indent=1, ensure_ascii=False))
     for nm, r in (('habillage', hab), ('mécanique', mcn)):
-        print(f"{nm} : top-1 {r['top1']} (sans pair : {len(r['sansPair'])}) ; croisé {r['croise']['reussis']} ; intra/inter {r['ratioIntraOverInter']}")
+        print(f"{nm} : top-1 {r['top1']} (sans pair : {len(r['sansPair'])}) ; croisé {r['croise']['reussis']} (sans le même sujet : {r['croise']['reussisAutreSujet']}) ; intra/inter {r['ratioIntraOverInter']}")
         for e in r['echecs']:
             print('   échec', e['short'], '->', e['voisin'])
         for c in r['croise']['lignes']:
