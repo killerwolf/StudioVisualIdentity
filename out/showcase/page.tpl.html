@@ -279,6 +279,22 @@ details.full summary { cursor: pointer; font-weight: 600; color: var(--safelight
 .family .vars figcaption { font-size: 12px; color: var(--ink-2); margin-top: 4px; line-height: 1.25; }
 .family .vars figcaption b { color: var(--ink); }
 .trial .cost { font: 600 13px var(--mono); color: var(--ink); margin-top: auto; }
+.props { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: var(--s3); }
+.prop { background: var(--panel); border: 1px solid var(--line); border-left: 4px solid var(--c-try); border-radius: 8px; padding: var(--s3) var(--s4); min-width: 0; }
+.prop.inc { border-left-color: var(--ink-2); }
+.prop .tid { font: 800 13px var(--mono); color: var(--c-try); letter-spacing: .04em; }
+.prop.inc .tid { color: var(--ink-2); }
+.prop h4 { margin: 4px 0; font: 700 16px/1.25 var(--display); }
+.prop p { font-size: 13px; color: var(--ink-2); margin: 0 0 4px; }
+.recog2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s4); }
+.recog2 > div { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: var(--s4); min-width: 0; }
+.recog2 .big { font: 800 44px/1 var(--display); }
+.recog2 .big small { font: 600 15px var(--body); color: var(--ink-2); }
+.recog2 h4 { margin: 0 0 var(--s2); font: 700 17px/1.25 var(--display); }
+.recog2 ul { list-style: none; padding: 0; margin: var(--s3) 0 0; font-size: 13px; color: var(--ink-2); display: grid; gap: 4px; }
+.recog2 li b { color: var(--ink); }
+.recog2 .ok { color: var(--ok); font-weight: 700; } .recog2 .no { color: var(--safelight); font-weight: 700; }
+.recog2 p { font-size: 13px; color: var(--ink-2); margin: var(--s2) 0 0; }
 .effort table { min-width: 0; font-size: 14px; }
 .effort td, .effort th { padding: 10px 12px; }
 .effort td:last-child, .effort th:last-child { white-space: nowrap; text-align: right; font-family: var(--mono); font-weight: 600; }
@@ -308,7 +324,7 @@ footer.colophon { margin-top: var(--s7); padding-top: var(--s4); border-top: 1px
 
 @media (max-width: 860px) {
   .hero { grid-template-columns: minmax(0, 1fr); }
-  .proof, .trials, .choices, .family { grid-template-columns: minmax(0, 1fr); }
+  .proof, .trials, .choices, .family, .recog2 { grid-template-columns: minmax(0, 1fr); }
   .family .vars { max-width: 360px; }
   .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .split ul { grid-template-columns: minmax(0, 1fr); }
@@ -339,8 +355,8 @@ footer.colophon { margin-top: var(--s7); padding-top: var(--s4); border-top: 1px
   <section class="hero">
     <div>
       <p class="eyebrow">Recherche exploratoire · shorts verticaux 1080×1920 · 30 fps</p>
-      <h1>Vingt identités visuelles, <em>50 shorts</em> rendus par code</h1>
-      <p class="lede">Chaque identité est un design system lisible par un agent (tokens, mouvement, caméra, recettes par famille) et elle est prouvée par des vidéos réelles, rendues avec des librairies open-source sur 4 cœurs CPU. Les 14 identités de la campagne, l'identité papier de StudioGabarit (Papier découpé, avec ses 3 dérivations : même moteur, seuls le fond, la palette et les polices changent), les 2 du lot 2 de la fabrique d'identités (Carte Météo, Trait continu), Survol pixel, un petit monde en pixel art 16 bits survolé en vraie profondeur 3D d'après une vidéo source, et les 2 identités de paroles de chansons : Lyrics punchy et Lyrics chemin (ses 4 shorts portent 4 habillages différents sur le même mouvement). 20 identités, 23 déclinaisons.</p>
+      <h1>Vingt identités visuelles, <em><span id="m-h1-shorts">53</span> shorts</em> rendus par code</h1>
+      <p class="lede">Chaque identité est un design system lisible par un agent (tokens, mouvement, caméra, recettes par famille) et elle est prouvée par des vidéos réelles, rendues avec des librairies open-source sur 4 cœurs CPU. Les 14 identités de la campagne, l'identité papier de StudioGabarit (Papier découpé, avec ses 3 dérivations : même moteur, seuls le fond, la palette et les polices changent), les 2 du lot 2 de la fabrique d'identités (Carte Météo, Trait continu), Survol pixel, un petit monde en pixel art 16 bits survolé en vraie profondeur 3D d'après une vidéo source, et les 2 identités de paroles de chansons : Lyrics punchy et Lyrics chemin (ses 4 shorts portent 4 habillages différents sur le même mouvement). 20 identités, 23 déclinaisons. Depuis le 20 novembre, le catalogue est aussi rangé en briques : <span id="m-lede-b">29 recettes, 25 habillages, 19 mécaniques, 4 formats</span>, et 3 shorts de plus sont nés de la matrice (section « Composer »).</p>
       <div class="reco">
         <span class="eyebrow">Recommandées pour une chaîne durable</span>
         <ol id="reco"></ol>
@@ -350,11 +366,15 @@ footer.colophon { margin-top: var(--s7); padding-top: var(--s4); border-top: 1px
       <div><span>Identités</span><b id="m-ids">20</b></div>
       <div><span>Déclinaisons</span><b id="m-decl">23</b></div>
       <div><span>Dérivations de Papier découpé</span><b id="m-deriv">3</b></div>
-      <div><span>Shorts livrés</span><b id="m-shorts">50</b></div>
+      <div><span>Shorts livrés (dont nés de la matrice)</span><b id="m-shorts" title="50 shorts dans les identités + 3 nés d'une case de la matrice (C1 essai, C2 recette adoptée, C4 abandonné)">53</b></div>
       <div><span id="m-qa-l">Contrôle qualité</span><b id="m-qa">47 / 47</b></div>
       <div><span>Familles couvertes (dont Paroles)</span><b title="les 7 familles de la campagne, plus Paroles (vidéos de paroles de chansons)">8</b></div>
       <div><span>Librairies A + B (+ ajouts)</span><b title="lot 2 : shapely, opensimplex, topojson-client, world-atlas ; Survol pixel : NumPy (moteur 3D), scipy, Jersey ; identités lyrics : Canvas 2D et DOM rendus par Chrome (playwright-core), polices @fontsource">8 + 11 (+7)</b></div>
-      <div><span>Plus proche voisin</span><b id="m-recog">41 / 45</b></div>
+      <div><span>Plus proche voisin (identité)</span><b id="m-recog">41 / 45</b></div>
+      <div><span>Recettes</span><b id="m-rec" title="27 adoptées, 1 essai, 1 abandonnée">29</b></div>
+      <div><span>Habillages · mécaniques</span><b id="m-hm">25 · 19</b></div>
+      <div><span>Reconnu par l'habillage</span><b id="m-rh" title="reconnaissance à deux étages, recognition.py --briques : shorts avec un pair, C4 exclu">—</b></div>
+      <div><span>Reconnu par la mécanique</span><b id="m-rm" title="reconnaissance à deux étages, recognition.py --briques : shorts avec un pair, C4 exclu">—</b></div>
       <div><span>Production</span><b>4 cœurs</b></div>
       <div><span>Voix off (3 vidéos muettes)</span><b title="31 Arnold (Fish Audio) + 14 Sulafat (Gemini : 8 papier + 4 lot 2 + 2 Survol pixel) + 2 ElevenLabs (Lyrics chemin narrés) ; 3 vidéos de paroles muettes (la chanson est ajoutée à la publication)">47</b></div>
     </div>
@@ -362,7 +382,7 @@ footer.colophon { margin-top: var(--s7); padding-top: var(--s4); border-top: 1px
 
   <section class="section compose" id="composer" aria-labelledby="composer-h">
     <header>
-      <p class="eyebrow"><span class="new">Nouveau</span>Validé le 19 novembre 2026 (choix 118) · 20 novembre (option 124) : 1 recette adoptée, famille craie, C4 abandonné</p>
+      <p class="eyebrow"><span class="new">Nouveau</span>Validé le 19 novembre 2026 (choix 118) · 20 novembre (option 124) : 1 recette adoptée, famille craie, C4 abandonné · option 125 : les outils lisent les briques</p>
       <h2 id="composer-h">Composer ses identités</h2>
       <p>Une identité mélange deux choses : <b>ce qu'on voit</b> sur une image fixe (couleurs, polices, matière) et <b>la façon dont ça bouge</b>. Si on les sépare, on peut les recombiner : garder un mouvement qui marche et lui changer d'habit, ou l'inverse, sans tout refaire. Lyrics chemin l'a déjà fait quatre fois.</p>
     </header>
@@ -383,19 +403,12 @@ footer.colophon { margin-top: var(--s7); padding-top: var(--s4); border-top: 1px
     <div class="proof" id="cx-proof"></div>
 
     <h3 class="sub">L'inventaire en chiffres</h3>
-    <p class="subl">Chaque identité du catalogue a été découpée en habillage et mécanique. On compte ici 23 identités : les 20 de cette page, en comptant à part les 3 dérivations de Papier découpé.</p>
+    <p class="subl" id="cx-stats-l">Chaque identité du catalogue a été découpée en habillage et mécanique. Les chiffres ci-dessous sont lus dans les fiches du dépôt (out/habillages, out/mecaniques, out/formats, out/recettes) par l'index.</p>
     <div class="stats" id="cx-stats"></div>
-    <div class="split" aria-label="Facilité à séparer habillage et mécanique, sur 23 identités">
-      <div class="barx"><div class="e" style="flex:7">7</div><div class="m" style="flex:12">12</div><div class="d" style="flex:4">4</div></div>
-      <ul>
-        <li><b><i style="background:#217A4B"></i>7 faciles</b>déjà séparées dans le code (Lyrics chemin, les 4 papiers) ou presque (Grille suisse, Brut mème)</li>
-        <li><b><i style="background:#A86B00"></i>12 moyennes</b>les couleurs sont regroupées, mais quelques-unes sont écrites ailleurs dans le code</li>
-        <li><b><i style="background:#B3261E"></i>4 difficiles</b>le mouvement est la matière (Trait continu, Diorama pastel, Labo néon, Chrome liquide) : on les garde telles quelles</li>
-      </ul>
-    </div>
+    <div class="split" id="cx-split"></div>
 
     <h3 class="sub">Ce qui existe, la recette adoptée et les essais</h3>
-    <p class="subl">Lignes : les habillages ; colonnes : les mécaniques. Une image = un short existe (cliquer pour le voir). Les cases C1, C2 et C4 ont été rendues le 19 novembre : pour la première fois, un habillage a été posé sur une deuxième mécanique. Le 20 novembre, C2 est devenue une recette de chaîne (« Données qui se tracent », cerclée de vert), C4 est abandonné (grisé), C1 reste un essai. Ardoise et craie verte sont maintenant les deux variantes d'un même habillage, « Craie ». Les fiches de chaque brique et ce tableau sont dans le dépôt : out/habillages/, out/mecaniques/, out/formats/, out/recettes/.</p>
+    <p class="subl">Lignes : les habillages ; colonnes : les mécaniques. Une image = un short existe (cliquer pour le voir). Les cases C1, C2 et C4 ont été rendues le 19 novembre : pour la première fois, un habillage a été posé sur une deuxième mécanique. Le 20 novembre, C2 est devenue une recette de chaîne (« Données qui se tracent », cerclée de vert), C4 est abandonné (grisé), C1 reste un essai. Ardoise et craie verte sont maintenant les deux variantes d'un même habillage, « Craie ». Depuis le 20 novembre, ce tableau est calculé par l'index à partir des fiches (out/habillages/, out/mecaniques/, out/formats/, out/recettes/) : on ne le tient plus à la main.</p>
     <div class="mx" id="cx-focus"></div>
     <div class="mlegend"><span><i class="k1"></i>short existant</span><span><i class="k3"></i>recette adoptée (C2)</span><span><i class="k2"></i>essai (C1)</span><span><i class="k4"></i>abandonné (C4)</span><span>Extrait : les 10 habillages et 4 mécaniques concernés</span></div>
     <details class="full">
@@ -406,6 +419,14 @@ footer.colophon { margin-top: var(--s7); padding-top: var(--s4); border-top: 1px
     <div class="trials" id="cx-trials"></div>
     <div class="family" id="cx-family"></div>
 
+    <h3 class="sub">Les cases proposées, pas encore rendues</h3>
+    <p class="subl">État calculé par l'index : « à tester » = la fiche de l'habillage donne ce que la mécanique demande, mais aucun adaptateur n'est écrit ; « incompatible » = une contrainte est violée, avec sa raison écrite.</p>
+    <div class="props" id="cx-props"></div>
+
+    <h3 class="sub">La reconnaissance mesurée en deux</h3>
+    <p class="subl">Mesure automatique sur les vidéos (aucun juge humain) : pour chaque short, on cherche le short le plus proche. <b>Habillage</b> : couleurs et contours de 8 images fixes. <b>Mécanique</b> : le mouvement seul, en noir et blanc, sur toutes les images (images tenues, coupes, caméra qui bouge, part de l'image qui bouge). Un short seul de son habillage ou de sa mécanique n'a pas de pair : il n'est pas compté. C4 (abandonné) est mis de côté.</p>
+    <div class="recog2" id="cx-recog"></div>
+
     <h3 class="sub">L'effort</h3>
     <p class="subl">Une session = une séance de travail d'un agent. Aucun short existant n'est modifié, quelle que soit l'option.</p>
     <div class="tablebox effort"><table>
@@ -413,12 +434,12 @@ footer.colophon { margin-top: var(--s7); padding-top: var(--s4); border-top: 1px
       <tbody>
         <tr class="best"><td><b>Version minimale</b></td><td>Le vocabulaire et une fiche par brique, chaque short étiqueté (habillage, mécanique, format), le tableau des combinaisons tenu à la main. Aucun outil touché.</td><td>≈ 2 sessions</td></tr>
         <tr class="best"><td><b>Essais C1, C2, C4</b></td><td>3 shorts nouveaux, avec des textes et des voix qui existent déjà (pas de nouvel enregistrement)</td><td>≈ 2 sessions</td></tr>
-        <tr><td><b>Plan complet</b></td><td>La version minimale, plus les outils de contrôle, un index qui calcule la matrice tout seul, la reconnaissance mesurée en deux (habillage et mouvement), une vue « composer » dans cette page et la documentation</td><td>5,5 à 6,5 sessions</td></tr>
+        <tr class="best"><td><b>Plan complet</b> · fait le 20 novembre</td><td>La version minimale, plus les outils de contrôle, un index qui calcule la matrice tout seul, la reconnaissance mesurée en deux (habillage et mouvement), une vue « composer » dans cette page et la documentation</td><td>5,5 à 6,5 sessions</td></tr>
         <tr><td><b>Briques interchangeables</b></td><td>Rendre 5 moteurs capables de changer d'habillage sans toucher à leur code de mouvement (après le plan complet, seulement si on produit beaucoup de combinaisons)</td><td>+ 3 à 4 sessions</td></tr>
       </tbody>
     </table></div>
 
-    <h3 class="sub">Ta décision (prise : 118)</h3>
+    <h3 class="sub">Tes décisions (118, puis 124 et 125)</h3>
     <div class="choices">
       <div class="choice best"><span class="flag">Choisi</span><span class="num">118</span><h4>Je valide le modèle + version minimale + essais C1, C2, C4</h4><p>≈ 4 sessions. On pose le vocabulaire sans toucher aux outils, puis on fait les 3 essais pour voir si un habillage reste reconnaissable sur un autre mouvement. On décide du reste après avoir vu les essais.</p></div>
       <div class="choice"><span class="num">119</span><h4>Je valide le modèle + plan complet</h4><p>5,5 à 6,5 sessions. Tout le chantier d'un coup : fiches, outils, index, vitrine « composer », documentation. Les essais viennent après.</p></div>
@@ -426,6 +447,7 @@ footer.colophon { margin-top: var(--s7); padding-top: var(--s4); border-top: 1px
     </div>
     <p class="answer">Choix 118 reçu le 19 novembre : modèle validé, version minimale faite, essais C1, C2 et C4 rendus (verdicts ci-dessus).</p>
     <p class="answer">Option 124 reçue le 20 novembre, après avoir regardé les essais : C2 corrigé (ouverture sur le chiffre, échelle juste) et adopté comme recette de chaîne « Données qui se tracent » ; ardoise et craie verte réunies en une famille d'habillage « Craie » à deux variantes ; C4 abandonné (le short reste comme exemple). Le plan complet (option 125) vient ensuite.</p>
+    <p class="answer">Option 125 reçue le 20 novembre : plan complet fait. Le contrôle qualité, l'index et la mesure de reconnaissance lisent maintenant les fiches des briques ; cette section est calculée à partir d'elles ; la documentation (AGENTS.md, la fabrique d'identités) explique comment créer une recette avec des briques existantes. Reste, seulement si on produit beaucoup de combinaisons : les briques interchangeables.</p>
   </section>
 
   <div class="toolbar">
@@ -503,7 +525,7 @@ footer.colophon { margin-top: var(--s7); padding-top: var(--s4); border-top: 1px
   </section>
 
   <footer class="colophon">
-    <span>Dépôt killerwolf/StudioVisualIdentity · branche identite-lyrics (main fusionnée) · point d'entrée out/report/README.md · proposition « Composer » : out/report/notes/composition/ · 20 identités (23 déclinaisons), 50 shorts, mis à jour le 19 novembre 2026</span>
+    <span>Dépôt killerwolf/StudioVisualIdentity · branche identite-lyrics (main fusionnée) · point d'entrée out/report/README.md · proposition « Composer » : out/report/notes/composition/ · 20 identités (23 déclinaisons), 50 shorts d'identités et 3 nés de la matrice, mis à jour le 20 novembre 2026</span>
     <span class="mono">Aperçus 540×960 ; fichiers livrés en 1080×1920</span>
   </footer>
 </div>
@@ -520,7 +542,15 @@ const fmt = n => String(n).replace(".", ",");
 
 // chiffres de l'en-tête et de la reconnaissance (calculés par build.py)
 const setText = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
-setText("m-ids", META.identities); setText("m-decl", META.declinations); setText("m-deriv", META.derivations); setText("m-shorts", META.shorts);
+setText("m-ids", META.identities); setText("m-decl", META.declinations); setText("m-deriv", META.derivations);
+setText("m-shorts", META.shortsComposes ? `${META.shortsAll} (${META.shortsComposes})` : META.shortsAll); setText("m-h1-shorts", META.shortsAll);
+if (META.briques) {
+  const b = META.briques;
+  setText("m-rec", b.recettes); setText("m-hm", `${b.habillages} · ${b.mecaniques}`);
+  document.getElementById("m-rec").title = `${b.recettesParStatut.validee} adoptées, ${b.recettesParStatut.essai} essai, ${b.recettesParStatut.abandonnee} abandonnée`;
+  setText("m-lede-b", `${b.recettes} recettes, ${b.habillages} habillages (dont une famille à ${b.pates - b.habillages + 1} variantes), ${b.mecaniques} mécaniques, ${b.formats} formats`);
+}
+if (META.recogBriques) { setText("m-rh", META.recogBriques.habillage.top1.replace("/", " / ")); setText("m-rm", META.recogBriques.mecanique.top1.replace("/", " / ")); }
 setText("m-qa", `${META.qaOk} / ${META.qaTotal}`);
 if (META.qaMissing.length) setText("m-qa-l", `Contrôle qualité (${META.qaMissing.length} shorts pas encore contrôlés)`);
 if (META.qaMissing.length) document.getElementById("m-qa").title = `${META.qaMissing.length} shorts pas encore dans qa.json : ${META.qaMissing.join(", ")}`; setText("m-recog", `${META.recogHits} / ${META.recogTotal}`);
@@ -535,24 +565,24 @@ setText("r-hits", META.recogHits); setText("r-total", META.recogTotal);
   const WHY = { "liquid-chrome": "Chrome Liquide : des fonds sombres que la couleur seule ne sépare pas",
                 "survol-pixel": "Survol pixel (atoll) : deux biomes aux palettes opposées (océan bleu, montagne verte), la sœur arrive 4ᵉ ; sa signature est géométrique et le juge aveugle l'a isolée (6/6)" };
   const why = [...failIds].map(id => WHY[id]).filter(Boolean).join(" ; ");
-  const notYet = META.recogMissing.length ? ` Les ${META.recogMissing.length} shorts des identités lyrics (19 novembre) ne sont pas encore mesurés.` : "";
+  const notYet = META.recogMissing.length ? ` Les ${META.recogMissing.length} shorts des identités lyrics (19 novembre) ne sont pas dans cette mesure-là${META.recogBriques ? ` ; ils le sont dans la reconnaissance à deux étages (habillage, mécanique) de la section « Composer », qui mesure les ${META.recogBriques.shorts} shorts` : ""}.` : "";
   setText("r-text", `Histogramme couleur Lab et densité de contours sur 8 images par short, relancé sur ${META.recogTotal} shorts.${notYet} Distance moyenne entre shorts d'une même identité ${fmt(META.recogIntra.toFixed(2))} contre ${fmt(META.recogInter.toFixed(2))} entre identités. ${addedOkNames.length ? `Identités ajoutées reconnues : ${addedOkNames.join(", ")}${DATA.some(d => d.variantOf) ? " (et ses dérivations)" : ""}. ` : ""}Les ${META.recogFails.length} erreurs : ${fails}${why ? ` — ${why}.` : "."}`);
 }
 
 
-// ---------- Composer ses identités (données : maquette vitrine-composer.html, via build.py) ----------
+// ---------- Composer ses identités (données : sections briques de index.json et recognition-briques.json, via build.py) ----------
 {
   const C = COMPOSER;
   const H = Object.fromEntries(C.habillages.map(h => [h.id, h]));
   const M = Object.fromEntries(C.mecaniques.map(m => [m.id, m]));
   const poster = dir => `p/${dir}.jpg`;
-  const TRIALS = ["C1", "C2", "C4"];
-  const cases = C.cases.filter(c => c.etat === "teste" || TRIALS.includes(c.essai));
+  const TRIALS = C.essais;   // cases rendues (C1, C2, C4) : recettes avec une clé « case » et un short
+  const cases = C.cases;
   const cell = (h, m) => cases.filter(c => c.h === h && c.m === m);
   const tested = cases.filter(c => c.etat === "teste" && !c.fait);   // shorts du catalogue (les essais faits ont c.fait)
 
   // l'exemple : Le quatre-quarts = Ardoise × Chemin qui se trace × Narré long + voix
-  const ex = C.cases.find(c => c.h === "ardoise" && c.m === "trace-chemin");
+  const ex = C.cases.find(c => c.h === "craie/ardoise" && c.m === "trace-chemin");
   const exShort = DATA.flatMap(d => d.shorts).find(s => s.dir === ex.poster);
   document.getElementById("cx-example").innerHTML = `
     <a class="poster" href="#${ex.ancre}"><img src="${poster(ex.poster)}" alt="Image du short « Le quatre-quarts »" loading="lazy"></a>
@@ -576,22 +606,36 @@ setText("r-hits", META.recogHits); setText("r-total", META.recogTotal);
     <div><h4>Même mécanique « Papier qui saute », 4 habillages<small>Papier découpé et ses 3 dérivations : même épisode, 4 habits</small></h4><div class="four">${four("pop-papier-12ips")}</div></div>`;
 
   // chiffres
+  const K = C.counts, rs = K.recettesParStatut;
   document.getElementById("cx-stats").innerHTML = [
-    ["", 23, "identités inventoriées"], ["c-hab", C.habillages.length, "habillages"],
-    ["c-mec", C.mecaniques.length, "mécaniques"], ["", META.shorts, "shorts"]]
-    .map(([c, n, l]) => `<div class="stat ${c}"><b>${n}</b><span>${l}</span></div>`).join("");
+    ["c-rec", K.recettes, `recettes (${rs.validee} adoptées, ${rs.essai} essai, ${rs.abandonnee} abandonnée)`],
+    ["c-hab", K.habillages, `habillages (${K.pates} tons : la famille Craie en a 2)`],
+    ["c-mec", K.mecaniques, "mécaniques"], ["", K.shorts, `shorts (${K.shortsHorsIdentites} nés de la matrice)`]]
+    .map(([c, n, l]) => `<div class="stat ${c}"><b>${n}</b><span>${esc(l)}</span></div>`).join("");
+  {
+    const S = C.separation, tot = (S.facile || 0) + (S.moyen || 0) + (S.difficile || 0);
+    document.getElementById("cx-split").setAttribute("aria-label", `Facilité à séparer habillage et mécanique, sur ${tot} recettes du catalogue`);
+    document.getElementById("cx-split").innerHTML = `
+      <div class="barx"><div class="e" style="flex:${S.facile}">${S.facile}</div><div class="m" style="flex:${S.moyen}">${S.moyen}</div><div class="d" style="flex:${S.difficile}">${S.difficile}</div></div>
+      <ul>
+        <li><b><i style="background:#217A4B"></i>${S.facile} faciles</b>déjà séparées dans le code (les 4 habillages du chemin et les 4 papiers) ou presque (Grille suisse, Brut mème)</li>
+        <li><b><i style="background:#A86B00"></i>${S.moyen} moyennes</b>les couleurs sont regroupées, mais quelques-unes sont écrites ailleurs dans le code</li>
+        <li><b><i style="background:#B3261E"></i>${S.difficile} difficiles</b>le mouvement est la matière (Trait continu, Diorama pastel, Labo néon, Chrome liquide) : on les garde telles quelles</li>
+      </ul>`;
+    document.getElementById("cx-stats-l").textContent = `Chaque recette du catalogue (${tot}, hors recettes nées de la matrice) a été découpée en habillage et mécanique. Les chiffres ci-dessous sont lus dans les fiches du dépôt (out/habillages, out/mecaniques, out/formats, out/recettes) par l'index.`;
+  }
 
   // matrice : extrait
-  const FH = ["plan-bleu", "editeur", "portulan", "ardoise", "craie-verte", "grille-suisse", "papier-decoupe", "atelier-papier", "carnet-archives", "cabinet-curiosites"];
+  const FH = ["plan-bleu", "editeur", "portulan", "craie/ardoise", "craie/tableau-vert", "grille-suisse", "papier-decoupe", "atelier-papier", "carnet-archives", "cabinet-curiosites"];
   const FM = ["trace-chemin", "pop-papier-12ips", "ecriture-trace-chiffon", "chiffre-volet-compteur"];
-  const GRP = new Set(["ardoise", "grille-suisse", "papier-decoupe"]);   // ardoise et craie verte : la famille « craie », regroupée
+  const GRP = new Set(["craie/ardoise", "grille-suisse", "papier-decoupe"]);   // ardoise et craie verte : la famille « craie », regroupée
   const ST = F => F && F.statut === "validee" ? "ok" : F && F.statut === "abandonnee" ? "ab" : "";
   const STL = F => F && F.statut === "validee" ? `Recette adoptée « ${F.nom} » (issue de l'essai ${F.essai})` : F && F.statut === "abandonnee" ? `Essai ${F.essai} abandonné` : `Essai ${F.essai} fait`;
   const td = (h, m) => {
     const cs = cell(h, m), t = cs.find(c => c.etat === "teste"), e = cs.find(c => c.essai);
     if (t && t.fait) return `<td><a class="thumb done ${ST(t.fait)}" href="#essai-${t.essai}" title="${esc(STL(t.fait))} : ${esc(H[h].nom)} × ${esc(M[m].nom)}"><img src="${poster(t.poster)}" alt="${esc(STL(t.fait))} : ${esc(H[h].nom)} × ${esc(M[m].nom)}" loading="lazy"><b>${t.essai}</b></a></td>`;
     if (t) return `<td><a class="thumb" href="#${t.ancre}" title="${esc(H[h].nom)} × ${esc(M[m].nom)} : short existant"><img src="${poster(t.poster)}" alt="${esc(H[h].nom)} × ${esc(M[m].nom)}" loading="lazy"></a></td>`;
-    if (e) return `<td><a class="try" href="#essai-${e.essai}" title="Essai proposé ${e.essai}">${e.essai}</a></td>`;
+    if (e) return `<td><a class="try" href="#essai-${e.essai}" title="${e.etat === "incompatible" ? "Incompatible" : "Proposé, à tester"} : ${e.essai}">${e.essai}</a></td>`;
     return `<td><span class="nil" aria-label="rien"></span></td>`;
   };
   document.getElementById("cx-focus").innerHTML = `<table><thead><tr><th style="position:sticky;left:0;background:var(--panel);z-index:1"></th>${FM.map(m => `<th scope="col">${esc(M[m].nom)}</th>`).join("")}</tr></thead><tbody>${
@@ -604,7 +648,7 @@ setText("r-hits", META.recogHits); setText("r-total", META.recogTotal);
       const cs = cell(h.id, m.id), t = cs.find(c => c.etat === "teste"), e = cs.find(c => c.essai);
       if (t && t.fait) return `<td><a class="tr done ${ST(t.fait)}" href="#essai-${t.essai}" title="${esc(STL(t.fait))}">${t.essai}</a></td>`;
       if (t) return `<td><a href="#${t.ancre}" title="${esc(h.nom)} × ${esc(m.nom)} : short existant"><span class="dot"></span></a></td>`;
-      if (e) return `<td><a class="tr" href="#essai-${e.essai}" title="Essai proposé">${e.essai}</a></td>`;
+      if (e) return `<td><a class="tr" href="#essai-${e.essai}" title="${e.etat === "incompatible" ? "Incompatible" : "Proposé, à tester"}">${e.essai}</a></td>`;
       return "<td></td>";
     }).join("")}</tr>`).join("")}</tbody></table>`;
 
@@ -615,11 +659,11 @@ setText("r-hits", META.recogHits); setText("r-total", META.recogTotal);
     C4: ["Blueprint dans le moteur papier", "Le plan bleu de Lyrics chemin dans le moteur papier qui saute : un simple fichier de réglages, l'épisode « sandwich » rendu tel quel. Le moins cher des trois.", "≈ 0,5 session · reprend l'épisode et la voix du sandwich"],
   };
   document.getElementById("cx-trials").innerHTML = TRIALS.map(id => {
-    const c = C.cases.find(x => x.essai === id), h = H[c.h], m = M[c.m];
+    const c = C.cases.find(x => x.essai === id && x.fait), h = H[c.h], m = M[c.m];
     // le mouvement est montré par un short d'un autre habillage que celui de l'essai (portulan pour le chemin, papier vert pour le papier)
     const MEC_SHOW = { "trace-chemin": "portulan", "pop-papier-12ips": "papier-decoupe" };
     const mecPoster = tested.find(t => t.m === c.m && t.h === MEC_SHOW[c.m]) || tested.find(t => t.m === c.m && t.h !== c.h);
-    const [title, body, cost] = TXT[id];
+    const [title, body, cost] = TXT[id] || [`${h.nom} × ${m.nom}`, c.fait.question || "", ""];
     const F = c.fait, V = F ? F.verdict : null, st = ST(F);
     const label = st === "ok" ? "recette" : st === "ab" ? "abandonné" : "essai";
     const result = F ? `<figure><img src="${poster(c.poster)}" alt="" loading="lazy"><figcaption><b>${label}</b></figcaption></figure>` : `<div class="q">?</div>`;
@@ -652,7 +696,44 @@ setText("r-hits", META.recogHits); setText("r-total", META.recogTotal);
       <p>L'essai C1 a montré que l'ardoise et la craie verte sont la même matière (craie érodée par le même grain, même dessin, même mise en page) en deux tons. Au lieu de deux marques, un seul habillage « Craie » à deux variantes : on choisit le ton selon le public.</p>
       <p>Fiches : out/habillages/craie/ (la famille et ses variantes). Les anciennes fiches ardoise et craie-verte sont gardées, marquées « remplacée ».</p>
     </div>
-    <div class="vars">${fv("ardoise", "Ardoise", "bistrot, adultes : ardoise noire, cadre en chêne, majuscules étroites")}${fv("craie-verte", "Tableau vert", "école, enfants : tableau vert, écriture à la main, craies de couleur")}</div>`;
+    <div class="vars">${fv("craie/ardoise", "Ardoise", "bistrot, adultes : ardoise noire, cadre en chêne, majuscules étroites")}${fv("craie/tableau-vert", "Tableau vert", "école, enfants : tableau vert, écriture à la main, craies de couleur")}</div>`;
+
+  // les cases proposées, pas encore rendues (out/recettes/propositions.json ; état calculé par build_index.py)
+  const EL = { "a-tester": "à tester", "incompatible": "incompatible", "compatible": "compatible", "inconnu": "inconnu" };
+  document.getElementById("cx-props").innerHTML = C.cases.filter(c => c.essai && !c.fait).sort((a, b) => a.essai.localeCompare(b.essai)).map(c => `
+    <article class="prop ${c.etat === "incompatible" ? "inc" : ""}" id="essai-${c.essai}">
+      <span class="tid">${c.essai} · ${esc(EL[c.etat] || c.etat)} · ${esc(c.fNom)}</span>
+      <h4>${esc(H[c.h] ? H[c.h].nom : c.h)} × ${esc(M[c.m] ? M[c.m].nom : c.m)}</h4>
+      <p>${esc(c.note || "")}</p>
+      ${c.alerte ? `<p><b>À surveiller :</b> ${esc(c.alerte.join(" ; "))}</p>` : ""}
+      ${c.cout ? `<p class="mono">${esc(c.cout)}</p>` : ""}
+    </article>`).join("");
+
+  // la reconnaissance à deux étages (recognition.py --briques)
+  const G = C.recog;
+  const cut = (t, n = 42) => t.length > n ? t.slice(0, n - 1).replace(/\s+\S*$/, "") + "…" : t;
+  const shortNm = d => { const x = DATA.find(e => e.shorts.some(s => s.dir === d)); const t = x && x.shorts.find(s => s.dir === d); return cut(t ? t.title.split(" — ")[0] : (C.cases.find(c => c.fait && c.fait.dir === d) || {}).fait?.nom || d); };
+  const pl = (n, s, p) => `${n} ${n > 1 ? p : s}`;
+  // une ligne : le short (sa brique mesurée, l'autre brique entre parenthèses) -> son voisin parmi les shorts de l'autre brique
+  const line = (l, quoi) => `<li><span class="${l.ok ? "ok" : "no"}">${l.ok ? "oui" : "non"}</span> · « ${esc(shortNm(l.short))} » <b>${esc(l.cle)}</b>${quoi === "h" ? ` sur ${esc(l.autre)}` : ` habillé ${esc(l.autre)}`} → « ${esc(shortNm(l.voisin))} » (${esc(l.cleVoisin)})${l.ok ? "" : ` ; le premier ${quoi === "h" ? "du même habillage" : "de la même mécanique"} arrive ${l.rang}ᵉ sur ${l.n}`}</li>`;
+  const grp = g => g.groupes.map(x => `<b>${esc(x.cle)}</b> ${x.ok}/${x.n}`).join(" · ");
+  document.getElementById("cx-recog").innerHTML = !G ? `<div><p>Pas encore mesurée (lancer recognition.py --briques).</p></div>` : `
+    <div>
+      <p class="eyebrow">Habillage · ce qu'on voit</p>
+      <div class="big">${G.habillage.top1.replace("/", "<small> / ") + "</small>"}</div>
+      <p>shorts dont le plus proche voisin a le même habillage (${pl(G.habillage.sansPair, "short seul de son habillage non compté", "shorts seuls de leur habillage non comptés")}).</p>
+      <h4 style="margin-top:var(--s3)">Le test qui compte : le même habillage sur une autre mécanique (${G.habillage.croise})</h4>
+      <p>On cherche le voisin seulement parmi les shorts d'une autre mécanique : retrouve-t-on le même habillage ? ${grp(G.habillage)}.</p>
+      <ul>${G.habillage.lignes.map(l => line(l, "h")).join("")}</ul>
+    </div>
+    <div>
+      <p class="eyebrow">Mécanique · comment ça bouge</p>
+      <div class="big">${G.mecanique.top1.replace("/", "<small> / ") + "</small>"}</div>
+      <p>shorts dont le plus proche voisin a la même mécanique (${pl(G.mecanique.sansPair, "short seul de sa mécanique non compté", "shorts seuls de leur mécanique non comptés")}). Score global bas : la plupart des mécaniques n'ont que les 2 shorts de leur recette, sur deux sujets très différents, et ce premier descripteur du mouvement est simple.</p>
+      <h4 style="margin-top:var(--s3)">Le test qui compte : la même mécanique sous un autre habillage (${G.mecanique.croise})</h4>
+      <p>On cherche le voisin seulement parmi les shorts d'un autre habillage : retrouve-t-on la même mécanique ? ${grp(G.mecanique)}. Les deux mécaniques qui ont vraiment changé d'habit (le chemin, le papier) sont reconnues ; « Survol de relief » ne l'est pas : Relief topo et Survol pixel bougent différemment, ce sont sans doute deux mécaniques.</p>
+      <ul>${G.mecanique.lignes.map(l => line(l, "m")).join("")}</ul>
+    </div>`;
 }
 
 // recommandations

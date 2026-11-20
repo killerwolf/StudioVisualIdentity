@@ -32,21 +32,22 @@ PUBLIER : outil Artifact, file_path = out/showcase/build/index.html, root = out/
   files = tous les chemins v/*.mp4 et p/*.jpg (une publication accepte ≤ 64 Mo, ≤ 15 Mo par fichier).
   Artifact existant : https://claude.ai/artifact/VJEgxZpSjAn3cGGb51c1nK (repasser son url pour le mettre à jour).
 
-COMPOSER (section « Composer ses identités ») : les données (habillages, mécaniques, formats, cases de la matrice, essais
-  C1…C8) sont lues dans la maquette out/report/notes/composition/vitrine-composer.html (objet `const D = {…}`), et
-  injectées à la place de __COMPOSER__ avec des noms lisibles (HAB_NOM, MEC_NOM ci-dessous) et le poster de chaque
-  habillage (p/<short>.jpg, déjà produit pour les bandes). Les chiffres d'inventaire (23 identités, 7/12/4) et l'effort
-  sont des textes fixes de page.tpl.html, repris de inventaire.md et migration.md. Les recettes nées d'une case de la
-  matrice (out/recettes/<id>.json avec une clé « case » : C1, C2, C4…, ou l'ancienne clé « essai ») remplissent leur case :
-  short, aperçu v/<short>.mp4, poster p/<short>.jpg (image à posterT), verdict et statut (« validee » = recette adoptée,
-  comme C2 « Données qui se tracent » le 20/11/2026 ; « essai » ; « abandonnee », comme C4) ; leurs shorts ne sont pas dans
-  l'index (préfixe de recette neuf) et ne comptent pas dans les chiffres de l'en-tête. Ardoise et craie verte sont affichées
-  comme les deux variantes de la famille d'habillage « craie » (out/habillages/craie/, 20/11/2026).
+COMPOSER (section « Composer ses identités ») : depuis le 20/11/2026 (migration.md étape 6), les données sont lues dans les
+  sections briques de out/identities/index.json (schéma 2.0 : habillages[], mecaniques[], formats[], recettes[],
+  compatibilite[] calculée par build_index.py depuis les fiches out/habillages, out/mecaniques, out/formats, out/recettes,
+  dont propositions.json pour les cases C3, C5…C8) et dans out/report/recognition-briques.json (reconnaissance à deux
+  étages, recognition.py --briques), puis injectées à la place de __COMPOSER__ avec les noms lisibles des fiches. La
+  maquette vitrine-composer.html n'est plus lue (gardée, marquée « remplacée »). Les chiffres de la section (recettes,
+  habillages, pâtes, mécaniques, cases par état, facile / moyen / difficile) sont calculés. Les recettes nées d'une case de
+  la matrice (clé « case » : C1, C2, C4) remplissent leur case : short, aperçu v/<short>.mp4, poster p/<short>.jpg (image à
+  posterT), verdict et statut (« validee » = recette adoptée, comme C2 « Données qui se tracent » ; « essai » ;
+  « abandonnee », comme C4). Leurs 3 shorts comptent dans « shorts livrés » de l'en-tête (53 = 50 des identités + 3 nés de
+  la matrice) et dans le contrôle qualité, pas dans les bandes des identités.
 
 Les textes fixes de la page (limites, directions, colophon) sont dans page.tpl.html : les mettre à jour à la main quand le
 rapport (out/report/) change. Les chiffres (identités, shorts, QA, reconnaissance mesurée, voix) sont calculés ici.
 """
-import argparse, glob, json, os, re, subprocess
+import argparse, glob, json, os, re, subprocess, sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -144,7 +145,8 @@ def build_meta(ids, also=None):
     for r in roots:
         for row in json.load(open(r / 'out/report/qa.json')):
             qa_by.setdefault(row['short'], row)
-    qa = [row for k, row in qa_by.items() if k in shown]
+    comp = {d for d, _, _ in essai_shorts()}          # shorts nés d'une case de la matrice (hors bandes des identités)
+    qa = [row for k, row in qa_by.items() if k in shown or k in comp]
     # reconnaissance : le recognition.json qui mesure le plus de shorts (il n'est pas fusionnable : moyennes globales)
     rec = max((json.load(open(r / 'out/report/recognition.json')) for r in roots), key=lambda x: len(x.get('rows', [])))
     voices = {}
@@ -162,58 +164,44 @@ def build_meta(ids, also=None):
         'recogFails': [{'short': r['short'], 'nearest': r['nearest'], 'distance': r['distance']} for r in fails],
         'blindJudge14': (rec.get('blindJudge14') or {}).get('pureGroups'),
         'voiced': sum(1 for s in shorts if s['voiced']), 'voices': voices,
-        'qaMissing': sorted(shown - set(qa_by)), 'recogMissing': sorted(shown - {r['short'] for r in rec.get('rows', [])}),
+        'qaMissing': sorted((shown | comp) - set(qa_by)), 'recogMissing': sorted(shown - {r['short'] for r in rec.get('rows', [])}),
+        'shortsAll': len(shown | comp), 'shortsComposes': len(comp - shown),
+        'briques': index_briques()['counts']['briques'], 'recogBriques': reconnaissance_briques(),
     }
 
 
 # ---------- section « Composer ses identités » ----------
-MAQUETTE = ROOT / 'out/report/notes/composition/vitrine-composer.html'
-# noms lisibles par un non-technicien (les ids viennent de inventaire.md)
-HAB_NOM = {
-    'grille-suisse': 'Grille suisse', 'gazette-sepia': 'Gazette sépia', 'arcade-marine': 'Arcade marine',
-    'brut-jaune': 'Brut jaune', 'meteo-clair': 'Météo claire', 'bauhaus-primaires': 'Bauhaus primaires',
-    'craie-verte': 'Craie · tableau vert', 'riso-3-encres': 'Riso 3 encres', 'orange-graphite': 'Orange graphite',
-    'diorama-pastel': 'Diorama pastel', 'relief-vert': 'Relief vert', 'gravure-parchemin': 'Gravure parchemin',
-    'aquarelle': 'Aquarelle', 'neon-labo': 'Néon labo', 'cosmos-noir': 'Cosmos noir', 'chrome-irise': 'Chrome irisé',
-    'papier-decoupe': 'Papier, tapis vert', 'atelier-papier': 'Papier, bleu nuit', 'carnet-archives': 'Carnet kraft',
-    'cabinet-curiosites': 'Cabinet bleu et or', 'punchy': 'Punchy (3 camaïeux)', 'plan-bleu': 'Plan bleu (blueprint)',
-    'editeur': 'Éditeur de code', 'ardoise': 'Craie · ardoise', 'portulan': 'Portulan', 'pixel-jour': 'Pixel jour',
-}
-MEC_NOM = {
-    'trace-chemin': 'Chemin qui se trace', 'pop-papier-12ips': 'Papier qui saute (12 images/s)',
-    'chiffre-volet-compteur': 'Chiffres qui roulent, volets', 'tourniquet-tampon': 'Journal qui tourne, tampon',
-    'simulation-deterministe': 'Simulation (billes, territoires)', 'punch-cut-slam': 'Coupes franches, mots qui claquent',
-    'carte-champs-front': 'Carte météo et front', 'puzzle-grille-morph': 'Formes qui pivotent en grille',
-    'ecriture-trace-chiffon': 'Écriture à la craie, chiffon', 'impression-on-twos': 'Impression riso saccadée',
-    'traceur-escalier-plaque': 'Traceur sur plaque', 'maquette-rebond': 'Maquette qui rebondit',
-    'survol-terrain': 'Survol de relief', 'carte-trace-panoramique': 'Carte qui se trace, panoramique',
-    'lavis-multiplan': "Lavis qui s'ouvre, plans superposés", 'orbite-phenomene-neon': "Orbite autour d'un phénomène",
-    'travelling-cine-3d': 'Travelling de cinéma 3D', 'plan-sequence-matiere': 'Plan-séquence de matière',
-    'colonne-mot-a-mot': 'Colonne mot à mot',
-}
+# Depuis le 20/11/2026 (migration.md étape 6) : lue dans les sections briques de out/identities/index.json (schéma 2.0,
+# build_index.py, elles-mêmes lues dans les fiches out/habillages, out/mecaniques, out/formats, out/recettes), et dans
+# out/report/recognition-briques.json (reconnaissance à deux étages). La maquette vitrine-composer.html n'est plus lue
+# (gardée, marquée « remplacée »). Noms lisibles : champ « nom » des fiches.
+sys.path.insert(0, str(ROOT / 'out/tools'))
+import briques as B  # noqa: E402
+
 FMT_NOM = {'narre-court': 'Narré court', 'narre-long': 'Narré long', 'paroles-muet': 'Paroles, muet', 'boucle': 'Boucle'}
 
 
-def maquette():
-    m = re.search(r'const D = (\{.*?\});\n', MAQUETTE.read_text(), re.S)
-    assert m, f'objet D introuvable dans {MAQUETTE}'
-    return json.loads(m.group(1))
+def index_briques():
+    ix = json.load(open(ROOT / 'out/identities/index.json'))
+    assert ix.get('schemaVersion', '1') >= '2', "index.json sans briques : lancer python3 out/tools/build_index.py"
+    return ix
 
 
 def composer_short_habillage():
-    """dossier de short -> nom lisible de son habillage (recettes de la maquette)."""
-    return {s['dir']: HAB_NOM.get(r['habillage'], r['habillage']) for r in maquette()['recettes'] for s in r['shorts']}
+    """dossier de short -> nom lisible de son habillage (fiche de la pâte, via etiquettes.json / short.json)."""
+    out = {}
+    for d in (ROOT / 'out/shorts').iterdir():
+        if d.is_dir():
+            b = B.briques_du_short(d.name)
+            if b['pate']:
+                out[d.name] = B.nom_pate(b['pate'])
+    return out
 
 
 def essais():
-    """Recettes nées d'une case de la matrice (out/recettes/<id>.json avec une clé « case » ou « essai » : C1, C2, C4…),
-    adoptées, à l'essai ou abandonnées : leur short est hors index. r['case'] est rempli depuis l'ancienne clé si besoin."""
-    out = []
-    for f in sorted((ROOT / 'out/recettes').glob('*.json')):
-        r = json.load(open(f))
-        if isinstance(r, dict) and (r.get('case') or r.get('essai')):
-            out.append({**r, 'case': r.get('case') or r['essai']})
-    return out
+    """Recettes nées d'une case de la matrice (clé « case » ou ancienne clé « essai » : C1, C2, C4…), adoptées, à l'essai
+    ou abandonnées : leur short est hors identités. r['case'] est rempli depuis l'ancienne clé si besoin."""
+    return [{**r, 'case': r.get('case') or r['essai']} for r in B.recettes().values() if r.get('case') or r.get('essai')]
 
 
 def essai_shorts():
@@ -221,36 +209,83 @@ def essai_shorts():
     return [(Path(d).name, ROOT / d / 'short.mp4', r.get('posterT', 2.2)) for r in essais() for d in r['shorts'] if (ROOT / d / 'short.mp4').exists()]
 
 
+def reconnaissance_briques():
+    """résumé de out/report/recognition-briques.json (None s'il n'a pas été mesuré)."""
+    p = ROOT / 'out/report/recognition-briques.json'
+    if not p.exists():
+        return None
+    r = json.load(open(p))
+    nom = lambda k: B.nom_pate(k) if k and k in B.habillages() else (B.mecaniques().get(k) or {}).get('nom', k)
+    bq = r.get('briques') or {}
+    autre = lambda d, cle: nom(bq.get(d, {}).get('mecanique' if cle == 'pate' else 'pate'))   # l'autre brique du short
+    def etage(e, cle_nom, cle):
+        lignes = [{'short': c['short'], 'cle': cle_nom(c['cle']), 'autre': autre(c['short'], cle), 'voisin': c['voisin'],
+                   'cleVoisin': cle_nom(c['cleVoisin']), 'autreVoisin': autre(c['voisin'], cle),
+                   'ok': c['reconnu'], 'rang': c['rangDuPremierPair'], 'n': c['candidats']} for c in e['croise']['lignes']]
+        groupes = {}
+        for l in lignes:
+            g = groupes.setdefault(l['cle'], [0, 0]); g[0] += l['ok']; g[1] += 1
+        return {'top1': e['top1'], 'acc': e['top1Accuracy'], 'sansPair': len(e['sansPair']), 'ratio': e['ratioIntraOverInter'],
+                'croise': e['croise']['reussis'], 'groupes': [{'cle': k, 'ok': v[0], 'n': v[1]} for k, v in groupes.items()],
+                'lignes': lignes,
+                'echecs': [{'short': x['short'], 'cle': cle_nom(x['cle']), 'voisin': x['voisin'], 'cleVoisin': cle_nom(x['cleVoisin'])} for x in e['echecs']]}
+    return {'date': r.get('date'), 'shorts': r['shorts'], 'mesures': r['mesures'], 'exclus': [x['short'] for x in r['exclus']],
+            'habillage': etage(r['habillage'], nom, 'pate'), 'mecanique': etage(r['mecanique'], nom, 'mecanique'),
+            'doublons': [{'a': nom(x['a']), 'b': nom(x['b'])} for x in r['voisinage']['doublonsProbables']], 'M3': r.get('M3')}
+
+
 def build_composer(ids):
-    D = maquette()
-    by_id = {i['id']: i for i in ids}
-    first = {}   # recette -> premier short (poster)
-    for r in D['recettes']:
-        dirs = [s['dir'] for s in r['shorts']] or [s['dir'] for s in (by_id.get(r['id']) or {}).get('shorts', [])]
-        first[r['id']] = dirs[0] if dirs else None
-    # essais faits (C1, C2, C4…) : la case de la maquette passe à « teste », avec le short, la vidéo et le verdict de la recette
+    ix = index_briques()
+    shown = {s['dir'] for i in ids for s in i['shorts']}
+    ident_of = {s['dir']: i['id'] for i in ids for s in i['shorts']}
+    rank = {i['id']: i['rank'] for i in ids}
+    R = {r['id']: r for r in ix['recettes']}
     ess = {}
     for r in essais():
-        c = next((c for c in D['cases'] if c.get('essai') == r['case']), None)
-        if not c or not r['shorts'] or not (ROOT / r['shorts'][0] / 'short.mp4').exists():
+        if not r['shorts'] or not (ROOT / r['shorts'][0] / 'short.mp4').exists():
             continue
         d = Path(r['shorts'][0]).name
-        c.update(etat='teste', recette=r['id'], f=r['formats'][0])
-        first[r['id']] = d
-        ess[r['id']] = {'essai': r['case'], 'statut': r.get('statut'), 'video': f'v/{d}.mp4', 'nom': r['nom'], 'verdict': r.get('verdict') or {},
-                        'duree': json.load(open(ROOT / r['shorts'][0] / 'short.json')).get('duration')}
-    anchor = lambda rid: f"essai-{ess[rid]['essai']}" if rid in ess else rid if rid in by_id else 'lyrics-chemin' if rid.startswith('chemin-') else rid
-    tested = {c['h']: c['recette'] for c in D['cases'] if c['etat'] == 'teste' and c.get('recette') not in ess}
-    habs = [{'id': h['id'], 'nom': HAB_NOM.get(h['id'], h['id']), 'de': h['de'],
-             'poster': first.get(tested.get(h['id'])), 'ancre': anchor(tested.get(h['id'], h['de']))}
-            for h in D['habillages']]
-    mecs = [{'id': m['id'], 'nom': MEC_NOM.get(m['id'], m['id']), 'de': m['de']} for m in D['mecaniques']]
-    cases = [{**c, 'poster': first.get(c.get('recette')), 'ancre': anchor(c['recette']) if c.get('recette') else None,
-              'fNom': FMT_NOM.get(c['f'], c['f']), **({'fait': ess[c['recette']]} if c.get('recette') in ess else {})} for c in D['cases']]
-    # un habillage dont aucun short n'est dans la page (ex. pixel-jour sans --also-from sur identite-lyrics) garde un
-    # poster nul : il n'apparaît que dans la matrice complète, sous forme de point
-    return {'habillages': habs, 'mecaniques': mecs, 'formats': [{**f, 'nom': FMT_NOM.get(f['id'], f['id'])} for f in D['formats']],
-            'cases': cases}
+        ess[r['case']] = {'essai': r['case'], 'statut': r.get('statut'), 'video': f'v/{d}.mp4', 'nom': r['nom'], 'recette': r['id'],
+                          'verdict': r.get('verdict') or {}, 'question': r.get('question'), 'dir': d,
+                          'duree': json.load(open(ROOT / r['shorts'][0] / 'short.json')).get('duration')}
+    anchor = lambda d, case=None: f'essai-{case}' if case else ident_of.get(d)
+    cases = []
+    for c in ix['compatibilite']:
+        prv = [Path(x).name for x in c.get('preuve') or []]
+        cat = [d for d in prv if d in shown]
+        poster = (cat or prv or [None])[0]
+        fait = ess.get(c.get('case')) if c.get('case') and prv else None
+        cases.append({'h': c['pate'], 'm': c['mecanique'], 'f': c['format'], 'fNom': FMT_NOM.get(c['format'], c['format'] or '—'),
+                      'etat': c['etat'], 'recette': c.get('recette'), 'statut': c.get('statut'), 'essai': c.get('case'),
+                      'note': c.get('raison') if c['etat'] in ('incompatible', 'inconnu') else c.get('question') or c.get('raison'),
+                      'alerte': c.get('alerte'), 'cout': c.get('cout'), 'poster': (fait or {}).get('dir') or poster,
+                      'ancre': anchor(poster, c.get('case') if (fait or not prv) else None), 'n': len(prv),
+                      **({'fait': fait} if fait else {})})
+    # habillages (lignes de la matrice) : pâtes en service, dans l'ordre du classement de la recette d'où elles viennent
+    top, pates = B.actifs()
+    H = {h['id']: h for h in ix['habillages']}
+    def de_rank(k):
+        de = H[k].get('de') or ''
+        return rank.get(de, rank.get('lyrics-chemin', 99) + 0.5 if de.startswith('chemin-') else 99)
+    habs = []
+    for k in sorted(pates, key=lambda k: (de_rank(k), k)):
+        tc = [c for c in cases if c['h'] == k and c['etat'] == 'teste' and not c.get('fait') and c['poster'] in shown]
+        habs.append({'id': k, 'nom': H[k].get('nom') or k, 'de': H[k].get('de'), 'niveau': H[k].get('niveau'),
+                     'famille': k.split('/')[0] if '/' in k else None,
+                     'poster': tc[0]['poster'] if tc else None, 'ancre': tc[0]['ancre'] if tc else None})
+    mecs = [{'id': m['id'], 'nom': m.get('nom') or m['id'], 'de': m.get('recettes') or [], 'niveau': m.get('niveau'),
+             'separation': m.get('separation')} for m in sorted(ix['mecaniques'], key=lambda m: min([rank.get(r, 99) for r in m.get('recettes') or []] or [99]))]
+    # chiffres de la section, calculés
+    sep = {}
+    for r in ix['recettes']:
+        if r.get('separation') and r.get('statut') == 'validee':
+            k = {'exécutable': 'facile', 'FACILE': 'facile', 'MOYEN': 'moyen', 'DIFFICILE': 'difficile'}.get(r['separation'], 'moyen')
+            sep[k] = sep.get(k, 0) + 1
+    cb = ix['counts']['briques']
+    fam = B.habillages().get('craie') or {}
+    return {'habillages': habs, 'mecaniques': mecs, 'formats': [{**f, 'nom': FMT_NOM.get(f['id'], f.get('nom'))} for f in ix['formats']],
+            'cases': cases, 'essais': sorted(ess), 'counts': cb, 'separation': sep, 'recog': reconnaissance_briques(),
+            'famille': {'id': 'craie', 'nom': fam.get('nom'), 'variantes': fam.get('variantes') or [], 'differences': fam.get('differences') or {}}}
 
 
 def ff(*args):
