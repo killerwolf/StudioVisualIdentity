@@ -1,104 +1,279 @@
 {
  "language": "fr",
- "voice": "à générer après validation : Gemini « Sulafat » (un seul appel, découpe par ligne)",
- "note": "Aucune voix générée pour l’instant. Déposer une ligne par fichier dans out/demo/voice_fr/NN.mp3 (NN = index), puis `build.py audio` et `build.py final <fmt>` : la musique est atténuée sous la voix. Débit visé ≤ 2,8 mots/s.",
- "duration": 43.0,
+ "voice": "Gemini « Puck », style « voix off de bande-annonce, très punchy »",
+ "source": "voice_fr_raw/demo.mp3 (un seul appel, 39,84 s, les 12 lignes jointes par <long pause>)",
+ "note": "Découpe par build_audio.split_voice() : silences (ffmpeg silencedetect, −38 dB) + horodatage des mots faster-whisper small. start/end = instants réels dans la vidéo ; rawStart/rawEnd = instants dans le fichier brut. Les pauses internes sont resserrées ou étirées pour que chaque mot tombe sur son image. wordsPerSec = débit réel de la voix.",
+ "duration": 46.0,
  "lines": [
   {
    "index": 0,
    "file": "voice_fr/00.mp3",
-   "start": 0.3,
-   "end": 2.0,
+   "start": 0.05,
+   "end": 1.49,
    "text": "Encore la même vidéo ?",
-   "wordsPerSec": 2.35
+   "wordsPerSec": 2.78,
+   "chunks": [
+    {
+     "rawStart": 0.28,
+     "rawEnd": 1.72,
+     "start": 0.05,
+     "end": 1.49
+    }
+   ]
   },
   {
    "index": 1,
    "file": "voice_fr/01.mp3",
-   "start": 2.6,
-   "end": 5.8,
+   "start": 2.1,
+   "end": 4.3,
    "text": "Et si la vôtre ne ressemblait à aucune autre ?",
-   "wordsPerSec": 2.81
+   "wordsPerSec": 4.09,
+   "chunks": [
+    {
+     "rawStart": 2.51,
+     "rawEnd": 4.71,
+     "start": 2.1,
+     "end": 4.3
+    }
+   ]
   },
   {
    "index": 2,
    "file": "voice_fr/02.mp3",
-   "start": 6.2,
-   "end": 9.4,
+   "start": 5.0,
+   "end": 7.81,
    "text": "Voici dix-huit identités visuelles pour vos vidéos courtes.",
-   "wordsPerSec": 2.5
+   "wordsPerSec": 2.85,
+   "chunks": [
+    {
+     "rawStart": 5.4,
+     "rawEnd": 8.21,
+     "start": 5.0,
+     "end": 7.81
+    }
+   ]
   },
   {
    "index": 3,
    "file": "voice_fr/03.mp3",
-   "start": 9.8,
-   "end": 13.6,
+   "start": 11.05,
+   "end": 16.09,
    "text": "Gazette, pixel, néon, aquarelle : à chacune sa signature.",
-   "wordsPerSec": 2.11
+   "wordsPerSec": 2.08,
+   "chunks": [
+    {
+     "rawStart": 8.81,
+     "rawEnd": 9.39,
+     "start": 11.05,
+     "end": 11.63
+    },
+    {
+     "rawStart": 9.72,
+     "rawEnd": 10.38,
+     "start": 12.05,
+     "end": 12.71
+    },
+    {
+     "rawStart": 10.38,
+     "rawEnd": 10.98,
+     "start": 13.02,
+     "end": 13.62
+    },
+    {
+     "rawStart": 11.35,
+     "rawEnd": 11.99,
+     "start": 14.05,
+     "end": 14.69
+    },
+    {
+     "rawStart": 12.34,
+     "rawEnd": 13.71,
+     "start": 14.72,
+     "end": 16.09
+    }
+   ]
   },
   {
    "index": 4,
    "file": "voice_fr/04.mp3",
-   "start": 14.3,
-   "end": 17.6,
+   "start": 16.3,
+   "end": 18.88,
    "text": "Quarante-cinq shorts le prouvent, tous rendus par du code.",
-   "wordsPerSec": 2.73
+   "wordsPerSec": 3.83,
+   "chunks": [
+    {
+     "rawStart": 14.23,
+     "rawEnd": 15.5,
+     "start": 16.3,
+     "end": 17.57
+    },
+    {
+     "rawStart": 15.75,
+     "rawEnd": 16.83,
+     "start": 17.8,
+     "end": 18.88
+    }
+   ]
   },
   {
    "index": 5,
    "file": "voice_fr/05.mp3",
-   "start": 18.3,
-   "end": 21.7,
+   "start": 20.3,
+   "end": 23.95,
    "text": "Testées à l’aveugle : dix-huit reconnues sur dix-huit.",
-   "wordsPerSec": 2.06
+   "wordsPerSec": 2.82,
+   "chunks": [
+    {
+     "rawStart": 17.46,
+     "rawEnd": 18.19,
+     "start": 20.3,
+     "end": 21.03
+    },
+    {
+     "rawStart": 18.47,
+     "rawEnd": 20.22,
+     "start": 22.2,
+     "end": 23.95
+    }
+   ]
   },
   {
    "index": 6,
    "file": "voice_fr/06.mp3",
-   "start": 22.3,
-   "end": 25.6,
+   "start": 24.7,
+   "end": 26.73,
    "text": "Le plus simple ? Donnez un prompt à votre agent.",
-   "wordsPerSec": 2.73
+   "wordsPerSec": 4.97,
+   "chunks": [
+    {
+     "rawStart": 20.75,
+     "rawEnd": 21.28,
+     "start": 24.7,
+     "end": 25.23
+    },
+    {
+     "rawStart": 21.54,
+     "rawEnd": 22.82,
+     "start": 25.45,
+     "end": 26.73
+    }
+   ]
   },
   {
    "index": 7,
    "file": "voice_fr/07.mp3",
-   "start": 26.0,
-   "end": 28.7,
+   "start": 28.0,
+   "end": 29.89,
    "text": "Il choisit le style, crée votre studio…",
-   "wordsPerSec": 2.59
+   "wordsPerSec": 3.95,
+   "chunks": [
+    {
+     "rawStart": 23.39,
+     "rawEnd": 24.32,
+     "start": 28.0,
+     "end": 28.93
+    },
+    {
+     "rawStart": 24.86,
+     "rawEnd": 25.7,
+     "start": 29.05,
+     "end": 29.89
+    }
+   ]
   },
   {
    "index": 8,
    "file": "voice_fr/08.mp3",
-   "start": 29.1,
-   "end": 31.0,
+   "start": 30.0,
+   "end": 31.68,
    "text": "… et réalise votre premier épisode.",
-   "wordsPerSec": 2.63
+   "wordsPerSec": 2.98,
+   "chunks": [
+    {
+     "rawStart": 26.23,
+     "rawEnd": 27.91,
+     "start": 30.0,
+     "end": 31.68
+    }
+   ]
   },
   {
    "index": 9,
    "file": "voice_fr/09.mp3",
-   "start": 31.3,
-   "end": 34.6,
+   "start": 32.6,
+   "end": 36.87,
    "text": "Puis le deuxième. Le troisième. À votre image.",
-   "wordsPerSec": 2.42
+   "wordsPerSec": 3.24,
+   "chunks": [
+    {
+     "rawStart": 28.56,
+     "rawEnd": 29.51,
+     "start": 32.6,
+     "end": 33.55
+    },
+    {
+     "rawStart": 29.94,
+     "rawEnd": 30.59,
+     "start": 34.7,
+     "end": 35.35
+    },
+    {
+     "rawStart": 30.88,
+     "rawEnd": 31.75,
+     "start": 36.0,
+     "end": 36.87
+    }
+   ]
   },
   {
    "index": 10,
    "file": "voice_fr/10.mp3",
-   "start": 35.0,
-   "end": 38.8,
+   "start": 37.55,
+   "end": 41.41,
    "text": "Dix-huit identités. Quarante-cinq shorts. Tout est open source.",
-   "wordsPerSec": 2.11
+   "wordsPerSec": 3.0,
+   "chunks": [
+    {
+     "rawStart": 32.56,
+     "rawEnd": 33.48,
+     "start": 37.55,
+     "end": 38.47
+    },
+    {
+     "rawStart": 33.99,
+     "rawEnd": 34.78,
+     "start": 39.55,
+     "end": 40.34
+    },
+    {
+     "rawStart": 35.28,
+     "rawEnd": 36.24,
+     "start": 40.45,
+     "end": 41.41
+    }
+   ]
   },
   {
    "index": 11,
    "file": "voice_fr/11.mp3",
-   "start": 39.4,
-   "end": 42.0,
+   "start": 41.8,
+   "end": 44.21,
    "text": "Studio Visual Identity. À vous de jouer.",
-   "wordsPerSec": 2.69
+   "wordsPerSec": 3.43,
+   "chunks": [
+    {
+     "rawStart": 36.9,
+     "rawEnd": 38.48,
+     "start": 41.8,
+     "end": 43.38
+    },
+    {
+     "rawStart": 39.06,
+     "rawEnd": 39.52,
+     "start": 43.75,
+     "end": 44.21
+    }
+   ]
   }
  ]
 }

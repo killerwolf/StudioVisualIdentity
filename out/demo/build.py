@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-build.py — vidéo démo « Caméléon » en français (43 s), en 16:9 (1920×1080) et 9:16 (1080×1920).
+build.py — vidéo démo « Caméléon » en français (46 s), en 16:9 (1920×1080) et 9:16 (1080×1920).
 
 Tout est dessiné image par image en Python (numpy + OpenCV + Pillow), sans navigateur : la démo prend tour à tour
 le fond, la police et la couleur de chacune des 18 identités, avec les vrais shorts du dépôt comme matière.
@@ -35,39 +35,40 @@ FPS = 30
 NB = ' '  # espace insécable
 
 # ------------------------------------------------------------------ minutage (120 BPM : un temps = 0,5 s)
-T_MUT = 2.5     # une carte se met à changer de style
-T_COV = 4.0     # carrousel des 18 identités
-T_WALL = 14.0   # mur des 45 shorts
-T_JUDGE = 18.0  # juge à l'aveugle
-T_TERM = 22.0   # le prompt
-T_CHK = [26.0, 27.0, 29.0]   # ✓ style, ✓ studio, ✓ épisode 1
-T_EP = [29.0, 31.0, 33.0]    # épisodes 1, 2, 3
-T_SLAM = 35.0   # 4 panneaux, un par seconde
-T_END = 39.0
-DUR = 43.0
+T_MUT = 2.0     # une carte se met à changer de style
+T_COV = 3.5     # carrousel des 18 identités
+T_SPIN = 14.8   # le carrousel fait un tour complet (« à chacune sa signature »)
+T_WALL = 16.0   # mur des 45 shorts
+T_JUDGE = 20.0  # juge à l'aveugle
+T_TERM = 24.5   # le prompt
+T_CHK = [28.0, 29.0, 31.0]   # ✓ style, ✓ studio, ✓ épisode 1
+T_EP = [31.0, 33.0, 35.0]    # épisodes 1, 2, 3
+T_SLAM = 37.5   # 4 panneaux, un par seconde
+T_END = 41.5
+DUR = 46.0
 
-# ------------------------------------------------------------------ les 18 identités (du plus clair au plus sombre)
+# ------------------------------------------------------------------ les 18 identités (du plus sombre au plus clair, puis les quatre que la voix nomme)
 DELA = 'out/shared/papier-moteur/assets/fonts/DelaGothicOne-Regular.woff2'
 # id, nom, short, début (s), police d'affichage, graisse, fond, encre, accent
 IDS = [
-    ('swiss-data', 'Grille Suisse', 'swiss-data__geographie__ou-vivent-8-milliards', 1.2, 'archivo-black', 400, '#F4F1EA', '#111111', '#E3241B'),
-    ('bauhaus-kinetic', 'Bauhaus Cinétique', 'bauhaus-kinetic__explicatif__abeilles-hexagones', 0.3, 'unbounded', 800, '#F2EDE3', '#111111', '#1D4ED8'),
-    ('riso-zine', 'Zine Riso', 'riso-zine__evenements__geminides-j-39', 0.6, 'space-mono', 700, '#F6F0E4', '#1A1A1A', '#FF48B0'),
-    ('gazette-1900', 'Gazette 1900', 'gazette-1900__histoire__1789-en-20-secondes', 3.0, 'playfair-display', 900, '#E9E1CF', '#1E1B18', '#B3261E'),
-    ('atlas-grave', 'Atlas Gravé', 'atlas-grave__histoire__premier-tour-du-monde-1519-1522', 8.0, 'cormorant-garamond', 700, '#EFE3C8', '#2A1F14', '#8C2F1B'),
-    ('aquarelle-conte', 'Aquarelle Conte', 'aquarelle-conte__histoire__phare-d-alexandrie', 5.0, 'fraunces', 700, '#F7F1E6', '#3A3042', '#E88D72'),
-    ('pastel-diorama', 'Diorama Pastel', 'pastel-diorama__engagement__choisis-ta-boite-renard', 10.0, 'baloo-2', 800, '#FFE8EF', '#3B2E5A', '#FF8FAB'),
-    ('carte-meteo', 'Carte Météo', 'carte-meteo__geographie__le-mistral-pourquoi-il-souffle-si-fort', 7.0, 'space-grotesk', 700, '#CFE6F5', '#10263D', '#D63A2A'),
-    ('trait-continu', 'Trait continu', 'trait-continu__geographie__l-italie-a-la-forme-d-une-botte', 5.0, 'fredoka', 700, '#F26A21', '#1A1410', '#FFF8EE'),
-    ('survol-pixel', 'Survol pixel', 'survol-pixel__histoire__machu-picchu-pourquoi-une-cite-en-escaliers', 3.0, 'jersey-15', 400, '#1E5AA8', '#FBF3D5', '#FFC94A'),
-    ('papier-decoupe', 'Papier découpé', 'papier-decoupe__histoire__la-fourchette-a-fait-scandale', 0.3, DELA, 400, '#1F5A4A', '#F7F4EC', '#FFD23F'),
-    ('tableau-craie', 'Tableau Craie', 'tableau-craie__enfants__comment-une-graine-devient-un-arbre', 9.0, 'nunito', 800, '#1F3A30', '#F7F3E3', '#FFB84C'),
+    ('brut-meme', 'Brut Mème', 'brut-meme__evenements__pendant-ces-15-secondes-dans-le-monde', 0.2, 'anton', 400, '#111111', '#FFFFFF', '#FFE600'),
+    ('liquid-chrome', 'Chrome Liquide', 'liquid-chrome__abstrait__quatre-peintures-mpm', 4.0, 'syne', 800, '#0B0B10', '#FFFFFF', '#FF9AE8'),
+    ('cosmos-doc', 'Cosmos Doc', 'cosmos-doc__explicatif__pourquoi-venus-plus-chaude-que-mercure', 10.0, 'bebas-neue', 400, '#07070D', '#EAF2FF', '#FFB347'),
     ('topo-relief', 'Relief Topo', 'topo-relief__geographie__comment-mesure-t-on-l-everest', 2.0, 'jetbrains-mono', 700, '#14221C', '#F1EEDC', '#E8C872'),
+    ('tableau-craie', 'Tableau Craie', 'tableau-craie__enfants__comment-une-graine-devient-un-arbre', 9.0, 'nunito', 800, '#1F3A30', '#F7F3E3', '#FFB84C'),
+    ('papier-decoupe', 'Papier découpé', 'papier-decoupe__histoire__la-fourchette-a-fait-scandale', 0.3, DELA, 400, '#1F5A4A', '#F7F4EC', '#FFD23F'),
+    ('survol-pixel', 'Survol pixel', 'survol-pixel__histoire__machu-picchu-pourquoi-une-cite-en-escaliers', 3.0, 'jersey-15', 400, '#1E5AA8', '#FBF3D5', '#FFC94A'),
+    ('trait-continu', 'Trait continu', 'trait-continu__geographie__l-italie-a-la-forme-d-une-botte', 5.0, 'fredoka', 700, '#F26A21', '#1A1410', '#FFF8EE'),
+    ('carte-meteo', 'Carte Météo', 'carte-meteo__geographie__le-mistral-pourquoi-il-souffle-si-fort', 7.0, 'space-grotesk', 700, '#CFE6F5', '#10263D', '#D63A2A'),
+    ('pastel-diorama', 'Diorama Pastel', 'pastel-diorama__engagement__choisis-ta-boite-renard', 10.0, 'baloo-2', 800, '#FFE8EF', '#3B2E5A', '#FF8FAB'),
+    ('atlas-grave', 'Atlas Gravé', 'atlas-grave__histoire__premier-tour-du-monde-1519-1522', 8.0, 'cormorant-garamond', 700, '#EFE3C8', '#2A1F14', '#8C2F1B'),
+    ('riso-zine', 'Zine Riso', 'riso-zine__evenements__geminides-j-39', 0.6, 'space-mono', 700, '#F6F0E4', '#1A1A1A', '#FF48B0'),
+    ('bauhaus-kinetic', 'Bauhaus Cinétique', 'bauhaus-kinetic__explicatif__abeilles-hexagones', 0.3, 'unbounded', 800, '#F2EDE3', '#111111', '#1D4ED8'),
+    ('swiss-data', 'Grille Suisse', 'swiss-data__geographie__ou-vivent-8-milliards', 1.2, 'archivo-black', 400, '#F4F1EA', '#111111', '#E3241B'),
+    ('gazette-1900', 'Gazette 1900', 'gazette-1900__histoire__1789-en-20-secondes', 3.0, 'playfair-display', 900, '#E9E1CF', '#1E1B18', '#B3261E'),
     ('pixel-arcade', 'Arcade Pixel', 'pixel-arcade__engagement__quelle-couleur-conquiert-l-ecran', 4.0, 'rubik-mono-one', 400, '#0E0B1F', '#FFFFFF', '#3CF2A0'),
     ('neon-lab', 'Labo Néon', 'neon-lab__explicatif__lune-meme-face', 7.0, 'space-grotesk', 700, '#05060B', '#F2F6FF', '#38F9FF'),
-    ('cosmos-doc', 'Cosmos Doc', 'cosmos-doc__explicatif__pourquoi-venus-plus-chaude-que-mercure', 10.0, 'bebas-neue', 400, '#07070D', '#EAF2FF', '#FFB347'),
-    ('liquid-chrome', 'Chrome Liquide', 'liquid-chrome__abstrait__quatre-peintures-mpm', 4.0, 'syne', 800, '#0B0B10', '#FFFFFF', '#FF9AE8'),
-    ('brut-meme', 'Brut Mème', 'brut-meme__evenements__pendant-ces-15-secondes-dans-le-monde', 0.2, 'anton', 400, '#111111', '#FFFFFF', '#FFE600'),
+    ('aquarelle-conte', 'Aquarelle Conte', 'aquarelle-conte__histoire__phare-d-alexandrie', 5.0, 'fraunces', 700, '#F7F1E6', '#3A3042', '#E88D72'),
 ]
 N = len(IDS)
 IDX = {r[0]: k for k, r in enumerate(IDS)}
@@ -77,7 +78,7 @@ for _i in json.load(open(ROOT / 'out/identities/index.json'))['identities']:
 FAM_FR = {'abstrait': 'abstrait', 'enfants': 'enfants', 'explicatif': 'explicatif', 'histoire': 'histoire',
           'geographie': 'géographie', 'evenements': 'événements', 'engagement': 'engagement'}
 ALL_SHORTS = sorted(p.name for p in SHORTS.iterdir() if (p / 'short.mp4').exists())
-MUTANTS = ['gazette-1900', 'pixel-arcade', 'pastel-diorama', 'cosmos-doc', 'trait-continu']  # 2,5 -> 3,75 s
+MUTANTS = ['gazette-1900', 'pixel-arcade', 'pastel-diorama', 'survol-pixel', 'trait-continu']  # 2,0 -> 3,25 s
 EPISODES = [('pixel-arcade__engagement__quelle-bille-gagne-la-course', 4.0),
             ('pixel-arcade__engagement__quelle-couleur-conquiert-l-ecran', 4.5),
             ('pixel-arcade__abstrait__la-balle-peut-elle-s-echapper', 6.0)]
@@ -98,22 +99,26 @@ PROMPT = ['> Lis AGENTS.md de',
 CHECKS = ['style choisi' + NB + ': Arcade Pixel', 'studio créé' + NB + ': defis-ados/', 'épisode 1 rendu · contrôle qualité OK',
           'épisode 2 rendu', 'épisode 3 rendu']
 T_CHECKS = T_CHK + [T_EP[1], T_EP[2]]
-TYPE0, TYPE1 = T_TERM + 0.5, T_TERM + 3.7
+TYPE0, TYPE1 = T_TERM + 0.5, T_TERM + 3.1
 
-NARRATION = [
-    (0.3, 2.0, 'Encore la même vidéo' + NB + '?'),
-    (2.6, 5.8, 'Et si la vôtre ne ressemblait à aucune autre' + NB + '?'),
-    (6.2, 9.4, 'Voici dix-huit identités visuelles pour vos vidéos courtes.'),
-    (9.8, 13.6, 'Gazette, pixel, néon, aquarelle' + NB + ': à chacune sa signature.'),
-    (14.3, 17.6, 'Quarante-cinq shorts le prouvent, tous rendus par du code.'),
-    (18.3, 21.7, 'Testées à l’aveugle' + NB + ': dix-huit reconnues sur dix-huit.'),
-    (22.3, 25.6, 'Le plus simple' + NB + '? Donnez un prompt à votre agent.'),
-    (26.0, 28.7, 'Il choisit le style, crée votre studio…'),
-    (29.1, 31.0, '… et réalise votre premier épisode.'),
-    (31.3, 34.6, 'Puis le deuxième. Le troisième. À votre image.'),
-    (35.0, 38.8, 'Dix-huit identités. Quarante-cinq shorts. Tout est open source.'),
-    (39.4, 42.0, 'Studio Visual Identity. À vous de jouer.'),
+# Voix off : Gemini « Puck », un seul fichier (voice_fr_raw/demo.mp3). Chaque ligne = des morceaux (début et fin dans le
+# fichier brut, instant dans la vidéo) : c'est la voix qui cale le montage, les pauses internes sont resserrées ou étirées.
+VOICE = [
+    ('Encore la même vidéo' + NB + '?', [(0.28, 1.72, 0.05)]),
+    ('Et si la vôtre ne ressemblait à aucune autre' + NB + '?', [(2.51, 4.71, 2.1)]),
+    ('Voici dix-huit identités visuelles pour vos vidéos courtes.', [(5.40, 8.21, 5.0)]),
+    ('Gazette, pixel, néon, aquarelle' + NB + ': à chacune sa signature.',
+     [(8.81, 9.39, 11.05), (9.72, 10.38, 12.05), (10.38, 10.98, 13.02), (11.35, 11.99, 14.05), (12.34, 13.71, 14.72)]),
+    ('Quarante-cinq shorts le prouvent, tous rendus par du code.', [(14.23, 15.50, 16.3), (15.75, 16.83, 17.8)]),
+    ('Testées à l’aveugle' + NB + ': dix-huit reconnues sur dix-huit.', [(17.46, 18.19, 20.3), (18.47, 20.22, 22.2)]),
+    ('Le plus simple' + NB + '? Donnez un prompt à votre agent.', [(20.75, 21.28, 24.7), (21.54, 22.82, 25.45)]),
+    ('Il choisit le style, crée votre studio…', [(23.39, 24.32, 28.0), (24.86, 25.70, 29.05)]),
+    ('… et réalise votre premier épisode.', [(26.23, 27.91, 30.0)]),
+    ('Puis le deuxième. Le troisième. À votre image.', [(28.56, 29.51, 32.6), (29.94, 30.59, 34.7), (30.88, 31.75, 36.0)]),
+    ('Dix-huit identités. Quarante-cinq shorts. Tout est open source.', [(32.56, 33.48, 37.55), (33.99, 34.78, 39.55), (35.28, 36.24, 40.45)]),
+    ('Studio Visual Identity. À vous de jouer.', [(36.90, 38.48, 41.8), (39.06, 39.52, 43.75)]),
 ]
+NARRATION = [(ch[0][2], round(ch[-1][2] + ch[-1][1] - ch[-1][0], 2), txt) for txt, ch in VOICE]
 
 # ------------------------------------------------------------------ géométrie par format
 FMT = {
@@ -440,7 +445,7 @@ def template_grid(gw, gh, pw, ph):
 
 
 def hook_words(fr, t):
-    lines = [('ENCORE', -0.10), ('LA MÊME', 0.50), ('VIDÉO' + NB + '?', 0.90)]   # « ENCORE » est déjà là à la première image
+    lines = [('ENCORE', -0.10), ('LA MÊME', 0.50), ('VIDÉO' + NB + '?', 0.95)]   # « ENCORE » est déjà là à la première image
     out = u(t, T_MUT - 0.05, 0.22)
     if out >= 1:
         return
@@ -475,8 +480,8 @@ def header(fr, t, ink, shadow_col=None):
             blitc(fr, T(txt, fk, size, shadow_col), W / 2 + 3, F['head_y'] + dy + 4, a * 0.8)
         blitc(fr, s, W / 2, F['head_y'] + dy, a)
     q = 'Et si la vôtre ne ressemblait à aucune autre' + NB + '?'
-    a1 = eo3(u(t, 2.7, 0.3)) * (1 - u(t, 5.75, 0.25))
-    a2 = eo3(u(t, 6.0, 0.3))
+    a1 = eo3(u(t, T_MUT + 0.1, 0.3)) * (1 - u(t, 5.05, 0.25))
+    a2 = eo3(u(t, 5.4, 0.3)) * (1 - u(t, T_WALL - 0.3, 0.3))
     if a1 > 0:
         if F['fmt'] == '9x16':
             line('Et si la vôtre ne ressemblait', a1, -34 + 20 * (1 - a1), ink)
@@ -507,7 +512,7 @@ def scene_hook(t, n):
     fr = cv2.warpPerspective(G, Tb @ Pm @ A @ Tc, (W, H), flags=cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT, borderValue=rgb('#0B0D17'))
     # après 2,5 s : la grille s'éteint, une carte prend vie
     m = u(t, T_MUT, 0.5)
-    z = eio(u(t, 3.55, 0.45))  # fondu vers le fond de la première identité
+    z = eio(u(t, T_COV - 0.45, 0.45))  # fondu vers le fond de la première identité
     if m > 0:
         fr = cv2.convertScaleAbs(fr, alpha=1 - 0.62 * eo3(m))
     if z > 0:
@@ -520,10 +525,9 @@ def scene_hook(t, n):
         ident = MUTANTS[k] if k < len(MUTANTS) else IDS[0][0]
         r = IDS[IDX[ident]]
         cw, chh = F['card']
-        grow = eo3(u(t, T_MUT, 0.3)) * 0.78 + 0.22 * eio(u(t, 3.4, 0.6))
         pop = back(u(t, T_MUT, 0.3))
         local = u(t, T_MUT + 0.25 * k, 0.12) if k < len(MUTANTS) + 1 and k > 0 else 1
-        sc = (0.45 + 0.55 * pop) * (0.9 + 0.1 * eio(u(t, 3.4, 0.6))) * (1 + 0.05 * (1 - eo3(local)))
+        sc = (0.45 + 0.55 * pop) * (0.9 + 0.1 * eio(u(t, T_COV - 0.6, 0.6))) * (1 + 0.05 * (1 - eo3(local)))
         w2, h2 = int(cw * sc), int(chh * sc)
         fi = 60 + (t - T_MUT) * 30 if ident != IDS[0][0] else (t - (T_COV - 0.25)) * 30
         img = cv2.resize(cframe('c_' + ident, fi), (w2, h2), interpolation=cv2.INTER_AREA)
@@ -536,16 +540,21 @@ def scene_hook(t, n):
 
 
 # ------------------------------------------------------------------ scène 2 : le carrousel caméléon
+COV_T = [T_COV, T_COV + 1.0] + [T_COV + 1.5 + 0.5 * k for k in range(13)] + [12.0, 13.0, 14.0]   # gazette 11, pixel 12, néon 13, aquarelle 14
+
+
 def cov_start(k):
-    return T_COV + (k if k < 2 else 2 + 0.5 * (k - 2))
+    return COV_T[k]
 
 
 def cov_pos(t):
-    """Position flottante du carrousel (indice de la carte au centre)."""
-    if t < T_COV + 1:
+    """Position flottante du carrousel (indice de la carte au centre) ; après T_SPIN, un tour complet qui accélère."""
+    if t >= T_SPIN:
+        return N - 1 + N * u(t, T_SPIN, T_WALL - T_SPIN) ** 2.4
+    k = max(i for i in range(N) if COV_T[i] <= t) if t >= T_COV else 0
+    if k == 0:
         return 0.0
-    k = 1 if t < T_COV + 2 else min(N - 1, 2 + int((t - T_COV - 2) / 0.5))
-    return k - 1 + eo3(u(t, cov_start(k), 0.26))
+    return k - 1 + eo3(u(t, COV_T[k], 0.26))
 
 
 def card_quad(d, extra=0.0):
@@ -569,6 +578,15 @@ def card_quad(d, extra=0.0):
     return [po[0], pi_[0], pi_[1], po[1]], sc
 
 
+def cov_fi(k, t):
+    """Image du clip de la carte k à l'instant t (le son des shorts utilise la même horloge)."""
+    n = clip_len('c_' + IDS[k][0])
+    fi = (t - (cov_start(k) - 2.0)) * 30
+    if t >= T_SPIN and k != N - 1:
+        fi = n * 0.5 + (t - T_SPIN) * 30
+    return fi if 0 <= fi < n else pingpong(abs(fi), n)
+
+
 @lru_cache(64)
 def ghost(txt, fkey, size, col):
     return Tt(txt, fkey, size, col)
@@ -576,18 +594,24 @@ def ghost(txt, fkey, size, col):
 
 def scene_cover(t, n):
     p = cov_pos(t)
-    k0 = int(math.floor(p))
-    k1 = min(N - 1, k0 + 1)
-    x = p - k0
+    spin = u(t, T_SPIN, T_WALL - T_SPIN)
+    k0 = int(math.floor(p)) % N
+    k1 = (k0 + 1) % N if t >= T_SPIN else min(N - 1, k0 + 1)
+    x = p - math.floor(p)
     A, B = IDS[k0], IDS[k1]
-    bgc = mix(rgb(A[6]), rgb(B[6]), eio(x))
-    ink = mix(rgb(A[7]), rgb(B[7]), 1 if x > 0.5 else 0)
-    cur = IDS[int(round(p))]
+    if spin > 0:   # pendant le tour, le fond ne clignote pas : il glisse de la dernière identité vers le sombre
+        bgc = mix(rgb(IDS[N - 1][6]), rgb(DARK), eio(spin))
+        ink = rgb(IDS[N - 1][7]) if spin < 0.5 else (255, 255, 255)
+    else:
+        bgc = mix(rgb(A[6]), rgb(B[6]), eio(x))
+        ink = mix(rgb(A[7]), rgb(B[7]), 1 if x > 0.5 else 0)
+    cur = IDS[int(round(p)) % N]
     fr = np.empty((H, W, 3), np.uint8)
     fr[:] = bgc
+    p = p % N if spin > 0 else p
     # nom fantôme géant, dans la police de l'identité
     for ident, a in ((A, 1 - x), (B, x)) if k1 != k0 else ((A, 1.0),):
-        if a <= 0.02:
+        if a <= 0.02 or spin > 0:
             continue
         gc = mix(rgb(ident[6]), rgb(ident[7]), 0.10)
         kk = IDX[ident[0]]
@@ -598,7 +622,7 @@ def scene_cover(t, n):
         blitc(fr, g, W / 2 - drift + (kk - p) * W * 0.5, gy, a)
     # halo d'accent derrière la carte centrale
     acc = mix(rgb(A[8]), rgb(B[8]), x)
-    blitc(fr, glow(int(F['card'][1] * 2.1), '#%02x%02x%02x' % acc), F['ccx'], F['ccy'], 0.30 if lum(bgc) < 0.4 else 0.22)
+    blitc(fr, glow(int(F['card'][1] * 2.1), '#%02x%02x%02x' % acc), F['ccx'], F['ccy'], (0.30 if lum(bgc) < 0.4 else 0.22) * (1 - spin))
     # cartes, de la plus lointaine à la plus proche
     ent = 1 - eo3(u(t, T_COV - 0.05, 0.55))
     def dist(k):
@@ -610,11 +634,9 @@ def scene_cover(t, n):
             continue
         quad, sc = card_quad(d, extra=ent * W * 0.6 * (abs(d) > 0.01))
         ident = IDS[k]
-        fi = (t - (cov_start(k) - 2.0)) * 30
+        fi = cov_fi(k, t)
         if k == 0 and t < T_COV + 4:
             fi = (t - (T_COV - 0.25)) * 30
-        elif fi < 0 or fi >= clip_len('c_' + ident[0]):
-            fi = pingpong(abs(fi), clip_len('c_' + ident[0]))
         img = cframe('c_' + ident[0], fi)
         dim = min(1.0, abs(d)) * 0.38 + max(0, abs(d) - 1) * 0.2
         if dim > 0.01:
@@ -629,12 +651,17 @@ def scene_cover(t, n):
         shw = shadow(int(ww), int(hh), 30, 22, 120 if lum(bgc) > 0.4 else 190)
         blitc(fr, shw, q[:, 0].mean(), q[:, 1].mean() + 24 * sc)
         quad_blit(fr, src, quad)
+    if spin > 0.12:   # flou de filé horizontal pendant le tour
+        ks = int(4 + 110 * spin ** 2.0) | 1
+        y0b, y1b = int(F['ccy'] - F['card'][1] * 0.56), int(F['ccy'] + F['card'][1] * 0.60)
+        fr[y0b:y1b] = cv2.blur(fr[y0b:y1b], (ks, 1))
     # titre du haut
     header(fr, t, ink)
     # nom de l'identité, dans SA police, + méta
-    ki = int(round(p))
+    ki = int(round(p)) % N if spin == 0 else N - 1
+    cur = IDS[ki]
     tk = cov_start(ki)
-    ap = eo3(u(t, tk + 0.04, 0.2)) if ki > 0 else eo3(u(t, T_COV + 0.05, 0.3))
+    ap = (eo3(u(t, tk + 0.04, 0.2)) if ki > 0 else eo3(u(t, T_COV + 0.05, 0.3))) * (1 - u(t, T_SPIN, 0.2))
     fk = (cur[4], cur[5])
     inkc = '#%02x%02x%02x' % rgb(cur[7])
     size = fit(cur[1], fk, F['name_size'] * (1.25 if cur[4] in ('jersey-15', 'bebas-neue', 'anton', 'cormorant-garamond') else 1.0), W - 260 if F['fmt'] == '9x16' else 1100)
@@ -647,9 +674,9 @@ def scene_cover(t, n):
     seg = bw / N
     for k in range(N):
         x0 = W / 2 - bw / 2 + k * seg
-        on = k <= ki
+        on = k <= ki or spin > 0
         col = rgb(IDS[k][8]) if on else mix(bgc, ink, 0.22)
-        hgt = 14 if k == ki else 8
+        hgt = 14 if (k == ki and spin == 0) else 8
         rect(fr, x0 + 3, F['bar_y'] - hgt / 2, x0 + seg - 3, F['bar_y'] + hgt / 2, col)
         if on:
             rect(fr, x0 + 3, F['bar_y'] + hgt / 2, x0 + seg - 3, F['bar_y'] + hgt / 2 + 2, mix(bgc, ink, 0.5))
@@ -657,7 +684,7 @@ def scene_cover(t, n):
 
 
 # ------------------------------------------------------------------ scène 3 : le mur des 45 shorts
-def big_caption(fr, t, t0, big, small, y, col=YEL, small2=None):
+def big_caption(fr, t, t0, big, small, y, col=YEL, small2=None, d2=0.8):
     """Gros chiffre + phrase, centrés (bandeau sombre derrière)."""
     a = eo3(u(t, t0, 0.2))
     if a <= 0:
@@ -665,7 +692,7 @@ def big_caption(fr, t, t0, big, small, y, col=YEL, small2=None):
     bs = 150 if F['fmt'] == '16x9' else 118
     ss = 58 if F['fmt'] == '16x9' else 46
     sb = Tt(big, ('unbounded', 900), bs, col)
-    a2 = eo3(u(t, t0 + 0.8, 0.25))
+    a2 = eo3(u(t, t0 + d2, 0.25))
     if F['fmt'] == '16x9':
         ssp = T(small, GROT, ss, '#FFFFFF')
         tw = sb.shape[1] + 50 + ssp.shape[1]
@@ -720,7 +747,7 @@ def scene_wall(t, n, t0=T_WALL, caption=True):
         al = (np.clip(np.linspace(0, 1.5 if not fmt9 else 3.2, gh), 0, 1) ** 1.3 * 0.94 * eo3(u(t, t0 + 0.3, 0.3)))[:, None, None]
         reg = fr[y0:]
         reg[:] = (reg * (1 - al) + np.array(rgb('#07080F'), np.float32) * al).astype(np.uint8)
-        big_caption(fr, t, t0 + 0.5, '45 shorts', 'tous rendus par du code', F['wall_ty'], YEL, '18 identités · 21 déclinaisons')
+        big_caption(fr, t, t0 + 0.3, '45 shorts', 'tous rendus par du code', F['wall_ty'], YEL, '18 identités · 21 déclinaisons', d2=1.5)
     return fr
 
 
@@ -749,7 +776,7 @@ def scene_judge(t, n):
     perm = rng.permutation(72)
     jit = rng.uniform(-1, 1, (72, 2))
     cols, rows = g['cols'], g['rows']
-    t_sort = T_JUDGE + 1.1
+    t_sort = T_JUDGE + 1.0
     t_tick = T_JUDGE + 2.3
 
     def sorted_pos(k, m):
@@ -1233,8 +1260,7 @@ if __name__ == '__main__':
         if len(sys.argv) > 2:
             sheet(sys.argv[2], sys.argv[4:], sys.argv[3])
         else:
-            sheet('16x9', [0.9, 2.3, 3.2, 5.2, 8.2, 11.7, 15.6, 19.0, 21.6, 25.0, 27.6, 30.2, 34.2, 38.6, 41.5, 42.2][:12] and
-                  [0.9, 3.2, 5.2, 8.2, 11.7, 15.6, 21.6, 25.0, 27.6, 32.2, 38.6, 41.8], HERE / 'planche-demo-fr.jpg')
+            sheet('16x9', [0.9, 2.8, 4.2, 8.2, 12.3, 15.6, 17.6, 23.5, 27.2, 33.6, 41.0, 44.6], HERE / 'planche-demo-fr.jpg')
     elif cmd == 'video':
         video(sys.argv[2], *(float(x) for x in sys.argv[3:5]))
     elif cmd == 'audio':
@@ -1245,10 +1271,13 @@ if __name__ == '__main__':
         build_audio.gif()
     elif cmd == 'thumb':
         build_audio.thumb()
+    elif cmd == 'voice':
+        build_audio.split_voice()
     elif cmd == 'narration':
         build_audio.write_narration()
     elif cmd == 'all':
         clips()
+        build_audio.split_voice()
         build_audio.write_narration()
         for f in ('16x9', '9x16'):
             video(f)
@@ -1257,6 +1286,6 @@ if __name__ == '__main__':
             build_audio.final(f)
         build_audio.gif()
         build_audio.thumb()
-        sheet('16x9', [0.9, 3.2, 5.2, 8.2, 11.7, 15.6, 21.6, 25.0, 27.6, 32.2, 38.6, 41.8], HERE / 'planche-demo-fr.jpg')
+        sheet('16x9', [0.9, 2.8, 4.2, 8.2, 12.3, 15.6, 17.6, 23.5, 27.2, 33.6, 41.0, 44.6], HERE / 'planche-demo-fr.jpg')
     else:
         print(__doc__)

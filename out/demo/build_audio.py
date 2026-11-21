@@ -2,12 +2,15 @@
 """
 build_audio.py — son, assemblage, aperçu et vignette de la démo « Caméléon » (appelé par build.py).
 
-- Musique : synthétisée par code (numpy/scipy, 120 BPM, la mineur), calée sur le montage.
-- Bruitages : uniquement les sons CC0 de out/demo/sfx/ (crédits : sfx/credits.json).
-- Brouhaha du mur de shorts : les voix françaises déjà présentes dans out/demo/brouhaha/ (aucune génération).
-- Voix off : mixée seulement si out/demo/voice_fr/NN.mp3 existent (voir narration_fr.json), avec ducking de la musique.
+Quatre couches, mixées ici :
+- VOIX OFF : out/demo/voice_fr/NN.mp3, découpées par `split_voice()` dans le fichier unique voice_fr_raw/demo.mp3
+  (Gemini « Puck »). Aucun appel réseau : on ne fait que découper. La voix cale le montage (build.VOICE).
+- SON DES SHORTS : quand de vrais shorts sont à l'écran (carte qui change de style, carrousel, mur, épisodes, panneaux),
+  on entend leur propre bande son (voix + musique de leur short.mp4), avec fondus, baissée sous la voix off.
+- MUSIQUE : synthétisée par code (numpy/scipy, 120 BPM, la mineur), calée sur le montage.
+- BRUITAGES : sons CC0 de out/demo/sfx/ (crédits : sfx/credits.json) + synthèse de out/tools/sound.py.
 """
-import json, math, shutil, subprocess
+import json, math, shutil, subprocess, sys
 from pathlib import Path
 
 import numpy as np
@@ -15,7 +18,9 @@ from scipy import signal
 from scipy.io import wavfile
 
 import __main__ as _m
-B = _m if hasattr(_m, 'NARRATION') else __import__('build')
+B = _m if hasattr(_m, 'VOICE') else __import__('build')
+sys.path.insert(0, str(B.ROOT / 'out' / 'tools'))
+import sound as SND  # noqa: E402
 
 SR = 48000
 HERE = Path(__file__).resolve().parent
@@ -42,9 +47,13 @@ def tax(d):
     return np.arange(int(d * SR)) / SR
 
 
+def st(y):
+    return y if y.ndim == 2 else np.stack([y, y], 1)
+
+
 class Track:
     def __init__(self, dur):
-        self.x = np.zeros((int(dur * SR) + SR, 2))
+        self.x = np.zeros((int(dur * SR) + 2 * SR, 2))
 
     def add(self, y, t, g=1.0, pan=0.0):
         i = int(round(t * SR))
@@ -54,12 +63,13 @@ class Track:
         n = min(len(y), len(self.x) - i)
         if n <= 0:
             return
+        l, r = math.cos((pan + 1) * math.pi / 4) * 1.414, math.sin((pan + 1) * math.pi / 4) * 1.414
         if y.ndim == 1:
-            l, r = math.cos((pan + 1) * math.pi / 4) * 1.414, math.sin((pan + 1) * math.pi / 4) * 1.414
             self.x[i:i + n, 0] += y[:n] * g * l
             self.x[i:i + n, 1] += y[:n] * g * r
         else:
-            self.x[i:i + n] += y[:n] * g
+            self.x[i:i + n, 0] += y[:n, 0] * g * l
+            self.x[i:i + n, 1] += y[:n, 1] * g * r
 
 
 def kick():
@@ -70,9 +80,22 @@ def kick():
     return np.tanh((y + click) * 1.6)
 
 
+def subdrop(d=1.1):
+    """Chute de basse : le « boum » sous les gros impacts."""
+    t = tax(d)
+    f = 34 + 70 * np.exp(-t * 5)
+    return np.tanh(np.sin(2 * np.pi * np.cumsum(f) / SR) * 1.5) * np.exp(-t * 3.2) * np.minimum(1, t * 200)
+
+
 def hat(d=0.05, seed=2, dec=70):
     t = tax(d)
     return hp(np.random.default_rng(seed).uniform(-1, 1, len(t)), 7500) * np.exp(-t * dec)
+
+
+def crash(d=1.6):
+    t = tax(d)
+    n = np.random.default_rng(8).uniform(-1, 1, len(t))
+    return hp(n, 4500) * np.exp(-t * 3.2) * np.minimum(1, t * 400)
 
 
 def clap():
@@ -112,11 +135,23 @@ def stab(notes, d=0.22):
     return lp(y, 3200) * np.minimum(1, t * 400) * np.exp(-t * 13)
 
 
+def noise_riser(d):
+    """Montée de bruit filtré (balayage passe-haut), pour amener une révélation."""
+    t = tax(d)
+    n = np.random.default_rng(21).uniform(-1, 1, len(t))
+    out = np.zeros_like(n)
+    blk = 1024
+    for i in range(0, len(n), blk):
+        x = i / len(n)
+        b, a = signal.butter(2, [(300 + 5000 * x ** 2) / (SR / 2), min(0.98, (1500 + 14000 * x ** 1.5) / (SR / 2))], 'band')
+        out[i:i + blk] = signal.lfilter(b, a, n[i:i + blk])
+    return out * (t / d) ** 2.2
+
+
 def load(name):
     sr, y = wavfile.read(SFX / f'{name}.wav')
     y = y.astype(np.float64) / (32768.0 if y.dtype == np.int16 else (np.abs(y).max() or 1))
-    if y.ndim == 1:
-        y = np.stack([y, y], 1)
+    y = st(y)
     pk = np.abs(y).max()
     return y / pk if pk else y
 
@@ -127,219 +162,50 @@ def pitch(y, ratio):
     return np.stack([np.interp(idx, np.arange(len(y)), y[:, c]) for c in range(y.shape[1])], 1)
 
 
-def decode(path):
-    raw = subprocess.run(['ffmpeg', '-loglevel', 'error', '-i', str(path), '-f', 'f32le', '-ac', '1', '-ar', str(SR), '-'],
-                         capture_output=True, check=True).stdout
-    return np.frombuffer(raw, np.float32).astype(np.float64)
+def decode(path, ss=None, dur=None, ch=1):
+    cmd = ['ffmpeg', '-loglevel', 'error']
+    if ss is not None:
+        cmd += ['-ss', f'{max(0, ss):.3f}', '-t', f'{dur:.3f}']
+    cmd += ['-i', str(path), '-vn', '-f', 'f32le', '-ac', str(ch), '-ar', str(SR), '-']
+    y = np.frombuffer(subprocess.run(cmd, capture_output=True, check=True).stdout, np.float32).astype(np.float64)
+    return y.reshape(-1, 2) if ch == 2 else y
+
+
+def smooth_env(x, attack=0.05, release=0.25):
+    """Enveloppe 0..1 lissée (montée rapide, descente lente) à partir d'un signal de présence."""
+    k = int(release * SR)
+    e = signal.fftconvolve(x, np.ones(k) / k, 'same')
+    e = np.clip(e * 3, 0, 1)
+    b, a = signal.butter(1, 1 / (attack * 2 * np.pi) / (SR / 2))
+    return np.clip(signal.filtfilt(b, a, e), 0, 1)
 
 
 CH = [(45, [57, 60, 64]), (41, [57, 60, 65]), (48, [55, 60, 64]), (43, [55, 59, 62])]  # Am F C G (basse, accord)
 
 
-# ------------------------------------------------------------------ musique
-def music():
-    D = B.DUR
-    drums, tonal, fx = Track(D), Track(D), Track(D)
-    K, HH, CL = kick(), hat(), clap()
-    OH = hat(0.16, 3, 22)
-
-    # 0 -> 2,5 s : la « musique de template » (ukulélé joyeux, filtré comme un haut-parleur de téléphone), puis elle déraille
-    muz = Track(3.2)
-    cmaj = [(60, 64, 67), (60, 64, 67), (65, 69, 72), (67, 71, 74)]
-    for i in range(int(2.9 / 0.25)):
-        ch = cmaj[(i // 4) % 4]
-        muz.add(pluck(ch[(0, 2, 1, 2)[i % 4]] + 12, 0.3, 4000), i * 0.25, 0.5)
-        if i % 4 == 0:
-            muz.add(pluck(ch[0] - 12, 0.5, 1200), i * 0.25, 0.6)
-    m = hp(lp(muz.x, 3400), 380)
-    n0, n1 = int(2.45 * SR), int(2.95 * SR)      # arrêt de bande à 2,5 s
-    sp = np.ones(n1)
-    sp[n0:] = np.linspace(1, 0.05, n1 - n0) ** 1.5
-    pos = np.cumsum(sp)
-    pos = pos[pos < len(m) - 1]
-    m2 = np.stack([np.interp(pos, np.arange(len(m)), m[:, c]) for c in range(2)], 1)
-    m2[-int(0.08 * SR):] *= np.linspace(1, 0, int(0.08 * SR))[:, None]
-    fx.add(m2, 0, 1.25)
-    for t in (0.03, 0.50, 0.90):   # un coup grave sous chaque mot de l'accroche
-        drums.add(K, t, 0.9)
-
-    def groove(t0, t1, full=True, hats=True, kicks=True, claps=True, arp=True, bassg=1.0, stabs=True):
-        nb = int(round((t1 - t0) / BEAT))
-        for b in range(nb):
-            t = t0 + b * BEAT
-            bar = int((t - 4.0) // 2.0)
-            root, chord = CH[bar % 4]
-            if kicks and (full or b % 2 == 0):
-                drums.add(K, t, 0.95)
-            if hats:
-                drums.add(HH, t + 0.25, 0.30, 0.2)
-                if full:
-                    drums.add(HH, t + 0.125, 0.12, -0.3)
-                    drums.add(HH, t + 0.375, 0.12, 0.3)
-                    if b % 4 == 3:
-                        drums.add(OH, t + 0.25, 0.22, 0.1)
-            if claps and full and b % 2 == 1:
-                drums.add(CL, t, 0.55)
-            if bassg:
-                tonal.add(bass(root - 12, 0.24), t, 0.55 * bassg)
-                tonal.add(bass(root - 12, 0.22), t + 0.25, 0.42 * bassg)
-                if full and b % 4 == 3:
-                    tonal.add(bass(root, 0.12), t + 0.375, 0.3 * bassg)
-            if arp:
-                pat = [0, 1, 2, 1, 0, 2, 1, 2]
-                for s in range(4):
-                    nt = chord[pat[(b * 4 + s) % 8]] + (12 if (b * 4 + s) % 8 in (2, 5) else 0)
-                    tonal.add(pluck(nt + 12, 0.26, 3200 if full else 1800), t + s * 0.125, 0.16 if full else 0.11, 0.5 * math.sin(b + s))
-                    tonal.add(pluck(nt + 12, 0.26, 1500), t + s * 0.125 + 0.1875, 0.06, -0.5 * math.sin(b + s))  # écho
-            if stabs and full and b % 4 in (0, 3):
-                tonal.add(stab([c + 12 for c in chord]), t + (0 if b % 4 == 0 else 0.25), 0.22)
-
-    def pads(t0, t1, g=0.16, cut=1500):
-        t = t0
-        while t < t1 - 0.01:
-            bar = int((t - 4.0) // 2.0)
-            d = min(2.0, t1 - t)
-            tonal.add(pad(CH[bar % 4][1], d + 0.3, cut), t, g)
-            t += 2.0
-
-    # 4 -> 6 : entrée à mi-régime ; 6 -> 18 : plein régime (carrousel, mur)
-    groove(4.0, 6.0, full=False, claps=False)
-    groove(6.0, 18.0)
-    pads(4.0, 18.0)
-    # 18 -> 22 : le juge — on retire la grosse caisse, on garde le fil
-    groove(18.0, 22.0, full=False, kicks=False, hats=True, bassg=0.5)
-    pads(18.0, 22.0, 0.32, 1900)
-    # 22 -> 29 : le prompt — presque rien, puis ça remonte
-    groove(22.0, 27.0, full=False, kicks=False, hats=False, arp=False, bassg=0.7, stabs=False)
-    groove(27.0, 29.0, full=False, kicks=True, hats=True, bassg=0.8)
-    pads(22.0, 29.0, 0.3, 1100)
-    for i in range(8):   # roulement 28 -> 29
-        drums.add(CL, 28.0 + i * 0.125, 0.18 + 0.05 * i)
-    # 29 -> 39 : épisodes et chiffres
-    groove(29.0, 39.0)
-    pads(29.0, 39.0)
-    # 39 : accord final
-    tonal.add(pad([45, 57, 60, 64, 71], 4.2, 2200), 39.0, 0.3)
-    for k, mnote in enumerate((69, 72, 76, 81)):
-        tonal.add(pluck(mnote, 1.2, 3000), 39.0 + k * 0.125, 0.22)
-    drums.add(K, 39.0, 1.0)
-
-    # pompage (sidechain) de la partie tonale sur chaque grosse caisse
-    env = np.ones(len(tonal.x))
-    for t0, t1, step in ((4.0, 6.0, 1.0), (6.0, 18.0, 0.5), (27.0, 29.0, 1.0), (29.0, 39.0, 0.5)):
-        t = t0
-        while t < t1 - 0.01:
-            i = int(t * SR)
-            n = int(0.3 * SR)
-            env[i:i + n] = np.minimum(env[i:i + n], 1 - 0.55 * np.exp(-np.arange(n) / (0.09 * SR)))
-            t += step
-    tonal.x *= env[:, None]
-    mix = drums.x * 0.8 + tonal.x * 1.0 + fx.x
-    n = int(1.2 * SR)
-    e = int(D * SR)
-    mix[e - n:e] *= np.linspace(1, 0, n)[:, None] ** 2
-    mix[e:] = 0
-    return mix
-
-
-# ------------------------------------------------------------------ bruitages (sons CC0 de sfx/)
-def sfx_track():
-    D = B.DUR
-    tr = Track(D)
-    S = {n: load(n) for n in ('click', 'ding', 'glitch', 'impact', 'impact_light', 'key1', 'key2', 'key3', 'pop', 'riser', 'whoosh_fast', 'whoosh_soft')}
-    ev = []
-
-    def put(name, t, g=0.6, ratio=1.0, pan=0.0):
-        y = S[name] if ratio == 1.0 else pitch(S[name], ratio)
-        yy = y.copy()
-        yy[:, 0] *= 1 - max(0, pan)
-        yy[:, 1] *= 1 + min(0, pan)
-        tr.add(yy, t, g)
-        ev.append({'t': round(t, 3), 'sfx': name, 'gain': round(g, 2)})
-
-    # accroche : trois mots qui claquent
-    for k, t in enumerate((0.03, 0.50, 0.90)):
-        put('impact_light' if k < 2 else 'impact', t, 0.75 + 0.1 * k)
-        put('whoosh_fast', t - 0.12, 0.25)
-    # la carte change de style
-    put('glitch', B.T_MUT - 0.02, 0.6)
-    for k in range(6):
-        put('pop', B.T_MUT + 0.25 * k, 0.4, 0.9 + 0.08 * k)
-    put('riser', B.T_COV - 1.76, 0.55)
-    put('impact', B.T_COV, 0.95)
-    put('whoosh_soft', B.T_COV - 0.25, 0.5)
-    # carrousel : un petit tic à chaque identité
-    for k in range(1, B.N):
-        put('click', B.cov_start(k), 0.32, 0.85 + 0.02 * k, pan=0.3 if k % 2 else -0.3)
-        if k < 3:
-            put('whoosh_fast', B.cov_start(k) - 0.05, 0.3)
-    # mur
-    put('whoosh_soft', B.T_WALL - 0.3, 0.6)
-    put('impact', B.T_WALL, 0.8)
-    put('impact_light', B.T_WALL + 0.5, 0.8)
-    put('pop', B.T_WALL + 1.3, 0.4)
-    # juge
-    put('whoosh_fast', B.T_JUDGE - 0.1, 0.5)
-    put('whoosh_soft', B.T_JUDGE + 1.05, 0.5)
-    for k in range(B.N):
-        put('click', B.T_JUDGE + 2.3 + k * 0.055, 0.35, 0.9 + 0.035 * k)
-    put('ding', B.T_JUDGE + 2.3 + B.N * 0.055, 0.7)
-    # terminal : frappe
-    put('whoosh_fast', B.T_TERM - 0.1, 0.5)
-    total = sum(len(l) for l in B.PROMPT)
-    rng = np.random.default_rng(11)
-    for c in range(0, total, 3):
-        t = B.TYPE0 + (B.TYPE1 - B.TYPE0) * c / total
-        put(f'key{1 + int(rng.integers(0, 3))}', t + float(rng.uniform(-0.012, 0.012)), 0.32, float(rng.uniform(0.94, 1.06)))
-    for hi in range(14):
-        put('click', B.T_TERM + 1.3 + 0.25 * hi, 0.12, 1.3, pan=-0.5)
-    for k, t in enumerate(B.T_CHECKS):
-        put('ding', t, 0.5 if k < 3 else 0.35, 1.0 + 0.06 * k)
-    put('whoosh_soft', B.T_CHK[1], 0.45)
-    put('riser', B.T_EP[0] - 1.76, 0.6)
-    put('impact', B.T_EP[0], 0.9)
-    for t in B.T_EP[1:]:
-        put('whoosh_fast', t - 0.05, 0.5)
-        put('impact_light', t, 0.55)
-    # panneaux
-    for k in range(4):
-        put('whoosh_fast', B.T_SLAM + k - 0.08, 0.45)
-        put('impact', B.T_SLAM + k + 0.12, 0.85, 1.0 - 0.04 * k)
-    # fin
-    put('whoosh_soft', B.T_END - 0.1, 0.6)
-    put('impact_light', B.T_END + 0.3, 0.6)
-    for k in range(1, 6):
-        put('click', B.T_END + 0.3 + 0.5 * k, 0.3, 1.0 + 0.05 * k)
-    put('ding', B.T_END + 1.1, 0.4, 1.12)
-    json.dump({'duration': D, 'bpm': 120, 'note': 'sons CC0 de out/demo/sfx/ (voir sfx/credits.json), posés par build_audio.py', 'events': ev},
-              open(HERE / 'sound_fr.json', 'w'), ensure_ascii=False, indent=1)
-    return tr.x
-
-
-def brouhaha():
-    """Le mur des 45 shorts « parle » : quelques voix françaises déjà enregistrées, très bas."""
-    tr = Track(B.DUR)
-    files = sorted((HERE / 'brouhaha').glob('*.mp3'))
-    for k, f in enumerate(files[:8]):
-        y = decode(f)
-        y = y / (np.abs(y).max() or 1)
-        t0 = B.T_WALL + 0.15 + 0.22 * k
-        d = B.T_JUDGE - 0.2 - t0
-        y = y[int(0.3 * SR):int((0.3 + d) * SR)]
-        n = len(y)
-        env = np.minimum(1, np.arange(n) / (0.4 * SR)) * np.minimum(1, (n - np.arange(n)) / (0.35 * SR))
-        tr.add(hp(y * env, 200), t0, 0.07, pan=(-0.8 + 1.6 * (k % 4) / 3))
-    return tr.x
-
-
-def limit(x, peak=0.84):
-    x = np.tanh(x * 1.1) / np.tanh(1.1)
-    pk = np.abs(x).max()
-    return x * (peak / pk) if pk > 0 else x
-
-
-def write_wav(path, x):
-    wavfile.write(path, SR, (np.clip(x, -1, 1) * 32767).astype(np.int16))
+# ------------------------------------------------------------------ voix off
+def split_voice():
+    """Découpe voice_fr_raw/demo.mp3 en une ligne par fichier (voice_fr/NN.mp3), pauses internes recalées sur le montage."""
+    raw = HERE / 'voice_fr_raw' / 'demo.mp3'
+    y = decode(raw)
+    g = 0.9 / np.abs(y).max()
+    out = HERE / 'voice_fr'
+    out.mkdir(exist_ok=True)
+    f = int(0.008 * SR)
+    for k, (txt, chunks) in enumerate(B.VOICE):
+        t0 = chunks[0][2]
+        end = chunks[-1][2] + (chunks[-1][1] - chunks[-1][0]) + 0.12
+        buf = np.zeros(int((end - t0) * SR))
+        for a, b, tv in chunks:
+            seg = y[int((a - 0.03) * SR):int((b + 0.07) * SR)].copy() * g
+            seg[:f] *= np.linspace(0, 1, f)
+            seg[-f:] *= np.linspace(1, 0, f)
+            i = max(0, int((tv - 0.03 - t0) * SR))
+            n = min(len(seg), len(buf) - i)
+            buf[i:i + n] += seg[:n]
+        subprocess.run(['ffmpeg', '-y', '-loglevel', 'error', '-f', 'f32le', '-ar', str(SR), '-ac', '1', '-i', '-', '-c:a', 'libmp3lame', '-b:a', '128k',
+                        str(out / f'{k:02d}.mp3')], input=buf.astype(np.float32).tobytes(), check=True)
+        print(f'{k:02d}.mp3  {t0:5.2f} -> {end - 0.12:5.2f} s  {txt}')
 
 
 def voice_files():
@@ -348,31 +214,399 @@ def voice_files():
     return fs if all(f.exists() for f in fs) else None
 
 
+def voice_track(n):
+    vf = voice_files()
+    if not vf:
+        return None
+    v = np.zeros(n)
+    for (t0, t1, _), f in zip(B.NARRATION, vf):
+        y = decode(f)
+        i = int(t0 * SR)
+        m = min(len(y), n - i)
+        v[i:i + m] += y[:m]
+    v = hp(v, 85)
+    v = np.tanh(v * 1.5) / np.tanh(1.5)        # un peu de compression : voix de bande-annonce, bien devant
+    return v
+
+
+# ------------------------------------------------------------------ le son des shorts à l'écran
+_gain = {}
+
+
+def short_gain(short):
+    """Gain qui ramène chaque short au même niveau moyen (mesuré sur 8 s)."""
+    if short not in _gain:
+        y = decode(B.SHORTS / short / 'short.mp4', 1.0, 8.0)
+        _gain[short] = 0.09 / (np.sqrt((y ** 2).mean()) + 1e-6)
+    return _gain[short]
+
+
+def shorts_layer():
+    D = B.DUR
+    tr = Track(D)
+    log = []
+
+    def seg(short, src, t0, t1, g=1.0, pan=0.0, fi=0.08, fo=0.08, what=''):
+        d = t1 - t0
+        if d <= 0.02:
+            return
+        y = decode(B.SHORTS / short / 'short.mp4', src, d, ch=2) * short_gain(short)
+        n = len(y)
+        if n < 10:
+            return
+        e = np.minimum(1, np.arange(n) / max(1, fi * SR)) * np.minimum(1, (n - np.arange(n)) / max(1, fo * SR))
+        tr.add(y * e[:, None], t0, g, pan)
+        log.append({'t0': round(t0, 2), 't1': round(t1, 2), 'short': short, 'from': round(src, 2), 'gain': g, 'what': what})
+
+    ids = B.IDS
+    # 1. la carte qui change de style : un zapping d'un quart de seconde par style
+    for k, name in enumerate(B.MUTANTS):
+        r = ids[B.IDX[name]]
+        t0 = B.T_MUT + 0.25 * k
+        seg(r[2], r[3] + 2.0 + 0.25 * k, t0, t0 + 0.25, 0.55, 0, 0.02, 0.03, 'zapping')
+    # 2. carrousel : on entend le short de la carte du centre (même horloge que l'image)
+    t_first = B.T_MUT + 0.25 * len(B.MUTANTS)
+    seg(ids[0][2], ids[0][3], t_first, B.COV_T[1] + 0.05, 0.75, 0, 0.03, 0.08, 'carrousel')
+    for k in range(1, B.N):
+        t0 = B.COV_T[k]
+        t1 = (B.COV_T[k + 1] if k + 1 < B.N else B.T_SPIN + 0.3) + 0.05
+        seg(ids[k][2], ids[k][3] + 2.0, t0, t1, 0.75, 0.25 * (-1) ** k, 0.05, 0.08 if k + 1 < B.N else 0.4, 'carrousel')
+    # 3. le mur : six shorts à la fois, étalés dans la stéréo
+    wall = ['gazette-1900__evenements__9-novembre-1989-mur-de-berlin', 'pixel-arcade__engagement__quelle-bille-gagne-la-course',
+            'tableau-craie__explicatif__pourquoi-le-ciel-est-bleu', 'cosmos-doc__evenements__voyager-1-a-un-jour-lumiere',
+            'pastel-diorama__enfants__d-ou-vient-la-pluie', 'riso-zine__geographie__5-plus-grands-deserts']
+    for k, sname in enumerate(wall):
+        seg(sname, 1.0, B.T_WALL + 0.1 + 0.12 * k, B.T_JUDGE + 0.15, 0.36, -0.9 + 1.8 * k / 5, 0.5, 0.6, 'mur')
+    # 4. les épisodes 1, 2, 3 : le son du short qui passe dans le téléphone
+    for k, (sname, st0) in enumerate(B.EPISODES):
+        t1 = B.T_EP[k + 1] if k < 2 else B.T_SLAM + 0.1
+        seg(sname, st0, B.T_EP[k], t1 + 0.1, 0.95, 0, 0.12, 0.2, 'épisode')
+    # 5. les quatre panneaux : chaque short entre avec son panneau
+    for k, (name, _, _) in enumerate(B.PANELS):
+        r = ids[B.IDX[name]]
+        seg(r[2], r[3] + 1.0, B.T_SLAM + k + 0.05, B.T_END + 0.35, 0.42, -0.75 + 0.5 * k, 0.25, 0.5, 'panneau')
+    return tr.x, log
+
+
+# ------------------------------------------------------------------ musique
+def music():
+    D = B.DUR
+    drums, tonal, fx = Track(D), Track(D), Track(D)
+    K, HH, CL, CR = kick(), hat(), clap(), crash()
+    OH = hat(0.16, 3, 22)
+    T0 = B.T_COV
+
+    # 0 -> T_MUT : la « musique de template » (ukulélé joyeux, filtré comme un haut-parleur de téléphone), puis elle déraille
+    muz = Track(3.0)
+    cmaj = [(60, 64, 67), (60, 64, 67), (65, 69, 72), (67, 71, 74)]
+    for i in range(int((B.T_MUT + 0.4) / 0.25)):
+        ch = cmaj[(i // 4) % 4]
+        muz.add(pluck(ch[(0, 2, 1, 2)[i % 4]] + 12, 0.3, 4000), i * 0.25, 0.5)
+        if i % 4 == 0:
+            muz.add(pluck(ch[0] - 12, 0.5, 1200), i * 0.25, 0.6)
+    m = hp(lp(muz.x, 3400), 380)
+    n0, n1 = int((B.T_MUT - 0.05) * SR), int((B.T_MUT + 0.45) * SR)      # arrêt de bande
+    sp = np.ones(n1)
+    sp[n0:] = np.linspace(1, 0.05, n1 - n0) ** 1.5
+    pos = np.cumsum(sp)
+    pos = pos[pos < len(m) - 1]
+    m2 = np.stack([np.interp(pos, np.arange(len(m)), m[:, c]) for c in range(2)], 1)
+    m2[-int(0.08 * SR):] *= np.linspace(1, 0, int(0.08 * SR))[:, None]
+    fx.add(m2, 0, 1.1)
+    for t in (0.03, 0.50, 0.95):
+        drums.add(K, t, 0.9)
+
+    def chord_at(t):
+        return CH[int((t - T0) // 2.0) % 4]
+
+    def groove(t0, t1, full=True, hats=True, kicks=True, claps=True, arp=True, bassg=1.0, stabs=True):
+        nb = int(round((t1 - t0) / BEAT))
+        for b in range(nb):
+            t = t0 + b * BEAT
+            gb = int(round((t - T0) / BEAT))          # numéro de temps global : la mesure ne se décale pas entre sections
+            root, chord = chord_at(t + 0.01)
+            if kicks and (full or gb % 2 == 0):
+                drums.add(K, t, 0.95)
+            if hats:
+                drums.add(HH, t + 0.25, 0.30, 0.2)
+                if full:
+                    drums.add(HH, t + 0.125, 0.12, -0.3)
+                    drums.add(HH, t + 0.375, 0.12, 0.3)
+                    if gb % 4 == 3:
+                        drums.add(OH, t + 0.25, 0.22, 0.1)
+            if claps and full and gb % 2 == 1:
+                drums.add(CL, t, 0.55)
+            if bassg:
+                tonal.add(bass(root - 12, 0.24), t, 0.55 * bassg)
+                tonal.add(bass(root - 12, 0.22), t + 0.25, 0.42 * bassg)
+                if full and gb % 4 == 3:
+                    tonal.add(bass(root, 0.12), t + 0.375, 0.3 * bassg)
+            if arp:
+                pat = [0, 1, 2, 1, 0, 2, 1, 2]
+                for s in range(4):
+                    q = (gb * 4 + s) % 8
+                    nt = chord[pat[q]] + (12 if q in (2, 5) else 0)
+                    tonal.add(pluck(nt + 12, 0.26, 3200 if full else 1800), t + s * 0.125, 0.16 if full else 0.11, 0.5 * math.sin(gb + s))
+                    tonal.add(pluck(nt + 12, 0.26, 1500), t + s * 0.125 + 0.1875, 0.06, -0.5 * math.sin(gb + s))  # écho
+            if stabs and full and gb % 4 in (0, 3):
+                tonal.add(stab([c + 12 for c in chord]), t + (0 if gb % 4 == 0 else 0.25), 0.22)
+
+    def pads(t0, t1, g=0.16, cut=1500):
+        t = t0
+        while t < t1 - 0.01:
+            nxt = T0 + (math.floor((t - T0) / 2.0 + 1e-6) + 1) * 2.0
+            d = min(nxt, t1) - t
+            tonal.add(pad(chord_at(t + 0.01)[1], d + 0.3, cut), t, g)
+            t += d
+
+    def roll(t0, t1, g0=0.15, g1=0.6, step=0.125):
+        n = int(round((t1 - t0) / step))
+        for i in range(n):
+            drums.add(CL, t0 + i * step, g0 + (g1 - g0) * i / max(1, n - 1))
+
+    # carrousel : entrée à mi-régime, plein régime, puis sans arpège pendant que les shorts « parlent » (7,5 -> 11)
+    groove(T0, T0 + 1.0, full=False, claps=False)
+    groove(T0 + 1.0, 7.5)
+    groove(7.5, 11.0, arp=False, stabs=False)
+    groove(11.0, B.T_SPIN, claps=True)
+    groove(B.T_SPIN, B.T_WALL - 0.5, full=False, kicks=True, hats=True, arp=True)      # le tour : on retient, roulement
+    roll(B.T_SPIN + 0.2, B.T_WALL - 0.1)
+    pads(T0, B.T_WALL)
+    # mur : plein régime + cymbale
+    drums.add(CR, B.T_WALL, 0.5)
+    groove(B.T_WALL, B.T_JUDGE)
+    pads(B.T_WALL, B.T_JUDGE)
+    # juge : on retire la grosse caisse, on garde le fil, puis un battement monte vers 18/18
+    groove(B.T_JUDGE, B.T_JUDGE + 2.0, full=False, kicks=False, hats=True, bassg=0.5)
+    groove(B.T_JUDGE + 2.0, B.T_TERM, full=False, kicks=True, hats=True, bassg=0.7)
+    pads(B.T_JUDGE, B.T_TERM, 0.3, 1900)
+    # le prompt : presque rien (basse + nappe), la frappe s'entend
+    groove(B.T_TERM, B.T_CHK[0], full=False, kicks=False, hats=False, arp=False, bassg=0.7, stabs=False)
+    groove(B.T_CHK[0], B.T_EP[0] - 1.0, full=False, kicks=True, hats=True, bassg=0.8)
+    groove(B.T_EP[0] - 1.0, B.T_EP[0] - 0.5, full=False, kicks=True, hats=True, bassg=0.8)
+    pads(B.T_TERM, B.T_EP[0] - 0.2, 0.3, 1100)
+    roll(B.T_EP[0] - 1.0, B.T_EP[0] - 0.14, 0.2, 0.75)
+    # LE DROP : les épisodes défilent (batterie + basse devant, pas d'arpège : on écoute les shorts)
+    drums.add(CR, B.T_EP[0], 0.7)
+    groove(B.T_EP[0], B.T_SLAM, arp=False)
+    pads(B.T_EP[0], B.T_SLAM, 0.12)
+    for t in B.T_EP[1:]:
+        drums.add(CR, t, 0.35)
+    # panneaux : tout le monde
+    drums.add(CR, B.T_SLAM, 0.6)
+    groove(B.T_SLAM, B.T_END)
+    pads(B.T_SLAM, B.T_END)
+    roll(B.T_END - 0.5, B.T_END - 0.05, 0.3, 0.7)
+    # fin : accord tenu + arpège de cloche, puis un dernier coup sur « À vous de jouer »
+    tonal.add(pad([45, 57, 60, 64, 71], 4.4, 2200), B.T_END, 0.34)
+    tonal.add(stab([57, 60, 64, 69, 72], 0.6), B.T_END, 0.5)
+    for k, mnote in enumerate((69, 72, 76, 81, 84)):
+        tonal.add(pluck(mnote, 1.2, 3000), B.T_END + k * 0.125, 0.22, 0.6 * (-1) ** k)
+    drums.add(K, B.T_END, 1.0)
+    drums.add(CR, B.T_END, 0.7)
+    t_last = B.VOICE[-1][1][-1][2]
+    drums.add(K, t_last + 0.02, 0.9)
+    tonal.add(stab([45, 57, 64, 69], 0.5), t_last + 0.02, 0.4)
+
+    # pompage (sidechain) de la partie tonale sur les grosses caisses
+    env = np.ones(len(tonal.x))
+    for t0, t1, step in ((T0, T0 + 1.0, 1.0), (T0 + 1.0, B.T_SPIN, 0.5), (B.T_WALL, B.T_JUDGE, 0.5), (B.T_EP[0], B.T_END, 0.5)):
+        t = t0
+        while t < t1 - 0.01:
+            i = int(t * SR)
+            n = int(0.3 * SR)
+            env[i:i + n] = np.minimum(env[i:i + n], 1 - 0.55 * np.exp(-np.arange(n) / (0.09 * SR)))
+            t += step
+    tonal.x *= env[:, None]
+    mix = drums.x * 0.8 + tonal.x * 1.0 + fx.x
+    # le silence d'une double croche juste avant le drop
+    i0, i1 = int((B.T_EP[0] - 0.13) * SR), int(B.T_EP[0] * SR)
+    mix[i0:i1] *= np.linspace(1, 0, i1 - i0)[:, None] ** 0.3 * 0.15
+    n = int(1.4 * SR)
+    e = int(D * SR)
+    mix[e - n:e] *= np.linspace(1, 0, n)[:, None] ** 2
+    mix[e:] = 0
+    return mix
+
+
+# ------------------------------------------------------------------ bruitages
+def sfx_track():
+    D = B.DUR
+    tr = Track(D)
+    S = {n: load(n) for n in ('click', 'ding', 'glitch', 'impact', 'impact_light', 'key1', 'key2', 'key3', 'pop', 'riser', 'whoosh_fast', 'whoosh_soft')}
+    ev = []
+
+    def put(name, t, g=0.6, ratio=1.0, pan=0.0, rev=False):
+        y = S[name] if ratio == 1.0 else pitch(S[name], ratio)
+        if rev:
+            y = y[::-1]
+            t = t - len(y) / SR
+        tr.add(y, t, g, pan)
+        ev.append({'t': round(t, 3), 'sfx': name + ('(inversé)' if rev else ''), 'gain': round(g, 2)})
+
+    def syn(kind, t, g=0.5, pan=0.0, **kw):
+        y = SND.sfx(kind, **kw)
+        y = y / (np.abs(y).max() or 1)
+        tr.add(y, t, g, pan)
+        ev.append({'t': round(t, 3), 'sfx': 'synthèse:' + kind, 'gain': round(g, 2)})
+
+    def raw(y, t, g, name, pan=0.0):
+        tr.add(y / (np.abs(y).max() or 1), t, g, pan)
+        ev.append({'t': round(t, 3), 'sfx': 'synthèse:' + name, 'gain': round(g, 2)})
+
+    def reveal(t, d=1.6, g=0.5, big=True):
+        """Montée vers une révélation, puis l'impact : aspiration + riser + bruit, coup, chute de basse."""
+        put('riser', t - 1.76 * (d / 1.76), g, 1.76 / d)
+        raw(noise_riser(d), t - d, g * 0.55, 'montée de bruit')
+        put('whoosh_soft', t - 0.02, 0.45, rev=True)
+        put('impact', t, 1.0)
+        if big:
+            raw(subdrop(), t, 0.8, 'chute de basse')
+            put('whoosh_soft', t + 0.02, 0.4, 0.8)
+
+    # --- accroche : trois mots qui claquent
+    for k, t in enumerate((0.03, 0.50, 0.95)):
+        put('whoosh_fast', t - 0.12, 0.3, 1.1)
+        put('impact_light' if k < 2 else 'impact', t, 0.85 + 0.1 * k)
+        syn('thud', t, 0.5)
+    # --- la carte change de style : arrêt de bande, zapping, montée
+    put('glitch', B.T_MUT - 0.04, 0.7)
+    put('glitch', B.T_MUT + 0.1, 0.35, 1.5)
+    for k in range(6):
+        put('pop', B.T_MUT + 0.25 * k, 0.5, 0.9 + 0.09 * k, pan=0.4 * (-1) ** k)
+        put('click', B.T_MUT + 0.25 * k, 0.4, 1.0 + 0.1 * k)
+    reveal(B.T_COV, 1.5, 0.55)
+    # --- carrousel : un souffle + un tic à chaque glissement, plus marqués sur les quatre que la voix nomme
+    for k in range(1, B.N):
+        t = B.COV_T[k]
+        named = k >= B.N - 4
+        put('whoosh_fast', t - 0.10, 0.42 if named else 0.26, 0.9 + 0.03 * (k % 5), pan=0.5 * (-1) ** k)
+        put('click', t + 0.02, 0.4, 0.85 + 0.02 * k, pan=0.3 * (-1) ** k)
+        if named:
+            put('impact_light', t + 0.03, 0.6)
+            syn('thud', t + 0.03, 0.35)
+    put('ding', 5.42, 0.3, 1.2)                                   # « 18 identités visuelles » s'affiche
+    # le tour complet : souffle qui accélère, montée, puis le mur tombe
+    for k in range(9):
+        x = (k / 9) ** 0.45
+        put('whoosh_fast', B.T_SPIN + x * (B.T_WALL - B.T_SPIN - 0.15), 0.22 + 0.03 * k, 0.9 + 0.07 * k, pan=0.7 * (-1) ** k)
+    reveal(B.T_WALL, 1.2, 0.6)
+    # --- mur des 45 shorts
+    for k in range(6):                                            # les cartes se posent
+        put('pop', B.T_WALL + 0.04 + 0.045 * k, 0.22, 1.2 + 0.08 * k, pan=-0.8 + 0.32 * k)
+    put('impact', B.T_WALL + 0.3, 0.9, 0.9)                       # « 45 shorts »
+    raw(subdrop(0.8), B.T_WALL + 0.3, 0.55, 'chute de basse')
+    put('whoosh_fast', B.T_WALL + 1.72, 0.35)
+    put('impact_light', B.T_WALL + 1.8, 0.6)                      # « tous rendus par du code »
+    # --- juge à l'aveugle
+    put('whoosh_soft', B.T_JUDGE - 0.25, 0.6)
+    put('impact_light', B.T_JUDGE + 0.05, 0.5)
+    for k in range(12):                                           # 72 images qui tombent en vrac
+        put('click', B.T_JUDGE + 0.03 + 0.022 * k, 0.2, 0.7 + 0.05 * (k % 5), pan=-0.8 + 1.6 * (k % 6) / 5)
+    put('whoosh_soft', B.T_JUDGE + 0.95, 0.6, 1.15)               # elles se rangent
+    put('whoosh_fast', B.T_JUDGE + 1.35, 0.35, 0.8)
+    put('riser', B.T_JUDGE + 2.3 - 0.25, 0.4, 1.76 / 1.25)         # montée pendant les coches
+    for k in range(B.N):
+        put('click', B.T_JUDGE + 2.3 + k * 0.055, 0.42, 0.9 + 0.045 * k, pan=-0.8 + 1.6 * k / 17)
+        syn('blip', B.T_JUDGE + 2.3 + k * 0.055, 0.16, note=hz(72 + k), pan=-0.8 + 1.6 * k / 17)
+    t18 = B.T_JUDGE + 2.3 + B.N * 0.055
+    put('impact', t18, 1.0)                                       # 18/18
+    raw(subdrop(0.9), t18, 0.7, 'chute de basse')
+    put('ding', t18, 0.8)
+    put('ding', t18 + 0.12, 0.45, 1.5)
+    syn('chime', t18, 0.3, note='A5', dur=1.6)
+    # --- le prompt : glissement, frappe, entrée
+    put('whoosh_fast', B.T_TERM - 0.12, 0.55, 0.85)
+    put('impact_light', B.T_TERM + 0.12, 0.5)
+    total = sum(len(l) for l in B.PROMPT)
+    rng = np.random.default_rng(11)
+    for c in range(0, total, 2):
+        ch = ''.join(B.PROMPT)[c]
+        t = B.TYPE0 + (B.TYPE1 - B.TYPE0) * c / total
+        put(f'key{1 + int(rng.integers(0, 3))}', t + float(rng.uniform(-0.012, 0.012)), 0.42 if ch != ' ' else 0.3,
+            float(rng.uniform(0.9, 1.1)), pan=float(rng.uniform(-0.35, 0.05)))
+    put('key1', B.TYPE1 + 0.12, 0.7, 0.7)                         # touche Entrée
+    put('click', B.TYPE1 + 0.12, 0.5, 0.6)
+    for hi in range(int((B.T_CHK[0] - (B.T_TERM + 1.3)) / 0.25)):  # l'agent compare les styles
+        put('click', B.T_TERM + 1.3 + 0.25 * hi, 0.2, 1.3 + 0.03 * hi, pan=0.55)
+        syn('tick', B.T_TERM + 1.3 + 0.25 * hi, 0.14, pan=0.55)
+    for k, t in enumerate(B.T_CHECKS):                            # les ✓
+        put('ding', t, 0.6 if k < 3 else 0.32, 1.0 + 0.08 * k, pan=-0.3)
+        put('pop', t, 0.35 if k < 3 else 0.2, 1.3, pan=-0.3)
+    put('impact_light', B.T_CHK[0], 0.55)                         # le style est choisi
+    put('whoosh_soft', B.T_CHK[1] - 0.02, 0.55, pan=0.4)           # la carte devient le téléphone
+    for k in range(8):                                            # rendu image par image
+        syn('tick', B.T_CHK[1] + 0.7 + 0.15 * k, 0.16 + 0.02 * k, pan=0.5)
+    # --- LE DROP : épisode 1
+    reveal(B.T_EP[0], 1.7, 0.7)
+    put('ding', B.T_EP[0] + 0.02, 0.5, 0.8)
+    for t in B.T_EP[1:]:                                          # épisodes 2 et 3 : balayage du fil
+        put('whoosh_soft', t, 0.4, rev=True)
+        put('whoosh_fast', t - 0.06, 0.55)
+        put('impact', t, 0.8, 1.05)
+        syn('thud', t, 0.5)
+    # --- les quatre panneaux
+    put('riser', B.T_SLAM - 1.2, 0.45, 1.76 / 1.2)
+    for k in range(4):
+        t = B.T_SLAM + k
+        put('whoosh_fast', t - 0.10, 0.5, 0.9, pan=-0.7 + 0.45 * k)
+        put('impact', t + 0.04, 0.7, 1.0 - 0.05 * k, pan=-0.6 + 0.4 * k)
+        put('impact_light', t + 0.14, 0.75, pan=-0.6 + 0.4 * k)   # le chiffre claque
+        raw(subdrop(0.7), t + 0.04, 0.5, 'chute de basse')
+    # --- fin : le coup final
+    reveal(B.T_END, 1.3, 0.7)
+    syn('chime', B.T_END, 0.3, note='A5', dur=2.4)
+    syn('chime', B.T_END + 0.12, 0.2, note='E6', dur=2.0)
+    for k in range(1, 6):                                         # le nom change de police sur chaque temps
+        put('click', B.T_END + 0.3 + 0.5 * k, 0.4, 1.0 + 0.06 * k)
+        put('pop', B.T_END + 0.3 + 0.5 * k, 0.22, 1.1 + 0.06 * k)
+    put('ding', B.T_END + 1.1, 0.45, 1.12)                        # l'adresse
+    t_last = B.VOICE[-1][1][-1][2]
+    put('whoosh_soft', t_last + 0.02, 0.45, rev=True)
+    put('impact', t_last + 0.02, 0.9)                             # « À vous de jouer »
+    raw(subdrop(1.3), t_last + 0.02, 0.7, 'chute de basse')
+    put('ding', t_last + 0.04, 0.6, 0.75)
+    x = tr.x
+    wet = np.stack([SND.simple_reverb(x[:, c], 0.14) for c in range(2)], 1)   # un peu d'air autour des bruitages
+    return wet, ev
+
+
+def limit(x, peak=0.84, drive=1.1):
+    x = np.tanh(x * drive) / np.tanh(drive)
+    pk = np.abs(x).max()
+    return x * (peak / pk) if pk > 0 else x
+
+
+def write_wav(path, x):
+    wavfile.write(path, SR, (np.clip(x, -1, 1) * 32767).astype(np.int16))
+
+
 def audio():
     B.TMP.mkdir(parents=True, exist_ok=True)
     n = int(B.DUR * SR)
-    bed = limit((music() * 0.62 + sfx_track() * 0.9 + brouhaha())[:n])
-    write_wav(B.TMP / 'bed.wav', bed)
+    mus = music()[:n]
+    sfx, ev = sfx_track()
+    sfx = sfx[:n]
+    sh, slog = shorts_layer()
+    sh = sh[:n]
+    voice = voice_track(n)
+    # sans voix : musique + bruitages + son des shorts
+    novo = limit(mus * 0.55 + sfx * 0.85 + sh * 0.8)
+    write_wav(B.TMP / 'bed.wav', novo)
     print(B.TMP / 'bed.wav')
-    vf = voice_files()
-    if vf:
-        voice = np.zeros(n)
-        for (t0, t1, _), f in zip(B.NARRATION, vf):
-            y = decode(f)
-            y = y / (np.abs(y).max() or 1) * 0.9
-            i = int(t0 * SR)
-            m = min(len(y), n - i)
-            voice[i:i + m] += y[:m]
-            if len(y) / SR > (t1 - t0) + 0.6:
-                print(f'ATTENTION : {f.name} dure {len(y) / SR:.2f} s pour un créneau de {t1 - t0:.2f} s')
-        # ducking : la musique baisse d'environ 9 dB sous la voix
-        pres = (np.abs(voice) > 0.02).astype(np.float64)
-        k = int(0.3 * SR)
-        pres = np.minimum(1, signal.fftconvolve(pres, np.ones(k) / k * 4, 'same'))
-        b, a = signal.butter(1, 6 / (SR / 2))
-        duck = 1 - 0.64 * np.clip(signal.filtfilt(b, a, pres), 0, 1)
-        mixv = bed * duck[:, None] + np.stack([voice, voice], 1) * 1.05
-        write_wav(B.TMP / 'mix_voice.wav', limit(mixv, 0.89))
+    info = {'duration': B.DUR, 'bpm': 120,
+            'layers': 'voix off (voice_fr/) · son propre des shorts à l’écran · musique synthétisée · bruitages',
+            'ducking': 'sous la voix off : son des shorts −13 dB, musique −7 dB, bruitages −2 dB',
+            'sfx': ev, 'shortsAudio': slog}
+    json.dump(info, open(HERE / 'sound_fr.json', 'w'), ensure_ascii=False, indent=1)
+    if voice is not None:
+        pres = (np.abs(voice) > 0.015).astype(np.float64)
+        env = smooth_env(pres, 0.04, 0.22)
+        d_sh = 1 - 0.78 * env          # son des shorts : −13 dB sous la voix, plein niveau dans les silences
+        d_mu = 1 - 0.55 * env          # musique : −7 dB
+        d_fx = 1 - 0.20 * env          # bruitages : −2 dB
+        mixv = mus * 0.55 * d_mu[:, None] + sfx * 0.85 * d_fx[:, None] + sh * 0.8 * d_sh[:, None] + np.stack([voice, voice], 1) * 1.15
+        write_wav(B.TMP / 'mix_voice.wav', limit(mixv, 0.89, 1.0))
         print(B.TMP / 'mix_voice.wav')
     elif (B.TMP / 'mix_voice.wav').exists():
         (B.TMP / 'mix_voice.wav').unlink()
@@ -383,8 +617,8 @@ def final(fmt):
 
     def mux(wav, out):
         subprocess.run(['ffmpeg', '-y', '-loglevel', 'error', '-i', str(v), '-i', str(wav), '-map', '0:v', '-map', '1:a',
-                        '-c:v', 'libx264', '-preset', 'slow', '-crf', '26', '-pix_fmt', 'yuv420p', '-r', '30',   # ~20 Mo par fichier
-                        '-af', 'loudnorm=I=-14:TP=-1.5:LRA=11', '-ar', '48000', '-c:a', 'aac', '-b:a', '192k', '-t', str(B.DUR),
+                        '-c:v', 'libx264', '-preset', 'slow', '-crf', '26', '-pix_fmt', 'yuv420p', '-r', '30',   # ~12 Mo par fichier
+                        '-af', 'loudnorm=I=-14:TP=-2:LRA=11,alimiter=limit=0.79:level=false', '-ar', '48000', '-c:a', 'aac', '-b:a', '192k', '-t', str(B.DUR),
                         '-movflags', '+faststart', str(out)], check=True)
         print(out)
     novo = HERE / f'demo_{fmt}_novo.mp4'
@@ -392,7 +626,7 @@ def final(fmt):
     if (B.TMP / 'mix_voice.wav').exists() and voice_files():
         mux(B.TMP / 'mix_voice.wav', HERE / f'demo_{fmt}.mp4')
     else:
-        shutil.copyfile(novo, HERE / f'demo_{fmt}.mp4')   # en attendant la voix : même contenu que _novo
+        shutil.copyfile(novo, HERE / f'demo_{fmt}.mp4')
         print(HERE / f'demo_{fmt}.mp4', '(sans voix : voice_fr/ absent)')
 
 
@@ -436,16 +670,23 @@ def thumb():
 
 
 def write_narration():
-    def wps(txt, a, b):
-        words = [w for w in txt.replace(B.NB, ' ').replace('…', ' ').split() if any(c.isalnum() for c in w)]
-        return round(len(words) / (b - a), 2)
-    out = {'language': 'fr', 'voice': 'à générer après validation : Gemini « Sulafat » (un seul appel, découpe par ligne)',
-           'note': 'Aucune voix générée pour l’instant. Déposer une ligne par fichier dans out/demo/voice_fr/NN.mp3 (NN = index), '
-                   'puis `build.py audio` et `build.py final <fmt>` : la musique est atténuée sous la voix. Débit visé ≤ 2,8 mots/s.',
-           'duration': B.DUR,
-           'lines': [{'index': k, 'file': f'voice_fr/{k:02d}.mp3', 'start': a, 'end': b, 'text': txt, 'wordsPerSec': wps(txt, a, b)}
-                     for k, (a, b, txt) in enumerate(B.NARRATION)]}
+    def nwords(txt):
+        return len([w for w in txt.replace(B.NB, ' ').replace('…', ' ').split() if any(c.isalnum() for c in w)])
+    lines = []
+    for k, (txt, chunks) in enumerate(B.VOICE):
+        a = chunks[0][2]
+        b = round(chunks[-1][2] + chunks[-1][1] - chunks[-1][0], 2)
+        speech = sum(c[1] - c[0] for c in chunks)
+        lines.append({'index': k, 'file': f'voice_fr/{k:02d}.mp3', 'start': a, 'end': b, 'text': txt,
+                      'wordsPerSec': round(nwords(txt) / speech, 2),
+                      'chunks': [{'rawStart': c[0], 'rawEnd': c[1], 'start': c[2], 'end': round(c[2] + c[1] - c[0], 2)} for c in chunks]})
+    out = {'language': 'fr', 'voice': 'Gemini « Puck », style « voix off de bande-annonce, très punchy »',
+           'source': 'voice_fr_raw/demo.mp3 (un seul appel, 39,84 s, les 12 lignes jointes par <long pause>)',
+           'note': 'Découpe par build_audio.split_voice() : silences (ffmpeg silencedetect, −38 dB) + horodatage des mots faster-whisper small. '
+                   'start/end = instants réels dans la vidéo ; rawStart/rawEnd = instants dans le fichier brut. '
+                   'Les pauses internes sont resserrées ou étirées pour que chaque mot tombe sur son image. wordsPerSec = débit réel de la voix.',
+           'duration': B.DUR, 'lines': lines}
     json.dump(out, open(HERE / 'narration_fr.json', 'w'), ensure_ascii=False, indent=1)
     print(HERE / 'narration_fr.json')
-    for l in out['lines']:
-        print(f"  {l['start']:5.1f}–{l['end']:5.1f}  {l['wordsPerSec']:.2f} m/s  {l['text']}")
+    for l in lines:
+        print(f"  {l['start']:5.2f}–{l['end']:5.2f}  {l['wordsPerSec']:.2f} m/s  {l['text']}")
