@@ -7,7 +7,8 @@
 ▶ **La démo en 51 s, avec le son** : [16:9](out/demo/demo_16x9.mp4) · [9:16 vertical](out/demo/demo_9x16.mp4)
 
 - **18 identités complètes** (couleurs, typographies, mouvements, transitions, structure d'un short), chacune prouvée par 2 ou 3 vraies vidéos : **21 déclinaisons, 45 shorts** en tout. Dont, depuis le 2026-11-04, le **papier découpé du gabarit StudioGabarit** et ses 3 **dérivations** (atelier papier, carnet d'archives, cabinet de curiosités : une seule identité, même moteur, seuls le fond, la palette et les polices changent), rendus par le moteur Python partagé `out/shared/papier-moteur/`, et depuis le 2026-11-05 le **lot 2 de la fabrique d'identités** : `carte-meteo` (carte météo claire, vraies côtes Natural Earth) et `trait-continu` (un seul trait jamais levé), et depuis le 2026-11-18 `survol-pixel` (un petit monde en pixel art 16 bits que la caméra survole en vraie profondeur 3D, style inspiré d'une vidéo de @creativedash ; moteur Python sans navigateur).
-- **Voix off** : 31 shorts voisés par Fish Audio « Arnold », les 8 shorts papier par Gemini « Sulafat » ; les 4 shorts du lot 2 aussi par Gemini « Sulafat » (décision du propriétaire : Arnold était prévu, mais le plan gratuit Fish Audio n'a permis qu'une ligne sur 20). Les 2 shorts de `survol-pixel` aussi par Gemini « Sulafat » (décision du propriétaire du 2026-11-18, appel en API v1beta). Soit 31 Arnold + 14 Sulafat.
+- **Voix off** : 31 shorts voisés par Fish Audio « Arnold », 14 par Gemini « Sulafat » (les 8 shorts papier, les 4 du lot 2 et les 2 de `survol-pixel`).
+- **Vraiment distinctes** : un juge indépendant, sans contexte, a classé à l'aveugle 72 images des 18 identités sans une seule erreur (18 groupes purs sur 18, 2026-11-21).
 - **La fabrique d'identités** : le skill Claude Code `fabrique-identites` (`.claude/skills/fabrique-identites/`) fait créer de nouvelles identités par des sous-agents (repérage dans le catalogue, challenge adversarial, studios, intégration, revue), à partir du [catalogue des librairies](out/library-cards/catalogue.md).
 - **Les outils pour produire la suite** : rendu image par image, voix off, sons, contrôle qualité, et un script qui crée en une commande le projet de votre chaîne.
 - **Tout est open source** : les shorts sont rendus par du code, sans image ni musique téléchargée (seules exceptions : les fichiers audio et polices du moteur papier importés avec StudioGabarit, et des données factuelles libres à version épinglée, comme les côtes Natural Earth de `world-atlas`).
@@ -29,11 +30,10 @@ L'agent choisit un style, crée un projet séparé pour votre chaîne (votre ide
 
 ## Pour aller plus loin : voix et sound design
 
-Le plugin `studio` de [killerwolf/skills](https://github.com/killerwolf/skills) complète le studio avec trois skills Claude Code :
+Le plugin `studio` de [killerwolf/skills](https://github.com/killerwolf/skills) complète le studio avec deux skills Claude Code :
 
 | Skill | Ce qu'il apporte |
 | --- | --- |
-| [`gemini-voices`](https://github.com/killerwolf/skills/tree/main/skills/gemini-voices) | Les voix off avec Gemini : narration, personnages, dialogue à deux voix. |
 | [`sound-design`](https://github.com/killerwolf/skills/tree/main/skills/sound-design) | Les bruitages (whoosh, pop, impact, frappe, ding) calés sur les apparitions de texte et mixés sous la voix, à partir d'une bibliothèque de sons CC0 qu'on peut enrichir avec Freesound. |
 | [`studio-mate`](https://github.com/killerwolf/skills/tree/main/skills/studio-mate) | Le pilotage des studios depuis Notion, en conversation, sans code : ce qui attend, les idées à valider, les retours de relecture. |
 
@@ -45,6 +45,8 @@ claude plugin marketplace add killerwolf/skills
 claude plugin install studio@killerwolf
 ```
 
+Pour les voix Gemini, la recette utilisée ici (un appel par short, découpe par ligne, API v1beta) est décrite dans [`out/report/notes/voix-lot2.md`](out/report/notes/voix-lot2.md) et [`out/report/facts.md`](out/report/facts.md).
+
 ## Ce que vous devrez faire ou valider
 
 - **Valider l'identité** proposée par l'agent (nom, couleurs, ton) avant de produire en série.
@@ -55,7 +57,7 @@ claude plugin install studio@killerwolf
 ## Pour aller encore plus loin
 
 - [`AGENTS.md`](AGENTS.md) : le guide détaillé pour les agents (en anglais).
-- [`out/identities/index.json`](out/identities/index.json) : les 20 styles en données (couleurs, polices, public conseillé).
+- [`out/identities/index.json`](out/identities/index.json) : les 18 identités (21 déclinaisons) en données (couleurs, polices, public conseillé).
 - [`out/report/`](out/report/README.md) : le rapport complet de l'exploration (en français).
 - [`out/library-cards/catalogue.md`](out/library-cards/catalogue.md) : toutes les librairies et outils envisageables, ceux déjà utilisés et où : la base pour créer de nouvelles identités.
 - [`out/demo/`](out/demo/README.md) : comment la vidéo démo et sa vignette sont fabriquées.
