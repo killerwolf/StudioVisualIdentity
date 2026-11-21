@@ -4,6 +4,8 @@
 - `demo_16x9_novo.mp4`, `demo_9x16_novo.mp4` : les mêmes sans la voix off, produits par `build.py final` (non versionnés).
 - `demo_preview.gif` : 12 premières secondes, muettes, pour le README.
 - `thumb/thumbnail_fr_1280.jpg` (et `_1920`) : la vignette.
+- `thumb/hero_fr.jpg` (2560×1280) et `thumb/hero_fr_1280.jpg` (1280×640) : la bannière du haut du README, « Un prompt. 18 styles. Votre chaîne. »
+  devant un mur incliné de 18 vraies images, une par identité. Elle se refait avec `.venv/bin/python out/demo/thumb.py` (sans cache).
 - `planche-demo-fr.jpg` : planche de 12 images de la version 16:9.
 - `narration_fr.json` : le texte de la voix off et son minutage réel ; `sound_fr.json` : les bruitages et les extraits de shorts posés.
 - `voice_fr_raw/demo.mp3` : la voix brute (un seul fichier) ; `voice_fr/00.mp3` … `10.mp3` : une ligne par fichier.
