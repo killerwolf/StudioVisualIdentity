@@ -1,0 +1,60 @@
+name: Deploy landing page
+
+# Publishes site/ to GitHub Pages (https://h4md1.fr/StudioVisualIdentity/).
+# The page's heavy assets (demo videos, banner, identity posters) are copied
+# from out/ at build time, so they are not duplicated in git.
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'site/**'
+      - 'out/demo/demo_*.mp4'
+      - 'out/demo/thumb/hero_fr_1280.jpg'
+      - 'out/identities/*/poster.jpg'
+      - '.github/workflows/pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+
+      - name: Assemble the page
+        run: |
+          mkdir -p _site/posters
+          cp -r site/. _site/
+          cp out/demo/demo_16x9.mp4 out/demo/demo_9x16.mp4 _site/
+          cp out/demo/thumb/hero_fr_1280.jpg _site/hero.jpg
+          for d in out/identities/*/; do
+            id=$(basename "$d")
+            [ -f "$d/poster.jpg" ] && cp "$d/poster.jpg" "_site/posters/$id.jpg"
+          done
+          # every image the page references must exist
+          grep -o 'src="posters/[^"]*"' site/index.html | sed 's/src="//;s/"$//' | while read f; do test -f "_site/$f" || { echo "missing $f"; exit 1; }; done
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v6
+
+      - name: Upload the page
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: _site
+
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v5
