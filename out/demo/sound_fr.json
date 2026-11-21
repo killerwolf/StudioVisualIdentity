@@ -3,8 +3,19 @@
  "bpm": 120,
  "layers": "voix off (voice_fr/) · son propre des shorts à l’écran · musique synthétisée · bruitages",
  "ducking": "sous la voix off : son des shorts −13 dB, musique −7 dB, bruitages −2 dB",
- "music": "synthèse (build_audio.music)",
- "externalSfxUsed": [],
+ "music": "eleven/music.mp3",
+ "externalSfxUsed": [
+  "click.mp3",
+  "ding.mp3",
+  "glitch.mp3",
+  "impact.mp3",
+  "impact_light.mp3",
+  "key.mp3",
+  "pop.mp3",
+  "riser.mp3",
+  "whoosh.mp3",
+  "whoosh_long.mp3"
+ ],
  "sfx": [
   {
    "t": -0.09,
@@ -127,12 +138,7 @@
    "gain": 0.55
   },
   {
-   "t": 2.0,
-   "sfx": "synthèse:montée de bruit",
-   "gain": 0.3
-  },
-  {
-   "t": 2.68,
+   "t": 2.54,
    "sfx": "whoosh_soft(inversé)",
    "gain": 0.45
   },
@@ -417,12 +423,7 @@
    "gain": 0.6
   },
   {
-   "t": 14.8,
-   "sfx": "synthèse:montée de bruit",
-   "gain": 0.33
-  },
-  {
-   "t": 15.18,
+   "t": 15.04,
    "sfx": "whoosh_soft(inversé)",
    "gain": 0.45
   },
@@ -1127,12 +1128,7 @@
    "gain": 0.7
   },
   {
-   "t": 24.3,
-   "sfx": "synthèse:montée de bruit",
-   "gain": 0.39
-  },
-  {
-   "t": 25.18,
+   "t": 25.04,
    "sfx": "whoosh_soft(inversé)",
    "gain": 0.45
   },
@@ -1157,7 +1153,7 @@
    "gain": 0.5
   },
   {
-   "t": 27.2,
+   "t": 27.06,
    "sfx": "whoosh_soft(inversé)",
    "gain": 0.4
   },
@@ -1177,7 +1173,7 @@
    "gain": 0.5
   },
   {
-   "t": 29.2,
+   "t": 29.06,
    "sfx": "whoosh_soft(inversé)",
    "gain": 0.4
   },
@@ -1287,12 +1283,7 @@
    "gain": 0.7
   },
   {
-   "t": 35.2,
-   "sfx": "synthèse:montée de bruit",
-   "gain": 0.39
-  },
-  {
-   "t": 35.68,
+   "t": 35.54,
    "sfx": "whoosh_soft(inversé)",
    "gain": 0.45
   },
@@ -1377,7 +1368,7 @@
    "gain": 0.45
   },
   {
-   "t": 37.97,
+   "t": 37.83,
    "sfx": "whoosh_soft(inversé)",
    "gain": 0.45
   },
