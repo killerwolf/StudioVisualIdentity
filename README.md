@@ -4,7 +4,7 @@
 
 [![18 identités visuelles, 21 déclinaisons, 45 shorts pour le prouver : un prompt pour lancer la vôtre.](out/demo/thumb/thumbnail_fr_1280.jpg)](out/demo/demo_16x9.mp4)
 
-▶ **La démo en 46 s, avec le son** (18 identités, 21 déclinaisons, 45 shorts) : [16:9](out/demo/demo_16x9.mp4) · [9:16 vertical](out/demo/demo_9x16.mp4)
+▶ **La démo en 41 s, avec le son** (18 identités, 21 déclinaisons, 45 shorts) : [16:9](out/demo/demo_16x9.mp4) · [9:16 vertical](out/demo/demo_9x16.mp4)
 
 - **18 identités complètes** (couleurs, typographies, mouvements, transitions, structure d'un short), chacune prouvée par 2 ou 3 vraies vidéos : **21 déclinaisons, 45 shorts** en tout. Dont, depuis le 2026-11-04, le **papier découpé du gabarit StudioGabarit** et ses 3 **dérivations** (atelier papier, carnet d'archives, cabinet de curiosités : une seule identité, même moteur, seuls le fond, la palette et les polices changent), rendus par le moteur Python partagé `out/shared/papier-moteur/`, et depuis le 2026-11-05 le **lot 2 de la fabrique d'identités** : `carte-meteo` (carte météo claire, vraies côtes Natural Earth) et `trait-continu` (un seul trait jamais levé), et depuis le 2026-11-18 `survol-pixel` (un petit monde en pixel art 16 bits que la caméra survole en vraie profondeur 3D, style inspiré d'une vidéo de @creativedash ; moteur Python sans navigateur).
 - **Voix off** : 31 shorts voisés par Fish Audio « Arnold », 14 par Gemini « Sulafat » (les 8 shorts papier, les 4 du lot 2 et les 2 de `survol-pixel`).

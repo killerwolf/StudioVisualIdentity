@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-build.py — vidéo démo « Caméléon » en français (46 s), en 16:9 (1920×1080) et 9:16 (1080×1920).
+build.py — vidéo démo « Caméléon » en français (41 s), en 16:9 (1920×1080) et 9:16 (1080×1920).
 
 Tout est dessiné image par image en Python (numpy + OpenCV + Pillow), sans navigateur : la démo prend tour à tour
 le fond, la police et la couleur de chacune des 18 identités, avec les vrais shorts du dépôt comme matière.
@@ -39,13 +39,12 @@ T_MUT = 2.0     # une carte se met à changer de style
 T_COV = 3.5     # carrousel des 18 identités
 T_SPIN = 14.8   # le carrousel fait un tour complet (« à chacune sa signature »)
 T_WALL = 16.0   # mur des 45 shorts
-T_JUDGE = 20.0  # juge à l'aveugle
-T_TERM = 24.5   # le prompt
-T_CHK = [28.0, 29.0, 31.0]   # ✓ style, ✓ studio, ✓ épisode 1
-T_EP = [31.0, 33.0, 35.0]    # épisodes 1, 2, 3
-T_SLAM = 37.5   # 4 panneaux, un par seconde
-T_END = 41.5
-DUR = 46.0
+T_TERM = 19.5   # le prompt
+T_CHK = [23.0, 24.0, 26.0]   # ✓ style, ✓ studio, ✓ épisode 1
+T_EP = [26.0, 28.0, 30.0]    # épisodes 1, 2, 3
+T_SLAM = 32.5   # 4 panneaux, un par seconde
+T_END = 36.5
+DUR = 41.0
 
 # ------------------------------------------------------------------ les 18 identités (du plus sombre au plus clair, puis les quatre que la voix nomme)
 DELA = 'out/shared/papier-moteur/assets/fonts/DelaGothicOne-Regular.woff2'
@@ -101,6 +100,7 @@ CHECKS = ['style choisi' + NB + ': Arcade Pixel', 'studio créé' + NB + ': defi
 T_CHECKS = T_CHK + [T_EP[1], T_EP[2]]
 TYPE0, TYPE1 = T_TERM + 0.5, T_TERM + 3.1
 
+# Voix off : Gemini « Puck », un seul fichier (la ligne « Testées à l'aveugle… » du fichier brut n'est plus utilisée)
 # Voix off : Gemini « Puck », un seul fichier (voice_fr_raw/demo.mp3). Chaque ligne = des morceaux (début et fin dans le
 # fichier brut, instant dans la vidéo) : c'est la voix qui cale le montage, les pauses internes sont resserrées ou étirées.
 VOICE = [
@@ -110,13 +110,12 @@ VOICE = [
     ('Gazette, pixel, néon, aquarelle' + NB + ': à chacune sa signature.',
      [(8.81, 9.39, 11.05), (9.72, 10.38, 12.05), (10.38, 10.98, 13.02), (11.35, 11.99, 14.05), (12.34, 13.71, 14.72)]),
     ('Quarante-cinq shorts le prouvent, tous rendus par du code.', [(14.23, 15.50, 16.3), (15.75, 16.83, 17.8)]),
-    ('Testées à l’aveugle' + NB + ': dix-huit reconnues sur dix-huit.', [(17.46, 18.19, 20.3), (18.47, 20.22, 22.2)]),
-    ('Le plus simple' + NB + '? Donnez un prompt à votre agent.', [(20.75, 21.28, 24.7), (21.54, 22.82, 25.45)]),
-    ('Il choisit le style, crée votre studio…', [(23.39, 24.32, 28.0), (24.86, 25.70, 29.05)]),
-    ('… et réalise votre premier épisode.', [(26.23, 27.91, 30.0)]),
-    ('Puis le deuxième. Le troisième. À votre image.', [(28.56, 29.51, 32.6), (29.94, 30.59, 34.7), (30.88, 31.75, 36.0)]),
-    ('Dix-huit identités. Quarante-cinq shorts. Tout est open source.', [(32.56, 33.48, 37.55), (33.99, 34.78, 39.55), (35.28, 36.24, 40.45)]),
-    ('Studio Visual Identity. À vous de jouer.', [(36.90, 38.48, 41.8), (39.06, 39.52, 43.75)]),
+    ('Le plus simple' + NB + '? Donnez un prompt à votre agent.', [(20.75, 21.28, 19.7), (21.54, 22.82, 20.45)]),
+    ('Il choisit le style, crée votre studio…', [(23.39, 24.32, 23), (24.86, 25.70, 24.05)]),
+    ('… et réalise votre premier épisode.', [(26.23, 27.91, 25)]),
+    ('Puis le deuxième. Le troisième. À votre image.', [(28.56, 29.51, 27.6), (29.94, 30.59, 29.7), (30.88, 31.75, 31)]),
+    ('Dix-huit identités. Quarante-cinq shorts. Tout est open source.', [(32.56, 33.48, 32.55), (33.99, 34.78, 34.55), (35.28, 36.24, 35.45)]),
+    ('Studio Visual Identity. À vous de jouer.', [(36.90, 38.48, 36.8), (39.06, 39.52, 38.75)]),
 ]
 NARRATION = [(ch[0][2], round(ch[-1][2] + ch[-1][1] - ch[-1][0], 2), txt) for txt, ch in VOICE]
 
@@ -127,7 +126,6 @@ FMT = {
                  head_y=66, head_size=50, head_w=1700, name_y=932, name_size=84, meta_y=1004, bar_y=1050, bar_w=1100,
                  hook_y=(300, 530, 760), hook_size=176,
                  wall=dict(cols=15, rows=3, speed=250), wall_ty=905,
-                 judge=dict(cols=18, rows=4, pw=96, ph=160, tw=84, th=150, x0=102, y0=50), judge_ty=880,
                  term=dict(x=90, y=215, w=1050, h=680, fs=33, lh=51), th_xy=(90, 62), th_size=78,
                  menu=dict(x=1190, y=235, pw=116, ph=206, tw=106, th=188), phone=(1335, 175, 405, 720),
                  ),
@@ -136,7 +134,6 @@ FMT = {
                  head_y=276, head_size=44, head_w=880, name_y=1438, name_size=80, meta_y=1514, bar_y=1566, bar_w=820,
                  hook_y=(700, 880, 1060), hook_size=132,
                  wall=dict(cols=9, rows=5, speed=180), wall_ty=1440,
-                 judge=dict(cols=9, rows=8, pw=100, ph=140, tw=76, th=134, x0=100, y0=250), judge_ty=1500,
                  term=dict(x=60, y=345, w=900, h=590, fs=30, lh=46), th_xy=(60, 240), th_size=64,
                  menu=dict(x=124, y=985, pw=138, ph=200, tw=106, th=188), phone=(336, 965, 348, 618),
                  ),
@@ -751,103 +748,6 @@ def scene_wall(t, n, t0=T_WALL, caption=True):
     return fr
 
 
-# ------------------------------------------------------------------ scène 4 : le juge à l'aveugle
-def judge_tiles():
-    """72 vignettes : 4 par identité (2 shorts × 2 instants)."""
-    out = []
-    for k, r in enumerate(IDS):
-        ss = [s for s in ALL_SHORTS if s.startswith(r[0] + '__')][:2]
-        for s in ss:
-            for fi in (20, 85):
-                out.append((k, 'w_' + s, fi))
-    return out
-
-
-JT = None
-
-
-def scene_judge(t, n):
-    global JT
-    if JT is None:
-        JT = judge_tiles()
-    g = F['judge']
-    fr = dark_bg(t)
-    rng = np.random.default_rng(72)
-    perm = rng.permutation(72)
-    jit = rng.uniform(-1, 1, (72, 2))
-    cols, rows = g['cols'], g['rows']
-    t_sort = T_JUDGE + 1.0
-    t_tick = T_JUDGE + 2.3
-
-    def sorted_pos(k, m):
-        if F['fmt'] == '16x9':
-            return g['x0'] + k * g['pw'], g['y0'] + m * g['ph']
-        return g['x0'] + (k % 9) * g['pw'], g['y0'] + (k // 9) * (4 * g['ph'] + 28) + m * g['ph']
-
-    done = min(N, int(max(0, (t - t_tick)) / 0.055))
-    # cadres des groupes
-    for k in range(N):
-        a = eo3(u(t, t_sort + 0.5 + 0.02 * k, 0.3))
-        if a <= 0:
-            continue
-        x, y = sorted_pos(k, 0)
-        ok = k < done
-        fw, fh = g['tw'] + 10, 4 * g['ph'] - (g['ph'] - g['th']) + 10
-        blit(fr, rr(fw, fh, 10, '#3CF2A022' if ok else None, '#3CF2A0' if ok else '#5A6080', 3), x - 5, y - 5, a)
-    for idx, (k, key, fi) in enumerate(JT):
-        m = idx % 4
-        sp = perm[idx]
-        x0 = g['x0'] + (sp % cols) * g['pw'] + jit[idx, 0] * 5
-        y0 = g['y0'] + (sp // cols) * g['ph'] + jit[idx, 1] * 5
-        if F['fmt'] == '9x16':
-            y0 += (sp // cols >= 4) * 28
-        x1, y1 = sorted_pos(k, m)
-        mv = eio(u(t, t_sort + 0.025 * k + 0.02 * m, 0.62))
-        x = x0 + (x1 - x0) * mv
-        y = y0 + (y1 - y0) * mv - 26 * math.sin(math.pi * mv)
-        a = eo3(u(t, T_JUDGE + 0.004 * ((idx * 37) % 72), 0.25))
-        wob = math.sin(t * 9 + idx) * 2.0 * (1 - mv) * (t > T_JUDGE + 0.4)
-        spr = thumb(key, fi, g['tw'], g['th'], 7)
-        blit(fr, spr, x + wob, y, a)
-    # coches
-    for k in range(done):
-        x, y = sorted_pos(k, 0)
-        pop = back(u(t, t_tick + k * 0.055, 0.15))
-        cx, cy = x + g['tw'] / 2, y + 4 * g['ph'] - (g['ph'] - g['th']) + 2
-        blitc(fr, rr(34, 34, 17, '#3CF2A0'), cx, cy, 1, pop)
-        blitc(fr, check_spr(22, '#0B0D17'), cx, cy, 1, pop)
-    # légende
-    y = F['judge_ty']
-    if t < t_sort + 0.9:
-        a = eo3(u(t, T_JUDGE + 0.25, 0.25)) * (1 - u(t, t_sort + 0.6, 0.3))
-        s1 = '72 images anonymes, mélangées'
-        blitc(fr, T(s1, DEMO, fit(s1, DEMO, 60, W - 220), '#FFFFFF'), W / 2 - (30 if F['fmt'] == '9x16' else 0), y, a)
-        s2 = 'un juge indépendant, sans contexte'
-        blitc(fr, T(s2, MONO, 34 if F['fmt'] == '16x9' else 28, '#C4CBE6'), W / 2 - (30 if F['fmt'] == '9x16' else 0), y + 76, a)
-    else:
-        col = '#3CF2A0' if done >= N else '#FFFFFF'
-        big = f'{done}/18'
-        a = eo3(u(t, t_sort + 0.9, 0.2))
-        bs = 150 if F['fmt'] == '16x9' else 112
-        sb = Tt(big, ('unbounded', 900), bs, col)
-        pulse = 1 + 0.10 * (1 - eo3(u(t, t_tick + N * 0.055, 0.3))) * (done >= N)
-        s1 = 'Juge à l’aveugle' + NB + ': zéro erreur'
-        if F['fmt'] == '16x9':
-            ssp = T(s1, GROT, 58, '#FFFFFF')
-            ref = Tt('18/18', ('unbounded', 900), bs, col).shape[1]
-            tw = ref + 50 + ssp.shape[1]
-            x0 = W / 2 - tw / 2
-            blitc(fr, sb, x0 + ref / 2, y, a, pulse)
-            a2 = eo3(u(t, t_tick + N * 0.055, 0.25))
-            blit(fr, ssp, x0 + ref + 50, y - ssp.shape[0] / 2 - 28, a2)
-            blit(fr, T('18 groupes purs sur 18 · 72 images sur 72', MONO, 34, '#C4CBE6'), x0 + ref + 54, y + 26, a2)
-        else:
-            blitc(fr, sb, W / 2 - 30, y - 16, a, pulse)
-            a2 = eo3(u(t, t_tick + N * 0.055, 0.25))
-            blitc(fr, T(s1, GROT, 42, '#FFFFFF'), W / 2 - 30, y + 66, a2)
-    return fr
-
-
 # ------------------------------------------------------------------ scène 5 : un prompt -> un studio -> des épisodes
 def typed_count(t):
     total = sum(len(l) for l in PROMPT)
@@ -1173,7 +1073,7 @@ def render(t, n=None):
         fr = scene_hook(t, n)
     elif t < T_WALL:
         fr = scene_cover(t, n)
-    elif t < T_JUDGE:
+    elif t < T_TERM:
         fr = scene_wall(t, n)
         x = u(t, T_WALL, 0.2)
         if x < 1:   # le carrousel s'éloigne
@@ -1185,16 +1085,11 @@ def render(t, n=None):
             base[:] = rgb(DARK)
             blitc(base, ov, W / 2, H / 2, 1 - eo3(x))
             fr = np.maximum(fr, base) if False else cv2.addWeighted(base, 1 - eo3(x), fr, eo3(x), 0)
-    elif t < T_TERM:
-        fr = scene_judge(t, n)
-        x = u(t, T_JUDGE, 0.35)
-        if x < 1:
-            fr = push(scene_wall(t, n), fr, x, False)
     elif t < T_SLAM:
         fr = scene_term(t, n)
         x = u(t, T_TERM, 0.35)
         if x < 1:
-            fr = push(scene_judge(t, n), fr, x, True)
+            fr = push(scene_wall(t, n), fr, x, True)
     elif t < T_END + 0.65:
         base = scene_term(t, n) if t < T_SLAM + 3.3 else np.zeros((H, W, 3), np.uint8)
         if t >= T_END:
@@ -1260,7 +1155,7 @@ if __name__ == '__main__':
         if len(sys.argv) > 2:
             sheet(sys.argv[2], sys.argv[4:], sys.argv[3])
         else:
-            sheet('16x9', [0.9, 2.8, 4.2, 8.2, 12.3, 15.6, 17.6, 23.5, 27.2, 33.6, 41.0, 44.6], HERE / 'planche-demo-fr.jpg')
+            sheet('16x9', [0.9, 2.8, 4.2, 8.2, 12.3, 15.6, 17.6, 22.2, 25.4, 28.6, 36.0, 39.6], HERE / 'planche-demo-fr.jpg')
     elif cmd == 'video':
         video(sys.argv[2], *(float(x) for x in sys.argv[3:5]))
     elif cmd == 'audio':
@@ -1271,6 +1166,8 @@ if __name__ == '__main__':
         build_audio.gif()
     elif cmd == 'thumb':
         build_audio.thumb()
+    elif cmd == 'brief':
+        build_audio.write_brief()
     elif cmd == 'voice':
         build_audio.split_voice()
     elif cmd == 'narration':
@@ -1284,8 +1181,9 @@ if __name__ == '__main__':
         build_audio.audio()
         for f in ('16x9', '9x16'):
             build_audio.final(f)
+        build_audio.write_brief()
         build_audio.gif()
         build_audio.thumb()
-        sheet('16x9', [0.9, 2.8, 4.2, 8.2, 12.3, 15.6, 17.6, 23.5, 27.2, 33.6, 41.0, 44.6], HERE / 'planche-demo-fr.jpg')
+        sheet('16x9', [0.9, 2.8, 4.2, 8.2, 12.3, 15.6, 17.6, 22.2, 25.4, 28.6, 36.0, 39.6], HERE / 'planche-demo-fr.jpg')
     else:
         print(__doc__)

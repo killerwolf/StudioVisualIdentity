@@ -9,6 +9,10 @@ Quatre couches, mixées ici :
   on entend leur propre bande son (voix + musique de leur short.mp4), avec fondus, baissée sous la voix off.
 - MUSIQUE : synthétisée par code (numpy/scipy, 120 BPM, la mineur), calée sur le montage.
 - BRUITAGES : sons CC0 de out/demo/sfx/ (crédits : sfx/credits.json) + synthèse de out/tools/sound.py.
+
+MUSIQUE ET BRUITAGES EXTERNES (optionnels, voir eleven/brief.json écrit par `build.py brief`) :
+- out/demo/eleven/music.mp3 présent -> il remplace la musique synthétisée (calé à t = 0, mêmes atténuations) ;
+- out/demo/eleven/sfx/<nom>.mp3 présent -> il remplace le son CC0 du même rôle, aux mêmes instants (sinon : son CC0).
 """
 import json, math, shutil, subprocess, sys
 from pathlib import Path
@@ -25,6 +29,10 @@ import sound as SND  # noqa: E402
 SR = 48000
 HERE = Path(__file__).resolve().parent
 SFX = HERE / 'sfx'
+ELEVEN = HERE / 'eleven'
+# rôle du son CC0 -> nom du fichier externe attendu dans eleven/sfx/ (10 sons distincts, réutilisés)
+EXT_NAME = {'whoosh_fast': 'whoosh', 'whoosh_soft': 'whoosh_long', 'key1': 'key', 'key2': 'key', 'key3': 'key'}
+EXT_USED = set()
 BEAT = 0.5
 
 
@@ -149,6 +157,16 @@ def noise_riser(d):
 
 
 def load(name):
+    """Son d'un rôle : eleven/sfx/<nom>.mp3 s'il existe (silences de début et de fin rognés), sinon le son CC0 de sfx/."""
+    ext = ELEVEN / 'sfx' / f'{EXT_NAME.get(name, name)}.mp3'
+    if ext.exists():
+        y = decode(ext, ch=2)
+        pk = np.abs(y).max() or 1
+        on = np.where(np.abs(y).max(1) > 0.02 * pk)[0]
+        if len(on):
+            y = y[max(0, on[0] - int(0.005 * SR)):min(len(y), on[-1] + int(0.05 * SR))]
+        EXT_USED.add(ext.name)
+        return y / pk
     sr, y = wavfile.read(SFX / f'{name}.wav')
     y = y.astype(np.float64) / (32768.0 if y.dtype == np.int16 else (np.abs(y).max() or 1))
     y = st(y)
@@ -191,6 +209,8 @@ def split_voice():
     g = 0.9 / np.abs(y).max()
     out = HERE / 'voice_fr'
     out.mkdir(exist_ok=True)
+    for old in out.glob('*.mp3'):
+        old.unlink()
     f = int(0.008 * SR)
     for k, (txt, chunks) in enumerate(B.VOICE):
         t0 = chunks[0][2]
@@ -276,7 +296,7 @@ def shorts_layer():
             'tableau-craie__explicatif__pourquoi-le-ciel-est-bleu', 'cosmos-doc__evenements__voyager-1-a-un-jour-lumiere',
             'pastel-diorama__enfants__d-ou-vient-la-pluie', 'riso-zine__geographie__5-plus-grands-deserts']
     for k, sname in enumerate(wall):
-        seg(sname, 1.0, B.T_WALL + 0.1 + 0.12 * k, B.T_JUDGE + 0.15, 0.36, -0.9 + 1.8 * k / 5, 0.5, 0.6, 'mur')
+        seg(sname, 1.0, B.T_WALL + 0.1 + 0.12 * k, B.T_TERM + 0.15, 0.36, -0.9 + 1.8 * k / 5, 0.5, 0.6, 'mur')
     # 4. les épisodes 1, 2, 3 : le son du short qui passe dans le téléphone
     for k, (sname, st0) in enumerate(B.EPISODES):
         t1 = B.T_EP[k + 1] if k < 2 else B.T_SLAM + 0.1
@@ -374,12 +394,8 @@ def music():
     pads(T0, B.T_WALL)
     # mur : plein régime + cymbale
     drums.add(CR, B.T_WALL, 0.5)
-    groove(B.T_WALL, B.T_JUDGE)
-    pads(B.T_WALL, B.T_JUDGE)
-    # juge : on retire la grosse caisse, on garde le fil, puis un battement monte vers 18/18
-    groove(B.T_JUDGE, B.T_JUDGE + 2.0, full=False, kicks=False, hats=True, bassg=0.5)
-    groove(B.T_JUDGE + 2.0, B.T_TERM, full=False, kicks=True, hats=True, bassg=0.7)
-    pads(B.T_JUDGE, B.T_TERM, 0.3, 1900)
+    groove(B.T_WALL, B.T_TERM)
+    pads(B.T_WALL, B.T_TERM)
     # le prompt : presque rien (basse + nappe), la frappe s'entend
     groove(B.T_TERM, B.T_CHK[0], full=False, kicks=False, hats=False, arp=False, bassg=0.7, stabs=False)
     groove(B.T_CHK[0], B.T_EP[0] - 1.0, full=False, kicks=True, hats=True, bassg=0.8)
@@ -410,7 +426,7 @@ def music():
 
     # pompage (sidechain) de la partie tonale sur les grosses caisses
     env = np.ones(len(tonal.x))
-    for t0, t1, step in ((T0, T0 + 1.0, 1.0), (T0 + 1.0, B.T_SPIN, 0.5), (B.T_WALL, B.T_JUDGE, 0.5), (B.T_EP[0], B.T_END, 0.5)):
+    for t0, t1, step in ((T0, T0 + 1.0, 1.0), (T0 + 1.0, B.T_SPIN, 0.5), (B.T_WALL, B.T_TERM, 0.5), (B.T_EP[0], B.T_END, 0.5)):
         t = t0
         while t < t1 - 0.01:
             i = int(t * SR)
@@ -454,10 +470,15 @@ def sfx_track():
         tr.add(y / (np.abs(y).max() or 1), t, g, pan)
         ev.append({'t': round(t, 3), 'sfx': 'synthèse:' + name, 'gain': round(g, 2)})
 
+    def riser_to(t, d, g):
+        """Montée étirée ou resserrée pour durer d secondes et finir pile sur t."""
+        put('riser', t - d, g, len(S['riser']) / SR / d)
+
     def reveal(t, d=1.6, g=0.5, big=True):
         """Montée vers une révélation, puis l'impact : aspiration + riser + bruit, coup, chute de basse."""
-        put('riser', t - 1.76 * (d / 1.76), g, 1.76 / d)
-        raw(noise_riser(d), t - d, g * 0.55, 'montée de bruit')
+        riser_to(t, d, g)
+        if 'riser.mp3' not in EXT_USED:
+            raw(noise_riser(d), t - d, g * 0.55, 'montée de bruit')
         put('whoosh_soft', t - 0.02, 0.45, rev=True)
         put('impact', t, 1.0)
         if big:
@@ -498,23 +519,6 @@ def sfx_track():
     raw(subdrop(0.8), B.T_WALL + 0.3, 0.55, 'chute de basse')
     put('whoosh_fast', B.T_WALL + 1.72, 0.35)
     put('impact_light', B.T_WALL + 1.8, 0.6)                      # « tous rendus par du code »
-    # --- juge à l'aveugle
-    put('whoosh_soft', B.T_JUDGE - 0.25, 0.6)
-    put('impact_light', B.T_JUDGE + 0.05, 0.5)
-    for k in range(12):                                           # 72 images qui tombent en vrac
-        put('click', B.T_JUDGE + 0.03 + 0.022 * k, 0.2, 0.7 + 0.05 * (k % 5), pan=-0.8 + 1.6 * (k % 6) / 5)
-    put('whoosh_soft', B.T_JUDGE + 0.95, 0.6, 1.15)               # elles se rangent
-    put('whoosh_fast', B.T_JUDGE + 1.35, 0.35, 0.8)
-    put('riser', B.T_JUDGE + 2.3 - 0.25, 0.4, 1.76 / 1.25)         # montée pendant les coches
-    for k in range(B.N):
-        put('click', B.T_JUDGE + 2.3 + k * 0.055, 0.42, 0.9 + 0.045 * k, pan=-0.8 + 1.6 * k / 17)
-        syn('blip', B.T_JUDGE + 2.3 + k * 0.055, 0.16, note=hz(72 + k), pan=-0.8 + 1.6 * k / 17)
-    t18 = B.T_JUDGE + 2.3 + B.N * 0.055
-    put('impact', t18, 1.0)                                       # 18/18
-    raw(subdrop(0.9), t18, 0.7, 'chute de basse')
-    put('ding', t18, 0.8)
-    put('ding', t18 + 0.12, 0.45, 1.5)
-    syn('chime', t18, 0.3, note='A5', dur=1.6)
     # --- le prompt : glissement, frappe, entrée
     put('whoosh_fast', B.T_TERM - 0.12, 0.55, 0.85)
     put('impact_light', B.T_TERM + 0.12, 0.5)
@@ -546,7 +550,7 @@ def sfx_track():
         put('impact', t, 0.8, 1.05)
         syn('thud', t, 0.5)
     # --- les quatre panneaux
-    put('riser', B.T_SLAM - 1.2, 0.45, 1.76 / 1.2)
+    riser_to(B.T_SLAM, 1.2, 0.45)
     for k in range(4):
         t = B.T_SLAM + k
         put('whoosh_fast', t - 0.10, 0.5, 0.9, pan=-0.7 + 0.45 * k)
@@ -584,19 +588,37 @@ def write_wav(path, x):
 def audio():
     B.TMP.mkdir(parents=True, exist_ok=True)
     n = int(B.DUR * SR)
-    mus = music()[:n]
+    ext_music = ELEVEN / 'music.mp3'
+    if ext_music.exists():
+        # musique externe : calée à t = 0, coupée ou complétée à la durée, ramenée au niveau moyen de la musique synthétisée
+        y = decode(ext_music, ch=2)[:n]
+        mus = np.zeros((n, 2))
+        mus[:len(y)] = y
+        ref = np.sqrt((music()[:n] ** 2).mean())
+        mus *= ref / (np.sqrt((mus ** 2).mean()) + 1e-9)
+        k = int(0.6 * SR)
+        mus[-k:] *= np.linspace(1, 0, k)[:, None]
+        music_src = 'eleven/music.mp3'
+    else:
+        mus = music()[:n]
+        music_src = 'synthèse (build_audio.music)'
     sfx, ev = sfx_track()
     sfx = sfx[:n]
     sh, slog = shorts_layer()
     sh = sh[:n]
     voice = voice_track(n)
     # sans voix : musique + bruitages + son des shorts
+    # la musique externe ne peut pas retirer son arpège quand les shorts « parlent » : on la baisse de 3 dB sous leur son
+    sh_env = smooth_env((np.abs(sh).max(1) > 0.03).astype(np.float64), 0.08, 0.4)
+    d_sh_mu = 1 - 0.3 * sh_env if ext_music.exists() else np.ones(n)
+    mus = mus * d_sh_mu[:, None]
     novo = limit(mus * 0.55 + sfx * 0.85 + sh * 0.8)
     write_wav(B.TMP / 'bed.wav', novo)
     print(B.TMP / 'bed.wav')
     info = {'duration': B.DUR, 'bpm': 120,
             'layers': 'voix off (voice_fr/) · son propre des shorts à l’écran · musique synthétisée · bruitages',
             'ducking': 'sous la voix off : son des shorts −13 dB, musique −7 dB, bruitages −2 dB',
+            'music': music_src, 'externalSfxUsed': sorted(EXT_USED),
             'sfx': ev, 'shortsAudio': slog}
     json.dump(info, open(HERE / 'sound_fr.json', 'w'), ensure_ascii=False, indent=1)
     if voice is not None:
@@ -681,7 +703,8 @@ def write_narration():
                       'wordsPerSec': round(nwords(txt) / speech, 2),
                       'chunks': [{'rawStart': c[0], 'rawEnd': c[1], 'start': c[2], 'end': round(c[2] + c[1] - c[0], 2)} for c in chunks]})
     out = {'language': 'fr', 'voice': 'Gemini « Puck », style « voix off de bande-annonce, très punchy »',
-           'source': 'voice_fr_raw/demo.mp3 (un seul appel, 39,84 s, les 12 lignes jointes par <long pause>)',
+           'source': 'voice_fr_raw/demo.mp3 (un seul appel, 39,84 s, 12 lignes jointes par <long pause> ; la 6e, « Testées à l’aveugle… », '
+                     'n’est plus utilisée depuis le retrait de la scène du juge)',
            'note': 'Découpe par build_audio.split_voice() : silences (ffmpeg silencedetect, −38 dB) + horodatage des mots faster-whisper small. '
                    'start/end = instants réels dans la vidéo ; rawStart/rawEnd = instants dans le fichier brut. '
                    'Les pauses internes sont resserrées ou étirées pour que chaque mot tombe sur son image. wordsPerSec = débit réel de la voix.',
@@ -690,3 +713,64 @@ def write_narration():
     print(HERE / 'narration_fr.json')
     for l in lines:
         print(f"  {l['start']:5.2f}–{l['end']:5.2f}  {l['wordsPerSec']:.2f} m/s  {l['text']}")
+
+
+def write_brief():
+    """eleven/brief.json : ce qu'il faut générer (une musique, dix bruitages) pour remplacer la musique et les sons de repli."""
+    _, ev = sfx_track()
+    back = {}
+    for cc0, ext in EXT_NAME.items():
+        back[cc0] = ext
+    cues = {}
+    for e in ev:
+        nm = e['sfx'].replace('(inversé)', '')
+        if nm.startswith('synthèse'):
+            continue
+        cues.setdefault(back.get(nm, nm), set()).add(round(e['t'], 2))
+    T = B
+    desc = {
+        'whoosh': ('Short, fast, airy swipe whoosh for a card sliding past, no tonal content, dry.', 0.5),
+        'whoosh_long': ('Longer soft cinematic whoosh / air swell, smooth rise and fall. Also played reversed as a suck-in right before big hits.', 1.0),
+        'impact': ('Heavy cinematic trailer hit: tight punchy transient with a deep sub-bass boom tail, dry, no melody.', 1.5),
+        'impact_light': ('Small snappy punch / thump for a word or number slamming on screen, short tail.', 0.5),
+        'riser': ('Tension riser: rising noise and pitch sweep that builds steadily and stops abruptly at its very end (no tail, no impact). It is time-stretched to end exactly on each reveal.', 2.0),
+        'pop': ('Bright short UI pop / bubble pop, clean and playful.', 0.5),
+        'click': ('Tiny crisp UI tick / click, very short, neutral pitch (it is re-pitched per cue).', 0.5),
+        'ding': ('Clean positive confirmation chime, single bright bell note with a short tail (a check mark appears).', 1.0),
+        'key': ('One single mechanical keyboard key press, close and dry (it is repeated and re-pitched for typing).', 0.5),
+        'glitch': ('Digital glitch / tape-stop stutter: the bland template music breaks, half a second.', 0.6),
+    }
+    brief = {
+        'purpose': 'External music and sound effects for the 41 s French promo of StudioVisualIdentity. Files are optional: when a file is missing, build_audio.py falls back to its synthesized music / CC0 sounds.',
+        'howToUse': 'Drop the files, then run: .venv/bin/python out/demo/build.py audio && build.py final 16x9 && build.py final 9x16 (no need to re-render the picture).',
+        'music': {
+            'file': 'out/demo/eleven/music.mp3',
+            'durationSec': T.DUR, 'exactEndSec': T.DUR, 'alignment': 'starts at t = 0 of the video; trimmed or zero-padded to the duration, last 0.6 s faded out',
+            'tempoBpm': 120, 'beatSec': 0.5, 'key': 'A minor (fallback music: Am - F - C - G, one chord per 2 s bar)',
+            'beatGrid': f'first downbeat at {T.T_COV} s, then a beat every 0.5 s and a bar every 2.0 s; every cut below sits on this grid',
+            'style': 'Instrumental, no vocals (a French voice-over and the shorts\' own audio play on top). Punchy modern trailer / tech-promo electronic: tight kick, bass, plucky synth arpeggio, claps. Confident and playful, not dark.',
+            'mixNote': 'It is ducked about 7 dB under the voice-over and 3 dB under the shorts\' own audio, and loudness-matched to the fallback music, so deliver it full and unducked.',
+            'sections': [
+                {'start': 0.0, 'end': T.T_MUT, 'name': 'hook: template music', 'direction': 'Deliberately bland, cheerful stock "template" ukulele/pluck jingle, thin like a phone speaker. Three accents at 0.0, 0.5 and 0.95 s (three words slam on screen).'},
+                {'start': T.T_MUT, 'end': T.T_COV, 'name': 'the template breaks', 'direction': 'At 2.0 s the jingle tape-stops / glitches out. Then 1.5 s of rising tension (riser, snare roll) into the first drop.'},
+                {'start': T.T_COV, 'end': 11.0, 'name': 'carousel build', 'direction': f'First drop at {T.T_COV} s: the real groove enters (half-time for one bar, then full four-on-the-floor from 4.5 s). One style card every 0.5 s. From 7.5 to 11.0 s keep it lighter (drums and bass, no lead): the shorts\' own audio is featured.'},
+                {'start': 11.0, 'end': T.T_SPIN, 'name': 'carousel: four named styles', 'direction': 'Four strong accents exactly at 11.0, 12.0, 13.0 and 14.0 s (the voice names four styles, one card each).'},
+                {'start': T.T_SPIN, 'end': T.T_WALL, 'name': 'carousel spin', 'direction': 'The carousel whips a full turn while accelerating: hold back the kick, snare roll and riser building to the wall.'},
+                {'start': T.T_WALL, 'end': T.T_TERM, 'name': '45-shorts wall', 'direction': f'Big impact with crash exactly at {T.T_WALL} s, second accent at {T.T_WALL + 0.3} s ("45 shorts" slams). Fullest energy so far.'},
+                {'start': T.T_TERM, 'end': T.T_CHK[0], 'name': 'the prompt (calm)', 'direction': 'Breakdown: no kick, only a soft bass pulse and a pad. Leave room: keyboard typing is heard here.'},
+                {'start': T.T_CHK[0], 'end': T.T_EP[0], 'name': 'build to the drop', 'direction': f'Check marks at {T.T_CHK[0]} and {T.T_CHK[1]} s. Kick returns on half notes, hats, snare roll from {T.T_EP[0] - 1.0} s, and a tiny gap of silence (about 0.13 s) right before {T.T_EP[0]} s.'},
+                {'start': T.T_EP[0], 'end': T.T_SLAM, 'name': 'DROP: episodes 1, 2, 3', 'direction': f'The main drop exactly at {T.T_EP[0]} s (crash, full drums and bass). Accents at {T.T_EP[1]} and {T.T_EP[2]} s (episode changes). Keep the lead sparse: each episode\'s own audio is featured.'},
+                {'start': T.T_SLAM, 'end': T.T_END, 'name': 'four number panels', 'direction': f'Four big hits, one per second, at {T.T_SLAM}, {T.T_SLAM + 1}, {T.T_SLAM + 2} and {T.T_SLAM + 3} s. Full arrangement, lead back in.'},
+                {'start': T.T_END, 'end': T.DUR, 'name': 'end sting', 'direction': f'Final hit and held A-minor chord exactly at {T.T_END} s, drums stop. One last short accent at {T.VOICE[-1][1][-1][2]} s ("À vous de jouer"). Ring out and be fully silent by {T.DUR} s.'},
+            ],
+        },
+        'sfx': [{'name': k, 'file': f'out/demo/eleven/sfx/{k}.mp3', 'description': d, 'durationSec': dur,
+                 'cueCount': len(cues.get(k, [])), 'cueTimesSec': sorted(cues.get(k, []))} for k, (d, dur) in desc.items()],
+        'sfxNotes': 'One file per name; each is reused at all its cues (re-pitched, panned and gain-staged by build_audio.py). Leading and trailing silence is trimmed automatically. Dry sounds, no music, no voice. The riser cue times are where the riser STARTS; it is stretched to end on the next reveal.',
+    }
+    ELEVEN.mkdir(exist_ok=True)
+    (ELEVEN / 'sfx').mkdir(exist_ok=True)
+    json.dump(brief, open(ELEVEN / 'brief.json', 'w'), ensure_ascii=False, indent=1)
+    print(ELEVEN / 'brief.json')
+    for x in brief['sfx']:
+        print(f"  {x['name']:13s} {x['durationSec']} s  {x['cueCount']} cues")
