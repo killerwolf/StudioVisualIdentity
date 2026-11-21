@@ -1,395 +1,257 @@
 {
-  "anthropic/icone": {
-    "source": "https://cdn.jsdelivr.net/npm/simple-icons@13.21.0/icons/anthropic.svg",
-    "licence": "CC0 1.0 (Simple Icons)",
-    "couleur": "#191919",
-    "marque": "Anthropic",
-    "consulte": "2026-10-25"
-  },
-  "anthropic/nom": {
-    "source": "https://commons.wikimedia.org/wiki/File:Anthropic_logo.svg",
-    "licence": "Public domain",
-    "auteur": "Anthropic",
-    "origine": "Wikimedia Commons",
-    "consulte": "2026-10-25"
-  },
-  "claude/icone": {
-    "source": "https://cdn.jsdelivr.net/npm/simple-icons@13.21.0/icons/claude.svg",
-    "licence": "CC0 1.0 (Simple Icons)",
-    "couleur": "#D97757",
-    "marque": "Claude",
-    "consulte": "2026-10-25"
-  },
-  "claude/nom": {
-    "source": "https://commons.wikimedia.org/wiki/File:Claude_AI_logo.svg",
-    "licence": "Public domain",
-    "auteur": "Anthropic",
-    "origine": "Wikimedia Commons",
-    "consulte": "2026-10-25"
-  },
-  "elevenlabs/icone": {
-    "source": "https://cdn.jsdelivr.net/npm/simple-icons@13.21.0/icons/elevenlabs.svg",
-    "licence": "CC0 1.0 (Simple Icons)",
-    "couleur": "#000000",
-    "marque": "ElevenLabs",
-    "consulte": "2026-10-25"
-  },
-  "elevenlabs/nom": {
-    "source": "https://commons.wikimedia.org/wiki/File:ElevenLabs_Logo_03.svg",
-    "licence": "Public domain",
-    "auteur": "ElevenLabs",
-    "origine": "Wikimedia Commons",
-    "consulte": "2026-10-25"
-  },
-  "elevenlabs/nom-blanc": {
-    "source": "https://commons.wikimedia.org/wiki/File:ElevenLabs_Logo_01.svg",
-    "licence": "CC BY-SA 4.0",
-    "auteur": "Ammaarreshi",
-    "origine": "Wikimedia Commons",
-    "consulte": "2026-10-25"
-  },
-  "emoji/ampoule": {
-    "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f4a1.svg",
-    "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
-    "consulte": "2026-10-28"
-  },
-  "emoji/balance": {
-    "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/2696.svg",
-    "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
-    "consulte": "2026-10-29"
-  },
-  "emoji/boutons": {
-    "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f39b.svg",
-    "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
-    "consulte": "2026-10-26"
-  },
-  "emoji/cadenas": {
-    "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f512.svg",
-    "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
-    "consulte": "2026-10-29"
-  },
-  "emoji/carte": {
-    "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f5fa.svg",
-    "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
-    "consulte": "2026-10-29"
-  },
-  "emoji/chrono": {
-    "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/23f1.svg",
-    "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
-    "consulte": "2026-10-26"
-  },
-  "emoji/ciseaux": {
-    "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/2702.svg",
-    "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
-    "consulte": "2026-10-26"
-  },
-  "emoji/clap": {
-    "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f3ac.svg",
-    "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
-    "consulte": "2026-10-25"
-  },
-  "emoji/classeur": {
-    "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f5c2.svg",
-    "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
-    "consulte": "2026-10-27"
-  },
-  "emoji/coche": {
-    "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/2705.svg",
-    "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
-    "consulte": "2026-10-25"
-  },
-  "emoji/couronne": {
-    "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f451.svg",
-    "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
-    "consulte": "2026-10-29"
-  },
-  "emoji/crayon": {
-    "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f58d.svg",
-    "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
-    "consulte": "2026-10-25"
-  },
-  "emoji/croix": {
-    "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/274c.svg",
-    "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
-    "consulte": "2026-10-25"
-  },
-  "emoji/de": {
-    "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f3b2.svg",
-    "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
-    "consulte": "2026-10-26"
-  },
-  "emoji/dodo": {
-    "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f634.svg",
-    "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
-    "consulte": "2026-10-25"
-  },
-  "emoji/doigt": {
-    "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f449.svg",
-    "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
-    "consulte": "2026-10-26"
-  },
-  "emoji/drapeau-de": {
-    "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f1e9-1f1ea.svg",
-    "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
-    "consulte": "2026-10-26"
-  },
-  "emoji/drapeau-fr": {
-    "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f1eb-1f1f7.svg",
-    "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
-    "consulte": "2026-10-26"
-  },
-  "emoji/drapeau-gb": {
-    "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f1ec-1f1e7.svg",
-    "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
-    "consulte": "2026-10-26"
-  },
-  "emoji/elephant": {
-    "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f418.svg",
-    "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
-    "consulte": "2026-10-29"
-  },
-  "emoji/engrenage": {
-    "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/2699.svg",
-    "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
-    "consulte": "2026-10-26"
-  },
-  "emoji/enveloppe": {
-    "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/2709.svg",
-    "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
-    "consulte": "2026-10-29"
-  },
-  "emoji/epingle": {
-    "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f4cd.svg",
-    "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
-    "consulte": "2026-10-29"
-  },
-  "emoji/etiquette": {
-    "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f3f7.svg",
-    "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
-    "consulte": "2026-10-26"
-  },
-  "emoji/gateau": {
-    "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f382.svg",
-    "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
-    "consulte": "2026-10-28"
-  },
-  "emoji/livres": {
-    "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f4da.svg",
-    "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
-    "consulte": "2026-10-26"
-  },
-  "emoji/loupe": {
-    "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f50d.svg",
-    "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
-    "consulte": "2026-10-25"
-  },
-  "emoji/main": {
-    "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/270b.svg",
-    "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
-    "consulte": "2026-10-29"
-  },
-  "emoji/memo": {
-    "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f4dd.svg",
-    "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
-    "consulte": "2026-10-25"
-  },
-  "emoji/micro": {
-    "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f399.svg",
-    "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
-    "consulte": "2026-10-25"
-  },
-  "emoji/mur": {
-    "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f9f1.svg",
-    "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
-    "consulte": "2026-10-29"
-  },
-  "emoji/nombres": {
-    "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f522.svg",
-    "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
-    "consulte": "2026-10-26"
-  },
-  "emoji/ordi": {
-    "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f4bb.svg",
-    "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
-    "consulte": "2026-10-25"
-  },
-  "emoji/page": {
-    "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f4c4.svg",
-    "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
-    "consulte": "2026-10-29"
-  },
-  "emoji/perroquet": {
-    "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f99c.svg",
-    "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
-    "consulte": "2026-11-02"
-  },
-  "emoji/poisson": {
-    "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f41f.svg",
-    "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
-    "consulte": "2026-10-27"
-  },
-  "emoji/porte": {
-    "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f6aa.svg",
-    "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
-    "consulte": "2026-11-02"
-  },
-  "emoji/prise": {
-    "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f50c.svg",
-    "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
-    "consulte": "2026-10-28"
-  },
-  "emoji/question": {
-    "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/2753.svg",
-    "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
-    "consulte": "2026-10-29"
-  },
-  "emoji/robot": {
-    "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f916.svg",
-    "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
-    "consulte": "2026-10-25"
-  },
-  "emoji/route": {
-    "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f6e3.svg",
-    "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
-    "consulte": "2026-10-26"
-  },
-  "emoji/sac": {
-    "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f392.svg",
-    "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
-    "consulte": "2026-10-26"
-  },
-  "emoji/sens-interdit": {
-    "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/26d4.svg",
-    "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
-    "consulte": "2026-10-25"
-  },
-  "emoji/souris": {
-    "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f42d.svg",
-    "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
-    "consulte": "2026-10-29"
-  },
-  "emoji/stylo": {
-    "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f58a.svg",
-    "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
-    "consulte": "2026-10-25"
-  },
-  "emoji/telephone": {
-    "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f4f1.svg",
-    "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
-    "consulte": "2026-10-29"
-  },
-  "emoji/ticket": {
-    "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f9fe.svg",
-    "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
-    "consulte": "2026-10-25"
-  },
-  "emoji/triangle": {
-    "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f53a.svg",
-    "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
-    "consulte": "2026-10-28"
-  },
-  "emoji/trophee": {
-    "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f3c6.svg",
-    "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
-    "consulte": "2026-10-26"
-  },
-  "emoji/vague": {
-    "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/3030.svg",
-    "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
-    "consulte": "2026-10-26"
-  },
-  "emoji/yeux": {
-    "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f440.svg",
-    "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
-    "consulte": "2026-10-26"
-  },
-  "git/icone": {
-    "source": "https://cdn.jsdelivr.net/npm/simple-icons@13.21.0/icons/git.svg",
-    "licence": "CC0 1.0 (Simple Icons)",
-    "couleur": "#F05032",
-    "marque": "Git",
-    "consulte": "2026-10-25"
-  },
-  "google/icone": {
-    "source": "https://cdn.jsdelivr.net/npm/simple-icons@13.21.0/icons/google.svg",
-    "licence": "CC0 1.0 (Simple Icons)",
-    "couleur": "#4285F4",
-    "marque": "Google",
-    "consulte": "2026-10-26"
-  },
-  "googlegemini/icone": {
-    "source": "https://cdn.jsdelivr.net/npm/simple-icons@13.21.0/icons/googlegemini.svg",
-    "licence": "CC0 1.0 (Simple Icons)",
-    "couleur": "#8E75B2",
-    "marque": "Google Gemini",
-    "consulte": "2026-10-28"
-  },
-  "microsoft/icone": {
-    "source": "https://commons.wikimedia.org/wiki/File:Microsoft_logo.svg",
-    "licence": "Public domain",
-    "auteur": "Microsoft",
-    "origine": "Wikimedia Commons",
-    "consulte": "2026-10-29"
-  },
-  "notion/icone": {
-    "source": "https://cdn.jsdelivr.net/npm/simple-icons@13.21.0/icons/notion.svg",
-    "licence": "CC0 1.0 (Simple Icons)",
-    "couleur": "#000000",
-    "marque": "Notion",
-    "consulte": "2026-10-25"
-  },
-  "notion/icone-blanche": {
-    "source": "https://cdn.jsdelivr.net/npm/simple-icons@13.21.0/icons/notion.svg",
-    "licence": "CC0 1.0 (Simple Icons)",
-    "couleur": "#F7F4EC",
-    "marque": "Notion",
-    "consulte": "2026-10-25"
-  },
-  "notion/nom": {
-    "source": "assemblage : notion/icone (Simple Icons) + « Notion » en Helvetica Neue Bold",
-    "licence": "CC0 1.0 (symbole) ; texte composé par le studio",
-    "consulte": "2026-10-25"
-  },
-  "openai/icone": {
-    "source": "https://cdn.jsdelivr.net/npm/simple-icons@13.21.0/icons/openai.svg",
-    "licence": "CC0 1.0 (Simple Icons)",
-    "couleur": "#412991",
-    "marque": "OpenAI",
-    "consulte": "2026-10-26"
-  },
-  "tiktok/icone": {
-    "source": "https://cdn.jsdelivr.net/npm/simple-icons@13.21.0/icons/tiktok.svg",
-    "licence": "CC0 1.0 (Simple Icons)",
-    "couleur": "#000000",
-    "marque": "TikTok",
-    "consulte": "2026-10-25"
-  },
-  "tiktok/icone-couleur": {
-    "source": "https://commons.wikimedia.org/wiki/File:Tiktok_icon.svg",
-    "licence": "CC0",
-    "auteur": "Editantpv\nIonic Team (https://github.com/ionic-team / http://ionic.io/)\nArchive link: https://web.archive.org/web/202304",
-    "origine": "Wikimedia Commons",
-    "consulte": "2026-10-25"
-  },
-  "tiktok/nom": {
-    "source": "https://commons.wikimedia.org/wiki/File:Tiktok_logo_text.svg",
-    "licence": "Public domain",
-    "auteur": "ByteDance",
-    "origine": "Wikimedia Commons",
-    "consulte": "2026-10-25"
-  },
-  "youtube/icone": {
-    "source": "https://cdn.jsdelivr.net/npm/simple-icons@13.21.0/icons/youtube.svg",
-    "licence": "CC0 1.0 (Simple Icons)",
-    "couleur": "#FF0000",
-    "marque": "YouTube",
-    "consulte": "2026-10-25"
-  },
-  "youtube/nom": {
-    "source": "https://commons.wikimedia.org/wiki/File:YouTube_Logo_2017.svg",
-    "licence": "Public domain",
-    "auteur": "YouTube",
-    "origine": "Wikimedia Commons",
-    "consulte": "2026-10-25"
-  }
+ "emoji/ampoule": {
+  "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f4a1.svg",
+  "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
+  "consulte": "2026-10-28"
+ },
+ "emoji/balance": {
+  "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/2696.svg",
+  "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
+  "consulte": "2026-10-29"
+ },
+ "emoji/boutons": {
+  "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f39b.svg",
+  "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
+  "consulte": "2026-10-26"
+ },
+ "emoji/cadenas": {
+  "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f512.svg",
+  "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
+  "consulte": "2026-10-29"
+ },
+ "emoji/carte": {
+  "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f5fa.svg",
+  "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
+  "consulte": "2026-10-29"
+ },
+ "emoji/chrono": {
+  "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/23f1.svg",
+  "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
+  "consulte": "2026-10-26"
+ },
+ "emoji/ciseaux": {
+  "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/2702.svg",
+  "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
+  "consulte": "2026-10-26"
+ },
+ "emoji/clap": {
+  "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f3ac.svg",
+  "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
+  "consulte": "2026-10-25"
+ },
+ "emoji/classeur": {
+  "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f5c2.svg",
+  "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
+  "consulte": "2026-10-27"
+ },
+ "emoji/coche": {
+  "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/2705.svg",
+  "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
+  "consulte": "2026-10-25"
+ },
+ "emoji/couronne": {
+  "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f451.svg",
+  "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
+  "consulte": "2026-10-29"
+ },
+ "emoji/crayon": {
+  "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f58d.svg",
+  "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
+  "consulte": "2026-10-25"
+ },
+ "emoji/croix": {
+  "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/274c.svg",
+  "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
+  "consulte": "2026-10-25"
+ },
+ "emoji/de": {
+  "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f3b2.svg",
+  "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
+  "consulte": "2026-10-26"
+ },
+ "emoji/dodo": {
+  "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f634.svg",
+  "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
+  "consulte": "2026-10-25"
+ },
+ "emoji/doigt": {
+  "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f449.svg",
+  "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
+  "consulte": "2026-10-26"
+ },
+ "emoji/drapeau-de": {
+  "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f1e9-1f1ea.svg",
+  "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
+  "consulte": "2026-10-26"
+ },
+ "emoji/drapeau-fr": {
+  "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f1eb-1f1f7.svg",
+  "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
+  "consulte": "2026-10-26"
+ },
+ "emoji/drapeau-gb": {
+  "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f1ec-1f1e7.svg",
+  "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
+  "consulte": "2026-10-26"
+ },
+ "emoji/elephant": {
+  "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f418.svg",
+  "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
+  "consulte": "2026-10-29"
+ },
+ "emoji/engrenage": {
+  "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/2699.svg",
+  "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
+  "consulte": "2026-10-26"
+ },
+ "emoji/enveloppe": {
+  "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/2709.svg",
+  "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
+  "consulte": "2026-10-29"
+ },
+ "emoji/epingle": {
+  "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f4cd.svg",
+  "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
+  "consulte": "2026-10-29"
+ },
+ "emoji/etiquette": {
+  "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f3f7.svg",
+  "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
+  "consulte": "2026-10-26"
+ },
+ "emoji/gateau": {
+  "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f382.svg",
+  "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
+  "consulte": "2026-10-28"
+ },
+ "emoji/livres": {
+  "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f4da.svg",
+  "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
+  "consulte": "2026-10-26"
+ },
+ "emoji/loupe": {
+  "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f50d.svg",
+  "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
+  "consulte": "2026-10-25"
+ },
+ "emoji/main": {
+  "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/270b.svg",
+  "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
+  "consulte": "2026-10-29"
+ },
+ "emoji/memo": {
+  "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f4dd.svg",
+  "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
+  "consulte": "2026-10-25"
+ },
+ "emoji/micro": {
+  "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f399.svg",
+  "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
+  "consulte": "2026-10-25"
+ },
+ "emoji/mur": {
+  "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f9f1.svg",
+  "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
+  "consulte": "2026-10-29"
+ },
+ "emoji/nombres": {
+  "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f522.svg",
+  "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
+  "consulte": "2026-10-26"
+ },
+ "emoji/ordi": {
+  "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f4bb.svg",
+  "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
+  "consulte": "2026-10-25"
+ },
+ "emoji/page": {
+  "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f4c4.svg",
+  "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
+  "consulte": "2026-10-29"
+ },
+ "emoji/perroquet": {
+  "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f99c.svg",
+  "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
+  "consulte": "2026-11-02"
+ },
+ "emoji/poisson": {
+  "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f41f.svg",
+  "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
+  "consulte": "2026-10-27"
+ },
+ "emoji/porte": {
+  "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f6aa.svg",
+  "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
+  "consulte": "2026-11-02"
+ },
+ "emoji/prise": {
+  "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f50c.svg",
+  "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
+  "consulte": "2026-10-28"
+ },
+ "emoji/question": {
+  "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/2753.svg",
+  "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
+  "consulte": "2026-10-29"
+ },
+ "emoji/robot": {
+  "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f916.svg",
+  "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
+  "consulte": "2026-10-25"
+ },
+ "emoji/route": {
+  "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f6e3.svg",
+  "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
+  "consulte": "2026-10-26"
+ },
+ "emoji/sac": {
+  "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f392.svg",
+  "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
+  "consulte": "2026-10-26"
+ },
+ "emoji/sens-interdit": {
+  "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/26d4.svg",
+  "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
+  "consulte": "2026-10-25"
+ },
+ "emoji/souris": {
+  "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f42d.svg",
+  "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
+  "consulte": "2026-10-29"
+ },
+ "emoji/stylo": {
+  "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f58a.svg",
+  "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
+  "consulte": "2026-10-25"
+ },
+ "emoji/telephone": {
+  "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f4f1.svg",
+  "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
+  "consulte": "2026-10-29"
+ },
+ "emoji/ticket": {
+  "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f9fe.svg",
+  "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
+  "consulte": "2026-10-25"
+ },
+ "emoji/triangle": {
+  "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f53a.svg",
+  "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
+  "consulte": "2026-10-28"
+ },
+ "emoji/trophee": {
+  "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f3c6.svg",
+  "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
+  "consulte": "2026-10-26"
+ },
+ "emoji/vague": {
+  "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/3030.svg",
+  "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
+  "consulte": "2026-10-26"
+ },
+ "emoji/yeux": {
+  "source": "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/1f440.svg",
+  "licence": "CC BY 4.0 (Twemoji, Twitter / jdecked)",
+  "consulte": "2026-10-26"
+ }
 }

@@ -410,7 +410,7 @@ _logos = {}
 
 
 def logo(cle, variante="icone", hauteur=110, papier=True, angle=-1.0, seed=60, teinte=None):
-    """Logo de la librairie (assets/logos, outil pipeline/logos.py) : « notion », « elevenlabs », « emoji/robot »…
+    """Logo de la librairie (assets/logos, outil pipeline/logos.py) : « emoji/robot »… Les logos de marques ont été retirés du dépôt public (2026-11-22) : à ajouter soi-même avec pipeline/logos.py, sous sa propre responsabilité (droit des marques).
     variante : icone | icone-noire | icone-blanche | icone-couleur | nom. papier=True : posé sur un autocollant de papier
     (style du tapis) ; un emoji se pose plutôt sans papier. teinte : nouvelle couleur (degrés, 0 = rouge, 120 = vert,
     210 = bleu) de la couleur bleue dominante, ex. un 🤖 d'une couleur différente par agent ; jamais sur un logo de marque."""
@@ -523,7 +523,7 @@ def tampon(s, couleur="rouge", taille=70, angle=-8.0, seed=3):
     return [((c, 0), 0, 0, angle)]
 
 
-def fiche(eyebrow, titre, lignes=(), citation=None, w=620, logo_cle="notion", seed=70, angle=-1.0):
+def fiche(eyebrow, titre, lignes=(), citation=None, w=620, logo_cle=None, seed=70, angle=-1.0):
     """Une fiche comme dans le studio (une page Notion reconstituée avec ses vraies valeurs, jamais inventées) :
     logo de l'outil + eyebrow en DM Mono, titre, propriétés en pastilles [(propriété, valeur, couleur)],
     et une citation facultative (vraie remarque, mot pour mot ou traduite fidèlement) avec un trait rouge à gauche."""

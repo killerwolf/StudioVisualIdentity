@@ -7,6 +7,8 @@ It contains **18 identities, 21 declinations** (the 14 of the original campaign,
 lot 2 of the identity factory added on 2026-11-05 and « Survol pixel » added on 2026-11-18, see below), each documented as a design system and **proven by 2–3 real shorts rendered by code** (45 shorts in total),
 plus the open-source rendering toolkit that made them.
 
+**Licence**: code under MIT (`LICENSE`), the repository's own content under CC BY 4.0 with listed exclusions (`LICENSE-CONTENT.md`: fonts, emoji, AI voices, the paper engine's trial audio); third parties in `NOTICE.md`. **Format**: every identity is proven in vertical 1080×1920 only; 16:9 and long form are not covered yet.
+
 **It is a menu with evidence, not a finished brand.** You are expected to read it and then **define your own identity**:
 adopt one identity, blend several, or adapt one to your audience, language and content. Nothing here is a production channel identity.
 

@@ -111,15 +111,12 @@
   },
   "cameraPreflightMinClearance": 85.8,
   "fileMB": 6.6,
-  "sourceCompare": "out/report/notes/console-retro-source/comparaison.jpg",
   "grazingFinalShotSec": 3.7,
   "recognitionCopy": "recognition.py sur copie (scratchpad) après revue : 1er voisin aquarelle-conte « phare d'Alexandrie » (0,6208), frère à 0,6635 : échec maintenu, documenté",
-  "sourceCompareAfter": "out/report/notes/console-retro-source/comparaison-avant-apres.jpg",
   "detailPass": "out/report/notes/survol-pixel-detail.md : diffCells natif 0,111 → 0,153 (source 0,221), grandes plages > 5 % de l'écran 85 → 80 % (source 50 %), pixels A-B-A 0,23 → 0,38 % (source 4,0 %)",
   "camera": "tangage 25–40° (médiane 26,5°, 100 % du temps dans 25–40°), roulis jusqu'à 12° (≥ 5° pendant 56 % du temps) ; caméra PCHIP (passe A+B+C)",
   "loudness": "−16,0 LUFS intégrés, crête −1,7 dBFS, LRA 5,3 LU (ffmpeg ebur128 sur short.mp4 après la retouche Fable, inchangé)",
   "temporalAliasing": "retouche Fable, measure2.py de Fable (fichier décodé, 1 px par gros pixel, seuil 24 ; source 2,4 %) : A-B-A 0,57 % sur tout le short (0,87 % avant), pire fenêtre 1,38 % (bascule) ; pixels qui changent par image 5,2 % (6,5 % avant ; accroche 7,0 %, plan final 5,6 %, contre ≥ 12 % visés). Mesures A+B+C (autre méthode, source 4,0 %) : 1,06 % sur tout le short",
-  "sourceCompareFinal": "out/report/notes/console-retro-source/final-abc.jpg",
   "abcPass": "out/report/notes/survol-pixel.md § « Passe A+B+C » (phases 1 et 2)"
  },
  "facts": [
