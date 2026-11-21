@@ -354,7 +354,7 @@ def main():
         'rankingCriteria': 'durability/industrialisability: measured render cost 25%, templatability 25%, editorial breadth 20%, recognisability 15%, production risk 15% (out/report/comparison.md §5)',
         'recognition': {'blindJudge14': (recog.get('blindJudge14') or {}).get('pureGroups'), 'blindJudgeGroups': 14,
                         'blindJudgeLot2': (recog.get('blindJudgeLot2') or {}).get('pureGroups'), 'blindJudgeLot2Groups': (recog.get('blindJudgeLot2') or {}).get('groups'),
-                        'blindJudgeSurvol': (recog.get('blindJudgeSurvol') or {}).get('pureGroups'), 'blindJudgeSurvolGroups': (recog.get('blindJudgeSurvol') or {}).get('groups'),
+                        'blindJudgeSurvol': (recog.get('blindJudgeSurvol') or {}).get('pureGroups'), 'blindJudgeSurvolGroups': (recog.get('blindJudgeSurvol') or {}).get('groups'), 'blindJudgeGlobal': (recog.get('blindJudgeGlobal') or {}).get('pureGroups'), 'blindJudgeGlobalGroups': (recog.get('blindJudgeGlobal') or {}).get('groups'),
                         'measuredTop1': f"{sum(1 for r in recog.get('rows', []) if r.get('sameIdentity'))}/{len(recog.get('rows', []))}"},
         'identities': ids,
     }
