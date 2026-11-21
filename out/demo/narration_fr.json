@@ -1,0 +1,104 @@
+{
+ "language": "fr",
+ "voice": "à générer après validation : Gemini « Sulafat » (un seul appel, découpe par ligne)",
+ "note": "Aucune voix générée pour l’instant. Déposer une ligne par fichier dans out/demo/voice_fr/NN.mp3 (NN = index), puis `build.py audio` et `build.py final <fmt>` : la musique est atténuée sous la voix. Débit visé ≤ 2,8 mots/s.",
+ "duration": 43.0,
+ "lines": [
+  {
+   "index": 0,
+   "file": "voice_fr/00.mp3",
+   "start": 0.3,
+   "end": 2.0,
+   "text": "Encore la même vidéo ?",
+   "wordsPerSec": 2.35
+  },
+  {
+   "index": 1,
+   "file": "voice_fr/01.mp3",
+   "start": 2.6,
+   "end": 5.8,
+   "text": "Et si la vôtre ne ressemblait à aucune autre ?",
+   "wordsPerSec": 2.81
+  },
+  {
+   "index": 2,
+   "file": "voice_fr/02.mp3",
+   "start": 6.2,
+   "end": 9.4,
+   "text": "Voici dix-huit identités visuelles pour vos vidéos courtes.",
+   "wordsPerSec": 2.5
+  },
+  {
+   "index": 3,
+   "file": "voice_fr/03.mp3",
+   "start": 9.8,
+   "end": 13.6,
+   "text": "Gazette, pixel, néon, aquarelle : à chacune sa signature.",
+   "wordsPerSec": 2.11
+  },
+  {
+   "index": 4,
+   "file": "voice_fr/04.mp3",
+   "start": 14.3,
+   "end": 17.6,
+   "text": "Quarante-cinq shorts le prouvent, tous rendus par du code.",
+   "wordsPerSec": 2.73
+  },
+  {
+   "index": 5,
+   "file": "voice_fr/05.mp3",
+   "start": 18.3,
+   "end": 21.7,
+   "text": "Testées à l’aveugle : dix-huit reconnues sur dix-huit.",
+   "wordsPerSec": 2.06
+  },
+  {
+   "index": 6,
+   "file": "voice_fr/06.mp3",
+   "start": 22.3,
+   "end": 25.6,
+   "text": "Le plus simple ? Donnez un prompt à votre agent.",
+   "wordsPerSec": 2.73
+  },
+  {
+   "index": 7,
+   "file": "voice_fr/07.mp3",
+   "start": 26.0,
+   "end": 28.7,
+   "text": "Il choisit le style, crée votre studio…",
+   "wordsPerSec": 2.59
+  },
+  {
+   "index": 8,
+   "file": "voice_fr/08.mp3",
+   "start": 29.1,
+   "end": 31.0,
+   "text": "… et réalise votre premier épisode.",
+   "wordsPerSec": 2.63
+  },
+  {
+   "index": 9,
+   "file": "voice_fr/09.mp3",
+   "start": 31.3,
+   "end": 34.6,
+   "text": "Puis le deuxième. Le troisième. À votre image.",
+   "wordsPerSec": 2.42
+  },
+  {
+   "index": 10,
+   "file": "voice_fr/10.mp3",
+   "start": 35.0,
+   "end": 38.8,
+   "text": "Dix-huit identités. Quarante-cinq shorts. Tout est open source.",
+   "wordsPerSec": 2.11
+  },
+  {
+   "index": 11,
+   "file": "voice_fr/11.mp3",
+   "start": 39.4,
+   "end": 42.0,
+   "text": "Studio Visual Identity. À vous de jouer.",
+   "wordsPerSec": 2.69
+  }
+ ]
+}
