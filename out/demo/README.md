@@ -1,14 +1,13 @@
 # Vidéo démo « Caméléon » (français, 41 s)
 
 - `demo_16x9.mp4` (1920×1080) et `demo_9x16.mp4` (1080×1920) : 41 s, 30 i/s, H.264 yuv420p, **voix off + son des shorts + musique + bruitages**, −14 LUFS.
-- `demo_16x9_novo.mp4`, `demo_9x16_novo.mp4` : les mêmes sans la voix off.
+- `demo_16x9_novo.mp4`, `demo_9x16_novo.mp4` : les mêmes sans la voix off, produits par `build.py final` (non versionnés).
 - `demo_preview.gif` : 12 premières secondes, muettes, pour le README.
 - `thumb/thumbnail_fr_1280.jpg` (et `_1920`) : la vignette.
 - `planche-demo-fr.jpg` : planche de 12 images de la version 16:9.
 - `narration_fr.json` : le texte de la voix off et son minutage réel ; `sound_fr.json` : les bruitages et les extraits de shorts posés.
 - `voice_fr_raw/demo.mp3` : la voix brute (un seul fichier) ; `voice_fr/00.mp3` … `10.mp3` : une ligne par fichier.
 - `eleven/brief.json` : le cahier des charges d'une musique et de dix bruitages externes (optionnels, voir plus bas).
-- `v1/` : l'ancienne démo anglaise « 14 styles » (51 s), ses sources et ses vignettes.
 
 ## L'idée
 

@@ -1,2 +1,4 @@
 voice_fr_raw/*.wav
 __pycache__/
+demo_*_novo.mp4
+__pycache__/
