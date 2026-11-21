@@ -113,11 +113,19 @@ review (`out/report/decisions.md` § « Survol pixel », `out/report/notes/direc
 - **Voice-over: Gemini « Sulafat »** (owner decision, 2026-11-18), the lot 2 recipe: one `gemini-3.8-flash-tts` call per short through
   API **v1beta** (see `out/report/facts.md`), split into `voice_lines/NN.mp3`, mixed by `tts.py --engine files --replace`
   (`out/report/notes/voix-survol-pixel.md`).
-- Evidence: 2 proof shorts (`explicatif` atoll, `histoire` Machu Picchu), QA ok. Measured recognition: Machu Picchu's nearest neighbour is
+- Evidence: 2 proof shorts (`explicatif` atoll, `histoire` Machu Picchu), QA ok. Global blind judge (2026-11-21, below): its 4 frames form a pure group. Measured recognition: Machu Picchu's nearest neighbour is
   its sibling; the **atoll fails** (nearest aquarelle-conte: blue ocean against green mountain), because colour + edges miss a signature
   that is geometric (perspective, terraces, pixel grid). Render cost 63.9–214.4 s/100 frames on CPU under load (`measuredUnderLoad: true`).
 - History of the passes (detail, A+B+C, Fable retouch, owner decisions, per-pass timings and flicker measurements):
   `out/report/notes/survol-pixel.md`.
+
+## Evidence that the identities are distinct (2026-11-21)
+
+A fresh blind judge with no context received **72 anonymised frames covering all 18 identities** (the cut-paper family represented by
+`papier-decoupe`; 2 shorts × 2 frames per identity) and was asked for 18 groups of 4 by style: **18/18 pure groups, 72/72 frames**
+(`out/report/recognition.json` → `blindJudgeGlobal`, `out/report/comparison.md` § 4 g). The measured colour + edge test (41/45) misses
+the 3 liquid-chrome shorts and the survol-pixel atoll; the judge does not, so those are limits of the measure, not visual confusions.
+Closest neighbours by eye: the dark identities (neon-lab, cosmos-doc, topo-relief, pixel-arcade), separated by type and rendering.
 
 ## Read in this order (≈ 10 minutes)
 

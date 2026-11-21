@@ -575,5 +575,252 @@
   "imagesCorrectlyGrouped": 24,
   "images": 24,
   "notes": "confiance haute partout ; seule hésitation : survol-pixel et pixel-arcade partagent une police pixel, séparés par « terrain 3D de jour, cartouches crème » contre « grille néon sombre ». Limites : titres français visibles, un seul juge, images fixes, images tirées des rendus d'avant les corrections de la revue."
+ },
+ "blindJudgeGlobal": {
+  "method": "Juge agent indépendant (opus, neuf, sans contexte) lancé pendant l'harmonisation (2026-11-21) : 72 images anonymisées couvrant les 18 identités (papier-decoupe pour la famille papier, ses 3 dérivations exclues car proches par construction), 2 shorts par identité (tirés par random.Random(20261121) quand il y en a 3) × 2 images à 35 % et 75 % de la durée de short.mp4, noms aléatoires, clé hors de portée ; consigne : 18 groupes de 4 par style. Images après la passe A+B+C et la retouche Fable de survol-pixel. Images hors dépôt (StudioVisualIdentity-sources/juge-global-2026-11-21).",
+  "seed": 20261121,
+  "pureGroups": 18,
+  "groups": 18,
+  "imagesCorrectlyGrouped": 72,
+  "images": 72,
+  "shortsUsed": [
+   "aquarelle-conte__enfants__ou-vont-les-etoiles-le-jour",
+   "aquarelle-conte__histoire__phare-d-alexandrie",
+   "atlas-grave__geographie__plus-longs-fleuves-du-monde",
+   "atlas-grave__histoire__premier-tour-du-monde-1519-1522",
+   "bauhaus-kinetic__engagement__trouve-l-intrus",
+   "bauhaus-kinetic__explicatif__abeilles-hexagones",
+   "brut-meme__engagement__test-des-3-secondes-stroop",
+   "brut-meme__evenements__pendant-ces-15-secondes-dans-le-monde",
+   "carte-meteo__evenements__28-juin-2019-46-degres-record-de-chaleur",
+   "carte-meteo__geographie__le-mistral-pourquoi-il-souffle-si-fort",
+   "cosmos-doc__evenements__voyager-1-a-un-jour-lumiere",
+   "cosmos-doc__explicatif__pourquoi-venus-plus-chaude-que-mercure",
+   "gazette-1900__evenements__9-novembre-1989-mur-de-berlin",
+   "gazette-1900__histoire__1789-en-20-secondes",
+   "liquid-chrome__abstrait__pendule-de-newton-chrome",
+   "liquid-chrome__engagement__quelle-couleur-remplit-le-verre",
+   "neon-lab__explicatif__effet-papillon-double-pendule",
+   "neon-lab__explicatif__lune-meme-face",
+   "papier-decoupe__explicatif__d-ou-vient-le-mot-sandwich",
+   "papier-decoupe__histoire__la-fourchette-a-fait-scandale",
+   "pastel-diorama__enfants__d-ou-vient-la-pluie",
+   "pastel-diorama__engagement__choisis-ta-boite-renard",
+   "pixel-arcade__abstrait__la-balle-peut-elle-s-echapper",
+   "pixel-arcade__engagement__quelle-couleur-conquiert-l-ecran",
+   "riso-zine__evenements__geminides-j-39",
+   "riso-zine__geographie__5-plus-grands-deserts",
+   "survol-pixel__explicatif__comment-nait-un-atoll",
+   "survol-pixel__histoire__machu-picchu-pourquoi-une-cite-en-escaliers",
+   "swiss-data__evenements__j-272-eclipse-2-aout-2027",
+   "swiss-data__geographie__ou-vivent-8-milliards",
+   "tableau-craie__enfants__comment-une-graine-devient-un-arbre",
+   "tableau-craie__explicatif__pourquoi-le-ciel-est-bleu",
+   "topo-relief__geographie__comment-mesure-t-on-l-everest",
+   "topo-relief__histoire__hannibal-traverse-les-alpes",
+   "trait-continu__enfants__dessine-un-escargot-d-un-seul-trait",
+   "trait-continu__geographie__l-italie-a-la-forme-d-une-botte"
+  ],
+  "notes": "img_8833 is a mid-transition frame showing only a cropped strip and the green mat, so it was assigned to the cut-paper group by elimination and the mat texture rather than by full content. The liquid-chrome group joins two quite different scenes (test tubes vs Newton's cradle), linked by the shared glossy iridescent 3D rendering and black ground. The dark groups (neon lab, cosmos, topo relief, pixel arcade) are neighbours in palette but separated cleanly by type and rendering technique. Every other group was unambiguous.",
+  "judgeGroups": [
+   {
+    "style": "Chalkboard: dark green slate, hand-drawn chalk lines, handwritten chalk captions, wooden chalk ledge at the bottom",
+    "confidence": 0.97,
+    "identities": [
+     "tableau-craie",
+     "tableau-craie",
+     "tableau-craie",
+     "tableau-craie"
+    ],
+    "pure": true
+   },
+   {
+    "style": "Swiss data editorial: cream ground, red/black grotesk, numbered section header with rule, bar charts and waffle grids",
+    "confidence": 0.95,
+    "identities": [
+     "swiss-data",
+     "swiss-data",
+     "swiss-data",
+     "swiss-data"
+    ],
+    "pure": true
+   },
+   {
+    "style": "Liquid chrome 3D: black ground, glossy iridescent glass/chrome renders (test tubes, Newton's cradle), wide rounded display type",
+    "confidence": 0.93,
+    "identities": [
+     "liquid-chrome",
+     "liquid-chrome",
+     "liquid-chrome",
+     "liquid-chrome"
+    ],
+    "pure": true
+   },
+   {
+    "style": "Pastel diorama: pale pink ground, soft 3D clay islands with cute characters, rounded white pill labels",
+    "confidence": 0.97,
+    "identities": [
+     "pastel-diorama",
+     "pastel-diorama",
+     "pastel-diorama",
+     "pastel-diorama"
+    ],
+    "pure": true
+   },
+   {
+    "style": "Risograph zine: off-white paper, blue/pink/yellow misregistered riso prints, typewriter mono on yellow highlight, handwritten blue notes",
+    "confidence": 0.95,
+    "identities": [
+     "riso-zine",
+     "riso-zine",
+     "riso-zine",
+     "riso-zine"
+    ],
+    "pure": true
+   },
+   {
+    "style": "Watercolour storybook: textured watercolour landscapes fading into cream paper, serif title with small sans caption",
+    "confidence": 0.96,
+    "identities": [
+     "aquarelle-conte",
+     "aquarelle-conte",
+     "aquarelle-conte",
+     "aquarelle-conte"
+    ],
+    "pure": true
+   },
+   {
+    "style": "Weather map: pale blue sea, soft green land, wind trails/isobars, white cards with coloured left bar, temperature pills",
+    "confidence": 0.97,
+    "identities": [
+     "carte-meteo",
+     "carte-meteo",
+     "carte-meteo",
+     "carte-meteo"
+    ],
+    "pure": true
+   },
+   {
+    "style": "Bauhaus kinetic: cream grid paper, primary red/yellow/blue/black flat geometry, bold geometric sans, square/circle/triangle footer",
+    "confidence": 0.96,
+    "identities": [
+     "bauhaus-kinetic",
+     "bauhaus-kinetic",
+     "bauhaus-kinetic",
+     "bauhaus-kinetic"
+    ],
+    "pure": true
+   },
+   {
+    "style": "Cosmos documentary: black space, photoreal planets/probes with lens flare, condensed tall grey/white type, spaced caps labels",
+    "confidence": 0.95,
+    "identities": [
+     "cosmos-doc",
+     "cosmos-doc",
+     "cosmos-doc",
+     "cosmos-doc"
+    ],
+    "pure": true
+   },
+   {
+    "style": "Brut meme: black ground, huge yellow condensed impact numerals/words, red tag 'EN DIRECT/ROUND', hazard-stripe progress bar",
+    "confidence": 0.95,
+    "identities": [
+     "brut-meme",
+     "brut-meme",
+     "brut-meme",
+     "brut-meme"
+    ],
+    "pure": true
+   },
+   {
+    "style": "Neon lab: dark navy, glowing cyan/magenta neon lines, 'LABO/0x' mono header, pink sans titles, scientific mini plots",
+    "confidence": 0.95,
+    "identities": [
+     "neon-lab",
+     "neon-lab",
+     "neon-lab",
+     "neon-lab"
+    ],
+    "pure": true
+   },
+   {
+    "style": "Continuous line: full-bleed orange ground, grey plate with rulers and cursors, single stair-stepped graphite line drawing",
+    "confidence": 0.97,
+    "identities": [
+     "trait-continu",
+     "trait-continu",
+     "trait-continu",
+     "trait-continu"
+    ],
+    "pure": true
+   },
+   {
+    "style": "Vintage newspaper 'Le Petit Crieur': aged paper, heavy serif masthead and headlines, engraving illustration, typewriter dispatch, red stamp",
+    "confidence": 0.98,
+    "identities": [
+     "gazette-1900",
+     "gazette-1900",
+     "gazette-1900",
+     "gazette-1900"
+    ],
+    "pure": true
+   },
+   {
+    "style": "Pixel arcade: dark navy, chunky pixel font with coloured score row, pixel-sprite physics/territory simulations in blue frames",
+    "confidence": 0.95,
+    "identities": [
+     "pixel-arcade",
+     "pixel-arcade",
+     "pixel-arcade",
+     "pixel-arcade"
+    ],
+    "pure": true
+   },
+   {
+    "style": "Topographic relief: dark green-black, glowing gold/cyan contour-line 3D terrain, coordinate/altitude mono header, gold small caps",
+    "confidence": 0.96,
+    "identities": [
+     "topo-relief",
+     "topo-relief",
+     "topo-relief",
+     "topo-relief"
+    ],
+    "pure": true
+   },
+   {
+    "style": "Cut paper on green cutting mat: graduated grid mat, slanted paper strips with bold display type, handwritten paper cards and sticky notes",
+    "confidence": 0.92,
+    "identities": [
+     "papier-decoupe",
+     "papier-decoupe",
+     "papier-decoupe",
+     "papier-decoupe"
+    ],
+    "pure": true
+   },
+   {
+    "style": "16-bit pixel-art flyover: perspective terraced voxel-like world, blue sea, puffy pixel clouds, small cream cartouche labels",
+    "confidence": 0.96,
+    "identities": [
+     "survol-pixel",
+     "survol-pixel",
+     "survol-pixel",
+     "survol-pixel"
+    ],
+    "pure": true
+   },
+   {
+    "style": "Engraved atlas plate: parchment, dashed double border, red small-caps 'PLANCHE' header, classical serif, hatched maps with compass rose",
+    "confidence": 0.97,
+    "identities": [
+     "atlas-grave",
+     "atlas-grave",
+     "atlas-grave",
+     "atlas-grave"
+    ],
+    "pure": true
+   }
+  ]
  }
 }
