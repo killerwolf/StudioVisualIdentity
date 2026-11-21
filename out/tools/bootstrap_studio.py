@@ -117,8 +117,9 @@ Configuration: `studio.json`. Language of the channel: **{language}**. Audience:
 2. Edit **`out/identities/{channel_id}/identity.md`** (16 sections) and **`tokens.json`**: new name and promise, audience-dependent
    values (pace, words per beat, text size, voice), language. **Keep the `signatureToPreserve`** listed in `reference/index-entries.json`
    (type pair, palette core, signature transition) — that is what makes the look recognisable. Remove the BROUILLON banner.
-3. Cast the voice (`studio.json` → `voice`). The exploration used Fish Audio "Arnold" (French male storyteller); another language or
-   audience needs another voice. Only the line text is sent to TTS (a style prefix is read aloud).
+3. Cast the voice (`studio.json` → `voice`). The exploration used Fish Audio "Arnold" (French male storyteller, 31 shorts) and
+   Gemini "Sulafat" (warm French female voice, 14 later shorts: one `gemini-3.8-flash-tts` call per short through API v1beta, split
+   per line, see `out/report/notes/voix-lot2.md` in the source repository); another language or audience needs another voice. Only the line text is sent to TTS (a style prefix is read aloud).
 4. Update the scene templates in `templates/<family>/src/` so their hard-coded colours, fonts and strings match your tokens
    (scene code does **not** read `tokens.json`; grep the template for the old hex values, font names and French UI strings).
 

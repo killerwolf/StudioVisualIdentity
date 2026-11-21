@@ -19,7 +19,8 @@ Most prose is in **French** (identity.md, recipes, reports, tool docstrings). JS
 - **Running a production channel** needs more than a style: writing, validation, voice, review, publishing and scheduling. Two ways:
   - you already have a studio template (for the owner of this repository, the private **StudioGabarit**, which runs on the Mac and is piloted from Notion): use this repository at its *design system* phase to pick 2–3 candidate styles, then port the chosen signature into that template's own render engine;
   - you don't: `bootstrap_studio.py` below gives a lightweight studio (identity + scene templates + render toolkit) to prototype a style and produce episodes by hand.
-- **Shared skills** for any studio (sound design, Gemini voices, Notion piloting) live in [killerwolf/skills](https://github.com/killerwolf/skills).
+- **Shared skills** for any studio (sound design, Notion piloting) live in [killerwolf/skills](https://github.com/killerwolf/skills). The Gemini
+  voice recipe used here (one call per short, API v1beta, split per line) is documented in `out/report/notes/voix-lot2.md` and `out/report/facts.md`.
 
 ## Starting a shorts studio from this repository (bootstrap)
 
