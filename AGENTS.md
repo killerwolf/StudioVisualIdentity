@@ -2,14 +2,14 @@
 
 ## What this repository is
 
-An **exploratory study of visual and cinematic identities for vertical short videos** (TikTok, Reels, Shorts; 1080×1920, 30 fps, 12–19 s).
+An **exploratory study of visual and cinematic identities for vertical short videos** (TikTok, Reels, Shorts; 1080×1920, 30 fps; 12–20 s; up to 45 s for the `paroles` lyric videos, the narrated `lyrics-chemin` shorts and one composition trial, whose formats allow 60 s).
 It contains **20 identities, 23 declinations** (the 14 of the original campaign, the cut-paper identity « Papier découpé » with its 3 derivations added on 2026-11-04, the 2 identities of
 lot 2 of the identity factory added on 2026-11-05, « Survol pixel » added on 2026-11-18, and `lyrics-punchy` and `lyrics-chemin` added on 2026-11-19, see below), each documented as a design system and **proven by 1–4 real shorts rendered by code** (50 shorts in total),
 plus the open-source rendering toolkit that made them. Since 2026-11-20 the catalogue is also described as **bricks**
 (habillage × mécanique × format = recette, see « Composing from bricks » below): 29 recipes, 25 habillages, 19 mécaniques,
 4 formats, and 3 more shorts born from the composition matrix (53 shorts in `out/shorts/`).
 
-**Licence**: code under MIT (`LICENSE`), the repository's own content under CC BY 4.0 with listed exclusions (`LICENSE-CONTENT.md`: fonts, emoji, AI voices, the paper engine's trial audio); third parties in `NOTICE.md`. **Format**: every identity is proven in vertical 1080×1920 only; 16:9 and long form are not covered yet.
+**Licence**: code under MIT (`LICENSE`), the repository's own content under CC BY 4.0 with listed exclusions (`LICENSE-CONTENT.md`: fonts, emoji, AI voices, the paper engine's trial audio); third parties in `NOTICE.md`. **Format**: every identity is proven in vertical 1080×1920 only; 16:9 and long videos (over 60 s) are not covered yet.
 
 **It is a menu with evidence, not a finished brand.** You are expected to read it and then **define your own identity**:
 adopt one identity, blend several, or adapt one to your audience, language and content. Nothing here is a production channel identity.
@@ -126,11 +126,15 @@ review (`out/report/decisions.md` § « Survol pixel », `out/report/notes/direc
 
 ## Evidence that the identities are distinct (2026-11-21)
 
-A fresh blind judge with no context received **72 anonymised frames covering all 18 identities** (the cut-paper family represented by
+A fresh blind judge with no context received **72 anonymised frames covering the 18 identities of that date** (the cut-paper family represented by
 `papier-decoupe`; 2 shorts × 2 frames per identity) and was asked for 18 groups of 4 by style: **18/18 pure groups, 72/72 frames**
 (`out/report/recognition.json` → `blindJudgeGlobal`, `out/report/comparison.md` § 4 g). The measured colour + edge test (41/45) misses
 the 3 liquid-chrome shorts and the survol-pixel atoll; the judge does not, so those are limits of the measure, not visual confusions.
 Closest neighbours by eye: the dark identities (neon-lab, cosmos-doc, topo-relief, pixel-arcade), separated by type and rendering.
+Not judged: `lyrics-punchy`, `lyrics-chemin` and the 3 shorts born from the composition matrix (they come from another line of work,
+merged on 2026-11-22). `recognition.json` (41/45) was not rerun either: by design of the bricks migration it stays the measure on the
+45 shorts; the two-stage measure `out/report/recognition-briques.json` covers all 53 shorts (habillage 42/47 nearest neighbour,
+« sans pair » shorts excluded; mécanique 21/51).
 
 ## Lyrics punchy (added 2026-11-19, status `added`, unranked)
 
@@ -217,8 +221,8 @@ it does **not** depend on content family. For a given family, start from the ide
 
 | Family | Proven by |
 |---|---|
-| `explicatif` (explainer / science) | bauhaus-kinetic (6), tableau-craie (7), survol-pixel (10), neon-lab (15), cosmos-doc (16); cut-paper family (added) |
-| `histoire` (history) | gazette-1900 (2), survol-pixel (10), topo-relief (12), atlas-grave (13), aquarelle-conte (14); cut-paper family (added) |
+| `explicatif` (explainer / science) | bauhaus-kinetic (6), tableau-craie (7), survol-pixel (10), neon-lab (15), cosmos-doc (16); cut-paper family (added); lyrics-chemin (added, unranked, narrated, 25–45 s) |
+| `histoire` (history) | gazette-1900 (2), survol-pixel (10), topo-relief (12), atlas-grave (13), aquarelle-conte (14); cut-paper family (added); lyrics-chemin (added, unranked, narrated, 25–45 s) |
 | `geographie` (geography) | swiss-data (1), carte-meteo (5), riso-zine (8), trait-continu (9), topo-relief (12), atlas-grave (13) |
 | `evenements` (on this day / countdowns) | swiss-data (1), gazette-1900 (2), brut-meme (4), carte-meteo (5), riso-zine (8), cosmos-doc (16) |
 | `engagement` (quiz / vote / bet) | pixel-arcade (3), brut-meme (4), bauhaus-kinetic (6), pastel-diorama (11), liquid-chrome (17) |
@@ -253,7 +257,8 @@ Suggested starting deltas, to validate with your own tests:
 1. **Write your brief**: audience (age, language), content families, cadence, budget per short (render time), voice.
 2. **Shortlist** in `index.json` by `curation.audience`, `familiesProven` and `renderCostSecPer100Frames`.
    Content families used throughout: `abstrait` (abstract/satisfying), `enfants` (kids), `explicatif` (explainer/science),
-   `histoire` (history), `geographie` (geography), `evenements` (events/on-this-day/countdowns), `engagement` (quiz/vote/bet).
+   `histoire` (history), `geographie` (geography), `evenements` (events/on-this-day/countdowns), `engagement` (quiz/vote/bet),
+   `paroles` (muted lyric video, the song is added in the app; since 2026-11-19).
 3. **Decide: adopt, blend or adapt.**
    - *Adopt*: copy the identity's `tokens.json` and `identity.md`, rename, change content.
    - *Blend*: keep **one** identity's `signatureToPreserve` intact (its type pair, palette core and signature transition — that is what
@@ -286,7 +291,8 @@ Suggested starting deltas, to validate with your own tests:
 
 - **Canvas and safe areas**: 1080×1920, 30 fps, H.264 yuv420p. Keep anything important out of the top 220 px, bottom 320 px and right
   120 px (TikTok UI); left margin 60–72 px. Body text ≥ 54 px, titles ≥ 90 px, AA contrast. Hook visible within 1 s.
-- **Voice-over, state at 50 shorts** (31 Arnold + 14 Sulafat + 2 ElevenLabs for the narrated `lyrics-chemin` shorts + 3 muted `paroles` shorts): 31 campaign shorts voiced with Fish Audio "Arnold" (below); the 8 cut-paper shorts declare and
+- **Voice-over, state at 50 shorts** (31 Arnold + 14 Sulafat + 2 ElevenLabs for the narrated `lyrics-chemin` shorts + 3 muted `paroles` shorts;
+  the 3 composition shorts reuse existing voices: ElevenLabs for `chemin-craie-verte`, Arnold for `chemin-grille-suisse`, Sulafat for `papier-plan-bleu`): 31 campaign shorts voiced with Fish Audio "Arnold" (below); the 8 cut-paper shorts declare and
   mix the Gemini voice "Sulafat" (mp3 reused from another studio, mixed by the cut-paper engine, not `tts.py`); the **4 lot 2 shorts
   use Sulafat too** (owner decision: Fish Audio credits ran out before Arnold could be recorded): 4 Gemini calls in all, one per short,
   split into `voice_lines/NN.mp3`, mixed by `tts.py --engine files` (see `out/report/notes/voix-lot2.md`). `tts.py --engine files`

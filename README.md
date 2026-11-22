@@ -4,7 +4,7 @@
 
 [![Un prompt, 18 styles visuels pour vos vidéos verticales](out/demo/thumb/hero_fr.jpg)](out/demo/demo_16x9.mp4)
 
-**Décrivez votre chaîne à votre agent IA : il vous propose un style parmi 18, crée votre studio et réalise votre première vidéo.**
+**Décrivez votre chaîne à votre agent IA : il vous propose un style parmi 20, crée votre studio et réalise votre première vidéo.**
 
 Pour les vidéos **verticales (9:16)** : TikTok, Reels, YouTube Shorts. Le 16:9 et le format long ne sont pas encore couverts.
 
@@ -37,9 +37,9 @@ Le dépôt est écrit en français, avec un manuel pour agents (`AGENTS.md`) en 
 
 ## Ce que vous obtenez
 
-- **18 styles complets** : couleurs, typographies, mouvements, transitions, structure d'une vidéo, sons. Chacun est décrit dans une fiche que votre agent sait lire. Le papier découpé existe en 4 variantes.
-- **45 vidéos d'exemple**, toutes en 1080×1920. Les images et les mouvements sont rendus par du code, sans banque d'images. Les voix off sont générées par Fish Audio (31 vidéos) et Gemini (14). Restent quelques éléments de tiers : polices libres, emoji Twemoji, musique d'essai du moteur papier, musique ElevenLabs de la démo. Tout est détaillé dans [`NOTICE.md`](NOTICE.md).
-- **Des styles vraiment différents** : un second agent IA, sans contexte, a reçu 72 images anonymes des 18 styles avec la consigne d'en faire 18 groupes de 4. Il les a tous bien regroupés. Protocole et résultats : [`out/report/comparison.md`](out/report/comparison.md) § 4 g.
+- **20 styles complets** : couleurs, typographies, mouvements, transitions, structure d'une vidéo, sons. Chacun est décrit dans une fiche que votre agent sait lire. Le papier découpé existe en 4 variantes.
+- **53 vidéos d'exemple** (50 pour les styles, 3 essais de composition), toutes en 1080×1920. Les images et les mouvements sont rendus par du code, sans banque d'images. Les voix off sont générées par Fish Audio (32 vidéos), Gemini (15) et ElevenLabs (3) ; les 3 vidéos de paroles sont muettes (la chanson s'ajoute dans l'appli). Restent quelques éléments de tiers : polices libres, emoji Twemoji, musique d'essai du moteur papier, musique ElevenLabs de la démo. Tout est détaillé dans [`NOTICE.md`](NOTICE.md).
+- **Des styles vraiment différents** : un second agent IA, sans contexte, a reçu 72 images anonymes des 18 premiers styles avec la consigne d'en faire 18 groupes de 4. Il les a tous bien regroupés. Protocole et résultats : [`out/report/comparison.md`](out/report/comparison.md) § 4 g.
 - **Un studio prêt à produire** : modèles de scènes, rendu image par image, voix off et sons mixés, contrôle qualité.
 - **Open source** : le code est sous licence MIT ([`LICENSE`](LICENSE)), le contenu sous CC BY 4.0, avec des exclusions listées dans [`LICENSE-CONTENT.md`](LICENSE-CONTENT.md).
 
@@ -84,7 +84,7 @@ Vue d'ensemble : [`out/report/directions-contact-sheet.jpg`](out/report/directio
 ## Pour aller plus loin
 
 - [`AGENTS.md`](AGENTS.md) : le guide détaillé pour les agents (en anglais).
-- [`out/identities/index.json`](out/identities/index.json) : les 18 styles en données (couleurs, polices, public conseillé, coût de rendu).
+- [`out/identities/index.json`](out/identities/index.json) : les 20 styles en données (couleurs, polices, public conseillé, coût de rendu).
 - [`out/report/`](out/report/README.md) : le rapport complet de l'exploration, comparaisons et tests à l'aveugle compris.
 - **Créer de nouveaux styles** : le skill Claude Code `fabrique-identites` (`.claude/skills/fabrique-identites/`) les fait fabriquer par des sous-agents, à partir du [catalogue des librairies](out/library-cards/catalogue.md).
 - **Sound design** : le skill [`sound-design`](https://github.com/killerwolf/skills/tree/main/skills/sound-design) du plugin `studio` (`claude plugin marketplace add killerwolf/skills` puis `claude plugin install studio@killerwolf`).
