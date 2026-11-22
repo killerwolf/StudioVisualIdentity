@@ -78,6 +78,9 @@ def voice_of(nr, sj):
     if snd.get('type') == 'none' or snd.get('silentTrack'):
         # vidéo de paroles rendue muette : la chanson (hors dépôt) est ajoutée dans l'appli à la publication
         return "muet ici : la chanson est ajoutée dans l'appli à la publication (hors dépôt)", False
+    if snd.get('type') == 'music' and not snd.get('voice'):
+        # vidéo de paroles chantée (lyrics-chemin « I Fold ») : chanson générée incluse dans la vidéo, pas de voix off
+        return f"chanson incluse : {snd.get('musicSource') or 'musique générée'}", False
     if not snd.get('voice'):
         planned = str(snd.get('voicePlanned') or nr.get('voice') or 'Arnold')
         # voix pas encore décidée (ex. « à décider par le propriétaire (…) ») -> « voix non enregistrée »
@@ -168,7 +171,7 @@ def build_meta(ids, also=None):
         'recogIntra': rec.get('meanIntra'), 'recogInter': rec.get('meanInter'), 'recogRatio': rec.get('ratioIntraOverInter'),
         'recogFails': [{'short': r['short'], 'nearest': r['nearest'], 'distance': r['distance']} for r in fails],
         'blindJudge14': (rec.get('blindJudge14') or {}).get('pureGroups'),
-        'voiced': sum(1 for s in shorts + comp_voice if s['voiced']), 'voices': voices, 'muted': sum(1 for s in shorts + comp_voice if not s['voiced']),
+        'voiced': sum(1 for s in shorts + comp_voice if s['voiced']), 'voices': voices, 'muted': sum(1 for s in shorts + comp_voice if not s['voiced'] and s['voice'].startswith('muet')),
         'qaMissing': sorted((shown | comp) - set(qa_by)), 'recogMissing': sorted(shown - {r['short'] for r in rec.get('rows', [])}),
         'shortsAll': len(shown | comp), 'shortsComposes': len(comp - shown),
         'briques': index_briques()['counts']['briques'], 'recogBriques': reconnaissance_briques(),

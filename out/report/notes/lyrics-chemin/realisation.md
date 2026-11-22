@@ -53,3 +53,22 @@ Après correction, `chemin_audit.mjs` ne relève **aucune** erreur, sur le rempl
 refrain). Au-delà de 19,5 s les mots et les temps viennent de la transcription automatique, **non vérifiés à l'oreille**. Rendue par
 lien symbolique dans `tmp/` du short (ignoré par git). Sorties : `chemin-paroles-muette.mp4` et `apercu_chemin_avec_son.mp4`
 (audio local mixé), dans ce dossier hors dépôt ; rien de ces fichiers n'est versionné.
+
+## 5. Versions chantées « I Fold » (2026-11-22)
+
+Nos paroles de remplissage « Monday's Draft » ont été mises en musique par deux générateurs : **ElevenLabs Music** et **Google Lyria 3.5**
+(appelé par treg). Deux shorts, `lyrics-chemin__paroles__i-fold-elevenlabs` (28,8 s, 152 BPM, extrait 5,87–34,70 s du morceau) et
+`lyrics-chemin__paroles__i-fold-lyria` (22,1 s, 155 BPM, extrait 0–18,52 s, 1,55 s de pré-roulé). Même scène que claudes-plan, même
+bateau, même habillage `plan-bleu` : seuls les temps changent.
+
+- **Calage** : trois passes faster-whisper sur l'extrait (small.en et medium.en avec les paroles en amorce, small.en sans) ; pour chaque
+  mot, la médiane des passes, ou un temps forcé (`--fix`) quand les passes divergent ou ratent un mot (4 mots chez ElevenLabs, 1 chez Lyria).
+  `gen_chemin.py` reprend la structure du remplissage (unités, arêtes, cadrages, types de transition) et recalcule les temps ;
+  `align.txt` garde le détail. Rejouer `--etape caler` redonne `chemin.json` à l'identique.
+- **Son** : extrait, fondus (0,15 s / 0,4 s), pré-roulé muet, −14 LUFS et −1,5 dBTP (`outils/audio.sh`), inclus dans `short.mp4`.
+  C'est un écart au format `paroles-muet` (écrit dans `short.json`, `formatEcart`) : les paroles sont à nous, la musique est générée,
+  rien n'oblige à publier muet. Les mp3 restent hors dépôt (conditions des fournisseurs).
+- **Contrôle** : `chemin_audit.mjs` relève 3 cadrages (ElevenLabs) et 8 (Lyria) tenus moins de 0,5 s. Les deux voix chantent plus serré
+  que le morceau test ; laissés tels quels. Lyria est plus court : zoom arrière sur 4 temps au lieu de 8.
+- **Ce qu'on en tire** : le moteur prend un nouvel enregistrement du même texte sans toucher à la scène ; le travail est dans le calage
+  (transcription, quelques temps forcés à l'oreille). Une chanson générée permet de montrer la vidéo avec le son, sans droits de tiers.
