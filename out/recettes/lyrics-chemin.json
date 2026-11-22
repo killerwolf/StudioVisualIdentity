@@ -23,7 +23,9 @@
  "dossier": "out/identities/lyrics-chemin/",
  "identite": "lyrics-chemin",
  "shorts": [
-  "out/shorts/lyrics-chemin__paroles__claudes-plan"
+  "out/shorts/lyrics-chemin__paroles__claudes-plan",
+  "out/shorts/lyrics-chemin__paroles__i-fold-elevenlabs",
+  "out/shorts/lyrics-chemin__paroles__i-fold-lyria"
  ],
  "confusableWith": [
   "atlas-grave",

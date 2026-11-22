@@ -1,0 +1,224 @@
+{
+ "note": "i-fold lyria : lyria.mp3 [0, 18.52] s, pré-roulé 1.55 s",
+ "titre": "MONDAY'S DRAFT",
+ "langue": "en",
+ "sens": "ltr",
+ "bpm": 155.0,
+ "t0": 0,
+ "duree": 22.098,
+ "dessin": "bateau",
+ "zoomArriere": [
+  19.35,
+  20.898
+ ],
+ "respiration": {
+  "x": 536,
+  "y": 474,
+  "zoom": 2.3,
+  "angle": -3,
+  "arrivee": 13.623,
+  "temps": 3.97
+ },
+ "lignes": [
+  {
+   "arete": "titre",
+   "u": [
+    ["MONDAY'S", 0, 0.566],
+    ["DRAFT", 0.566, 1.383]
+   ],
+   "cad": [
+    [
+     0,
+     1
+    ]
+   ],
+   "arr": 0,
+   "temps": 0,
+   "kind": "cut",
+   "maxPx": 250
+  },
+  {
+   "arete": "voileG",
+   "u": [
+    ["I FOLD", 1.72, 2.01],
+    ["MY DAY", 2.01, 2.29],
+    ["IN DRAFT MODE", 2.29, 3.09]
+   ],
+   "cad": [
+    [
+     0,
+     1
+    ],
+    [
+     2
+    ]
+   ],
+   "arr": 1.53,
+   "temps": 1.0,
+   "kind": "whip"
+  },
+  {
+   "arete": "voileD",
+   "u": [
+    ["I DRAW", 3.4, 3.61],
+    ["LINES", 3.61, 3.83],
+    ["BUT NOT", 3.83, 4.19],
+    ["FOR SHOW", 4.19, 4.63]
+   ],
+   "cad": [
+    [0, 1, 2],
+    [
+     3
+    ]
+   ],
+   "minPx": 104,
+   "arr": 3.38,
+   "temps": 1.524,
+   "kind": "pivot"
+  },
+  {
+   "arete": "pontD",
+   "u": [
+    ["I'VE BEEN", 4.91, 5.13],
+    ["UP SINCE", 5.13, 5.53],
+    ["5 A.M.", 5.53, 6.17]
+   ],
+   "cad": [
+    [
+     0,
+     1
+    ],
+    [
+     2
+    ]
+   ],
+   "arr": 4.89,
+   "temps": 1.017,
+   "kind": "pivot"
+  },
+  {
+   "arete": "coqueG",
+   "u": [
+    ["PRINTER DOWN", 6.41, 6.87],
+    ["CUZ NO INK", 6.87, 7.73]
+   ],
+   "cad": [
+    [
+     0
+    ],
+    [
+     1
+    ]
+   ],
+   "arr": 6.357,
+   "temps": 1.0,
+   "kind": "whip",
+   "annotation": {
+    "type": "croix",
+    "unite": 0,
+    "t": 7.1,
+    "d": 0.3
+   }
+  },
+  {
+   "arete": "quille",
+   "u": [
+    ["DRAFT MODE'S", 7.89, 8.55],
+    ["MY SPARE KEYS", 8.55, 9.31]
+   ],
+   "cad": [
+    [
+     0
+    ],
+    [
+     1
+    ]
+   ],
+   "arr": 7.87,
+   "temps": 1.199,
+   "kind": "pivot"
+  },
+  {
+   "arete": "coqueD",
+   "u": [
+    ["MAKE ANOTHER", 9.61, 9.99],
+    ["NOTE.TXT", 9.99, 10.58]
+   ],
+   "cad": [
+    [
+     0
+    ],
+    [
+     1
+    ]
+   ],
+   "arr": 9.529,
+   "temps": 1.3,
+   "kind": "pivot"
+  },
+  {
+   "arete": "fanion",
+   "u": [
+    ["AND YET", 11.01, 12.77]
+   ],
+   "cad": [
+    [
+     0
+    ]
+   ],
+   "arr": 10.82,
+   "temps": 1.0,
+   "kind": "whip",
+   "annotation": {
+    "type": "fanion",
+    "t": 10.73,
+    "d": 0.7
+   }
+  },
+  {
+   "arete": "pontG",
+   "u": [
+    ["WRONG", 14.35, 14.78],
+    ["FOLD", 14.78, 16.48]
+   ],
+   "cad": [
+    [
+     0,
+     1
+    ]
+   ],
+   "arr": 14.16,
+   "temps": 1.0,
+   "kind": "whip",
+   "annotation": {
+    "type": "boucle",
+    "t": 15.12,
+    "d": 0.45
+   }
+  },
+  {
+   "arete": "vague1",
+   "u": [
+    ["SUCH A LOT", 17.3, 17.93],
+    ["OF WRONG", 17.93, 18.4],
+    ["FOLDS", 18.4, 19.05]
+   ],
+   "cad": [
+    [
+     0,
+     1
+    ],
+    [
+     2
+    ]
+   ],
+   "arr": 17.11,
+   "temps": 0.57,
+   "kind": "whip"
+  }
+ ],
+ "refrain": {
+  "u": [],
+  "rangs": []
+ }
+}

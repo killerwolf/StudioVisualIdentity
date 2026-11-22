@@ -1,0 +1,76 @@
+{
+ "identity": "lyrics-chemin",
+ "recette": "lyrics-chemin",
+ "habillage": "plan-bleu",
+ "mecanique": "trace-chemin",
+ "format": "paroles-muet",
+ "formatEcart": "Vidéo chantée, pas muette : la chanson est dans short.mp4. Aucun format ne décrit ce cas (paroles-muet suppose une piste silencieuse et la chanson ajoutée dans l'appli). On garde paroles-muet pour la durée (10–60 s) et les règles de paroles ; seul le son diffère.",
+ "family": "paroles",
+ "title": "I Fold — « Monday's Draft » chanté (Google Lyria 3.5) : nos paroles de remplissage sur le bateau en papier, plan bleu",
+ "hook": "Image 0 : MONDAY'S DRAFT en très gros plan sur le nom de la coque, en jaune, pendant que la chanson démarre",
+ "duration": 22.1,
+ "libraries": [
+  "@fontsource/barlow-condensed 5.3.0",
+  "@fontsource/jetbrains-mono",
+  "Canvas 2D (render.mjs, Chrome par playwright-core)",
+  "faster-whisper (small.en, medium.en : mots horodatés)",
+  "ffmpeg"
+ ],
+ "seed": "textures à graine fixe (3, 7, 11, 19, 23) ; aucun hasard dépendant du temps",
+ "renderTimeSec": null,
+ "renderNote": "render.mjs sur la scène de lyrics-chemin__paroles__claudes-plan, 663 images ; temps de rendu non relevé. short.mp4 = le maître (crf 18, hors dépôt) réencodé en crf 26, AAC 160 kb/s, faststart, 11,3 Mo, PSNR 40 dB avec le maître.",
+ "data": "src/chemin.json (temps recalculés sur le morceau par src/refaire.sh et outils/gen_chemin.py, à partir de out/shorts/lyrics-chemin__paroles__claudes-plan/src/paroles.remplissage.json) + out/shared/chemin-moteur/dessins/bateau.json",
+ "tempo": {
+  "bpm": 155.0,
+  "t0": 0.0,
+  "source": "choisi à l'oreille sur le morceau (règle la durée des transitions)"
+ },
+ "structure": [
+  {
+   "t": 0,
+   "beat": "titre MONDAY'S DRAFT sur la coque"
+  },
+  {
+   "t": 5.7,
+   "beat": "couplet : voiles, pont droit, fouetté vers le flanc gauche, quille, flanc droit"
+  },
+  {
+   "t": 13.623,
+   "beat": "respiration : recul, le dessin se devine"
+  },
+  {
+   "t": 19.35,
+   "beat": "zoom arrière pendant que le refrain s'écrit dans la mer"
+  },
+  {
+   "t": 20.898,
+   "beat": "image d'ensemble : le bateau en papier sur la feuille scotchée au sol"
+  }
+ ],
+ "engagement": {
+  "mechanic": "lecture de la chanson au rythme et révélation finale du dessin",
+  "cta": null
+ },
+ "loopable": false,
+ "sound": {
+  "type": "music",
+  "voice": false,
+  "music": "chanson générée par IA : Google Lyria 3.5, appelé par treg (morceau généré à partir de nos paroles de remplissage « Monday's Draft ») ; extrait [0 ; 18,52] s du morceau, 1,55 s de pré-roulé muet, fondus, −14 LUFS / −1,5 dBTP (outils/audio.sh)",
+  "musicSource": "Google Lyria 3.5",
+  "musicLicence": "suit les conditions du fournisseur (voir LICENSE-CONTENT.md) ; le mp3 reste hors dépôt",
+  "lyrics": "« Monday's Draft » : nos paroles de remplissage (anglais), celles de lyrics-chemin__paroles__claudes-plan ; aucune parole de tiers",
+  "silentTrack": false,
+  "measured": "−14,1 LUFS, crête −3,4 dBFS"
+ },
+ "qualityChecks": {
+  "stillsReviewed": true,
+  "textMinPx": 93,
+  "safeAreaOk": true,
+  "audit": "out/tools/chemin_audit.mjs (22/11/2026, src/audit.json) : 8 cadrages tenus moins de 0,5 s, faute de temps dans le chant rapide (« FOR SHOW » 0,31 s, « I'VE BEEN UP SINCE » 0,48 s, « 5 A.M. » 0,44 s, « PRINTER DOWN » 0,33 s, « DRAFT MODE'S » 0,42 s, « MY SPARE KEYS » 0,50 s, « MAKE ANOTHER » 0,31 s, « NOTE.TXT » 0,44 s) ; une unité sans corps relevé (« 1000000000–0 px ») est un passage pré-posé jamais cadré seul. Laissés tels quels : la règle de 0,5 s vient de la preuve, le chant de ce morceau est plus serré.",
+  "maxWordsOnScreen": 5
+ },
+ "notes": "Une des deux versions « I Fold » : même dessin (bateau), même habillage (plan-bleu), mêmes paroles, deux musiques générées (ElevenLabs Music, Google Lyria 3.5). Seuls les temps changent. L'autre version : lyrics-chemin__paroles__i-fold-elevenlabs. Les outils (refaire.sh, outils/) sont dans le src/ de la version elevenlabs.",
+ "reproduce": "bash out/shorts/lyrics-chemin__paroles__i-fold-elevenlabs/src/refaire.sh lyria <lyria.mp3 hors dépôt> --bpm 155 --cut-in 0 --cut-out 18.52 --preroll 1.55 --zoom-beats 4 --tail 1.2 --fix i#0=0.17 (voir src/README.md)",
+ "language": "en",
+ "date": "2026-11-22"
+}
