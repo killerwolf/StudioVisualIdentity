@@ -1,0 +1,9 @@
+{
+  "name": "moteur-gpu-3d-essais",
+  "private": true,
+  "type": "module",
+  "description": "Essais de pile (phase 0) : Chrome sans affichage et headless-gl. Versions exactes.",
+  "dependencies": {
+    "playwright-core": "1.65.1"
+  }
+}

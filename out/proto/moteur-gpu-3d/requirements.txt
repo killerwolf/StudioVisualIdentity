@@ -1,0 +1,7 @@
+wgpu==0.33.0
+numpy==2.4.6
+pillow==13.0.0
+cffi==2.1.1
+pycparser==3.12
+rendercanvas==3.0.0
+rubicon-objc==0.6.0
