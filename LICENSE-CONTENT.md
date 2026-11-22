@@ -17,12 +17,15 @@ et images des shorts de preuve. Vous pouvez les réutiliser, y compris commercia
 | Musiques et bruitages du moteur papier | `out/shared/papier-moteur/assets/audio/` | fichiers d'essai repris d'un autre studio du propriétaire, droits non établis : exemple seulement, à remplacer par votre propre banque sonore |
 | Bande-son des 9 shorts papier | `out/shorts/{papier-decoupe,atelier-papier,carnet-archives,cabinet-curiosites,papier-plan-bleu}__*/short*.mp4` | contiennent la musique ci-dessus : images sous CC BY 4.0, piste audio exclue |
 | Voix off | `voice_lines/`, `voice_report.json` et pistes voix des `short.mp4` ; `out/demo/voice_fr*/` | générées par Fish Audio, Google Gemini et ElevenLabs (shorts narrés de `lyrics-chemin` et `chemin-craie-verte`) : fournies telles quelles, droits selon les conditions de ces fournisseurs |
+| Chansons des 2 shorts « I Fold » | piste audio de `out/shorts/lyrics-chemin__paroles__i-fold-{elevenlabs,lyria}/short.mp4` | générées par ElevenLabs Music et Google Lyria 3.5 sur nos paroles de remplissage : fournies telles quelles, droits selon les conditions de ces fournisseurs ; images sous CC BY 4.0, piste audio exclue (les paroles « Monday's Draft » restent sous CC BY 4.0) |
 | Musique et bruitages de la démo | `out/demo/eleven/` | générés par ElevenLabs : droits selon les conditions d'ElevenLabs |
 | Bruitages de la démo | `out/demo/sfx/` | CC0 (auteurs et liens : `out/demo/sfx/credits.json`) |
 | Données géographiques | dépendance npm `world-atlas` 2.0.2 | Natural Earth, domaine public |
 
 Les vidéos de la famille `paroles` (de `lyrics-punchy` et `lyrics-chemin`) sont muettes et portent des paroles de
 remplissage : les vraies paroles et l'audio de la chanson ne sont pas dans le dépôt (la chanson s'ajoute dans l'appli à la publication).
+Seule exception : les 2 shorts « I Fold » de `lyrics-chemin`, où nos paroles de remplissage sont chantées par une musique
+générée (ligne « Chansons » ci-dessus) ; les mp3 d'origine ne sont pas dans le dépôt.
 
 Le style de `survol-pixel` s'inspire d'une vidéo de @creativedash (crédit et provenance :
 `out/report/notes/console-retro-source/SOURCE.md`) ; aucune image de cette vidéo n'est dans le dépôt.

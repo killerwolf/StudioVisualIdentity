@@ -13,7 +13,8 @@ Les éléments ci-dessous appartiennent à des tiers et gardent leur propre lice
 - **Bruitages de la démo** (`out/demo/sfx/`) : CC0, auteurs dans `out/demo/sfx/credits.json` (OpenGameArt).
 - **Contenu généré par des services d'IA** : voix off (Fish Audio, Google Gemini, ElevenLabs pour les 2 shorts narrés de
   `lyrics-chemin` et un essai de composition : voix nommées dans leur `narration.json`), musique et bruitages de la démo
-  (ElevenLabs, `out/demo/eleven/SOURCES.md`). Fournis tels quels ; leur usage suit les conditions de chaque fournisseur.
+  (ElevenLabs, `out/demo/eleven/SOURCES.md`), chansons des 2 shorts « I Fold » de `lyrics-chemin` (ElevenLabs Music,
+  Google Lyria 3.5 ; source dans leur `short.json`). Fournis tels quels ; leur usage suit les conditions de chaque fournisseur.
 - **Audio du moteur papier** (`out/shared/papier-moteur/assets/audio/`) : fichiers d'essai, droits non établis,
   à remplacer avant tout usage public.
 
@@ -24,5 +25,5 @@ Les logos de marques (Anthropic, Claude, Google, ElevenLabs, Notion…) ont ét�
 
 Polices `@fontsource/*` et `@fontsource-variable/anybody` (OFL), D3, GSAP, three.js, p5.js, PixiJS, Matter.js, Paper.js, Zdog, A-Frame, Babylon.js,
 anime.js, flubber, twgl.js, Rough.js, topojson-client, world-atlas (données Natural Earth, domaine public),
-Playwright (ou playwright-core avec un Chrome installé) ; numpy, scipy, Pillow, OpenCV, pycairo, Matplotlib, Manim, Taichi, shapely, opensimplex.
+Playwright (ou playwright-core avec un Chrome installé) ; numpy, scipy, Pillow, OpenCV, pycairo, Matplotlib, Manim, Taichi, shapely, opensimplex ; faster-whisper (calage des shorts « I Fold », lancé par `uv run`).
 Chacune garde sa licence (voir `package.json`, `out/library-cards/catalogue.md` et le site de chaque projet).
