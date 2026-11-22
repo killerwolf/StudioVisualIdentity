@@ -117,8 +117,9 @@ Configuration: `studio.json`. Language of the channel: **{language}**. Audience:
 2. Edit **`out/identities/{channel_id}/identity.md`** (16 sections) and **`tokens.json`**: new name and promise, audience-dependent
    values (pace, words per beat, text size, voice), language. **Keep the `signatureToPreserve`** listed in `reference/index-entries.json`
    (type pair, palette core, signature transition) — that is what makes the look recognisable. Remove the BROUILLON banner.
-3. Cast the voice (`studio.json` → `voice`). The exploration used Fish Audio "Arnold" (French male storyteller); another language or
-   audience needs another voice. Only the line text is sent to TTS (a style prefix is read aloud).
+3. Cast the voice (`studio.json` → `voice`). The exploration used Fish Audio "Arnold" (French male storyteller, 31 shorts) and
+   Gemini "Sulafat" (warm French female voice, 14 later shorts: one `gemini-3.8-flash-tts` call per short through API v1beta, split
+   per line, see `out/report/notes/voix-lot2.md` in the source repository); another language or audience needs another voice. Only the line text is sent to TTS (a style prefix is read aloud).
 4. Update the scene templates in `templates/<family>/src/` so their hard-coded colours, fonts and strings match your tokens
    (scene code does **not** read `tokens.json`; grep the template for the old hex values, font names and French UI strings).
 
@@ -137,7 +138,8 @@ Then, in the new folder:
    — look at them (hook < 1 s, text ≥ 54 px, titles ≥ 90 px, safe areas: top 220 / bottom 320 / right 120 px, AA contrast).
 3. **Render, sound, mux**: run the command in `short.json.reproduce` (it was rewritten for this folder; Python scenes use their own script
    in `src/`, see `src/README.md`). Its last step is the voice-over.
-4. **Voice-over**: generate one audio file per narration line into `voice_lines/00.mp3, 01.mp3…` (Fish Audio connector or any TTS),
+4. **Voice-over**: generate one audio file per narration line into `voice_lines/00.mp3, 01.mp3…` (default voice: Gemini « Sulafat »;
+   the free Gemini quota is ~10 requests/day, so make ONE call per short and split it, see `studio.json` → `voice.note`; or Fish Audio / any TTS),
    then `.venv/bin/python out/tools/tts.py out/shorts/<dir> --engine files --voice "<voice name>" --replace`
    (`--engine fish` with `FISH_API_KEY` exists but was never tested against the real API).
 5. **QA**: `.venv/bin/python out/tools/check.py out/shorts/<dir>` must be OK (format, 10–20 s, audio, no black frames, 3–5 stills,
@@ -334,9 +336,13 @@ def main():
                                    f'Ne pas modifier : votre identité est dans `out/identities/{cid}/`.\n')
 
     # 5. configuration + manuel
-    voice = {'provider': 'Fish Audio', 'name': 'Arnold', 'reference_id': 'd704cf8f1216490cbfbed89955f0e938', 'model': 's2.1-pro',
-             'displayName': 'Fish Audio – Arnold (d704cf8f…)',
-             'note': "voix de l'exploration (FR, conteur masculin) — à remplacer si autre langue ou autre public"}
+    voice = {'provider': 'Gemini', 'name': 'Sulafat', 'reference_id': None, 'model': 'gemini-3.8-flash-tts',
+             'displayName': 'Gemini – Sulafat',
+             'note': ("voix des 14 derniers shorts de l'exploration (FR, voix féminine chaleureuse) — à remplacer si autre langue ou "
+                      "autre public. Quota gratuit Gemini ≈ 10 requêtes par jour : faire UN appel par short (lignes jointes par "
+                      "<long pause>, API v1beta), puis découper en voice_lines/NN.mp3 et mixer avec tts.py --engine files ; "
+                      "tts.py --engine gemini fait un appel par ligne et épuise vite le quota. Recette : out/report/notes/voix-lot2.md "
+                      "du dépôt source. Alternative : Fish Audio (FISH_API_KEY).")}
     missing = [f for f in families if f not in {r['family'] for r in report}]
     studio = {'channelId': cid, 'name': a.name, 'language': a.language, 'audience': a.audience,
               'families': [r['family'] for r in report], 'familiesWithoutTemplate': missing,

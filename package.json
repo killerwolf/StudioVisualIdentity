@@ -1,6 +1,7 @@
 {
   "name": "studio-visual-identity",
   "private": true,
+  "license": "MIT",
   "type": "module",
   "description": "Exploration d'identités visuelles pour shorts 9:16 — harnais de rendu dans out/tools",
   "dependencies": {

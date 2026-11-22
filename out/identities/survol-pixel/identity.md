@@ -7,7 +7,7 @@ haute pour comprendre la forme, **piqué** vers le détail ou l'horizon pour sen
 
 **Passe A+B+C (18/11/2026)**, à la demande du propriétaire : monde rempli jusqu'à l'horizon et brume refaite (A), fin des
 « cubes » et des bascules de détail (B), caméra qui vole et textes allégés (C). Journal : `out/report/notes/survol-pixel.md`
-§ « Passe A+B+C » ; planche avant / après : `out/report/notes/console-retro-source/final-abc.jpg`.
+§ « Passe A+B+C » ; les planches de comparaison avec la source sont gardées hors dépôt (`out/report/notes/console-retro-source/SOURCE.md`).
 
 **Statut : nouvelle identité, pas une dérivation de `pixel-arcade`.** Tout diffère : le moteur (Python numpy, une caméra
 3D sténopé, contre Matter.js + p5 + PixiJS dans un navigateur), l'espace (un monde en perspective avec horizon contre une
@@ -18,7 +18,7 @@ contre fond marine quasi noir). La grille 270×480 ×4 est commune aux deux : ce
 ### Provenance (inspiration de style, crédit)
 Style étudié d'après la vidéo de démonstration d'un simulateur de vol en pixel art publiée par **@creativedash**
 (https://x.com/creativedash/status/2122000830895386680, reprise par @meta_pavy), analysée image par image le 18/11/2026
-(`out/report/notes/console-retro-analyse.md`, planche `out/report/notes/console-retro-source/`). On en reprend une **forme** :
+(`out/report/notes/console-retro-analyse.md`, provenance dans `out/report/notes/console-retro-source/SOURCE.md`). On en reprend une **forme** :
 grille unique de gros pixels, palette indexée courte, sol en perspective type « Mode 7 », relief en terrasses à trait
 sombre, couches empilées avec ombres portées plates, ciel en paliers, caméra continue sans coupe.
 
@@ -303,8 +303,7 @@ Cartouches centrés sur x = 128 (milieu de la bande sûre) ; récit en haut (y =
 - `out/shorts/survol-pixel__histoire__machu-picchu-pourquoi-une-cite-en-escaliers/` — « Machu Picchu : pourquoi une cité
   en escaliers ? » (18,8 s, reconstitution stylisée) : cité sur l'ensellement, terrasses à murs de pierre, entaille qui
   montre pierres / gravier / terre, pluie qui traverse, lama et son ombre.
-- Comparaison avec la source : `out/report/notes/console-retro-source/comparaison.jpg` ; avant / après la passe A+B+C :
-  `out/report/notes/console-retro-source/final-abc.jpg`.
+- Comparaison avec la source : planches gardées hors dépôt depuis le 2026-11-22 (images de la vidéo de @creativedash) ; voir `out/report/notes/console-retro-source/SOURCE.md`.
 
 ## Place de la voix off (où elle parlera, débit conseillé, ce que le visuel laisse libre)
 - **Voix : Gemini « Sulafat »** (décision du propriétaire du 18/11, comme le lot 2) : un appel `gemini-3.8-flash-tts` par

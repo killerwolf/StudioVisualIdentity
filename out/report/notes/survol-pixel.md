@@ -682,3 +682,51 @@ Taille : atoll 6,6 Mo (8,9), Machu Picchu 13,2 Mo (13,8).
   régénérée en local avec `--videos-for survol-pixel`, **non republiée**.
 
 - **Rejugement de Fable (18/11)** : retouches 1 réussie à Machu Picchu / partielle à l'atoll, 2 partielle, 3 réussie, 4 cadrage réussi / mouvement raté, 5 partielle, 6 réussie (sauf ciel de Machu Picchu en vue haute). Les 3 écarts du studio sont gardés (contremarches éclaircies, murs sortis du pain de sucre avec granite à 100 × K, cap_colors). Fable recommande d'arrêter là : ce qui reste (atoll presque immobile, mer à moitié vide, pas de terre verte) tient au sujet et à la règle « pas d'archipel ». Rapports : `fable-retouches-2026-11-18.md`, `fable-rejugement-2026-11-18.md`.
+
+## Ancienne section survol-pixel d'AGENTS.md (archivée le 2026-11-21)
+
+Déplacée ici pendant l'harmonisation des identités, pour que la section d'`AGENTS.md` garde la même forme que celle du lot 2. Texte d'origine, inchangé :
+
+- **Owner rules** (signature, keep them): (1) **3D depth** is the rule — perspective ground (Mode 7 style) at any pitch, terraces,
+  cast shadows, layered depth, a camera that moves forward; (2) **form, not content** — a pixel-art look for explainers, kids, history
+  and narrated shorts, not a video-game or flight theme (no score, no game element; HUD and cockpit optional, absent from the proofs).
+- A new identity, **not a derivation of pixel-arcade**: other engine (one 3D camera, numpy ray casting on a terraced heightfield),
+  other fonts (Jersey, not Press Start 2P), other transition (the dive / climb-back, not a pixel mosaic), other sound (no chiptune blips).
+- Engine: pure Python `survol.py` (identical md5 in both shorts' `src/`), `video.py` per short; opensimplex fields cached in
+  `$SURVOL_CACHE` (outside the repository). A new topic = a new terrain / heightfield, a camera path, sprites with shadows and the cut-away.
+- **Detail pass (2026-11-18)**: sub-cell micro-detail, coursed walls, ball-heap clouds, tree clusters with cast shadows; both shorts
+  re-rendered (`out/report/notes/survol-pixel-detail.md`). The challenge's « ≤ 4 clouds » cap (C15) is lifted (3–11 clouds in frame);
+  the owner reopened C15 in the A+B+C pass (other atolls far away, more clouds, but no green archipelago copied from the source).
+- **A+B+C pass (2026-11-18)**, owner request: (A) a world filled to the horizon (atoll 1,080 units with other atolls, seamounts, banks;
+  Machu Picchu 1,536 units of Andean ridges) and a new haze in 6 steps with a world-fixed jagged border towards a very pale blue
+  `HAZE #DCEEF5`, sky in 7 steps (11 core colours added, 35 in all); (B) 4 rays per pixel with a majority vote on the palette index,
+  a 4× finer colour map around the subject, slope bias and « far wall = top colour » rule removed, relief cast shadow, safe-step ray
+  march on block max maps (128/32/8/2) + 8 bisections; (C) a PCHIP camera that flies, banks and rolls (5–13°), one Jersey 15 cartouche
+  at a time; Machu Picchu's dive (8.0 → 10.0 s) and climb-back (13.4 → 15.6 s) slowed down (owner decision). Owner decisions 34 and 36:
+  atoll cartouches « il y a des millions / d'années », « pendant des millions / d'années », the « lagon » pin and the final « basalte » /
+  « calcaire » pins removed; « reconstitution stylisée » only at the end (16.9–18.8 s); haze tables relaxed to 6 steps. Full CPU renders
+  (both in parallel on 4 cores): **atoll 107.18 s/100 frames (598.1 s), Machu Picchu 266.29 (1,501.9 s)**, 1-min load 4.4–10.4; the
+  owner lifted the cost cap for B. Flicker is the main remaining risk: A-B-A pixels on the decoded files 3.56 % over Machu Picchu
+  (1.40 % before), 7.3 % in its dive and 5.4 % in its climb-back (source 4.0 %); atoll 1.06 %. Voice remixed on the new timings without
+  any new call. Before / after board: `out/report/notes/console-retro-source/final-abc.jpg`; log `out/report/notes/survol-pixel.md`
+  § « Passe A+B+C ».
+- **Optional GPU ray march** (`src/survol_gpu.py`, same file in both shorts): `SURVOL_GPU=1`, `taichi==1.7.2`, Metal (AMD Radeon Pro 560,
+  the default Metal device); only the ray march moves to the GPU, frame 1.5–1.9 s → 0.7–0.8 s. Not bit-exact (Metal division is not
+  correctly rounded; 0 px palette-index difference on 6 frames but 0–0.2 % of rays off by 1–2 ulp, see `out/report/facts.md`), so the
+  delivered renders are CPU and the module stays experimental; CPU remains the default and the fallback.
+- **Fable retouch (2026-11-18, owner decision 38)**: 6 art-director fixes in one pass, both shorts re-rendered on CPU with the same voice and timings:
+  bigger, more numerous clouds with a dithered underside (the only engine change, `draw_clouds`), foam strokes on the atoll sea, a light Machu Picchu forest
+  with a dark-green `FOREST_SH` shadow (no more navy), a wider forested sugarloaf, a wider final atoll shot, a tighter sky ramp. Cost 63.9–214.4 s/100 frames;
+  the atoll's on-screen motion is still below Fable's target (`out/report/notes/survol-pixel.md` § « Retouche Fable »).
+- **Voice-over: Gemini « Sulafat »** (owner decision, 2026-11-18), the lot 2 recipe: one `gemini-3.8-flash-tts` call per short, split
+  into `voice_lines/NN.mp3` by word timestamps, mixed by `tts.py --engine files --replace` (`short_novo.mp4` = music + SFX). The call
+  needs API **v1beta** (see `out/report/facts.md`). Atoll 18.6 s at −16.0 LUFS (peak −1.7 dBFS), Machu Picchu 18.8 s at −13.8 LUFS (peak −1.5 dBFS), after the A+B+C remix (−15.9 / −13.7 before). Log:
+  `out/report/notes/voix-survol-pixel.md`.
+- Evidence: 2 proof shorts (`explicatif` atoll, `histoire` Machu Picchu), QA ok (0 warnings). **Blind visual judge**
+  (during the review, fresh agent, 24 anonymised frames, survol-pixel + pixel-arcade, carte-meteo, topo-relief, pastel-diorama,
+  trait-continu): **6/6 pure groups, 24/24** (`recognition.json` → `blindJudgeSurvol`; frames from the detail pass, it does not cover the
+  A+B+C pass). Measured recognition (after the A+B+C pass, 41/45 overall, unchanged): Machu Picchu's nearest neighbour is its sibling
+  (0.754); the **atoll still fails** (nearest aquarelle-conte « phare d'Alexandrie » at 0.722, sibling 3rd at 0.754: blue ocean against
+  green mountain); carte-meteo moved closer (2nd neighbour of Machu Picchu at 0.785); colour + edges miss its signature, which is
+  geometric (perspective, terraces, pixel grid). Render cost 107.18–266.29 s/100 frames on CPU under load (A+B+C renders, 1-min load
+  4.4–10.4, `measuredUnderLoad: true`; 19.6–63.1 after the detail pass, 15.6–59.1 before it).

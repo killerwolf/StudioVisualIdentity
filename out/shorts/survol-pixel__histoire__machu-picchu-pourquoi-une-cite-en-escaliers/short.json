@@ -110,12 +110,10 @@
   "moireBand5_4to9s": "mesure de la passe de détail, caduque depuis la passe A+B+C (caméra et monde refaits) : voir temporalAliasing",
   "recognitionCopy": "recognition.py sur copie après revue : 1er voisin = son frère (atoll, 0,6635) : réussite",
   "temporalAliasing": "retouche Fable, measure2.py de Fable (fichier décodé, 1 px par gros pixel, seuil 24 ; source 2,4 %, pire fenêtre 3,4 %) : A-B-A 2,10 % sur tout le short (2,00 % avant) ; piqué 4,49 % (4,29 %), remontée 3,46 % (3,41 %), survol 2,90 % ; pixels sombres (luminance < 70) 12,0 % (21,8 % avant ; survol 12,7 %, piqué 15,1 %, source 3–6 %). Mesures A+B+C (autre méthode, source 4,0 %) : 3,56 % sur tout le short, piqué 7,30 %",
-  "sourceCompareAfter": "out/report/notes/console-retro-source/comparaison-avant-apres.jpg",
   "detailPass": "out/report/notes/survol-pixel-detail.md : diffCells natif 0,146 → 0,330 (source 0,221), grandes plages > 5 % 59 → 35 % (source 50 %)",
   "treesDrawn": "2 965–5 884 boules d'arbres ≥ 1,25 px par image (compte du moteur, 1 image / 0,5 s) (passe de détail ; non recompté après A+B+C)",
   "camera": "tangage 19–38° (médiane 29°, 72 % du temps dans 25–40°, coupe à 19–20°), roulis jusqu'à 13° (≥ 5° pendant 59 % du temps) ; caméra PCHIP ; piqué 8,0 → 10,0 s et remontée 13,4 → 15,6 s ralentis (passe A+B+C)",
   "loudness": "−13,8 LUFS intégrés, crête −1,5 dBFS, LRA 3,9 LU (ffmpeg ebur128 sur short.mp4 après la retouche Fable, inchangé)",
-  "sourceCompareFinal": "out/report/notes/console-retro-source/final-abc.jpg",
   "abcPass": "out/report/notes/survol-pixel.md § « Passe A+B+C » (phases 1 et 2)",
   "darkPixels": "12,0 % sur tout le short après la retouche Fable (21,8 % avant ; INK 0,5–2,5 % hors coupe sur images natives, 5,8–8,1 % au piqué et à la coupe : joints de pierre)"
  },

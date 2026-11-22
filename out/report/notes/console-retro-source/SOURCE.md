@@ -6,19 +6,15 @@
 - **Copie de travail** (hors dépôt, jamais versionnée) : `/Users/killerwolf/git/StudioVisualIdentity-sources/console-retro/` (`source_1080.mp4`, `tweet.json`).
 - **Méthode** : ffmpeg (images à 3 i/s, détection de changements de plan, signal de différence image par image à 60 i/s, extraction audio, ebur128/astats), Python 3 + numpy + Pillow + scikit-learn (mesure de la taille du gros pixel par DFT des gradients, reconstruction des trames en résolution native, k-means des palettes, corrélation des ombres, flux par corrélation de phase). Détail et chiffres : `../console-retro-analyse.md`.
 
-## Contenu de ce dossier
+## Contenu de ce dossier (depuis le 2026-11-22)
 
 | Fichier | Contenu |
 |---|---|
-| `contact-sheet.jpg` | 16 images de la source (horodatage en haut à gauche de chaque vignette) : 0,00 · 0,75 · 1,50 · 2,25 · 3,00 · 3,40 · 3,75 · 4,50 · 5,25 · 5,60 · 6,25 · 7,00 · 8,25 · 9,10 · 9,75 · 10,75 s |
-| `palette.png` | nuanciers mesurés par type de vue (hex + part des pixels) |
-| `frame_0.5s.jpg` | vue aérienne (île en terrasses, nuages, ombres) |
-| `frame_3.40s.jpg` | transition aérienne → poursuite (bascule de la caméra) |
-| `frame_4.3s.jpg` | vue de poursuite, perspective vers l'horizon |
-| `frame_5.60s.jpg` | transition poursuite → cockpit (le tableau de bord monte) |
-| `frame_7.0s.jpg` | vue cockpit |
-| `frame_10.3s.jpg` | retour en vue aérienne |
+| `palette.png` | nuanciers mesurés par type de vue (hex + part des pixels) : des valeurs mesurées, pas des images de la source |
+| `avant/` | nos propres images, tirées de nos `short.mp4` avant la passe de détail |
 
-## Statut de ces images
+Les images extraites de la vidéo de @creativedash ont été **retirées du dépôt le 2026-11-22**, avant qu'il soit rendu public pour la promotion. Il s'agit des 6 `frame_*.jpg` et de la planche-contact `contact-sheet.jpg`, ainsi que des planches qui mêlaient la source et nos shorts : `comparaison.jpg`, `comparaison-avant-apres.jpg`, `prototypes-abc.jpg`, `final-abc.jpg` et `retouche-fable.jpg`. Elles restent dans la copie de travail du propriétaire, hors dépôt. Les notes de studio qui les citent (`survol-pixel.md`, `survol-pixel-detail.md`, `challenge-…`) sont un historique : ces chemins n'existent plus dans le dépôt.
 
-Ces images sont gardées **uniquement comme référence d'analyse** du style. **Rien n'en est réutilisé** dans nos shorts : ni image, ni sprite, ni avion, ni cockpit, ni texte d'interface, ni son. L'identité qui en découle copie un *style* (grille de gros pixels, palette, construction de la profondeur), pas l'œuvre ; tout est regénéré par code.
+## Statut
+
+L'œuvre analysée appartient à @creativedash. **Rien n'en est réutilisé** dans nos shorts : ni image, ni sprite, ni avion, ni cockpit, ni texte d'interface, ni son. L'identité qui en découle copie un *style* (grille de gros pixels, palette, construction de la profondeur), pas l'œuvre ; tout est regénéré par code.

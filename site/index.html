@@ -1,0 +1,504 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>StudioVisualIdentity — un prompt, 18 styles, votre chaîne</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="18 styles visuels pour vos vidéos verticales (TikTok, Reels, Shorts), montrés par 45 vidéos d'exemple rendues par code. Décrivez votre chaîne à votre agent IA : il vous propose un style, crée votre studio et réalise votre première vidéo. Open source."
+    />
+    <link rel="canonical" href="https://h4md1.fr/StudioVisualIdentity/" />
+    <meta name="theme-color" content="#0b0d1a" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="StudioVisualIdentity" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:title" content="Un prompt. 18 styles. Votre chaîne." />
+    <meta
+      property="og:description"
+      content="18 styles pour vos vidéos verticales, montrés par 45 vidéos d'exemple. Décrivez votre chaîne à votre agent IA : il fait le reste. Open source."
+    />
+    <meta property="og:url" content="https://h4md1.fr/StudioVisualIdentity/" />
+    <meta property="og:image" content="https://h4md1.fr/StudioVisualIdentity/hero.jpg" />
+    <meta property="og:image:width" content="1280" />
+    <meta property="og:image:height" content="640" />
+    <meta property="og:image:alt" content="« Un prompt. 18 styles. Votre chaîne. » à côté d'un mur incliné d'images tirées des 18 styles." />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;900&family=Inter:wght@400;600&family=JetBrains+Mono:wght@400&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --bg: #0b0d1a;
+        --bg2: #12152a;
+        --fg: #f4f4f7;
+        --muted: #a9adc4;
+        --yellow: #ffd60a;
+        --pink: #ff5c8a;
+        --blue: #4d7cff;
+        --line: #262a45;
+        --radius: 18px;
+      }
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--fg);
+        font: 17px/1.6 Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+      a { color: var(--yellow); }
+      .wrap { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+      h1, h2, h3 { font-family: Unbounded, system-ui, sans-serif; line-height: 1.1; margin: 0; }
+      h2 { font-size: clamp(28px, 4.2vw, 44px); font-weight: 900; margin-bottom: 18px; }
+      section { padding: 72px 0; }
+      .lead { color: var(--muted); font-size: 19px; max-width: 720px; }
+
+      /* Hero */
+      .hero {
+        position: relative;
+        padding: 56px 0 40px;
+        background:
+          radial-gradient(900px 500px at 10% 20%, rgba(77,124,255,.22), transparent 60%),
+          radial-gradient(700px 500px at 90% 80%, rgba(255,92,138,.18), transparent 60%);
+      }
+      .hero-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 40px; align-items: center; }
+      .hero h1 { font-size: clamp(40px, 7vw, 84px); font-weight: 900; letter-spacing: -.02em; }
+      .hero h1 .y { color: var(--yellow); display: block; }
+      .hero h1 span { display: block; }
+      .hero .lead { margin: 22px 0 28px; }
+      .btns { display: flex; flex-wrap: wrap; gap: 12px; }
+      .btn {
+        display: inline-flex; align-items: center; gap: 10px;
+        padding: 14px 22px; border-radius: 999px; font-weight: 600; text-decoration: none;
+        border: 2px solid var(--yellow); color: var(--bg); background: var(--yellow);
+        font-size: 16px; cursor: pointer; font-family: inherit;
+      }
+      .btn.ghost { background: transparent; color: var(--fg); border-color: var(--line); }
+      .btn:hover { filter: brightness(1.08); }
+      .phone {
+        justify-self: center; width: min(320px, 80vw); aspect-ratio: 9/16;
+        border-radius: 28px; overflow: hidden; border: 6px solid #1c1f38;
+        box-shadow: 0 30px 80px rgba(0,0,0,.55), 0 0 0 1px var(--line);
+        transform: rotate(2deg); background: #000;
+      }
+      .phone video { width: 100%; height: 100%; object-fit: cover; display: block; }
+      .stats { display: flex; flex-wrap: wrap; gap: 28px; margin-top: 34px; color: var(--muted); font-size: 15px; }
+      .stats b { display: block; font-family: Unbounded, sans-serif; font-size: 30px; color: var(--fg); }
+
+      /* Prompt */
+      .prompt { background: var(--bg2); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+      .term {
+        margin-top: 24px; border-radius: var(--radius); background: #070814; border: 1px solid var(--line);
+        overflow: hidden;
+      }
+      .term-bar { display: flex; align-items: center; gap: 8px; padding: 12px 16px; border-bottom: 1px solid var(--line); }
+      .term-bar i { width: 12px; height: 12px; border-radius: 50%; background: #ff5f57; display: inline-block; }
+      .term-bar i:nth-child(2) { background: #febc2e; }
+      .term-bar i:nth-child(3) { background: #28c840; }
+      .term-bar .copy {
+        margin-left: auto; background: transparent; color: var(--muted); border: 1px solid var(--line);
+        border-radius: 8px; padding: 6px 12px; font: 600 13px Inter, sans-serif; cursor: pointer;
+      }
+      .term-bar .copy:hover { color: var(--fg); }
+      pre {
+        margin: 0; padding: 22px; overflow-x: auto; white-space: pre-wrap;
+        font: 15px/1.7 "JetBrains Mono", ui-monospace, Menlo, monospace; color: #e7e9f5;
+      }
+      pre em { color: var(--yellow); font-style: normal; }
+      .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 28px; }
+      .step { padding: 22px; border: 1px solid var(--line); border-radius: var(--radius); }
+      .step b { font-family: Unbounded, sans-serif; color: var(--yellow); font-size: 22px; }
+      .step p { margin: 8px 0 0; color: var(--muted); }
+      .hero-grid > *, .wrap > * { min-width: 0; }
+      pre { overflow-wrap: anywhere; }
+      body { overflow-x: hidden; }
+
+      /* Video */
+      .video16 { margin-top: 24px; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); background: #000; }
+      .video16 video { width: 100%; display: block; aspect-ratio: 16/9; }
+
+      /* Grid */
+      .grid { list-style: none; padding: 0; margin: 28px 0 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 18px; }
+      .card { background: var(--bg2); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; display: flex; flex-direction: column; }
+      .card img { width: 100%; height: auto; aspect-ratio: 9/16; object-fit: cover; display: block; background: #000; }
+      .card h3 { font-size: 16px; padding: 14px 14px 0; }
+      .card p { margin: 6px 14px 0; color: var(--muted); font-size: 14px; line-height: 1.45; flex: 1; }
+      .card a { color: inherit; }
+      .card .more { margin: 0 14px 14px; font-size: 13px; color: var(--muted); text-decoration: none; }
+      .card .more:hover { color: var(--fg); }
+      .prereq { margin-top: 22px; padding: 20px 22px; border: 1px dashed var(--line); border-radius: var(--radius); color: var(--muted); }
+      .prereq b { color: var(--fg); }
+      .prereq ul { margin: 8px 0 0; padding-left: 20px; }
+      code { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: .92em; }
+      .card .fam { margin: 12px 14px 14px; font-size: 12px; color: var(--yellow); text-transform: uppercase; letter-spacing: .06em; }
+
+      /* Scope */
+      .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 24px; }
+      .col { padding: 24px; border-radius: var(--radius); border: 1px solid var(--line); }
+      .col h3 { font-size: 18px; margin-bottom: 10px; }
+      .col.yes h3 { color: #4ade80; }
+      .col.no h3 { color: var(--pink); }
+      .col ul { margin: 0; padding-left: 20px; color: var(--muted); }
+      .col li { margin: 6px 0; }
+
+      .card .play { position: relative; display: block; }
+      .card .play::after {
+        content: "▶"; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+        width: 56px; height: 56px; border-radius: 50%; background: rgba(11,13,26,.72); color: #fff;
+        display: grid; place-items: center; font-size: 20px; padding-left: 4px; box-sizing: border-box;
+        opacity: .85; transition: opacity .15s, transform .15s;
+      }
+      .card .play:hover::after { opacity: 1; transform: translate(-50%, -50%) scale(1.08); }
+      .viewer {
+        position: fixed; inset: 0; z-index: 50; display: none; align-items: center; justify-content: center;
+        background: rgba(5,6,14,.94); padding: 16px;
+      }
+      .viewer.open { display: flex; }
+      .viewer video { max-height: calc(100vh - 32px); max-width: 100%; aspect-ratio: 9/16; border-radius: 14px; background: #000; }
+      .viewer .close {
+        position: absolute; top: 14px; right: 16px; width: 44px; height: 44px; border-radius: 50%;
+        border: 1px solid var(--line); background: var(--bg2); color: var(--fg); font-size: 22px; cursor: pointer;
+      }
+      .viewer .full {
+        position: absolute; top: 14px; right: 70px; height: 44px; padding: 0 14px; border-radius: 999px;
+        border: 1px solid var(--line); background: var(--bg2); color: var(--fg); font: 600 14px Inter, sans-serif; cursor: pointer;
+      }
+      footer { padding: 48px 0 64px; color: var(--muted); border-top: 1px solid var(--line); font-size: 15px; }
+      footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; }
+
+      @media (max-width: 860px) {
+        .hero-grid { grid-template-columns: 1fr; }
+        .phone { transform: none; }
+        .steps, .cols { grid-template-columns: 1fr; }
+        section { padding: 56px 0; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <h1><span>Un prompt.</span><span class="y">18 styles.</span><span>Votre chaîne.</span></h1>
+          <p class="lead">
+            Décrivez votre chaîne à votre agent IA : il vous propose un style parmi 18,
+            crée votre studio et réalise votre première vidéo verticale (TikTok, Reels, Shorts).
+          </p>
+          <div class="btns">
+            <a class="btn" href="#prompt">Copier le prompt</a>
+            <a class="btn ghost" href="https://github.com/killerwolf/StudioVisualIdentity">Voir sur GitHub</a>
+          </div>
+          <div class="stats">
+            <div><b>18</b>styles</div>
+            <div><b>45</b>vidéos d'exemple</div>
+            <div><b>9:16</b>vertical</div>
+            <div><b>MIT</b>open source</div>
+          </div>
+        </div>
+        <div class="phone">
+          <video src="demo_9x16.mp4" poster="poster_9x16.jpg" autoplay muted loop playsinline aria-label="Démo de 41 secondes, format vertical"></video>
+        </div>
+      </div>
+    </header>
+
+    <section class="prompt" id="prompt">
+      <div class="wrap">
+        <h2>En un prompt</h2>
+        <p class="lead">Donnez ce texte à votre agent (Claude Code ou un autre agent qui travaille dans un terminal), en remplaçant ce qui est entre crochets.</p>
+        <div class="term">
+          <div class="term-bar"><i></i><i></i><i></i><button class="copy" type="button" id="copy">Copier</button></div>
+<pre id="prompt-text">Clone https://github.com/killerwolf/StudioVisualIdentity et lis son AGENTS.md (il est en anglais, c'est normal).
+Ma chaîne : <em>[sujet, ex. quiz de géographie]</em>, pour <em>[public, ex. ados de 13 à 17 ans]</em>, en <em>[langue]</em>.
+Propose-moi 3 styles adaptés, avec leur vidéo d'exemple, et attends mon choix.
+Ensuite, crée notre studio avec out/tools/bootstrap_studio.py, installe ce qu'il faut,
+adapte le style à notre chaîne et réalise notre premier épisode sur <em>[sujet de l'épisode]</em>.</pre>
+        </div>
+        <div class="steps">
+          <div class="step"><b>1. Le style</b><p>L'agent lit le dépôt et vous propose 3 styles adaptés à votre sujet et à votre public. Vous choisissez.</p></div>
+          <div class="step"><b>2. Le studio</b><p>Il crée un projet séparé pour votre chaîne : votre style, des modèles de scènes, les outils de rendu.</p></div>
+          <div class="step"><b>3. L'épisode</b><p>Il réalise votre premier short, voix off et sons mixés, puis le suivant, et le suivant.</p></div>
+        </div>
+        <div class="prereq">
+          <b>Avant de commencer, il vous faut</b>
+          <ul>
+            <li>un agent IA qui travaille dans un terminal, par exemple <a href="https://claude.com/claude-code">Claude Code</a> ;</li>
+            <li><code>git</code>, Python 3.11, Node.js, <code>ffmpeg</code>, et Chromium pour les styles rendus dans un navigateur. Votre agent peut les installer ;</li>
+            <li>une clé <a href="https://aistudio.google.com/">Gemini</a> pour la voix off. Le quota gratuit permet environ 10 voix par jour.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="demo">
+      <div class="wrap">
+        <h2>La démo, avec le son</h2>
+        <p class="lead">41 secondes pour voir les 18 styles, le prompt et les premiers épisodes.</p>
+        <div class="video16">
+          <video src="demo_16x9.mp4" poster="hero.jpg" controls preload="none" playsinline></video>
+        </div>
+      </div>
+    </section>
+
+    <section id="styles">
+      <div class="wrap">
+        <h2>Les 18 styles</h2>
+        <p class="lead">
+          Chaque style a sa fiche complète (couleurs, typographies, mouvements, transitions, sons), que votre agent sait lire,
+          et 2 ou 3 vidéos d'exemple rendues par code. Touchez une image pour voir la vidéo, avec le son.
+          Test à l'aveugle : un second agent IA a regroupé sans erreur 72 images anonymes des 18 styles.
+        </p>
+        <ul class="grid">
+      <li class="card">
+        <a class="play" href="videos/swiss-data.mp4" data-short="swiss-data__evenements__j-272-eclipse-2-aout-2027" aria-label="Voir une vidéo d'exemple : Grille Suisse">
+        <img src="posters/swiss-data.jpg" alt="Grille Suisse : image d'une vidéo d'exemple" loading="lazy" width="540" height="960" />
+        </a>
+        <h3>Grille Suisse</h3>
+        <p>Un chiffre qui claque par écran, posé sur une grille 12 colonnes visible, révélé par des volets rouges nets</p>
+        <span class="fam">événements · géographie</span>
+        <a class="more" href="https://github.com/killerwolf/StudioVisualIdentity/tree/main/out/identities/swiss-data">La fiche du style →</a>
+      </li>
+      <li class="card">
+        <a class="play" href="videos/gazette-1900.mp4" data-short="gazette-1900__evenements__9-novembre-1989-mur-de-berlin" aria-label="Voir une vidéo d'exemple : Gazette 1900">
+        <img src="posters/gazette-1900.jpg" alt="Gazette 1900 : image d'une vidéo d'exemple" loading="lazy" width="540" height="960" />
+        </a>
+        <h3>Gazette 1900</h3>
+        <p>Chaque grand moment arrive comme la une d&#x27;un journal qui tourbillonne, se pose sur la pile et se fait tamponner</p>
+        <span class="fam">événements · histoire</span>
+        <a class="more" href="https://github.com/killerwolf/StudioVisualIdentity/tree/main/out/identities/gazette-1900">La fiche du style →</a>
+      </li>
+      <li class="card">
+        <a class="play" href="videos/pixel-arcade.mp4" data-short="pixel-arcade__abstrait__la-balle-peut-elle-s-echapper" aria-label="Voir une vidéo d'exemple : Arcade Pixel">
+        <img src="posters/pixel-arcade.jpg" alt="Arcade Pixel : image d'une vidéo d'exemple" loading="lazy" width="540" height="960" />
+        </a>
+        <h3>Arcade Pixel</h3>
+        <p>Une vraie simulation physique, déterministe, filmée comme une partie d&#x27;arcade</p>
+        <span class="fam">abstrait · quiz et défis</span>
+        <a class="more" href="https://github.com/killerwolf/StudioVisualIdentity/tree/main/out/identities/pixel-arcade">La fiche du style →</a>
+      </li>
+      <li class="card">
+        <a class="play" href="videos/brut-meme.mp4" data-short="brut-meme__engagement__test-des-3-secondes-stroop" aria-label="Voir une vidéo d'exemple : Brut Mème">
+        <img src="posters/brut-meme.jpg" alt="Brut Mème : image d'une vidéo d'exemple" loading="lazy" width="540" height="960" />
+        </a>
+        <h3>Brut Mème</h3>
+        <p>Un fait ou un défi par coupe, en lettres géantes qui claquent sur le beat</p>
+        <span class="fam">quiz et défis · événements</span>
+        <a class="more" href="https://github.com/killerwolf/StudioVisualIdentity/tree/main/out/identities/brut-meme">La fiche du style →</a>
+      </li>
+      <li class="card">
+        <a class="play" href="videos/carte-meteo.mp4" data-short="carte-meteo__evenements__28-juin-2019-46-degres-record-de-chaleur" aria-label="Voir une vidéo d'exemple : Carte Météo">
+        <img src="posters/carte-meteo.jpg" alt="Carte Météo : image d'une vidéo d'exemple" loading="lazy" width="540" height="960" />
+        </a>
+        <h3>Carte Météo</h3>
+        <p>Une carte météo claire où les isobares respirent, le vent file et un front balaie l&#x27;écran pour changer de plan</p>
+        <span class="fam">événements · géographie</span>
+        <a class="more" href="https://github.com/killerwolf/StudioVisualIdentity/tree/main/out/identities/carte-meteo">La fiche du style →</a>
+      </li>
+      <li class="card">
+        <a class="play" href="videos/bauhaus-kinetic.mp4" data-short="bauhaus-kinetic__engagement__trouve-l-intrus" aria-label="Voir une vidéo d'exemple : Bauhaus Cinétique">
+        <img src="posters/bauhaus-kinetic.jpg" alt="Bauhaus Cinétique : image d'une vidéo d'exemple" loading="lazy" width="540" height="960" />
+        </a>
+        <h3>Bauhaus Cinétique</h3>
+        <p>Des formes primaires qui s&#x27;emboîtent sur une grille stricte pour expliquer ou défier en 15 secondes</p>
+        <span class="fam">quiz et défis · explicatif</span>
+        <a class="more" href="https://github.com/killerwolf/StudioVisualIdentity/tree/main/out/identities/bauhaus-kinetic">La fiche du style →</a>
+      </li>
+      <li class="card">
+        <a class="play" href="videos/tableau-craie.mp4" data-short="tableau-craie__enfants__comment-une-graine-devient-un-arbre" aria-label="Voir une vidéo d'exemple : Tableau Craie">
+        <img src="posters/tableau-craie.jpg" alt="Tableau Craie : image d'une vidéo d'exemple" loading="lazy" width="540" height="960" />
+        </a>
+        <h3>Tableau Craie</h3>
+        <p>Un prof bienveillant vous explique le monde en le dessinant à la craie</p>
+        <span class="fam">enfants · explicatif</span>
+        <a class="more" href="https://github.com/killerwolf/StudioVisualIdentity/tree/main/out/identities/tableau-craie">La fiche du style →</a>
+      </li>
+      <li class="card">
+        <a class="play" href="videos/riso-zine.mp4" data-short="riso-zine__evenements__geminides-j-39" aria-label="Voir une vidéo d'exemple : Zine Riso">
+        <img src="posters/riso-zine.jpg" alt="Zine Riso : image d'une vidéo d'exemple" loading="lazy" width="540" height="960" />
+        </a>
+        <h3>Zine Riso</h3>
+        <p>Un chiffre fort, une forme découpée, une annotation au marqueur</p>
+        <span class="fam">événements · géographie</span>
+        <a class="more" href="https://github.com/killerwolf/StudioVisualIdentity/tree/main/out/identities/riso-zine">La fiche du style →</a>
+      </li>
+      <li class="card">
+        <a class="play" href="videos/trait-continu.mp4" data-short="trait-continu__enfants__dessine-un-escargot-d-un-seul-trait" aria-label="Voir une vidéo d'exemple : Trait continu">
+        <img src="posters/trait-continu.jpg" alt="Trait continu : image d'une vidéo d'exemple" loading="lazy" width="540" height="960" />
+        </a>
+        <h3>Trait continu</h3>
+        <p>Un seul trait, jamais levé, dessine l&#x27;idée devant vous</p>
+        <span class="fam">enfants · géographie</span>
+        <a class="more" href="https://github.com/killerwolf/StudioVisualIdentity/tree/main/out/identities/trait-continu">La fiche du style →</a>
+      </li>
+      <li class="card">
+        <a class="play" href="videos/survol-pixel.mp4" data-short="survol-pixel__explicatif__comment-nait-un-atoll" aria-label="Voir une vidéo d'exemple : Survol pixel">
+        <img src="posters/survol-pixel.jpg" alt="Survol pixel : image d'une vidéo d'exemple" loading="lazy" width="540" height="960" />
+        </a>
+        <h3>Survol pixel</h3>
+        <p>Chaque sujet devient un petit monde en pixel art 16 bits que la caméra survole, puis frôle jusqu&#x27;à l&#x27;horizon</p>
+        <span class="fam">explicatif · histoire</span>
+        <a class="more" href="https://github.com/killerwolf/StudioVisualIdentity/tree/main/out/identities/survol-pixel">La fiche du style →</a>
+      </li>
+      <li class="card">
+        <a class="play" href="videos/pastel-diorama.mp4" data-short="pastel-diorama__enfants__d-ou-vient-la-pluie" aria-label="Voir une vidéo d'exemple : Diorama Pastel">
+        <img src="posters/pastel-diorama.jpg" alt="Diorama Pastel : image d'une vidéo d'exemple" loading="lazy" width="540" height="960" />
+        </a>
+        <h3>Diorama Pastel</h3>
+        <p>Un monde de jouets doux pour les 6–10 ans, où chaque idée « saute » en place avec un rebond</p>
+        <span class="fam">enfants · quiz et défis</span>
+        <a class="more" href="https://github.com/killerwolf/StudioVisualIdentity/tree/main/out/identities/pastel-diorama">La fiche du style →</a>
+      </li>
+      <li class="card">
+        <a class="play" href="videos/topo-relief.mp4" data-short="topo-relief__geographie__comment-mesure-t-on-l-everest" aria-label="Voir une vidéo d'exemple : Relief Topo">
+        <img src="posters/topo-relief.jpg" alt="Relief Topo : image d'une vidéo d'exemple" loading="lazy" width="540" height="960" />
+        </a>
+        <h3>Relief Topo</h3>
+        <p>Chaque sujet devient un terrain qu&#x27;on survole</p>
+        <span class="fam">géographie · histoire</span>
+        <a class="more" href="https://github.com/killerwolf/StudioVisualIdentity/tree/main/out/identities/topo-relief">La fiche du style →</a>
+      </li>
+      <li class="card">
+        <a class="play" href="videos/atlas-grave.mp4" data-short="atlas-grave__geographie__plus-longs-fleuves-du-monde" aria-label="Voir une vidéo d'exemple : Atlas Gravé">
+        <img src="posters/atlas-grave.jpg" alt="Atlas Gravé : image d'une vidéo d'exemple" loading="lazy" width="540" height="960" />
+        </a>
+        <h3>Atlas Gravé</h3>
+        <p>Un savoir qui s&#x27;imprime à l&#x27;encre sur une carte gravée, et finit sur une question ouverte</p>
+        <span class="fam">géographie · histoire</span>
+        <a class="more" href="https://github.com/killerwolf/StudioVisualIdentity/tree/main/out/identities/atlas-grave">La fiche du style →</a>
+      </li>
+      <li class="card">
+        <a class="play" href="videos/aquarelle-conte.mp4" data-short="aquarelle-conte__enfants__ou-vont-les-etoiles-le-jour" aria-label="Voir une vidéo d'exemple : Aquarelle Conte">
+        <img src="posters/aquarelle-conte.jpg" alt="Aquarelle Conte : image d'une vidéo d'exemple" loading="lazy" width="540" height="960" />
+        </a>
+        <h3>Aquarelle Conte</h3>
+        <p>Chaque short est une page d&#x27;album</p>
+        <span class="fam">enfants · histoire</span>
+        <a class="more" href="https://github.com/killerwolf/StudioVisualIdentity/tree/main/out/identities/aquarelle-conte">La fiche du style →</a>
+      </li>
+      <li class="card">
+        <a class="play" href="videos/neon-lab.mp4" data-short="neon-lab__abstrait__champ-de-force-lucioles" aria-label="Voir une vidéo d'exemple : Labo Néon">
+        <img src="posters/neon-lab.jpg" alt="Labo Néon : image d'une vidéo d'exemple" loading="lazy" width="540" height="960" />
+        </a>
+        <h3>Labo Néon</h3>
+        <p>Une nuit de laboratoire où la science se voit en lumière</p>
+        <span class="fam">abstrait · explicatif</span>
+        <a class="more" href="https://github.com/killerwolf/StudioVisualIdentity/tree/main/out/identities/neon-lab">La fiche du style →</a>
+      </li>
+      <li class="card">
+        <a class="play" href="videos/cosmos-doc.mp4" data-short="cosmos-doc__evenements__voyager-1-a-un-jour-lumiere" aria-label="Voir une vidéo d'exemple : Cosmos Doc">
+        <img src="posters/cosmos-doc.jpg" alt="Cosmos Doc : image d'une vidéo d'exemple" loading="lazy" width="540" height="960" />
+        </a>
+        <h3>Cosmos Doc</h3>
+        <p>Un plan de cinéma sur un vrai objet du ciel, où un seul chiffre suffit à donner le vertige</p>
+        <span class="fam">événements · explicatif</span>
+        <a class="more" href="https://github.com/killerwolf/StudioVisualIdentity/tree/main/out/identities/cosmos-doc">La fiche du style →</a>
+      </li>
+      <li class="card">
+        <a class="play" href="videos/liquid-chrome.mp4" data-short="liquid-chrome__abstrait__pendule-de-newton-chrome" aria-label="Voir une vidéo d'exemple : Chrome Liquide">
+        <img src="posters/liquid-chrome.jpg" alt="Chrome Liquide : image d'une vidéo d'exemple" loading="lazy" width="540" height="960" />
+        </a>
+        <h3>Chrome Liquide</h3>
+        <p>Une matière liquide, chromée et hypnotique qu&#x27;on regarde couler jusqu&#x27;au bout</p>
+        <span class="fam">abstrait · quiz et défis</span>
+        <a class="more" href="https://github.com/killerwolf/StudioVisualIdentity/tree/main/out/identities/liquid-chrome">La fiche du style →</a>
+      </li>
+      <li class="card">
+        <a class="play" href="videos/papier-decoupe.mp4" data-short="papier-decoupe__explicatif__d-ou-vient-le-mot-sandwich" aria-label="Voir une vidéo d'exemple : Papier découpé (+ 3 variantes)">
+        <img src="posters/papier-decoupe.jpg" alt="Papier découpé : image d'une vidéo d'exemple" loading="lazy" width="540" height="960" />
+        </a>
+        <h3>Papier découpé (+ 3 variantes)</h3>
+        <p>Chaque idée est une pièce de papier découpée qui saute sur un tapis de découpe vert, en stop-motion</p>
+        <span class="fam">explicatif · histoire</span>
+        <a class="more" href="https://github.com/killerwolf/StudioVisualIdentity/tree/main/out/identities/papier-decoupe">La fiche du style →</a>
+      </li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="perimetre">
+      <div class="wrap">
+        <h2>Ce que ça fait, et ce que ça ne fait pas</h2>
+        <div class="cols">
+          <div class="col yes">
+            <h3>Ça fait</h3>
+            <ul>
+              <li>Vous proposer un style visuel, montré sur de vraies vidéos.</li>
+              <li>Créer votre studio : votre style, des modèles de scènes, rendu, voix off, sons, contrôle qualité.</li>
+              <li>Produire vos épisodes avec votre agent, un par un.</li>
+              <li>Fabriquer de nouveaux styles avec le skill <code>fabrique-identites</code>.</li>
+            </ul>
+          </div>
+          <div class="col no">
+            <h3>Ça ne fait pas</h3>
+            <ul>
+              <li>Écrire et valider les sujets à votre place.</li>
+              <li>Relire, publier ni programmer vos vidéos.</li>
+              <li>Les vidéos horizontales (16:9) et le format long : pas encore.</li>
+              <li>Publier à votre place : vous gardez la main à chaque épisode.</li>
+            </ul>
+          </div>
+        </div>
+        <p class="lead" style="margin-top:24px">
+          Vous avez déjà votre propre studio ? Servez-vous du dépôt seulement pour choisir le style, puis transposez-le dans votre moteur.
+        </p>
+      </div>
+    </section>
+
+    <footer>
+      <div class="wrap">
+        <span>StudioVisualIdentity · code MIT, contenu CC BY 4.0 · par <a href="https://h4md1.fr/">Hamdi Laadhari</a></span>
+        <a href="https://github.com/killerwolf/StudioVisualIdentity">github.com/killerwolf/StudioVisualIdentity</a>
+      </div>
+    </footer>
+
+    <div class="viewer" id="viewer" role="dialog" aria-modal="true" aria-label="Vidéo d'exemple">
+      <button class="full" type="button" id="viewer-full">Plein écran</button>
+      <button class="close" type="button" id="viewer-close" aria-label="Fermer">×</button>
+      <video id="viewer-video" controls playsinline></video>
+    </div>
+
+    <script>
+      (() => {
+        const viewer = document.getElementById('viewer');
+        const video = document.getElementById('viewer-video');
+        const close = () => {
+          video.pause(); video.removeAttribute('src'); video.load();
+          viewer.classList.remove('open'); document.body.style.overflow = '';
+          if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
+        };
+        document.querySelectorAll('a.play').forEach((a) => {
+          a.addEventListener('click', (e) => {
+            e.preventDefault();
+            video.src = a.getAttribute('href');
+            viewer.classList.add('open'); document.body.style.overflow = 'hidden';
+            video.play().catch(() => {});
+          });
+        });
+        document.getElementById('viewer-close').addEventListener('click', close);
+        document.getElementById('viewer-full').addEventListener('click', () => {
+          if (video.requestFullscreen) video.requestFullscreen().catch(() => {});
+          else if (video.webkitEnterFullscreen) video.webkitEnterFullscreen();
+        });
+        viewer.addEventListener('click', (e) => { if (e.target === viewer) close(); });
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && viewer.classList.contains('open')) close(); });
+      })();
+
+      document.getElementById('copy').addEventListener('click', async (e) => {
+        const text = document.getElementById('prompt-text').innerText;
+        try {
+          await navigator.clipboard.writeText(text);
+          e.target.textContent = 'Copié ✓';
+        } catch {
+          e.target.textContent = 'Sélectionnez le texte';
+        }
+        setTimeout(() => (e.target.textContent = 'Copier'), 2000);
+      });
+    </script>
+  </body>
+</html>

@@ -1,61 +1,91 @@
 # StudioVisualIdentity
 
-**18 styles visuels (21 déclinaisons) prêts à l'emploi pour lancer une chaîne de vidéos courtes verticales (TikTok, Reels, Shorts), et l'agent qui fabrique les épisodes avec vous.**
+[![licence MIT](https://img.shields.io/badge/licence-MIT-green)](LICENSE) [![contenu CC BY 4.0](https://img.shields.io/badge/contenu-CC_BY_4.0-orange)](LICENSE-CONTENT.md) [![démo](https://img.shields.io/badge/d%C3%A9mo-landing-blue)](https://h4md1.fr/StudioVisualIdentity/) [![format 9:16](https://img.shields.io/badge/format-9%3A16-black)](https://h4md1.fr/StudioVisualIdentity/)
 
-[![Avant : toutes pareilles. Après : 14 styles, aucun ne se ressemble.](out/demo/thumb/thumbnail_fr_1280.jpg)](out/demo/demo_16x9.mp4)
+[![Un prompt, 18 styles visuels pour vos vidéos verticales](out/demo/thumb/hero_fr.jpg)](out/demo/demo_16x9.mp4)
 
-▶ **La démo en 51 s, avec le son** : [16:9](out/demo/demo_16x9.mp4) · [9:16 vertical](out/demo/demo_9x16.mp4)
+**Décrivez votre chaîne à votre agent IA : il vous propose un style parmi 18, crée votre studio et réalise votre première vidéo.**
 
-- **18 identités complètes** (couleurs, typographies, mouvements, transitions, structure d'un short), chacune prouvée par 2 ou 3 vraies vidéos : **21 déclinaisons, 45 shorts** en tout. Dont, depuis le 2026-11-04, le **papier découpé du gabarit StudioGabarit** et ses 3 **dérivations** (atelier papier, carnet d'archives, cabinet de curiosités : une seule identité, même moteur, seuls le fond, la palette et les polices changent), rendus par le moteur Python partagé `out/shared/papier-moteur/`, et depuis le 2026-11-05 le **lot 2 de la fabrique d'identités** : `carte-meteo` (carte météo claire, vraies côtes Natural Earth) et `trait-continu` (un seul trait jamais levé), et depuis le 2026-11-18 `survol-pixel` (un petit monde en pixel art 16 bits que la caméra survole en vraie profondeur 3D, style inspiré d'une vidéo de @creativedash ; moteur Python sans navigateur).
-- **Voix off** : 31 shorts voisés par Fish Audio « Arnold », les 8 shorts papier par Gemini « Sulafat » ; les 4 shorts du lot 2 aussi par Gemini « Sulafat » (décision du propriétaire : Arnold était prévu, mais le plan gratuit Fish Audio n'a permis qu'une ligne sur 20). Les 2 shorts de `survol-pixel` aussi par Gemini « Sulafat » (décision du propriétaire du 2026-11-18, appel en API v1beta). Soit 31 Arnold + 14 Sulafat.
-- **La fabrique d'identités** : le skill Claude Code `fabrique-identites` (`.claude/skills/fabrique-identites/`) fait créer de nouvelles identités par des sous-agents (repérage dans le catalogue, challenge adversarial, studios, intégration, revue), à partir du [catalogue des librairies](out/library-cards/catalogue.md).
-- **Les outils pour produire la suite** : rendu image par image, voix off, sons, contrôle qualité, et un script qui crée en une commande le projet de votre chaîne.
-- **Tout est open source** : les shorts sont rendus par du code, sans image ni musique téléchargée (seules exceptions : les fichiers audio et polices du moteur papier importés avec StudioGabarit, et des données factuelles libres à version épinglée, comme les côtes Natural Earth de `world-atlas`).
+Pour les vidéos **verticales (9:16)** : TikTok, Reels, YouTube Shorts. Le 16:9 et le format long ne sont pas encore couverts.
 
-## Comment s'en servir
+## En un prompt
 
-Donnez ce prompt à votre agent (Claude Code, etc.) en remplaçant ce qui est entre crochets :
+Donnez ce texte à votre agent (Claude Code ou un autre agent qui travaille dans un terminal), en remplaçant ce qui est entre crochets :
 
 ```text
-Lis AGENTS.md de https://github.com/killerwolf/StudioVisualIdentity.
-Choisis le style qui convient à une chaîne de [sujet, ex. quiz de géographie] pour [public, ex. ados de 13 à 17 ans] en [langue].
-Crée notre studio avec out/tools/bootstrap_studio.py, adapte l'identité visuelle à notre chaîne,
-puis réalise notre premier épisode sur [sujet de l'épisode] et montre-moi le résultat.
+Clone https://github.com/killerwolf/StudioVisualIdentity et lis son AGENTS.md (il est en anglais, c'est normal).
+Ma chaîne : [sujet, ex. quiz de géographie], pour [public, ex. ados de 13 à 17 ans], en [langue].
+Propose-moi 3 styles adaptés, avec leur vidéo d'exemple, et attends mon choix.
+Ensuite, crée notre studio avec out/tools/bootstrap_studio.py, installe ce qu'il faut,
+adapte le style à notre chaîne et réalise notre premier épisode sur [sujet de l'épisode].
 ```
 
-L'agent choisit un style, crée un projet séparé pour votre chaîne (votre identité visuelle, des modèles de scènes, les outils de rendu), puis fabrique les épisodes un par un.
+L'agent vous montre 3 styles, vous choisissez, puis il crée un projet séparé pour votre chaîne (votre style, des modèles de scènes, les outils de rendu) et réalise l'épisode.
 
-**Vous avez déjà un modèle de studio complet** (agents, Notion, relecture, publication) ? Servez-vous de ce dépôt seulement pour **choisir le style** : l'agent en retient 2 ou 3 au moment de définir l'identité visuelle, puis transpose le style choisi dans votre propre moteur. C'est ainsi que l'utilise le modèle de studio privé de l'auteur, qui tourne sur Mac et se pilote depuis Notion.
+**Avant de commencer**, il vous faut :
+- un agent IA qui travaille dans un terminal, par exemple [Claude Code](https://claude.com/claude-code) ;
+- `git`, Python 3.11 (`uv` conseillé), Node.js, `ffmpeg`, et Chromium via Playwright pour les styles rendus dans un navigateur. Les dépendances sont dans `package.json` et `requirements.txt`, et votre agent peut les installer ;
+- une clé [Gemini](https://aistudio.google.com/) pour la voix off. Le quota gratuit permet environ 10 voix par jour, à raison d'un appel par vidéo.
 
-## Pour aller plus loin : voix et sound design
+Le dépôt est écrit en français, avec un manuel pour agents (`AGENTS.md`) en anglais.
 
-Le plugin `studio` de [killerwolf/skills](https://github.com/killerwolf/skills) complète le studio avec trois skills Claude Code :
+## La démo (41 s, avec le son)
 
-| Skill | Ce qu'il apporte |
-| --- | --- |
-| [`gemini-voices`](https://github.com/killerwolf/skills/tree/main/skills/gemini-voices) | Les voix off avec Gemini : narration, personnages, dialogue à deux voix. |
-| [`sound-design`](https://github.com/killerwolf/skills/tree/main/skills/sound-design) | Les bruitages (whoosh, pop, impact, frappe, ding) calés sur les apparitions de texte et mixés sous la voix, à partir d'une bibliothèque de sons CC0 qu'on peut enrichir avec Freesound. |
-| [`studio-mate`](https://github.com/killerwolf/skills/tree/main/skills/studio-mate) | Le pilotage des studios depuis Notion, en conversation, sans code : ce qui attend, les idées à valider, les retours de relecture. |
+▶ [16:9](out/demo/demo_16x9.mp4) · [9:16 vertical](out/demo/demo_9x16.mp4)
 
-```bash
-claude plugin marketplace add killerwolf/skills
-```
+18 styles prêts à l'emploi pour TikTok, Reels et Shorts, chacun montré par de vraies vidéos d'exemple, et un agent qui crée votre studio et fabrique vos premiers épisodes.
 
-```bash
-claude plugin install studio@killerwolf
-```
+## Ce que vous obtenez
+
+- **18 styles complets** : couleurs, typographies, mouvements, transitions, structure d'une vidéo, sons. Chacun est décrit dans une fiche que votre agent sait lire. Le papier découpé existe en 4 variantes.
+- **45 vidéos d'exemple**, toutes en 1080×1920. Les images et les mouvements sont rendus par du code, sans banque d'images. Les voix off sont générées par Fish Audio (31 vidéos) et Gemini (14). Restent quelques éléments de tiers : polices libres, emoji Twemoji, musique d'essai du moteur papier, musique ElevenLabs de la démo. Tout est détaillé dans [`NOTICE.md`](NOTICE.md).
+- **Des styles vraiment différents** : un second agent IA, sans contexte, a reçu 72 images anonymes des 18 styles avec la consigne d'en faire 18 groupes de 4. Il les a tous bien regroupés. Protocole et résultats : [`out/report/comparison.md`](out/report/comparison.md) § 4 g.
+- **Un studio prêt à produire** : modèles de scènes, rendu image par image, voix off et sons mixés, contrôle qualité.
+- **Open source** : le code est sous licence MIT ([`LICENSE`](LICENSE)), le contenu sous CC BY 4.0, avec des exclusions listées dans [`LICENSE-CONTENT.md`](LICENSE-CONTENT.md).
+
+## Ce que ce dépôt fait, et ce qu'il ne fait pas
+
+**Il fait** : choisir un style et le prouver, puis produire des épisodes avec votre agent, un par un.
+
+**Il ne fait pas** la chaîne complète : écriture et validation des sujets, relecture, publication, programmation. Ce dépôt n'est relié à aucun outil de pilotage. Si vous avez déjà votre propre modèle de studio, servez-vous de ce dépôt seulement pour **choisir le style**, puis transposez-le dans votre moteur.
+
+## Les 18 styles
+
+| Style | En une phrase | Sujets des vidéos d'exemple |
+|---|---|---|
+| [**Grille Suisse**](out/identities/swiss-data/identity.md) | Un chiffre qui claque par écran, posé sur une grille 12 colonnes visible, révélé par des volets rouges nets | événements, géographie |
+| [**Gazette 1900**](out/identities/gazette-1900/identity.md) | Chaque grand moment arrive comme la une d'un journal qui tourbillonne, se pose sur la pile et se fait tamponner | événements, histoire |
+| [**Arcade Pixel**](out/identities/pixel-arcade/identity.md) | Une vraie simulation physique, déterministe, filmée comme une partie d'arcade | abstrait, quiz et défis |
+| [**Brut Mème**](out/identities/brut-meme/identity.md) | Un fait ou un défi par coupe, en lettres géantes qui claquent sur le beat | quiz et défis, événements |
+| [**Carte Météo**](out/identities/carte-meteo/identity.md) | Une carte météo claire où les isobares respirent, le vent file et un front balaie l'écran pour changer de plan | événements, géographie |
+| [**Bauhaus Cinétique**](out/identities/bauhaus-kinetic/identity.md) | Des formes primaires qui s'emboîtent sur une grille stricte pour expliquer ou défier en 15 secondes | quiz et défis, explicatif |
+| [**Tableau Craie**](out/identities/tableau-craie/identity.md) | Un prof bienveillant vous explique le monde en le dessinant à la craie | enfants, explicatif |
+| [**Zine Riso**](out/identities/riso-zine/identity.md) | Un chiffre fort, une forme découpée, une annotation au marqueur | événements, géographie |
+| [**Trait continu**](out/identities/trait-continu/identity.md) | Un seul trait, jamais levé, dessine l'idée devant vous | enfants, géographie |
+| [**Survol pixel**](out/identities/survol-pixel/identity.md) | Chaque sujet devient un petit monde en pixel art 16 bits que la caméra survole, puis frôle jusqu'à l'horizon | explicatif, histoire |
+| [**Diorama Pastel**](out/identities/pastel-diorama/identity.md) | Un monde de jouets doux pour les 6–10 ans, où chaque idée « saute » en place avec un rebond | enfants, quiz et défis |
+| [**Relief Topo**](out/identities/topo-relief/identity.md) | Chaque sujet devient un terrain qu'on survole | géographie, histoire |
+| [**Atlas Gravé**](out/identities/atlas-grave/identity.md) | Un savoir qui s'imprime à l'encre sur une carte gravée, et finit sur une question ouverte | géographie, histoire |
+| [**Aquarelle Conte**](out/identities/aquarelle-conte/identity.md) | Chaque short est une page d'album | enfants, histoire |
+| [**Labo Néon**](out/identities/neon-lab/identity.md) | Une nuit de laboratoire où la science se voit en lumière | abstrait, explicatif |
+| [**Cosmos Doc**](out/identities/cosmos-doc/identity.md) | Un plan de cinéma sur un vrai objet du ciel, où un seul chiffre suffit à donner le vertige | événements, explicatif |
+| [**Chrome Liquide**](out/identities/liquid-chrome/identity.md) | Une matière liquide, chromée et hypnotique qu'on regarde couler jusqu'au bout | abstrait, quiz et défis |
+| [**Papier découpé (+ 3 variantes)**](out/identities/papier-decoupe/identity.md) | Chaque idée est une pièce de papier découpée qui saute sur un tapis de découpe vert, en stop-motion | explicatif, histoire |
+
+Vue d'ensemble : [`out/report/directions-contact-sheet.jpg`](out/report/directions-contact-sheet.jpg). Chaque style a sa planche dans `out/identities/<id>/contact-sheet.jpg`.
 
 ## Ce que vous devrez faire ou valider
 
-- **Valider l'identité** proposée par l'agent (nom, couleurs, ton) avant de produire en série.
-- **Fournir les clés des services de voix** : Fish Audio (connecteur MCP) ou `GEMINI_API_KEY`. Ajoutez `FREESOUND_API_KEY` si vous voulez d'autres bruitages que ceux fournis.
-- **Écouter et regarder chaque épisode** avant de le publier. L'agent mesure les niveaux sonores, mais il ne peut pas écouter.
+- **Valider le style** proposé par l'agent (nom, couleurs, ton) avant de produire en série.
+- **Fournir une clé de voix** : `GEMINI_API_KEY` (la recette utilisée ici est dans [`out/report/notes/voix-lot2.md`](out/report/notes/voix-lot2.md)) ou Fish Audio. Ajoutez `FREESOUND_API_KEY` si vous voulez d'autres bruitages que ceux fournis.
+- **Regarder et écouter chaque épisode** avant de le publier. L'agent mesure les niveaux sonores, mais il ne peut pas écouter.
 - **Relire les faits** énoncés dans chaque épisode.
 
-## Pour aller encore plus loin
+## Pour aller plus loin
 
 - [`AGENTS.md`](AGENTS.md) : le guide détaillé pour les agents (en anglais).
-- [`out/identities/index.json`](out/identities/index.json) : les 20 styles en données (couleurs, polices, public conseillé).
-- [`out/report/`](out/report/README.md) : le rapport complet de l'exploration (en français).
-- [`out/library-cards/catalogue.md`](out/library-cards/catalogue.md) : toutes les librairies et outils envisageables, ceux déjà utilisés et où : la base pour créer de nouvelles identités.
-- [`out/demo/`](out/demo/README.md) : comment la vidéo démo et sa vignette sont fabriquées.
+- [`out/identities/index.json`](out/identities/index.json) : les 18 styles en données (couleurs, polices, public conseillé, coût de rendu).
+- [`out/report/`](out/report/README.md) : le rapport complet de l'exploration, comparaisons et tests à l'aveugle compris.
+- **Créer de nouveaux styles** : le skill Claude Code `fabrique-identites` (`.claude/skills/fabrique-identites/`) les fait fabriquer par des sous-agents, à partir du [catalogue des librairies](out/library-cards/catalogue.md).
+- **Sound design** : le skill [`sound-design`](https://github.com/killerwolf/skills/tree/main/skills/sound-design) du plugin `studio` (`claude plugin marketplace add killerwolf/skills` puis `claude plugin install studio@killerwolf`).
+- [`out/demo/`](out/demo/README.md) : comment la vidéo démo est fabriquée.

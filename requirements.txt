@@ -1,0 +1,15 @@
+# Python dependencies for rendering (Python 3.11). Tested 2026-11-22 in a fresh venv:
+#   uv venv --python 3.11 .venv && uv pip install --python .venv/bin/python -r requirements.txt
+# Node side: `npm i` (package.json). System: ffmpeg; Playwright + Chromium for browser-rendered identities.
+numpy==2.4.6
+scipy==1.17.1
+pillow==13.0.0
+opencv-python-headless==4.11.0.86
+pycairo==1.29.2
+matplotlib==3.11.2
+shapely==2.2.0
+opensimplex==0.4.5.1
+fonttools==4.68.0
+# taichi: liquid-chrome scenes and survol-pixel's optional GPU ray march. 1.7.2 is the last release with a macOS x86_64 wheel.
+taichi==1.7.2
+# Manim (tableau-craie, one short) is not listed: install it without manimpango, see out/report/facts.md.

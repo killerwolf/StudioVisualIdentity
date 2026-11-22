@@ -1,0 +1,1681 @@
+{
+ "duration": 41.0,
+ "bpm": 120,
+ "layers": "voix off (voice_fr/) · son propre des shorts à l’écran · musique synthétisée · bruitages",
+ "ducking": "sous la voix off : son des shorts −13 dB, musique −7 dB, bruitages −2 dB",
+ "music": "eleven/music.mp3",
+ "externalSfxUsed": [
+  "click.mp3",
+  "ding.mp3",
+  "glitch.mp3",
+  "impact.mp3",
+  "impact_light.mp3",
+  "key.mp3",
+  "pop.mp3",
+  "riser.mp3",
+  "whoosh.mp3",
+  "whoosh_long.mp3"
+ ],
+ "sfx": [
+  {
+   "t": -0.09,
+   "sfx": "whoosh_fast",
+   "gain": 0.3
+  },
+  {
+   "t": 0.03,
+   "sfx": "impact_light",
+   "gain": 0.85
+  },
+  {
+   "t": 0.03,
+   "sfx": "synthèse:thud",
+   "gain": 0.5
+  },
+  {
+   "t": 0.38,
+   "sfx": "whoosh_fast",
+   "gain": 0.3
+  },
+  {
+   "t": 0.5,
+   "sfx": "impact_light",
+   "gain": 0.95
+  },
+  {
+   "t": 0.5,
+   "sfx": "synthèse:thud",
+   "gain": 0.5
+  },
+  {
+   "t": 0.83,
+   "sfx": "whoosh_fast",
+   "gain": 0.3
+  },
+  {
+   "t": 0.95,
+   "sfx": "impact",
+   "gain": 1.05
+  },
+  {
+   "t": 0.95,
+   "sfx": "synthèse:thud",
+   "gain": 0.5
+  },
+  {
+   "t": 1.96,
+   "sfx": "glitch",
+   "gain": 0.7
+  },
+  {
+   "t": 2.1,
+   "sfx": "glitch",
+   "gain": 0.35
+  },
+  {
+   "t": 2.0,
+   "sfx": "pop",
+   "gain": 0.5
+  },
+  {
+   "t": 2.0,
+   "sfx": "click",
+   "gain": 0.4
+  },
+  {
+   "t": 2.25,
+   "sfx": "pop",
+   "gain": 0.5
+  },
+  {
+   "t": 2.25,
+   "sfx": "click",
+   "gain": 0.4
+  },
+  {
+   "t": 2.5,
+   "sfx": "pop",
+   "gain": 0.5
+  },
+  {
+   "t": 2.5,
+   "sfx": "click",
+   "gain": 0.4
+  },
+  {
+   "t": 2.75,
+   "sfx": "pop",
+   "gain": 0.5
+  },
+  {
+   "t": 2.75,
+   "sfx": "click",
+   "gain": 0.4
+  },
+  {
+   "t": 3.0,
+   "sfx": "pop",
+   "gain": 0.5
+  },
+  {
+   "t": 3.0,
+   "sfx": "click",
+   "gain": 0.4
+  },
+  {
+   "t": 3.25,
+   "sfx": "pop",
+   "gain": 0.5
+  },
+  {
+   "t": 3.25,
+   "sfx": "click",
+   "gain": 0.4
+  },
+  {
+   "t": 2.0,
+   "sfx": "riser",
+   "gain": 0.55
+  },
+  {
+   "t": 2.54,
+   "sfx": "whoosh_soft(inversé)",
+   "gain": 0.45
+  },
+  {
+   "t": 3.5,
+   "sfx": "impact",
+   "gain": 1.0
+  },
+  {
+   "t": 3.5,
+   "sfx": "synthèse:chute de basse",
+   "gain": 0.8
+  },
+  {
+   "t": 3.52,
+   "sfx": "whoosh_soft",
+   "gain": 0.4
+  },
+  {
+   "t": 4.4,
+   "sfx": "whoosh_fast",
+   "gain": 0.26
+  },
+  {
+   "t": 4.52,
+   "sfx": "click",
+   "gain": 0.4
+  },
+  {
+   "t": 4.9,
+   "sfx": "whoosh_fast",
+   "gain": 0.26
+  },
+  {
+   "t": 5.02,
+   "sfx": "click",
+   "gain": 0.4
+  },
+  {
+   "t": 5.4,
+   "sfx": "whoosh_fast",
+   "gain": 0.26
+  },
+  {
+   "t": 5.52,
+   "sfx": "click",
+   "gain": 0.4
+  },
+  {
+   "t": 5.9,
+   "sfx": "whoosh_fast",
+   "gain": 0.26
+  },
+  {
+   "t": 6.02,
+   "sfx": "click",
+   "gain": 0.4
+  },
+  {
+   "t": 6.4,
+   "sfx": "whoosh_fast",
+   "gain": 0.26
+  },
+  {
+   "t": 6.52,
+   "sfx": "click",
+   "gain": 0.4
+  },
+  {
+   "t": 6.9,
+   "sfx": "whoosh_fast",
+   "gain": 0.26
+  },
+  {
+   "t": 7.02,
+   "sfx": "click",
+   "gain": 0.4
+  },
+  {
+   "t": 7.4,
+   "sfx": "whoosh_fast",
+   "gain": 0.26
+  },
+  {
+   "t": 7.52,
+   "sfx": "click",
+   "gain": 0.4
+  },
+  {
+   "t": 7.9,
+   "sfx": "whoosh_fast",
+   "gain": 0.26
+  },
+  {
+   "t": 8.02,
+   "sfx": "click",
+   "gain": 0.4
+  },
+  {
+   "t": 8.4,
+   "sfx": "whoosh_fast",
+   "gain": 0.26
+  },
+  {
+   "t": 8.52,
+   "sfx": "click",
+   "gain": 0.4
+  },
+  {
+   "t": 8.9,
+   "sfx": "whoosh_fast",
+   "gain": 0.26
+  },
+  {
+   "t": 9.02,
+   "sfx": "click",
+   "gain": 0.4
+  },
+  {
+   "t": 9.4,
+   "sfx": "whoosh_fast",
+   "gain": 0.26
+  },
+  {
+   "t": 9.52,
+   "sfx": "click",
+   "gain": 0.4
+  },
+  {
+   "t": 9.9,
+   "sfx": "whoosh_fast",
+   "gain": 0.26
+  },
+  {
+   "t": 10.02,
+   "sfx": "click",
+   "gain": 0.4
+  },
+  {
+   "t": 10.4,
+   "sfx": "whoosh_fast",
+   "gain": 0.26
+  },
+  {
+   "t": 10.52,
+   "sfx": "click",
+   "gain": 0.4
+  },
+  {
+   "t": 10.9,
+   "sfx": "whoosh_fast",
+   "gain": 0.42
+  },
+  {
+   "t": 11.02,
+   "sfx": "click",
+   "gain": 0.4
+  },
+  {
+   "t": 11.03,
+   "sfx": "impact_light",
+   "gain": 0.6
+  },
+  {
+   "t": 11.03,
+   "sfx": "synthèse:thud",
+   "gain": 0.35
+  },
+  {
+   "t": 11.9,
+   "sfx": "whoosh_fast",
+   "gain": 0.42
+  },
+  {
+   "t": 12.02,
+   "sfx": "click",
+   "gain": 0.4
+  },
+  {
+   "t": 12.03,
+   "sfx": "impact_light",
+   "gain": 0.6
+  },
+  {
+   "t": 12.03,
+   "sfx": "synthèse:thud",
+   "gain": 0.35
+  },
+  {
+   "t": 12.9,
+   "sfx": "whoosh_fast",
+   "gain": 0.42
+  },
+  {
+   "t": 13.02,
+   "sfx": "click",
+   "gain": 0.4
+  },
+  {
+   "t": 13.03,
+   "sfx": "impact_light",
+   "gain": 0.6
+  },
+  {
+   "t": 13.03,
+   "sfx": "synthèse:thud",
+   "gain": 0.35
+  },
+  {
+   "t": 13.9,
+   "sfx": "whoosh_fast",
+   "gain": 0.42
+  },
+  {
+   "t": 14.02,
+   "sfx": "click",
+   "gain": 0.4
+  },
+  {
+   "t": 14.03,
+   "sfx": "impact_light",
+   "gain": 0.6
+  },
+  {
+   "t": 14.03,
+   "sfx": "synthèse:thud",
+   "gain": 0.35
+  },
+  {
+   "t": 5.42,
+   "sfx": "ding",
+   "gain": 0.3
+  },
+  {
+   "t": 14.8,
+   "sfx": "whoosh_fast",
+   "gain": 0.22
+  },
+  {
+   "t": 15.191,
+   "sfx": "whoosh_fast",
+   "gain": 0.25
+  },
+  {
+   "t": 15.334,
+   "sfx": "whoosh_fast",
+   "gain": 0.28
+  },
+  {
+   "t": 15.44,
+   "sfx": "whoosh_fast",
+   "gain": 0.31
+  },
+  {
+   "t": 15.529,
+   "sfx": "whoosh_fast",
+   "gain": 0.34
+  },
+  {
+   "t": 15.606,
+   "sfx": "whoosh_fast",
+   "gain": 0.37
+  },
+  {
+   "t": 15.675,
+   "sfx": "whoosh_fast",
+   "gain": 0.4
+  },
+  {
+   "t": 15.738,
+   "sfx": "whoosh_fast",
+   "gain": 0.43
+  },
+  {
+   "t": 15.796,
+   "sfx": "whoosh_fast",
+   "gain": 0.46
+  },
+  {
+   "t": 14.8,
+   "sfx": "riser",
+   "gain": 0.6
+  },
+  {
+   "t": 15.04,
+   "sfx": "whoosh_soft(inversé)",
+   "gain": 0.45
+  },
+  {
+   "t": 16.0,
+   "sfx": "impact",
+   "gain": 1.0
+  },
+  {
+   "t": 16.0,
+   "sfx": "synthèse:chute de basse",
+   "gain": 0.8
+  },
+  {
+   "t": 16.02,
+   "sfx": "whoosh_soft",
+   "gain": 0.4
+  },
+  {
+   "t": 16.04,
+   "sfx": "pop",
+   "gain": 0.22
+  },
+  {
+   "t": 16.085,
+   "sfx": "pop",
+   "gain": 0.22
+  },
+  {
+   "t": 16.13,
+   "sfx": "pop",
+   "gain": 0.22
+  },
+  {
+   "t": 16.175,
+   "sfx": "pop",
+   "gain": 0.22
+  },
+  {
+   "t": 16.22,
+   "sfx": "pop",
+   "gain": 0.22
+  },
+  {
+   "t": 16.265,
+   "sfx": "pop",
+   "gain": 0.22
+  },
+  {
+   "t": 16.3,
+   "sfx": "impact",
+   "gain": 0.9
+  },
+  {
+   "t": 16.3,
+   "sfx": "synthèse:chute de basse",
+   "gain": 0.55
+  },
+  {
+   "t": 17.72,
+   "sfx": "whoosh_fast",
+   "gain": 0.35
+  },
+  {
+   "t": 17.8,
+   "sfx": "impact_light",
+   "gain": 0.6
+  },
+  {
+   "t": 19.38,
+   "sfx": "whoosh_fast",
+   "gain": 0.55
+  },
+  {
+   "t": 19.62,
+   "sfx": "impact_light",
+   "gain": 0.5
+  },
+  {
+   "t": 20.0,
+   "sfx": "key1",
+   "gain": 0.42
+  },
+  {
+   "t": 20.022,
+   "sfx": "key1",
+   "gain": 0.42
+  },
+  {
+   "t": 20.072,
+   "sfx": "key2",
+   "gain": 0.42
+  },
+  {
+   "t": 20.092,
+   "sfx": "key1",
+   "gain": 0.42
+  },
+  {
+   "t": 20.129,
+   "sfx": "key3",
+   "gain": 0.42
+  },
+  {
+   "t": 20.16,
+   "sfx": "key1",
+   "gain": 0.42
+  },
+  {
+   "t": 20.184,
+   "sfx": "key1",
+   "gain": 0.42
+  },
+  {
+   "t": 20.215,
+   "sfx": "key1",
+   "gain": 0.42
+  },
+  {
+   "t": 20.234,
+   "sfx": "key3",
+   "gain": 0.42
+  },
+  {
+   "t": 20.264,
+   "sfx": "key3",
+   "gain": 0.3
+  },
+  {
+   "t": 20.308,
+   "sfx": "key1",
+   "gain": 0.42
+  },
+  {
+   "t": 20.328,
+   "sfx": "key1",
+   "gain": 0.42
+  },
+  {
+   "t": 20.364,
+   "sfx": "key2",
+   "gain": 0.42
+  },
+  {
+   "t": 20.391,
+   "sfx": "key2",
+   "gain": 0.42
+  },
+  {
+   "t": 20.425,
+   "sfx": "key1",
+   "gain": 0.42
+  },
+  {
+   "t": 20.445,
+   "sfx": "key3",
+   "gain": 0.42
+  },
+  {
+   "t": 20.482,
+   "sfx": "key1",
+   "gain": 0.42
+  },
+  {
+   "t": 20.506,
+   "sfx": "key1",
+   "gain": 0.42
+  },
+  {
+   "t": 20.553,
+   "sfx": "key2",
+   "gain": 0.42
+  },
+  {
+   "t": 20.58,
+   "sfx": "key1",
+   "gain": 0.42
+  },
+  {
+   "t": 20.601,
+   "sfx": "key2",
+   "gain": 0.42
+  },
+  {
+   "t": 20.634,
+   "sfx": "key3",
+   "gain": 0.42
+  },
+  {
+   "t": 20.662,
+   "sfx": "key1",
+   "gain": 0.42
+  },
+  {
+   "t": 20.711,
+   "sfx": "key3",
+   "gain": 0.42
+  },
+  {
+   "t": 20.725,
+   "sfx": "key3",
+   "gain": 0.42
+  },
+  {
+   "t": 20.75,
+   "sfx": "key2",
+   "gain": 0.42
+  },
+  {
+   "t": 20.796,
+   "sfx": "key1",
+   "gain": 0.42
+  },
+  {
+   "t": 20.826,
+   "sfx": "key3",
+   "gain": 0.42
+  },
+  {
+   "t": 20.854,
+   "sfx": "key2",
+   "gain": 0.42
+  },
+  {
+   "t": 20.889,
+   "sfx": "key1",
+   "gain": 0.42
+  },
+  {
+   "t": 20.909,
+   "sfx": "key2",
+   "gain": 0.42
+  },
+  {
+   "t": 20.934,
+   "sfx": "key1",
+   "gain": 0.42
+  },
+  {
+   "t": 20.982,
+   "sfx": "key3",
+   "gain": 0.3
+  },
+  {
+   "t": 21.003,
+   "sfx": "key1",
+   "gain": 0.42
+  },
+  {
+   "t": 21.023,
+   "sfx": "key2",
+   "gain": 0.42
+  },
+  {
+   "t": 21.068,
+   "sfx": "key1",
+   "gain": 0.42
+  },
+  {
+   "t": 21.086,
+   "sfx": "key1",
+   "gain": 0.3
+  },
+  {
+   "t": 21.135,
+   "sfx": "key2",
+   "gain": 0.42
+  },
+  {
+   "t": 21.167,
+   "sfx": "key3",
+   "gain": 0.42
+  },
+  {
+   "t": 21.176,
+   "sfx": "key2",
+   "gain": 0.42
+  },
+  {
+   "t": 21.216,
+   "sfx": "key2",
+   "gain": 0.42
+  },
+  {
+   "t": 21.252,
+   "sfx": "key1",
+   "gain": 0.42
+  },
+  {
+   "t": 21.284,
+   "sfx": "key2",
+   "gain": 0.42
+  },
+  {
+   "t": 21.305,
+   "sfx": "key1",
+   "gain": 0.42
+  },
+  {
+   "t": 21.34,
+   "sfx": "key2",
+   "gain": 0.42
+  },
+  {
+   "t": 21.365,
+   "sfx": "key2",
+   "gain": 0.42
+  },
+  {
+   "t": 21.397,
+   "sfx": "key1",
+   "gain": 0.42
+  },
+  {
+   "t": 21.43,
+   "sfx": "key3",
+   "gain": 0.3
+  },
+  {
+   "t": 21.455,
+   "sfx": "key1",
+   "gain": 0.42
+  },
+  {
+   "t": 21.482,
+   "sfx": "key1",
+   "gain": 0.42
+  },
+  {
+   "t": 21.53,
+   "sfx": "key1",
+   "gain": 0.42
+  },
+  {
+   "t": 21.554,
+   "sfx": "key2",
+   "gain": 0.42
+  },
+  {
+   "t": 21.573,
+   "sfx": "key1",
+   "gain": 0.3
+  },
+  {
+   "t": 21.618,
+   "sfx": "key2",
+   "gain": 0.42
+  },
+  {
+   "t": 21.644,
+   "sfx": "key1",
+   "gain": 0.42
+  },
+  {
+   "t": 21.68,
+   "sfx": "key2",
+   "gain": 0.42
+  },
+  {
+   "t": 21.712,
+   "sfx": "key2",
+   "gain": 0.42
+  },
+  {
+   "t": 21.73,
+   "sfx": "key2",
+   "gain": 0.42
+  },
+  {
+   "t": 21.762,
+   "sfx": "key1",
+   "gain": 0.42
+  },
+  {
+   "t": 21.797,
+   "sfx": "key2",
+   "gain": 0.42
+  },
+  {
+   "t": 21.816,
+   "sfx": "key1",
+   "gain": 0.3
+  },
+  {
+   "t": 21.847,
+   "sfx": "key2",
+   "gain": 0.42
+  },
+  {
+   "t": 21.897,
+   "sfx": "key3",
+   "gain": 0.42
+  },
+  {
+   "t": 21.917,
+   "sfx": "key2",
+   "gain": 0.3
+  },
+  {
+   "t": 21.951,
+   "sfx": "key1",
+   "gain": 0.42
+  },
+  {
+   "t": 21.971,
+   "sfx": "key1",
+   "gain": 0.42
+  },
+  {
+   "t": 22.005,
+   "sfx": "key3",
+   "gain": 0.42
+  },
+  {
+   "t": 22.027,
+   "sfx": "key2",
+   "gain": 0.3
+  },
+  {
+   "t": 22.058,
+   "sfx": "key3",
+   "gain": 0.42
+  },
+  {
+   "t": 22.096,
+   "sfx": "key2",
+   "gain": 0.42
+  },
+  {
+   "t": 22.118,
+   "sfx": "key3",
+   "gain": 0.3
+  },
+  {
+   "t": 22.169,
+   "sfx": "key1",
+   "gain": 0.42
+  },
+  {
+   "t": 22.187,
+   "sfx": "key2",
+   "gain": 0.42
+  },
+  {
+   "t": 22.212,
+   "sfx": "key3",
+   "gain": 0.42
+  },
+  {
+   "t": 22.258,
+   "sfx": "key1",
+   "gain": 0.3
+  },
+  {
+   "t": 22.272,
+   "sfx": "key2",
+   "gain": 0.42
+  },
+  {
+   "t": 22.313,
+   "sfx": "key3",
+   "gain": 0.42
+  },
+  {
+   "t": 22.334,
+   "sfx": "key3",
+   "gain": 0.3
+  },
+  {
+   "t": 22.377,
+   "sfx": "key1",
+   "gain": 0.42
+  },
+  {
+   "t": 22.414,
+   "sfx": "key1",
+   "gain": 0.42
+  },
+  {
+   "t": 22.443,
+   "sfx": "key1",
+   "gain": 0.42
+  },
+  {
+   "t": 22.455,
+   "sfx": "key1",
+   "gain": 0.3
+  },
+  {
+   "t": 22.482,
+   "sfx": "key2",
+   "gain": 0.42
+  },
+  {
+   "t": 22.524,
+   "sfx": "key1",
+   "gain": 0.42
+  },
+  {
+   "t": 22.562,
+   "sfx": "key2",
+   "gain": 0.42
+  },
+  {
+   "t": 22.582,
+   "sfx": "key3",
+   "gain": 0.42
+  },
+  {
+   "t": 22.72,
+   "sfx": "key1",
+   "gain": 0.7
+  },
+  {
+   "t": 22.72,
+   "sfx": "click",
+   "gain": 0.5
+  },
+  {
+   "t": 20.8,
+   "sfx": "click",
+   "gain": 0.2
+  },
+  {
+   "t": 20.8,
+   "sfx": "synthèse:tick",
+   "gain": 0.14
+  },
+  {
+   "t": 21.05,
+   "sfx": "click",
+   "gain": 0.2
+  },
+  {
+   "t": 21.05,
+   "sfx": "synthèse:tick",
+   "gain": 0.14
+  },
+  {
+   "t": 21.3,
+   "sfx": "click",
+   "gain": 0.2
+  },
+  {
+   "t": 21.3,
+   "sfx": "synthèse:tick",
+   "gain": 0.14
+  },
+  {
+   "t": 21.55,
+   "sfx": "click",
+   "gain": 0.2
+  },
+  {
+   "t": 21.55,
+   "sfx": "synthèse:tick",
+   "gain": 0.14
+  },
+  {
+   "t": 21.8,
+   "sfx": "click",
+   "gain": 0.2
+  },
+  {
+   "t": 21.8,
+   "sfx": "synthèse:tick",
+   "gain": 0.14
+  },
+  {
+   "t": 22.05,
+   "sfx": "click",
+   "gain": 0.2
+  },
+  {
+   "t": 22.05,
+   "sfx": "synthèse:tick",
+   "gain": 0.14
+  },
+  {
+   "t": 22.3,
+   "sfx": "click",
+   "gain": 0.2
+  },
+  {
+   "t": 22.3,
+   "sfx": "synthèse:tick",
+   "gain": 0.14
+  },
+  {
+   "t": 22.55,
+   "sfx": "click",
+   "gain": 0.2
+  },
+  {
+   "t": 22.55,
+   "sfx": "synthèse:tick",
+   "gain": 0.14
+  },
+  {
+   "t": 23.0,
+   "sfx": "ding",
+   "gain": 0.6
+  },
+  {
+   "t": 23.0,
+   "sfx": "pop",
+   "gain": 0.35
+  },
+  {
+   "t": 24.0,
+   "sfx": "ding",
+   "gain": 0.6
+  },
+  {
+   "t": 24.0,
+   "sfx": "pop",
+   "gain": 0.35
+  },
+  {
+   "t": 26.0,
+   "sfx": "ding",
+   "gain": 0.6
+  },
+  {
+   "t": 26.0,
+   "sfx": "pop",
+   "gain": 0.35
+  },
+  {
+   "t": 28.0,
+   "sfx": "ding",
+   "gain": 0.32
+  },
+  {
+   "t": 28.0,
+   "sfx": "pop",
+   "gain": 0.2
+  },
+  {
+   "t": 30.0,
+   "sfx": "ding",
+   "gain": 0.32
+  },
+  {
+   "t": 30.0,
+   "sfx": "pop",
+   "gain": 0.2
+  },
+  {
+   "t": 23.0,
+   "sfx": "impact_light",
+   "gain": 0.55
+  },
+  {
+   "t": 23.98,
+   "sfx": "whoosh_soft",
+   "gain": 0.55
+  },
+  {
+   "t": 24.7,
+   "sfx": "synthèse:tick",
+   "gain": 0.16
+  },
+  {
+   "t": 24.85,
+   "sfx": "synthèse:tick",
+   "gain": 0.18
+  },
+  {
+   "t": 25.0,
+   "sfx": "synthèse:tick",
+   "gain": 0.2
+  },
+  {
+   "t": 25.15,
+   "sfx": "synthèse:tick",
+   "gain": 0.22
+  },
+  {
+   "t": 25.3,
+   "sfx": "synthèse:tick",
+   "gain": 0.24
+  },
+  {
+   "t": 25.45,
+   "sfx": "synthèse:tick",
+   "gain": 0.26
+  },
+  {
+   "t": 25.6,
+   "sfx": "synthèse:tick",
+   "gain": 0.28
+  },
+  {
+   "t": 25.75,
+   "sfx": "synthèse:tick",
+   "gain": 0.3
+  },
+  {
+   "t": 24.3,
+   "sfx": "riser",
+   "gain": 0.7
+  },
+  {
+   "t": 25.04,
+   "sfx": "whoosh_soft(inversé)",
+   "gain": 0.45
+  },
+  {
+   "t": 26.0,
+   "sfx": "impact",
+   "gain": 1.0
+  },
+  {
+   "t": 26.0,
+   "sfx": "synthèse:chute de basse",
+   "gain": 0.8
+  },
+  {
+   "t": 26.02,
+   "sfx": "whoosh_soft",
+   "gain": 0.4
+  },
+  {
+   "t": 26.02,
+   "sfx": "ding",
+   "gain": 0.5
+  },
+  {
+   "t": 27.06,
+   "sfx": "whoosh_soft(inversé)",
+   "gain": 0.4
+  },
+  {
+   "t": 27.94,
+   "sfx": "whoosh_fast",
+   "gain": 0.55
+  },
+  {
+   "t": 28.0,
+   "sfx": "impact",
+   "gain": 0.8
+  },
+  {
+   "t": 28.0,
+   "sfx": "synthèse:thud",
+   "gain": 0.5
+  },
+  {
+   "t": 29.06,
+   "sfx": "whoosh_soft(inversé)",
+   "gain": 0.4
+  },
+  {
+   "t": 29.94,
+   "sfx": "whoosh_fast",
+   "gain": 0.55
+  },
+  {
+   "t": 30.0,
+   "sfx": "impact",
+   "gain": 0.8
+  },
+  {
+   "t": 30.0,
+   "sfx": "synthèse:thud",
+   "gain": 0.5
+  },
+  {
+   "t": 31.3,
+   "sfx": "riser",
+   "gain": 0.45
+  },
+  {
+   "t": 32.4,
+   "sfx": "whoosh_fast",
+   "gain": 0.5
+  },
+  {
+   "t": 32.54,
+   "sfx": "impact",
+   "gain": 0.7
+  },
+  {
+   "t": 32.64,
+   "sfx": "impact_light",
+   "gain": 0.75
+  },
+  {
+   "t": 32.54,
+   "sfx": "synthèse:chute de basse",
+   "gain": 0.5
+  },
+  {
+   "t": 33.4,
+   "sfx": "whoosh_fast",
+   "gain": 0.5
+  },
+  {
+   "t": 33.54,
+   "sfx": "impact",
+   "gain": 0.7
+  },
+  {
+   "t": 33.64,
+   "sfx": "impact_light",
+   "gain": 0.75
+  },
+  {
+   "t": 33.54,
+   "sfx": "synthèse:chute de basse",
+   "gain": 0.5
+  },
+  {
+   "t": 34.4,
+   "sfx": "whoosh_fast",
+   "gain": 0.5
+  },
+  {
+   "t": 34.54,
+   "sfx": "impact",
+   "gain": 0.7
+  },
+  {
+   "t": 34.64,
+   "sfx": "impact_light",
+   "gain": 0.75
+  },
+  {
+   "t": 34.54,
+   "sfx": "synthèse:chute de basse",
+   "gain": 0.5
+  },
+  {
+   "t": 35.4,
+   "sfx": "whoosh_fast",
+   "gain": 0.5
+  },
+  {
+   "t": 35.54,
+   "sfx": "impact",
+   "gain": 0.7
+  },
+  {
+   "t": 35.64,
+   "sfx": "impact_light",
+   "gain": 0.75
+  },
+  {
+   "t": 35.54,
+   "sfx": "synthèse:chute de basse",
+   "gain": 0.5
+  },
+  {
+   "t": 35.2,
+   "sfx": "riser",
+   "gain": 0.7
+  },
+  {
+   "t": 35.54,
+   "sfx": "whoosh_soft(inversé)",
+   "gain": 0.45
+  },
+  {
+   "t": 36.5,
+   "sfx": "impact",
+   "gain": 1.0
+  },
+  {
+   "t": 36.5,
+   "sfx": "synthèse:chute de basse",
+   "gain": 0.8
+  },
+  {
+   "t": 36.52,
+   "sfx": "whoosh_soft",
+   "gain": 0.4
+  },
+  {
+   "t": 36.5,
+   "sfx": "synthèse:chime",
+   "gain": 0.3
+  },
+  {
+   "t": 36.62,
+   "sfx": "synthèse:chime",
+   "gain": 0.2
+  },
+  {
+   "t": 37.3,
+   "sfx": "click",
+   "gain": 0.4
+  },
+  {
+   "t": 37.3,
+   "sfx": "pop",
+   "gain": 0.22
+  },
+  {
+   "t": 37.8,
+   "sfx": "click",
+   "gain": 0.4
+  },
+  {
+   "t": 37.8,
+   "sfx": "pop",
+   "gain": 0.22
+  },
+  {
+   "t": 38.3,
+   "sfx": "click",
+   "gain": 0.4
+  },
+  {
+   "t": 38.3,
+   "sfx": "pop",
+   "gain": 0.22
+  },
+  {
+   "t": 38.8,
+   "sfx": "click",
+   "gain": 0.4
+  },
+  {
+   "t": 38.8,
+   "sfx": "pop",
+   "gain": 0.22
+  },
+  {
+   "t": 39.3,
+   "sfx": "click",
+   "gain": 0.4
+  },
+  {
+   "t": 39.3,
+   "sfx": "pop",
+   "gain": 0.22
+  },
+  {
+   "t": 37.6,
+   "sfx": "ding",
+   "gain": 0.45
+  },
+  {
+   "t": 37.83,
+   "sfx": "whoosh_soft(inversé)",
+   "gain": 0.45
+  },
+  {
+   "t": 38.77,
+   "sfx": "impact",
+   "gain": 0.9
+  },
+  {
+   "t": 38.77,
+   "sfx": "synthèse:chute de basse",
+   "gain": 0.7
+  },
+  {
+   "t": 38.79,
+   "sfx": "ding",
+   "gain": 0.6
+  }
+ ],
+ "shortsAudio": [
+  {
+   "t0": 2.0,
+   "t1": 2.25,
+   "short": "gazette-1900__histoire__1789-en-20-secondes",
+   "from": 5.0,
+   "gain": 0.55,
+   "what": "zapping"
+  },
+  {
+   "t0": 2.25,
+   "t1": 2.5,
+   "short": "pixel-arcade__engagement__quelle-couleur-conquiert-l-ecran",
+   "from": 6.25,
+   "gain": 0.55,
+   "what": "zapping"
+  },
+  {
+   "t0": 2.5,
+   "t1": 2.75,
+   "short": "pastel-diorama__engagement__choisis-ta-boite-renard",
+   "from": 12.5,
+   "gain": 0.55,
+   "what": "zapping"
+  },
+  {
+   "t0": 2.75,
+   "t1": 3.0,
+   "short": "survol-pixel__histoire__machu-picchu-pourquoi-une-cite-en-escaliers",
+   "from": 5.75,
+   "gain": 0.55,
+   "what": "zapping"
+  },
+  {
+   "t0": 3.0,
+   "t1": 3.25,
+   "short": "trait-continu__geographie__l-italie-a-la-forme-d-une-botte",
+   "from": 8.0,
+   "gain": 0.55,
+   "what": "zapping"
+  },
+  {
+   "t0": 3.25,
+   "t1": 4.55,
+   "short": "brut-meme__evenements__pendant-ces-15-secondes-dans-le-monde",
+   "from": 0.2,
+   "gain": 0.75,
+   "what": "carrousel"
+  },
+  {
+   "t0": 4.5,
+   "t1": 5.05,
+   "short": "liquid-chrome__abstrait__quatre-peintures-mpm",
+   "from": 6.0,
+   "gain": 0.75,
+   "what": "carrousel"
+  },
+  {
+   "t0": 5.0,
+   "t1": 5.55,
+   "short": "cosmos-doc__explicatif__pourquoi-venus-plus-chaude-que-mercure",
+   "from": 12.0,
+   "gain": 0.75,
+   "what": "carrousel"
+  },
+  {
+   "t0": 5.5,
+   "t1": 6.05,
+   "short": "topo-relief__geographie__comment-mesure-t-on-l-everest",
+   "from": 4.0,
+   "gain": 0.75,
+   "what": "carrousel"
+  },
+  {
+   "t0": 6.0,
+   "t1": 6.55,
+   "short": "tableau-craie__enfants__comment-une-graine-devient-un-arbre",
+   "from": 11.0,
+   "gain": 0.75,
+   "what": "carrousel"
+  },
+  {
+   "t0": 6.5,
+   "t1": 7.05,
+   "short": "papier-decoupe__histoire__la-fourchette-a-fait-scandale",
+   "from": 2.3,
+   "gain": 0.75,
+   "what": "carrousel"
+  },
+  {
+   "t0": 7.0,
+   "t1": 7.55,
+   "short": "survol-pixel__histoire__machu-picchu-pourquoi-une-cite-en-escaliers",
+   "from": 5.0,
+   "gain": 0.75,
+   "what": "carrousel"
+  },
+  {
+   "t0": 7.5,
+   "t1": 8.05,
+   "short": "trait-continu__geographie__l-italie-a-la-forme-d-une-botte",
+   "from": 7.0,
+   "gain": 0.75,
+   "what": "carrousel"
+  },
+  {
+   "t0": 8.0,
+   "t1": 8.55,
+   "short": "carte-meteo__geographie__le-mistral-pourquoi-il-souffle-si-fort",
+   "from": 9.0,
+   "gain": 0.75,
+   "what": "carrousel"
+  },
+  {
+   "t0": 8.5,
+   "t1": 9.05,
+   "short": "pastel-diorama__engagement__choisis-ta-boite-renard",
+   "from": 12.0,
+   "gain": 0.75,
+   "what": "carrousel"
+  },
+  {
+   "t0": 9.0,
+   "t1": 9.55,
+   "short": "atlas-grave__histoire__premier-tour-du-monde-1519-1522",
+   "from": 10.0,
+   "gain": 0.75,
+   "what": "carrousel"
+  },
+  {
+   "t0": 9.5,
+   "t1": 10.05,
+   "short": "riso-zine__evenements__geminides-j-39",
+   "from": 2.6,
+   "gain": 0.75,
+   "what": "carrousel"
+  },
+  {
+   "t0": 10.0,
+   "t1": 10.55,
+   "short": "bauhaus-kinetic__explicatif__abeilles-hexagones",
+   "from": 2.3,
+   "gain": 0.75,
+   "what": "carrousel"
+  },
+  {
+   "t0": 10.5,
+   "t1": 11.05,
+   "short": "swiss-data__geographie__ou-vivent-8-milliards",
+   "from": 3.2,
+   "gain": 0.75,
+   "what": "carrousel"
+  },
+  {
+   "t0": 11.0,
+   "t1": 12.05,
+   "short": "gazette-1900__histoire__1789-en-20-secondes",
+   "from": 5.0,
+   "gain": 0.75,
+   "what": "carrousel"
+  },
+  {
+   "t0": 12.0,
+   "t1": 13.05,
+   "short": "pixel-arcade__engagement__quelle-couleur-conquiert-l-ecran",
+   "from": 6.0,
+   "gain": 0.75,
+   "what": "carrousel"
+  },
+  {
+   "t0": 13.0,
+   "t1": 14.05,
+   "short": "neon-lab__explicatif__lune-meme-face",
+   "from": 9.0,
+   "gain": 0.75,
+   "what": "carrousel"
+  },
+  {
+   "t0": 14.0,
+   "t1": 15.15,
+   "short": "aquarelle-conte__histoire__phare-d-alexandrie",
+   "from": 7.0,
+   "gain": 0.75,
+   "what": "carrousel"
+  },
+  {
+   "t0": 16.1,
+   "t1": 19.65,
+   "short": "gazette-1900__evenements__9-novembre-1989-mur-de-berlin",
+   "from": 1.0,
+   "gain": 0.36,
+   "what": "mur"
+  },
+  {
+   "t0": 16.22,
+   "t1": 19.65,
+   "short": "pixel-arcade__engagement__quelle-bille-gagne-la-course",
+   "from": 1.0,
+   "gain": 0.36,
+   "what": "mur"
+  },
+  {
+   "t0": 16.34,
+   "t1": 19.65,
+   "short": "tableau-craie__explicatif__pourquoi-le-ciel-est-bleu",
+   "from": 1.0,
+   "gain": 0.36,
+   "what": "mur"
+  },
+  {
+   "t0": 16.46,
+   "t1": 19.65,
+   "short": "cosmos-doc__evenements__voyager-1-a-un-jour-lumiere",
+   "from": 1.0,
+   "gain": 0.36,
+   "what": "mur"
+  },
+  {
+   "t0": 16.58,
+   "t1": 19.65,
+   "short": "pastel-diorama__enfants__d-ou-vient-la-pluie",
+   "from": 1.0,
+   "gain": 0.36,
+   "what": "mur"
+  },
+  {
+   "t0": 16.7,
+   "t1": 19.65,
+   "short": "riso-zine__geographie__5-plus-grands-deserts",
+   "from": 1.0,
+   "gain": 0.36,
+   "what": "mur"
+  },
+  {
+   "t0": 26.0,
+   "t1": 28.1,
+   "short": "pixel-arcade__engagement__quelle-bille-gagne-la-course",
+   "from": 4.0,
+   "gain": 0.95,
+   "what": "épisode"
+  },
+  {
+   "t0": 28.0,
+   "t1": 30.1,
+   "short": "pixel-arcade__engagement__quelle-couleur-conquiert-l-ecran",
+   "from": 4.5,
+   "gain": 0.95,
+   "what": "épisode"
+  },
+  {
+   "t0": 30.0,
+   "t1": 32.7,
+   "short": "pixel-arcade__abstrait__la-balle-peut-elle-s-echapper",
+   "from": 6.0,
+   "gain": 0.95,
+   "what": "épisode"
+  },
+  {
+   "t0": 32.55,
+   "t1": 36.85,
+   "short": "gazette-1900__histoire__1789-en-20-secondes",
+   "from": 4.0,
+   "gain": 0.42,
+   "what": "panneau"
+  },
+  {
+   "t0": 33.55,
+   "t1": 36.85,
+   "short": "brut-meme__evenements__pendant-ces-15-secondes-dans-le-monde",
+   "from": 1.2,
+   "gain": 0.42,
+   "what": "panneau"
+  },
+  {
+   "t0": 34.55,
+   "t1": 36.85,
+   "short": "pixel-arcade__engagement__quelle-couleur-conquiert-l-ecran",
+   "from": 5.0,
+   "gain": 0.42,
+   "what": "panneau"
+  },
+  {
+   "t0": 35.55,
+   "t1": 36.85,
+   "short": "neon-lab__explicatif__lune-meme-face",
+   "from": 8.0,
+   "gain": 0.42,
+   "what": "panneau"
+  }
+ ]
+}

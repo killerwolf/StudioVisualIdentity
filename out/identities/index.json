@@ -61,6 +61,8 @@
   "blindJudgeLot2Groups": 8,
   "blindJudgeSurvol": 6,
   "blindJudgeSurvolGroups": 6,
+  "blindJudgeGlobal": 18,
+  "blindJudgeGlobalGroups": 18,
   "measuredTop1": "41/45"
  },
  "identities": [
