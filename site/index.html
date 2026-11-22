@@ -2,11 +2,11 @@
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
-    <title>StudioVisualIdentity — un prompt, 18 styles, votre chaîne</title>
+    <title>StudioVisualIdentity — un prompt, 20 styles à combiner, votre chaîne</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="18 styles visuels pour vos vidéos verticales (TikTok, Reels, Shorts), montrés par 45 vidéos d'exemple rendues par code. Décrivez votre chaîne à votre agent IA : il vous propose un style, crée votre studio et réalise votre première vidéo. Open source."
+      content="20 styles visuels pour vos vidéos verticales (TikTok, Reels, Shorts), montrés par 53 vidéos d'exemple rendues par code, et des briques (look, mouvement, format) à combiner. Décrivez votre chaîne à votre agent IA : il vous propose un style ou un mélange, crée votre studio et réalise votre première vidéo. Open source."
     />
     <link rel="canonical" href="https://h4md1.fr/StudioVisualIdentity/" />
     <meta name="theme-color" content="#0b0d1a" />
@@ -14,16 +14,16 @@
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="StudioVisualIdentity" />
     <meta property="og:locale" content="fr_FR" />
-    <meta property="og:title" content="Un prompt. 18 styles. Votre chaîne." />
+    <meta property="og:title" content="Un prompt. 20 styles. Votre chaîne." />
     <meta
       property="og:description"
-      content="18 styles pour vos vidéos verticales, montrés par 45 vidéos d'exemple. Décrivez votre chaîne à votre agent IA : il fait le reste. Open source."
+      content="20 styles à combiner pour vos vidéos verticales, montrés par 53 vidéos d'exemple. Décrivez votre chaîne à votre agent IA : il fait le reste. Open source."
     />
     <meta property="og:url" content="https://h4md1.fr/StudioVisualIdentity/" />
     <meta property="og:image" content="https://h4md1.fr/StudioVisualIdentity/hero.jpg" />
     <meta property="og:image:width" content="1280" />
     <meta property="og:image:height" content="640" />
-    <meta property="og:image:alt" content="« Un prompt. 18 styles. Votre chaîne. » à côté d'un mur incliné d'images tirées des 18 styles." />
+    <meta property="og:image:alt" content="Le titre du projet à côté d'un mur incliné d'images tirées des styles du dépôt." />
     <meta name="twitter:card" content="summary_large_image" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -171,13 +171,32 @@
         position: absolute; top: 14px; right: 70px; height: 44px; padding: 0 14px; border-radius: 999px;
         border: 1px solid var(--line); background: var(--bg2); color: var(--fg); font: 600 14px Inter, sans-serif; cursor: pointer;
       }
+      /* Combinez */
+      .bricks { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 28px; }
+      .brick { padding: 22px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--bg2); }
+      .brick b { font-family: Unbounded, sans-serif; font-size: 20px; display: block; }
+      .brick .n { font: 600 13px Inter, sans-serif; color: var(--yellow); text-transform: uppercase; letter-spacing: .06em; }
+      .brick p { margin: 8px 0 0; color: var(--muted); }
+      .brick:nth-child(1) b { color: var(--yellow); }
+      .brick:nth-child(2) b { color: var(--pink); }
+      .brick:nth-child(3) b { color: var(--blue); }
+      .combos { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 28px; align-items: stretch; }
+      .combo { display: grid; grid-template-columns: 140px 1fr; gap: 0; }
+      .combo .play img { height: 100%; }
+      .combo .txt { display: flex; flex-direction: column; padding-bottom: 14px; }
+      .combo .recipe { margin: 12px 14px 0; font-size: 13px; color: var(--fg); }
+      .combo .recipe i { font-style: normal; color: var(--yellow); }
+      .tag { display: inline-block; margin: 12px 14px 0; padding: 2px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; border: 1px solid var(--line); color: var(--muted); align-self: flex-start; }
+      .tag.ok { color: #4ade80; border-color: #285c3d; }
+      .note { margin-top: 22px; color: var(--muted); max-width: 820px; }
+      .note b { color: var(--fg); }
       footer { padding: 48px 0 64px; color: var(--muted); border-top: 1px solid var(--line); font-size: 15px; }
       footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; }
 
       @media (max-width: 860px) {
         .hero-grid { grid-template-columns: 1fr; }
         .phone { transform: none; }
-        .steps, .cols { grid-template-columns: 1fr; }
+        .steps, .cols, .bricks, .combos { grid-template-columns: 1fr; }
         section { padding: 56px 0; }
       }
     </style>
@@ -186,19 +205,22 @@
     <header class="hero">
       <div class="wrap hero-grid">
         <div>
-          <h1><span>Un prompt.</span><span class="y">18 styles.</span><span>Votre chaîne.</span></h1>
+          <h1><span>Un prompt.</span><span class="y">20 styles.</span><span>Votre chaîne.</span></h1>
           <p class="lead">
-            Décrivez votre chaîne à votre agent IA : il vous propose un style parmi 18,
-            crée votre studio et réalise votre première vidéo verticale (TikTok, Reels, Shorts).
+            Décrivez votre chaîne à votre agent IA : il vous propose un style parmi 20, ou un mélange
+            (le look d'un style, le mouvement d'un autre), crée votre studio et réalise votre première vidéo
+            verticale (TikTok, Reels, Shorts).
           </p>
           <div class="btns">
             <a class="btn" href="#prompt">Copier le prompt</a>
+            <a class="btn ghost" href="#combinez">Combiner les styles</a>
             <a class="btn ghost" href="https://github.com/killerwolf/StudioVisualIdentity">Voir sur GitHub</a>
           </div>
           <div class="stats">
-            <div><b>18</b>styles</div>
-            <div><b>45</b>vidéos d'exemple</div>
-            <div><b>9:16</b>vertical</div>
+            <div><b>20</b>styles</div>
+            <div><b>53</b>vidéos d'exemple</div>
+            <div><b>29</b>combinaisons nommées</div>
+            <div><b>9:16</b>10 à 60 s</div>
             <div><b>MIT</b>open source</div>
           </div>
         </div>
@@ -216,12 +238,13 @@
           <div class="term-bar"><i></i><i></i><i></i><button class="copy" type="button" id="copy">Copier</button></div>
 <pre id="prompt-text">Clone https://github.com/killerwolf/StudioVisualIdentity et lis son AGENTS.md (il est en anglais, c'est normal).
 Ma chaîne : <em>[sujet, ex. quiz de géographie]</em>, pour <em>[public, ex. ados de 13 à 17 ans]</em>, en <em>[langue]</em>.
-Propose-moi 3 styles adaptés, avec leur vidéo d'exemple, et attends mon choix.
-Ensuite, crée notre studio avec out/tools/bootstrap_studio.py, installe ce qu'il faut,
-adapte le style à notre chaîne et réalise notre premier épisode sur <em>[sujet de l'épisode]</em>.</pre>
+Propose-moi 3 styles adaptés, ou une combinaison (un look × un mouvement) si elle colle mieux,
+avec leurs vidéos d'exemple, et attends mon choix.
+Ensuite, crée notre studio avec out/tools/bootstrap_studio.py à partir du style le plus proche,
+installe ce qu'il faut, adapte le style à notre chaîne et réalise notre premier épisode sur <em>[sujet de l'épisode]</em>.</pre>
         </div>
         <div class="steps">
-          <div class="step"><b>1. Le style</b><p>L'agent lit le dépôt et vous propose 3 styles adaptés à votre sujet et à votre public. Vous choisissez.</p></div>
+          <div class="step"><b>1. Le style</b><p>L'agent lit le dépôt et vous propose 3 styles, ou un mélange, adaptés à votre sujet et à votre public. Vous choisissez.</p></div>
           <div class="step"><b>2. Le studio</b><p>Il crée un projet séparé pour votre chaîne : votre style, des modèles de scènes, les outils de rendu.</p></div>
           <div class="step"><b>3. L'épisode</b><p>Il réalise votre premier short, voix off et sons mixés, puis le suivant, et le suivant.</p></div>
         </div>
@@ -236,10 +259,64 @@ adapte le style à notre chaîne et réalise notre premier épisode sur <em>[suj
       </div>
     </section>
 
+    <section id="combinez">
+      <div class="wrap">
+        <h2>Combinez</h2>
+        <p class="lead">Chaque style se découpe en trois briques. Gardez le look qui fait votre marque, changez le mouvement selon le sujet.</p>
+        <div class="bricks">
+          <div class="brick"><span class="n">25 looks</span><b>Le look</b><p>Couleurs, polices, matière : tout ce qu'on voit sur une image fixe. On l'appelle aussi l'« habillage ».</p></div>
+          <div class="brick"><span class="n">19 mouvements</span><b>× Le mouvement</b><p>Comment le texte arrive, comment la caméra bouge, le rythme : ce qu'on ne voit qu'en vidéo. On l'appelle aussi la « mécanique ».</p></div>
+          <div class="brick"><span class="n">4 formats</span><b>× Le format</b><p>La durée et le son : voix off courte ou longue (10 à 60 s), boucle, ou vidéo muette pour les paroles de chanson.</p></div>
+        </div>
+        <ul class="combos">
+          <li class="card combo">
+            <a class="play" href="videos/chemin-grille-suisse.mp4" data-short="chemin-grille-suisse__geographie__ou-vivent-8-milliards" aria-label="Voir la vidéo : Données qui se tracent">
+            <img src="posters/chemin-grille-suisse.jpg" data-poster-src="out/shorts/chemin-grille-suisse__geographie__ou-vivent-8-milliards/stills/still_0.00s.jpg" alt="Données qui se tracent : un 8 rouge géant sur une grille suisse" loading="lazy" width="540" height="960" />
+            </a>
+            <div class="txt">
+              <h3>Données qui se tracent</h3>
+              <p class="recipe">Look <i>Grille Suisse</i> × mouvement <i>Lyrics chemin</i></p>
+              <p>Chaque chiffre s'écrit au-dessus de sa barre, puis la caméra recule : la page entière était un graphique.</p>
+              <span class="tag ok">adoptée</span>
+            </div>
+          </li>
+          <li class="card combo">
+            <a class="play" href="videos/chemin-craie-verte.mp4" data-short="chemin-craie-verte__explicatif__le-quatre-quarts" aria-label="Voir la vidéo : le quatre-quarts au tableau">
+            <img src="posters/chemin-craie-verte.jpg" data-poster-src="out/shorts/chemin-craie-verte__explicatif__le-quatre-quarts/stills/still_24.50s.jpg" alt="Le quatre-quarts écrit à la craie sur un tableau vert" loading="lazy" width="540" height="960" />
+            </a>
+            <div class="txt">
+              <h3>Le quatre-quarts au tableau</h3>
+              <p class="recipe">Look <i>craie verte</i> × mouvement <i>Lyrics chemin</i></p>
+              <p>La recette s'écrit à la craie le long d'un gâteau coupé en quatre, puis on recule pour la voir en entier.</p>
+              <span class="tag">à l'essai</span>
+            </div>
+          </li>
+          <li class="card combo">
+            <a class="play" href="videos/lyrics-chemin.mp4" data-short="lyrics-chemin__histoire__le-premier-tour-du-monde" aria-label="Voir la vidéo : le premier tour du monde">
+            <img src="posters/lyrics-chemin-magellan.jpg" data-poster-src="out/shorts/lyrics-chemin__histoire__le-premier-tour-du-monde/stills/06_image-finale_44.5s.jpg" alt="La route de Magellan et Elcano sur une carte ancienne" loading="lazy" width="540" height="960" />
+            </a>
+            <div class="txt">
+              <h3>Le premier tour du monde</h3>
+              <p class="recipe">Look <i>carte ancienne</i> × mouvement <i>Lyrics chemin</i></p>
+              <p>Une des quatre déclinaisons de Lyrics chemin : le récit suit la route de Magellan, et la boucle se referme sur la carte entière.</p>
+              <span class="tag ok">style Lyrics chemin</span>
+            </div>
+          </li>
+        </ul>
+        <p class="note">
+          <b>Ce qui marche, ce qui ne marche pas.</b> Un look franc sur un fond plat se transporte bien. Un look dont la signature
+          tient dans le geste lui-même se transporte mal : le plan bleu posé sur le papier découpé ressemblait surtout à du papier,
+          l'essai est abandonné. Aujourd'hui, deux mouvements prennent un nouveau look en un seul fichier : le trait de
+          <i>Lyrics chemin</i> et le stop-motion du <i>Papier découpé</i>.
+          <a href="https://github.com/killerwolf/StudioVisualIdentity/blob/main/out/report/notes/composition/essais.md">Les essais en détail →</a>
+        </p>
+      </div>
+    </section>
+
     <section id="demo">
       <div class="wrap">
         <h2>La démo, avec le son</h2>
-        <p class="lead">41 secondes pour voir les 18 styles, le prompt et les premiers épisodes.</p>
+        <p class="lead">41 secondes pour voir les styles, le prompt et les premiers épisodes. Tournée avant l'ajout des deux styles de paroles, elle en montre 18.</p>
         <div class="video16">
           <video src="demo_16x9.mp4" poster="hero.jpg" controls preload="none" playsinline></video>
         </div>
@@ -248,11 +325,12 @@ adapte le style à notre chaîne et réalise notre premier épisode sur <em>[suj
 
     <section id="styles">
       <div class="wrap">
-        <h2>Les 18 styles</h2>
+        <h2>Les 20 styles</h2>
         <p class="lead">
           Chaque style a sa fiche complète (couleurs, typographies, mouvements, transitions, sons), que votre agent sait lire,
-          et 2 ou 3 vidéos d'exemple rendues par code. Touchez une image pour voir la vidéo, avec le son.
-          Test à l'aveugle : un second agent IA a regroupé sans erreur 72 images anonymes des 18 styles.
+          et 1 à 4 vidéos d'exemple rendues par code. Touchez une image pour voir la vidéo, avec le son
+          (sauf Lyrics punchy, muette : la chanson s'ajoute dans l'appli).
+          Test à l'aveugle : un second agent IA a regroupé sans erreur 72 images anonymes des 18 premiers styles.
         </p>
         <ul class="grid">
       <li class="card">
@@ -417,6 +495,24 @@ adapte le style à notre chaîne et réalise notre premier épisode sur <em>[suj
         <span class="fam">explicatif · histoire</span>
         <a class="more" href="https://github.com/killerwolf/StudioVisualIdentity/tree/main/out/identities/papier-decoupe">La fiche du style →</a>
       </li>
+      <li class="card">
+        <a class="play" href="videos/lyrics-chemin.mp4" data-short="lyrics-chemin__histoire__le-premier-tour-du-monde" aria-label="Voir une vidéo d'exemple : Lyrics chemin">
+        <img src="posters/lyrics-chemin-magellan.jpg" data-poster-src="out/shorts/lyrics-chemin__histoire__le-premier-tour-du-monde/stills/06_image-finale_44.5s.jpg" alt="Lyrics chemin : la route de Magellan sur une carte ancienne" loading="lazy" width="540" height="960" />
+        </a>
+        <h3>Lyrics chemin</h3>
+        <p>Le texte s&#x27;écrit le long d&#x27;un trait que la caméra suit, puis elle recule et l&#x27;image entière apparaît : la route de Magellan, une recette de gâteau</p>
+        <span class="fam">histoire · explicatif · paroles</span>
+        <a class="more" href="https://github.com/killerwolf/StudioVisualIdentity/tree/main/out/identities/lyrics-chemin">La fiche du style →</a>
+      </li>
+      <li class="card">
+        <a class="play" href="videos/lyrics-punchy.mp4" data-short="lyrics-punchy__paroles__claudes-plan" aria-label="Voir une vidéo d'exemple (muette) : Lyrics punchy">
+        <img src="posters/lyrics-punchy.jpg" alt="Lyrics punchy : image d'une vidéo d'exemple" loading="lazy" width="540" height="960" />
+        </a>
+        <h3>Lyrics punchy</h3>
+        <p>Les paroles d&#x27;une chanson tombent pile sur le temps et s&#x27;empilent en mur, avec un petit carton illustré</p>
+        <span class="fam">paroles · vidéo muette</span>
+        <a class="more" href="https://github.com/killerwolf/StudioVisualIdentity/tree/main/out/identities/lyrics-punchy">La fiche du style →</a>
+      </li>
         </ul>
       </div>
     </section>
@@ -428,7 +524,7 @@ adapte le style à notre chaîne et réalise notre premier épisode sur <em>[suj
           <div class="col yes">
             <h3>Ça fait</h3>
             <ul>
-              <li>Vous proposer un style visuel, montré sur de vraies vidéos.</li>
+              <li>Vous proposer un style visuel, ou un mélange de deux, montré sur de vraies vidéos.</li>
               <li>Créer votre studio : votre style, des modèles de scènes, rendu, voix off, sons, contrôle qualité.</li>
               <li>Produire vos épisodes avec votre agent, un par un.</li>
               <li>Fabriquer de nouveaux styles avec le skill <code>fabrique-identites</code>.</li>
@@ -439,7 +535,7 @@ adapte le style à notre chaîne et réalise notre premier épisode sur <em>[suj
             <ul>
               <li>Écrire et valider les sujets à votre place.</li>
               <li>Relire, publier ni programmer vos vidéos.</li>
-              <li>Les vidéos horizontales (16:9) et le format long : pas encore.</li>
+              <li>Les vidéos horizontales (16:9) et celles au-delà de 60 s : pas encore.</li>
               <li>Publier à votre place : vous gardez la main à chaque épisode.</li>
             </ul>
           </div>

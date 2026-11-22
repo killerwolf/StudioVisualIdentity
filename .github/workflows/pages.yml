@@ -13,6 +13,7 @@ on:
       - 'out/demo/thumb/hero_fr_1280.jpg'
       - 'out/identities/*/poster.jpg'
       - 'out/shorts/*/short.mp4'
+      - 'out/shorts/*/stills/*.jpg'
       - '.github/workflows/pages.yml'
   workflow_dispatch:
 
@@ -49,6 +50,10 @@ jobs:
           mkdir -p _site/videos
           grep -o 'href="videos/[^"]*" data-short="[^"]*"' site/index.html | sed -E 's/href="videos\/([^"]*)" data-short="([^"]*)"/\1 \2/' | while read v short; do
             cp "out/shorts/$short/short.mp4" "_site/videos/$v" || { echo "missing $short"; exit 1; }
+          done
+          # card images taken from a short's stills (data-poster-src="out/...", next to src="posters/...")
+          grep -o 'src="posters/[^"]*" data-poster-src="[^"]*"' site/index.html | sed -E 's/src="posters\/([^"]*)" data-poster-src="([^"]*)"/\1 \2/' | while read p src; do
+            cp "$src" "_site/posters/$p" || { echo "missing $src"; exit 1; }
           done
           # every image the page references must exist
           grep -o 'src="posters/[^"]*"' site/index.html | sed 's/src="//;s/"$//' | while read f; do test -f "_site/$f" || { echo "missing $f"; exit 1; }; done
