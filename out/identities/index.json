@@ -6,7 +6,7 @@
   "identities": 20,
   "derivations": 3,
   "declinations": 23,
-  "shorts": 50,
+  "shorts": 52,
   "briques": {
    "recettes": 29,
    "recettesParStatut": {
@@ -19,7 +19,7 @@
    "familleshabillage": 1,
    "mecaniques": 19,
    "formats": 4,
-   "shorts": 53,
+   "shorts": 55,
    "shortsHorsIdentites": 3,
    "cases": {
     "teste": 31,
@@ -46,7 +46,7 @@
  ],
  "fieldNotes": {
   "variantOf": "id of the root identity when this entry is a derivation (same engine, only ground / palette / fonts change), else null. A root lists its derivations in variants and what is shared / what varies in variantAxis. Derivations stay ranked, right after their root; counts.identities counts roots only, counts.declinations counts every entry. curation.deliberateSiblings = derivations of the same root, deliberately close and therefore not listed in confusableWith. A new identity that reuses an existing engine and only changes ground / palette / fonts must be registered as a derivation, not as a new identity",
-  "status": "selected = kept in Phase 1; rehabilitated = set aside in Phase 1 only to avoid topic overlap with a neighbour, then produced on request with the same rules and evidence level; added = added after the campaign: (a) the cut-paper identity from the StudioGabarit template, papier-decoupe, and its 3 derivations (atelier-papier, carnet-archives, cabinet-curiosites), rendered by the shared Python engine out/shared/papier-moteur/, appended after the ranked identities and not part of the ranking or the blind visual judge; (b) lot 2 of the identity factory (trait-continu, carte-meteo, 2026-11-05: scouting + adversarial challenge + studio + review), ranked with the others, blind visual judge on 8 identities (lot 2 + 6 neighbours, 8/8 pure groups, out/report/notes/revue-2026-11-05.md), voice-over Gemini Sulafat like the cut-paper family (owner decision: Fish Audio credits ran out before Arnold could be recorded); (c) survol-pixel (2026-11-18, same skill, style taken from a source pixel-art flight video), ranked with the others, voice-over Gemini Sulafat (owner decision 2026-11-18, API v1beta), blind visual judge on 6 identities during its review (survol-pixel + pixel-arcade, carte-meteo, topo-relief, pastel-diorama, trait-continu; 6/6 pure groups, 24/24 images, recognition.json blindJudgeSurvol); (d) lyrics-punchy and lyrics-chemin (2026-11-19), the two identities of the new content family `paroles` (muted lyric video, no voice-over), unranked, appended last, one proof short each rendered with filler lyrics (real lyrics and audio stay outside the repository)",
+  "status": "selected = kept in Phase 1; rehabilitated = set aside in Phase 1 only to avoid topic overlap with a neighbour, then produced on request with the same rules and evidence level; added = added after the campaign: (a) the cut-paper identity from the StudioGabarit template, papier-decoupe, and its 3 derivations (atelier-papier, carnet-archives, cabinet-curiosites), rendered by the shared Python engine out/shared/papier-moteur/, appended after the ranked identities and not part of the ranking or the blind visual judge; (b) lot 2 of the identity factory (trait-continu, carte-meteo, 2026-11-05: scouting + adversarial challenge + studio + review), ranked with the others, blind visual judge on 8 identities (lot 2 + 6 neighbours, 8/8 pure groups, out/report/notes/revue-2026-11-05.md), voice-over Gemini Sulafat like the cut-paper family (owner decision: Fish Audio credits ran out before Arnold could be recorded); (c) survol-pixel (2026-11-18, same skill, style taken from a source pixel-art flight video), ranked with the others, voice-over Gemini Sulafat (owner decision 2026-11-18, API v1beta), blind visual judge on 6 identities during its review (survol-pixel + pixel-arcade, carte-meteo, topo-relief, pastel-diorama, trait-continu; 6/6 pure groups, 24/24 images, recognition.json blindJudgeSurvol); (d) lyrics-punchy and lyrics-chemin (2026-11-19), the two identities of the new content family `paroles` (muted lyric video, no voice-over), unranked, appended last, one proof short each rendered with filler lyrics (real lyrics and audio stay outside the repository); lyrics-chemin later got narrated and sung declinations, among them two « I Fold » shorts (2026-11-22) whose AI-generated song, sung on our filler lyrics, is baked into short.mp4",
   "voiceUsed": "voice actually mixed into short.mp4 (Fish Audio Arnold for the 31 campaign shorts, Gemini Sulafat for the 8 cut-paper, 4 lot 2 and 2 survol-pixel shorts, i.e. 31 Arnold + 14 Sulafat; see shorts[].voiced)",
   "coreTokens.motion.staggerSec": "the identity's default stagger as written in its tokens.json; meaning varies (per-item stagger for most, spacing between beats/captions for atlas-grave 1.5 and liquid-chrome 1.55, title-to-body delay for neon-lab 0.8)",
   "coreTokens.motion.durationSec.slow": "longest standard duration; for gazette-1900 it is one page (6 beats at 128 bpm)",
@@ -4503,7 +4503,7 @@
    "voiceUsed": {
     "provider": null,
     "name": null,
-    "note": "no voice-over: muted lyric video, the song itself is added from the app library at publication; short.mp4 carries a silent track for check.py"
+    "note": "no voice-over: muted lyric video, the song itself is added from the app library at publication; short.mp4 carries a silent track for check.py; exception: the two lyrics-chemin « I Fold » shorts (2026-11-22) bake in an AI-generated song (ElevenLabs Music, Google Lyria 3.5) sung on our filler lyrics"
    },
    "paths": {
     "identityMd": "out/identities/lyrics-punchy/identity.md",
@@ -4683,7 +4683,7 @@
    "voiceUsed": {
     "provider": null,
     "name": null,
-    "note": "no voice-over: muted lyric video, the song itself is added from the app library at publication; short.mp4 carries a silent track for check.py"
+    "note": "no voice-over: muted lyric video, the song itself is added from the app library at publication; short.mp4 carries a silent track for check.py; exception: the two lyrics-chemin « I Fold » shorts (2026-11-22) bake in an AI-generated song (ElevenLabs Music, Google Lyria 3.5) sung on our filler lyrics"
    },
    "paths": {
     "identityMd": "out/identities/lyrics-chemin/identity.md",
@@ -4763,6 +4763,42 @@
       "ffmpeg"
      ],
      "renderCostSecPer100Frames": 94.9,
+     "loopable": false,
+     "voiced": false,
+     "recognitionNearestShort": null,
+     "recognitionSameIdentity": null
+    },
+    {
+     "dir": "out/shorts/lyrics-chemin__paroles__i-fold-elevenlabs",
+     "family": "paroles",
+     "title": "I Fold — « Monday's Draft » chanté (ElevenLabs Music) : nos paroles de remplissage sur le bateau en papier, plan bleu",
+     "durationSec": 28.83,
+     "libraries": [
+      "@fontsource/barlow-condensed 5.3.0",
+      "@fontsource/jetbrains-mono",
+      "Canvas 2D (render.mjs, Chrome par playwright-core)",
+      "faster-whisper (small.en, medium.en : mots horodatés)",
+      "ffmpeg"
+     ],
+     "renderCostSecPer100Frames": null,
+     "loopable": false,
+     "voiced": false,
+     "recognitionNearestShort": null,
+     "recognitionSameIdentity": null
+    },
+    {
+     "dir": "out/shorts/lyrics-chemin__paroles__i-fold-lyria",
+     "family": "paroles",
+     "title": "I Fold — « Monday's Draft » chanté (Google Lyria 3.5) : nos paroles de remplissage sur le bateau en papier, plan bleu",
+     "durationSec": 22.1,
+     "libraries": [
+      "@fontsource/barlow-condensed 5.3.0",
+      "@fontsource/jetbrains-mono",
+      "Canvas 2D (render.mjs, Chrome par playwright-core)",
+      "faster-whisper (small.en, medium.en : mots horodatés)",
+      "ffmpeg"
+     ],
+     "renderCostSecPer100Frames": null,
      "loopable": false,
      "voiced": false,
      "recognitionNearestShort": null,
@@ -8292,7 +8328,9 @@
    "dossier": "out/identities/lyrics-chemin/",
    "identite": "lyrics-chemin",
    "shorts": [
-    "out/shorts/lyrics-chemin__paroles__claudes-plan"
+    "out/shorts/lyrics-chemin__paroles__claudes-plan",
+    "out/shorts/lyrics-chemin__paroles__i-fold-elevenlabs",
+    "out/shorts/lyrics-chemin__paroles__i-fold-lyria"
    ],
    "confusableWith": [
     "atlas-grave",
@@ -9189,7 +9227,9 @@
    "format": "paroles-muet",
    "etat": "teste",
    "preuve": [
-    "out/shorts/lyrics-chemin__paroles__claudes-plan"
+    "out/shorts/lyrics-chemin__paroles__claudes-plan",
+    "out/shorts/lyrics-chemin__paroles__i-fold-elevenlabs",
+    "out/shorts/lyrics-chemin__paroles__i-fold-lyria"
    ],
    "recette": "lyrics-chemin",
    "statut": "validee"

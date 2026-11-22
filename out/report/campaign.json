@@ -493,6 +493,44 @@
    "video": "shorts/lyrics-chemin__paroles__claudes-plan-tech/short.mp4"
   },
   {
+   "dir": "shorts/lyrics-chemin__paroles__i-fold-elevenlabs",
+   "identity": "lyrics-chemin",
+   "family": "paroles",
+   "title": "I Fold — « Monday's Draft » chanté (ElevenLabs Music) : nos paroles de remplissage sur le bateau en papier, plan bleu",
+   "duration": 28.83,
+   "renderTimeSec": null,
+   "libraries": [
+    "@fontsource/barlow-condensed 5.3.0",
+    "@fontsource/jetbrains-mono",
+    "Canvas 2D (render.mjs, Chrome par playwright-core)",
+    "faster-whisper (small.en, medium.en : mots horodatés)",
+    "ffmpeg"
+   ],
+   "loopable": false,
+   "mechanic": "lecture de la chanson au rythme et révélation finale du dessin",
+   "narrationLines": 0,
+   "video": "shorts/lyrics-chemin__paroles__i-fold-elevenlabs/short.mp4"
+  },
+  {
+   "dir": "shorts/lyrics-chemin__paroles__i-fold-lyria",
+   "identity": "lyrics-chemin",
+   "family": "paroles",
+   "title": "I Fold — « Monday's Draft » chanté (Google Lyria 3.5) : nos paroles de remplissage sur le bateau en papier, plan bleu",
+   "duration": 22.1,
+   "renderTimeSec": null,
+   "libraries": [
+    "@fontsource/barlow-condensed 5.3.0",
+    "@fontsource/jetbrains-mono",
+    "Canvas 2D (render.mjs, Chrome par playwright-core)",
+    "faster-whisper (small.en, medium.en : mots horodatés)",
+    "ffmpeg"
+   ],
+   "loopable": false,
+   "mechanic": "lecture de la chanson au rythme et révélation finale du dessin",
+   "narrationLines": 0,
+   "video": "shorts/lyrics-chemin__paroles__i-fold-lyria/short.mp4"
+  },
+  {
    "dir": "shorts/lyrics-punchy__paroles__claudes-plan",
    "identity": "lyrics-punchy",
    "family": "paroles",

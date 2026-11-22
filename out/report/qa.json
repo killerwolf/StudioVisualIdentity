@@ -685,6 +685,52 @@
   }
  },
  {
+  "short": "lyrics-chemin__paroles__i-fold-elevenlabs",
+  "ok": true,
+  "errors": [],
+  "warnings": [],
+  "info": {
+   "duration": 28.83,
+   "width": 1080,
+   "height": 1920,
+   "fps": "30/1",
+   "codec": "h264",
+   "pix": "yuv420p",
+   "format": "paroles-muet"
+  },
+  "briques": {
+   "recette": "lyrics-chemin",
+   "pate": "plan-bleu",
+   "mecanique": "trace-chemin",
+   "format": "paroles-muet",
+   "statut": "validee",
+   "source": "short.json"
+  }
+ },
+ {
+  "short": "lyrics-chemin__paroles__i-fold-lyria",
+  "ok": true,
+  "errors": [],
+  "warnings": [],
+  "info": {
+   "duration": 22.1,
+   "width": 1080,
+   "height": 1920,
+   "fps": "30/1",
+   "codec": "h264",
+   "pix": "yuv420p",
+   "format": "paroles-muet"
+  },
+  "briques": {
+   "recette": "lyrics-chemin",
+   "pate": "plan-bleu",
+   "mecanique": "trace-chemin",
+   "format": "paroles-muet",
+   "statut": "validee",
+   "source": "short.json"
+  }
+ },
+ {
   "short": "lyrics-punchy__paroles__claudes-plan",
   "ok": true,
   "errors": [],

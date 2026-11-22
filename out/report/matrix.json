@@ -163,6 +163,7 @@
    "@fontsource/jetbrains-mono 5.3.0 (400, 400 italique, 700, 800)",
    "Canvas 2D (render.mjs, Chrome 157 par playwright-core 1.65.1)",
    "Canvas 2D (render.mjs, Chrome par playwright-core)",
+   "faster-whisper (small.en, medium.en : mots horodatés)",
    "ffmpeg"
   ]
  },
