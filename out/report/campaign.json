@@ -275,6 +275,41 @@
    "video": "shorts/carte-meteo__geographie__le-mistral-pourquoi-il-souffle-si-fort/short.mp4"
   },
   {
+   "dir": "shorts/chemin-craie-verte__explicatif__le-quatre-quarts",
+   "identity": "chemin-craie-verte",
+   "family": "explicatif",
+   "title": "Le quatre-quarts, à la craie verte — essai C1 : habillage craie-verte (Tableau Craie) sur le chemin qui se trace",
+   "duration": 25.6,
+   "renderTimeSec": 779.7,
+   "libraries": [
+    "@fontsource/caveat 5.3.0",
+    "Canvas 2D (render.mjs, Chrome par playwright-core)",
+    "ffmpeg"
+   ],
+   "loopable": false,
+   "mechanic": "fiche de recette qu'on peut capturer : le dessin final est la recette",
+   "narrationLines": 8,
+   "video": "shorts/chemin-craie-verte__explicatif__le-quatre-quarts/short.mp4"
+  },
+  {
+   "dir": "shorts/chemin-grille-suisse__geographie__ou-vivent-8-milliards",
+   "identity": "chemin-grille-suisse",
+   "family": "geographie",
+   "title": "Où vivent les 8 milliards d'humains ? — recette « Données qui se tracent » : habillage grille-suisse (Grille Suisse) sur le chemin qui se trace",
+   "duration": 13.8,
+   "renderTimeSec": 117.7,
+   "libraries": [
+    "@fontsource/archivo-black 5.3.0",
+    "@fontsource/inter 5.3.0",
+    "Canvas 2D (render.mjs, Chrome par playwright-core)",
+    "ffmpeg"
+   ],
+   "loopable": false,
+   "mechanic": "question",
+   "narrationLines": 5,
+   "video": "shorts/chemin-grille-suisse__geographie__ou-vivent-8-milliards/short.mp4"
+  },
+  {
    "dir": "shorts/cosmos-doc__evenements__voyager-1-a-un-jour-lumiere",
    "identity": "cosmos-doc",
    "family": "evenements",
@@ -385,6 +420,97 @@
    "video": "shorts/liquid-chrome__engagement__quelle-couleur-remplit-le-verre/short.mp4"
   },
   {
+   "dir": "shorts/lyrics-chemin__explicatif__le-quatre-quarts",
+   "identity": "lyrics-chemin",
+   "family": "explicatif",
+   "title": "Le quatre-quarts — la recette écrite à la craie le long d'un gâteau coupé en quatre parts égales",
+   "duration": 25.6,
+   "renderTimeSec": 925.9,
+   "libraries": [
+    "@fontsource/barlow-condensed 5.3.0",
+    "Canvas 2D (render.mjs, Chrome par playwright-core)",
+    "ffmpeg",
+    "faster-whisper small (horodatage des mots, hors dépôt)"
+   ],
+   "loopable": false,
+   "mechanic": "fiche de recette qu'on peut capturer : le dessin final est la recette",
+   "narrationLines": 8,
+   "video": "shorts/lyrics-chemin__explicatif__le-quatre-quarts/short.mp4"
+  },
+  {
+   "dir": "shorts/lyrics-chemin__histoire__le-premier-tour-du-monde",
+   "identity": "lyrics-chemin",
+   "family": "histoire",
+   "title": "Le premier tour du monde — la route de Magellan et Elcano écrite à l'encre sur une carte vue du pôle Sud, qui se referme en boucle",
+   "duration": 45.0,
+   "renderTimeSec": 1448,
+   "libraries": [
+    "@fontsource/cormorant-garamond 5.3.0",
+    "world-atlas 2.0.2 land-50m (Natural Earth, domaine public)",
+    "topojson-client",
+    "Canvas 2D (render.mjs, Chrome par playwright-core)",
+    "ffmpeg",
+    "faster-whisper small (horodatage des mots, hors dépôt)"
+   ],
+   "loopable": false,
+   "mechanic": "révélation finale : la phrase qu'on a suivie était la route, elle forme une boucle fermée",
+   "narrationLines": 11,
+   "video": "shorts/lyrics-chemin__histoire__le-premier-tour-du-monde/short.mp4"
+  },
+  {
+   "dir": "shorts/lyrics-chemin__paroles__claudes-plan",
+   "identity": "lyrics-chemin",
+   "family": "paroles",
+   "title": "Claude's Plan — 32,6 premières secondes, jusqu'au refrain (paroles de remplissage en anglais : « Monday's draft »)",
+   "duration": 32.62,
+   "renderTimeSec": 2033.6,
+   "libraries": [
+    "@fontsource/barlow-condensed 5.3.0",
+    "@fontsource/jetbrains-mono",
+    "Canvas 2D (render.mjs, Chrome 157 par playwright-core 1.65.1)",
+    "ffmpeg"
+   ],
+   "loopable": false,
+   "mechanic": "lecture de la chanson au rythme (son de l'appli) et révélation finale du dessin",
+   "narrationLines": 0,
+   "video": "shorts/lyrics-chemin__paroles__claudes-plan/short.mp4"
+  },
+  {
+   "dir": "shorts/lyrics-chemin__paroles__claudes-plan-tech",
+   "identity": "lyrics-chemin",
+   "family": "paroles",
+   "title": "Claude's Plan, version tech — 32,6 premières secondes, jusqu'au refrain (paroles de remplissage en anglais : « Monday's draft »)",
+   "duration": 32.62,
+   "renderTimeSec": 929.5,
+   "libraries": [
+    "@fontsource/jetbrains-mono 5.3.0 (400, 400 italique, 700, 800)",
+    "Canvas 2D (render.mjs, Chrome par playwright-core)",
+    "ffmpeg"
+   ],
+   "loopable": false,
+   "mechanic": "lecture de la chanson au rythme (son de l'appli) et révélation finale du dessin",
+   "narrationLines": 0,
+   "video": "shorts/lyrics-chemin__paroles__claudes-plan-tech/short.mp4"
+  },
+  {
+   "dir": "shorts/lyrics-punchy__paroles__claudes-plan",
+   "identity": "lyrics-punchy",
+   "family": "paroles",
+   "title": "Claude's Plan — 19,5 premières secondes (paroles de remplissage en anglais)",
+   "duration": 19.5,
+   "renderTimeSec": 116.9,
+   "libraries": [
+    "@fontsource-variable/anybody 5.3.0",
+    "DOM + SVG (render.mjs, Chrome 157 par playwright-core 1.65.1)",
+    "difflib",
+    "ffmpeg"
+   ],
+   "loopable": false,
+   "mechanic": "lecture de la chanson au rythme (son TikTok)",
+   "narrationLines": 0,
+   "video": "shorts/lyrics-punchy__paroles__claudes-plan/short.mp4"
+  },
+  {
    "dir": "shorts/neon-lab__abstrait__champ-de-force-lucioles",
    "identity": "neon-lab",
    "family": "abstrait",
@@ -467,6 +593,26 @@
    "mechanic": "vote",
    "narrationLines": 5,
    "video": "shorts/papier-decoupe__histoire__la-fourchette-a-fait-scandale/short.mp4"
+  },
+  {
+   "dir": "shorts/papier-plan-bleu__explicatif__d-ou-vient-le-mot-sandwich",
+   "identity": "papier-plan-bleu",
+   "family": "explicatif",
+   "title": "D'où vient le mot sandwich ? — essai C4 : habillage plan-bleu (Lyrics chemin) dans le moteur papier",
+   "duration": 12.2,
+   "renderTimeSec": 15,
+   "libraries": [
+    "Pillow",
+    "OpenCV",
+    "NumPy",
+    "ffmpeg",
+    "@fontsource/barlow-condensed 5.3.0",
+    "@fontsource/jetbrains-mono 5.3.0"
+   ],
+   "loopable": false,
+   "mechanic": "révélation",
+   "narrationLines": 2,
+   "video": "shorts/papier-plan-bleu__explicatif__d-ou-vient-le-mot-sandwich/short.mp4"
   },
   {
    "dir": "shorts/pastel-diorama__enfants__d-ou-vient-la-pluie",

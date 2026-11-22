@@ -97,6 +97,21 @@
    "world-atlas"
   ]
  },
+ "chemin-craie-verte": {
+  "explicatif": [
+   "@fontsource/caveat 5.3.0",
+   "Canvas 2D (render.mjs, Chrome par playwright-core)",
+   "ffmpeg"
+  ]
+ },
+ "chemin-grille-suisse": {
+  "geographie": [
+   "@fontsource/archivo-black 5.3.0",
+   "@fontsource/inter 5.3.0",
+   "Canvas 2D (render.mjs, Chrome par playwright-core)",
+   "ffmpeg"
+  ]
+ },
  "cosmos-doc": {
   "evenements": [
    "GSAP",
@@ -127,6 +142,38 @@
    "three.js"
   ]
  },
+ "lyrics-chemin": {
+  "explicatif": [
+   "@fontsource/barlow-condensed 5.3.0",
+   "Canvas 2D (render.mjs, Chrome par playwright-core)",
+   "faster-whisper small (horodatage des mots, hors dépôt)",
+   "ffmpeg"
+  ],
+  "histoire": [
+   "@fontsource/cormorant-garamond 5.3.0",
+   "Canvas 2D (render.mjs, Chrome par playwright-core)",
+   "faster-whisper small (horodatage des mots, hors dépôt)",
+   "ffmpeg",
+   "topojson-client",
+   "world-atlas 2.0.2 land-50m (Natural Earth, domaine public)"
+  ],
+  "paroles": [
+   "@fontsource/barlow-condensed 5.3.0",
+   "@fontsource/jetbrains-mono",
+   "@fontsource/jetbrains-mono 5.3.0 (400, 400 italique, 700, 800)",
+   "Canvas 2D (render.mjs, Chrome 157 par playwright-core 1.65.1)",
+   "Canvas 2D (render.mjs, Chrome par playwright-core)",
+   "ffmpeg"
+  ]
+ },
+ "lyrics-punchy": {
+  "paroles": [
+   "@fontsource-variable/anybody 5.3.0",
+   "DOM + SVG (render.mjs, Chrome 157 par playwright-core 1.65.1)",
+   "difflib",
+   "ffmpeg"
+  ]
+ },
  "neon-lab": {
   "abstrait": [
    "OpenCV",
@@ -146,6 +193,16 @@
    "ffmpeg"
   ],
   "histoire": [
+   "NumPy",
+   "OpenCV",
+   "Pillow",
+   "ffmpeg"
+  ]
+ },
+ "papier-plan-bleu": {
+  "explicatif": [
+   "@fontsource/barlow-condensed 5.3.0",
+   "@fontsource/jetbrains-mono 5.3.0",
    "NumPy",
    "OpenCV",
    "Pillow",
