@@ -15,7 +15,10 @@ CE QUE ÇA PRODUIT (dans ../mon-studio)
   templates/<famille>/         une scène de départ par famille : le code (src/), narration.json, short.json d'un short de preuve
                                de l'identité source (ou d'une identité --blend qui a prouvé cette famille)
   out/tools/                   la boîte à outils de rendu (render.mjs, lib/svi.js, sound.py, assemble.py, textpng.py, check.py,
-                               tts.py, slot.sh, recognition.py, templates/) + new_episode.py
+                               tts.py, slot.sh, recognition.py, briques.py, templates/) + new_episode.py
+  out/shared/<moteur>/         moteur partagé quand l'identité en a un : papier-moteur (papier découpé et dérivations),
+                               chemin-moteur (lyrics-chemin, + chemin_audit.mjs), lyrics-moteur (lyrics-punchy, + lyrics_audit.mjs,
+                               lyrics_align.py)
   reference/                   copie en lecture seule des identités sources (identity.md, tokens.json, contact-sheet.jpg)
                                et de leur entrée dans index.json, + l'URL de ce dépôt
   out/shorts/                  vos épisodes (créés par out/tools/new_episode.py) ; out/report/ (QA)
@@ -31,7 +34,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / 'out'
 REPO_URL = 'https://github.com/killerwolf/StudioVisualIdentity'
-TOOLS = ['render.mjs', 'sound.py', 'assemble.py', 'textpng.py', 'check.py', 'tts.py', 'slot.sh', 'recognition.py']
+TOOLS = ['render.mjs', 'sound.py', 'assemble.py', 'textpng.py', 'check.py', 'tts.py', 'slot.sh', 'recognition.py',
+         'briques.py']  # briques.py : lu par check.py et recognition.py (sans fiches de briques, check.py retombe sur la règle de durée)
 SKIP_SRC = {'short.mp4', 'short_novo.mp4', 'short_vo.mp4', 'voice.wav', 'voice_report.json'}
 
 
@@ -312,6 +316,16 @@ def main():
                        'referencesOtherShorts': others or None,
                        'note': None if sid == a.source else (f'template emprunté à {sid} : référence de STRUCTURE (rythme, mécanique), '
                                                              f'pas de signature — à restyler entièrement avec vos tokens')})
+    # moteurs partagés JS (chemin-moteur de lyrics-chemin, lyrics-moteur de lyrics-punchy) : copiés quand un template les importe,
+    # avec ses outils (audit, alignement des paroles)
+    AUDITS = {'chemin-moteur': ['chemin_audit.mjs'], 'lyrics-moteur': ['lyrics_audit.mjs', 'lyrics_align.py']}
+    tpl_txt = ' '.join(f.read_text(errors='ignore') for f in (target / 'templates').rglob('*') if f.is_file() and f.suffix in ('.html', '.js', '.md', '.json'))
+    for eng in sorted(p.name for p in (OUT / 'shared').iterdir() if p.is_dir() and p.name != 'papier-moteur'):
+        if f'out/shared/{eng}/' in tpl_txt and not (target / 'out' / 'shared' / eng).exists():
+            shutil.copytree(OUT / 'shared' / eng, target / 'out' / 'shared' / eng, ignore=shutil.ignore_patterns('__pycache__'))
+            for t in AUDITS.get(eng, []):
+                if (OUT / 'tools' / t).exists():
+                    shutil.copy2(OUT / 'tools' / t, tdst / t)
 
     # 4. référence
     ref = target / 'reference'
