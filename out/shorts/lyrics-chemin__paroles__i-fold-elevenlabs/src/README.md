@@ -21,8 +21,9 @@ ffmpeg -i out/shorts/lyrics-chemin__paroles__i-fold-elevenlabs/tmp/i-fold_eleven
 python3 out/tools/check.py out/shorts/lyrics-chemin__paroles__i-fold-elevenlabs
 ```
 
-L'étape `caler` seule (`--etape caler`) n'a pas besoin du mp3 si on donne `--cut-out` : elle relit `src/mots_*.json` et redonne
-`src/chemin.json` et `src/align.txt` à l'identique (vérifié le 22/11/2026).
+L'étape `caler` seule (`--etape caler`) n'a pas besoin du mp3 si on donne `--cut-out` : il suffit d'un chemin dans un dossier qui existe,
+le fichier peut manquer (son nom n'entre que dans `note`, nommez-le `elevenlabs.mp3`). Elle relit `src/mots_*.json` et redonne
+`src/chemin.json` et `src/align.txt` à l'identique (vérifié le 22/11/2026, avec `refaire.sh` sur la version Lyria).
 
 ## Fichiers
 

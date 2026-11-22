@@ -21,7 +21,8 @@ ffmpeg -i out/shorts/lyrics-chemin__paroles__i-fold-lyria/tmp/i-fold_lyria.mp4 -
 python3 out/tools/check.py out/shorts/lyrics-chemin__paroles__i-fold-lyria
 ```
 
-`--etape caler` redonne `src/chemin.json` et `src/align.txt` à l'identique sans le mp3 (vérifié le 22/11/2026).
+`--etape caler` redonne `src/chemin.json` et `src/align.txt` à l'identique sans le mp3 : il suffit d'un chemin `…/lyria.mp3` dans un
+dossier qui existe (son nom n'entre que dans `note`). Vérifié le 22/11/2026 ; l'audit refait par cette étape va dans `../tmp/audit.json`.
 
 ## Fichiers
 

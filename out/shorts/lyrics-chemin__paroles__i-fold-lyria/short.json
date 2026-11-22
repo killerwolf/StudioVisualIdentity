@@ -66,8 +66,9 @@
   "stillsReviewed": true,
   "textMinPx": 93,
   "safeAreaOk": true,
-  "audit": "out/tools/chemin_audit.mjs (22/11/2026, src/audit.json) : 8 cadrages tenus moins de 0,5 s, faute de temps dans le chant rapide (« FOR SHOW » 0,31 s, « I'VE BEEN UP SINCE » 0,48 s, « 5 A.M. » 0,44 s, « PRINTER DOWN » 0,33 s, « DRAFT MODE'S » 0,42 s, « MY SPARE KEYS » 0,50 s, « MAKE ANOTHER » 0,31 s, « NOTE.TXT » 0,44 s) ; une unité sans corps relevé (« 1000000000–0 px ») est un passage pré-posé jamais cadré seul. Laissés tels quels : la règle de 0,5 s vient de la preuve, le chant de ce morceau est plus serré.",
-  "maxWordsOnScreen": 5
+  "audit": "out/tools/chemin_audit.mjs (22/11/2026, src/audit.json) : 8 cadrages tenus moins de 0,5 s, faute de temps dans le chant rapide (« FOR SHOW » 0,31 s, « I'VE BEEN UP SINCE » 0,48 s, « 5 A.M. » 0,44 s, « PRINTER DOWN » 0,33 s, « DRAFT MODE'S » 0,42 s, « MY SPARE KEYS » 0,50 s, « MAKE ANOTHER » 0,31 s, « NOTE.TXT » 0,44 s) ; pour 3 unités (« FOR SHOW », « PRINTER DOWN », « MAKE ANOTHER »), l'audit ne relève ni corps ni zone sûre : leur cadrage est trop court pour être mesuré. Vérifiées à l'œil sur une image à l'attaque (22/11/2026) : mot entier, jaune, dans la zone sûre. Laissés tels quels : la règle de 0,5 s vient de la preuve, le chant de ce morceau est plus serré.",
+  "maxWordsOnScreen": 5,
+  "safeAreaNote": "mesurée par chemin_audit.mjs, sauf les unités citées dans « audit », vérifiées à l'œil"
  },
  "notes": "Une des deux versions « I Fold » : même dessin (bateau), même habillage (plan-bleu), mêmes paroles, deux musiques générées (ElevenLabs Music, Google Lyria 3.5). Seuls les temps changent. L'autre version : lyrics-chemin__paroles__i-fold-elevenlabs. Les outils (refaire.sh, outils/) sont dans le src/ de la version elevenlabs.",
  "reproduce": "bash out/shorts/lyrics-chemin__paroles__i-fold-elevenlabs/src/refaire.sh lyria <lyria.mp3 hors dépôt> --bpm 155 --cut-in 0 --cut-out 18.52 --preroll 1.55 --zoom-beats 4 --tail 1.2 --fix i#0=0.17 (voir src/README.md)",
