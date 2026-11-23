@@ -2,6 +2,8 @@
 
 [![licence MIT](https://img.shields.io/badge/licence-MIT-green)](LICENSE) [![contenu CC BY 4.0](https://img.shields.io/badge/contenu-CC_BY_4.0-orange)](LICENSE-CONTENT.md) [![démo](https://img.shields.io/badge/d%C3%A9mo-landing-blue)](https://h4md1.fr/StudioVisualIdentity/) [![format 9:16](https://img.shields.io/badge/format-9%3A16-black)](https://h4md1.fr/StudioVisualIdentity/)
 
+**▶ Voir les styles et leurs vidéos en ligne : [h4md1.fr/StudioVisualIdentity](https://h4md1.fr/StudioVisualIdentity/)**
+
 [![Un prompt, des styles visuels pour vos vidéos verticales : voir la démo](out/demo/thumb/hero_fr.jpg)](out/demo/demo_16x9.mp4)
 
 **Décrivez votre chaîne à votre agent IA : il vous propose un style parmi 20, ou un mélange (le look d'un style, le mouvement d'un autre), crée votre studio et réalise votre première vidéo.**
