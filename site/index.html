@@ -199,6 +199,18 @@
         .steps, .cols, .bricks, .combos { grid-template-columns: 1fr; }
         section { padding: 56px 0; }
       }
+
+      .consent {
+        position: fixed; left: 16px; right: 16px; bottom: 16px; z-index: 60;
+        max-width: 520px; margin: 0 auto; padding: 18px 20px;
+        background: var(--bg); color: var(--fg); border: 1px solid var(--line); border-radius: var(--radius);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, .45);
+      }
+      .consent[hidden] { display: none; }
+      .consent h2 { margin: 0 0 6px; font-size: 1.05rem; }
+      .consent p { margin: 0 0 14px; color: var(--muted); font-size: .95rem; }
+      .consent a { color: var(--fg); }
+      .consent .btn { cursor: pointer; font: inherit; }
     </style>
   </head>
   <body>
@@ -670,6 +682,41 @@ installe ce qu'il faut, adapte le style à notre chaîne et réalise notre premi
         }
         setTimeout(() => (e.target.textContent = 'Copier'), 2000);
       });
+    </script>
+
+    <aside class="consent" id="consent" hidden role="dialog" aria-labelledby="consent-title">
+      <h2 id="consent-title">Cookies, en bref</h2>
+      <p>Cette page utilise Google Analytics pour savoir quelles parties aident vraiment les visiteurs. Pas de publicité ciblée, aucune revente de données. <a href="https://h4md1.fr/privacy/">Politique de confidentialité</a>. Votre choix est retenu sur cet appareil.</p>
+      <div class="btns">
+        <button type="button" class="btn" id="consent-accept">Accepter</button>
+        <button type="button" class="btn ghost" id="consent-refuse">Refuser</button>
+      </div>
+    </aside>
+    <script>
+      // Google Analytics de h4md1.fr, chargé seulement après accord (même clé que h4md1.fr, même domaine).
+      (() => {
+        const GA_ID = 'G-JKP7MNFKKH';
+        const KEY = 'h4md1-consent';
+        const load = () => {
+          const s = document.createElement('script');
+          s.async = true;
+          s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+          document.head.appendChild(s);
+          window.dataLayer = window.dataLayer || [];
+          window.gtag = function () { window.dataLayer.push(arguments); };
+          window.gtag('js', new Date());
+          window.gtag('config', GA_ID);
+        };
+        const get = () => { try { return localStorage.getItem(KEY); } catch { return null; } };
+        const set = (v) => { try { localStorage.setItem(KEY, v); } catch {} };
+        const box = document.getElementById('consent');
+        const choice = get();
+        if (choice === 'granted') { load(); return; }
+        if (choice === 'denied') return;
+        box.hidden = false;
+        document.getElementById('consent-accept').addEventListener('click', () => { set('granted'); box.hidden = true; load(); });
+        document.getElementById('consent-refuse').addEventListener('click', () => { set('denied'); box.hidden = true; });
+      })();
     </script>
   </body>
 </html>
